@@ -1,9 +1,0 @@
-{
-  "data_file": "stocks.json",
-  "default_sort_type": "name",
-  "default_sort_order": "asc",
-  "auto_refresh": true,
-  "refresh_interval": 60,
-  "theme": "dark",
-  "language": "zh-CN"
-}

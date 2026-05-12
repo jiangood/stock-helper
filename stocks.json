@@ -1,0 +1,38 @@
+[
+  {
+    "id": "2ae4bf37-a986-45a2-8bda-11e3300cd589",
+    "name": "贵州茅台",
+    "code": "sh600519",
+    "entry_price1": 1300,
+    "entry_price2": 1250,
+    "target_price1": 1500,
+    "target_price2": 1600,
+    "remark": "白酒龙头",
+    "created_at": 1778557221633,
+    "updated_at": 1778557221634
+  },
+  {
+    "id": "78808d70-dbc4-4ff2-9260-12e462988874",
+    "name": "五粮液",
+    "code": "sz000858",
+    "entry_price1": 85,
+    "entry_price2": 80,
+    "target_price1": 100,
+    "target_price2": 110,
+    "remark": "白酒",
+    "created_at": 1778557221636,
+    "updated_at": 1778557221637
+  },
+  {
+    "id": "12345678-1234-5678-1234-567812345678",
+    "name": "招商银行",
+    "code": "sh600036",
+    "entry_price1": 35,
+    "entry_price2": null,
+    "target_price1": 45,
+    "target_price2": null,
+    "remark": "银行",
+    "created_at": 1778557221638,
+    "updated_at": 1778557221639
+  }
+]

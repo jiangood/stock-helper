@@ -1,0 +1,38 @@
+[
+  {
+    "id": "test-001",
+    "name": "贵州茅台",
+    "code": "sh600519",
+    "entry_price1": 1300,
+    "entry_price2": null,
+    "target_price1": 1500,
+    "target_price2": null,
+    "remark": "测试股票1",
+    "created_at": 1778557221633,
+    "updated_at": 1778557221634
+  },
+  {
+    "id": "test-002",
+    "name": "五粮液",
+    "code": "sz000858",
+    "entry_price1": 85,
+    "entry_price2": null,
+    "target_price1": 100,
+    "target_price2": null,
+    "remark": "测试股票2",
+    "created_at": 1778557221636,
+    "updated_at": 1778557221637
+  },
+  {
+    "id": "test-003",
+    "name": "招商银行",
+    "code": "sh600036",
+    "entry_price1": 35,
+    "entry_price2": null,
+    "target_price1": 45,
+    "target_price2": null,
+    "remark": "测试股票3",
+    "created_at": 1778557221638,
+    "updated_at": 1778557221639
+  }
+]

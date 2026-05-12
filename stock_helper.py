@@ -4,6 +4,39 @@ import time
 import requests
 from datetime import datetime
 from tabulate import tabulate
+import os
+import sys
+
+def _getch():
+    """Cross-platform getch(). Returns a bytes object (like msvcrt.getch)."""
+    if os.name == 'nt':
+        import msvcrt
+        return msvcrt.getch()
+    import termios
+    import tty
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        return sys.stdin.buffer.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+def _kbhit():
+    """Cross-platform kbhit(). Returns True if a keypress is waiting."""
+    if os.name == 'nt':
+        import msvcrt
+        return msvcrt.kbhit()
+    import select
+    import termios
+    import tty
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        return select.select([sys.stdin], [], [], 0)[0]
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
 
 class Stock:
     def __init__(self, id=None, name="", code="", entry_price=None,
@@ -274,7 +307,6 @@ class StockHelperCLI:
         self.stocks_on_screen = []
 
     def run(self):
-        import msvcrt
         while True:
             self._clear_screen()
             self._print_header()
@@ -287,8 +319,8 @@ class StockHelperCLI:
             
             choice = ""
             while True:
-                if msvcrt.kbhit():
-                    char = msvcrt.getch()
+                if _kbhit():
+                    char = _getch()
                     try:
                         c = char.decode('utf-8')
                         if c == '\r':
@@ -705,12 +737,11 @@ class StockHelperCLI:
         self._input_char("")
 
     def _input_with_esc(self, prompt="", exit_on_esc=False):
-        import msvcrt
         print(prompt, end="", flush=True)
         result = ""
         while True:
-            if msvcrt.kbhit():
-                char = msvcrt.getch()
+            if _kbhit():
+                char = _getch()
                 if char == b'\x1b':
                     print()
                     if exit_on_esc:
@@ -727,7 +758,7 @@ class StockHelperCLI:
                     try:
                         first_byte = char[0]
                         if first_byte >= 0x81 and first_byte <= 0xFE:
-                            second_byte = msvcrt.getch()[0]
+                            second_byte = _getch()[0]
                             full_char = bytes([first_byte, second_byte])
                             c = full_char.decode('gbk')
                         else:
@@ -741,11 +772,10 @@ class StockHelperCLI:
         return result
 
     def _input_digit(self, prompt=""):
-        import msvcrt
         print(prompt, end="", flush=True)
         while True:
-            if msvcrt.kbhit():
-                char = msvcrt.getch()
+            if _kbhit():
+                char = _getch()
                 if char == b'\x1b':
                     print()
                     return ("ESC",)
@@ -761,11 +791,10 @@ class StockHelperCLI:
             time.sleep(0.05)
 
     def _input_char(self, prompt=""):
-        import msvcrt
         print(prompt, end="", flush=True)
         while True:
-            if msvcrt.kbhit():
-                char = msvcrt.getch()
+            if _kbhit():
+                char = _getch()
                 if char == b'\x1b':
                     print()
                     return ("ESC",)

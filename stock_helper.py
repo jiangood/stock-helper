@@ -5,38 +5,6 @@ import requests
 from datetime import datetime
 from tabulate import tabulate
 import os
-import sys
-
-def _getch():
-    """Cross-platform getch(). Returns a bytes object (like msvcrt.getch)."""
-    if os.name == 'nt':
-        import msvcrt
-        return msvcrt.getch()
-    import termios
-    import tty
-    fd = sys.stdin.fileno()
-    old = termios.tcgetattr(fd)
-    try:
-        tty.setraw(fd)
-        return sys.stdin.buffer.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old)
-
-def _kbhit():
-    """Cross-platform kbhit(). Returns True if a keypress is waiting."""
-    if os.name == 'nt':
-        import msvcrt
-        return msvcrt.kbhit()
-    import select
-    import termios
-    import tty
-    fd = sys.stdin.fileno()
-    old = termios.tcgetattr(fd)
-    try:
-        tty.setraw(fd)
-        return select.select([sys.stdin], [], [], 0)[0]
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old)
 
 class Stock:
     def __init__(self, id=None, name="", code="", entry_price=None,
@@ -317,32 +285,11 @@ class StockHelperCLI:
             print()
             self._print_menu()
             
-            choice = ""
-            while True:
-                if _kbhit():
-                    char = _getch()
-                    try:
-                        c = char.decode('utf-8')
-                        if c == '\r':
-                            if choice:
-                                print()
-                                break
-                        elif c == '\x08' and len(choice) > 0:
-                            choice = choice[:-1]
-                            print("\b \b", end="", flush=True)
-                        elif c.isdigit():
-                            print(c, end="", flush=True)
-                            choice = c
-                    except:
-                        pass
-                import time
-                time.sleep(0.05)
-            
+            choice = input("\n  请输入: ").strip()
             if choice:
                 self._handle_choice(choice, stocks)
 
     def _clear_screen(self):
-        import os
         os.system("cls" if os.name == "nt" else "clear")
 
     def _print_header(self):
@@ -458,36 +405,28 @@ class StockHelperCLI:
         print("\n  添加股票")
         print("  --------")
         
-        keyword = self._input_with_esc("  搜索股票名称或代码: ")
-        if isinstance(keyword, tuple) and keyword[0] == "ESC":
-            return
-        keyword = keyword.strip()
+        keyword = self._input_text("  搜索股票名称或代码: ")
         if not keyword:
-            self._input_with_esc("  请输入搜索关键词，按回车返回...")
+            input("  请输入搜索关键词，按回车返回...")
             return
         
         search_results = StockApiService.search_stocks(keyword)
         if not search_results:
-            self._input_with_esc("  未找到匹配的股票，按回车返回...")
+            input("  未找到匹配的股票，按回车返回...")
             return
         
         print("\n  搜索结果:")
         for i, stock in enumerate(search_results, 1):
             print(f"    {i}. {stock.name} ({stock.get_display_code()})")
         
-        try:
-            choice_str = self._input_digit("\n  请选择股票序号: ")
-            if isinstance(choice_str, tuple) and choice_str[0] == "ESC":
-                return
-            choice = int(choice_str)
-            if 1 <= choice <= len(search_results):
-                selected_stock = search_results[choice - 1]
-            else:
-                print("  无效选择")
-                time.sleep(0.5)
-                return
-        except ValueError:
-            print("  请输入有效数字")
+        choice_str = self._input_digit("\n  请选择股票序号: ")
+        if not choice_str:
+            return
+        choice = int(choice_str)
+        if 1 <= choice <= len(search_results):
+            selected_stock = search_results[choice - 1]
+        else:
+            print("  无效选择")
             time.sleep(0.5)
             return
         
@@ -497,19 +436,9 @@ class StockHelperCLI:
             return
         
         entry_price = self._get_float_input("  推荐买入价: ", allow_empty=True)
-        if isinstance(entry_price, tuple) and entry_price[0] == "ESC":
-            return
         target_price = self._get_float_input("  目标价: ", allow_empty=True)
-        if isinstance(target_price, tuple) and target_price[0] == "ESC":
-            return
-        group = self._input_with_esc("  分组: ")
-        if isinstance(group, tuple) and group[0] == "ESC":
-            return
-        group = group.strip()
-        remark = self._input_with_esc("  备注: ")
-        if isinstance(remark, tuple) and remark[0] == "ESC":
-            return
-        remark = remark.strip()
+        group = self._input_text("  分组: ")
+        remark = self._input_text("  备注: ")
         
         new_stock = Stock(
             name=selected_stock.name,
@@ -539,23 +468,18 @@ class StockHelperCLI:
         
         print("\n  编辑股票")
         print("  --------")
-        
+
         for i, stock in enumerate(stocks, 1):
             print(f"    {i}. {stock.name} ({stock.get_display_code()})")
-        
-        try:
-            choice_str = self._input_digit("\n  请选择股票序号: ")
-            if isinstance(choice_str, tuple) and choice_str[0] == "ESC":
-                return
-            choice = int(choice_str)
-            if 1 <= choice <= len(stocks):
-                stock = stocks[choice - 1]
-            else:
-                print("  无效选择")
-                time.sleep(0.5)
-                return
-        except ValueError:
-            print("  请输入有效数字")
+
+        choice_str = self._input_digit("\n  请选择股票序号: ")
+        if not choice_str:
+            return
+        choice = int(choice_str)
+        if 1 <= choice <= len(stocks):
+            stock = stocks[choice - 1]
+        else:
+            print("  无效选择")
             time.sleep(0.5)
             return
         
@@ -574,35 +498,23 @@ class StockHelperCLI:
             print("    0. 保存并返回")
             
             field_choice = self._input_digit("  请选择: ")
-            if isinstance(field_choice, tuple) and field_choice[0] == "ESC":
-                return
-            
+
             if field_choice == "1":
                 entry_price = self._get_float_input(f"  推荐买入价 ({stock.entry_price or 0}): ", allow_empty=True)
-                if isinstance(entry_price, tuple) and entry_price[0] == "ESC":
-                    return
                 if entry_price is not None:
                     stock.entry_price = entry_price
                     print("  买入价已更新")
             elif field_choice == "2":
                 target_price = self._get_float_input(f"  目标价 ({stock.target_price or 0}): ", allow_empty=True)
-                if isinstance(target_price, tuple) and target_price[0] == "ESC":
-                    return
                 if target_price is not None:
                     stock.target_price = target_price
                     print("  目标价已更新")
             elif field_choice == "3":
-                group = self._input_with_esc(f"  分组 ({stock.group}): ")
-                if isinstance(group, tuple) and group[0] == "ESC":
-                    return
-                group = group.strip()
+                group = self._input_text(f"  分组: ", stock.group)
                 stock.group = group
                 print("  分组已更新")
             elif field_choice == "4":
-                remark = self._input_with_esc(f"  备注 ({stock.remark}): ")
-                if isinstance(remark, tuple) and remark[0] == "ESC":
-                    return
-                remark = remark.strip()
+                remark = self._input_text(f"  备注: ", stock.remark)
                 stock.remark = remark
                 print("  备注已更新")
             elif field_choice == "0":
@@ -625,26 +537,19 @@ class StockHelperCLI:
         
         for i, stock in enumerate(stocks, 1):
             print(f"    {i}. {stock.name} ({stock.get_display_code()})")
-        
-        try:
-            choice_str = self._input_digit("\n  请选择要删除的股票序号: ")
-            if isinstance(choice_str, tuple) and choice_str[0] == "ESC":
-                return
-            choice = int(choice_str)
-            if 1 <= choice <= len(stocks):
-                stock = stocks[choice - 1]
-            else:
-                print("  无效选择")
-                time.sleep(0.5)
-                return
-        except ValueError:
-            print("  请输入有效数字")
+
+        choice_str = self._input_digit("\n  请选择要删除的股票序号: ")
+        if not choice_str:
+            return
+        choice = int(choice_str)
+        if 1 <= choice <= len(stocks):
+            stock = stocks[choice - 1]
+        else:
+            print("  无效选择")
             time.sleep(0.5)
             return
         
         confirm = self._input_char(f"  确定删除 {stock.name} 吗? (y/n): ")
-        if isinstance(confirm, tuple) and confirm[0] == "ESC":
-            return
         if confirm == "y":
             self.stock_manager.delete_stock(stock.id)
             print("  删除成功")
@@ -698,22 +603,17 @@ class StockHelperCLI:
         for i, stock in enumerate(stocks, 1):
             print(f"    {i}. {stock.name} ({stock.get_display_code()})")
         
-        try:
-            choice_str = self._input_digit("\n  请选择股票序号: ")
-            if isinstance(choice_str, tuple) and choice_str[0] == "ESC":
-                return
-            choice = int(choice_str)
-            if 1 <= choice <= len(stocks):
-                stock = stocks[choice - 1]
-            else:
-                print("  无效选择")
-                time.sleep(0.5)
-                return
-        except ValueError:
-            print("  请输入有效数字")
+        choice_str = self._input_digit("\n  请选择股票序号: ")
+        if not choice_str:
+            return
+        choice = int(choice_str)
+        if 1 <= choice <= len(stocks):
+            stock = stocks[choice - 1]
+        else:
+            print("  无效选择")
             time.sleep(0.5)
             return
-        
+
         price = self.price_map.get(stock.code)
         current_price = price.price if price else 0.0
         change = price.change if price else 0.0
@@ -733,89 +633,35 @@ class StockHelperCLI:
         print(f"  创建时间: {datetime.fromtimestamp(stock.created_at / 1000)}")
         print(f"  更新时间: {datetime.fromtimestamp(stock.updated_at / 1000)}")
         
-        print("\n  按任意键返回...")
-        self._input_char("")
+        print("\n  按回车键返回...")
+        input()
 
-    def _input_with_esc(self, prompt="", exit_on_esc=False):
-        print(prompt, end="", flush=True)
-        result = ""
-        while True:
-            if _kbhit():
-                char = _getch()
-                if char == b'\x1b':
-                    print()
-                    if exit_on_esc:
-                        print("  感谢使用股票助手，再见！")
-                        exit(0)
-                    return ("ESC",)
-                elif char == b'\r':
-                    print()
-                    break
-                elif char == b'\x08' and len(result) > 0:
-                    result = result[:-1]
-                    print("\b \b", end="", flush=True)
-                else:
-                    try:
-                        first_byte = char[0]
-                        if first_byte >= 0x81 and first_byte <= 0xFE:
-                            second_byte = _getch()[0]
-                            full_char = bytes([first_byte, second_byte])
-                            c = full_char.decode('gbk')
-                        else:
-                            c = char.decode('utf-8')
-                        print(c, end="", flush=True)
-                        result += c
-                    except:
-                        pass
-            import time
-            time.sleep(0.05)
-        return result
+    def _input_text(self, prompt="", default=""):
+        prompt_text = prompt
+        if default:
+            prompt_text = f"{prompt} (默认: {default}) "
+        value = input(prompt_text).strip()
+        if not value and default:
+            return default
+        return value
 
     def _input_digit(self, prompt=""):
-        print(prompt, end="", flush=True)
         while True:
-            if _kbhit():
-                char = _getch()
-                if char == b'\x1b':
-                    print()
-                    return ("ESC",)
-                else:
-                    try:
-                        c = char.decode('utf-8')
-                        if c.isdigit():
-                            print(c)
-                            return c
-                    except:
-                        pass
-            import time
-            time.sleep(0.05)
+            c = input(prompt).strip()
+            if c.isdigit():
+                return c
 
     def _input_char(self, prompt=""):
-        print(prompt, end="", flush=True)
-        while True:
-            if _kbhit():
-                char = _getch()
-                if char == b'\x1b':
-                    print()
-                    return ("ESC",)
-                else:
-                    try:
-                        c = char.decode('utf-8').lower()
-                        print(c)
-                        return c
-                    except:
-                        pass
-            import time
-            time.sleep(0.05)
+        value = input(prompt).strip().lower()
+        return value[:1] if value else ""
 
     def _get_float_input(self, prompt, allow_empty=False):
         while True:
-            value = self._input_with_esc(prompt)
-            if isinstance(value, tuple) and value[0] == "ESC":  # ESC被按下
-                return ("ESC",)
-            value = value.strip()
-            if allow_empty and not value:
-                return None
+            value = input(prompt).strip()
+            if not value:
+                if allow_empty:
+                    return None
+                continue
             try:
                 return float(value)
             except ValueError:

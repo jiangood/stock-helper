@@ -1,9 +1,10 @@
 import json
 import uuid
 import time
+import re
 import requests
 from datetime import datetime
-from tabulate import tabulate
+from wcwidth import wcswidth
 import os
 
 class Stock:
@@ -266,15 +267,38 @@ class SortOrder:
     DESC = "desc"
 
 class StockHelperCLI:
-    def __init__(self):
+    def __init__(self, readonly=False):
         self.stock_manager = StockManager()
         self.price_map = {}
         self.current_sort_type = SortType.PROFIT
         self.current_sort_order = SortOrder.ASC
         self.current_search_query = ""
         self.stocks_on_screen = []
+        self.readonly = readonly
 
     def run(self):
+        try:
+            if self.readonly:
+                self._run_readonly()
+                return
+            while True:
+                self._clear_screen()
+                self._print_header()
+                self._refresh_prices(silent=True)
+                stocks = self._get_filtered_and_sorted_stocks()
+                self.stocks_on_screen = stocks
+                self._display_stocks(stocks)
+                print()
+                self._print_menu()
+
+                choice = input("\n  请输入: ").strip()
+                if choice:
+                    self._handle_choice(choice, stocks)
+        except KeyboardInterrupt:
+            print()
+            pass
+
+    def _run_readonly(self):
         while True:
             self._clear_screen()
             self._print_header()
@@ -282,55 +306,109 @@ class StockHelperCLI:
             stocks = self._get_filtered_and_sorted_stocks()
             self.stocks_on_screen = stocks
             self._display_stocks(stocks)
-            print()
-            self._print_menu()
-            
-            choice = input("\n  请输入: ").strip()
-            if choice:
-                self._handle_choice(choice, stocks)
+            time.sleep(15)
 
     def _clear_screen(self):
         os.system("cls" if os.name == "nt" else "clear")
 
     def _print_header(self):
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print("=" * 100)
-        print("                    股票助手 Stock Helper                    ")
+        print(f"    股票助手 Stock Helper        {now}")
         print("=" * 100)
 
     def _display_stocks(self, stocks):
         if not stocks:
             print("  暂无股票数据")
             return
-        
-        headers = ["序号", "股票名称", "代码", "当前价", "推荐买入价", "目标价", "盈亏%", "分组", "备注", "更新时间"]
+
+        headers = ["股票名称", "当前价", "推荐买入价", "目标价", "盈亏%", "分组", "备注"]
         table_data = []
-        
+
         for i, stock in enumerate(stocks, 1):
             price = self.price_map.get(stock.code)
             current_price = price.price if price else 0.0
-            
+
             entry_price = stock.entry_price if stock.entry_price else 0.0
             profit = ((current_price - entry_price) / entry_price * 100) if entry_price > 0 else 0.0
-            
+
             profit_color = "\033[91m" if profit >= 0 else "\033[92m"
             reset_color = "\033[0m"
-            
-            update_time = datetime.fromtimestamp(stock.updated_at / 1000).strftime("%m-%d %H:%M")
-            
+
             table_data.append([
-                i,
                 stock.name,
-                stock.get_display_code(),
                 f"{current_price:.2f}",
                 f"{entry_price:.2f}",
                 f"{(stock.target_price or 0):.2f}",
                 f"{profit_color}{profit:.2f}%{reset_color}",
                 stock.group or "-",
-                stock.remark[:10] + "..." if len(stock.remark) > 10 else (stock.remark or "-"),
-                update_time
+                (stock.remark[:10] + "...") if len(stock.remark) > 10 else (stock.remark or "-"),
             ])
-        
-        print(tabulate(table_data, headers=headers, tablefmt="simple", stralign="center", numalign="right"))
+
+        print(self._format_table(headers, table_data))
+
+    @staticmethod
+    def _strip_ansi(text):
+        return re.sub(r'\033\[[0-9;]*m', '', text)
+
+    @staticmethod
+    def _display_width(text):
+        visible = StockHelperCLI._strip_ansi(text)
+        width = 0
+        for char in visible:
+            w = wcswidth(char)
+            width += w if w > 0 else 1
+        return width
+
+    @staticmethod
+    def _ljust_to_width(text, width):
+        current = StockHelperCLI._display_width(text)
+        return text + ' ' * max(0, width - current)
+
+    @staticmethod
+    def _rjust_to_width(text, width):
+        current = StockHelperCLI._display_width(text)
+        return ' ' * max(0, width - current) + text
+
+    @staticmethod
+    def _center_to_width(text, width):
+        current = StockHelperCLI._display_width(text)
+        diff = width - current
+        if diff <= 0:
+            return text
+        left = diff // 2
+        right = diff - left
+        return ' ' * left + text + ' ' * right
+
+    def _format_table(self, headers, rows):
+        num_cols = len(headers)
+        col_widths = []
+        for j in range(num_cols):
+            widths = [self._display_width(h) for h in headers]
+            for row in rows:
+                widths.append(self._display_width(row[j]))
+            col_widths.append(max(widths))
+
+        sep = '  '.join('-' * w for w in col_widths)
+
+        header_cells = []
+        for j in range(num_cols):
+            header_cells.append(self._center_to_width(headers[j], col_widths[j]))
+        header_line = '  '.join(header_cells)
+
+        lines = [sep, header_line, sep]
+
+        for row in rows:
+            cells = []
+            num_col = [1, 2, 3]  # right-aligned column indices
+            for j in range(num_cols):
+                if j in num_col:
+                    cells.append(self._rjust_to_width(row[j], col_widths[j]))
+                else:
+                    cells.append(self._ljust_to_width(row[j], col_widths[j]))
+            lines.append('  '.join(cells))
+
+        return '\n'.join(lines)
 
     def _print_menu(self):
         sort_display = {
@@ -340,7 +418,8 @@ class StockHelperCLI:
         print("-" * 60)
         print("  [主菜单]")
         print("  1. 刷新价格    2. 排序方式    3. 查看详情")
-        print("  4. 添加股票    5. 编辑股票    6. 删除股票")
+        if not self.readonly:
+            print("  4. 添加股票    5. 编辑股票    6. 删除股票")
         print("  0. 退出程序")
         print("-" * 60)
         print(f"  当前排序: {sort_display[self.current_sort_type]}")
@@ -353,18 +432,28 @@ class StockHelperCLI:
             self._toggle_sort()
         elif choice == "3":
             self._view_details(stocks)
-        elif choice == "4":
-            self._add_stock()
-        elif choice == "5":
-            self._edit_stock(stocks)
-        elif choice == "6":
-            self._delete_stock(stocks)
-        elif choice == "0":
-            print("\n  感谢使用股票助手，再见！")
-            exit(0)
+        elif self.readonly:
+            if choice == "4":
+                print("  只读模式，无法添加股票")
+            elif choice == "5":
+                print("  只读模式，无法编辑股票")
+            elif choice == "6":
+                print("  只读模式，无法删除股票")
+            else:
+                print("  无效输入")
         else:
-            print("  无效输入")
-            time.sleep(0.5)
+            if choice == "4":
+                self._add_stock()
+            elif choice == "5":
+                self._edit_stock(stocks)
+            elif choice == "6":
+                self._delete_stock(stocks)
+            elif choice == "0":
+                print("\n  感谢使用股票助手，再见！")
+                exit(0)
+            else:
+                print("  无效输入")
+        time.sleep(0.5)
 
     def _toggle_sort(self):
         if self.current_sort_type == SortType.PROFIT:
@@ -569,26 +658,7 @@ class StockHelperCLI:
 
     def _refresh_prices_partial(self):
         stocks = self.stock_manager.get_stocks()
-        new_price_map = PriceService.fetch_prices(stocks)
-        
-        for i, stock in enumerate(self.stocks_on_screen, 1):
-            old_price = self.price_map.get(stock.code)
-            new_price = new_price_map.get(stock.code)
-            
-            if new_price and new_price.price != (old_price.price if old_price else 0):
-                entry_price = stock.entry_price if stock.entry_price else 0.0
-                profit = ((new_price.price - entry_price) / entry_price * 100) if entry_price > 0 else 0.0
-                profit_color = "\033[91m" if profit >= 0 else "\033[92m"
-                reset_color = "\033[0m"
-                
-                row_num = 6 + i
-                col_num = 34
-                print(f"\033[{row_num};{col_num}H\033[K{new_price.price:.2f}", end="")
-                
-                col_num = 50
-                print(f"\033[{row_num};{col_num}H\033[K{profit_color}{profit:.2f}%{reset_color}", end="", flush=True)
-        
-        self.price_map = new_price_map
+        self.price_map = PriceService.fetch_prices(stocks)
 
 
     def _view_details(self, stocks):
@@ -668,5 +738,11 @@ class StockHelperCLI:
                 print("  请输入有效数字")
 
 if __name__ == "__main__":
-    cli = StockHelperCLI()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="股票助手 - 股票跟踪工具")
+    parser.add_argument("--readonly", action="store_true", help="只读模式，只显示不操作")
+    args = parser.parse_args()
+
+    cli = StockHelperCLI(readonly=args.readonly)
     cli.run()

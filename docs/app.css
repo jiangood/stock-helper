@@ -1,9 +1,5 @@
 .container { max-width: 1100px; margin: 0 auto; }
 
-.header { background: #1a1a2e; color: #fff; padding: 20px 30px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-.header h1 { font-size: 22px; font-weight: 600; }
-.header .time { font-size: 14px; color: #aaa; }
-
 .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
 .controls button { padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all .2s; }
 .btn-primary { background: #4361ee; color: #fff; }
@@ -28,21 +24,7 @@ tbody tr.selected { background: #eef2ff; }
 .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: #e2e8f0; color: #475569; }
 .text-muted { color: #94a3b8; }
 .text-right { text-align: right; }
-
-.detail-panel { display: none; background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-top: 16px; padding: 24px; }
-.detail-panel.show { display: block; }
-.detail-panel h2 { font-size: 18px; margin-bottom: 16px; color: #1e293b; }
-.detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-.detail-item { padding: 10px 14px; background: #f8fafc; border-radius: 8px; }
-.detail-item .label { font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
-.detail-item .value { font-size: 16px; font-weight: 600; color: #1e293b; }
-.detail-close { float: right; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; background: #e2e8f0; color: #475569; font-size: 13px; }
-.detail-close:hover { background: #cbd5e1; }
-
 @media (max-width: 640px) {
-  .header { padding: 12px 14px; }
-  .header h1 { font-size: 15px; }
-  .header .time { font-size: 11px; }
   .controls { gap: 4px; }
   .controls button { padding: 5px 10px; font-size: 11px; }
   .controls .info { margin-left: 0; width: 100%; font-size: 11px; display: flex; justify-content: space-between; }
@@ -51,8 +33,4 @@ tbody tr.selected { background: #eef2ff; }
   table { min-width: 0; font-size: 11px; }
   thead th, tbody td { padding: 4px 3px; }
   thead th:first-child, tbody td:first-child { padding-left: 6px; }
-  .detail-panel { padding: 14px; }
-  .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
-  .detail-item { padding: 6px 10px; }
-  .detail-item .value { font-size: 13px; }
 }

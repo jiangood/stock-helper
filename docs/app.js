@@ -1,14 +1,6 @@
 let stocks = [];
 let currentSort = "profit";
 let priceMap = {};
-let selectedStock = null;
-
-function closeDetail() {
-  $("detailPanel").classList.remove("show");
-  selectedStock = null;
-  document.querySelectorAll("tbody tr.selected").forEach(el => el.classList.remove("selected"));
-}
-
 async function fetchPrices() {
   const codes = stocks.map(s => s.code).join(",");
   if (!codes) return {};
@@ -90,7 +82,7 @@ function render() {
       profitStr = (profit >= 0 ? "+" : "") + profit.toFixed(2) + "%";
       profitClass = profit >= 0 ? "profit-up" : "profit-down";
     }
-    html += `<tr onclick="showDetail('${s.code}')" data-code="${s.code}">
+    html += `<tr>
       <td>${i + 1}</td>
       <td><span class="stock-name">${s.name}</span></td>
       <td class="text-right ${profitClass}">${profitStr}</td>
@@ -103,46 +95,7 @@ function render() {
   }
   tbody.innerHTML = html;
   $("sortInfo").textContent = "📊 排序: " + (currentSort === "profit" ? "盈亏" : "分组+盈亏");
-  if (selectedStock && priceMap[selectedStock]) renderDetail(selectedStock);
 }
-
-function showDetail(code) {
-  selectedStock = code;
-  document.querySelectorAll("tbody tr.selected").forEach(el => el.classList.remove("selected"));
-  const row = document.querySelector(`tbody tr[data-code="${code}"]`);
-  if (row) row.classList.add("selected");
-  renderDetail(code);
-}
-
-function renderDetail(code) {
-  const stock = stocks.find(s => s.code === code);
-  if (!stock) return;
-  const p = priceMap[code];
-  $("detailPanel").classList.add("show");
-  $("detailName").textContent = stock.name + " 详情";
-  const currentPrice = p ? p.price : null;
-  const change = p ? p.change : null;
-  const changePercent = p ? p.change_percent : null;
-  let profit = null;
-  if (stock.entry_price && stock.entry_price > 0 && currentPrice !== null) {
-    profit = ((currentPrice - stock.entry_price) / stock.entry_price) * 100;
-  }
-  const items = [
-    { label: "股票代码", value: stock.code },
-    { label: "当前价", value: currentPrice !== null ? currentPrice.toFixed(2) : "-" },
-    { label: "涨跌额", value: change !== null ? (change >= 0 ? "+" : "") + change.toFixed(2) : "-" },
-    { label: "涨跌幅", value: changePercent !== null ? (changePercent >= 0 ? "+" : "") + changePercent.toFixed(2) + "%" : "-" },
-    { label: "推荐买入价", value: stock.entry_price !== null ? stock.entry_price.toFixed(2) : "-" },
-    { label: "目标价", value: stock.target_price !== null ? stock.target_price.toFixed(2) : "-" },
-    { label: "盈亏", value: profit !== null ? (profit >= 0 ? "+" : "") + profit.toFixed(2) + "%" : "-" },
-    { label: "分组", value: stock.group || "-" },
-    { label: "备注", value: stock.remark || "-" },
-  ];
-  $("detailGrid").innerHTML = items.map(item =>
-    `<div class="detail-item"><div class="label">${item.label}</div><div class="value">${item.value}</div></div>`
-  ).join("");
-}
-
 function toggleSort() {
   currentSort = currentSort === "profit" ? "group_profit" : "profit";
   render();

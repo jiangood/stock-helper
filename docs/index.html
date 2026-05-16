@@ -9,11 +9,6 @@
 </head>
 <body>
 <div class="container" id="appContent" style="display:none">
-  <div class="header">
-    <h1>📈 股票助手 Stock Helper</h1>
-    <div class="time" id="currentTime"></div>
-  </div>
-
   <div class="controls">
     <button class="btn-primary" onclick="refreshPrices()">🔄 刷新价格</button>
     <button class="btn-secondary" onclick="toggleSort()">⇅ 切换排序</button>
@@ -41,11 +36,6 @@
     </table>
   </div>
 
-  <div class="detail-panel" id="detailPanel">
-    <button class="detail-close" onclick="closeDetail()">✕ 关闭</button>
-    <h2 id="detailName">股票详情</h2>
-    <div class="detail-grid" id="detailGrid"></div>
-  </div>
 </div>
 
 <div class="toast" id="toast"></div>

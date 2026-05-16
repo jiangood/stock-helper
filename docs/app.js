@@ -1,70 +1,12 @@
-let config = {};
 let stocks = [];
 let currentSort = "profit";
 let priceMap = {};
 let selectedStock = null;
 
-const $ = id => document.getElementById(id);
-
-function formatTime(ts) {
-  return new Date(ts).toLocaleString("zh-CN", { hour12: false });
-}
-
-function updateClock() {
-  const now = new Date();
-  const timeStr = formatTime(now);
-  const dateStr = now.toLocaleDateString("zh-CN", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
-  if ($("currentTime")) $("currentTime").textContent = timeStr;
-
-}
-
-function showToast(msg, type) {
-  const t = $("toast");
-  t.textContent = msg;
-  t.className = "toast " + type + " show";
-  clearTimeout(t._hide);
-  t._hide = setTimeout(() => t.classList.remove("show"), 2500);
-}
-
-async function checkAccess() {
-  await loadConfig();
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("random") === config.password) {
-    $("publicPage").style.display = "none";
-    $("appContent").style.display = "block";
-    init();
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  checkAccess();
-});
-
 function closeDetail() {
   $("detailPanel").classList.remove("show");
   selectedStock = null;
   document.querySelectorAll("tbody tr.selected").forEach(el => el.classList.remove("selected"));
-}
-
-async function loadConfig() {
-  try {
-    const [cfg, stk] = await Promise.all([
-      fetch("config.json", { signal: AbortSignal.timeout(5000) }).then(r => {
-        if (!r.ok) throw new Error("config.json HTTP " + r.status);
-        return r.json();
-      }),
-      fetch("stocks.json", { signal: AbortSignal.timeout(5000) }).then(r => {
-        if (!r.ok) throw new Error("stocks.json HTTP " + r.status);
-        return r.json();
-      }),
-    ]);
-    config = cfg;
-    stocks = stk;
-  } catch (e) {
-    showToast("❌ 加载失败: " + e.message, "error");
-    config = {};
-    stocks = [];
-  }
 }
 
 async function fetchPrices() {
@@ -225,10 +167,15 @@ async function refreshPrices() {
   }
 }
 
-updateClock();
-setInterval(updateClock, 1000);
-
-async function init() {
-  await refreshPrices();
-  setInterval(refreshPrices, 60000);
-}
+(async function init() {
+  try {
+    const res = await fetch("stocks.json", { signal: AbortSignal.timeout(5000) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    stocks = await res.json();
+    await refreshPrices();
+    setInterval(refreshPrices, 60000);
+  } catch (e) {
+    showToast("❌ 加载失败: " + e.message, "error");
+    stocks = [];
+  }
+})();

@@ -62,6 +62,7 @@ function calcProfit(stock, price) {
 function render() {
   const sorted = sortStocks(stocks, priceMap);
   const grid = $("stockCardGrid");
+  if (!grid) return;
   let html = "";
   for (let i = 0; i < sorted.length; i++) {
     const s = sorted[i];

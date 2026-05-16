@@ -15,8 +15,7 @@ function updateClock() {
   const timeStr = formatTime(now);
   const dateStr = now.toLocaleDateString("zh-CN", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
   if ($("currentTime")) $("currentTime").textContent = timeStr;
-  if ($("marketTime")) $("marketTime").textContent = timeStr;
-  if ($("marketDate")) $("marketDate").textContent = dateStr;
+
 }
 
 function showToast(msg, type) {
@@ -34,8 +33,6 @@ async function checkAccess() {
     $("publicPage").style.display = "none";
     $("appContent").style.display = "block";
     init();
-  } else {
-    renderQuotes();
   }
 }
 
@@ -103,34 +100,6 @@ function parseEastMoneyPrices(data) {
     map[stock.code] = { price, change, change_percent: changePercent };
   }
   return map;
-}
-
-const QUOTES = [
-  { text: "别人贪婪时我恐惧，别人恐惧时我贪婪", author: "巴菲特" },
-  { text: "价格是你付出的，价值是你得到的", author: "巴菲特" },
-  { text: "投资最重要的不是智商，而是性情", author: "巴菲特" },
-  { text: "在别人悲观时买入，在别人乐观时卖出", author: "格雷厄姆" },
-  { text: "投资是预测艺术与风险管理科学的结合", author: "彼得·林奇" },
-  { text: "不要试图预测市场，而是准备好应对各种情况", author: "约翰·博格尔" },
-  { text: "复利是世界第八大奇迹", author: "爱因斯坦" },
-  { text: "股市是经济的晴雨表，但短期来看是投票机", author: "格雷厄姆" },
-  { text: "成功的投资需要耐心、纪律和独立思考", author: "查理·芒格" },
-  { text: "买股票就是买公司的一部分", author: "巴菲特" },
-  { text: "风险来自你不知道自己在做什么", author: "巴菲特" },
-  { text: "投资中最重要的是安全边际", author: "格雷厄姆" },
-];
-
-function renderQuotes() {
-  const grid = $("quoteGrid");
-  if (!grid) return;
-  const shuffled = [...QUOTES].sort(() => Math.random() - 0.5);
-  const selected = shuffled.slice(0, 6);
-  grid.innerHTML = selected.map(q =>
-    `<div class="quote-card">
-      <div class="quote-text">"${q.text}"</div>
-      <div class="quote-author">—— ${q.author}</div>
-    </div>`
-  ).join("");
 }
 
 function sortStocks(stocks, prices) {

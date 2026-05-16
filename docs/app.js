@@ -4,6 +4,13 @@ let currentSort = "profit";
 let priceMap = {};
 let selectedStock = null;
 
+const INDEX_CODES = [
+  { secid: "1.000001" },
+  { secid: "0.399001" },
+  { secid: "0.399006" },
+  { secid: "1.000688" },
+];
+
 const $ = id => document.getElementById(id);
 
 function formatTime(ts) {
@@ -11,7 +18,12 @@ function formatTime(ts) {
 }
 
 function updateClock() {
-  $("currentTime").textContent = formatTime(Date.now());
+  const now = new Date();
+  const timeStr = formatTime(now);
+  const dateStr = now.toLocaleDateString("zh-CN", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+  if ($("currentTime")) $("currentTime").textContent = timeStr;
+  if ($("marketTime")) $("marketTime").textContent = timeStr;
+  if ($("marketDate")) $("marketDate").textContent = dateStr;
 }
 
 function showToast(msg, type) {
@@ -26,9 +38,13 @@ async function checkAccess() {
   await loadConfig();
   const params = new URLSearchParams(window.location.search);
   if (params.get("random") === config.password) {
-    $("welcomeOverlay").style.display = "none";
+    $("marketDashboard").style.display = "none";
     $("appContent").style.display = "block";
     init();
+  } else {
+    $("marketDashboard").style.display = "block";
+    refreshIndices();
+    setInterval(refreshIndices, 30000);
   }
 }
 
@@ -96,6 +112,60 @@ function parseEastMoneyPrices(data) {
     map[stock.code] = { price, change, change_percent: changePercent };
   }
   return map;
+}
+
+async function fetchIndices() {
+  const secids = INDEX_CODES.map(c => c.secid).join(",");
+  const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=${secids}&fields=f2,f3,f4,f12,f14`;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    return parseIndexData(data);
+  } catch (e) {
+    return [];
+  }
+}
+
+function parseIndexData(data) {
+  const items = [];
+  if (!data.data || !data.data.diff) return items;
+  for (const item of data.data.diff) {
+    if (item.f2 == null) continue;
+    items.push({
+      name: item.f14 || "未知",
+      price: item.f2,
+      change: item.f4 || 0,
+      changePercent: item.f3 || 0,
+    });
+  }
+  return items;
+}
+
+function renderIndices(data) {
+  const grid = $("indexGrid");
+  let html = "";
+  for (const idx of data) {
+    const up = idx.change >= 0;
+    const cls = up ? "idx-up" : "idx-down";
+    const arrow = up ? "▲" : "▼";
+    const priceStr = idx.price.toFixed(2);
+    const changeStr = (up ? "+" : "") + idx.change.toFixed(2);
+    const percentStr = (up ? "+" : "") + idx.changePercent.toFixed(2) + "%";
+    html += `<div class="index-card ${cls}">
+      <div class="idx-name">${idx.name}</div>
+      <div class="idx-price">${priceStr}</div>
+      <div class="idx-change">${arrow} ${changeStr} ${percentStr}</div>
+    </div>`;
+  }
+  grid.innerHTML = html || '<div class="loading">暂无数据</div>';
+}
+
+async function refreshIndices() {
+  const data = await fetchIndices();
+  renderIndices(data);
+  const el = $("marketUpdateTime");
+  if (el) el.textContent = formatTime(Date.now());
 }
 
 function sortStocks(stocks, prices) {
@@ -223,7 +293,6 @@ async function refreshPrices() {
 
 updateClock();
 setInterval(updateClock, 1000);
-$("appContent").style.display = "none";
 
 async function init() {
   await refreshPrices();

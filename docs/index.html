@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container" id="appContent">
+<div class="container" id="appContent" style="display:none">
   <div class="header">
     <h1>📈 股票助手 Stock Helper</h1>
     <div class="time" id="currentTime"></div>
@@ -49,11 +49,25 @@
 
 <div class="toast" id="toast"></div>
 
-<div class="password-overlay" id="welcomeOverlay">
-  <div class="password-box">
-    <h2>📈 股票助手</h2>
-    <p>欢迎使用股票助手</p>
-    <p class="welcome-desc">请通过有效链接访问</p>
+<div class="market-dashboard" id="marketDashboard" style="display:none">
+  <div class="market-header">
+    <div class="market-header-left">
+      <h1>📊 A股行情</h1>
+      <div class="market-subtitle">沪深指数实时行情</div>
+    </div>
+    <div class="market-header-right">
+      <div class="market-time" id="marketTime">--</div>
+      <div class="market-date" id="marketDate">--</div>
+      <button class="btn-refresh-market" onclick="refreshIndices()">🔄 刷新</button>
+    </div>
+  </div>
+  <div class="index-grid" id="indexGrid">
+    <div class="loading">加载中...</div>
+  </div>
+  <div class="market-footer">
+    <span>数据来源：东方财富</span>
+    <span>｜</span>
+    <span>更新于：<span id="marketUpdateTime">--</span></span>
   </div>
 </div>
 

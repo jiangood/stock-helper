@@ -10,14 +10,8 @@ body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
 
 .container { max-width: 800px; margin: 0 auto; }
 
-.controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
-.controls button { padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all .2s; }
-.btn-primary { background: #4361ee; color: #fff; }
-.btn-primary:hover { background: #3a56d4; }
-.btn-secondary { background: #e2e8f0; color: #475569; }
-.btn-secondary:hover { background: #cbd5e1; }
-.controls .info { font-size: 13px; color: #64748b; margin-left: auto; }
-.controls .info span { margin-left: 16px; }
+.controls { margin-bottom: 16px; }
+.controls .info { font-size: 13px; color: #64748b; }
 
 .card-grid { display: flex; flex-direction: column; gap: 12px; }
 
@@ -50,10 +44,8 @@ body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
 
 @media (max-width: 640px) {
   body { padding: 10px; }
-  .controls { gap: 6px; margin-bottom: 12px; }
-  .controls button { padding: 6px 12px; font-size: 12px; }
-  .controls .info { margin-left: 0; width: 100%; font-size: 12px; display: flex; justify-content: space-between; }
-  .controls .info span { margin-left: 0; }
+  .controls { margin-bottom: 12px; }
+  .controls .info { font-size: 12px; }
   .stock-card { padding: 14px; }
   .card-name { font-size: 16px; }
   .card-profit { font-size: 20px; }
@@ -63,10 +55,7 @@ body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
 <body>
 <div class="container">
   <div class="controls">
-    <button class="btn-primary" onclick="refreshPrices()">🔄 刷新价格</button>
-    <button class="btn-secondary" onclick="toggleSort()">⇅ 切换排序</button>
     <div class="info">
-      <span id="sortInfo">📊 排序: 盈亏</span>
       <span id="updateInfo">⏱ 上次更新: --</span>
     </div>
   </div>
@@ -204,30 +193,16 @@ function render() {
     </div>`;
   }
   grid.innerHTML = html;
-  $("sortInfo").textContent = "📊 排序: " + (currentSort === "profit" ? "盈亏" : "分组+盈亏");
-}
-
-function toggleSort() {
-  currentSort = currentSort === "profit" ? "group_profit" : "profit";
-  render();
-  showToast("已切换为 " + (currentSort === "profit" ? "盈亏排序" : "分组+盈亏排序"), "info");
 }
 
 async function refreshPrices() {
-  const btn = document.querySelector(".btn-primary");
-  btn.textContent = "⏳ 获取中...";
-  btn.disabled = true;
   try {
     priceMap = await fetchPrices();
     render();
     const count = Object.keys(priceMap).length;
-    showToast("✅ 已更新 " + count + " 只股票价格", "success");
     $("updateInfo").textContent = "⏱ 上次更新: " + formatTime(Date.now());
   } catch (e) {
     showToast("❌ " + e.message, "error");
-  } finally {
-    btn.textContent = "🔄 刷新价格";
-    btn.disabled = false;
   }
 }
 

@@ -19,6 +19,7 @@ tbody tr { cursor: pointer; transition: background .15s; }
 tbody tr:hover { background: #f1f5f9; }
 tbody tr.selected { background: #eef2ff; }
 .stock-name { font-weight: 500; color: #1e293b; }
+.stock-code { font-size: 12px; color: #94a3b8; font-family: "SF Mono", monospace; }
 .profit-up { color: #dc2626; font-weight: 600; }
 .profit-down { color: #16a34a; font-weight: 600; }
 .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: #e2e8f0; color: #475569; }
@@ -31,6 +32,7 @@ tbody tr.selected { background: #eef2ff; }
   .controls .info span { margin-left: 0; }
   .table-wrap { overflow-x: hidden; }
   table { min-width: 0; font-size: 11px; }
-  thead th, tbody td { padding: 4px 3px; }
-  thead th:first-child, tbody td:first-child { padding-left: 6px; }
+  thead th, tbody td { padding: 4px 2px; }
+  thead th:first-child, tbody td:first-child { padding-left: 4px; }
+  .stock-code { font-size: 10px; }
 }

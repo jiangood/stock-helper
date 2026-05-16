@@ -85,6 +85,7 @@ function render() {
     html += `<tr>
       <td>${i + 1}</td>
       <td><span class="stock-name">${s.name}</span></td>
+      <td><span class="stock-code">${s.code}</span></td>
       <td class="text-right ${profitClass}">${profitStr}</td>
       <td class="text-right">${priceStr}</td>
       <td class="text-right">${entryStr}</td>

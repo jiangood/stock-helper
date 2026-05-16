@@ -22,7 +22,8 @@ body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
 
 .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
 .card-top-left { flex: 1; }
-.card-name { font-size: 18px; font-weight: 600; color: #1e293b; }
+.card-name { font-size: 18px; font-weight: 600; color: #1e293b; text-decoration: none; display: inline-block; }
+.card-name:hover { color: #4361ee; }
 .card-code { font-size: 12px; color: #94a3b8; font-family: "SF Mono", monospace; margin-top: 2px; }
 .card-profit { font-size: 22px; font-weight: 700; text-align: right; white-space: nowrap; }
 
@@ -166,7 +167,7 @@ function render() {
     html += `<div class="stock-card">
       <div class="card-top">
         <div class="card-top-left">
-          <div class="card-name">${s.name}</div>
+          <a class="card-name" href="https://quote.eastmoney.com/${s.code}.html" target="_blank" rel="noopener noreferrer">${s.name}</a>
           <div class="card-code">${s.code}</div>
         </div>
         <div class="card-profit ${profitClass}">${profitStr}</div>

@@ -2,7 +2,7 @@
 
 **在线查看：** https://jiangood.github.io/stock-helper/
 
-编辑 `docs/index.html` 顶部 `STOCKS_DATA` 数组即可修改股票数据。
+编辑 [`docs/index.html`](docs/index.html) 顶部 `STOCKS_DATA` 数组即可修改股票数据，修改后推送自动生效。
 
 ## 当前持仓
 
@@ -17,10 +17,3 @@
 | 中国中冶 | sh601618 | 3.15 | - | | |
 | 中牧股份 | sh600195 | 7.40 | - | | |
 | 齐翔腾达 | sz002408 | - | - | | 齐天大圣、大师兄 |
-
-## 运行方式
-
-```bash
-python stock_helper.py          # 交互模式
-python stock_helper.py --readonly  # 只读模式
-```

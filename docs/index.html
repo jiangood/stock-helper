@@ -3,28 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>股票助手 Stock Helper</title>
+<title>投资格言</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="public.css">
 </head>
 <body>
-<div class="container" id="appContent" style="display:none">
-  <div class="controls">
-    <button class="btn-primary" onclick="refreshPrices()">🔄 刷新价格</button>
-    <button class="btn-secondary" onclick="toggleSort()">⇅ 切换排序</button>
-    <div class="info">
-      <span id="sortInfo">📊 排序: 盈亏</span>
-      <span id="updateInfo">⏱ 上次更新: --</span>
-    </div>
-  </div>
-
-  <div class="card-grid" id="stockCardGrid"></div>
-
-</div>
-
-<div class="toast" id="toast"></div>
-
-<div class="public-page" id="publicPage">
+<div class="public-page">
   <div class="hero">
     <div class="hero-inner">
       <h1 class="hero-title">价值投资</h1>
@@ -68,7 +52,5 @@
     <p>本杰明·格雷厄姆 ｜ 沃伦·巴菲特 ｜ 查理·芒格</p>
   </div>
 </div>
-
-<script src="public.js"></script>
 </body>
 </html>

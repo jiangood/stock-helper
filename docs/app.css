@@ -40,17 +40,19 @@ tbody tr.selected { background: #eef2ff; }
 .detail-close:hover { background: #cbd5e1; }
 
 @media (max-width: 640px) {
-  .header { padding: 14px 16px; }
-  .header h1 { font-size: 16px; }
-  .header .time { font-size: 12px; }
-  .controls { gap: 6px; }
-  .controls button { padding: 6px 12px; font-size: 12px; }
-  .controls .info { margin-left: 0; width: 100%; display: flex; justify-content: space-between; }
+  .header { padding: 12px 14px; }
+  .header h1 { font-size: 15px; }
+  .header .time { font-size: 11px; }
+  .controls { gap: 4px; }
+  .controls button { padding: 5px 10px; font-size: 11px; }
+  .controls .info { margin-left: 0; width: 100%; font-size: 11px; display: flex; justify-content: space-between; }
   .controls .info span { margin-left: 0; }
-  table { font-size: 12px; }
-  thead th, tbody td { padding: 6px 6px; }
-  thead th:first-child, tbody td:first-child { padding-left: 10px; }
-  .detail-panel { padding: 16px; }
-  .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .detail-item { padding: 8px 12px; }
+  .table-wrap { overflow-x: hidden; }
+  table { min-width: 0; font-size: 11px; }
+  thead th, tbody td { padding: 4px 3px; }
+  thead th:first-child, tbody td:first-child { padding-left: 6px; }
+  .detail-panel { padding: 14px; }
+  .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .detail-item { padding: 6px 10px; }
+  .detail-item .value { font-size: 13px; }
 }

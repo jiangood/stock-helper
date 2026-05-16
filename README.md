@@ -2,7 +2,7 @@
 
 **在线查看：** https://jiangood.github.io/stock-helper/
 
-编辑 [`docs/config.json`](docs/config.json) 即可修改密码、股票数据和代理地址，修改后推送自动生效。
+编辑 `docs/config.json` 设置密码和代理地址，编辑 `docs/stocks.json` 管理股票数据，修改后推送自动生效。
 
 ## 当前持仓
 

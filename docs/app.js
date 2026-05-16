@@ -50,12 +50,20 @@ function closeDetail() {
 
 async function loadConfig() {
   try {
-    const res = await fetch("config.json", { signal: AbortSignal.timeout(5000) });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    config = await res.json();
-    stocks = config.stocks || [];
+    const [cfg, stk] = await Promise.all([
+      fetch("config.json", { signal: AbortSignal.timeout(5000) }).then(r => {
+        if (!r.ok) throw new Error("config.json HTTP " + r.status);
+        return r.json();
+      }),
+      fetch("stocks.json", { signal: AbortSignal.timeout(5000) }).then(r => {
+        if (!r.ok) throw new Error("stocks.json HTTP " + r.status);
+        return r.json();
+      }),
+    ]);
+    config = cfg;
+    stocks = stk;
   } catch (e) {
-    showToast("❌ 加载 config.json 失败: " + e.message, "error");
+    showToast("❌ 加载失败: " + e.message, "error");
     config = {};
     stocks = [];
   }

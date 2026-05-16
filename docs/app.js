@@ -93,10 +93,10 @@ function render() {
     html += `<tr onclick="showDetail('${s.code}')" data-code="${s.code}">
       <td>${i + 1}</td>
       <td><span class="stock-name">${s.name}</span></td>
+      <td class="text-right ${profitClass}">${profitStr}</td>
       <td class="text-right">${priceStr}</td>
       <td class="text-right">${entryStr}</td>
       <td class="text-right">${targetStr}</td>
-      <td class="text-right ${profitClass}">${profitStr}</td>
       <td>${s.group ? '<span class="tag">' + s.group + '</span>' : '<span class="text-muted">-</span>'}</td>
       <td>${s.remark || "-"}</td>
     </tr>`;

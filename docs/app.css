@@ -47,18 +47,9 @@ tbody tr.selected { background: #eef2ff; }
   .controls button { padding: 6px 12px; font-size: 12px; }
   .controls .info { margin-left: 0; width: 100%; display: flex; justify-content: space-between; }
   .controls .info span { margin-left: 0; }
-  .table-wrap { overflow-x: hidden; }
-  table { min-width: 0; font-size: 12px; }
-  thead th, tbody td { padding: 6px 6px; white-space: nowrap; }
+  table { font-size: 12px; }
+  thead th, tbody td { padding: 6px 6px; }
   thead th:first-child, tbody td:first-child { padding-left: 10px; }
-  thead th:nth-child(4),
-  thead th:nth-child(5),
-  thead th:nth-child(8),
-  tbody td:nth-child(4),
-  tbody td:nth-child(5),
-  tbody td:nth-child(8) {
-    display: none;
-  }
   .detail-panel { padding: 16px; }
   .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .detail-item { padding: 8px 12px; }

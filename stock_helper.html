@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>股票助手 Stock Helper</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif; background: #f0f2f5; color: #333; padding: 20px; }
+.container { max-width: 1100px; margin: 0 auto; }
+.header { background: #1a1a2e; color: #fff; padding: 20px 30px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 22px; font-weight: 600; }
+.header .time { font-size: 14px; color: #aaa; }
+.controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.controls button { padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all .2s; }
+.btn-primary { background: #4361ee; color: #fff; }
+.btn-primary:hover { background: #3a56d4; }
+.btn-secondary { background: #e2e8f0; color: #475569; }
+.btn-secondary:hover { background: #cbd5e1; }
+.btn-success { background: #059669; color: #fff; }
+.btn-success:hover { background: #047857; }
+.controls .info { font-size: 13px; color: #64748b; margin-left: auto; }
+.controls .info span { margin-left: 16px; }
+.table-wrap { background: #fff; border-radius: 12px; overflow-x: auto; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px; }
+thead th { background: #f8fafc; padding: 12px 14px; text-align: left; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
+thead th:first-child { padding-left: 20px; }
+tbody td { padding: 11px 14px; border-bottom: 1px solid #f1f5f9; }
+tbody td:first-child { padding-left: 20px; }
+tbody tr { cursor: pointer; transition: background .15s; }
+tbody tr:hover { background: #f1f5f9; }
+tbody tr.selected { background: #eef2ff; }
+.stock-name { font-weight: 500; color: #1e293b; }
+.profit-up { color: #dc2626; font-weight: 600; }
+.profit-down { color: #16a34a; font-weight: 600; }
+.price-na { color: #94a3b8; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: #e2e8f0; color: #475569; }
+.text-muted { color: #94a3b8; }
+.text-right { text-align: right; }
+
+/* detail panel */
+.detail-panel { display: none; background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-top: 16px; padding: 24px; }
+.detail-panel.show { display: block; }
+.detail-panel h2 { font-size: 18px; margin-bottom: 16px; color: #1e293b; }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.detail-item { padding: 10px 14px; background: #f8fafc; border-radius: 8px; }
+.detail-item .label { font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
+.detail-item .value { font-size: 16px; font-weight: 600; color: #1e293b; }
+.detail-close { float: right; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; background: #e2e8f0; color: #475569; font-size: 13px; }
+.detail-close:hover { background: #cbd5e1; }
+
+/* toast */
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 10px 24px; border-radius: 8px; color: #fff; font-size: 14px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
+.toast.show { opacity: 1; }
+.toast.info { background: #4361ee; }
+.toast.error { background: #dc2626; }
+.toast.success { background: #059669; }
+
+@media (max-width: 640px) {
+  body { padding: 10px; }
+  .header { padding: 16px 18px; }
+  .header h1 { font-size: 18px; }
+  table { font-size: 13px; }
+  thead th, tbody td { padding: 8px 8px; }
+  thead th:first-child, tbody td:first-child { padding-left: 12px; }
+  .controls .info { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>📈 股票助手 Stock Helper</h1>
+    <div class="time" id="currentTime"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn-primary" onclick="refreshPrices()">🔄 刷新价格</button>
+    <button class="btn-secondary" onclick="toggleSort()">⇅ 切换排序</button>
+    <div class="info">
+      <span id="sortInfo">📊 排序: 盈亏</span>
+      <span id="updateInfo">⏱ 上次更新: --</span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>股票名称</th>
+          <th class="text-right">当前价</th>
+          <th class="text-right">推荐买入价</th>
+          <th class="text-right">目标价</th>
+          <th class="text-right">盈亏%</th>
+          <th>分组</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody id="stockTableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="detail-panel" id="detailPanel">
+    <button class="detail-close" onclick="closeDetail()">✕ 关闭</button>
+    <h2 id="detailName">股票详情</h2>
+    <div class="detail-grid" id="detailGrid"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// =============================================================================
+//  ★ 股票数据配置 — 在此编辑您的股票数据 ★
+//  格式: { name: "股票名称", code: "市场代码", entry_price: 买入价, target_price: 目标价, group: "分组", remark: "备注" }
+//  code 格式: shxxxxxx (上海) 或 szxxxxxx (深圳)
+//  entry_price 和 target_price 可为 null 或留空 (不填写)
+// =============================================================================
+const STOCKS_DATA = [
+  { name: "易普力",   code: "sz002096", entry_price: 10.85, target_price: null, group: "民爆", remark: "" },
+  { name: "凯龙股份", code: "sz002783", entry_price: 8.90,  target_price: null, group: "民爆", remark: "" },
+  { name: "国泰集团", code: "sh603977", entry_price: 14.00, target_price: null, group: "民爆", remark: "" },
+  { name: "雪峰科技", code: "sh603227", entry_price: 8.50,  target_price: null, group: "民爆", remark: "" },
+  { name: "四川美丰", code: "sz000731", entry_price: 7.20,  target_price: null, group: "",    remark: "" },
+  { name: "双环科技", code: "sz000707", entry_price: 6.15,  target_price: null, group: "",    remark: "" },
+  { name: "中国中冶", code: "sh601618", entry_price: 3.15,  target_price: null, group: "",    remark: "" },
+  { name: "中牧股份", code: "sh600195", entry_price: 7.40,  target_price: null, group: "",    remark: "" },
+  { name: "齐翔腾达", code: "sz002408", entry_price: null,  target_price: null, group: "",    remark: "齐天大圣、大师兄" },
+];
+// =============================================================================
+
+// CORS 代理地址（若无法获取数据请更换）
+const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+
+let currentSort = "profit";        // "profit" | "group_profit"
+let priceMap = {};                 // { code: { price, change, change_percent } }
+let selectedStock = null;
+
+function $(id) { return document.getElementById(id); }
+
+function formatTime(ts) {
+  const d = new Date(ts);
+  return d.toLocaleString("zh-CN", { hour12: false });
+}
+
+function updateClock() {
+  $("currentTime").textContent = formatTime(Date.now());
+}
+
+function showToast(msg, type) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.className = "toast " + type + " show";
+  clearTimeout(t._hide);
+  t._hide = setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+function closeDetail() {
+  $("detailPanel").classList.remove("show");
+  selectedStock = null;
+  document.querySelectorAll("tbody tr.selected").forEach(el => el.classList.remove("selected"));
+}
+
+// ---- Price fetching ----
+async function fetchPrices() {
+  const codes = STOCKS_DATA.map(s => s.code).join(",");
+  if (!codes) return {};
+  const url = CORS_PROXY + encodeURIComponent("https://hq.sinajs.cn/list=" + codes);
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    return parseSinaPrices(text);
+  } catch (e) {
+    if (e.name === "TimeoutError") throw new Error("请求超时");
+    throw new Error("获取价格失败: " + e.message);
+  }
+}
+
+function parseSinaPrices(text) {
+  const map = {};
+  const lines = text.split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    const m = trimmed.match(/hq_str_(sh|sz|hk)(\d+)/);
+    if (!m) continue;
+    const market = m[1];
+    const codeNum = m[2];
+    const code = market + codeNum;
+
+    const start = trimmed.indexOf('"');
+    const end = trimmed.lastIndexOf('"');
+    if (start === -1 || end === -1 || start >= end) continue;
+
+    const data = trimmed.substring(start + 1, end);
+    const parts = data.split(",");
+    if (parts.length < 4) continue;
+
+    const prevClose = parseFloat(parts[2]);
+    const price = parseFloat(parts[3]);
+    if (isNaN(price) || isNaN(prevClose) || prevClose === 0) continue;
+
+    const change = price - prevClose;
+    const changePercent = (change / prevClose) * 100;
+
+    map[code] = { price, change, change_percent: changePercent };
+  }
+  return map;
+}
+
+// ---- Sorting ----
+function sortStocks(stocks, prices) {
+  const copy = [...stocks];
+  copy.sort((a, b) => {
+    const pA = prices[a.code];
+    const pB = prices[b.code];
+    const profitA = calcProfit(a, pA);
+    const profitB = calcProfit(b, pB);
+
+    if (currentSort === "group_profit") {
+      const gA = a.group || "";
+      const gB = b.group || "";
+      if (gA !== gB) return gA.localeCompare(gB, "zh");
+    }
+    return profitA - profitB;
+  });
+  return copy;
+}
+
+function calcProfit(stock, price) {
+  const entry = stock.entry_price;
+  if (!entry || entry <= 0 || !price) return 0;
+  return ((price.price - entry) / entry) * 100;
+}
+
+// ---- Render ----
+function render() {
+  const sorted = sortStocks(STOCKS_DATA, priceMap);
+  const tbody = $("stockTableBody");
+  let html = "";
+  for (let i = 0; i < sorted.length; i++) {
+    const s = sorted[i];
+    const p = priceMap[s.code];
+    const currentPrice = p ? p.price : null;
+    const entry = s.entry_price;
+    const target = s.target_price;
+    let profit = null;
+    if (entry && entry > 0 && currentPrice !== null) {
+      profit = ((currentPrice - entry) / entry) * 100;
+    }
+
+    const priceStr = currentPrice !== null ? currentPrice.toFixed(2) : "-";
+    const entryStr = entry !== null ? entry.toFixed(2) : "-";
+    const targetStr = target !== null ? target.toFixed(2) : "-";
+    let profitStr = "-";
+    let profitClass = "";
+    if (profit !== null) {
+      profitStr = (profit >= 0 ? "+" : "") + profit.toFixed(2) + "%";
+      profitClass = profit >= 0 ? "profit-up" : "profit-down";
+    }
+
+    const remarkStr = s.remark || "-";
+
+    html += `<tr onclick="showDetail('${s.code}')" data-code="${s.code}">
+      <td>${i + 1}</td>
+      <td><span class="stock-name">${s.name}</span></td>
+      <td class="text-right">${priceStr}</td>
+      <td class="text-right">${entryStr}</td>
+      <td class="text-right">${targetStr}</td>
+      <td class="text-right ${profitClass}">${profitStr}</td>
+      <td>${s.group ? '<span class="tag">' + s.group + '</span>' : '<span class="text-muted">-</span>'}</td>
+      <td>${remarkStr}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+  $("sortInfo").textContent = "📊 排序: " + (currentSort === "profit" ? "盈亏" : "分组+盈亏");
+
+  // Update detail panel if open
+  if (selectedStock && priceMap[selectedStock]) {
+    renderDetail(selectedStock);
+  }
+}
+
+function showDetail(code) {
+  selectedStock = code;
+  document.querySelectorAll("tbody tr.selected").forEach(el => el.classList.remove("selected"));
+  const row = document.querySelector(`tbody tr[data-code="${code}"]`);
+  if (row) row.classList.add("selected");
+  renderDetail(code);
+}
+
+function renderDetail(code) {
+  const stock = STOCKS_DATA.find(s => s.code === code);
+  if (!stock) return;
+  const p = priceMap[code];
+  const panel = $("detailPanel");
+  panel.classList.add("show");
+
+  $("detailName").textContent = stock.name + " 详情";
+
+  const currentPrice = p ? p.price : null;
+  const change = p ? p.change : null;
+  const changePercent = p ? p.change_percent : null;
+
+  let profit = null;
+  if (stock.entry_price && stock.entry_price > 0 && currentPrice !== null) {
+    profit = ((currentPrice - stock.entry_price) / stock.entry_price) * 100;
+  }
+
+  const items = [
+    { label: "股票代码", value: stock.code },
+    { label: "当前价", value: currentPrice !== null ? currentPrice.toFixed(2) : "-" },
+    { label: "涨跌额", value: change !== null ? (change >= 0 ? "+" : "") + change.toFixed(2) : "-" },
+    { label: "涨跌幅", value: changePercent !== null ? (changePercent >= 0 ? "+" : "") + changePercent.toFixed(2) + "%" : "-" },
+    { label: "推荐买入价", value: stock.entry_price !== null ? stock.entry_price.toFixed(2) : "-" },
+    { label: "目标价", value: stock.target_price !== null ? stock.target_price.toFixed(2) : "-" },
+    { label: "盈亏", value: profit !== null ? (profit >= 0 ? "+" : "") + profit.toFixed(2) + "%" : "-" },
+    { label: "分组", value: stock.group || "-" },
+    { label: "备注", value: stock.remark || "-" },
+  ];
+
+  const grid = $("detailGrid");
+  grid.innerHTML = items.map(item =>
+    `<div class="detail-item"><div class="label">${item.label}</div><div class="value">${item.value}</div></div>`
+  ).join("");
+}
+
+function toggleSort() {
+  currentSort = currentSort === "profit" ? "group_profit" : "profit";
+  render();
+  showToast("已切换为 " + (currentSort === "profit" ? "盈亏排序" : "分组+盈亏排序"), "info");
+}
+
+async function refreshPrices() {
+  const btn = document.querySelector(".btn-primary");
+  btn.textContent = "⏳ 获取中...";
+  btn.disabled = true;
+
+  try {
+    priceMap = await fetchPrices();
+    render();
+    const count = Object.keys(priceMap).length;
+    showToast(`✅ 已更新 ${count} 只股票价格`, "success");
+    $("updateInfo").textContent = "⏱ 上次更新: " + formatTime(Date.now());
+  } catch (e) {
+    showToast("❌ " + e.message, "error");
+  } finally {
+    btn.textContent = "🔄 刷新价格";
+    btn.disabled = false;
+  }
+}
+
+// ---- Init ----
+updateClock();
+setInterval(updateClock, 1000);
+refreshPrices();
+setInterval(refreshPrices, 60000);
+
+
+</script>
+</body>
+</html>

@@ -200,7 +200,7 @@ async function refreshPrices() {
     priceMap = await fetchPrices();
     render();
     const count = Object.keys(priceMap).length;
-    $("updateInfo").textContent = "⏱ 上次更新: " + formatTime(Date.now());
+    $("updateInfo").textContent = "⏱ 更新时间: " + formatTime(Date.now());
   } catch (e) {
     showToast("❌ " + e.message, "error");
   }

@@ -22,24 +22,18 @@ function showToast(msg, type) {
   t._hide = setTimeout(() => t.classList.remove("show"), 2500);
 }
 
-function checkPassword() {
-  const input = $("passwordInput");
-  const err = $("passwordError");
-  if (input.value === (config.password || "")) {
-    $("passwordOverlay").style.display = "none";
+async function checkAccess() {
+  await loadConfig();
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("random") === config.password) {
+    $("welcomeOverlay").style.display = "none";
     $("appContent").style.display = "block";
     init();
-  } else {
-    err.style.display = "block";
-    input.value = "";
-    input.focus();
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  $("passwordInput").addEventListener("keydown", e => {
-    if (e.key === "Enter") checkPassword();
-  });
+  checkAccess();
 });
 
 function closeDetail() {
@@ -72,37 +66,34 @@ async function loadConfig() {
 async function fetchPrices() {
   const codes = stocks.map(s => s.code).join(",");
   if (!codes) return {};
-  const proxy = config.cors_proxy || "";
-  const url = proxy + encodeURIComponent("https://hq.sinajs.cn/list=" + codes);
+  const emCodes = stocks.map(s => {
+    const prefix = s.code.startsWith("sh") ? "1." : "0.";
+    return prefix + s.code.slice(2);
+  }).join(",");
+  const url = `https://push2delay.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=${emCodes}&fields=f2,f3,f4,f12`;
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
     if (!res.ok) throw new Error("HTTP " + res.status);
-    const text = await res.text();
-    return parseSinaPrices(text);
+    const data = await res.json();
+    return parseEastMoneyPrices(data);
   } catch (e) {
     if (e.name === "TimeoutError") throw new Error("请求超时");
     throw new Error("获取价格失败: " + e.message);
   }
 }
 
-function parseSinaPrices(text) {
+function parseEastMoneyPrices(data) {
   const map = {};
-  for (const line of text.split("\n")) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
-    const m = trimmed.match(/hq_str_(sh|sz|hk)(\d+)/);
-    if (!m) continue;
-    const code = m[1] + m[2];
-    const start = trimmed.indexOf('"');
-    const end = trimmed.lastIndexOf('"');
-    if (start === -1 || end === -1 || start >= end) continue;
-    const parts = trimmed.substring(start + 1, end).split(",");
-    if (parts.length < 4) continue;
-    const prevClose = parseFloat(parts[2]);
-    const price = parseFloat(parts[3]);
-    if (isNaN(price) || isNaN(prevClose) || prevClose === 0) continue;
-    const change = price - prevClose;
-    map[code] = { price, change, change_percent: (change / prevClose) * 100 };
+  if (!data.data || !data.data.diff) return map;
+  for (const item of data.data.diff) {
+    const price = item.f2;
+    const change = item.f4;
+    const changePercent = item.f3;
+    const codeNum = item.f12;
+    if (price == null || change == null) continue;
+    const stock = stocks.find(s => s.code.endsWith(codeNum));
+    if (!stock) continue;
+    map[stock.code] = { price, change, change_percent: changePercent };
   }
   return map;
 }
@@ -235,7 +226,6 @@ setInterval(updateClock, 1000);
 $("appContent").style.display = "none";
 
 async function init() {
-  await loadConfig();
   await refreshPrices();
   setInterval(refreshPrices, 60000);
 }

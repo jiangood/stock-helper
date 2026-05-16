@@ -35,17 +35,7 @@ tbody tr.selected { background: #eef2ff; }
 .password-box { background: #1e293b; padding: 32px; border-radius: 16px; width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
 .password-box h2 { color: #fff; font-size: 20px; margin-bottom: 8px; text-align: center; }
 .password-box p { color: #94a3b8; font-size: 13px; text-align: center; margin-bottom: 20px; }
-.password-box input {
-  width: 100%; padding: 12px 16px; border: 1px solid #334155; border-radius: 8px;
-  background: #0f172a; color: #fff; font-size: 16px; outline: none; box-sizing: border-box;
-}
-.password-box input:focus { border-color: #4361ee; }
-.password-box .error { color: #ef4444; font-size: 13px; margin-top: 8px; display: none; }
-.password-box button {
-  width: 100%; margin-top: 14px; padding: 12px; border: none; border-radius: 8px;
-  background: #4361ee; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
-}
-.password-box button:hover { background: #3a56d4; }
+.welcome-desc { color: #64748b; font-size: 13px; margin-top: 12px; text-align: center; }
 
 .detail-panel { display: none; background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-top: 16px; padding: 24px; }
 .detail-panel.show { display: block; }

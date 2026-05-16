@@ -49,25 +49,14 @@
 
 <div class="toast" id="toast"></div>
 
-<div class="market-dashboard" id="marketDashboard" style="display:none">
-  <div class="market-header">
-    <div class="market-header-left">
-      <h1>📊 A股行情</h1>
-      <div class="market-subtitle">沪深指数实时行情</div>
-    </div>
-    <div class="market-header-right">
-      <div class="market-time" id="marketTime">--</div>
-      <div class="market-date" id="marketDate">--</div>
-      <button class="btn-refresh-market" onclick="refreshIndices()">🔄 刷新</button>
-    </div>
+<div class="quote-page" id="publicPage">
+  <div class="quote-header">
+    <h1>📊 投资格言</h1>
+    <p class="quote-subtitle">在投资中修行，在时间里沉淀</p>
   </div>
-  <div class="index-grid" id="indexGrid">
-    <div class="loading">加载中...</div>
-  </div>
-  <div class="market-footer">
-    <span>数据来源：东方财富</span>
-    <span>｜</span>
-    <span>更新于：<span id="marketUpdateTime">--</span></span>
+  <div class="quote-grid" id="quoteGrid"></div>
+  <div class="quote-footer">
+    <p>—— 价值投资 · 长期主义 ——</p>
   </div>
 </div>
 

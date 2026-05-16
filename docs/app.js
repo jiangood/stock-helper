@@ -4,13 +4,6 @@ let currentSort = "profit";
 let priceMap = {};
 let selectedStock = null;
 
-const INDEX_CODES = [
-  { secid: "1.000001" },
-  { secid: "0.399001" },
-  { secid: "0.399006" },
-  { secid: "1.000688" },
-];
-
 const $ = id => document.getElementById(id);
 
 function formatTime(ts) {
@@ -38,13 +31,11 @@ async function checkAccess() {
   await loadConfig();
   const params = new URLSearchParams(window.location.search);
   if (params.get("random") === config.password) {
-    $("marketDashboard").style.display = "none";
+    $("publicPage").style.display = "none";
     $("appContent").style.display = "block";
     init();
   } else {
-    $("marketDashboard").style.display = "block";
-    refreshIndices();
-    setInterval(refreshIndices, 30000);
+    renderQuotes();
   }
 }
 
@@ -114,58 +105,32 @@ function parseEastMoneyPrices(data) {
   return map;
 }
 
-async function fetchIndices() {
-  const secids = INDEX_CODES.map(c => c.secid).join(",");
-  const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=${secids}&fields=f2,f3,f4,f12,f14`;
-  try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    return parseIndexData(data);
-  } catch (e) {
-    return [];
-  }
-}
+const QUOTES = [
+  { text: "别人贪婪时我恐惧，别人恐惧时我贪婪", author: "巴菲特" },
+  { text: "价格是你付出的，价值是你得到的", author: "巴菲特" },
+  { text: "投资最重要的不是智商，而是性情", author: "巴菲特" },
+  { text: "在别人悲观时买入，在别人乐观时卖出", author: "格雷厄姆" },
+  { text: "投资是预测艺术与风险管理科学的结合", author: "彼得·林奇" },
+  { text: "不要试图预测市场，而是准备好应对各种情况", author: "约翰·博格尔" },
+  { text: "复利是世界第八大奇迹", author: "爱因斯坦" },
+  { text: "股市是经济的晴雨表，但短期来看是投票机", author: "格雷厄姆" },
+  { text: "成功的投资需要耐心、纪律和独立思考", author: "查理·芒格" },
+  { text: "买股票就是买公司的一部分", author: "巴菲特" },
+  { text: "风险来自你不知道自己在做什么", author: "巴菲特" },
+  { text: "投资中最重要的是安全边际", author: "格雷厄姆" },
+];
 
-function parseIndexData(data) {
-  const items = [];
-  if (!data.data || !data.data.diff) return items;
-  for (const item of data.data.diff) {
-    if (item.f2 == null) continue;
-    items.push({
-      name: item.f14 || "未知",
-      price: item.f2,
-      change: item.f4 || 0,
-      changePercent: item.f3 || 0,
-    });
-  }
-  return items;
-}
-
-function renderIndices(data) {
-  const grid = $("indexGrid");
-  let html = "";
-  for (const idx of data) {
-    const up = idx.change >= 0;
-    const cls = up ? "idx-up" : "idx-down";
-    const arrow = up ? "▲" : "▼";
-    const priceStr = idx.price.toFixed(2);
-    const changeStr = (up ? "+" : "") + idx.change.toFixed(2);
-    const percentStr = (up ? "+" : "") + idx.changePercent.toFixed(2) + "%";
-    html += `<div class="index-card ${cls}">
-      <div class="idx-name">${idx.name}</div>
-      <div class="idx-price">${priceStr}</div>
-      <div class="idx-change">${arrow} ${changeStr} ${percentStr}</div>
-    </div>`;
-  }
-  grid.innerHTML = html || '<div class="loading">暂无数据</div>';
-}
-
-async function refreshIndices() {
-  const data = await fetchIndices();
-  renderIndices(data);
-  const el = $("marketUpdateTime");
-  if (el) el.textContent = formatTime(Date.now());
+function renderQuotes() {
+  const grid = $("quoteGrid");
+  if (!grid) return;
+  const shuffled = [...QUOTES].sort(() => Math.random() - 0.5);
+  const selected = shuffled.slice(0, 6);
+  grid.innerHTML = selected.map(q =>
+    `<div class="quote-card">
+      <div class="quote-text">"${q.text}"</div>
+      <div class="quote-author">—— ${q.author}</div>
+    </div>`
+  ).join("");
 }
 
 function sortStocks(stocks, prices) {

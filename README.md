@@ -2,7 +2,7 @@
 
 **在线查看：** https://jiangood.github.io/stock-helper/
 
-编辑 [`docs/index.html`](docs/index.html) 顶部 `STOCKS_DATA` 数组即可修改股票数据，修改后推送自动生效。
+编辑 [`docs/stocks.json`](docs/stocks.json) 即可修改股票数据，修改后推送自动生效。
 
 ## 当前持仓
 

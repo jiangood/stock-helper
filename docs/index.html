@@ -111,24 +111,7 @@ tbody tr.selected { background: #eef2ff; }
 <div class="toast" id="toast"></div>
 
 <script>
-// =============================================================================
-//  ★ 股票数据配置 — 在此编辑您的股票数据 ★
-//  格式: { name: "股票名称", code: "市场代码", entry_price: 买入价, target_price: 目标价, group: "分组", remark: "备注" }
-//  code 格式: shxxxxxx (上海) 或 szxxxxxx (深圳)
-//  entry_price 和 target_price 可为 null 或留空 (不填写)
-// =============================================================================
-const STOCKS_DATA = [
-  { name: "易普力",   code: "sz002096", entry_price: 10.85, target_price: null, group: "民爆", remark: "" },
-  { name: "凯龙股份", code: "sz002783", entry_price: 8.90,  target_price: null, group: "民爆", remark: "" },
-  { name: "国泰集团", code: "sh603977", entry_price: 14.00, target_price: null, group: "民爆", remark: "" },
-  { name: "雪峰科技", code: "sh603227", entry_price: 8.50,  target_price: null, group: "民爆", remark: "" },
-  { name: "四川美丰", code: "sz000731", entry_price: 7.20,  target_price: null, group: "",    remark: "" },
-  { name: "双环科技", code: "sz000707", entry_price: 6.15,  target_price: null, group: "",    remark: "" },
-  { name: "中国中冶", code: "sh601618", entry_price: 3.15,  target_price: null, group: "",    remark: "" },
-  { name: "中牧股份", code: "sh600195", entry_price: 7.40,  target_price: null, group: "",    remark: "" },
-  { name: "齐翔腾达", code: "sz002408", entry_price: null,  target_price: null, group: "",    remark: "齐天大圣、大师兄" },
-];
-// =============================================================================
+let stocks = [];
 
 // CORS 代理地址（若无法获取数据请更换）
 const CORS_PROXY = "https://api.allorigins.win/raw?url=";
@@ -163,8 +146,19 @@ function closeDetail() {
 }
 
 // ---- Price fetching ----
+async function loadStocks() {
+  try {
+    const res = await fetch("stocks.json", { signal: AbortSignal.timeout(5000) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    stocks = await res.json();
+  } catch (e) {
+    showToast("❌ 加载 stocks.json 失败: " + e.message, "error");
+    stocks = [];
+  }
+}
+
 async function fetchPrices() {
-  const codes = STOCKS_DATA.map(s => s.code).join(",");
+  const codes = stocks.map(s => s.code).join(",");
   if (!codes) return {};
   const url = CORS_PROXY + encodeURIComponent("https://hq.sinajs.cn/list=" + codes);
   try {
@@ -237,7 +231,7 @@ function calcProfit(stock, price) {
 
 // ---- Render ----
 function render() {
-  const sorted = sortStocks(STOCKS_DATA, priceMap);
+  const sorted = sortStocks(stocks, priceMap);
   const tbody = $("stockTableBody");
   let html = "";
   for (let i = 0; i < sorted.length; i++) {
@@ -292,7 +286,7 @@ function showDetail(code) {
 }
 
 function renderDetail(code) {
-  const stock = STOCKS_DATA.find(s => s.code === code);
+  const stock = stocks.find(s => s.code === code);
   if (!stock) return;
   const p = priceMap[code];
   const panel = $("detailPanel");
@@ -355,7 +349,13 @@ async function refreshPrices() {
 // ---- Init ----
 updateClock();
 setInterval(updateClock, 1000);
-refreshPrices();
+
+async function init() {
+  await loadStocks();
+  await refreshPrices();
+}
+
+init();
 setInterval(refreshPrices, 60000);
 
 

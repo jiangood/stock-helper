@@ -1,4 +1,4 @@
-.container { max-width: 1100px; margin: 0 auto; }
+.container { max-width: 800px; margin: 0 auto; }
 
 .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
 .controls button { padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all .2s; }
@@ -9,30 +9,35 @@
 .controls .info { font-size: 13px; color: #64748b; margin-left: auto; }
 .controls .info span { margin-left: 16px; }
 
-.table-wrap { background: #fff; border-radius: 12px; overflow-x: auto; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px; }
-thead th { background: #f8fafc; padding: 12px 14px; text-align: left; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
-thead th:first-child { padding-left: 20px; }
-tbody td { padding: 11px 14px; border-bottom: 1px solid #f1f5f9; }
-tbody td:first-child { padding-left: 20px; }
-tbody tr { cursor: pointer; transition: background .15s; }
-tbody tr:hover { background: #f1f5f9; }
-tbody tr.selected { background: #eef2ff; }
-.stock-name { font-weight: 500; color: #1e293b; }
-.stock-code { font-size: 12px; color: #94a3b8; font-family: "SF Mono", monospace; }
-.profit-up { color: #dc2626; font-weight: 600; }
-.profit-down { color: #16a34a; font-weight: 600; }
-.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; background: #e2e8f0; color: #475569; }
-.text-muted { color: #94a3b8; }
-.text-right { text-align: right; }
+.card-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.stock-card {
+  background: #fff; border-radius: 12px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.card-top-left { flex: 1; }
+.card-name { font-size: 18px; font-weight: 600; color: #1e293b; }
+.card-code { font-size: 12px; color: #94a3b8; font-family: "SF Mono", monospace; margin-top: 2px; }
+.card-profit { font-size: 22px; font-weight: 700; text-align: right; white-space: nowrap; }
+
+.card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.card-field { padding: 6px 10px; background: #f8fafc; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
+.field-label { font-size: 12px; color: #94a3b8; }
+.field-value { font-size: 14px; font-weight: 500; color: #1e293b; }
+
+.card-remark { margin-top: 10px; padding: 8px 10px; font-size: 13px; color: #64748b; background: #f8fafc; border-radius: 6px; }
+
+.profit-up { color: #dc2626; }
+.profit-down { color: #16a34a; }
+
 @media (max-width: 640px) {
-  .controls { gap: 4px; }
-  .controls button { padding: 5px 10px; font-size: 11px; }
-  .controls .info { margin-left: 0; width: 100%; font-size: 11px; display: flex; justify-content: space-between; }
+  .controls { gap: 6px; margin-bottom: 12px; }
+  .controls button { padding: 6px 12px; font-size: 12px; }
+  .controls .info { margin-left: 0; width: 100%; font-size: 12px; display: flex; justify-content: space-between; }
   .controls .info span { margin-left: 0; }
-  .table-wrap { overflow-x: hidden; }
-  table { min-width: 0; font-size: 11px; }
-  thead th, tbody td { padding: 4px 2px; }
-  thead th:first-child, tbody td:first-child { padding-left: 4px; }
-  .stock-code { font-size: 10px; }
+  .stock-card { padding: 14px; }
+  .card-name { font-size: 16px; }
+  .card-profit { font-size: 20px; }
 }

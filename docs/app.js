@@ -61,7 +61,7 @@ function calcProfit(stock, price) {
 
 function render() {
   const sorted = sortStocks(stocks, priceMap);
-  const tbody = $("stockTableBody");
+  const grid = $("stockCardGrid");
   let html = "";
   for (let i = 0; i < sorted.length; i++) {
     const s = sorted[i];
@@ -82,19 +82,36 @@ function render() {
       profitStr = (profit >= 0 ? "+" : "") + profit.toFixed(2) + "%";
       profitClass = profit >= 0 ? "profit-up" : "profit-down";
     }
-    html += `<tr>
-      <td>${i + 1}</td>
-      <td><span class="stock-name">${s.name}</span></td>
-      <td><span class="stock-code">${s.code}</span></td>
-      <td class="text-right ${profitClass}">${profitStr}</td>
-      <td class="text-right">${priceStr}</td>
-      <td class="text-right">${entryStr}</td>
-      <td class="text-right">${targetStr}</td>
-      <td>${s.group ? '<span class="tag">' + s.group + '</span>' : '<span class="text-muted">-</span>'}</td>
-      <td>${s.remark || "-"}</td>
-    </tr>`;
+    html += `<div class="stock-card">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="card-name">${s.name}</div>
+          <div class="card-code">${s.code}</div>
+        </div>
+        <div class="card-profit ${profitClass}">${profitStr}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-field">
+          <span class="field-label">当前价</span>
+          <span class="field-value">${priceStr}</span>
+        </div>
+        <div class="card-field">
+          <span class="field-label">目标价</span>
+          <span class="field-value">${targetStr}</span>
+        </div>
+        <div class="card-field">
+          <span class="field-label">买入价</span>
+          <span class="field-value">${entryStr}</span>
+        </div>
+        <div class="card-field">
+          <span class="field-label">分组</span>
+          <span class="field-value">${s.group || '-'}</span>
+        </div>
+      </div>
+      ${s.remark ? `<div class="card-remark">${s.remark}</div>` : ''}
+    </div>`;
   }
-  tbody.innerHTML = html;
+  grid.innerHTML = html;
   $("sortInfo").textContent = "📊 排序: " + (currentSort === "profit" ? "盈亏" : "分组+盈亏");
 }
 function toggleSort() {

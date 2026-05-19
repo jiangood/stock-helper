@@ -64,6 +64,14 @@
     "remark": ""
   },
   {
+    "name": "恒邦股份",
+    "code": "sz002237",
+    "entry_price": 14,
+    "target_price": null,
+    "group": "金矿",
+    "remark": ""
+  },
+  {
     "name": "齐翔腾达",
     "code": "sz002408",
     "entry_price": null,

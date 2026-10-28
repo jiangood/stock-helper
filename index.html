@@ -297,16 +297,10 @@
   <div class="panel-title mb-2">股票池市场温度</div><div id="market-pulse-summary" class="row g-2 mb-3"></div>
   <div class="panel-title mb-2">板块热点 / 强弱</div><div id="sector-hotspots" class="insight-grid mb-4"></div>
   <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-    <div><div class="panel-title">当前持仓与盈亏</div><div class="panel-subtitle">持仓信息仅保存在当前浏览器，不写入公开 GitHub 仓库。</div></div>
-    <button type="button" class="btn btn-sm btn-outline-secondary" id="holdings-toggle">录入 / 修改持仓</button>
+    <div><div class="panel-title">当前持仓与盈亏</div><div class="panel-subtitle">持仓统一从仓库根目录 holdings.json 读取；网页只读，不写入浏览器存储。该 JSON 随公开仓库发布，持仓信息公开可见。</div></div>
+    <a class="btn btn-sm btn-outline-secondary" href="https://github.com/jiangood/stock-helper/blob/master/holdings.json" target="_blank" rel="noopener noreferrer">编辑 holdings.json</a>
   </div>
   <div id="holdings-summary" class="row g-2 mb-3"></div><div id="holdings-list" class="insight-grid mb-3"></div>
-  <form id="holdings-form" class="insight-card mb-4 d-none">
-    <div class="fw-semibold mb-2">持仓录入</div><div class="panel-subtitle mb-2">输入股票代码（如 sz000731）、持股数量和持仓成本；行情价格自动匹配股票池。每行一个持仓，可删除后保存。</div>
-    <div id="holdings-rows"></div><div class="d-flex flex-wrap gap-2 mt-2">
-      <button type="button" class="btn btn-sm btn-outline-secondary" id="holding-add">添加一行</button><button type="submit" class="btn btn-sm btn-primary">保存持仓</button><button type="button" class="btn btn-sm btn-outline-secondary" id="holdings-cancel">取消</button>
-    </div><div class="panel-subtitle mt-2">浏览器本地存储不是加密保险箱，请勿在共享设备录入敏感信息。</div>
-  </form>
   <div class="panel-title mb-2">机会与交易观察</div><div class="panel-subtitle mb-3">延续原机会页：计划价区间、量化纪律与买点观察；触及计划价不等于自动买入信号。</div>
   <div id="opportunity-summary" class="row g-2 mb-3"></div><div id="opportunity-list" class="insight-grid"></div>
   <div class="panel-subtitle mt-3">硬性门槛：ST 不买、亏损不买、盈利数据缺失先核实。仍需核对主营竞争力、行业周期、盈利质量和安全边际。</div>
@@ -364,6 +358,7 @@
 <script src="quotes.js"></script>
 <script src="pinyin.js"></script>
 <script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
+<script src="holdings-data.js"></script>
 <script src="business.js"></script>
 <script src="risk-center.js"></script>
 <script src="global-assets.js"></script>

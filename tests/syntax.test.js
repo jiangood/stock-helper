@@ -15,7 +15,7 @@ test('应用 JavaScript 文件均可通过语法解析', () => {
 
 test('首页内嵌 JavaScript 均可通过语法解析', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const scripts = [...html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi)]
+  const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
     .map(match => match[1].trim())
     .filter(Boolean);
   assert.ok(scripts.length > 0, '应找到首页内嵌脚本');

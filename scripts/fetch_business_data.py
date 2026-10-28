@@ -114,7 +114,7 @@ def normalize_source_monthly_prices(row: Any) -> list[dict[str, Any]]:
         if value is None:
             continue
         day = date_text(raw_key)
-        if day is None and re.fullmatch(r"\\d{4}[-/]\\d{1,2}", raw_key):
+        if day is None and re.fullmatch(r"\d{4}[-/]\d{1,2}", raw_key):
             try:
                 day = date.fromisoformat(raw_key.replace("/", "-") + "-01").isoformat()
             except ValueError:

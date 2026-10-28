@@ -20,7 +20,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 模块：行情卡（只留昨收/成交额/换手率，不展示今开/最高/最低/均价/涨停/跌停/量比/振幅等日内指标）、日/月 K（lightweight-charts 4.2.3，CDN，不含分时）、估值与周期位置（PE/PB/ROE/52 周分位/月 K 历史分位/同组中位数比价）、跟踪计划（价格刻度条 + 入场/重仓/止盈状态）、做T（15 分 VWAP 偏离 / MFI / 量能 / 单边过滤 + 参考价位）、补仓（POC 支撑 / MFI 底背离 / MA20 与 OBV 趋势三项）、鳄鱼纪律（PB 八折/200 亿/PE 30 倍/位置/连板检查、连续涨停提示、持仓成本与翻倍/三倍卖点、资源股 `(P−C)×Q` 估值计算器）
   - 做T / 补仓为纯前端计算：日 K 120 根近似筹码、15 分 K 约 20 个交易日；数据缺失只降级为「加载中 / 数据不足」，不阻塞主流程；结论旁固定标注「辅助参考，不构成投资建议」
   - 数据：`stocks.json` 匹配计划；不在股票池的代码也能看行情，计划区显示「未纳入股票池」
-  - 本机数据：持仓成本 `localStorage['croc-cost:<code>']`、估值参数 `localStorage['croc-valuation:<code>']`
+  - 本机数据：资源股估值参数 `localStorage['croc-valuation:<code>']`；持仓成本统一从公开 `holdings.json` 读取，个股详情页只读
   - 顶栏只保留标题 + 刷新/主题，不要加时钟、休市/交易中、收盘等提示
 - `croc.js` — 鳄鱼纪律工具（浏览器 `window.Croc` / Node `require`）
   - `evaluate` / `screen` / `matchStatus` / `health` / `brief` / `limitUpInfo` / `percentile`

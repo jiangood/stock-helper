@@ -898,6 +898,11 @@
     $('plan-body').classList.remove('d-none');
 
     const price = d.price;
+    const evalPlan = currentEval(d);
+    // 铁律：ST / 亏损股不买；盈利数据缺失时也不能把计划价显示成可执行买点。
+    const buyBlock = evalPlan.st ? 'ST 风险股，不买'
+      : evalPlan.pe === null ? '盈利数据缺失，暂不判断买点'
+      : evalPlan.pe <= 0 ? '亏损股，不买' : null;
     const levels = [
       { key: 'heavy', label: '重仓', value: PLAN.heavy },
       { key: 'entry', label: '入场', value: PLAN.entry },
@@ -956,7 +961,7 @@
         <td class="text-body-secondary">${l.label}</td>
         <td class="text-end fw-semibold">${fmtNum(l.value)}</td>
         <td class="text-end">${diffHtml}</td>
-        <td class="text-end">${statusBadge(l.key, l.value, price)}</td>
+        <td class="text-end">${statusBadge(l.key, l.value, price, buyBlock)}</td>
       </tr>`;
     }).join('');
 
@@ -972,7 +977,11 @@
     ].map(([k, v]) => statItem(k, v)).join('');
   }
 
-  function statusBadge(key, value, price) {
+  function statusBadge(key, value, price, buyBlock) {
+    if ((key === 'heavy' || key === 'entry') && buyBlock) {
+      const label = buyBlock === '盈利数据缺失，暂不判断买点' ? '待核实盈利' : '禁止买入';
+      return '<span class="badge text-bg-danger" title="' + esc(buyBlock) + '">' + label + '</span>';
+    }
     if (key === 'heavy') {
       return price <= value
         ? '<span class="badge text-bg-success">已到重仓区</span>'
@@ -1070,13 +1079,17 @@
     } else {
       const zoneText = e.zone === 'heavy' ? '重仓区' : e.zone === 'entry' ? '入场区'
         : e.zone === 'above' ? '高于入场' : '—';
+      const buyBlock = e.st ? 'ST 风险股，不买'
+        : e.pe === null ? '盈利数据缺失，暂不判断买点'
+        : e.pe <= 0 ? '亏损股，不买' : null;
       const note = [
         isNum(PLAN.heavy) ? `重仓 ${fmtNum(PLAN.heavy)}` : null,
-        isNum(PLAN.entry) ? `入场 ${fmtNum(PLAN.entry)}` : null
+        isNum(PLAN.entry) ? `入场 ${fmtNum(PLAN.entry)}` : null,
+        buyBlock
       ].filter(Boolean).join(' · ');
       checks.push(checkItem(
-        e.zone === 'heavy' || e.zone === 'entry' ? 'ok' : e.zone === 'above' ? 'warn' : 'neutral',
-        '计划区间', zoneText, note
+        buyBlock ? 'bad' : e.zone === 'heavy' || e.zone === 'entry' ? 'ok' : e.zone === 'above' ? 'warn' : 'neutral',
+        '计划区间', buyBlock ? '禁止买入' : zoneText, note
       ));
     }
 

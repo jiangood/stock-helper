@@ -21,7 +21,7 @@
     box-shadow: 0 2px 6px rgba(37,99,235,.3);
   }
 
-  .text-up { color: var(--up) !important; }
+  .refreshing .q-icon { animation: stock-refresh-spin .8s linear infinite; }\n  @keyframes stock-refresh-spin { to { transform: rotate(360deg); } }\n\n  .text-up { color: var(--up) !important; }
   .text-down { color: var(--down) !important; }
 
   .tag {
@@ -167,7 +167,7 @@
 <q-layout view="hHh lpR fFf" class="bg-body-tertiary">
 <q-header bordered class="bg-body text-body">
   <q-toolbar class="px-2 px-sm-3">
-    <a class="btn btn-sm btn-outline-secondary px-2 py-1" href="./index.html" title="返回股票池" aria-label="返回股票池">←</a>
+    <q-btn flat round dense icon="arrow_back" href="./index.html" title="返回股票池" aria-label="返回股票池"></q-btn>
     <span class="logo ms-1">▲</span>
     <div class="min-w-0 flex-grow-1 ms-2">
       <div class="d-flex align-items-baseline gap-2 min-w-0">
@@ -178,8 +178,8 @@
       <div class="text-body-secondary text-truncate" style="font-size:11px" id="alias-line"></div>
     </div>
     <div class="ms-auto d-flex align-items-center gap-1">
-      <button class="btn btn-sm btn-outline-secondary px-2 py-1" id="refresh-btn" onclick="refreshAll(true)" title="立即刷新" aria-label="立即刷新">⟳</button>
-      <button class="btn btn-sm btn-outline-secondary px-2 py-1" id="theme-btn" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">🌙</button>
+      <q-btn id="refresh-btn" flat round dense icon="refresh" @click="refreshDetail" title="立即刷新" aria-label="立即刷新"></q-btn>
+      <q-btn id="theme-btn" flat round dense :icon="dark ? 'light_mode' : 'dark_mode'" @click="toggleHomeTheme" title="切换主题" aria-label="切换主题"></q-btn>
     </div>
   </q-toolbar>
 </q-header>

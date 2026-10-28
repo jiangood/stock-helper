@@ -3,7 +3,7 @@
   'use strict';
   var stocks = [];
   var quotes = {};
-  var KEY = 'stock-helper-business-history-v1';
+  var businessData = null;\n  var businessFetchPromise = null;
   var items = [
     { id:'soda-ash', name:'纯碱', metric:'纯碱现货价', unit:'元/吨', stocks:['双环科技','中盐化工','三友化工'], chain:'玻璃、光伏玻璃、日用玻璃、硅酸钠', drivers:'重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨等成本。', query:'纯碱 现货价格 厂家库存 周度' },
     { id:'urea', name:'尿素', metric:'尿素现货价', unit:'元/吨', stocks:['四川美丰'], chain:'煤头/气头生产 → 农业与工业需求', drivers:'看农业需求季节性、出口政策、日产量、企业库存和煤气成本。', query:'尿素 现货价格 企业库存 日产量' },
@@ -16,34 +16,6 @@
   ];
   function el(id) { return document.getElementById(id); }
   function esc(v) { return String(v == null ? '' : v).replace(/[&<>\"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
-  function read() { try { var v = JSON.parse(localStorage.getItem(KEY) || '{}'); return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; } catch (e) { return {}; } }
-  function write(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); return true; } catch (e) { if (global.showToast) global.showToast('保存失败：浏览器存储不可用'); return false; } }
-  function showToast(msg) { var t = el('toast'); if (!t) return; t.className = 'position-fixed bottom-0 start-50 translate-middle-x mb-5 alert alert-secondary py-2 px-3'; t.textContent = msg; clearTimeout(t._hide); t._hide = setTimeout(function(){ t.className += ' d-none'; }, 2200); }
-  function initForm() {
-    var select = el('business-product');
-    if (!select || select.options.length) return;
-    select.innerHTML = items.map(function (x) { return '<option value="' + esc(x.id) + '">' + esc(x.name + ' · ' + x.metric) + '</option>'; }).join('');
-    el('business-date').value = new Date().toISOString().slice(0, 10);
-    el('business-observation-form').addEventListener('submit', function (event) {
-      event.preventDefault();
-      var item = items.find(function (x) { return x.id === el('business-product').value; });
-      var date = el('business-date').value;
-      var price = Number(el('business-price').value);
-      if (!item || !date || !Number.isFinite(price) || price < 0) return;
-      var history = read();
-      var points = Array.isArray(history[item.id]) ? history[item.id].filter(function(p){ return p && Number.isFinite(Number(p.price)) && /^\d{4}-\d{2}-\d{2}$/.test(p.date); }) : [];
-      points = points.filter(function (p) { return p.date !== date; });
-      points.push({ date:date, price:price, note:el('business-note').value.trim().slice(0, 120) });
-      points.sort(function (a,b) { return a.date.localeCompare(b.date); });
-      history[item.id] = points.slice(-180);
-      if (write(history)) { el('business-price').value = ''; el('business-note').value = ''; renderBusiness(); showToast('已保存观察点'); }
-    });
-    el('clear-business-history').addEventListener('click', function () {
-      if (!global.confirm('确定清空本浏览器保存的全部商品观察记录？')) return;
-      try { localStorage.removeItem(KEY); } catch (e) {}
-      renderBusiness(); showToast('商品观察记录已清空');
-    });
-  }
   function renderOpportunity() {
     var summary = el('opportunity-summary'), list = el('opportunity-list');
     if (!summary || !list) return;
@@ -65,34 +37,100 @@
       return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div><a class="fw-bold text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+'</a><div class="mini-label">'+esc(s.group || '')+' · '+esc(s.code)+'</div></div><span class="flag '+(e.zone === 'heavy' ? 'flag-buy' : 'flag-warn')+'">'+(e.zone === 'heavy' ? '重仓价区间' : '入场价区间')+'</span></div><div class="d-flex align-items-baseline gap-2 mt-2"><span class="business-price">'+q.price.toFixed(2)+'</span><span class="'+changeClass+'">'+change+'</span></div><div class="d-flex flex-wrap gap-2 mt-2 mini-label"><span>入场 '+(s.entry == null ? '—' : Number(s.entry).toFixed(2))+'</span><span>重仓 '+(s.heavy == null ? '—' : Number(s.heavy).toFixed(2))+'</span><span>PE '+(q.pe == null ? '—' : q.pe.toFixed(2))+'</span><span>PB '+(q.pb == null ? '—' : q.pb.toFixed(2))+'</span></div><div class="mt-2 small '+(gate.eligible ? 'text-success' : 'text-warning-emphasis')+'">'+esc(gate.reason || '通过硬门槛；仍需核对基本面与周期')+'</div><a class="btn btn-sm btn-outline-primary mt-2" href="stock.html?code='+encodeURIComponent(s.code)+'">查看个股详情</a></article>';
     }).join('');
   }
+  function formatNumber(value) {
+    var n = Number(value);
+    return Number.isFinite(n) ? n.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) : '—';
+  }
   function renderBusiness() {
-    var container = el('business-cards'); if (!container) return;
-    var history = read();
-    container.innerHTML = items.map(function(item){
-      var points = (Array.isArray(history[item.id]) ? history[item.id] : []).filter(function(p){return p && Number.isFinite(Number(p.price));}).slice().sort(function(a,b){return a.date.localeCompare(b.date);});
-      var first=points[0], last=points[points.length-1], delta=first && last && Number(first.price)!==0 ? (Number(last.price)-Number(first.price))/Number(first.price)*100 : null;
-      var trend = delta == null ? '尚无记录' : ((delta > 0 ? '+' : '') + delta.toFixed(2) + '%');
-      var tone = delta == null ? 'text-body-secondary' : delta > 0 ? 'text-up' : delta < 0 ? 'text-down' : 'text-body-secondary';
-      var chart = '<div class="empty-state py-2 small">录入两个以上日期的观察点后显示趋势线</div>';
-      if (points.length >= 2) {
-        var sample=points.slice(-12), vals=sample.map(function(p){return Number(p.price);}), min=Math.min.apply(null,vals), max=Math.max.apply(null,vals), range=max-min || 1;
-        var coords=vals.map(function(v,i){return (8+i*(284/Math.max(1,vals.length-1)))+','+(48-((v-min)/range)*36);});
-        chart='<svg class="trend-svg" viewBox="0 0 300 58" role="img" aria-label="'+esc(item.name)+'手工记录趋势"><polyline points="'+coords.join(' ')+'"></polyline>'+coords.map(function(c){var xy=c.split(',');return '<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="2.5"></circle>';}).join('')+'</svg>';
+    var container = el('business-cards');
+    if (!container) return;
+    var payloadItems = businessData && businessData.items ? businessData.items : {};
+    var products = items.map(function (meta) {
+      var data = payloadItems[meta.id] || {};
+      return { meta: meta, data: data };
+    });
+    container.innerHTML = products.map(function (entry) {
+      var meta = entry.meta, data = entry.data;
+      var series = Array.isArray(data.series) ? data.series.filter(function (p) {
+        return p && /^\\d{4}-\\d{2}-\\d{2}$/.test(p.date) && (Number(p.spot) > 0 || Number(p.futures) > 0);
+      }).slice().sort(function (a,b) { return a.date.localeCompare(b.date); }) : [];
+      var metricKey = series.some(function(p){ return Number(p.spot)>0; }) ? 'spot' : 'futures';
+      var points = series.filter(function(p){ return Number(p[metricKey])>0; }).slice(-60);
+      var last = data.latest != null && Number(data.latest)>0 ? Number(data.latest) : (points.length ? Number(points[points.length-1][metricKey]) : null);
+      var latestDate = data.latestDate || (points.length ? points[points.length-1].date : null);
+      var delta = null;
+      if (points.length > 1 && Number(points[0][metricKey]) > 0) {
+        delta = (Number(points[points.length-1][metricKey]) / Number(points[0][metricKey]) - 1) * 100;
+      } else if (Number.isFinite(Number(data.changePct))) {
+        delta = Number(data.changePct);
       }
-      var links=item.stocks.map(function(name){var s=stocks.find(function(x){return x.name===name;});return s?'<a class="btn btn-sm btn-outline-secondary me-1 mb-1" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(name)+'</a>':'<span class="tag me-1">'+esc(name)+'</span>';}).join('');
-      var recent=points.slice(-3).reverse().map(function(p){return '<div class="d-flex justify-content-between mini-label py-1 border-top"><span>'+esc(p.date)+(p.note?' · '+esc(p.note):'')+'</span><span class="fw-semibold">'+Number(p.price).toLocaleString('zh-CN')+' '+esc(item.unit)+'</span></div>';}).join('');
-      var search='https://www.baidu.com/s?wd='+encodeURIComponent(item.query);
-      return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(item.name)+'</div><div class="mini-label">'+esc(item.metric)+' · '+esc(item.unit)+'</div></div><span class="flag" style="margin:0">手工记录</span></div><div class="d-flex align-items-baseline justify-content-between mt-2 gap-2"><div class="business-price">'+(last?Number(last.price).toLocaleString('zh-CN'):'—')+'</div><div class="'+tone+' fw-semibold">'+trend+'</div></div><div class="mini-label">'+(last?'最新记录：'+esc(last.date):'尚无价格记录；可先查询外部报价')+'</div><div class="mt-2">'+chart+'</div><div class="mini-label mt-1">产业链：'+esc(item.chain)+'</div><div class="small mt-2">'+esc(item.drivers)+'</div><div class="mt-2"><div class="mini-label mb-1">关联股票池</div>'+links+'</div>'+(recent?'<div class="mt-2">'+recent+'</div>':'')+'<div class="mt-2"><a href="'+search+'" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">查询价格 / 库存</a></div></article>';
+      var trend = delta == null ? '趋势数据不足' : ((delta > 0 ? '+' : '') + delta.toFixed(2) + '%');
+      var tone = delta == null ? 'text-body-secondary' : delta > 0 ? 'text-up' : delta < 0 ? 'text-down' : 'text-body-secondary';
+      var chart = '<div class="empty-state py-2 small">' + (last ? '该来源暂未提供可绘制的历史序列' : '等待自动数据源返回有效报价') + '</div>';
+      if (points.length >= 2) {
+        var values = points.map(function(p){ return Number(p[metricKey]); });
+        var min = Math.min.apply(null, values), max = Math.max.apply(null, values), range = max - min || 1;
+        var coords = values.map(function(v,i){ return (8+i*(284/Math.max(1,values.length-1)))+','+(48-((v-min)/range)*36); });
+        chart = '<svg class="trend-svg" viewBox="0 0 300 58" role="img" aria-label="'+esc(meta.name)+'自动行情趋势"><polyline points="'+coords.join(' ')+'"></polyline>'+coords.map(function(p){var xy=p.split(',');return '<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="2.2"></circle>';}).join('')+'</svg>';
+      }
+      var related = (data.stocks || meta.stocks || []).map(function(name){
+        var stock = stocks.find(function(s){ return s.name === name; });
+        return stock ? '<a class="btn btn-sm btn-outline-secondary me-1 mb-1" href="stock.html?code='+encodeURIComponent(stock.code)+'">'+esc(name)+'</a>' : '<span class="tag me-1">'+esc(name)+'</span>';
+      }).join('');
+      var source = data.source || '暂未匹配到可靠的自动报价源';
+      var sourceLink = data.sourceUrl ? '<a href="'+esc(data.sourceUrl)+'" target="_blank" rel="noopener noreferrer">查看来源</a>' : '';
+      var status = data.status === 'ok' ? '现货 / 期货历史' : data.status === 'latest-only' ? '自动最新报价' : '等待可靠数据源';
+      return '<article class="insight-card">'
+        + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(data.name || meta.name)+'</div><div class="mini-label">'+esc(data.unit || meta.unit || '价格')+'</div></div><span class="flag" style="margin:0">'+status+'</span></div>'
+        + '<div class="d-flex align-items-baseline justify-content-between mt-2 gap-2"><div class="business-price tabular">'+(last == null ? '—' : formatNumber(last))+'</div><div class="'+tone+' fw-semibold">'+trend+'</div></div>'
+        + '<div class="mini-label">'+(latestDate ? '数据日期：'+esc(latestDate) : '当前没有有效报价')+' · '+(metricKey === 'futures' ? '期货价格' : '现货价格')+'</div>'
+        + '<div class="mt-2">'+chart+'</div>'
+        + '<div class="mini-label mt-1">产业链：'+esc(data.chain || meta.chain)+'</div>'
+        + '<div class="small mt-2">'+esc(data.drivers || meta.drivers)+'</div>'
+        + '<div class="mt-2"><div class="mini-label mb-1">关联股票池</div>'+related+'</div>'
+        + '<div class="mini-label mt-2">数据源：'+esc(source)+' '+sourceLink+'</div>'
+        + '</article>';
     }).join('');
+    var statusEl = el('business-data-status');
+    if (statusEl) {
+      if (!businessData) statusEl.textContent = '自动行情文件暂不可用；请稍后重新读取。';
+      else {
+        var updated = businessData.updatedAt ? new Date(businessData.updatedAt).toLocaleString('zh-CN', { timeZone:'Asia/Shanghai', hour12:false }) : '时间未知';
+        var count = Object.keys(payloadItems).filter(function(k){return payloadItems[k] && Number(payloadItems[k].latest)>0;}).length;
+        statusEl.textContent = '最近抓取：'+updated+'（北京时间） · '+count+'/'+items.length+' 个品种有有效报价；数据非逐笔实时。';
+      }
+    }
+  }
+  function fetchBusinessData() {
+    if (businessFetchPromise) return businessFetchPromise;
+    var statusEl = el('business-data-status');
+    if (statusEl) statusEl.textContent = '正在读取自动抓取的商品数据…';
+    businessFetchPromise = fetch('business-data.json?t='+Date.now(), { cache:'no-store' })
+      .then(function(response){ if (!response.ok) throw new Error('HTTP '+response.status); return response.json(); })
+      .then(function(payload){
+        if (!payload || !payload.items || typeof payload.items !== 'object') throw new Error('数据格式不正确');
+        businessData = payload;
+        renderBusiness();
+        return payload;
+      })
+      .catch(function(error){
+        if (statusEl) statusEl.textContent = '读取失败：'+String(error && error.message || error)+'。自动任务完成后再试。';
+        renderBusiness();
+        return null;
+      })
+      .then(function(value){ businessFetchPromise = null; return value; });
+    return businessFetchPromise;
   }
   function init(stocksArg, quoteArg) {
-    stocks=Array.isArray(stocksArg)?stocksArg:[]; quotes=quoteArg || {};
-    var select=el('business-product');
-    if (select && !select.options.length) { select.innerHTML=items.map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.name+' · '+x.metric)+'</option>';}).join(''); el('business-date').value=new Date().toISOString().slice(0,10);
-      el('business-observation-form').addEventListener('submit', function(event){event.preventDefault();var item=items.find(function(x){return x.id===select.value;}),date=el('business-date').value,price=Number(el('business-price').value);if(!item||!date||!Number.isFinite(price)||price<0)return;var h=read(),p=Array.isArray(h[item.id])?h[item.id]:[];p=p.filter(function(x){return x.date!==date;});p.push({date:date,price:price,note:el('business-note').value.trim().slice(0,120)});p.sort(function(a,b){return a.date.localeCompare(b.date);});h[item.id]=p.slice(-180);if(write(h)){el('business-price').value='';el('business-note').value='';renderBusiness();showToast('已保存观察点');}});
-      el('clear-business-history').addEventListener('click',function(){if(!global.confirm('确定清空本浏览器保存的全部商品观察记录？'))return;try{localStorage.removeItem(KEY);}catch(e){}renderBusiness();showToast('商品观察记录已清空');});
+    stocks = Array.isArray(stocksArg) ? stocksArg : [];
+    quotes = quoteArg || {};
+    var refresh = el('refresh-business-data');
+    if (refresh && !refresh.dataset.bound) {
+      refresh.dataset.bound = '1';
+      refresh.addEventListener('click', function(){ fetchBusinessData(); });
     }
-    renderBusiness(); renderOpportunity();
+    renderOpportunity();
+    fetchBusinessData();
   }
   function onTab(target) { if(target==='business')renderBusiness(); if(target==='opportunity')renderOpportunity(); }
   global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness};

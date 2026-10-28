@@ -84,8 +84,10 @@ def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
     """Split source-provided company names without inventing or inferring relationships."""
     if value is None:
         return []
+    if isinstance(value, float) and math.isnan(value):
+        return []
     text = str(value).strip()
-    if not text or text in {"-", "--", "暂无", "无"}:
+    if not text or text.lower() == "nan" or text in {"-", "--", "暂无", "无"}:
         return []
     names = [name.strip() for name in re.split(r"[,，、;；|]", text) if name.strip()]
     return list(dict.fromkeys(names))[:limit]

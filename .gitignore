@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 stocks.json.bak.*
+
+.playwright-mcp/

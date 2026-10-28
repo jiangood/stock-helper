@@ -1,13 +1,28 @@
 每次修改代码后，执行提交和推送（git add、git commit、git push），确保修改立即部署到 GitHub Pages。
 
+## 站点
+
+GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
+
 ## 架构说明
 
-两个独立 HTML 页面（均为公开页面，无密码）：
+- `index.html` — 首页，股票跟踪看板（表格），公开无密码
+  - 样式基于 Bootstrap 5（CDN），少量自定义 CSS
+  - 数据：`stocks.json`（静态基础数据） + `quotes.js`（行情 SDK）
+  - 功能：搜索、持仓/股票池切换、分组筛选、全列排序、明暗主题、交易时段每 3 秒自动刷新
+- `principles.html` — 价值投资理念展示，全静态（`style.css` + `public.css`）
+- `quotes.js` — 行情 SDK，独立文件，可单独复用
+  - 数据源：东方财富 push2（JSON）+ 腾讯财经 qt.gtimg.cn（GBK），多源自动降级、分片批量请求
+  - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`
+  - 交易时段：`StockQuotes.marketSession()` / `StockQuotes.isTrading()`
 
-- `docs/index.html` — 首页，股票跟踪看板，自包含（内联 CSS/JS）
-  - 默认访问根路径即可查看：https://jiangood.github.io/stock-helper/
-  - 数据来源：`stocks.json`（股票列表）、东方财富 API（实时价格）
-  - 自动刷新：每 60 秒
-- `docs/principles.html` — 价值投资理念展示，全静态（`style.css` + `public.css`）
+## stocks.json 字段
 
-两页之间通过顶部/底部链接互相跳转。
+```json
+{ "name": "名称", "alias": "别名", "group": "分组", "code": "sz002408",
+  "yearInit": 4.87, "entry": 5.5, "heavy": 4.5, "tp1": 10, "tp2": 15,
+  "prevChg": 0.16, "updDate": "2026-03-05", "pool": false }
+```
+
+- `pool: true` 表示股票池（未建仓）股票，界面显示「股票池」标签
+- `group` 每只股票都应填写（民爆 / 化工 / 农药 / 农业 / 食品 / 动保 / 有色 / 贵金属 / 稀土钨 / 钢铁 / 新材料 / 军工 / 能源 / 装备 / 轻工）

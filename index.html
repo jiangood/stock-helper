@@ -182,6 +182,8 @@
     width: 100%; padding: 12px; border: 0; border-radius: 8px;
     background: #2563eb; color: white; font-weight: 600; cursor: pointer;
   }
+  #password-gate .gate-remember { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; color: #475569; font-size: 13px; }
+  #password-gate .gate-remember input { width: 16px; height: 16px; margin: 0; }
   #password-gate .gate-error { display: none; margin-top: 12px; color: #dc2626; font-size: 13px; }
 
 </style>
@@ -193,6 +195,7 @@
     <h1 id="gate-title">股票池监控</h1>
     <p>请输入访问密码以继续</p>
     <input id="gate-password" type="password" placeholder="输入密码" autocomplete="current-password" required autofocus>
+    <label class="gate-remember"><input id="gate-remember" type="checkbox" checked> 在此设备记住登录状态</label>
     <button type="submit">进入首页</button>
     <div id="gate-error" class="gate-error" role="alert">密码不正确，请重试。</div>
   </form>
@@ -826,14 +829,23 @@ function toggleTheme() {
   const gate = document.getElementById('password-gate');
   const form = document.getElementById('password-gate-form');
   const input = document.getElementById('gate-password');
+  const remember = document.getElementById('gate-remember');
   const error = document.getElementById('gate-error');
-  if (sessionStorage.getItem('stock-helper-unlocked') === '1') {
+  // Keep only the unlocked flag, never the password itself.
+  if (localStorage.getItem('stock-helper-unlocked') === '1' ||
+      sessionStorage.getItem('stock-helper-unlocked') === '1') {
     gate.style.display = 'none';
   }
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     if (input.value === 'dayuchi0315') {
-      sessionStorage.setItem('stock-helper-unlocked', '1');
+      if (remember.checked) {
+        localStorage.setItem('stock-helper-unlocked', '1');
+        sessionStorage.removeItem('stock-helper-unlocked');
+      } else {
+        sessionStorage.setItem('stock-helper-unlocked', '1');
+        localStorage.removeItem('stock-helper-unlocked');
+      }
       gate.style.display = 'none';
     } else {
       error.style.display = 'block';

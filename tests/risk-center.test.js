@@ -17,6 +17,8 @@ test('calculates market value, P&L, stop risk and target scenarios', () => {
   assert.equal(row.stopState, 'valid');
   assert.equal(row.target1Gain, 200);
   assert.equal(row.target2Gain, 400);
+  assert.equal(row.doublePrice, 12);
+  assert.equal(row.doubleReached, false);
 });
 
 test('missing stop is unknown risk, not zero; plan targets remain fallback', () => {

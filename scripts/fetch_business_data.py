@@ -269,7 +269,7 @@ def fetch_data() -> dict[str, Any]:
         if code and isinstance(old_series, list):
             daily_by_symbol[code] = clean_series(old_series)
 
-    core_codes = ["SA", "UR", "MA", "AL", "RU"]
+    core_codes = ["SA", "UR", "MA", "AL", "RU", "AO"]
     missing_history = [code for code in core_codes if len(daily_by_symbol.get(code, [])) < 5]
     fresh_data = False
 
@@ -294,7 +294,7 @@ def fetch_data() -> dict[str, Any]:
     # Refresh the latest spot/settlement snapshot from Business Society. If today is
     # not a trading day or one product is absent, try the previous few trading dates.
     observed: set[str] = set()
-    mapping = {"纯碱": "SA", "尿素": "UR", "甲醇MA": "MA", "甲醇": "MA", "铝": "AL", "天然橡胶": "RU"}
+    mapping = {"纯碱": "SA", "尿素": "UR", "甲醇MA": "MA", "甲醇": "MA", "铝": "AL", "氧化铝": "AO", "天然橡胶": "RU"}
     for offset in range(0, 8):
         day = end_day - timedelta(days=offset)
         try:
@@ -534,6 +534,21 @@ def fetch_data() -> dict[str, Any]:
                     "source": None, "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
                     "status": "pending",
                 })
+        if input_id == "alumina":
+            alumina_series = clean_series(daily_by_symbol.get("AO", []))
+            if alumina_series:
+                latest_point = alumina_series[-1]
+                latest_price = latest_point.get("spot") or latest_point.get("futures")
+                if latest_price is not None:
+                    item.update({
+                        "series": alumina_series[-120:],
+                        "latest": latest_price,
+                        "latestDate": latest_point["date"],
+                        "source": "生意社现货/期货参考价格（经 AKShare 获取）",
+                        "sourceUrl": "https://www.100ppi.com/",
+                        "status": "ok",
+                    })
+                    fresh_data = True
         updated_cost_inputs[input_id] = item
     payload["costInputs"] = updated_cost_inputs
 

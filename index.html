@@ -157,7 +157,6 @@
           <th onclick="sortTable('yearInit')" id="th-yearInit"> 年初价        <span class="sort-icon"></span></th>
           <th onclick="sortTable('group')"    id="th-group">    分组          <span class="sort-icon"></span></th>
           <th onclick="sortTable('alias')"    id="th-alias">    别名          <span class="sort-icon"></span></th>
-          <th onclick="sortTable('updDate')"  id="th-updDate">  更新          <span class="sort-icon"></span></th>
         </tr>
       </thead>
       <tbody id="stock-tbody"></tbody>
@@ -239,7 +238,6 @@ function getSortValue(stock, col) {
     case 'tp2':      return stock.tp2;
     case 'group':    return stock.group || '';
     case 'alias':    return stock.alias || '';
-    case 'updDate':  return stock.updDate || '';
     default:         return null;
   }
 }
@@ -258,7 +256,7 @@ function sortedView(list) {
 }
 
 function updateSortUI() {
-  ['name','price','entry','heavy','today','prevChg','tp1','tp2','yearInit','group','alias','updDate'].forEach(col => {
+  ['name','price','entry','heavy','today','prevChg','tp1','tp2','yearInit','group','alias'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
     th.classList.remove('sort-asc', 'sort-desc');
@@ -357,8 +355,7 @@ function buildRow(stock) {
     <td>${tp2Html}</td>
     <td class="text-body-secondary">${stock.yearInit != null ? Number(stock.yearInit).toFixed(2) : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
-    <td>${aliasHtml}</td>
-    <td class="text-body-secondary" style="font-size:10px">${stock.updDate || '<span class="text-body-tertiary">—</span>'}</td>`;
+    <td>${aliasHtml}</td>`;
 }
 
 function diffHtml(d) {

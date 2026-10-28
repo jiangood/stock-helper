@@ -99,6 +99,49 @@ def normalize_daily_frame(frame: Any) -> dict[str, list[dict[str, Any]]]:
         result.setdefault(symbol, []).append({"date": day, "spot": spot, "futures": futures})
     return {key: clean_series(value) for key, value in result.items()}
 
+def normalize_sys_frame(frame: Any, today: date | None = None) -> list[dict[str, Any]]:
+    """Normalize Business Society's compact MM-DD chart dates into a chronological series."""
+    if frame is None or getattr(frame, "empty", True):
+        return []
+    today = today or date.today()
+    raw_points: list[dict[str, Any]] = []
+    for _, row in frame.iterrows():
+        raw_date = str(row.get("日期", row.get("date", ""))).strip()
+        day = date_text(raw_date)
+        spot = finite_number(row.get("现货价格", row.get("spot")))
+        futures = finite_number(row.get("主力合约", row.get("futures")))
+        if futures is None:
+            futures = finite_number(row.get("最近合约"))
+        raw_points.append({"raw_date": raw_date, "date": day, "spot": spot, "futures": futures})
+    if all(p["date"] for p in raw_points):
+        return clean_series([p for p in raw_points if p["date"]])
+    year = today.year
+    previous: tuple[int, int] | None = None
+    for point in raw_points:
+        if point["date"]:
+            continue
+        match = re.fullmatch(r"(\d{1,2})-(\d{1,2})", point["raw_date"])
+        if not match:
+            continue
+        month, day_num = int(match.group(1)), int(match.group(2))
+        month_day = (month, day_num)
+        if previous and month_day < previous:
+            year += 1
+        try:
+            point["date"] = date(year, month, day_num).isoformat()
+        except ValueError:
+            continue
+        previous = month_day
+    dated = [p for p in raw_points if p.get("date")]
+    if dated and dated[-1]["date"] > today.isoformat():
+        for point in dated:
+            try:
+                point["date"] = date.fromisoformat(point["date"]).replace(year=date.fromisoformat(point["date"]).year - 1).isoformat()
+            except ValueError:
+                pass
+    return clean_series(dated)
+
+
 def build_payload(daily_by_symbol: dict[str, list[dict[str, Any]]], now: datetime | None = None) -> dict[str, Any]:
     now = now or datetime.now(timezone.utc)
     items: dict[str, Any] = {}
@@ -132,41 +175,40 @@ def fetch_data() -> dict[str, Any]:
         raise RuntimeError("AKShare is not installed. Install it with: pip install akshare") from exc
 
     end_day = date.today()
-    start_day = end_day - timedelta(days=LOOKBACK_DAYS)
     daily_by_symbol: dict[str, list[dict[str, Any]]] = {}
     errors: list[str] = []
 
-    # Business Society spot/futures basis data; exact dates allow a real trend chart.
-    try:
-        frame = call_with_timeout(SOURCE_TIMEOUT_SECONDS, ak.futures_spot_price_daily,
-            start_day=start_day.strftime("%Y%m%d"),
-            end_day=end_day.strftime("%Y%m%d"),
-            vars_list=["SA", "UR", "MA", "AL", "RU"],
-        )
-        daily_by_symbol = normalize_daily_frame(frame)
-    except Exception as exc:  # network/source outages must not crash UI data silently
-        errors.append("futures_spot_price_daily: " + str(exc)[:180])
+    # Use compact historical charts (one request per product) instead of
+    # scraping every calendar day separately.
+    chart_names = {"SA": "纯碱", "UR": "尿素", "MA": "甲醇", "AL": "铝", "RU": "天然橡胶"}
+    for code, chinese_name in chart_names.items():
+        try:
+            frame = call_with_timeout(18, ak.futures_spot_sys, symbol=chinese_name, indicator="市场价格")
+            series = normalize_sys_frame(frame, today=end_day)
+            if series:
+                daily_by_symbol[code] = series
+        except Exception as exc:
+            errors.append("futures_spot_sys/" + code + ": " + str(exc)[:120])
 
     # Fill the latest observation from the most recent available trading day if daily
     # history is temporarily empty for a product. Do not invent a date or a price.
-    if not daily_by_symbol or any(not daily_by_symbol.get(code) for code in ("SA", "UR", "MA", "AL", "RU")):
+    if any(not daily_by_symbol.get(code) for code in ("SA", "UR", "MA", "AL", "RU")):
         for offset in range(0, 8):
             day = end_day - timedelta(days=offset)
             try:
-                frame = call_with_timeout(15, ak.futures_spot_price_previous, day.strftime("%Y%m%d"))
+                frame = call_with_timeout(12, ak.futures_spot_price_previous, day.strftime("%Y%m%d"))
                 if frame is None or getattr(frame, "empty", True):
                     continue
+                mapping = {"纯碱": "SA", "尿素": "UR", "甲醇MA": "MA", "甲醇": "MA", "铝": "AL", "天然橡胶": "RU"}
                 for _, row in frame.iterrows():
                     label = str(row.get("商品", row.get("symbol", ""))).strip()
-                    mapping = {"纯碱": "SA", "尿素": "UR", "甲醇MA": "MA", "甲醇": "MA", "铝": "AL", "天然橡胶": "RU"}
                     code = mapping.get(label)
                     if not code:
                         continue
                     spot = finite_number(row.get("现货价格", row.get("spot_price")))
                     fut = finite_number(row.get("主力合约价格", row.get("dominant_price")))
-                    point = {"date": day.isoformat(), "spot": spot, "futures": fut}
-                    daily_by_symbol.setdefault(code, []).append(point)
-                if any(daily_by_symbol.get(code) for code in ("SA", "UR", "MA", "AL", "RU")):
+                    daily_by_symbol.setdefault(code, []).append({"date": day.isoformat(), "spot": spot, "futures": fut})
+                if all(daily_by_symbol.get(code) for code in ("SA", "UR", "MA", "AL", "RU")):
                     break
             except Exception as exc:
                 errors.append("futures_spot_price_previous: " + str(exc)[:120])

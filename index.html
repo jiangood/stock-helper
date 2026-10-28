@@ -220,8 +220,8 @@
     <q-toolbar-title class="fw-semibold" style="font-size:13px">股票池监控</q-toolbar-title>
     <div class="ms-auto d-flex align-items-center gap-1">
       <span id="network-status" class="small text-secondary px-1" role="status" aria-live="polite" title="离线时展示最近缓存的数据">联网</span>
-      <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="refresh-btn" onclick="loadPrices(true)" title="立即刷新" aria-label="立即刷新">⟳</button>
-      <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="theme-btn" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">🌙</button>
+      <q-btn id="refresh-btn" flat round dense icon="refresh" @click="refreshHome" title="立即刷新" aria-label="立即刷新"></q-btn>
+      <q-btn id="theme-btn" flat round dense :icon="dark ? 'light_mode' : 'dark_mode'" @click="toggleHomeTheme" title="切换主题" aria-label="切换主题"></q-btn>
     </div>
   </q-toolbar>
 

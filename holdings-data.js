@@ -63,7 +63,7 @@
     if (force) { cached = null; pending = null; }
     if (cached && !force) return Promise.resolve(cached);
     if (pending && !force) return pending;
-    var url = './holdings.json?ts=' + Date.now();
+    var url = './data/holdings.json?ts=' + Date.now();
     pending = root.fetch(url, { cache: 'no-store' }).then(function (response) {
       if (!response.ok) throw new Error('holdings.json request failed (' + response.status + ')');
       return response.json();

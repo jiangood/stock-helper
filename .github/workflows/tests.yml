@@ -17,4 +17,4 @@ jobs:
         with:
           node-version: 22
       - name: Run indicator tests
-        run: node --test tests/indicators.test.js
+        run: node --test tests/*.test.js

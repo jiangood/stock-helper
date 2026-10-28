@@ -27,7 +27,7 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .stock-table { min-width: 980px; }
+  .stock-table { min-width: 1080px; }
   .stock-table thead th {
     position: sticky; top: 0; z-index: 3;
     font-size: 11px; font-weight: 600; letter-spacing: .4px;
@@ -82,9 +82,8 @@
 
   @media (max-width: 575.98px) {
     .table-scroll { max-height: calc(100vh - 104px); }
-    .stock-table { min-width: 0; }
     .stock-table thead th,
-    .stock-table tbody td { padding: .35rem .3rem; font-size: 11px; }
+    .stock-table tbody td { padding: .35rem .35rem; font-size: 11px; }
     .stock-table thead th { font-size: 10px; letter-spacing: 0; }
     .price-cell { font-size: 13px; }
     .stock-table .badge { font-size: 10px; padding: .2em .45em; }
@@ -121,6 +120,8 @@
 
     <span class="text-body-secondary ms-1"><span id="stock-count" class="fw-semibold text-body">0</span> 只</span>
 
+    <span class="text-body-secondary d-sm-none" style="font-size:11px">← 左右滑动看全部字段 →</span>
+
     <div class="ms-auto d-none d-lg-flex align-items-center gap-3 text-body-secondary">
       <span><span class="legend-pip" style="background:var(--up)"></span> 高于入场</span>
       <span><span class="legend-pip" style="background:var(--down)"></span> 低于入场</span>
@@ -136,14 +137,14 @@
           <th onclick="sortTable('name')"     id="th-name">     名称          <span class="sort-icon"></span></th>
           <th onclick="sortTable('price')"    id="th-price">    价格          <span class="sort-icon"></span></th>
           <th onclick="sortTable('entry')"    id="th-entry">    入场          <span class="sort-icon"></span></th>
-          <th onclick="sortTable('heavy')"    id="th-heavy"    class="d-none d-sm-table-cell">重仓 <span class="sort-icon"></span></th>
+          <th onclick="sortTable('heavy')"    id="th-heavy">   重仓          <span class="sort-icon"></span></th>
           <th onclick="sortTable('today')"    id="th-today">    今日          <span class="sort-icon"></span></th>
-          <th onclick="sortTable('prevChg')"  id="th-prevChg"  class="d-none d-lg-table-cell">昨日 <span class="sort-icon"></span></th>
+          <th onclick="sortTable('prevChg')"  id="th-prevChg">  昨日          <span class="sort-icon"></span></th>
           <th onclick="sortTable('tp1')"      id="th-tp1">      止盈1         <span class="sort-icon"></span></th>
-          <th onclick="sortTable('tp2')"      id="th-tp2"      class="d-none d-xl-table-cell">止盈2 <span class="sort-icon"></span></th>
-          <th onclick="sortTable('yearInit')" id="th-yearInit" class="d-none d-lg-table-cell">年初价 <span class="sort-icon"></span></th>
-          <th onclick="sortTable('group')"    id="th-group"    class="d-none d-md-table-cell">分组 <span class="sort-icon"></span></th>
-          <th onclick="sortTable('updDate')"  id="th-updDate"  class="d-none d-lg-table-cell">更新 <span class="sort-icon"></span></th>
+          <th onclick="sortTable('tp2')"      id="th-tp2">      止盈2         <span class="sort-icon"></span></th>
+          <th onclick="sortTable('yearInit')" id="th-yearInit"> 年初价        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('group')"    id="th-group">    分组          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('updDate')"  id="th-updDate">  更新          <span class="sort-icon"></span></th>
         </tr>
       </thead>
       <tbody id="stock-tbody"></tbody>
@@ -298,13 +299,13 @@ function buildRow(stock) {
   if (price != null && price > 0) {
     const prev = pd.prevClose;
     priceClass = prev == null ? '' : price > prev ? 'text-up' : price < prev ? 'text-down' : '';
-    const closing = StockQuotes.isTrading() ? '' : ' <span class="tag d-none d-sm-inline">收盘</span>';
+    const closing = StockQuotes.isTrading() ? '' : ' <span class="tag">收盘</span>';
     priceHtml = `<span class="price-cell ${priceClass}">${price.toFixed(2)}</span>${closing}`;
 
     if (pd.todayChange != null) {
       const v = pd.todayChange;
       changeHtml = `<span class="badge rounded-pill ${v > 0 ? 'text-bg-danger' : v < 0 ? 'text-bg-success' : 'text-bg-secondary'}">`
-                 + `${v > 0 ? '+' : ''}${v.toFixed(2)}%</span>`;
+                 + `${v > 0 ? '▲ +' : v < 0 ? '▼ ' : ''}${v.toFixed(2)}%</span>`;
     }
     if (stock.entry) {
       const d = (price - stock.entry) / stock.entry * 100;
@@ -321,7 +322,7 @@ function buildRow(stock) {
   if (price != null && stock.tp1 != null) {
     tp1Html = price >= stock.tp1
       ? `<span class="badge text-bg-warning-subtle border border-warning-subtle text-warning-emphasis">${stock.tp1} ✓</span>`
-      : `<span class="text-body-secondary">${stock.tp1} <span class="text-down d-none d-sm-inline" style="font-size:10px">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span></span>`;
+      : `<span class="text-body-secondary">${stock.tp1} <span class="text-down" style="font-size:10px">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span></span>`;
   }
   let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${stock.tp2}</span>` : '<span class="text-body-tertiary">—</span>';
   if (price != null && stock.tp2 != null && price >= stock.tp2) {
@@ -333,7 +334,7 @@ function buildRow(stock) {
     : '<span class="text-body-tertiary">—</span>';
 
   const subs = [];
-  if (stock.alias) subs.push(`<span class="tag d-none d-sm-inline" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`);
+  if (stock.alias) subs.push(`<span class="tag" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`);
 
   const codeNum = stock.code ? stock.code.replace(/^(sh|sz)/, '') : '';
   const nameHtml = `
@@ -347,14 +348,14 @@ function buildRow(stock) {
     <td>${nameHtml}</td>
     <td>${priceHtml}</td>
     <td>${entryHtml}${entryDiff}</td>
-    <td class="d-none d-sm-table-cell">${heavyHtml}${heavyDiff}</td>
+    <td>${heavyHtml}${heavyDiff}</td>
     <td>${changeHtml}</td>
-    <td class="d-none d-lg-table-cell">${prevChgHtml}</td>
+    <td>${prevChgHtml}</td>
     <td>${tp1Html}</td>
-    <td class="d-none d-xl-table-cell">${tp2Html}</td>
-    <td class="d-none d-lg-table-cell text-body-secondary">${stock.yearInit != null ? Number(stock.yearInit).toFixed(2) : '<span class="text-body-tertiary">—</span>'}</td>
-    <td class="d-none d-md-table-cell">${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
-    <td class="d-none d-lg-table-cell text-body-secondary" style="font-size:11px">${stock.updDate || '<span class="text-body-tertiary">—</span>'}</td>`;
+    <td>${tp2Html}</td>
+    <td class="text-body-secondary">${stock.yearInit != null ? Number(stock.yearInit).toFixed(2) : '<span class="text-body-tertiary">—</span>'}</td>
+    <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
+    <td class="text-body-secondary" style="font-size:11px">${stock.updDate || '<span class="text-body-tertiary">—</span>'}</td>`;
 }
 
 function esc(s) {

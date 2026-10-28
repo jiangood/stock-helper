@@ -148,7 +148,7 @@
     pane.id = 'risk-pane'; pane.dataset.pane = 'risk';
     pane.className = 'app-pane container-fluid px-3 py-3 d-none';
     pane.innerHTML = [
-      '<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3"><div><div class="panel-title">持仓风险中心</div><div class="panel-subtitle">只读当前浏览器的持仓与页面行情；止损、账户总资产和风险预算由你手工设定。不会下单，也不修改原有鳄鱼纪律。</div></div><div id="risk-quote-note" class="panel-subtitle">等待行情数据…</div></div>',
+      '<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3"><div><div class="panel-title">持仓风险中心</div><div class="panel-subtitle">只读当前浏览器的持仓与页面行情；风险退出参考价、组合总资产和风险预算由你手工设定。不会下单，也不修改原有鳄鱼纪律。</div></div><div id="risk-quote-note" class="panel-subtitle">等待行情数据…</div></div>',
       '<div id="risk-summary" class="row g-2 mb-3"></div>',
       '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数</div><div class="business-form">',
       '<div><label for="risk-account-equity" class="form-label small mb-1">组合总资产（元，手工维护）</label><input id="risk-account-equity" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="未填写则不计算组合资产仓位"></div>',

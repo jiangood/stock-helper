@@ -459,6 +459,63 @@ def fetch_data() -> dict[str, Any]:
             if not target.get("series") and isinstance(old_item.get("series"), list):
                 target["series"] = old_item["series"]
 
+    # Fetch raw-material cost proxies from the same public spot/futures chart source.
+    # These are market price references, not company-specific cost calculations.
+    cost_inputs = [
+        {"id": "alumina", "name": "氧化铝", "unit": "元/吨", "symbol": "氧化铝",
+         "relatedProducts": ["电解铝"], "role": "电解铝主要原料之一"},
+        {"id": "synthetic-ammonia", "name": "合成氨", "unit": "元/吨", "symbol": "合成氨",
+         "relatedProducts": ["纯碱", "尿素"], "role": "化工原料参考价"},
+        {"id": "sulfuric-acid", "name": "硫酸", "unit": "元/吨", "symbol": "硫酸",
+         "relatedProducts": ["钛白粉"], "role": "硫酸法钛白粉成本参考"},
+        {"id": "titanium-concentrate", "name": "钛精矿", "unit": "元/吨", "symbol": "钛精矿",
+         "relatedProducts": ["钛白粉"], "role": "钛白粉主要原料参考"},
+        {"id": "thermal-coal", "name": "动力煤", "unit": "元/吨", "symbol": "动力煤",
+         "relatedProducts": ["尿素", "甲醇", "纯碱"], "role": "煤化工能源成本参考，煤种/地区口径需核对"},
+    ]
+    old_cost_inputs = existing_payload.get("costInputs", {})
+    if not isinstance(old_cost_inputs, dict):
+        old_cost_inputs = {}
+    updated_cost_inputs: dict[str, Any] = {}
+    for input_meta in cost_inputs:
+        input_id = input_meta["id"]
+        prior = old_cost_inputs.get(input_id, {})
+        item: dict[str, Any] = dict(input_meta)
+        try:
+            frame = call_with_timeout(
+                18, ak.futures_spot_sys, symbol=input_meta["symbol"], indicator="市场价格"
+            )
+            series = normalize_sys_frame(frame, today=end_day)
+            if series:
+                latest_point = series[-1]
+                latest_price = latest_point.get("spot") or latest_point.get("futures")
+                if latest_price is not None:
+                    item.update({
+                        "series": series[-120:],
+                        "latest": latest_price,
+                        "latestDate": latest_point["date"],
+                        "source": "生意社现货/期货市场价格（经 AKShare 获取）",
+                        "sourceUrl": "https://www.100ppi.com/",
+                        "status": "ok",
+                    })
+                    fresh_data = True
+                else:
+                    raise ValueError("no positive latest price in source series")
+            else:
+                raise ValueError("source returned no usable price history")
+        except Exception as exc:
+            errors.append("futures_spot_sys/" + input_id + ": " + str(exc)[:100])
+            if isinstance(prior, dict) and prior.get("latest") is not None:
+                item.update(prior)
+            else:
+                item.update({
+                    "series": [], "latest": None, "latestDate": None,
+                    "source": None, "sourceUrl": "https://www.100ppi.com/",
+                    "status": "pending",
+                })
+        updated_cost_inputs[input_id] = item
+    payload["costInputs"] = updated_cost_inputs
+
     payload["fetchErrors"] = errors[:5]
     payload["hasFreshData"] = fresh_data
     return payload

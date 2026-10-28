@@ -279,7 +279,7 @@ def fetch_data() -> dict[str, Any]:
     # They are NOT the same as total producer, port, or social inventory.
     inventory_symbols = {
         "soda-ash": "SA", "urea": "尿素", "methanol": "甲醇",
-        "aluminium": "沪铝", "rubber": "天然橡胶",
+        "aluminium": "沪铝", "rubber": "橡胶",
     }
     for product_id, symbol in inventory_symbols.items():
         try:

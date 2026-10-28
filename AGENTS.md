@@ -63,7 +63,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 
 ## 公开持仓 JSON
 
-- `data/holdings.json` 是持仓数量、成本、组合总资产/风险预算、风险退出参考价和止盈覆盖价的唯一来源；简报与风险中心都通过 `holdings-data.js` 读取。
+- `data/holdings.json` 是持仓数量、成本、组合总资产/风险预算和风险退出参考价的唯一来源；股票名称和止盈目标从 data/stocks.json 获取；简报与风险中心都通过 `holdings-data.js` 读取。
 - 该仓库为公开仓库，`data/holdings.json` 内容公开可见。不得在其中放入账号、交易凭证或其他秘密。
 - 网页端只读，不通过 localStorage 保存或修改持仓；修改持仓需更新 JSON 并提交仓库，等待 GitHub Pages 部署。
 - 初始持仓数量/成本来自用户提供的 2026-09-17 截图，若后续代码维护，先核对用户最新实际持仓；不要把截图行情当成实时行情。

@@ -22,6 +22,7 @@ ASSETS = [
     {"id": "nasdaq100", "name": "纳斯达克 100", "symbols": ["^NDX"], "currency": "指数点", "unit": "海外指数"},
     {"id": "sp500", "name": "标普 500", "symbols": ["^GSPC"], "currency": "指数点", "unit": "海外指数"},
     {"id": "vix", "name": "VIX 恐慌指数", "symbols": ["^VIX"], "currency": "指数点", "unit": "波动率指标", "range": "1mo"},
+    {"id": "usdcny", "name": "美元兑人民币", "symbols": ["CNY=X"], "currency": "CNY/USD", "unit": "外汇", "range": "1mo"},
 ]
 
 def finite(value: Any) -> float | None:

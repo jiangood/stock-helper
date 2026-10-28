@@ -110,6 +110,23 @@
       var inventoryHtml = inventory
         ? '<div class="mt-2 p-2 rounded border"><div class="mini-label">'+esc(inventory.label || '期货仓单库存')+'</div><div class="d-flex justify-content-between align-items-baseline gap-2"><strong>'+formatNumber(inventory.latest)+'</strong><span class="mini-label">较上期 '+inventoryChange+'</span></div><div class="mini-label">日期：'+esc(inventory.latestDate || '—')+' · <a href="'+esc(inventory.sourceUrl || 'https://data.eastmoney.com/ifdata/kcsj.html')+'" target="_blank" rel="noopener noreferrer">数据来源</a></div>'+inventoryChart+'</div>'
         : '<div class="mini-label mt-2">供需指标：该品种暂未取得可靠的自动仓单数据</div>';
+      var marketSignalHtml = '';
+      if (points.length >= 4 && inventoryPoints.length >= 4) {
+        var priceBase = Number(points[Math.max(0, points.length-5)][metricKey]);
+        var priceEnd = Number(points[points.length-1][metricKey]);
+        var invBase = Number(inventoryPoints[Math.max(0, inventoryPoints.length-5)].value);
+        var invEnd = Number(inventoryPoints[inventoryPoints.length-1].value);
+        if (priceBase>0 && invBase>0 && priceEnd>0 && invEnd>0) {
+          var shortPriceChange = (priceEnd/priceBase-1)*100;
+          var shortInvChange = (invEnd/invBase-1)*100;
+          var signalText = '价格与仓单变化不一致，暂不形成明确方向';
+          if (shortPriceChange>0.5 && shortInvChange<-1) signalText='价格上行、仓单下降：存在供需偏紧迹象';
+          else if (shortPriceChange<-0.5 && shortInvChange>1) signalText='价格下行、仓单上升：存在库存压力迹象';
+          else if (shortPriceChange>0.5 && shortInvChange>1) signalText='价格与仓单同步上升：需辨别补库与供给增加';
+          else if (shortPriceChange<-0.5 && shortInvChange<-1) signalText='价格与仓单同步下降：需留意需求走弱或库存转移';
+          marketSignalHtml = '<div class="mini-label mt-2">短期供需观察（近'+Math.min(points.length,inventoryPoints.length,5)+'个数据点）：'+esc(signalText)+'</div>';
+        }
+      }
       var links = data.industryLinks && typeof data.industryLinks === 'object' ? data.industryLinks : null;
       function companyTags(values) {
         return (Array.isArray(values) ? values : []).slice(0, 5).map(function(name){
@@ -130,6 +147,7 @@
         + '<div class="mt-2">'+chart+'</div>'
         + monthlyPriceHtml
         + inventoryHtml
+        + marketSignalHtml
         + industryLinksHtml
         + '<div class="mini-label mt-1">产业链：'+esc(data.chain || meta.chain)+'</div>'
         + '<div class="small mt-2">'+esc(data.drivers || meta.drivers)+'</div>'

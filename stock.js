@@ -899,10 +899,9 @@
 
     const price = d.price;
     const evalPlan = currentEval(d);
-    // 铁律：ST / 亏损股不买；盈利数据缺失时也不能把计划价显示成可执行买点。
-    const buyBlock = evalPlan.st ? 'ST 风险股，不买'
-      : evalPlan.pe === null ? '盈利数据缺失，暂不判断买点'
-      : evalPlan.pe <= 0 ? '亏损股，不买' : null;
+    // 与首页共用同一套硬性买入资格闸门。
+    const eligibility = Croc.buyEligibility(d, { name: evalPlan.name, pe: evalPlan.pe });
+    const buyBlock = eligibility.eligible ? null : eligibility.reason;
     const levels = [
       { key: 'heavy', label: '重仓', value: PLAN.heavy },
       { key: 'entry', label: '入场', value: PLAN.entry },

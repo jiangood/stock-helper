@@ -45,7 +45,9 @@ def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) ->
 
 def finite_number(value: Any) -> float | None:
     try:
-        if isinstance(value, str):\n            value = value.replace(",", "").strip()\n        number = float(value)
+        if isinstance(value, str):
+            value = value.replace(",", "").strip()
+        number = float(value)
         return number if math.isfinite(number) and number > 0 else None
     except (TypeError, ValueError):
         return None
@@ -236,7 +238,8 @@ def fetch_data() -> dict[str, Any]:
                 latest = finite_number(row.get("最新价", row.get("最新价格")))
                 if latest is None:
                     continue
-                target["name"] = name\n                target["latest"] = round(latest, 4)
+                target["name"] = name
+                target["latest"] = round(latest, 4)
                 target["latestDate"] = date.today().isoformat()
                 target["latestSpot"] = round(latest, 4)
                 target["source"] = "东方财富现货与股票数据（经 AKShare 获取）"

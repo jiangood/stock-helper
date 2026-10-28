@@ -53,7 +53,7 @@
     var screenbuy = ready.filter(function(x){ return Croc.matchStatus(x.stock, x.quote, 'screenbuy'); });
     summary.innerHTML = [['进入计划区',zone.length],['通过硬门槛',eligible.length],['纪律全过+买点',screenbuy.length]].map(function(x){return '<div class="col-4"><div class="insight-card h-100 p-2"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div></div></div>';}).join('');
     if (!ready.length) { list.innerHTML = '<div class="empty-state">行情尚未加载，请返回股票池刷新行情。</div>'; return; }
-    var cards = (eligible.length ? eligible : zone).slice().sort(function(a,b){ return (a.eval.zone === 'heavy' ? 0 : 1) - (b.eval.zone === 'heavy' ? 0 : 1); });
+    var cards = zone.slice().sort(function(a,b){ var ea=Croc.buyEligibility(a.stock,a.quote).eligible?0:1; var eb=Croc.buyEligibility(b.stock,b.quote).eligible?0:1; return ea-eb || (a.eval.zone === 'heavy' ? 0 : 1) - (b.eval.zone === 'heavy' ? 0 : 1); });
     if (!cards.length) {
       list.innerHTML = '<div class="empty-state">当前没有进入计划区且通过硬门槛的标的。可以继续观察价格，或查看量化纪律名单。</div>' + (screenbuy.length ? '<div class="insight-card"><div class="fw-semibold mb-2">量化纪律全过 + 计划买点</div><div class="d-flex flex-wrap gap-2">' + screenbuy.map(function(x){return '<a class="btn btn-sm btn-outline-secondary" href="stock.html?code='+encodeURIComponent(x.stock.code)+'">'+esc(x.stock.name)+'</a>';}).join('') + '</div></div>' : '');
       return;

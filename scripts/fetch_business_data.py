@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import signal
 import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -16,7 +17,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "business-data.json"
-LOOKBACK_DAYS = 240
+LOOKBACK_DAYS = 120
+SOURCE_TIMEOUT_SECONDS = 35
 
 PRODUCTS = [
     {"id": "soda-ash", "name": "纯碱", "unit": "元/吨", "symbol": "SA", "aliases": ["纯碱", "SA"], "stocks": ["双环科技", "中盐化工", "三友化工"], "chain": "玻璃、光伏玻璃、日用玻璃、硅酸钠", "drivers": "重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨成本。"},
@@ -28,6 +30,18 @@ PRODUCTS = [
     {"id": "rubber", "name": "天然橡胶", "unit": "元/吨", "symbol": "RU", "aliases": ["天然橡胶", "RU"], "stocks": ["海南橡胶"], "chain": "天然橡胶 → 轮胎、汽车、工业制品", "drivers": "看主产区天气、割胶季、库存、轮胎开工和合成胶价差。"},
     {"id": "rare-earth", "name": "稀土（氧化镨钕）", "unit": "元/吨", "symbol": None, "aliases": ["氧化镨钕", "稀土"], "stocks": ["北方稀土", "盛和资源"], "chain": "稀土矿/分离 → 磁材 → 新能源车、风电、电机", "drivers": "关注配额、分离产量、磁材需求、出口政策和上下游库存。"},
 ]
+
+def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:
+    """Bound a single public-source request so a stalled provider cannot block refresh forever."""
+    def alarm_handler(_signum: int, _frame: Any) -> None:
+        raise TimeoutError(f"data source timed out after {seconds}s")
+    previous = signal.signal(signal.SIGALRM, alarm_handler)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        return function(*args, **kwargs)
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous)
 
 def finite_number(value: Any) -> float | None:
     try:
@@ -122,7 +136,7 @@ def fetch_data() -> dict[str, Any]:
 
     # Business Society spot/futures basis data; exact dates allow a real trend chart.
     try:
-        frame = ak.futures_spot_price_daily(
+        frame = call_with_timeout(SOURCE_TIMEOUT_SECONDS, ak.futures_spot_price_daily,
             start_day=start_day.strftime("%Y%m%d"),
             end_day=end_day.strftime("%Y%m%d"),
             vars_list=["SA", "UR", "MA", "AL", "RU"],
@@ -137,7 +151,7 @@ def fetch_data() -> dict[str, Any]:
         for offset in range(0, 8):
             day = end_day - timedelta(days=offset)
             try:
-                frame = ak.futures_spot_price_previous(day.strftime("%Y%m%d"))
+                frame = call_with_timeout(15, ak.futures_spot_price_previous, day.strftime("%Y%m%d"))
                 if frame is None or getattr(frame, "empty", True):
                     continue
                 for _, row in frame.iterrows():
@@ -158,7 +172,43 @@ def fetch_data() -> dict[str, Any]:
 
     payload = build_payload(daily_by_symbol)
     payload["fetchErrors"] = errors[:5]
-    payload["items"] = payload["items"]
+
+    # Add a separate automatically fetched futures quote, clearly distinguished from spot.
+    realtime_names = {"SA": "纯碱", "UR": "尿素", "MA": "甲醇", "AL": "铝", "RU": "天然橡胶"}
+    for code, chinese_name in realtime_names.items():
+        try:
+            frame = call_with_timeout(12, ak.futures_zh_realtime, symbol=chinese_name)
+            if frame is None or getattr(frame, "empty", True):
+                continue
+            candidates = []
+            for _, row in frame.iterrows():
+                contract = str(row.get("symbol", "")).strip().upper()
+                name = str(row.get("name", "")).strip()
+                price = finite_number(row.get("trade"))
+                if price is None:
+                    continue
+                rank = 0 if contract == code + "0" or "连续" in name else 1
+                candidates.append((rank, row, price))
+            if not candidates:
+                continue
+            candidates.sort(key=lambda x: x[0])
+            _, row, price = candidates[0]
+            target = next((x for x in payload["items"].values() if x.get("symbol") == code), None)
+            if target:
+                target["latestFutures"] = round(price, 4)
+                target["futuresDate"] = date_text(row.get("tradedate")) or date.today().isoformat()
+                target["futuresTime"] = str(row.get("ticktime", "")).strip() or None
+                target["futuresSource"] = "新浪财经商品期货行情（经 AKShare 获取）"
+                target["futuresSourceUrl"] = "https://finance.sina.com.cn/futuremarket/"
+                if not target.get("latest"):
+                    target["latest"] = round(price, 4)
+                    target["latestDate"] = target["futuresDate"]
+                    target["status"] = "latest-only"
+                    target["source"] = target["futuresSource"]
+                    target["sourceUrl"] = target["futuresSourceUrl"]
+        except Exception as exc:
+            errors.append("futures_zh_realtime/" + code + ": " + str(exc)[:100])
+    payload["fetchErrors"] = errors[:5]
 
     # For products without futures basis series, pull the latest public spot quote
     # from Eastmoney's commodity/stock mapping endpoint if an exact product row exists.
@@ -167,7 +217,7 @@ def fetch_data() -> dict[str, Any]:
         spot_rows: list[dict[str, Any]] = []
         for category in categories:
             try:
-                frame = ak.futures_spot_stock(symbol=category)
+                frame = call_with_timeout(15, ak.futures_spot_stock, symbol=category)
                 if frame is None or getattr(frame, "empty", True):
                     continue
                 spot_rows.extend(frame.to_dict(orient="records"))

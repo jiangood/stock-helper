@@ -1,5 +1,5 @@
 /*!
- * StockQuotes SDK v1.3.0
+ * StockQuotes SDK v1.3.1
  * ---------------------------------------------------------------------------
  * 股票行情 SDK —— A 股实时行情聚合封装（浏览器 / Node 通用，无依赖）
  *
@@ -49,7 +49,7 @@
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
 
-  const VERSION = '1.3.0';
+  const VERSION = '1.3.1';
   const REFRESH_INTERVAL = 60000;   // 只看中期，盘中不做高频轮询
 
   const DEFAULTS = {
@@ -112,6 +112,13 @@
     if (v === null || v === undefined || v === '' || v === '-') return null;
     const n = Number(v);
     return isFinite(n) ? n : null;
+  };
+
+  /** K 线日期统一成 yyyy-mm-dd（兼容 20251103 / 2025-11-03） */
+  const barTime = v => {
+    const s = String(v || '').trim();
+    if (/^\d{8}$/.test(s)) return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+    return s.slice(0, 10);
   };
 
   /* ────────────────────────── 解析器 ────────────────────────── */
@@ -315,7 +322,7 @@
     const rows = d[(adjust || '') + period] || d[period] || [];
     if (!Array.isArray(rows)) return [];
     return rows.map(r => ({
-      time: String(r[0]).slice(0, 10),
+      time: barTime(r[0]),
       open: num(r[1]),
       close: num(r[2]),
       high: num(r[3]),
@@ -331,7 +338,7 @@
     return k.map(line => {
       const f = String(line).split(',');
       return {
-        time: f[0],
+        time: barTime(f[0]),
         open: num(f[1]),
         close: num(f[2]),
         high: num(f[3]),

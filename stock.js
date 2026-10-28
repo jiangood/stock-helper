@@ -24,6 +24,8 @@
   let PLAN = null;
   let DETAIL = null;
   let peersAt = 0;
+  let historyAt = 0;
+  let HISTORY = null;
 
   let chartTab = 'day';
   let chart = null;
@@ -88,6 +90,35 @@
     });
     await Promise.all(workers);
     return out;
+  }
+
+  const fmtYi = v => isNum(v) ? (v / 1e8).toFixed(2) + '亿' : '—';
+
+  const costKey = () => 'croc-cost:' + CODE;
+  const calcKey = () => 'croc-valuation:' + CODE;
+
+  function readCost() {
+    try {
+      const v = Number(localStorage.getItem(costKey()));
+      return isFinite(v) && v > 0 ? v : null;
+    } catch (e) { return null; }
+  }
+
+  function historyStats() {
+    if (!HISTORY || !Array.isArray(HISTORY.bars) || !HISTORY.bars.length || !DETAIL) return null;
+    const bars = HISTORY.bars;
+    const closes = bars.map(b => b.close).filter(isNum);
+    const lows = bars.map(b => b.low).filter(isNum);
+    const highs = bars.map(b => b.high).filter(isNum);
+    if (!closes.length || !lows.length || !highs.length) return null;
+    const lo = Math.min.apply(null, lows);
+    const hi = Math.max.apply(null, highs);
+    if (!(hi > lo)) return null;
+    return {
+      lo, hi,
+      count: bars.length,
+      pos: Croc.percentile(closes, DETAIL.price)
+    };
   }
 
   /* ────────────────────────── 初始化 ────────────────────────── */
@@ -156,6 +187,7 @@
       renderAll();
       loadPeers();
       warmupDaily();
+      warmupHistory();
       return true;
     } catch (e) {
       console.warn('获取详情失败:', e);
@@ -185,6 +217,8 @@
     renderQuote(DETAIL);
     renderValuation(DETAIL);
     renderPlan(DETAIL);
+    renderDiscipline(DETAIL);
+    updateCalc();
   }
 
   function renderHeader() {
@@ -262,6 +296,7 @@
       .join('');
 
     renderRange(d);
+    renderHistoryRange();
     renderInsightTags(d);
   }
 
@@ -291,6 +326,36 @@
     const toHigh = (price / hi - 1) * 100;
     $('range-low-dist').textContent = `距低点 ${fmtPct(toLow)}`;
     $('range-high-dist').textContent = `距高点 ${fmtPct(toHigh)}`;
+  }
+
+  function renderHistoryRange() {
+    const st = historyStats();
+    if (!st) {
+      $('hist-label').textContent = HISTORY ? '历史分位数据不足' : '历史分位加载中…';
+      $('hist-low').textContent = '--';
+      $('hist-high').textContent = '--';
+      $('hist-pin').style.left = '0%';
+      $('hist-low-dist').textContent = '--';
+      $('hist-high-dist').textContent = '--';
+      return;
+    }
+
+    const price = DETAIL.price;
+    $('hist-low').textContent = st.lo.toFixed(2);
+    $('hist-high').textContent = st.hi.toFixed(2);
+
+    // 价位条按历史低—高区间定位；同时给出收盘价分位，避免两个口径混淆
+    const rangePin = Math.min(100, Math.max(0, (price - st.lo) / (st.hi - st.lo) * 100));
+    $('hist-pin').style.left = rangePin + '%';
+
+    const pos = st.pos;
+    const zone = pos == null ? '—' : pos < 25 ? '低位区' : pos > 75 ? '高位区' : '中枢区';
+    $('hist-label').textContent = pos == null
+      ? `月K ${st.count} 根`
+      : `月K分位 ${pos.toFixed(0)}% · ${zone}（区间 ${rangePin.toFixed(0)}%）`;
+
+    $('hist-low-dist').textContent = `距历史低点 ${fmtPct((price / st.lo - 1) * 100)}`;
+    $('hist-high-dist').textContent = `距历史高点 ${fmtPct((price / st.hi - 1) * 100)}`;
   }
 
   function renderInsightTags(d) {
@@ -371,12 +436,32 @@
 
   /** 预取日 K，并在详情源缺少 52 周高低时用日 K 补算（同时加速「日K」标签切换） */
   async function warmupDaily() {
-    if (klineCache.day) return;
+    if (klineCache.day) {
+      renderDiscipline(DETAIL);
+      return;
+    }
     try {
       klineCache.day = await quotes.fetchKline(CODE, { period: 'day', count: 250, adjust: 'qfq' });
       apply52WeekFallback(klineCache.day.bars);
+      renderDiscipline(DETAIL);
     } catch (e) {
       /* 日 K 失败不影响主流程 */
+    }
+  }
+
+  /** 预取月 K，用于「历史分位」和长周期位置判断 */
+  async function warmupHistory() {
+    if (HISTORY && Date.now() - historyAt < 30 * 60 * 1000) return;
+    try {
+      const res = await quotes.fetchKline(CODE, { period: 'month', count: 240, adjust: 'qfq' });
+      HISTORY = res;
+      historyAt = Date.now();
+      renderHistoryRange();
+      renderDiscipline(DETAIL);
+    } catch (e) {
+      /* 月 K 失败不影响主流程 */
+      HISTORY = { bars: [] };
+      renderHistoryRange();
     }
   }
 
@@ -509,6 +594,264 @@
       : '<span class="text-body-secondary">未达成</span>';
   }
 
+  /* ────────────────────────── 渲染：鳄鱼纪律 ────────────────────────── */
+
+  function currentEval(d) {
+    return Croc.evaluate(PLAN || {}, Object.assign({}, d, {
+      pe: isNum(d.peTtm) ? d.peTtm : d.pe
+    }));
+  }
+
+  function checkItem(tone, label, value, note) {
+    const icon = tone === 'ok' ? '✓' : tone === 'bad' ? '×' : tone === 'warn' ? '!' : '·';
+    return `<div class="check-item ${tone}">
+      <span class="check-icon">${icon}</span>
+      <div class="min-w-0">
+        <div class="check-label">${esc(label)}</div>
+        <div class="check-value">${value}</div>
+        ${note ? `<div class="check-note">${esc(note)}</div>` : ''}
+      </div>
+    </div>`;
+  }
+
+  function renderDiscipline(d) {
+    if (!d || typeof Croc === 'undefined') return;
+    const e = currentEval(d);
+    const price = d.price;
+    const checks = [];
+
+    // 1. PB / 净资产八折
+    const pbVal = isNum(e.pb) ? `PB ${e.pb.toFixed(2)}` : 'PB —';
+    const navVal = isNum(e.navGolden) ? ` · 八折价 ${e.navGolden.toFixed(2)}` : '';
+    if (e.pbGolden) {
+      checks.push(checkItem('ok', 'PB / 净资产八折', pbVal + navVal, 'PB≤0.8：黄金买点'));
+    } else if (e.pbUnder1) {
+      checks.push(checkItem('warn', 'PB / 净资产八折', pbVal + navVal, '已破净，但未到八折'));
+    } else if (e.pb !== null && e.pb > 0) {
+      checks.push(checkItem('bad', 'PB / 净资产八折', pbVal + navVal, '高于八折，安全边际不足'));
+    } else {
+      checks.push(checkItem('neutral', 'PB / 净资产八折', pbVal, '行情源未提供 PB'));
+    }
+
+    // 2. 市值
+    if (isNum(e.cap) && e.cap > 0) {
+      checks.push(checkItem(e.smallCap ? 'ok' : 'bad', '市值 / 200 亿', fmtCap(e.cap),
+        e.smallCap ? '≤200 亿，弹性优先' : '>200 亿，弹性偏小'));
+    } else {
+      checks.push(checkItem('neutral', '市值 / 200 亿', '—', '行情源未提供总市值'));
+    }
+
+    // 3. PE
+    let peTone = 'neutral';
+    let peNote = '行情源未提供 PE';
+    if (e.loss) { peTone = 'bad'; peNote = 'TTM 亏损，PE 失效，改看 PB'; }
+    else if (e.pe !== null && e.pe > 30) { peTone = 'bad'; peNote = '30 倍以上算高'; }
+    else if (e.pe !== null) { peTone = 'ok'; peNote = '30 倍以内'; }
+    checks.push(checkItem(peTone, 'PE(TTM) / 30 倍', fmtPe(e.pe), peNote));
+
+    // 4. 52 周位置
+    const pos52 = (isNum(d.low52) && isNum(d.high52) && d.high52 > d.low52)
+      ? (price - d.low52) / (d.high52 - d.low52) * 100 : null;
+    checks.push(checkItem(
+      pos52 == null ? 'neutral' : pos52 <= 25 ? 'ok' : pos52 >= 75 ? 'bad' : 'neutral',
+      '52 周位置',
+      pos52 == null ? '—' : `分位 ${pos52.toFixed(0)}%`,
+      pos52 == null ? '区间数据缺失' : pos52 <= 25 ? '低位区' : pos52 >= 75 ? '高位区' : '中枢区'
+    ));
+
+    // 5. 月 K 历史分位
+    const hs = historyStats();
+    checks.push(checkItem(
+      !hs || hs.pos == null ? 'neutral' : hs.pos <= 25 ? 'ok' : hs.pos >= 75 ? 'bad' : 'neutral',
+      '历史分位（月K）',
+      hs && hs.pos != null ? `${hs.pos.toFixed(0)}%` : '—',
+      hs ? `${hs.count} 根月K · 低 ${hs.lo.toFixed(2)} / 高 ${hs.hi.toFixed(2)}` : HISTORY ? '月K 数据不足' : '月K 加载中…'
+    ));
+
+    // 6. 计划区间
+    if (!PLAN) {
+      checks.push(checkItem('neutral', '计划区间', '未纳入股票池', '无入场 / 重仓计划'));
+    } else if (!isNum(PLAN.entry) && !isNum(PLAN.heavy)) {
+      checks.push(checkItem('neutral', '计划区间', '未设置买点', '入场价与重仓价都为空'));
+    } else {
+      const zoneText = e.zone === 'heavy' ? '重仓区' : e.zone === 'entry' ? '入场区'
+        : e.zone === 'above' ? '高于入场' : '—';
+      const note = [
+        isNum(PLAN.heavy) ? `重仓 ${fmtNum(PLAN.heavy)}` : null,
+        isNum(PLAN.entry) ? `入场 ${fmtNum(PLAN.entry)}` : null
+      ].filter(Boolean).join(' · ');
+      checks.push(checkItem(
+        e.zone === 'heavy' || e.zone === 'entry' ? 'ok' : e.zone === 'above' ? 'warn' : 'neutral',
+        '计划区间', zoneText, note
+      ));
+    }
+
+    // 7. ST
+    checks.push(checkItem(e.st ? 'bad' : 'ok', 'ST / 风险警示', e.st ? '是' : '否',
+      e.st ? '铁律：不买 ST' : '非 ST'));
+
+    // 8. 连板
+    const li = Croc.limitUpInfo(klineCache.day && klineCache.day.bars, CODE, e.name);
+    let lTone = 'neutral';
+    let lVal = '—';
+    let lNote = klineCache.day ? '日K 数据不足' : '日K 加载中…';
+    if (li) {
+      lTone = li.count >= 3 || li.opened ? 'bad' : li.count === 2 ? 'warn' : 'ok';
+      lVal = li.count ? `${li.count} 连板` : '无连板';
+      lNote = li.opened ? '最近交易日涨停打开' : `涨停幅度 ${li.pct}%`;
+    }
+    checks.push(checkItem(lTone, '连续涨停', lVal, lNote));
+
+    $('discipline-checks').innerHTML = checks.join('');
+    renderLimitUpAlert(li);
+    renderSellPlan(e);
+  }
+
+  function renderLimitUpAlert(li) {
+    const el = $('limitup-alert');
+    if (!li || (!li.opened && li.count < 2)) {
+      el.classList.add('d-none');
+      return;
+    }
+
+    let cls = 'alert-warning';
+    let text = '';
+    if (li.count >= 3) {
+      cls = 'alert-danger';
+      text = `连续 ${li.count} 个涨停（最近 ${li.lastDate}）。按「卖其疯狂」纪律：不再猜顶，涨停打开时清仓或分批卖出。`
+        + (li.opened ? ' 最近交易日涨停已打开。' : '');
+    } else if (li.opened) {
+      cls = 'alert-danger';
+      text = `最近交易日触及涨停后打开（${li.lastDate}），情绪可能见顶；结合 ${li.count} 连板分批卖出。`;
+    } else {
+      text = `已 2 连板（最近 ${li.lastDate}），接近疯狂信号，准备执行卖出纪律。`;
+    }
+
+    el.className = `alert ${cls} mt-3 mb-0 py-2 px-3`;
+    el.textContent = text;
+  }
+
+  function renderSellPlan(e) {
+    const el = $('sell-plan');
+    const cost = readCost();
+    if (!cost) {
+      el.innerHTML = '<span class="text-body-secondary">设置持仓成本后，显示翻倍卖点与当前盈亏。</span>';
+      return;
+    }
+
+    const price = e.price;
+    const pnl = isNum(price) && price > 0 ? (price / cost - 1) * 100 : null;
+    const two = cost * 2;
+    const three = cost * 3;
+
+    let hint = '';
+    let tone = 'text-body-secondary';
+    if (isNum(price)) {
+      if (price >= three) {
+        hint = '已达三倍区间：参考资料目标，结合连续涨停信号分批清仓。';
+        tone = 'text-up';
+      } else if (price >= two) {
+        hint = '已达翻倍：按纪律卖出浮盈部分，收回本金，剩余为零成本底仓。';
+        tone = 'text-up';
+      } else if (price >= cost) {
+        hint = `未到翻倍，距翻倍还需 ${fmtPct((two / price - 1) * 100)}；逻辑不变就拿住。`;
+      } else {
+        hint = `低于成本 ${fmtPct((price / cost - 1) * 100)}；先核对买入逻辑是否被破坏。`;
+        tone = 'text-down';
+      }
+    }
+
+    el.innerHTML = `
+      <div class="sell-line">成本 <b>${cost.toFixed(2)}</b> · 现价 <b>${fmtNum(price)}</b>
+        · 浮动 <span class="${toneClass(pnl)}">${fmtPct(pnl)}</span></div>
+      <div class="sell-line text-body-secondary">翻倍卖利润 <b class="text-body">${two.toFixed(2)}</b>（+100%）
+        · 三倍目标 <b class="text-body">${three.toFixed(2)}</b>（+200%）</div>
+      <div class="sell-line ${tone}">${esc(hint)}</div>`;
+  }
+
+  function loadCost() {
+    const c = readCost();
+    if (c) $('cost-input').value = c.toFixed(2);
+  }
+
+  function saveCost() {
+    const v = Number($('cost-input').value);
+    if (!isFinite(v) || v <= 0) {
+      showToast('请输入大于 0 的持仓成本');
+      return;
+    }
+    try { localStorage.setItem(costKey(), String(v)); } catch (e) { /* ignore */ }
+    $('cost-input').value = v.toFixed(2);
+    if (DETAIL) renderSellPlan(currentEval(DETAIL));
+    showToast('持仓成本已保存', 'success');
+  }
+
+  function clearCost() {
+    try { localStorage.removeItem(costKey()); } catch (e) { /* ignore */ }
+    $('cost-input').value = '';
+    if (DETAIL) renderSellPlan(currentEval(DETAIL));
+    showToast('持仓成本已清除', 'success');
+  }
+
+  /* ────────────────────────── 资源股估值计算 ────────────────────────── */
+
+  function loadCalc() {
+    try {
+      const o = JSON.parse(localStorage.getItem(calcKey()) || '{}');
+      ['p', 'c', 'q', 'discount', 'multiple'].forEach(k => {
+        if (o[k] !== undefined && o[k] !== null && o[k] !== '' && $('calc-' + k)) {
+          $('calc-' + k).value = o[k];
+        }
+      });
+    } catch (e) { /* ignore */ }
+  }
+
+  function updateCalc() {
+    if (!DETAIL || !$('calc-p')) return;
+
+    const p = Number($('calc-p').value);
+    const c = Number($('calc-c').value);
+    const q = Number($('calc-q').value);
+    const discount = Number($('calc-discount').value) || 0.65;
+    const multiple = Number($('calc-multiple').value) || 20;
+    const filled = $('calc-p').value !== '' && $('calc-c').value !== '' && $('calc-q').value !== '';
+
+    try {
+      localStorage.setItem(calcKey(), JSON.stringify({
+        p: $('calc-p').value,
+        c: $('calc-c').value,
+        q: $('calc-q').value,
+        discount: $('calc-discount').value,
+        multiple: $('calc-multiple').value
+      }));
+    } catch (e) { /* ignore */ }
+
+    const out = $('calc-out');
+    if (!filled || !isFinite(p) || !isFinite(c) || !isFinite(q) || p <= 0 || c < 0 || q <= 0) {
+      out.textContent = '填写 P / C / Q 后自动计算。';
+      return;
+    }
+
+    const gross = (p - c) * q * 1e4;
+    const net = gross * discount;
+    const fair = net * multiple;
+    const wild = net * 40;
+    const cap = DETAIL.totalCap;
+    const shares = isNum(DETAIL.totalShares) && DETAIL.totalShares > 0
+      ? DETAIL.totalShares
+      : (isNum(cap) && isNum(DETAIL.price) && DETAIL.price > 0 ? cap / DETAIL.price : null);
+    const implied = shares ? fair / shares : null;
+    const space = isNum(cap) && cap > 0 ? (fair / cap - 1) * 100 : null;
+
+    out.innerHTML = `
+      <div>年化毛利 <b>${fmtYi(gross)}</b> · 保守净利 <b>${fmtYi(net)}</b></div>
+      <div>合理市值 <b>${fmtYi(fair)}</b>（${multiple}×） · 当前 <b>${fmtYi(cap)}</b>
+        · 空间 <span class="${toneClass(space)}">${fmtPct(space)}</span></div>
+      <div class="text-body-secondary">对应股价 <b class="text-body">${fmtNum(implied)}</b>
+        · 狂热上限（40×）${fmtYi(wild)}</div>
+      ${gross <= 0 ? '<div class="text-up">当前价格不高于成本，毛利为负：先确认 P / C 是否填反。</div>' : ''}`;
+  }
+
   /* ────────────────────────── 图表 ────────────────────────── */
 
   function destroyChart() {
@@ -576,6 +919,7 @@
       }
       renderKline(klineCache[tab], tab);
       $('chart-empty').classList.add('d-none');
+      if (tab === 'day' && DETAIL) renderDiscipline(DETAIL);
     } catch (e) {
       console.warn('图表加载失败:', e);
       $('chart-empty').textContent = '图表加载失败：' + (e.message || '接口不可用');
@@ -732,6 +1076,9 @@
 
   window.refreshAll = refreshAll;
   window.toggleTheme = toggleTheme;
+  window.saveCost = saveCost;
+  window.clearCost = clearCost;
+  window.updateCalc = updateCalc;
 
   (async function init() {
     initTheme();
@@ -760,6 +1107,8 @@
 
     await loadPlan();
     renderHeader();
+    loadCost();
+    loadCalc();
 
     await refreshAll(false);
     scheduleRefresh();

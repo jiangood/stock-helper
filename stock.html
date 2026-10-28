@@ -105,11 +105,57 @@
   .insight-tag.warn { border-color: rgba(220,38,38,.35); color: var(--up); background: rgba(220,38,38,.06); }
   .insight-tag.calm { border-color: rgba(22,163,74,.35); color: var(--down); background: rgba(22,163,74,.06); }
 
+  /* 鳄鱼纪律 */
+  .check-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: .5rem;
+  }
+  .check-item {
+    display: flex; align-items: flex-start; gap: .5rem;
+    padding: .45rem .55rem; border-radius: 6px;
+    border: 1px solid var(--bs-border-color);
+    background: var(--bs-tertiary-bg);
+  }
+  .check-item .check-icon {
+    flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    border: 1px solid var(--bs-border-color);
+    color: var(--bs-secondary-color); background: var(--bs-body-bg);
+  }
+  .check-item.ok .check-icon { color: var(--down); border-color: rgba(22,163,74,.45); background: rgba(22,163,74,.08); }
+  .check-item.warn .check-icon { color: #b45309; border-color: rgba(245,158,11,.45); background: rgba(245,158,11,.1); }
+  .check-item.bad .check-icon { color: var(--up); border-color: rgba(220,38,38,.4); background: rgba(220,38,38,.07); }
+  .check-item.ok { border-color: rgba(22,163,74,.26); }
+  .check-item.warn { border-color: rgba(245,158,11,.3); }
+  .check-item.bad { border-color: rgba(220,38,38,.28); }
+  [data-bs-theme="dark"] .check-item.warn .check-icon { color: #fbbf24; }
+  .check-item .check-label { font-size: 11px; color: var(--bs-secondary-color); }
+  .check-item .check-value { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .check-item .check-note { font-size: 10.5px; color: var(--bs-secondary-color); }
+
+  .sell-box {
+    border: 1px solid var(--bs-border-color); border-radius: 6px;
+    padding: .6rem .7rem; background: var(--bs-tertiary-bg);
+  }
+  .sell-box .sell-line { font-size: 12px; font-variant-numeric: tabular-nums; }
+  .sell-box .sell-line + .sell-line { margin-top: .25rem; }
+
+  .calc-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: .5rem .65rem;
+  }
+  .calc-grid label { font-size: 10.5px; color: var(--bs-secondary-color); margin-bottom: .15rem; }
+  .calc-grid .form-control { font-size: 12px; font-variant-numeric: tabular-nums; }
+  .calc-out { font-size: 12px; font-variant-numeric: tabular-nums; }
+  .calc-out b { font-weight: 700; }
+
   @media (max-width: 575.98px) {
     .price-big { font-size: 32px; }
     #chart { height: 240px; }
     .stat-grid { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: .5rem .75rem; }
     .stat-item .stat-value { font-size: 12px; }
+    .check-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
   }
 </style>
 </head>
@@ -219,6 +265,19 @@
         </div>
 
         <div class="mt-3 pt-3 border-top">
+          <div class="d-flex justify-content-between text-body-secondary" style="font-size:11px">
+            <span>历史低 <span class="font-monospace text-body" id="hist-low">--</span></span>
+            <span id="hist-label">历史分位统计中…</span>
+            <span>历史高 <span class="font-monospace text-body" id="hist-high">--</span></span>
+          </div>
+          <div class="range-track mt-2"><div class="range-pin" id="hist-pin" style="left:0"></div></div>
+          <div class="d-flex justify-content-between text-body-secondary mt-1" style="font-size:11px">
+            <span id="hist-low-dist">--</span>
+            <span id="hist-high-dist">--</span>
+          </div>
+        </div>
+
+        <div class="mt-3 pt-3 border-top">
           <div class="d-flex flex-wrap align-items-baseline gap-2" style="font-size:12px">
             <span class="text-body-secondary">同组比价</span>
             <span id="peer-summary" class="text-body-secondary">统计中…</span>
@@ -257,6 +316,79 @@
         </div>
       </div>
     </section>
+
+    <!-- 鳄鱼纪律 -->
+    <section class="card shadow-sm">
+      <div class="card-header bg-body d-flex align-items-center py-2">
+        <span class="fw-semibold" style="font-size:13px">鳄鱼纪律</span>
+        <span class="ms-auto text-body-secondary" style="font-size:10.5px">可量化项自动计算</span>
+      </div>
+      <div class="card-body">
+        <div class="check-grid" id="discipline-checks"></div>
+
+        <div class="text-body-tertiary mt-2" style="font-size:10.5px">
+          仓位纪律：单账户持仓 ≤3 只 · 主仓 ≥70% · 原则上不使用融资。自动项不含国资背景、主营集中、护城河，需人工核对。
+        </div>
+
+        <div class="alert d-none mt-3 mb-0 py-2 px-3" id="limitup-alert" style="font-size:12px"></div>
+
+        <div class="mt-3 pt-3 border-top">
+          <div class="d-flex flex-wrap align-items-baseline gap-2">
+            <span class="fw-semibold" style="font-size:13px">卖出纪律</span>
+            <span class="text-body-secondary" style="font-size:10.5px">涨一倍卖利润 · 三倍目标 · 连板清仓</span>
+          </div>
+          <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+            <div class="input-group input-group-sm" style="max-width:230px">
+              <span class="input-group-text">持仓成本</span>
+              <input type="number" class="form-control" id="cost-input" min="0" step="0.01"
+                     placeholder="如 5.50" inputmode="decimal" onkeydown="if(event.key==='Enter')saveCost()">
+              <button class="btn btn-outline-secondary" type="button" onclick="saveCost()">保存</button>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary" type="button" onclick="clearCost()">清除</button>
+            <span class="text-body-tertiary" style="font-size:10.5px">仅保存在本机浏览器</span>
+          </div>
+          <div class="sell-box mt-2" id="sell-plan">设置持仓成本后，显示翻倍卖点与当前盈亏。</div>
+        </div>
+
+        <details class="mt-3 pt-3 border-top">
+          <summary class="fw-semibold" style="font-size:13px;cursor:pointer">资源股现价估值（(P−C)×Q 法）</summary>
+          <div class="text-body-secondary mt-1" style="font-size:10.5px">
+            不预测未来，只用已经发生的产品价格计算当下应有多少市值。Q 以「万」为单位，例如 2.5 万吨填 2.5。
+          </div>
+          <div class="calc-grid mt-2">
+            <div>
+              <label for="calc-p">P 产品现价（元/单位）</label>
+              <input type="number" class="form-control form-control-sm" id="calc-p" step="0.01" min="0"
+                     placeholder="如 180000" oninput="updateCalc()">
+            </div>
+            <div>
+              <label for="calc-c">C 现金成本（元/单位）</label>
+              <input type="number" class="form-control form-control-sm" id="calc-c" step="0.01" min="0"
+                     placeholder="如 100000" oninput="updateCalc()">
+            </div>
+            <div>
+              <label for="calc-q">Q 年产能（万单位）</label>
+              <input type="number" class="form-control form-control-sm" id="calc-q" step="0.01" min="0"
+                     placeholder="如 2.5" oninput="updateCalc()">
+            </div>
+            <div>
+              <label for="calc-discount">安全折扣</label>
+              <input type="number" class="form-control form-control-sm" id="calc-discount" step="0.05" min="0.1" max="1"
+                     value="0.65" oninput="updateCalc()">
+            </div>
+            <div>
+              <label for="calc-multiple">PE 倍数</label>
+              <input type="number" class="form-control form-control-sm" id="calc-multiple" step="1" min="1"
+                     value="20" oninput="updateCalc()">
+            </div>
+          </div>
+          <div class="calc-out mt-2" id="calc-out">填写 P / C / Q 后自动计算。</div>
+          <div class="text-body-tertiary mt-1" style="font-size:10.5px">
+            保守净利 = (P−C)×Q×1万×折扣；合理市值 = 保守净利×PE。结果只是模糊的正确，不构成投资建议。
+          </div>
+        </details>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -267,6 +399,7 @@
 
 <div class="alert position-fixed bottom-0 start-50 translate-middle-x mb-3 py-2 px-3 small shadow d-none" id="toast" style="z-index:1080"></div>
 
+<script src="croc.js"></script>
 <script src="quotes.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
 <script src="stock.js"></script>

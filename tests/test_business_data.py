@@ -34,6 +34,21 @@ class BusinessDataTests(unittest.TestCase):
         self.assertIsNone(missing["latest"])
         self.assertEqual(missing["status"], "pending")
 
+    def test_compact_chart_dates_roll_over_year_correctly(self):
+        class FakeFrame:
+            empty = False
+            def iterrows(self):
+                return iter(enumerate([
+                    {"日期": "11-26", "现货价格": 100, "主力合约": 101},
+                    {"日期": "12-05", "现货价格": 102, "主力合约": 103},
+                    {"日期": "01-10", "现货价格": 98, "主力合约": 99},
+                    {"日期": "10-28", "现货价格": 110, "主力合约": 111},
+                ]))
+        series = fetcher.normalize_sys_frame(FakeFrame(), today=fetcher.date(2026, 10, 28))
+        self.assertEqual(series[0]["date"], "2025-11-26")
+        self.assertEqual(series[-1]["date"], "2026-10-28")
+        self.assertEqual(series[-1]["spot"], 110)
+
     def test_finite_number_rejects_zero_nan_and_text(self):
         self.assertIsNone(fetcher.finite_number(0))
         self.assertIsNone(fetcher.finite_number(float("nan")))

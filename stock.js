@@ -162,7 +162,10 @@
   function toggleTheme() {
     const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-bs-theme', next);
-    $('theme-btn').textContent = next === 'dark' ? '☀️' : '🌙';
+    const themeBtn = $('theme-btn');
+    if (themeBtn && !themeBtn.classList.contains('q-btn')) {
+      themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+    }
     localStorage.setItem('stock-theme', next);
     if (window.__stockQuasarSetDark) window.__stockQuasarSetDark(next === 'dark');
     rerenderChart();
@@ -1485,6 +1488,13 @@
 
   function spinRefresh() {
     const btn = $('refresh-btn');
+    if (!btn) return;
+    if (btn.classList.contains('q-btn')) {
+      btn.classList.add('refreshing');
+      clearTimeout(btn._t);
+      btn._t = setTimeout(() => btn.classList.remove('refreshing'), 900);
+      return;
+    }
     btn.classList.add('disabled');
     btn.textContent = '◌';
     clearTimeout(btn._t);

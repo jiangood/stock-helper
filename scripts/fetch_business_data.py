@@ -93,6 +93,23 @@ def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
     return list(dict.fromkeys(names))[:limit]
 
 
+def normalize_source_monthly_prices(row: Any) -> list[dict[str, Any]]:
+    """Normalize Eastmoney's five-month commodity price snapshots without guessing dates."""
+    points: list[dict[str, Any]] = []
+    for key, label in [
+        ("近5月", "5个月前"),
+        ("近4月", "4个月前"),
+        ("近3月", "3个月前"),
+        ("近2月", "2个月前"),
+        ("近1月", "1个月前"),
+        ("最新价", "最新"),
+    ]:
+        value = finite_number(row.get(key))
+        if value is not None:
+            points.append({"label": label, "value": round(value, 4)})
+    return points
+
+
 def normalize_inventory_frame(frame: Any) -> list[dict[str, Any]]:
     """Normalize exchange warehouse receipt/inventory data; this is not total industry inventory."""
     if frame is None or getattr(frame, "empty", True):
@@ -397,6 +414,17 @@ def fetch_data() -> dict[str, Any]:
                 "source": "东方财富现货与股票数据（经 AKShare 获取）",
                 "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
             }
+            monthly_prices = normalize_source_monthly_prices(row)
+            if monthly_prices:
+                target["monthlyPrices"] = {
+                    "label": "来源提供的近月价格快照",
+                    "series": monthly_prices,
+                    "source": "东方财富现货与股票数据（经 AKShare 获取）",
+                    "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+                }
+                fresh_data = True
+            elif isinstance(old_item, dict) and isinstance(old_item.get("monthlyPrices"), dict):
+                target["monthlyPrices"] = old_item["monthlyPrices"]
             if product["id"] in latest_only_products:
                 latest = finite_number(row.get("最新价", row.get("最新价格")))
                 if latest is not None:

@@ -5,6 +5,7 @@
   var quotes = {};
   var businessData = null;
   var businessFetchPromise = null;
+  var businessCharts = {};
   var items = [
     { id:'soda-ash', name:'纯碱', metric:'纯碱现货价', unit:'元/吨', stocks:['双环科技','中盐化工','三友化工'], chain:'玻璃、光伏玻璃、日用玻璃、硅酸钠', drivers:'重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨等成本。', query:'纯碱 现货价格 厂家库存 周度' },
     { id:'urea', name:'尿素', metric:'尿素现货价', unit:'元/吨', stocks:['四川美丰'], chain:'煤头/气头生产 → 农业与工业需求', drivers:'看农业需求季节性、出口政策、日产量、企业库存和煤气成本。', query:'尿素 现货价格 企业库存 日产量' },
@@ -45,6 +46,10 @@
   function renderBusiness() {
     var container = el('business-cards');
     if (!container) return;
+    Object.keys(businessCharts).forEach(function(key) {
+      try { businessCharts[key].remove(); } catch (error) { /* ignore detached charts */ }
+    });
+    businessCharts = {};
     var businessChartSpecs = [];
     var payloadItems = businessData && businessData.items ? businessData.items : {};
     var products = items.map(function (meta) {
@@ -273,8 +278,8 @@
         });
         var area = chart.addAreaSeries({
           lineColor: primary,
-          topColor: primary + '35',
-          bottomColor: primary + '00',
+          topColor: primary,
+          bottomColor: 'transparent',
           lineWidth: 2,
           priceLineVisible: true,
           lastValueVisible: true,
@@ -284,7 +289,7 @@
         area.setData(data);
         chart.timeScale().fitContent();
         node.dataset.chartReady = '1';
-        node._businessChart = chart;
+        businessCharts[spec.id] = chart;
       } catch (error) {
         node.innerHTML = '<div class="empty-state py-2 small">历史曲线暂时无法绘制</div>';
       }

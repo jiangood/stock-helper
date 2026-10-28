@@ -18,6 +18,7 @@
     var costValue = validQuantity && validCost ? quantity * cost : null;
     var pnl = marketValue !== null && costValue !== null ? marketValue - costValue : null;
     var pnlPct = pnl !== null && costValue > 0 ? pnl / costValue * 100 : null;
+    var doublePrice = validCost ? cost * 2 : null;
     var stopLoss = num(riskPlan.stopLoss);
     var target1 = num(riskPlan.target1 !== undefined && riskPlan.target1 !== '' ? riskPlan.target1 : plan.tp1);
     var target2 = num(riskPlan.target2 !== undefined && riskPlan.target2 !== '' ? riskPlan.target2 : plan.tp2);
@@ -37,6 +38,7 @@
       quantity: validQuantity ? quantity : null, cost: validCost ? cost : null, price: validPrice ? price : null,
       quoteTime: quote.time || null, marketValue: marketValue, costValue: costValue, pnl: pnl, pnlPct: pnlPct,
       weightOfStocks: null, weightOfAssets: null, stopLoss: stopLoss, stopRisk: stopRisk,
+      doublePrice: doublePrice, doubleReached: validPrice && doublePrice !== null && price >= doublePrice,
       stopDistancePct: stopDistancePct, stopState: stopState, target1: target1, target2: target2,
       target1Gain: targetGain(target1), target2Gain: targetGain(target2),
       target1Reached: validPrice && target1 !== null && price >= target1,
@@ -139,11 +141,11 @@
       '<div id="risk-summary" class="row g-2 mb-3"></div>',
       '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数</div><div class="business-form">',
       '<div><label for="risk-account-equity" class="form-label small mb-1">账户总资产（元，手工维护）</label><input id="risk-account-equity" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="未填写则不计算总资产仓位"></div>',
-      '<div><label for="risk-budget" class="form-label small mb-1">组合止损风险预算（元，可选）</label><input id="risk-budget" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="按你的纪律填写，不预设"></div>',
+      '<div><label for="risk-budget" class="form-label small mb-1">组合风险预算（元，可选）</label><input id="risk-budget" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="按你的纪律填写，不预设"></div>',
       '<div class="wide d-flex flex-wrap gap-2 align-items-center"><button id="risk-save-settings" type="button" class="btn btn-sm btn-primary">保存参数</button><span id="risk-save-status" class="panel-subtitle">参数仅保存在本机浏览器。</span></div></div></section>',
       '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"><div><div class="panel-title">实际持仓风险明细</div><div class="panel-subtitle">止损价默认留空；止盈目标优先读取股票池原计划价，可在此单独覆盖。</div></div><button id="risk-refresh" class="btn btn-sm btn-outline-secondary" type="button">刷新计算</button></div>',
       '<div id="risk-positions" class="insight-grid mb-3"></div>',
-      '<div class="panel-subtitle mt-2">口径说明：止损风险金额 = max(现价 − 止损价, 0) × 持股数量；仅在止损价低于有效现价时计算。未设止损、行情缺失或参数无效的持仓不会被当作风险为零。止盈收益是达到目标价时的静态情景，不是预测。未计手续费、税费、滑点、跳空和流动性影响。</div>',
+      '<div class="panel-subtitle mt-2">口径说明：参考价风险敞口 = max(现价 − 风险退出参考价, 0) × 持股数量；仅在参考价低于有效现价时计算。未设参考价、行情缺失或参数无效的持仓不会被当作风险为零。鳄鱼体系强调区分正常波动与本金永久损失；这里的参考价只用于情景测算，不代表建议按价格机械止损，须结合基本面与周期逻辑。止盈收益是达到目标价时的静态情景，不是预测；未计手续费、税费、滑点、跳空和流动性影响。</div>',
       '<div class="panel-subtitle mt-2">风险预算比较只有在每只持仓都具备有效行情和有效止损价时才给出完整结论。账户总资产为手工输入，不会自动从券商同步。</div>'
     ].join('');
     nav.parentNode.insertBefore(pane, nav);
@@ -191,7 +193,7 @@
       ['持仓市值', summary.totalMarketValue === null ? (summary.count ? '部分行情缺失' : '—') : '¥' + money(summary.totalMarketValue), summary.completeQuotes ? '所有持仓均有有效价格' : '仅显示有效报价，不把缺失行情当作零'],
       ['浮动盈亏', summary.pnl === null ? (summary.count ? '数据不完整' : '—') : (summary.pnl > 0 ? '+' : '') + '¥' + money(summary.pnl), '按录入成本与当前页面报价计算'],
       ['占账户总资产', summary.accountExposurePct === null ? '需填写资产 / 行情完整' : pct(summary.accountExposurePct), '账户总资产为手工输入值'],
-      ['止损风险金额', summary.riskComplete ? '¥' + money(summary.knownRisk) : '不完整：' + summary.missingRisk + ' 只待设置', summary.riskBudget === null ? '可选填写组合风险预算' : (summary.riskComplete ? '预算 ¥' + money(summary.riskBudget) + ' · ' + (summary.budgetExceeded ? '超出预算' : '未超预算') : '预算比较暂不完整')]
+      ['参考价风险敞口', summary.riskComplete ? '¥' + money(summary.knownRisk) : '不完整：' + summary.missingRisk + ' 只待设置', summary.riskBudget === null ? '可选填写组合风险预算' : (summary.riskComplete ? '预算 ¥' + money(summary.riskBudget) + ' · ' + (summary.budgetExceeded ? '超出预算' : '未超预算') : '预算比较暂不完整')]
     ];
     summaryNode.innerHTML = cards.map(function (item) {
       return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">' + esc(item[0]) + '</div><div class="fs-5 fw-bold">' + esc(item[1]) + '</div><div class="mini-label mt-1">' + esc(item[2]) + '</div></div></div>';
@@ -202,9 +204,9 @@
     }
     listNode.innerHTML = rows.map(function (r) {
       var configKey = r.code, config = planMap[configKey] || {}, stock = stockForCode(r.code);
-      var riskState = r.stopState === 'valid' ? '有效止损' : r.stopState === 'invalid' ? '止损价无效' : r.stopState === 'unverified' ? '待核验' : '未设止损';
+      var riskState = r.stopState === 'valid' ? '有效参考价' : r.stopState === 'invalid' ? '参考价无效' : r.stopState === 'unverified' ? '待核验' : '未设参考价';
       var riskClass = r.stopState === 'valid' ? 'flag-buy' : 'flag-warn';
-      var stopDetail = r.stopRisk === null ? '风险金额暂不可计算' : '止损距离 ' + pct(r.stopDistancePct) + ' · 风险约 ¥' + money(r.stopRisk);
+      var stopDetail = r.stopRisk === null ? '风险金额暂不可计算' : '参考价距离 ' + pct(r.stopDistancePct) + ' · 风险约 ¥' + money(r.stopRisk);
       function targetDetail(target, gain, reached) {
         if (target === null) return '未设置';
         if (reached) return '已触及/超过目标价';
@@ -214,9 +216,10 @@
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">' + esc(r.name) + '</div><div class="mini-label">' + esc(r.code) + ' · ' + esc(marketStatus) + '</div></div><span class="flag ' + riskClass + '" style="margin:0">' + esc(riskState) + '</span></div>'
         + '<div class="d-flex flex-wrap justify-content-between gap-2 mt-2"><div><div class="mini-label">持仓市值</div><div class="fs-5 fw-bold">' + (r.marketValue === null ? '—' : '¥' + money(r.marketValue)) + '</div></div><div><div class="mini-label">持仓盈亏</div><div class="fw-semibold ' + (r.pnl > 0 ? 'text-up' : r.pnl < 0 ? 'text-down' : 'text-body-secondary') + '">' + (r.pnl === null ? '—' : (r.pnl > 0 ? '+' : '') + '¥' + money(r.pnl) + ' (' + pct(r.pnlPct) + ')') + '</div></div><div><div class="mini-label">股票仓位</div><div class="fw-semibold">' + pct(r.weightOfStocks) + '</div></div><div><div class="mini-label">账户仓位</div><div class="fw-semibold">' + pct(r.weightOfAssets) + '</div></div></div>'
-        + '<div class="row g-2 mt-1"><div class="col-12 col-md-4"><label class="form-label small mb-1">计划止损价（手工设定）</label><input class="form-control form-control-sm" type="number" min="0.001" step="0.001" placeholder="未设置" value="' + esc(config.stopLoss || '') + '" data-risk-code="' + esc(configKey) + '" data-risk-field="stopLoss"></div>'
+        + '<div class="row g-2 mt-1"><div class="col-12 col-md-4"><label class="form-label small mb-1">风险退出参考价（手工设定）</label><input class="form-control form-control-sm" type="number" min="0.001" step="0.001" placeholder="未设置" value="' + esc(config.stopLoss || '') + '" data-risk-code="' + esc(configKey) + '" data-risk-field="stopLoss"></div>'
         + '<div class="col-6 col-md-4"><label class="form-label small mb-1">止盈目标 1（默认股票池计划）</label><input class="form-control form-control-sm" type="number" min="0.001" step="0.001" placeholder="' + (stock && stock.tp1 != null ? esc(stock.tp1) : '未设置') + '" value="' + esc(config.target1 || '') + '" data-risk-code="' + esc(configKey) + '" data-risk-field="target1"></div>'
         + '<div class="col-6 col-md-4"><label class="form-label small mb-1">止盈目标 2（默认股票池计划）</label><input class="form-control form-control-sm" type="number" min="0.001" step="0.001" placeholder="' + (stock && stock.tp2 != null ? esc(stock.tp2) : '未设置') + '" value="' + esc(config.target2 || '') + '" data-risk-code="' + esc(configKey) + '" data-risk-field="target2"></div></div>'
+        + '<div class="mini-label mt-2">成本翻倍参考价：' + (r.doublePrice === null ? '—' : money(r.doublePrice)) + ' · ' + (r.doubleReached ? '已到成本翻倍参考价' : '未到成本翻倍参考价') + '</div>'
         + '<div class="mini-label mt-2">' + esc(stopDetail) + ' · 止盈1：' + esc(targetDetail(r.target1, r.target1Gain, r.target1Reached)) + ' · 止盈2：' + esc(targetDetail(r.target2, r.target2Gain, r.target2Reached)) + '</div></article>';
     }).join('');
   }

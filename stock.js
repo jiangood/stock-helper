@@ -164,6 +164,7 @@
     document.documentElement.setAttribute('data-bs-theme', next);
     $('theme-btn').textContent = next === 'dark' ? '☀️' : '🌙';
     localStorage.setItem('stock-theme', next);
+    if (window.__stockQuasarSetDark) window.__stockQuasarSetDark(next === 'dark');
     rerenderChart();
   }
 

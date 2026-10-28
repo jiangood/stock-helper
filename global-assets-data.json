@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T12:59:55.057744Z",
+  "updatedAt": "2026-10-28T13:00:37.616739Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,11 +7,11 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4065.3,
+      "price": 4066.7,
       "prevClose": 4007.9,
-      "change": 57.4,
-      "changePct": 1.432171,
-      "quoteTime": "2026-10-28T12:49:50Z",
+      "change": 58.8,
+      "changePct": 1.467102,
+      "quoteTime": "2026-10-28T12:50:26Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF"
     },
@@ -20,11 +20,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 80616.04,
+      "price": 80616.05,
       "prevClose": 80790.836,
-      "change": -174.796,
-      "changePct": -0.216356,
-      "quoteTime": "2026-10-28T12:59:47Z",
+      "change": -174.786,
+      "changePct": -0.216344,
+      "quoteTime": "2026-10-28T12:59:32Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD"
     },
@@ -33,11 +33,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2336.58,
+      "price": 2336.95,
       "prevClose": 2355.9536,
-      "change": -19.3736,
-      "changePct": -0.822325,
-      "quoteTime": "2026-10-28T12:59:49Z",
+      "change": -19.0036,
+      "changePct": -0.80662,
+      "quoteTime": "2026-10-28T13:00:28Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD"
     },
@@ -89,7 +89,7 @@
       "prevClose": 16.07,
       "change": 1.32,
       "changePct": 8.214063,
-      "quoteTime": "2026-10-28T12:44:46Z",
+      "quoteTime": "2026-10-28T12:45:31Z",
       "sourceSymbol": "^VIX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EVIX",
       "history": [

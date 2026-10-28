@@ -869,6 +869,7 @@
 
     $('stock-code').textContent = CODE6;
     document.title = `${CODE6} - 股票详情`;
+    $('em-link').href = `https://quote.eastmoney.com/${CODE}.html`;
     showState('加载中…', `${CODE6} 行情获取中，请稍候`, 'none');
 
     await loadPlan();

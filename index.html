@@ -68,6 +68,7 @@
 
   /* 名称 / 别名 */
   .stock-name { font-weight: 600; }
+  .stock-name:hover { color: var(--bs-primary) !important; text-decoration: underline; }
   .tag-alias {
     font-size: 9.5px; max-width: 120px; display: inline-block;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -341,7 +342,9 @@ function buildRow(stock) {
   const aliasHtml = stock.alias
     ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
     : '<span class="text-body-tertiary">—</span>';
-  const nameHtml = `<a class="stock-name text-decoration-none text-body" href="https://quote.eastmoney.com/${stock.code}.html" target="_blank" rel="noopener" title="${esc(stock.name)}">${esc(stock.name)}</a>`;
+  const nameHtml = stock.code
+    ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}" title="查看 ${esc(stock.name)} 详情">${esc(stock.name)}</a>`
+    : `<span class="stock-name">${esc(stock.name)}</span>`;
 
   return `
     <td>${nameHtml}</td>

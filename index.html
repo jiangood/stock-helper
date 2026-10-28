@@ -115,6 +115,12 @@
   }
   .health-dialog::backdrop { background: rgba(15,23,42,.42); }
   .health-list { max-height: 58vh; overflow: auto; }
+  .brief-text {
+    margin: 0; max-height: 62vh; overflow: auto;
+    white-space: pre-wrap; word-break: break-word;
+    font-family: inherit; font-size: 12px; line-height: 1.7;
+    color: var(--bs-body-color);
+  }
   .health-item {
     display: flex; align-items: flex-start; gap: .5rem;
     padding: .45rem .1rem; border-bottom: 1px solid var(--bs-border-color);
@@ -184,7 +190,7 @@
     </div>
 
     <div class="ms-auto ms-xl-0 d-flex align-items-center gap-1">
-      <button class="btn btn-sm btn-outline-secondary px-2 py-0" onclick="copyBrief()" title="复制每日简报" aria-label="复制每日简报">📋<span class="d-none d-lg-inline ms-1">简报</span></button>
+      <button class="btn btn-sm btn-outline-secondary px-2 py-0" onclick="openBrief()" title="查看每日简报" aria-label="查看每日简报">📋<span class="d-none d-lg-inline ms-1">简报</span></button>
       <button class="btn btn-sm btn-outline-secondary px-2 py-0" onclick="openHealth()" title="股票池体检" aria-label="股票池体检">🩺<span class="d-none d-lg-inline ms-1">体检</span></button>
     </div>
   </div>
@@ -228,6 +234,15 @@
     <button type="button" class="btn-close ms-auto" style="font-size:10px" onclick="closeHealth()" aria-label="关闭"></button>
   </div>
   <div class="px-3 pt-2 pb-3" id="health-body"></div>
+</dialog>
+
+<dialog id="brief-dialog" class="health-dialog" aria-labelledby="brief-title">
+  <div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom">
+    <strong id="brief-title" style="font-size:13px">每日简报</strong>
+    <button type="button" class="btn btn-sm btn-outline-secondary px-2 py-0 ms-auto" onclick="copyBrief()">复制</button>
+    <button type="button" class="btn-close ms-1" style="font-size:10px" onclick="closeBrief()" aria-label="关闭"></button>
+  </div>
+  <div class="px-3 py-2"><pre class="brief-text" id="brief-text"></pre></div>
 </dialog>
 
 <script src="croc.js"></script>
@@ -511,8 +526,27 @@ function showToast(msg, type) {
 // ============================================================
 // 每日简报 / 股票池体检
 // ============================================================
+let currentBrief = '';
+
+async function openBrief() {
+  if (!Object.keys(priceData || {}).length) {
+    try { await loadPrices(false); } catch (_) {}
+  }
+  currentBrief = Croc.brief(STOCKS, priceData);
+  $('brief-text').textContent = currentBrief;
+  const dlg = $('brief-dialog');
+  if (typeof dlg.showModal === 'function') dlg.showModal();
+  else dlg.setAttribute('open', '');
+}
+
+function closeBrief() {
+  const dlg = $('brief-dialog');
+  if (typeof dlg.close === 'function') dlg.close();
+  else dlg.removeAttribute('open');
+}
+
 async function copyBrief() {
-  const text = Croc.brief(STOCKS, priceData);
+  const text = currentBrief || Croc.brief(STOCKS, priceData);
   try {
     await navigator.clipboard.writeText(text);
     showToast('每日简报已复制', 'success');
@@ -524,7 +558,7 @@ async function copyBrief() {
     document.body.appendChild(ta);
     ta.select();
     try { document.execCommand('copy'); showToast('每日简报已复制', 'success'); }
-    catch (_) { showToast('复制失败，请检查浏览器权限'); }
+    catch (_) { showToast('复制失败，请长按选择文本手动复制'); }
     ta.remove();
   }
 }
@@ -634,6 +668,14 @@ function toggleTheme() {
   if (!dlg) return;
   dlg.addEventListener('click', e => {
     if (e.target === dlg) closeHealth();
+  });
+})();
+
+(function bindBriefDialog() {
+  const dlg = $('brief-dialog');
+  if (!dlg) return;
+  dlg.addEventListener('click', e => {
+    if (e.target === dlg) closeBrief();
   });
 })();
 

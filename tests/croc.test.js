@@ -32,3 +32,22 @@ test('股票池体检会提示超过 180 天未复核的计划价格', () => {
   ]);
   assert.ok(result.issues.some(item => item.text.includes('未复核')));
 });
+
+
+test('ST 股票不能通过纪律全过筛选', () => {
+  const result = Croc.screen(
+    { name: 'ST 测试股', code: 'sz000001' },
+    { price: 5, pe: 10, pb: 0.9, totalCap: 2e10 }
+  );
+  assert.equal(result.allPass, false);
+  assert.ok(result.failed.some(item => item.key === 'st'));
+});
+
+test('TTM 亏损股票不能通过纪律全过筛选', () => {
+  const result = Croc.screen(
+    { name: '测试亏损股', code: 'sz000001' },
+    { price: 5, pe: -3, pb: 0.9, totalCap: 2e10 }
+  );
+  assert.equal(result.allPass, false);
+  assert.ok(result.failed.some(item => item.key === 'loss'));
+});

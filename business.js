@@ -85,8 +85,19 @@
       var inventoryChange = inventory && Number.isFinite(Number(inventory.change))
         ? ((Number(inventory.change) > 0 ? '+' : '') + formatNumber(inventory.change))
         : '—';
+      var inventoryPoints = inventory && Array.isArray(inventory.series)
+        ? inventory.series.filter(function(p){ return p && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && Number(p.value)>0; }).slice(-30)
+        : [];
+      var inventoryChart = '';
+      if (inventoryPoints.length >= 2) {
+        var inventoryValues = inventoryPoints.map(function(p){ return Number(p.value); });
+        var inventoryMin = Math.min.apply(null, inventoryValues), inventoryMax = Math.max.apply(null, inventoryValues);
+        var inventoryRange = inventoryMax - inventoryMin || 1;
+        var inventoryCoords = inventoryValues.map(function(v,i){ return (4+i*(272/Math.max(1,inventoryValues.length-1)))+','+(34-((v-inventoryMin)/inventoryRange)*26); });
+        inventoryChart = '<svg class="trend-svg mt-1" viewBox="0 0 280 40" role="img" aria-label="'+esc(meta.name)+'期货仓单库存趋势"><polyline points="'+inventoryCoords.join(' ')+'"></polyline></svg><div class="mini-label">仓单趋势：近'+inventoryPoints.length+'个数据点</div>';
+      }
       var inventoryHtml = inventory
-        ? '<div class="mt-2 p-2 rounded border"><div class="mini-label">'+esc(inventory.label || '期货仓单库存')+'</div><div class="d-flex justify-content-between align-items-baseline gap-2"><strong>'+formatNumber(inventory.latest)+'</strong><span class="mini-label">较上期 '+inventoryChange+'</span></div><div class="mini-label">日期：'+esc(inventory.latestDate || '—')+' · <a href="'+esc(inventory.sourceUrl || 'https://data.eastmoney.com/ifdata/kcsj.html')+'" target="_blank" rel="noopener noreferrer">数据来源</a></div></div>'
+        ? '<div class="mt-2 p-2 rounded border"><div class="mini-label">'+esc(inventory.label || '期货仓单库存')+'</div><div class="d-flex justify-content-between align-items-baseline gap-2"><strong>'+formatNumber(inventory.latest)+'</strong><span class="mini-label">较上期 '+inventoryChange+'</span></div><div class="mini-label">日期：'+esc(inventory.latestDate || '—')+' · <a href="'+esc(inventory.sourceUrl || 'https://data.eastmoney.com/ifdata/kcsj.html')+'" target="_blank" rel="noopener noreferrer">数据来源</a></div>'+inventoryChart+'</div>'
         : '<div class="mini-label mt-2">供需指标：该品种暂未取得可靠的自动仓单数据</div>';
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(data.name || meta.name)+'</div><div class="mini-label">'+esc(data.unit || meta.unit || '价格')+'</div></div><span class="flag" style="margin:0">'+status+'</span></div>'

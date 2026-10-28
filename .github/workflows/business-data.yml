@@ -9,7 +9,7 @@ on:
     branches: [master, main]
     paths:
       - "scripts/fetch_business_data.py"
-      - "business-data.json"
+      - "data/business-data.json"
       - ".github/workflows/business-data.yml"
 
 permissions:
@@ -36,13 +36,13 @@ jobs:
         run: python scripts/fetch_business_data.py
       - name: Commit refreshed data
         run: |
-          if git diff --quiet -- business-data.json; then
+          if git diff --quiet -- data/business-data.json; then
             echo "No business data changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add business-data.json
+          git add data/business-data.json
           git commit -m "Refresh automatic commodity business data"
           git fetch origin "$GITHUB_REF_NAME"
           git rebase -X theirs "origin/$GITHUB_REF_NAME"

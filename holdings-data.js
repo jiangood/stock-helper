@@ -2,51 +2,30 @@
 (function (root) {
   'use strict';
 
-  function positiveOrNull(value, label, allowNull) {
-    if (value === null || value === undefined || value === '') {
-      if (allowNull) return null;
-      throw new Error(label + ' must be a positive number');
-    }
+  function positiveNumber(value, label) {
+    if (value === null || value === undefined || value === '') throw new Error(label + ' must be a positive number');
     var n = Number(value);
     if (!Number.isFinite(n) || n <= 0) throw new Error(label + ' must be a positive number');
     return n;
   }
 
   function validatePayload(payload) {
-    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
-      throw new Error('holdings.json must contain a JSON object');
-    }
+    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('holdings.json must contain a JSON object');
     if (!Array.isArray(payload.holdings)) throw new Error('holdings.json holdings must be an array');
-    var portfolio = payload.portfolio && typeof payload.portfolio === 'object' && !Array.isArray(payload.portfolio)
-      ? payload.portfolio : {};
     var seenCodes = {};
     var holdings = payload.holdings.map(function (holding, index) {
-      if (!holding || typeof holding !== 'object' || Array.isArray(holding)) {
-        throw new Error('holding #' + (index + 1) + ' must be an object');
-      }
+      if (!holding || typeof holding !== 'object' || Array.isArray(holding)) throw new Error('holding #' + (index + 1) + ' must be an object');
       var code = String(holding.code || '').trim().toLowerCase();
       if (!/^(sh|sz)\d{6}$/.test(code)) throw new Error('holding #' + (index + 1) + ' has an invalid code');
       if (seenCodes[code]) throw new Error('duplicate holding code: ' + code);
       seenCodes[code] = true;
-      var quantity = positiveOrNull(holding.quantity, code + ' quantity', false);
-      var cost = positiveOrNull(holding.cost, code + ' cost', false);
-      var riskExitPrice = positiveOrNull(holding.riskExitPrice, code + ' riskExitPrice', true);
       return {
         code: code,
-        quantity: quantity,
-        cost: cost,
-        riskExitPrice: riskExitPrice
+        quantity: positiveNumber(holding.quantity, code + ' quantity'),
+        cost: positiveNumber(holding.cost, code + ' cost')
       };
     });
-    return {
-      schemaVersion: Number(payload.schemaVersion) || 1,
-      updatedAt: String(payload.updatedAt || ''),
-      portfolio: {
-        totalAssets: positiveOrNull(portfolio.totalAssets, 'portfolio.totalAssets', true),
-        riskBudget: positiveOrNull(portfolio.riskBudget, 'portfolio.riskBudget', true)
-      },
-      holdings: holdings
-    };
+    return { schemaVersion: Number(payload.schemaVersion) || 1, holdings: holdings };
   }
 
   var cached = null;

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T13:29:26.331765Z",
+  "updatedAt": "2026-10-28T18:39:19.506007Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,11 +7,11 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4065.5,
+      "price": 4049.6,
       "prevClose": 4168.4,
-      "change": -102.9,
-      "changePct": -2.468573,
-      "quoteTime": "2026-10-28T13:19:17Z",
+      "change": -118.8,
+      "changePct": -2.850014,
+      "quoteTime": "2026-10-28T18:29:17Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF",
       "history": [
@@ -101,7 +101,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 4065.5
+          "close": 4049.6001
         }
       ]
     },
@@ -110,11 +110,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 80495.22,
+      "price": 80932.11,
       "prevClose": 83502.61,
-      "change": -3007.39,
-      "changePct": -3.601552,
-      "quoteTime": "2026-10-28T13:29:21Z",
+      "change": -2570.5,
+      "changePct": -3.078347,
+      "quoteTime": "2026-10-28T18:39:17Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD",
       "history": [
@@ -204,7 +204,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 80495.2188
+          "close": 80932.1094
         }
       ]
     },
@@ -213,11 +213,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2332.59,
+      "price": 2352.67,
       "prevClose": 2688.6687,
-      "change": -356.0787,
-      "changePct": -13.243681,
-      "quoteTime": "2026-10-28T13:29:20Z",
+      "change": -335.9987,
+      "changePct": -12.496843,
+      "quoteTime": "2026-10-28T18:39:14Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD",
       "history": [
@@ -307,7 +307,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 2332.5901
+          "close": 2352.6699
         }
       ]
     },
@@ -407,10 +407,6 @@
         {
           "date": "2026-10-27",
           "close": 63268.3711
-        },
-        {
-          "date": "2026-10-28",
-          "close": 63954.1914
         }
       ]
     },
@@ -419,18 +415,14 @@
       "name": "纳斯达克 100",
       "currency": "USD",
       "status": "已更新",
-      "price": 29651.441,
-      "prevClose": 30608.13,
-      "change": -956.689,
-      "changePct": -3.125604,
-      "quoteTime": "2026-10-27T21:15:59Z",
+      "price": 29780.992,
+      "prevClose": 30276.81,
+      "change": -495.818,
+      "changePct": -1.637616,
+      "quoteTime": "2026-10-28T18:39:17Z",
       "sourceSymbol": "^NDX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5ENDX",
       "history": [
-        {
-          "date": "2026-09-28",
-          "close": 30276.8105
-        },
         {
           "date": "2026-09-29",
           "close": 30339.3301
@@ -514,6 +506,10 @@
         {
           "date": "2026-10-27",
           "close": 29651.4395
+        },
+        {
+          "date": "2026-10-28",
+          "close": 29780.9922
         }
       ]
     },
@@ -522,18 +518,14 @@
       "name": "标普 500",
       "currency": "USD",
       "status": "已更新",
-      "price": 7722.6,
-      "prevClose": 7743.41,
-      "change": -20.81,
-      "changePct": -0.268745,
-      "quoteTime": "2026-10-27T20:48:15Z",
+      "price": 7744.8,
+      "prevClose": 7683.69,
+      "change": 61.11,
+      "changePct": 0.795321,
+      "quoteTime": "2026-10-28T18:39:17Z",
       "sourceSymbol": "^GSPC",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC",
       "history": [
-        {
-          "date": "2026-09-28",
-          "close": 7683.6899
-        },
         {
           "date": "2026-09-29",
           "close": 7670.8398
@@ -617,6 +609,10 @@
         {
           "date": "2026-10-27",
           "close": 7722.6001
+        },
+        {
+          "date": "2026-10-28",
+          "close": 7744.7998
         }
       ]
     },
@@ -625,11 +621,11 @@
       "name": "VIX 恐慌指数",
       "currency": "USD",
       "status": "已更新",
-      "price": 17.31,
+      "price": 17.38,
       "prevClose": 16.07,
-      "change": 1.24,
-      "changePct": 7.716241,
-      "quoteTime": "2026-10-28T13:14:16Z",
+      "change": 1.31,
+      "changePct": 8.151836,
+      "quoteTime": "2026-10-28T18:24:16Z",
       "sourceSymbol": "^VIX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EVIX",
       "history": [
@@ -719,7 +715,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 17.31
+          "close": 17.38
         }
       ]
     },
@@ -728,11 +724,11 @@
       "name": "美元兑人民币",
       "currency": "CNY",
       "status": "已更新",
-      "price": 6.6656,
+      "price": 6.6544,
       "prevClose": 6.7128,
-      "change": -0.0472,
-      "changePct": -0.703134,
-      "quoteTime": "2026-10-28T13:27:17Z",
+      "change": -0.0584,
+      "changePct": -0.86998,
+      "quoteTime": "2026-10-28T18:36:39Z",
       "sourceSymbol": "CNY=X",
       "sourceUrl": "https://finance.yahoo.com/quote/CNY%3DX",
       "history": [
@@ -822,7 +818,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 6.6656
+          "close": 6.6544
         }
       ]
     }

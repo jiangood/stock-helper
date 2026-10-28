@@ -61,6 +61,9 @@
       refreshHome: function () {
         if (typeof window.loadPrices === 'function') window.loadPrices(true);
       },
+      refreshDetail: function () {
+        if (typeof window.refreshAll === 'function') window.refreshAll(true);
+      },
       toggleHomeTheme: function () {
         if (typeof window.toggleTheme === 'function') window.toggleTheme();
       },

@@ -27,6 +27,9 @@ python -m http.server 8089
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
 | `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K、分钟 K、分时） |
 | `business.js` `business-data.json` | 简报页展示指数行情、股票池温度、板块强弱、持仓盈亏和交易观察；生意选项卡自动读取商品现货/期货数据 |
+| `global-assets.js` `global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500 的公开行情缓存与涨跌幅 |
+| `scripts/fetch_global_assets.py` | 从 Yahoo Finance 公开图表接口抓取全球资产报价，抓取失败时保留最近有效值并标记缓存状态 |
+| `.github/workflows/global-assets.yml` | 每 30 分钟尝试刷新全球资产行情，支持手动触发 |
 | `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
 | `.github/workflows/business-data.yml` | 工作日定时刷新商品数据（北京时间白天/晚间多个时段），也支持手动触发 GitHub Actions |
 
@@ -38,6 +41,10 @@ python -m http.server 8089
 - 如果某个品种没有可靠匹配到公开数据源，会显示「等待可靠数据源」，不会生成虚构价格。
 - 商品涨价不必然让关联上市公司受益，仍要结合公司实际业务占比、成本、库存、供需和盈利质量判断。
 - 自动抓取任务与运行状态可在 [GitHub Actions](https://github.com/jiangood/stock-helper/actions/workflows/business-data.yml) 查看。
+
+## 全球资产
+
+底部「全球资产」页展示黄金、BTC、ETH、日经 225、纳斯达克 100 和标普 500。行情通过 GitHub Actions 约每 30 分钟抓取并缓存，实际调度可能延迟；这是公开行情参考，不是逐笔实时行情。各市场币种和交易时段不同，报价失败时不生成模拟价格，页面会显示最近有效报价及更新时间。
 
 ## 鳄鱼纪律
 

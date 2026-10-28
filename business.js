@@ -45,6 +45,7 @@
   function renderBusiness() {
     var container = el('business-cards');
     if (!container) return;
+    var businessChartSpecs = [];
     var payloadItems = businessData && businessData.items ? businessData.items : {};
     var products = items.map(function (meta) {
       var data = payloadItems[meta.id] || {};
@@ -69,10 +70,14 @@
       var tone = delta == null ? 'text-body-secondary' : delta > 0 ? 'text-up' : delta < 0 ? 'text-down' : 'text-body-secondary';
       var chart = '<div class="empty-state py-2 small">' + (last ? '该来源暂未提供可绘制的历史序列' : '等待自动数据源返回有效报价') + '</div>';
       if (points.length >= 2) {
-        var values = points.map(function(p){ return Number(p[metricKey]); });
-        var min = Math.min.apply(null, values), max = Math.max.apply(null, values), range = max - min || 1;
-        var coords = values.map(function(v,i){ return (8+i*(284/Math.max(1,values.length-1)))+','+(48-((v-min)/range)*36); });
-        chart = '<svg class="trend-svg" viewBox="0 0 300 58" role="img" aria-label="'+esc(meta.name)+'自动行情趋势"><polyline points="'+coords.join(' ')+'"></polyline>'+coords.map(function(p){var xy=p.split(',');return '<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="2.2"></circle>';}).join('')+'</svg>';
+        var chartId = 'business-price-chart-' + meta.id;
+        businessChartSpecs.push({
+          id: chartId,
+          name: meta.name,
+          unit: data.unit || meta.unit || '',
+          data: points.map(function(p){ return { time: p.date, value: Number(p[metricKey]) }; })
+        });
+        chart = '<div class="business-chart-wrap"><div class="business-chart-caption"><span>'+esc(meta.name)+'价格走势</span><span>近'+points.length+'个数据点</span></div><div class="business-price-chart" id="'+chartId+'" role="img" aria-label="'+esc(meta.name)+'历史价格曲线"></div></div>';
       }
       var related = (data.stocks || meta.stocks || []).map(function(name){
         var stock = stocks.find(function(s){ return s.name === name; });
@@ -185,11 +190,15 @@
         var tone = change == null ? 'text-body-secondary' : change>0 ? 'text-up' : change<0 ? 'text-down' : 'text-body-secondary';
         var trend = change == null ? '趋势数据不足' : ((change>0?'+':'')+change.toFixed(2)+'%');
         var chart = '<div class="empty-state py-2 small">暂未获取到可绘制的原料历史价格</div>';
-        if (series.length>=2) {
-          var vals=series.map(pointValue);
-          var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals), range=max-min||1;
-          var coords=vals.map(function(v,i){return (5+i*(270/Math.max(1,vals.length-1)))+','+(32-((v-min)/range)*23);});
-          chart='<svg class="trend-svg" viewBox="0 0 280 38" role="img" aria-label="'+esc(input.name)+'参考价格趋势"><polyline points="'+coords.join(' ')+'"></polyline></svg>';
+        if (datedSeries.length>=2) {
+          var chartId = 'business-cost-chart-' + input.id;
+          businessChartSpecs.push({
+            id: chartId,
+            name: input.name,
+            unit: input.unit || '元/吨',
+            data: datedSeries.map(function(p){ return { time: p.date, value: pointValue(p) }; })
+          });
+          chart = '<div class="business-chart-wrap"><div class="business-chart-caption"><span>'+esc(input.name)+'价格走势</span><span>近'+datedSeries.length+'个数据点</span></div><div class="business-price-chart business-cost-chart" id="'+chartId+'" role="img" aria-label="'+esc(input.name)+'历史价格曲线"></div></div>';
         }
         var related=Array.isArray(input.relatedProducts)?input.relatedProducts:[];
         return '<article class="insight-card">'
@@ -203,6 +212,7 @@
           + '</article>';
       }).join('') || '<div class="empty-state">成本原料数据尚未初始化，等待自动抓取任务。</div>';
     }
+    renderBusinessCharts(businessChartSpecs);
     var statusEl = el('business-data-status');
     if (statusEl) {
       if (!businessData) statusEl.textContent = '自动行情文件暂不可用；请稍后重新读取。';
@@ -213,6 +223,74 @@
       }
     }
   }
+  function renderBusinessCharts(specs) {
+    if (!Array.isArray(specs) || !specs.length) return;
+    if (!global.LightweightCharts || typeof global.LightweightCharts.createChart !== 'function') {
+      specs.forEach(function(spec) {
+        var node = el(spec.id);
+        if (node) node.innerHTML = '<div class="empty-state py-2 small">图表组件暂不可用</div>';
+      });
+      return;
+    }
+    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-body-color').trim() || '#212529';
+    var borderColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-border-color').trim() || '#dee2e6';
+    var primary = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim() || '#0d6efd';
+    specs.forEach(function(spec) {
+      var node = el(spec.id);
+      if (!node || node.dataset.chartReady === '1') return;
+      var data = (spec.data || []).filter(function(p) {
+        return p && /^\\d{4}-\\d{2}-\\d{2}$/.test(p.time) && Number.isFinite(Number(p.value)) && Number(p.value) > 0;
+      });
+      if (data.length < 2) return;
+      try {
+        var chart = global.LightweightCharts.createChart(node, {
+          autoSize: true,
+          height: node.classList.contains('business-cost-chart') ? 112 : 148,
+          layout: {
+            background: { type: 'solid', color: 'transparent' },
+            textColor: textColor,
+            fontSize: 10,
+            fontFamily: 'inherit'
+          },
+          grid: {
+            vertLines: { color: borderColor },
+            horzLines: { color: borderColor }
+          },
+          rightPriceScale: { borderColor: borderColor, scaleMargins: { top: 0.12, bottom: 0.08 } },
+          timeScale: { borderColor: borderColor, rightOffset: 2, barSpacing: 7, timeVisible: false },
+          crosshair: {
+            mode: global.LightweightCharts.CrosshairMode.Normal,
+            vertLine: { labelBackgroundColor: primary },
+            horzLine: { labelBackgroundColor: primary }
+          },
+          localization: {
+            priceFormatter: function(value) {
+              return Number(value).toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+            }
+          },
+          handleScroll: { mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false },
+          handleScale: { mouseWheel: false, pinch: true, axisPressedMouseMove: true }
+        });
+        var area = chart.addAreaSeries({
+          lineColor: primary,
+          topColor: primary + '35',
+          bottomColor: primary + '00',
+          lineWidth: 2,
+          priceLineVisible: true,
+          lastValueVisible: true,
+          crosshairMarkerVisible: true,
+          priceFormat: { type: 'price', precision: 2, minMove: 0.01 }
+        });
+        area.setData(data);
+        chart.timeScale().fitContent();
+        node.dataset.chartReady = '1';
+        node._businessChart = chart;
+      } catch (error) {
+        node.innerHTML = '<div class="empty-state py-2 small">历史曲线暂时无法绘制</div>';
+      }
+    });
+  }
+
   function fetchBusinessData() {
     if (businessFetchPromise) return businessFetchPromise;
     var statusEl = el('business-data-status');

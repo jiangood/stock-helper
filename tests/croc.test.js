@@ -54,7 +54,7 @@ test('TTM 亏损股票不能通过纪律全过筛选', () => {
 
 
 test('股票池保持 67 只且新增的易普力保留在列表中', () => {
-  const stocks = require('../stocks.json');
+  const stocks = require('../data/stocks.json');
   assert.equal(stocks.length, 67);
   assert.ok(stocks.some(stock => stock.code === 'sz002096' && stock.name === '易普力'));
   const codes = stocks.map(stock => stock.code);

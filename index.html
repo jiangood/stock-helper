@@ -143,9 +143,44 @@
     .toolbar { flex-wrap: wrap !important; row-gap: .3rem; }
     .toolbar .input-group { flex: 1 1 100%; max-width: none !important; }
   }
+
+  /* 简单首页密码门禁：仅用于阻挡普通访客，不是安全认证 */
+  #password-gate {
+    position: fixed; inset: 0; z-index: 99999; display: flex;
+    align-items: center; justify-content: center; padding: 24px;
+    background: #f3f6fb; color: #172033; font-family: system-ui, sans-serif;
+  }
+  #password-gate .gate-card {
+    width: 100%; max-width: 360px; padding: 28px; border-radius: 16px;
+    background: #fff; box-shadow: 0 12px 40px rgba(15,23,42,.12);
+  }
+  #password-gate h1 { font-size: 21px; margin: 0 0 8px; font-weight: 700; }
+  #password-gate p { color: #64748b; font-size: 13px; margin: 0 0 20px; }
+  #password-gate input {
+    box-sizing: border-box; width: 100%; padding: 12px;
+    border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px;
+    font-size: 16px;
+  }
+  #password-gate button {
+    width: 100%; padding: 12px; border: 0; border-radius: 8px;
+    background: #2563eb; color: white; font-weight: 600; cursor: pointer;
+  }
+  #password-gate .gate-error { display: none; margin-top: 12px; color: #dc2626; font-size: 13px; }
+
 </style>
 </head>
 <body class="bg-body-tertiary">
+
+<div id="password-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <form class="gate-card" id="password-gate-form">
+    <h1 id="gate-title">股票池监控</h1>
+    <p>请输入访问密码以继续</p>
+    <input id="gate-password" type="password" placeholder="输入密码" autocomplete="current-password" required autofocus>
+    <button type="submit">进入首页</button>
+    <div id="gate-error" class="gate-error" role="alert">密码不正确，请重试。</div>
+  </form>
+</div>
+
 
 <div class="sticky-top">
   <nav class="navbar bg-body border-bottom px-2 px-sm-3 py-1">
@@ -715,5 +750,28 @@ function toggleTheme() {
   scheduleRefresh();
 })();
 </script>
+
+<script>
+(function () {
+  const gate = document.getElementById('password-gate');
+  const form = document.getElementById('password-gate-form');
+  const input = document.getElementById('gate-password');
+  const error = document.getElementById('gate-error');
+  if (sessionStorage.getItem('stock-helper-unlocked') === '1') {
+    gate.style.display = 'none';
+  }
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (input.value === 'dayuchi0315') {
+      sessionStorage.setItem('stock-helper-unlocked', '1');
+      gate.style.display = 'none';
+    } else {
+      error.style.display = 'block';
+      input.select();
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

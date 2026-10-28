@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T11:19:35+00:00",
+  "updatedAt": "2026-10-28T11:21:40+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -332,7 +332,8 @@
         },
         {
           "date": "2026-10-28",
-          "spot": 1061.43
+          "spot": 1061.43,
+          "futures": 979.0
         }
       ],
       "latest": 1061.43,
@@ -683,7 +684,8 @@
         },
         {
           "date": "2026-10-28",
-          "spot": 1735.0
+          "spot": 1735.0,
+          "futures": 1694.0
         }
       ],
       "latest": 1735.0,
@@ -1032,13 +1034,14 @@
         },
         {
           "date": "2026-10-28",
-          "spot": 4000.0
+          "spot": 4000.0,
+          "futures": 3464.0
         }
       ],
       "latest": 4000.0,
       "latestDate": "2026-10-28",
       "latestSpot": 4000.0,
-      "latestFutures": null,
+      "latestFutures": 3464.0,
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -1397,13 +1400,14 @@
         },
         {
           "date": "2026-10-28",
-          "spot": 23896.67
+          "spot": 23896.7,
+          "futures": 23540.0
         }
       ],
-      "latest": 23896.67,
+      "latest": 23896.7,
       "latestDate": "2026-10-28",
-      "latestSpot": 23896.67,
-      "latestFutures": null,
+      "latestSpot": 23896.7,
+      "latestFutures": 23540.0,
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -1762,13 +1766,14 @@
         },
         {
           "date": "2026-10-28",
-          "spot": 19225.0
+          "spot": 19225.0,
+          "futures": 19570.0
         }
       ],
       "latest": 19225.0,
       "latestDate": "2026-10-28",
       "latestSpot": 19225.0,
-      "latestFutures": null,
+      "latestFutures": 19570.0,
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -1801,9 +1806,6 @@
       "status": "pending"
     }
   },
-  "fetchErrors": [
-    "futures_zh_realtime/MA: '甲醇'",
-    "futures_zh_realtime/AL: '铝'",
-    "futures_zh_realtime/RU: '天然橡胶'"
-  ]
+  "fetchErrors": [],
+  "hasFreshData": true
 }

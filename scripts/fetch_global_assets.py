@@ -121,7 +121,7 @@ def main() -> int:
         }
         for symbol in meta["symbols"]:
             try:
-                quote = fetch_symbol(symbol, meta.get("range", "5d"))
+                quote = fetch_symbol(symbol, meta.get("range", "1mo"))
                 result.update(quote)
                 break
             except (OSError, ValueError, KeyError, RuntimeError, urllib.error.URLError) as error:

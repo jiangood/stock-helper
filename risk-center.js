@@ -127,7 +127,7 @@
     pane.innerHTML = [
       '<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3"><div><div class="panel-title">持仓风险中心</div><div class="panel-subtitle">只读当前浏览器的持仓与页面行情；风险退出参考价、组合总资产和风险预算由你手工设定。不会下单，也不修改原有鳄鱼纪律。</div></div><div id="risk-quote-note" class="panel-subtitle">等待行情数据…</div></div>',
       '<div id="risk-summary" class="row g-2 mb-3"></div>',
-      '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数（来自 holdings.json）</div><div class="d-flex flex-wrap gap-4"><div><div class="mini-label">组合总资产</div><div id="risk-account-equity-value" class="fw-semibold">未设置</div></div><div><div class="mini-label">组合风险预算</div><div id="risk-budget-value" class="fw-semibold">未设置</div></div></div><div id="risk-source-note" class="panel-subtitle mt-2">参数与持仓统一维护在仓库根目录的 holdings.json 中。</div></section>',
+      '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数（来自 holdings.json）</div><div class="d-flex flex-wrap gap-4"><div><div class="mini-label">组合总资产</div><div id="risk-account-equity-value" class="fw-semibold">未设置</div></div><div><div class="mini-label">组合风险预算</div><div id="risk-budget-value" class="fw-semibold">未设置</div></div></div><div id="risk-source-note" class="panel-subtitle mt-2">参数与持仓统一维护在data/holdings.json 中。</div></section>',
       '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"><div><div class="panel-title">实际持仓风险明细</div><div class="panel-subtitle">持仓、风险退出参考价和止盈覆盖值均从 holdings.json 读取；网页只读。</div></div><button id="risk-refresh" class="btn btn-sm btn-outline-secondary" type="button">重新读取 JSON</button></div>',
       '<div id="risk-positions" class="insight-grid mb-3"></div>',
       '<div class="panel-subtitle mt-2">口径说明：参考价风险敞口 = max(现价 − 风险退出参考价, 0) × 持股数量；仅在参考价低于有效现价时计算。未设参考价、行情缺失或参数无效的持仓不会被当作风险为零。鳄鱼体系强调区分正常波动与本金永久损失；这里的参考价只用于情景测算，不代表建议按价格机械止损，须结合基本面与周期逻辑。止盈收益是达到目标价时的静态情景，不是预测；未计手续费、税费、滑点、跳空和流动性影响。</div>',
@@ -167,7 +167,7 @@
     var sourceNote = root.document.getElementById('risk-source-note');
     if (equityValue) equityValue.textContent = settings.totalAssets > 0 ? '¥' + money(settings.totalAssets) : '未设置';
     if (budgetValue) budgetValue.textContent = settings.riskBudget > 0 ? '¥' + money(settings.riskBudget) : '未设置';
-    if (sourceNote) sourceNote.textContent = '数据文件：holdings.json' +
+    if (sourceNote) sourceNote.textContent = '数据文件：data/holdings.json' +
       (data.updatedAt ? ' · 文件更新时间 ' + data.updatedAt : '') +
       (data.sourceSnapshotDate ? ' · 初始持仓来源快照 ' + data.sourceSnapshotDate : '') +
       '。修改后需提交仓库并等待 GitHub Pages 更新；此文件公开可见。';
@@ -192,7 +192,7 @@
       return '<div class="col-6 col-lg-4"><div class="insight-card h-100"><div class="mini-label">' + esc(item[0]) + '</div><div class="fs-5 fw-bold">' + esc(item[1]) + '</div><div class="mini-label mt-1">' + esc(item[2]) + '</div></div></div>';
     }).join('');
     if (!rows.length) {
-      listNode.innerHTML = '<div class="empty-state">holdings.json 中暂无有效持仓。请维护仓库根目录的 holdings.json；网页不会保存持仓数据。</div>';
+      listNode.innerHTML = '<div class="empty-state">holdings.json 中暂无有效持仓。请维护data/holdings.json；网页不会保存持仓数据。</div>';
       return;
     }
     listNode.innerHTML = rows.map(function (r) {

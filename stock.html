@@ -6,7 +6,9 @@
 <title>股票详情</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#2563eb">
-<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">\n<link href="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.prod.css" rel="stylesheet">\n<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.prod.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
   :root { --up: #dc2626; --down: #16a34a; }
   [data-bs-theme="dark"] { --up: #f23645; --down: #26a69a; }
@@ -21,7 +23,10 @@
     box-shadow: 0 2px 6px rgba(37,99,235,.3);
   }
 
-  .refreshing .q-icon { animation: stock-refresh-spin .8s linear infinite; }\n  @keyframes stock-refresh-spin { to { transform: rotate(360deg); } }\n\n  .text-up { color: var(--up) !important; }
+  .refreshing .q-icon { animation: stock-refresh-spin .8s linear infinite; }
+  @keyframes stock-refresh-spin { to { transform: rotate(360deg); } }
+
+  .text-up { color: var(--up) !important; }
   .text-down { color: var(--down) !important; }
 
   .tag {

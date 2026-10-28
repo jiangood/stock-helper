@@ -92,11 +92,11 @@
     methods: {
       goHome: function () { window.location.href = './index.html'; },
       navigate: function (name) {
+        if (name === 'assets') return;
         var routes = {
           stocks: './index.html',
           opportunity: './index.html#opportunity',
-          business: './index.html#business',
-          assets: './global-assets.html'
+          business: './index.html#business'
         };
         if (routes[name]) window.location.href = routes[name];
       },

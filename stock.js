@@ -479,7 +479,15 @@
       return;
     }
     try {
-      klineCache.day = await quotes.fetchKline(CODE, { period: 'day', count: 250, adjust: 'qfq' });
+      // 趋势/均线使用前复权 K；涨停幅度和涨停价必须使用未复权 K。
+      const [adjusted, raw] = await Promise.allSettled([
+        quotes.fetchKline(CODE, { period: 'day', count: 250, adjust: 'qfq' }),
+        quotes.fetchKline(CODE, { period: 'day', count: 250, adjust: 'none' })
+      ]);
+      if (raw.status === 'fulfilled') klineCache.dayRaw = raw.value;
+      if (adjusted.status !== 'fulfilled') throw adjusted.reason;
+
+      klineCache.day = adjusted.value;
       DAY_FAILED = false;
       apply52WeekFallback(klineCache.day.bars);
       renderDiscipline(DETAIL);
@@ -1077,10 +1085,10 @@
       e.st ? '铁律：不买 ST' : '非 ST'));
 
     // 8. 连板
-    const li = Croc.limitUpInfo(klineCache.day && klineCache.day.bars, CODE, e.name);
+    const li = Croc.limitUpInfo(klineCache.dayRaw && klineCache.dayRaw.bars, CODE, e.name);
     let lTone = 'neutral';
     let lVal = '—';
-    let lNote = klineCache.day ? '日K 数据不足' : '日K 加载中…';
+    let lNote = !klineCache.dayRaw ? (klineCache.day ? '未复权日K 不可用，无法可靠识别涨停' : '日K 加载中…') : '未复权日K 数据不足';
     if (li) {
       lTone = li.count >= 3 || li.opened ? 'bad' : li.count === 2 ? 'warn' : 'ok';
       lVal = li.count ? `${li.count} 连板` : '无连板';

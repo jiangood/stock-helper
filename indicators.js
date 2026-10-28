@@ -89,12 +89,17 @@
     for (let i = p; i < list.length; i++) {
       let pos = 0;
       let neg = 0;
+      let completeWindow = true;
       for (let k = i - p + 1; k <= i; k++) {
-        if (tp[k] === null || tp[k - 1] === null || flow[k] === null) continue;
+        if (tp[k] === null || tp[k - 1] === null || flow[k] === null) {
+          completeWindow = false;
+          break;
+        }
         const diff = tp[k] - tp[k - 1];
         if (diff > 0) pos += flow[k];
         else if (diff < 0) neg += flow[k];
       }
+      if (!completeWindow) continue;
 
       let value;
       if (neg <= 0) value = pos > 0 ? 100 : 50;

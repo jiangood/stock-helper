@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T23:04:23.172369Z",
+  "updatedAt": "2026-10-28T23:15:26.292525Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,11 +7,11 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4066.2,
+      "price": 4065.6,
       "prevClose": 4168.4,
-      "change": -102.2,
-      "changePct": -2.45178,
-      "quoteTime": "2026-10-28T22:54:13Z",
+      "change": -102.8,
+      "changePct": -2.466174,
+      "quoteTime": "2026-10-28T23:05:23Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF",
       "history": [
@@ -101,7 +101,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 4066.2
+          "close": 4065.6001
         }
       ]
     },
@@ -110,11 +110,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 81167.47,
+      "price": 81232.78,
       "prevClose": 83502.61,
-      "change": -2335.14,
-      "changePct": -2.796487,
-      "quoteTime": "2026-10-28T23:04:20Z",
+      "change": -2269.83,
+      "changePct": -2.718274,
+      "quoteTime": "2026-10-28T23:15:22Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD",
       "history": [
@@ -204,7 +204,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 81167.4688
+          "close": 81232.7812
         }
       ]
     },
@@ -213,11 +213,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2355.84,
+      "price": 2358.59,
       "prevClose": 2688.6687,
-      "change": -332.8287,
-      "changePct": -12.378941,
-      "quoteTime": "2026-10-28T23:04:18Z",
+      "change": -330.0787,
+      "changePct": -12.276659,
+      "quoteTime": "2026-10-28T23:15:22Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD",
       "history": [
@@ -307,7 +307,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 2355.8401
+          "close": 2358.5901
         }
       ]
     },

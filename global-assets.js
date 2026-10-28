@@ -208,7 +208,7 @@
     loading = true;
     var status = el('global-assets-updated');
     if (status) status.textContent = '正在读取全球资产行情缓存…';
-    fetch('./global-assets-data.json?t=' + Date.now(), { cache: 'no-store' })
+    fetch('./data/global-assets-data.json?t=' + Date.now(), { cache: 'no-store' })
       .then(function (response) {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         return response.json();

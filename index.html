@@ -27,7 +27,7 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .stock-table { min-width: 1000px; }
+  .stock-table { min-width: 1160px; }
   .stock-table thead th {
     position: sticky; top: 0; z-index: 3;
     font-size: 11px; font-weight: 600; letter-spacing: .3px;
@@ -77,7 +77,7 @@
 
   /* 数值旁的小号涨跌幅 */
   .diff { font-size: 10px; margin-left: .15rem; letter-spacing: -.1px; }
-  .badge-today { font-size: 10px; font-weight: 500; padding: .18em .42em; }
+  .unit { font-size: 9.5px; margin-left: .1rem; }
   .badge-tp { font-size: 10px; font-weight: 500; }
 
   .tag {
@@ -96,14 +96,14 @@
 
   @media (max-width: 575.98px) {
     .table-scroll { max-height: calc(100vh - 66px); }
-    .stock-table { min-width: 720px; }
+    .stock-table { min-width: 900px; }
     .stock-table thead th { padding: .3rem .25rem; font-size: 10px; letter-spacing: 0; }
     .stock-table tbody td { padding: .18rem .25rem; font-size: 11px; }
     .price-cell { font-size: 12.5px; }
     .stock-table .tag { font-size: 9px; padding: 0 .25rem; }
-    .badge-today { font-size: 9px; padding: .15em .35em; }
     .badge-tp { font-size: 9px; }
     .diff { font-size: 9px; margin-left: .1rem; }
+    .unit { font-size: 8.5px; }
     .tag-alias { font-size: 9px; max-width: 96px; }
   }
 </style>
@@ -150,11 +150,13 @@
           <th onclick="sortTable('price')"    id="th-price">    价格          <span class="sort-icon"></span></th>
           <th onclick="sortTable('entry')"    id="th-entry">    入场          <span class="sort-icon"></span></th>
           <th onclick="sortTable('heavy')"    id="th-heavy">   重仓          <span class="sort-icon"></span></th>
-          <th onclick="sortTable('today')"    id="th-today">    今日          <span class="sort-icon"></span></th>
           <th onclick="sortTable('prevChg')"  id="th-prevChg">  昨日          <span class="sort-icon"></span></th>
           <th onclick="sortTable('tp1')"      id="th-tp1">      止盈1         <span class="sort-icon"></span></th>
           <th onclick="sortTable('tp2')"      id="th-tp2">      止盈2         <span class="sort-icon"></span></th>
           <th onclick="sortTable('yearInit')" id="th-yearInit"> 年初价        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('totalCap')" id="th-totalCap"> 市值          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('pe')"       id="th-pe">       市盈率        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('pb')"       id="th-pb">       市净率        <span class="sort-icon"></span></th>
           <th onclick="sortTable('group')"    id="th-group">    分组          <span class="sort-icon"></span></th>
           <th onclick="sortTable('alias')"    id="th-alias">    别名          <span class="sort-icon"></span></th>
         </tr>
@@ -165,7 +167,7 @@
 </main>
 
 <footer class="text-center text-body-secondary py-2 border-top bg-body">
-  <div style="font-size:10px">交易时段自动刷新（09:15–11:30 / 13:00–15:00，每 3 秒）</div>
+  <div style="font-size:10px">交易时段每 60 秒自动刷新（09:15–11:30 / 13:00–15:00）</div>
   <div class="mt-1" style="font-size:10px">免责声明：本页面仅供个人投资记录参考，不构成任何投资建议。股市有风险，投资需谨慎。</div>
 </footer>
 
@@ -229,9 +231,11 @@ function getSortValue(stock, col) {
   switch (col) {
     case 'name':     return stock.name;
     case 'price':    return price;
-    case 'today':    return pd ? pd.todayChange : null;
     case 'prevChg':  return stock.prevChg;
     case 'yearInit': return stock.yearInit;
+    case 'totalCap': return pd ? pd.totalCap : null;
+    case 'pe':       return pd ? pd.pe : null;
+    case 'pb':       return pd ? pd.pb : null;
     case 'entry':    return (price != null && stock.entry) ? (price - stock.entry) / stock.entry : null;
     case 'heavy':    return (price != null && stock.heavy) ? (price - stock.heavy) / stock.heavy : null;
     case 'tp1':      return stock.tp1;
@@ -256,7 +260,7 @@ function sortedView(list) {
 }
 
 function updateSortUI() {
-  ['name','price','entry','heavy','today','prevChg','tp1','tp2','yearInit','group','alias'].forEach(col => {
+  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','group','alias'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
     th.classList.remove('sort-asc', 'sort-desc');
@@ -300,7 +304,6 @@ function buildRow(stock) {
   const price = pd ? pd.price : null;
 
   let priceHtml = '<span class="text-body-tertiary">…</span>';
-  let changeHtml = '<span class="text-body-tertiary">—</span>';
   let entryHtml = stock.entry != null ? Number(stock.entry).toFixed(2) : '<span class="text-body-tertiary">—</span>';
   let heavyHtml = stock.heavy != null ? Number(stock.heavy).toFixed(2) : '<span class="text-body-tertiary">—</span>';
   let entryDiff = '';
@@ -312,11 +315,6 @@ function buildRow(stock) {
     priceClass = prev == null ? '' : price > prev ? 'text-up' : price < prev ? 'text-down' : '';
     priceHtml = `<span class="price-cell ${priceClass}">${price.toFixed(2)}</span>`;
 
-    if (pd.todayChange != null) {
-      const v = pd.todayChange;
-      changeHtml = `<span class="badge rounded-pill badge-today ${v > 0 ? 'text-bg-danger' : v < 0 ? 'text-bg-success' : 'text-bg-secondary'}">`
-                 + `${v > 0 ? '▲ +' : v < 0 ? '▼ ' : ''}${v.toFixed(2)}%</span>`;
-    }
     if (stock.entry) entryDiff = diffHtml((price - stock.entry) / stock.entry * 100);
     if (stock.heavy) heavyDiff = diffHtml((price - stock.heavy) / stock.heavy * 100);
   }
@@ -349,13 +347,29 @@ function buildRow(stock) {
     <td>${priceHtml}</td>
     <td>${entryHtml}${entryDiff}</td>
     <td>${heavyHtml}${heavyDiff}</td>
-    <td>${changeHtml}</td>
     <td>${prevChgHtml}</td>
     <td>${tp1Html}</td>
     <td>${tp2Html}</td>
     <td class="text-body-secondary">${stock.yearInit != null ? Number(stock.yearInit).toFixed(2) : '<span class="text-body-tertiary">—</span>'}</td>
+    <td>${fmtCap(pd && pd.totalCap)}</td>
+    <td>${fmtRatio(pd && pd.pe)}</td>
+    <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${aliasHtml}</td>`;
+}
+
+/** 市值：元 -> 亿 / 万亿 */
+function fmtCap(cap) {
+  if (cap == null || !(cap > 0)) return '<span class="text-body-tertiary">—</span>';
+  const yi = cap / 1e8;
+  if (yi >= 1e4) return `<span class="text-body-secondary">${(yi / 1e4).toFixed(2)}<span class="unit">万亿</span></span>`;
+  return `<span class="text-body-secondary">${yi >= 1e3 ? yi.toFixed(0) : yi.toFixed(1)}<span class="unit">亿</span></span>`;
+}
+
+/** 市盈率 / 市净率（负值表示亏损，弱化显示） */
+function fmtRatio(v) {
+  if (v == null || !isFinite(v)) return '<span class="text-body-tertiary">—</span>';
+  return `<span class="${v > 0 ? 'text-body-secondary' : 'text-body-tertiary'}">${v.toFixed(2)}</span>`;
 }
 
 function diffHtml(d) {

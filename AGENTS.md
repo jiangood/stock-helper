@@ -10,7 +10,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 样式基于 Bootstrap 5（CDN），少量自定义 CSS
   - 数据：`stocks.json`（静态基础数据） + `quotes.js`（行情 SDK）
   - 功能：搜索、分组筛选、全列排序、明暗主题、交易时段每 3 秒自动刷新
-  - 表格 11 列（名称/价格/入场/重仓/今日/昨日/止盈1/止盈2/年初价/分组/别名）全部常显，窄屏靠横向滚动，不要再用 `d-none` 隐藏列
+  - 表格 14 列（名称/价格/入场/重仓/今日/昨日/止盈1/止盈2/年初价/市值/市盈率/市净率/分组/别名）全部常显，窄屏靠横向滚动，不要再用 `d-none` 隐藏列
   - 紧凑风格：行高约 26px，入场/重仓/止盈1 的涨跌幅用小号字紧随数值、不另起一行
   - 顶部只保留标题 + 刷新/主题按钮：不显示时钟、休市/交易中、收盘等常识性提示
   - 名称列只显示名称，不显示股票代码；别名单独一列，放在分组之后
@@ -21,7 +21,8 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 顶栏只保留标题 + 刷新/主题，不要加时钟、休市/交易中、收盘等提示
 - `quotes.js` — 行情 SDK，独立文件，可单独复用
   - 数据源：东方财富 push2（JSON）+ 腾讯财经 qt.gtimg.cn（GBK），多源自动降级、分片批量请求
-  - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`
+  - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`，返回 `price/prevClose/change/todayChange/pe/pb/totalCap/floatCap`
+  - 市值单位：`totalCap` / `floatCap` 为元（首页显示时换算成亿 / 万亿）
   - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`、`fetchTrends(code)`
   - 交易时段：`StockQuotes.marketSession()` / `StockQuotes.isTrading()`
 

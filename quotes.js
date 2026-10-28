@@ -1,5 +1,5 @@
 /*!
- * StockQuotes SDK v1.2.0
+ * StockQuotes SDK v1.3.0
  * ---------------------------------------------------------------------------
  * 股票行情 SDK —— A 股实时行情聚合封装（浏览器 / Node 通用，无依赖）
  *
@@ -21,7 +21,8 @@
  * 快速开始
  *   const quotes = new StockQuotes.Client({ timeout: 8000, cacheTTL: 1000 });
  *   const data = await quotes.fetch(['sz002408', '600519']);
- *   // data = { sz002408: { code, name, price, prevClose, change, todayChange, time }, ... }
+ *   // data = { sz002408: { code, name, price, prevClose, change, todayChange,
+ *   //                     pe, pb, totalCap, floatCap, time }, ... }
  *
  * 单只详情 / K 线 / 分时（详情页使用）
  *   await quotes.fetchDetail('sz002408');
@@ -48,7 +49,7 @@
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
 
-  const VERSION = '1.2.0';
+  const VERSION = '1.3.0';
   const REFRESH_INTERVAL = 3000;
 
   const DEFAULTS = {
@@ -127,7 +128,12 @@
       if (price === null || price <= 0) continue;
       const code = fromSecId(item.f12) || normalizeCode(item.f12);
       if (!code) continue;
-      out[code] = build(code, price, num(item.f18), num(item.f4), num(item.f3), null);
+      out[code] = build(code, price, num(item.f18), num(item.f4), num(item.f3), null, {
+        pe: num(item.f9),
+        pb: num(item.f23),
+        totalCap: num(item.f20),
+        floatCap: num(item.f21)
+      });
     }
     return out;
   }
@@ -146,16 +152,31 @@
       if (f.length < 33) continue;
       const price = num(f[3]);
       if (price === null || price <= 0) continue;
-      out[code] = build(code, price, num(f[4]), num(f[31]), num(f[32]), f[1]);
+      const totalCapYi = num(f[45]);
+      const floatCapYi = num(f[44]);
+      out[code] = build(code, price, num(f[4]), num(f[31]), num(f[32]), f[1], {
+        pe: num(f[39]),                                       // 市盈率(TTM)
+        pb: num(f[46]),
+        totalCap: totalCapYi === null ? null : totalCapYi * 1e8,   // 亿 -> 元
+        floatCap: floatCapYi === null ? null : floatCapYi * 1e8
+      });
     }
     return out;
   }
 
-  function build(code, price, prevClose, change, todayChange, name) {
+  function build(code, price, prevClose, change, todayChange, name, extra) {
     if (todayChange === null && prevClose && prevClose > 0) {
       todayChange = (price - prevClose) / prevClose * 100;
     }
-    return { code, name: name || null, price, prevClose, change, todayChange, time: Date.now() };
+    const e = extra || {};
+    return {
+      code, name: name || null, price, prevClose, change, todayChange,
+      pe: e.pe === undefined ? null : e.pe,
+      pb: e.pb === undefined ? null : e.pb,
+      totalCap: e.totalCap === undefined ? null : e.totalCap,
+      floatCap: e.floatCap === undefined ? null : e.floatCap,
+      time: Date.now()
+    };
   }
 
   /* ────────────────────── 单只详情解析 ────────────────────── */
@@ -392,7 +413,7 @@
       async fetch(codes, ctx) {
         const secids = codes.map(toSecId).filter(Boolean).join(',');
         const path = `/api/qt/ulist.np/get?fltt=2&secids=${secids}`
-                   + `&fields=f2,f3,f4,f12,f18&_=${Date.now()}`;
+                   + `&fields=f2,f3,f4,f9,f12,f18,f20,f21,f23&_=${Date.now()}`;
         const json = await requestJSON(this.hosts, path, ctx);
         return parseEastmoney(json);
       }
@@ -572,7 +593,8 @@
      * @param {AbortSignal} [opts.signal]
      * @param {boolean} [opts.force] 跳过缓存
      * @returns {Promise<Object<string, {code:string, name:string|null, price:number,
-     *           prevClose:number|null, change:number|null, todayChange:number|null}>>}
+     *           prevClose:number|null, change:number|null, todayChange:number|null,
+     *           pe:number|null, pb:number|null, totalCap:number|null, floatCap:number|null}>>}
      */
     async fetch(codes, opts) {
       const o = opts || {};

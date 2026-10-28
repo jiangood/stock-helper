@@ -29,8 +29,10 @@
 
   let MIN15 = null;
   let MIN15At = 0;
+  let MIN15Failed = false;
   let TRENDS = null;
   let TRENDSAt = 0;
+  let DAY_FAILED = false;
 
   /* 做T / 补仓 判定阈值（集中调参） */
   const T_RULES = {
@@ -38,6 +40,7 @@
     mfiLow: 25,        // 15 分 MFI 低吸
     mfiHigh: 75,       // 15 分 MFI 高抛
     volSurge: 1.3,     // 近 3 根 / 前 12 根 均量，放量阈值
+    volShrink: 1.0,    // 低于该量比算缩量
     trendDev: 2.5,     // 偏离超过多少 % 且放量 -> 单边
     spread: 2,         // 默认 T 差价目标 %
     stall: 0.5,        // 近 3 根涨跌幅多少 % 以内算滞涨
@@ -477,11 +480,14 @@
     }
     try {
       klineCache.day = await quotes.fetchKline(CODE, { period: 'day', count: 250, adjust: 'qfq' });
+      DAY_FAILED = false;
       apply52WeekFallback(klineCache.day.bars);
       renderDiscipline(DETAIL);
       renderAdd(DETAIL);
     } catch (e) {
       /* 日 K 失败不影响主流程 */
+      DAY_FAILED = true;
+      renderAdd(DETAIL);
     }
   }
 
@@ -589,8 +595,10 @@
     try {
       MIN15 = await quotes.fetchMinuteKline(CODE, { period: '15', count: 320, force: !!force });
       MIN15At = Date.now();
+      MIN15Failed = false;
     } catch (e) {
       /* 分钟 K 失败不影响主流程 */
+      MIN15Failed = true;
     }
     renderT(DETAIL);
   }
@@ -619,18 +627,19 @@
     const vr = bars.length >= 15 ? TechInd.volumeRatio(bars, 3, 12) : null;
     const dev = vw && isNum(price) ? (price / vw.value - 1) * 100 : null;
     const surge = vr !== null && vr >= T_RULES.volSurge;
+    const shrink = vr !== null && vr < T_RULES.volShrink;
     const single = dev !== null && Math.abs(dev) > T_RULES.trendDev && surge;
     const stall = recentStall(bars, T_RULES.stall);
 
     const buy = dev !== null && dev <= -T_RULES.vwapDev
-      && mfi !== null && mfi < T_RULES.mfiLow && !surge;
+      && mfi !== null && mfi < T_RULES.mfiLow && shrink;
     const sell = dev !== null && dev >= T_RULES.vwapDev
       && mfi !== null && mfi > T_RULES.mfiHigh && surge && stall;
 
     let text = '观望';
     let tone = 'text-bg-secondary';
     if (!bars.length && !vw) text = '加载中…';
-    else if (!bars.length) text = '分钟数据不足';
+    else if (!bars.length) text = MIN15Failed ? '分钟K 不可用' : '分钟数据不足';
     else if (single) { text = '单边 · 不逆势做T'; tone = 'text-bg-warning'; }
     else if (buy) { text = '正T 买点'; tone = 'text-bg-success'; }
     else if (sell) { text = 'T 卖点'; tone = 'text-bg-warning'; }
@@ -656,10 +665,10 @@
     checks.push(checkItem(mfiTone, '15 分 MFI', mfi === null ? '—' : mfi.toFixed(1), mfiNote));
 
     checks.push(checkItem(
-      surge ? 'warn' : 'neutral',
+      surge ? 'warn' : shrink ? 'ok' : 'neutral',
       '量能（3/12）',
       vr === null ? '—' : `${vr.toFixed(2)}×`,
-      vr === null ? '分钟 K 数据不足' : surge ? '放量，追单需谨慎' : '未放量'
+      vr === null ? '分钟 K 数据不足' : surge ? '放量，追单需谨慎' : shrink ? '缩量，利于低吸' : '量能平稳'
     ));
 
     checks.push(checkItem(
@@ -701,7 +710,8 @@
     }
 
     $('t-note').textContent = `15 分 K · ${bars.length || '—'} 根`
-      + (vw && vw.stale ? ' · 上一交易日' : '');
+      + (vw && vw.stale ? ' · 上一交易日' : '')
+      + (MIN15Failed ? ' · 获取失败' : '');
   }
 
   /** MFI < 20 后回升上穿 20 */
@@ -745,6 +755,7 @@
     if (!d || typeof TechInd === 'undefined') return;
     const price = d.price;
     const bars = dayBars();
+    const dayNote = DAY_FAILED ? '日K 不可用' : '日K 加载中…';
     const profile = bars.length >= 20
       ? TechInd.volumeProfile(bars, { bins: 30, lookback: ADD_RULES.profileLookback }) : null;
     const mfiRes = bars.length >= 16 ? TechInd.mfi(bars, 14) : null;
@@ -773,7 +784,7 @@
     const confirmKnown = !!mfiRes;
     const score = [supportOk, confirmOk, trendOk].filter(Boolean).length;
 
-    let text = '加载中…';
+    let text = DAY_FAILED ? '日K 不可用' : '加载中…';
     let tone = 'text-bg-secondary';
     if (!bars.length) {
       // 日 K 尚未返回
@@ -785,7 +796,7 @@
     const checks = [];
 
     if (!support) {
-      checks.push(checkItem('neutral', '① 到支撑', '—', bars.length ? '筹码 / 重仓价数据不足' : '日K 加载中…'));
+      checks.push(checkItem('neutral', '① 到支撑', '—', bars.length ? '筹码 / 重仓价数据不足' : dayNote));
     } else {
       checks.push(checkItem(
         supportOk ? 'ok' : 'warn',
@@ -796,7 +807,7 @@
     }
 
     if (!confirmKnown) {
-      checks.push(checkItem('neutral', '② 资金确认', '—', '日K 加载中…'));
+      checks.push(checkItem('neutral', '② 资金确认', '—', dayNote));
     } else if (bottomDiv) {
       checks.push(checkItem('ok', '② 资金确认', `MFI ${fmtNum(mfi, 1)}`,
         `MFI 底背离：${bottomDiv.barsAgo} 根前枢轴，指标 +${bottomDiv.indDelta.toFixed(1)}`));
@@ -809,7 +820,7 @@
     }
 
     if (!trendKnown) {
-      checks.push(checkItem('neutral', '③ 趋势过滤', '—', '日K 加载中…'));
+      checks.push(checkItem('neutral', '③ 趋势过滤', '—', dayNote));
     } else {
       const trendText = trendOk ? '趋势未破' : '趋势偏弱';
       const note = [
@@ -825,7 +836,9 @@
     let hintCls = 'alert-secondary';
     let hintText;
     if (!bars.length) {
-      hintText = '日K 数据加载中；补仓看日线是否止跌，三项缺一即降级。';
+      hintText = DAY_FAILED
+        ? '日K 获取失败，补仓面板暂不可用；不影响行情与做T。'
+        : '日K 数据加载中；补仓看日线是否止跌，三项缺一即降级。';
     } else if (score >= 3) {
       hintCls = 'alert-success';
       hintText = '三项齐备：价格到支撑、资金出现确认、趋势未破。可考虑分批补仓，单次不超过计划仓位的 1/3。';
@@ -850,8 +863,10 @@
     ].map(([k, v]) => statItem(k, v)).join('');
 
     const lastDay = bars.length ? bars[bars.length - 1].time : '';
-    $('add-note').textContent = `日 K · ${profile ? profile.count : bars.length || '—'} 根 · 筹码近似`
-      + (lastDay && isStale(lastDay) ? ' · 上一交易日' : '');
+    $('add-note').textContent = DAY_FAILED
+      ? '日 K 不可用 · 降级展示'
+      : `日 K · ${profile ? profile.count : bars.length || '—'} 根 · 筹码近似`
+        + (lastDay && isStale(lastDay) ? ' · 上一交易日' : '');
   }
 
   /* ────────────────────────── 渲染：跟踪计划 ────────────────────────── */

@@ -41,6 +41,7 @@ class BusinessDataTests(unittest.TestCase):
         )
         self.assertEqual(fetcher.normalize_company_list("-"), [])
         self.assertEqual(fetcher.normalize_company_list(None), [])
+        self.assertEqual(fetcher.normalize_company_list(float("nan")), [])
 
     def test_normalize_inventory_frame_preserves_date_value_and_signed_change(self):
         class FakeFrame:

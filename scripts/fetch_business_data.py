@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "business-data.json"
+OUTPUT = ROOT / "data" / "business-data.json"
 LOOKBACK_DAYS = 120
 SOURCE_TIMEOUT_SECONDS = 35
 

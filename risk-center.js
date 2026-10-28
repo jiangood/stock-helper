@@ -59,6 +59,13 @@
     });
     var knownPnlRows = rows.filter(function (r) { return r.pnl !== null; });
     var pnlComplete = knownPnlRows.length === rows.length && rows.length > 0;
+    var costRows = rows.filter(function (r) { return r.costValue !== null; });
+    var costComplete = costRows.length === rows.length && rows.length > 0;
+    var totalCostValue = costComplete ? costRows.reduce(function (sum, r) { return sum + r.costValue; }, 0) : null;
+    var totalPnl = pnlComplete ? knownPnlRows.reduce(function (sum, r) { return sum + r.pnl; }, 0) : null;
+    var rankedRows = completeQuotes ? rows.slice().sort(function (a, b) { return b.marketValue - a.marketValue; }) : [];
+    var largestHolding = rankedRows.length ? rankedRows[0] : null;
+    var topThreeValue = rankedRows.slice(0, 3).reduce(function (sum, r) { return sum + r.marketValue; }, 0);
     var riskRows = rows.filter(function (r) { return r.stopRisk !== null; });
     var missingRisk = rows.length - riskRows.length;
     var knownRisk = riskRows.reduce(function (sum, r) { return sum + r.stopRisk; }, 0);
@@ -66,8 +73,12 @@
       count: rows.length, completeQuotes: completeQuotes, knownMarketValue: knownMarketValue,
       totalMarketValue: totalMarketValue, accountEquity: equity !== null && equity > 0 ? equity : null,
       accountExposurePct: equity !== null && equity > 0 && completeQuotes ? totalMarketValue / equity * 100 : null,
-      pnl: pnlComplete ? knownPnlRows.reduce(function (sum, r) { return sum + r.pnl; }, 0) : null,
-      pnlComplete: pnlComplete, knownRisk: knownRisk, missingRisk: missingRisk,
+      totalCostValue: totalCostValue, pnl: totalPnl,
+      portfolioPnlPct: pnlComplete && totalCostValue !== null && totalCostValue > 0 ? totalPnl / totalCostValue * 100 : null,
+      pnlComplete: pnlComplete, largestHoldingName: largestHolding ? largestHolding.name : null,
+      largestHoldingWeight: largestHolding && totalMarketValue > 0 ? largestHolding.marketValue / totalMarketValue * 100 : null,
+      topThreeWeight: completeQuotes && totalMarketValue > 0 ? topThreeValue / totalMarketValue * 100 : null,
+      knownRisk: knownRisk, missingRisk: missingRisk,
       riskComplete: rows.length > 0 && missingRisk === 0,
       riskBudget: budget !== null && budget > 0 ? budget : null,
       riskBudgetPct: budget !== null && budget > 0 && missingRisk === 0 ? knownRisk / budget * 100 : null,
@@ -140,13 +151,13 @@
       '<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3"><div><div class="panel-title">持仓风险中心</div><div class="panel-subtitle">只读当前浏览器的持仓与页面行情；止损、账户总资产和风险预算由你手工设定。不会下单，也不修改原有鳄鱼纪律。</div></div><div id="risk-quote-note" class="panel-subtitle">等待行情数据…</div></div>',
       '<div id="risk-summary" class="row g-2 mb-3"></div>',
       '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数</div><div class="business-form">',
-      '<div><label for="risk-account-equity" class="form-label small mb-1">账户总资产（元，手工维护）</label><input id="risk-account-equity" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="未填写则不计算总资产仓位"></div>',
+      '<div><label for="risk-account-equity" class="form-label small mb-1">组合总资产（元，手工维护）</label><input id="risk-account-equity" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="未填写则不计算组合资产仓位"></div>',
       '<div><label for="risk-budget" class="form-label small mb-1">组合风险预算（元，可选）</label><input id="risk-budget" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="按你的纪律填写，不预设"></div>',
       '<div class="wide d-flex flex-wrap gap-2 align-items-center"><button id="risk-save-settings" type="button" class="btn btn-sm btn-primary">保存参数</button><span id="risk-save-status" class="panel-subtitle">参数仅保存在本机浏览器。</span></div></div></section>',
       '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"><div><div class="panel-title">实际持仓风险明细</div><div class="panel-subtitle">止损价默认留空；止盈目标优先读取股票池原计划价，可在此单独覆盖。</div></div><button id="risk-refresh" class="btn btn-sm btn-outline-secondary" type="button">刷新计算</button></div>',
       '<div id="risk-positions" class="insight-grid mb-3"></div>',
       '<div class="panel-subtitle mt-2">口径说明：参考价风险敞口 = max(现价 − 风险退出参考价, 0) × 持股数量；仅在参考价低于有效现价时计算。未设参考价、行情缺失或参数无效的持仓不会被当作风险为零。鳄鱼体系强调区分正常波动与本金永久损失；这里的参考价只用于情景测算，不代表建议按价格机械止损，须结合基本面与周期逻辑。止盈收益是达到目标价时的静态情景，不是预测；未计手续费、税费、滑点、跳空和流动性影响。</div>',
-      '<div class="panel-subtitle mt-2">风险预算比较只有在每只持仓都具备有效行情和有效风险退出参考价时才给出完整结论。账户总资产为手工输入，不会自动从券商同步。</div>'
+      '<div class="panel-subtitle mt-2">风险预算比较只有在每只持仓都具备有效行情和有效风险退出参考价时才给出完整结论。组合总资产为手工输入，不会自动从券商同步。</div>'
     ].join('');
     nav.parentNode.insertBefore(pane, nav);
     var equityInput = pane.querySelector('#risk-account-equity'), budgetInput = pane.querySelector('#risk-budget');
@@ -191,12 +202,14 @@
       '各持仓均有报价时间，仍请核对是否为最新。' : '部分报价时间缺失或行情不可用，风险金额可能不完整。');
     var cards = [
       ['持仓市值', summary.totalMarketValue === null ? (summary.count ? '部分行情缺失' : '—') : '¥' + money(summary.totalMarketValue), summary.completeQuotes ? '所有持仓均有有效价格' : '仅显示有效报价，不把缺失行情当作零'],
-      ['浮动盈亏', summary.pnl === null ? (summary.count ? '数据不完整' : '—') : (summary.pnl > 0 ? '+' : '') + '¥' + money(summary.pnl), '按录入成本与当前页面报价计算'],
-      ['占账户总资产', summary.accountExposurePct === null ? '需填写资产 / 行情完整' : pct(summary.accountExposurePct), '账户总资产为手工输入值'],
+      ['组合浮动盈亏', summary.pnl === null ? (summary.count ? '数据不完整' : '—') : (summary.pnl > 0 ? '+' : '') + '¥' + money(summary.pnl), '按录入成本与当前页面报价计算'],
+      ['组合盈亏率', summary.portfolioPnlPct === null ? '成本或行情不完整' : pct(summary.portfolioPnlPct), summary.totalCostValue === null ? '需要所有持仓都有有效成本' : '成本合计 ¥' + money(summary.totalCostValue)],
+      ['组合资产仓位', summary.accountExposurePct === null ? '需填写资产 / 行情完整' : pct(summary.accountExposurePct), '组合总资产为手工输入值'],
+      ['持仓集中度', summary.largestHoldingWeight === null ? '行情不完整' : esc(summary.largestHoldingName) + ' · ' + pct(summary.largestHoldingWeight), summary.topThreeWeight === null ? '前 3 大持仓占比待行情完整' : '前 3 大持仓合计 ' + pct(summary.topThreeWeight)],
       ['参考价风险敞口', summary.riskComplete ? '¥' + money(summary.knownRisk) : '不完整：' + summary.missingRisk + ' 只待设置', summary.riskBudget === null ? '可选填写组合风险预算' : (summary.riskComplete ? '预算 ¥' + money(summary.riskBudget) + ' · ' + (summary.budgetExceeded ? '超出预算' : '未超预算') : '预算比较暂不完整')]
     ];
     summaryNode.innerHTML = cards.map(function (item) {
-      return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">' + esc(item[0]) + '</div><div class="fs-5 fw-bold">' + esc(item[1]) + '</div><div class="mini-label mt-1">' + esc(item[2]) + '</div></div></div>';
+      return '<div class="col-6 col-lg-4"><div class="insight-card h-100"><div class="mini-label">' + esc(item[0]) + '</div><div class="fs-5 fw-bold">' + esc(item[1]) + '</div><div class="mini-label mt-1">' + esc(item[2]) + '</div></div></div>';
     }).join('');
     if (!rows.length) {
       listNode.innerHTML = '<div class="empty-state">当前浏览器尚无有效持仓。请先在「简报」页录入持仓；风险配置和持仓不会跨设备同步。</div>';

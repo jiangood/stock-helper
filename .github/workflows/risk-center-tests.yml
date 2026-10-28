@@ -9,7 +9,7 @@ on:
     paths:
       - 'risk-center.js'
       - 'holdings-data.js'
-      - 'holdings.json'
+      - 'data/holdings.json'
       - 'business.js'
       - 'stock.js'
       - 'stock.html'
@@ -22,7 +22,7 @@ on:
     paths:
       - 'risk-center.js'
       - 'holdings-data.js'
-      - 'holdings.json'
+      - 'data/holdings.json'
       - 'business.js'
       - 'stock.js'
       - 'stock.html'

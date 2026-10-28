@@ -3,54 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>投资格言</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="public.css">
+<title>Stock Helper</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif; background: #f0f2f5; color: #333; padding: 20px; }
+
+.container { max-width: 800px; margin: 0 auto; }
+
+.controls { margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.controls .info { font-size: 13px; color: #64748b; }
+.controls .nav-link { font-size: 13px; color: #4361ee; text-decoration: none; white-space: nowrap; }
+.controls .nav-link:hover { text-decoration: underline; }
+
+.card-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.stock-card {
+  background: #fff; border-radius: 12px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.card-top-left { flex: 1; }
+.card-name { font-size: 18px; font-weight: 600; color: #1e293b; text-decoration: none; display: inline-block; }
+.card-name:hover { color: #4361ee; }
+.card-code { font-size: 12px; color: #94a3b8; font-family: "SF Mono", monospace; margin-top: 2px; }
+.card-profit { font-size: 22px; font-weight: 700; text-align: right; white-space: nowrap; }
+
+.card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.card-field { padding: 6px 10px; background: #f8fafc; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
+.field-label { font-size: 12px; color: #94a3b8; }
+.field-value { font-size: 14px; font-weight: 500; color: #1e293b; }
+
+.card-remark { margin-top: 10px; padding: 8px 10px; font-size: 13px; color: #64748b; background: #f8fafc; border-radius: 6px; }
+
+.profit-up { color: #dc2626; }
+.profit-down { color: #16a34a; }
+
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 10px 24px; border-radius: 8px; color: #fff; font-size: 14px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
+.toast.show { opacity: 1; }
+.toast.info { background: #4361ee; }
+.toast.error { background: #dc2626; }
+.toast.success { background: #059669; }
+
+@media (max-width: 640px) {
+  body { padding: 10px; }
+  .controls { margin-bottom: 12px; }
+  .controls .info { font-size: 12px; }
+  .stock-card { padding: 14px; }
+  .card-name { font-size: 16px; }
+  .card-profit { font-size: 20px; }
+}
+</style>
 </head>
 <body>
-<div class="public-page">
-  <div class="hero">
-    <div class="hero-inner">
-      <h1 class="hero-title">价值投资</h1>
-      <p class="hero-subtitle">Value Investing</p>
-      <p class="hero-desc">在时间的河流中，寻找确定性的锚点</p>
+<div class="container">
+  <div class="controls">
+    <div class="info">
+      <span id="updateInfo">⏱ 更新时间: --</span>
     </div>
+    <a class="nav-link" href="principles.html">投资理念 →</a>
   </div>
-  <div class="principles-grid">
-    <div class="principle-card">
-      <div class="card-number">01</div>
-      <h3 class="card-title">安全边际</h3>
-      <p class="card-desc">以低于企业内在价值的价格买入，为判断失误留出缓冲空间。安全边际是价值投资的基石。</p>
-    </div>
-    <div class="principle-card">
-      <div class="card-number">02</div>
-      <h3 class="card-title">能力圈</h3>
-      <p class="card-desc">明确自己懂什么、不懂什么。在能力圈内投资，不追逐热点，不涉足未知领域。</p>
-    </div>
-    <div class="principle-card">
-      <div class="card-number">03</div>
-      <h3 class="card-title">市场先生</h3>
-      <p class="card-desc">市场是你的仆人，不是你的向导。利用市场的情绪波动，而非被其左右。</p>
-    </div>
-    <div class="principle-card">
-      <div class="card-number">04</div>
-      <h3 class="card-title">长期主义</h3>
-      <p class="card-desc">买入股票就是买入企业的一部分。与优秀企业共同成长，让时间成为你的朋友。</p>
-    </div>
-    <div class="principle-card">
-      <div class="card-number">05</div>
-      <h3 class="card-title">经济护城河</h3>
-      <p class="card-desc">寻找具有持久竞争优势的企业。护城河越宽，企业越能抵御竞争，长期价值越稳固。</p>
-    </div>
-    <div class="principle-card">
-      <div class="card-number">06</div>
-      <h3 class="card-title">集中投资</h3>
-      <p class="card-desc">少即是多。押注于你最确定的机会，深度研究带来信心，信心带来持有定力。</p>
-    </div>
-  </div>
-  <div class="public-footer">
-    <p>本杰明·格雷厄姆 ｜ 沃伦·巴菲特 ｜ 查理·芒格</p>
-  </div>
+  <div class="card-grid" id="stockCardGrid"></div>
 </div>
+<div class="toast" id="toast"></div>
+<script>
+const $ = id => document.getElementById(id);
+
+function formatTime(ts) {
+  return new Date(ts).toLocaleString("zh-CN", { hour12: false });
+}
+
+function showToast(msg, type) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.className = "toast " + type + " show";
+  clearTimeout(t._hide);
+  t._hide = setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+let stocks = [];
+let currentSort = "profit";
+let priceMap = {};
+
+async function fetchPrices() {
+  const codes = stocks.map(s => s.code).join(",");
+  if (!codes) return {};
+  const emCodes = stocks.map(s => {
+    const prefix = s.code.startsWith("sh") ? "1." : "0.";
+    return prefix + s.code.slice(2);
+  }).join(",");
+  const url = `https://push2delay.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=${emCodes}&fields=f2,f3,f4,f12`;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    return parseEastMoneyPrices(data);
+  } catch (e) {
+    if (e.name === "TimeoutError") throw new Error("请求超时");
+    throw new Error("获取价格失败: " + e.message);
+  }
+}
+
+function parseEastMoneyPrices(data) {
+  const map = {};
+  if (!data.data || !data.data.diff) return map;
+  for (const item of data.data.diff) {
+    const price = item.f2;
+    const change = item.f4;
+    const changePercent = item.f3;
+    const codeNum = item.f12;
+    if (price == null || change == null) continue;
+    const stock = stocks.find(s => s.code.endsWith(codeNum));
+    if (!stock) continue;
+    map[stock.code] = { price, change, change_percent: changePercent };
+  }
+  return map;
+}
+
+function sortStocks(stocks, prices) {
+  const copy = [...stocks];
+  copy.sort((a, b) => {
+    const pA = prices[a.code];
+    const pB = prices[b.code];
+    const profitA = calcProfit(a, pA);
+    const profitB = calcProfit(b, pB);
+    if (currentSort === "group_profit") {
+      const gA = a.group || "";
+      const gB = b.group || "";
+      if (gA !== gB) return gA.localeCompare(gB, "zh");
+    }
+    return profitA - profitB;
+  });
+  return copy;
+}
+
+function calcProfit(stock, price) {
+  const entry = stock.entry_price;
+  if (!entry || entry <= 0 || !price) return 0;
+  return ((price.price - entry) / entry) * 100;
+}
+
+function render() {
+  const sorted = sortStocks(stocks, priceMap);
+  const grid = $("stockCardGrid");
+  if (!grid) return;
+  let html = "";
+  for (let i = 0; i < sorted.length; i++) {
+    const s = sorted[i];
+    const p = priceMap[s.code];
+    const currentPrice = p ? p.price : null;
+    const entry = s.entry_price;
+    const target = s.target_price;
+    let profit = null;
+    if (entry && entry > 0 && currentPrice !== null) {
+      profit = ((currentPrice - entry) / entry) * 100;
+    }
+    const priceStr = currentPrice !== null ? currentPrice.toFixed(2) : "-";
+    const entryStr = entry !== null ? entry.toFixed(2) : "-";
+    const targetStr = target !== null ? target.toFixed(2) : "-";
+    let profitStr = "-";
+    let profitClass = "";
+    if (profit !== null) {
+      profitStr = (profit >= 0 ? "+" : "") + profit.toFixed(2) + "%";
+      profitClass = profit >= 0 ? "profit-up" : "profit-down";
+    }
+    html += `<div class="stock-card">
+      <div class="card-top">
+        <div class="card-top-left">
+          <a class="card-name" href="https://quote.eastmoney.com/${s.code}.html" target="_blank" rel="noopener noreferrer">${s.name}</a>
+          <div class="card-code">${s.code}</div>
+        </div>
+        <div class="card-profit ${profitClass}">${profitStr}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-field">
+          <span class="field-label">当前价</span>
+          <span class="field-value">${priceStr}</span>
+        </div>
+        <div class="card-field">
+          <span class="field-label">目标价</span>
+          <span class="field-value">${targetStr}</span>
+        </div>
+        <div class="card-field">
+          <span class="field-label">买入价</span>
+          <span class="field-value">${entryStr}</span>
+        </div>
+        <div class="card-field">
+          <span class="field-label">分组</span>
+          <span class="field-value">${s.group || '-'}</span>
+        </div>
+      </div>
+      ${s.remark ? `<div class="card-remark">${s.remark}</div>` : ''}
+    </div>`;
+  }
+  grid.innerHTML = html;
+}
+
+async function refreshPrices() {
+  try {
+    priceMap = await fetchPrices();
+    render();
+    const count = Object.keys(priceMap).length;
+    $("updateInfo").textContent = "⏱ 更新时间: " + formatTime(Date.now());
+  } catch (e) {
+    showToast("❌ " + e.message, "error");
+  }
+}
+
+(async function init() {
+  try {
+    const res = await fetch("stocks.json", { signal: AbortSignal.timeout(5000) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    stocks = await res.json();
+    await refreshPrices();
+    setInterval(refreshPrices, 60000);
+  } catch (e) {
+    showToast("❌ 加载失败: " + e.message, "error");
+    stocks = [];
+  }
+})();
+</script>
 </body>
 </html>

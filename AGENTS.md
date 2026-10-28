@@ -2,9 +2,12 @@
 
 ## 架构说明
 
-两个独立 HTML 页面：
-- `docs/index.html` — 公开页，价值投资理念展示，全静态
-- `docs/ce8aec697ee6.html` — 私密页，股票跟踪看板，自包含（内联 CSS/JS）
-  - 私密页通过随机长文件名访问，无密码参数
+两个独立 HTML 页面（均为公开页面，无密码）：
+
+- `docs/index.html` — 首页，股票跟踪看板，自包含（内联 CSS/JS）
+  - 默认访问根路径即可查看：https://jiangood.github.io/stock-helper/
   - 数据来源：`stocks.json`（股票列表）、东方财富 API（实时价格）
   - 自动刷新：每 60 秒
+- `docs/principles.html` — 价值投资理念展示，全静态（`style.css` + `public.css`）
+
+两页之间通过顶部/底部链接互相跳转。

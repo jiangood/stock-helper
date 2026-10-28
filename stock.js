@@ -630,6 +630,7 @@
     let text = '观望';
     let tone = 'text-bg-secondary';
     if (!bars.length && !vw) text = '加载中…';
+    else if (!bars.length) text = '分钟数据不足';
     else if (single) { text = '单边 · 不逆势做T'; tone = 'text-bg-warning'; }
     else if (buy) { text = '正T 买点'; tone = 'text-bg-success'; }
     else if (sell) { text = 'T 卖点'; tone = 'text-bg-warning'; }
@@ -685,16 +686,18 @@
       const lowBuy = vw.value * (1 - T_RULES.vwapDev / 100);
       const highSell = vw.value * (1 + T_RULES.vwapDev / 100);
       const target = lowBuy * (1 + T_RULES.spread / 100);
-      const sessionNote = !StockQuotes.isTrading() || vw.stale
-        ? `非交易时段 · 上一交易日 ${vw.time ? String(vw.time).slice(0, 16) : ''}`.trim()
+      const sessionNote = !StockQuotes.isTrading()
+        ? `${vw.stale ? '非交易时段 · 上一交易日' : '非交易时段 · 最近交易日'}${vw.time ? ' ' + String(vw.time).slice(0, 16) : ''}`
         : `均价来源：${vw.source}`;
+      const sampleNote = bars.length
+        ? `样本 ${bars.length} 根（约 20 个交易日）`
+        : '分钟 K 数据不足';
       $('t-ref').innerHTML = `
         <div class="sell-line">正T：均价下 ${T_RULES.vwapDev}% 低吸 <b>${fmtNum(lowBuy)}</b>
           → 回到均价 <b>${fmtNum(vw.value)}</b> 卖出 · 差价目标 ${T_RULES.spread}%（<b>${fmtNum(target)}</b>）</div>
         <div class="sell-line">倒T：均价上 ${T_RULES.vwapDev}% 高抛 <b>${fmtNum(highSell)}</b>
           → 回落接回，不等当日新低</div>
-        <div class="sell-line text-body-secondary">${esc(sessionNote)}
-          · 样本 ${bars.length || '—'} 根（约 20 个交易日）</div>`;
+        <div class="sell-line text-body-secondary">${esc(sessionNote)} · ${esc(sampleNote)}</div>`;
     }
 
     $('t-note').textContent = `15 分 K · ${bars.length || '—'} 根`
@@ -810,7 +813,7 @@
     } else {
       const trendText = trendOk ? '趋势未破' : '趋势偏弱';
       const note = [
-        isNum(maLatest) ? `MA20 ${fmtNum(maLatest)}（现价${aboveMa ? '上方' : '下方'}）` : 'MA20 —',
+        isNum(maLatest) ? `MA20 ${fmtNum(maLatest)}（现价在其${aboveMa ? '上方' : '下方'}）` : 'MA20 —',
         obvNewLow === null ? 'OBV —' : obvNewLow ? 'OBV 20 日创新低' : 'OBV 未创新低'
       ].join(' · ');
       checks.push(checkItem(trendOk ? 'ok' : 'bad', '③ 趋势过滤', trendText, note));
@@ -1071,6 +1074,18 @@
     checks.push(checkItem(lTone, '连续涨停', lVal, lNote));
 
     $('discipline-checks').innerHTML = checks.join('');
+
+    const scoreEl = $('discipline-score');
+    if (scoreEl && typeof Croc !== 'undefined') {
+      const sc = Croc.screen(
+        { name: e.name || (PLAN && PLAN.name) || '', code: CODE },
+        Object.assign({}, d, { pe: isNum(d.peTtm) ? d.peTtm : d.pe })
+      );
+      scoreEl.innerHTML = sc.allPass
+        ? '<span class="flag flag-buy" style="margin-left:0">纪律全过</span>'
+        : `<span class="${sc.passed === sc.total - 1 ? 'text-warning-emphasis' : 'text-body-tertiary'}">纪律 ${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
+    }
+
     renderLimitUpAlert(li);
     renderSellPlan(e);
   }

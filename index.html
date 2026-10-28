@@ -27,7 +27,7 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .stock-table { min-width: 1210px; }
+  .stock-table { min-width: 1265px; }
   .stock-table thead th {
     position: sticky; top: 0; z-index: 3;
     font-size: 11px; font-weight: 600; letter-spacing: .3px;
@@ -130,7 +130,7 @@
 
   @media (max-width: 575.98px) {
     .table-scroll { max-height: calc(100vh - 112px); }
-    .stock-table { min-width: 940px; }
+    .stock-table { min-width: 990px; }
     .stock-table thead th { padding: .3rem .25rem; font-size: 10px; letter-spacing: 0; }
     .stock-table tbody td { padding: .18rem .25rem; font-size: 11px; }
     .price-cell { font-size: 12.5px; }
@@ -162,7 +162,7 @@
   <div class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
     <div class="input-group input-group-sm flex-nowrap" style="max-width:210px;min-width:0">
       <span class="input-group-text px-2">🔍</span>
-      <input type="text" class="form-control" id="search-input" placeholder="名称 / 代码 / 别名" oninput="applyFilter()" style="min-width:0">
+      <input type="text" class="form-control" id="search-input" placeholder="名称 / 代码 / 别名 / 拼音" oninput="applyFilter()" style="min-width:0">
     </div>
 
     <select class="form-select form-select-sm w-auto flex-shrink-0" id="group-filter" onchange="applyFilter()" title="按分组筛选">
@@ -249,6 +249,7 @@
 
 <script src="croc.js"></script>
 <script src="quotes.js"></script>
+<script src="pinyin.js"></script>
 <script>
 // ============================================================
 // State
@@ -283,8 +284,20 @@ async function loadStocks() {
     STOCKS = [];
     showToast('股票数据加载失败：' + e.message);
   }
+  buildSearchKeys();
   buildGroupOptions();
   applyFilter();
+}
+
+/** 预计算拼音检索键（名称 + 别名），只算一次 */
+function buildSearchKeys() {
+  if (typeof Pinyin === 'undefined') return;
+  STOCKS.forEach(s => {
+    const text = (s.name || '') + (s.alias || '');
+    s._py = Pinyin.initials(text).replace(/\s+/g, '');
+    s._pyf = Pinyin.full(text).replace(/\s+/g, '');
+    s._pyu = s._pyf.replace(/v/g, 'u');   // 绿 lv / lu 都能搜到
+  });
 }
 
 function buildGroupOptions() {
@@ -372,16 +385,18 @@ function buildTable() {
 function updateSummary() {
   const el = $('board-summary');
   if (!el) return;
-  const c = { heavy: 0, pb: 0, pb80: 0, risk: 0 };
+  const c = { heavy: 0, pb: 0, pb80: 0, risk: 0, pass: 0 };
   STOCKS.forEach(s => {
     const e = Croc.evaluate(s, priceData[s.code]);
     if (e.zone === 'heavy') c.heavy++;
     if (e.pbUnder1) c.pb++;
     if (e.pbGolden) c.pb80++;
     if (e.st || e.loss) c.risk++;
+    if (Croc.screen(s, priceData[s.code]).allPass) c.pass++;
   });
   el.innerHTML = `重仓 <b class="text-body">${c.heavy}</b> · 破净 <b class="text-body">${c.pb}</b>`
-    + ` · 八折 <b class="text-body">${c.pb80}</b> · 风险 <b class="${c.risk ? 'text-up' : 'text-body'}">${c.risk}</b>`;
+    + ` · 八折 <b class="text-body">${c.pb80}</b> · 纪律 <b class="text-body">${c.pass}</b>`
+    + ` · 风险 <b class="${c.risk ? 'text-up' : 'text-body'}">${c.risk}</b>`;
 }
 
 function rowClass(stock) {
@@ -624,6 +639,8 @@ function closeHealth() {
 // ============================================================
 function applyFilter() {
   const q = ($('search-input').value || '').trim().toLowerCase();
+  const key = q.replace(/\s+/g, '');
+  const lettersOnly = /^[a-z]+$/.test(key);
   const group = $('group-filter').value;
   const status = $('status-filter').value;
 
@@ -634,7 +651,12 @@ function applyFilter() {
     return s.name.toLowerCase().includes(q)
         || (s.code && s.code.toLowerCase().includes(q))
         || (s.alias && s.alias.toLowerCase().includes(q))
-        || (s.group && s.group.toLowerCase().includes(q));
+        || (s.group && s.group.toLowerCase().includes(q))
+        || (lettersOnly && (
+             (s._py && s._py.includes(key))
+          || (s._pyf && s._pyf.includes(key))
+          || (s._pyu && s._pyu.includes(key))
+        ));
   });
   buildTable();
 }

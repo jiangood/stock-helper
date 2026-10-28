@@ -80,6 +80,30 @@ def clean_series(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         by_date[day] = item
     return [by_date[k] for k in sorted(by_date)][-180:]
 
+def normalize_inventory_frame(frame: Any) -> list[dict[str, Any]]:
+    """Normalize exchange warehouse receipt/inventory data; this is not total industry inventory."""
+    if frame is None or getattr(frame, "empty", True):
+        return []
+    rows: list[dict[str, Any]] = []
+    for _, row in frame.iterrows():
+        day = date_text(row.get("日期", row.get("date")))
+        raw_value = row.get("库存", row.get("库存量", row.get("inventory")))
+        value = finite_number(raw_value)
+        if not day or value is None:
+            continue
+        point: dict[str, Any] = {"date": day, "value": round(value, 4)}
+        raw_change = row.get("增减", row.get("change"))
+        try:
+            change = float(str(raw_change).replace(",", "").strip())
+            if math.isfinite(change):
+                point["change"] = round(change, 4)
+        except (TypeError, ValueError):
+            pass
+        rows.append(point)
+    by_date = {point["date"]: point for point in rows}
+    return [by_date[k] for k in sorted(by_date)][-90:]
+
+
 def normalize_daily_frame(frame: Any) -> dict[str, list[dict[str, Any]]]:
     result: dict[str, list[dict[str, Any]]] = {}
     if frame is None or getattr(frame, "empty", True):
@@ -158,6 +182,7 @@ def build_payload(daily_by_symbol: dict[str, list[dict[str, Any]]], now: datetim
             "futuresSource": "生意社主力合约参考价（历史数据）" if latest.get("futures") else None,
             "futuresSourceUrl": "https://www.100ppi.com/" if latest.get("futures") else None,
             "changePct": None,
+            "inventory": None,
             "source": "生意社现货/期货基差数据（经 AKShare 获取）" if series else None,
             "sourceUrl": "https://www.100ppi.com/",
             "stocks": product["stocks"], "chain": product["chain"], "drivers": product["drivers"],
@@ -249,6 +274,37 @@ def fetch_data() -> dict[str, Any]:
             errors.append("futures_spot_price_previous: " + str(exc)[:120])
 
     payload = build_payload(daily_by_symbol)
+
+    # Exchange warehouse receipts provide a useful, narrow supply-side signal.
+    # They are NOT the same as total producer, port, or social inventory.
+    inventory_symbols = {
+        "soda-ash": "SA", "urea": "尿素", "methanol": "甲醇",
+        "aluminium": "沪铝", "rubber": "天然橡胶",
+    }
+    for product_id, symbol in inventory_symbols.items():
+        try:
+            frame = call_with_timeout(15, ak.futures_inventory_em, symbol=symbol)
+            series = normalize_inventory_frame(frame)
+            if series:
+                latest_point = series[-1]
+                payload["items"][product_id]["inventory"] = {
+                    "label": "期货仓单库存（非全行业库存）",
+                    "series": series,
+                    "latest": latest_point["value"],
+                    "latestDate": latest_point["date"],
+                    "change": latest_point.get("change"),
+                    "source": "东方财富期货库存数据（经 AKShare 获取）",
+                    "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html",
+                }
+                fresh_data = True
+        except Exception as exc:
+            errors.append("futures_inventory_em/" + product_id + ": " + str(exc)[:100])
+        # Keep last successful observations when the provider is unavailable.
+        if payload["items"][product_id].get("inventory") is None:
+            old_item = old_items.get(product_id, {})
+            if isinstance(old_item, dict) and isinstance(old_item.get("inventory"), dict):
+                payload["items"][product_id]["inventory"] = old_item["inventory"]
+
     payload["fetchErrors"] = errors[:5]
 
     # Add separate futures quotes where the source's product-name mapping supports them.

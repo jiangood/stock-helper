@@ -80,6 +80,17 @@ def clean_series(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         by_date[day] = item
     return [by_date[k] for k in sorted(by_date)][-180:]
 
+def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
+    """Split source-provided company names without inventing or inferring relationships."""
+    if value is None:
+        return []
+    text = str(value).strip()
+    if not text or text in {"-", "--", "暂无", "无"}:
+        return []
+    names = [name.strip() for name in re.split(r"[,，、;；|]", text) if name.strip()]
+    return list(dict.fromkeys(names))[:limit]
+
+
 def normalize_inventory_frame(frame: Any) -> list[dict[str, Any]]:
     """Normalize exchange warehouse receipt/inventory data; this is not total industry inventory."""
     if frame is None or getattr(frame, "empty", True):
@@ -340,13 +351,22 @@ def fetch_data() -> dict[str, Any]:
     # Fetch current spot prices for non-futures commodities only where cache lacks a quote.
     # These products do not have a reliable futures spot series in this pipeline,
     # so refresh their latest quote from Eastmoney on every run.
-    category_by_product = {
+    # Pull source-reported producer/downstream links for every tracked commodity.
+    # The same endpoint can also provide latest spot quotes for products without a
+    # reliable daily series, but it must not overwrite the core historical price series.
+    industry_categories = {
+        "soda-ash": ["化工", "建材"],
+        "urea": ["化工", "农副"],
+        "methanol": ["能源", "化工"],
         "tio2": ["化工", "建材"],
-        "coal": ["能源"],
+        "aluminium": ["有色"],
+        "coal": ["能源", "钢铁"],
+        "rubber": ["化工", "纺织"],
         "rare-earth": ["有色"],
     }
+    latest_only_products = {"tio2", "coal", "rare-earth"}
     categories = list(dict.fromkeys(
-        category for values in category_by_product.values() for category in values
+        category for values in industry_categories.values() for category in values
     ))
     spot_rows: list[dict[str, Any]] = []
     for category in categories:
@@ -359,30 +379,44 @@ def fetch_data() -> dict[str, Any]:
 
     for product in PRODUCTS:
         target = payload["items"][product["id"]]
-        if product["id"] not in category_by_product and target.get("latest"):
-            continue
+        old_item = old_items.get(product["id"], {})
         for row in spot_rows:
             name = str(row.get("商品名称", row.get("商品", row.get("名称", "")))).strip()
             if not name or name not in product["aliases"]:
                 continue
-            latest = finite_number(row.get("最新价", row.get("最新价格")))
-            if latest is None:
-                continue
-            target["name"] = name
-            target["latest"] = round(latest, 4)
-            target["latestDate"] = date.today().isoformat()
-            target["latestSpot"] = round(latest, 4)
-            target["source"] = "东方财富现货与股票数据（经 AKShare 获取）"
-            target["sourceUrl"] = "https://data.eastmoney.com/ifdata/xhgp.html"
-            target["status"] = "latest-only"
-            try:
-                change = float(str(row.get("近半年涨跌幅", "")).replace("%", "").replace(",", "").strip())
-                if math.isfinite(change):
-                    target["changePct"] = change
-            except (TypeError, ValueError):
-                pass
-            fresh_data = True
+
+            producers = normalize_company_list(row.get("生产商"))
+            downstream = normalize_company_list(row.get("下游用户"))
+            target["industryLinks"] = {
+                "label": "数据源列示产业链企业",
+                "productName": name,
+                "producers": producers,
+                "downstreamUsers": downstream,
+                "source": "东方财富现货与股票数据（经 AKShare 获取）",
+                "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+            }
+            if product["id"] in latest_only_products:
+                latest = finite_number(row.get("最新价", row.get("最新价格")))
+                if latest is not None:
+                    target["name"] = name
+                    target["latest"] = round(latest, 4)
+                    target["latestDate"] = date.today().isoformat()
+                    target["latestSpot"] = round(latest, 4)
+                    target["source"] = "东方财富现货与股票数据（经 AKShare 获取）"
+                    target["sourceUrl"] = "https://data.eastmoney.com/ifdata/xhgp.html"
+                    target["status"] = "latest-only"
+                    try:
+                        change = float(str(row.get("近半年涨跌幅", "")).replace("%", "").replace(",", "").strip())
+                        if math.isfinite(change):
+                            target["changePct"] = change
+                    except (TypeError, ValueError):
+                        pass
+                    fresh_data = True
             break
+
+        # Preserve previously sourced industry names when a category endpoint is down.
+        if not target.get("industryLinks") and isinstance(old_item, dict) and isinstance(old_item.get("industryLinks"), dict):
+            target["industryLinks"] = old_item["industryLinks"]
 
     # Preserve last good latest-only quotes when a provider is temporarily unavailable.
     for product in PRODUCTS:

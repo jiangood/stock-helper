@@ -1,72 +1,88 @@
 {
-  "updatedAt": null,
+  "updatedAt": "2026-10-28T12:56:42.068328Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
       "id": "gold",
       "name": "黄金",
-      "sourceSymbol": "XAUUSD=X",
-      "price": null,
-      "changePct": null,
-      "quoteTime": null,
-      "status": "等待可靠报价",
-      "currency": "USD/盎司",
-      "sourceUrl": "https://finance.yahoo.com/quote/XAUUSD=X/"
+      "currency": "USD",
+      "status": "已更新",
+      "price": 4066.0,
+      "prevClose": 4007.9,
+      "change": 58.1,
+      "changePct": 1.449637,
+      "quoteTime": "2026-10-28T12:46:32Z",
+      "sourceSymbol": "GC=F",
+      "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF"
     },
     {
       "id": "bitcoin",
       "name": "比特币",
-      "sourceSymbol": "BTC-USD",
-      "price": null,
-      "changePct": null,
-      "quoteTime": null,
-      "status": "等待可靠报价",
       "currency": "USD",
-      "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD/"
+      "status": "已更新",
+      "price": 80617.46,
+      "prevClose": 80790.836,
+      "change": -173.376,
+      "changePct": -0.214599,
+      "quoteTime": "2026-10-28T12:56:38Z",
+      "sourceSymbol": "BTC-USD",
+      "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD"
     },
     {
       "id": "ethereum",
       "name": "以太坊",
-      "sourceSymbol": "ETH-USD",
-      "price": null,
-      "changePct": null,
-      "quoteTime": null,
-      "status": "等待可靠报价",
       "currency": "USD",
-      "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD/"
+      "status": "已更新",
+      "price": 2335.67,
+      "prevClose": 2355.9536,
+      "change": -20.2836,
+      "changePct": -0.860951,
+      "quoteTime": "2026-10-28T12:56:37Z",
+      "sourceSymbol": "ETH-USD",
+      "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD"
     },
     {
       "id": "nikkei225",
       "name": "日经 225",
+      "currency": "JPY",
+      "status": "已更新",
+      "price": 63954.19,
+      "prevClose": 62907.84,
+      "change": 1046.35,
+      "changePct": 1.663306,
+      "quoteTime": "2026-10-28T06:45:03Z",
       "sourceSymbol": "^N225",
-      "price": null,
-      "changePct": null,
-      "quoteTime": null,
-      "status": "等待可靠报价",
-      "currency": "指数点",
-      "sourceUrl": "https://finance.yahoo.com/quote/%5EN225/"
+      "sourceUrl": "https://finance.yahoo.com/quote/%5EN225"
     },
     {
       "id": "nasdaq100",
       "name": "纳斯达克 100",
+      "currency": "USD",
+      "status": "已更新",
+      "price": 29651.441,
+      "prevClose": 29490.28,
+      "change": 161.161,
+      "changePct": 0.546489,
+      "quoteTime": "2026-10-27T21:15:59Z",
       "sourceSymbol": "^NDX",
-      "price": null,
-      "changePct": null,
-      "quoteTime": null,
-      "status": "等待可靠报价",
-      "currency": "指数点",
-      "sourceUrl": "https://finance.yahoo.com/quote/%5ENDX/"
+      "sourceUrl": "https://finance.yahoo.com/quote/%5ENDX"
     },
     {
       "id": "sp500",
       "name": "标普 500",
+      "currency": "USD",
+      "status": "已更新",
+      "price": 7722.6,
+      "prevClose": 7712.57,
+      "change": 10.03,
+      "changePct": 0.130047,
+      "quoteTime": "2026-10-27T20:48:15Z",
       "sourceSymbol": "^GSPC",
-      "price": null,
-      "changePct": null,
-      "quoteTime": null,
-      "status": "等待可靠报价",
-      "currency": "指数点",
-      "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/"
+      "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC"
     }
+  ],
+  "error": true,
+  "errors": [
+    "gold (XAUUSD=X): HTTP Error 404: Not Found"
   ]
 }

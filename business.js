@@ -389,11 +389,6 @@
     quoteClient = quoteClientArg || null;
     bindHoldingsEditor();
     fetchMarketIndices();
-    var refresh = el('refresh-business-data');
-    if (refresh && !refresh.dataset.bound) {
-      refresh.dataset.bound = '1';
-      refresh.addEventListener('click', function(){ fetchBusinessData(); });
-    }
     renderOpportunity();
     fetchBusinessData();
   }

@@ -94,7 +94,7 @@ def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
 
 
 def normalize_source_monthly_prices(row: Any) -> list[dict[str, Any]]:
-    """Normalize Eastmoney's five-month commodity price snapshots without guessing dates."""
+    """Normalize monthly snapshots while retaining explicit dates when the source supplies them."""
     points: list[dict[str, Any]] = []
     for key, label in [
         ("近5月", "5个月前"),
@@ -107,7 +107,23 @@ def normalize_source_monthly_prices(row: Any) -> list[dict[str, Any]]:
         value = finite_number(row.get(key))
         if value is not None:
             points.append({"label": label, "value": round(value, 4)})
-    return points
+    # Some provider versions use the actual observation dates as column names.
+    for key, raw_value in row.items():
+        raw_key = str(key).strip()
+        value = finite_number(raw_value)
+        if value is None:
+            continue
+        day = date_text(raw_key)
+        if day is None and re.fullmatch(r"\\d{4}[-/]\\d{1,2}", raw_key):
+            try:
+                day = date.fromisoformat(raw_key.replace("/", "-") + "-01").isoformat()
+            except ValueError:
+                day = None
+        if day and not any(point.get("date") == day for point in points):
+            points.append({"label": day[:7], "date": day, "value": round(value, 4)})
+    dated = [point for point in points if point.get("date")]
+    undated = [point for point in points if not point.get("date")]
+    return sorted(dated, key=lambda point: point["date"]) + undated
 
 
 def normalize_inventory_frame(frame: Any) -> list[dict[str, Any]]:
@@ -459,19 +475,19 @@ def fetch_data() -> dict[str, Any]:
             if not target.get("series") and isinstance(old_item.get("series"), list):
                 target["series"] = old_item["series"]
 
-    # Fetch raw-material cost proxies from the same public spot/futures chart source.
-    # These are market price references, not company-specific cost calculations.
+    # Cost proxies are matched only against source rows that actually exist in
+    # Eastmoney's public spot-and-stock table. Unsupported raw materials remain pending.
     cost_inputs = [
-        {"id": "alumina", "name": "氧化铝", "unit": "元/吨", "symbol": "氧化铝",
+        {"id": "alumina", "name": "氧化铝", "unit": "元/吨", "aliases": ["氧化铝"],
          "relatedProducts": ["电解铝"], "role": "电解铝主要原料之一"},
-        {"id": "synthetic-ammonia", "name": "合成氨", "unit": "元/吨", "symbol": "合成氨",
+        {"id": "synthetic-ammonia", "name": "合成氨", "unit": "元/吨", "aliases": ["合成氨", "液氨"],
          "relatedProducts": ["纯碱", "尿素"], "role": "化工原料参考价"},
-        {"id": "sulfuric-acid", "name": "硫酸", "unit": "元/吨", "symbol": "硫酸",
+        {"id": "sulfuric-acid", "name": "硫酸", "unit": "元/吨", "aliases": ["硫酸"],
          "relatedProducts": ["钛白粉"], "role": "硫酸法钛白粉成本参考"},
-        {"id": "titanium-concentrate", "name": "钛精矿", "unit": "元/吨", "symbol": "钛精矿",
+        {"id": "titanium-concentrate", "name": "钛精矿", "unit": "元/吨", "aliases": ["钛精矿", "钛矿"],
          "relatedProducts": ["钛白粉"], "role": "钛白粉主要原料参考"},
-        {"id": "thermal-coal", "name": "动力煤", "unit": "元/吨", "symbol": "动力煤",
-         "relatedProducts": ["尿素", "甲醇", "纯碱"], "role": "煤化工能源成本参考，煤种/地区口径需核对"},
+        {"id": "thermal-coal", "name": "动力煤", "unit": "元/吨", "aliases": ["动力煤"],
+         "relatedProducts": ["尿素", "甲醇", "纯碱"], "role": "煤化工能源成本参考；煤种/地区口径需核对"},
     ]
     old_cost_inputs = existing_payload.get("costInputs", {})
     if not isinstance(old_cost_inputs, dict):
@@ -480,37 +496,42 @@ def fetch_data() -> dict[str, Any]:
     for input_meta in cost_inputs:
         input_id = input_meta["id"]
         prior = old_cost_inputs.get(input_id, {})
-        item: dict[str, Any] = dict(input_meta)
-        try:
-            frame = call_with_timeout(
-                18, ak.futures_spot_sys, symbol=input_meta["symbol"], indicator="市场价格"
-            )
-            series = normalize_sys_frame(frame, today=end_day)
-            if series:
-                latest_point = series[-1]
-                latest_price = latest_point.get("spot") or latest_point.get("futures")
-                if latest_price is not None:
-                    item.update({
-                        "series": series[-120:],
-                        "latest": latest_price,
-                        "latestDate": latest_point["date"],
-                        "source": "生意社现货/期货市场价格（经 AKShare 获取）",
-                        "sourceUrl": "https://www.100ppi.com/",
-                        "status": "ok",
-                    })
-                    fresh_data = True
-                else:
-                    raise ValueError("no positive latest price in source series")
+        item: dict[str, Any] = {
+            key: value for key, value in input_meta.items() if key != "aliases"
+        }
+        source_row = next((
+            row for row in spot_rows
+            if str(row.get("商品名称", row.get("商品", row.get("名称", "")))).strip()
+            in input_meta["aliases"]
+        ), None)
+        if source_row is not None:
+            monthly_prices = normalize_source_monthly_prices(source_row)
+            latest_price = finite_number(source_row.get("最新价", source_row.get("最新价格")))
+            if latest_price is not None:
+                item.update({
+                    "series": [],
+                    "latest": latest_price,
+                    "latestDate": end_day.isoformat(),
+                    "source": "东方财富现货与股票数据（经 AKShare 获取）",
+                    "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+                    "status": "latest-only",
+                })
+                if monthly_prices:
+                    item["monthlyPrices"] = monthly_prices
+                    item["series"] = [
+                        {"date": point["date"], "spot": point["value"]}
+                        for point in monthly_prices if point.get("date")
+                    ]
+                fresh_data = True
             else:
-                raise ValueError("source returned no usable price history")
-        except Exception as exc:
-            errors.append("futures_spot_sys/" + input_id + ": " + str(exc)[:100])
+                source_row = None
+        if source_row is None:
             if isinstance(prior, dict) and prior.get("latest") is not None:
                 item.update(prior)
             else:
                 item.update({
                     "series": [], "latest": None, "latestDate": None,
-                    "source": None, "sourceUrl": "https://www.100ppi.com/",
+                    "source": None, "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
                     "status": "pending",
                 })
         updated_cost_inputs[input_id] = item

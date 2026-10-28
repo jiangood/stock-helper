@@ -67,7 +67,7 @@
     eastmoney: ['push2delay.eastmoney.com', 'push2.eastmoney.com'],
     eastmoneyHistory: ['push2his.eastmoney.com', 'push2delay.eastmoney.com'],
     tencent: ['qt.gtimg.cn'],
-    tencentApp: ['web.ifzq.gtimg.cn', 'ifzq.gtimg.cn']
+    tencentApp: ['ifzq.gtimg.cn', 'web.ifzq.gtimg.cn']
   };
 
   /* ────────────────────────── 错误 ────────────────────────── */
@@ -120,6 +120,14 @@
     const s = String(v || '').trim();
     if (/^\d{8}$/.test(s)) return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
     return s.slice(0, 10);
+  };
+
+  /** 分钟 K 时间统一成 yyyy-mm-dd HH:MM（兼容 202511031445 / 2025-11-03 14:45） */
+  const minuteTime = v => {
+    const s = String(v || '').trim();
+    const m = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/.exec(s);
+    if (m) return `${m[1]}-${m[2]}-${m[3]} ${m[4]}:${m[5]}`;
+    return s.slice(0, 16);
   };
 
   /* ────────────────────────── 解析器 ────────────────────────── */
@@ -352,6 +360,39 @@
     }).filter(b => b.open !== null && b.close !== null);
   }
 
+  /** 腾讯 mkline JSON -> 分钟 K 数组（时间, 开, 收, 高, 低, 量） */
+  function parseTencentMinute(json, code, period) {
+    const d = json && json.data && json.data[code];
+    if (!d) return [];
+    const rows = d['m' + period];
+    if (!Array.isArray(rows)) return [];
+    return rows.map(r => ({
+      time: minuteTime(r[0]),
+      open: num(r[1]),
+      close: num(r[2]),
+      high: num(r[3]),
+      low: num(r[4]),
+      volume: num(r[5])
+    })).filter(b => b.open !== null && b.close !== null && b.high !== null && b.low !== null);
+  }
+
+  /** 东方财富分钟 K JSON -> 分钟 K 数组（时间已含时分） */
+  function parseEastmoneyMinute(json) {
+    const k = json && json.data && json.data.klines;
+    if (!Array.isArray(k)) return [];
+    return k.map(line => {
+      const f = String(line).split(',');
+      return {
+        time: minuteTime(f[0]),
+        open: num(f[1]),
+        close: num(f[2]),
+        high: num(f[3]),
+        low: num(f[4]),
+        volume: num(f[5])
+      };
+    }).filter(b => b.open !== null && b.close !== null && b.high !== null && b.low !== null);
+  }
+
   /** 东方财富 trends2 JSON -> 分时点（时间, 开, 收, 高, 低, 量, 额, 均价） */
   function parseEastmoneyTrends(json) {
     const d = json && json.data;
@@ -495,8 +536,33 @@
     }
   };
 
-  const TRENDS_PROVIDERS = {
+  /* 分钟 K：腾讯 mkline 主源（约 20 个交易日），东财 klt 降级 */
+  const MINUTE_PERIODS = { '5': 5, '15': 15, '30': 30, '60': 60 };
+  const MINUTE_KLT = { 5: 5, 15: 15, 30: 30, 60: 60 };
+
+  const MINUTE_PROVIDERS = {
+    tencent: {
+      id: 'tencent',
+      async fetch(code, opts, ctx) {
+        const path = `/appstock/app/kline/mkline?param=${code},m${opts.period},,${opts.count}&_=${Date.now()}`;
+        const json = await requestJSON(HOSTS.tencentApp, path, ctx);
+        return parseTencentMinute(json, code, opts.period);
+      }
+    },
     eastmoney: {
+      id: 'eastmoney',
+      async fetch(code, opts, ctx) {
+        const path = `/api/qt/stock/kline/get?secid=${toSecId(code)}&fields1=f1,f2,f3,f4,f5,f6`
+                   + `&fields2=f51,f52,f53,f54,f55,f56,f57`
+                   + `&klt=${MINUTE_KLT[opts.period]}&fqt=1`
+                   + `&end=20500101&lmt=${opts.count}&_=${Date.now()}`;
+        const json = await requestJSON(HOSTS.eastmoneyHistory, path, ctx);
+        return parseEastmoneyMinute(json);
+      }
+    }
+  };
+
+  const TRENDS_PROVIDERS = {    eastmoney: {
       id: 'eastmoney',
       async fetch(code, opts, ctx) {
         const path = `/api/qt/stock/trends2/get?secid=${toSecId(code)}`
@@ -731,6 +797,49 @@
       }
 
       const err = lastErr || new QuoteError('K 线数据不可用', 'UNAVAILABLE');
+      this._notifyError(err);
+      throw err;
+    }
+
+    /**
+     * 分钟 K（腾讯 mkline 主源，东方财富 klt 降级；腾讯约 20 个交易日）
+     * @param {string} code
+     * @param {{period?:'5'|'15'|'30'|'60'|5|15|30|60, count?:number,
+     *          force?:boolean, signal?:AbortSignal}} [opts]
+     * @returns {Promise<{code:string, period:string,
+     *   bars:Array<{time:string, open:number, close:number, high:number, low:number, volume:number|null}>}>}
+     */
+    async fetchMinuteKline(code, opts) {
+      const c = normalizeCode(code);
+      if (!c) throw new QuoteError('无效的股票代码: ' + code, 'PARSE');
+
+      const o = opts || {};
+      const period = MINUTE_PERIODS[String(o.period)] ? String(o.period) : '15';
+      const count = Math.min(800, Math.max(10, o.count | 0 || 320));
+
+      const key = `minute:${c}:${period}:${count}`;
+      const cached = this._readCache(key, o.force);
+      if (cached) return cached;
+
+      const ctx = this._context(o);
+      const spec = { period, count };
+      let lastErr = null;
+
+      for (const id of ['tencent', 'eastmoney']) {
+        const provider = MINUTE_PROVIDERS[id];
+        if (!this._available('minute:' + id)) continue;
+        try {
+          const bars = await provider.fetch(c, spec, ctx);
+          if (bars && bars.length) return this._cacheResult(key, { code: c, period, bars });
+        } catch (e) {
+          if (e && e.code === 'ABORTED') throw e;
+          this.stats.failures++;
+          lastErr = e;
+          this._markDown('minute:' + id);
+        }
+      }
+
+      const err = lastErr || new QuoteError('分钟 K 线数据不可用', 'UNAVAILABLE');
       this._notifyError(err);
       throw err;
     }

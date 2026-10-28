@@ -17,7 +17,7 @@ python -m http.server 8089
 
 | 文件 | 说明 |
 | --- | --- |
-| `index.html` | 股票池监控看板（Bootstrap 5）：搜索、分组、纪律筛选、破净/八折/ST 旗标、每日简报、股票池体检 |
+| `index.html` | 股票池监控看板（Bootstrap 5）：搜索、分组、纪律筛选、市值/PE/PB/股息率、破净/八折/ST 旗标、每日简报、股票池体检 |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日周月 K、估值与周期位置、跟踪计划、鳄鱼纪律、卖出纪律、资源股估值 |
 | `stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
 | `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、入场/重仓区、连续涨停、月 K 分位、体检与简报 |
@@ -46,7 +46,7 @@ python -m http.server 8089
 ```js
 const q = new StockQuotes.Client({ timeout: 8000, cacheTTL: 1000 });
 const data = await q.fetch(['sz002408', 'sh600519']);
-// { sz002408: { code, name, price, prevClose, change, todayChange, time } }
+// { sz002408: { code, name, price, prevClose, change, todayChange, divYield, time } }
 
 // 单只详情（含估值、52 周高低）
 await q.fetchDetail('sz002408');

@@ -99,6 +99,18 @@
       var inventoryHtml = inventory
         ? '<div class="mt-2 p-2 rounded border"><div class="mini-label">'+esc(inventory.label || '期货仓单库存')+'</div><div class="d-flex justify-content-between align-items-baseline gap-2"><strong>'+formatNumber(inventory.latest)+'</strong><span class="mini-label">较上期 '+inventoryChange+'</span></div><div class="mini-label">日期：'+esc(inventory.latestDate || '—')+' · <a href="'+esc(inventory.sourceUrl || 'https://data.eastmoney.com/ifdata/kcsj.html')+'" target="_blank" rel="noopener noreferrer">数据来源</a></div>'+inventoryChart+'</div>'
         : '<div class="mini-label mt-2">供需指标：该品种暂未取得可靠的自动仓单数据</div>';
+      var links = data.industryLinks && typeof data.industryLinks === 'object' ? data.industryLinks : null;
+      function companyTags(values) {
+        return (Array.isArray(values) ? values : []).slice(0, 5).map(function(name){
+          return '<span class="tag me-1 mb-1">'+esc(name)+'</span>';
+        }).join('') || '<span class="mini-label">数据源未列示</span>';
+      }
+      var industryLinksHtml = links
+        ? '<div class="mt-2 p-2 rounded border"><div class="mini-label mb-1">产业链企业（数据源列示，不代表持股或确定供销关系）</div>'
+          + '<div class="mini-label">生产商</div><div class="mb-1">'+companyTags(links.producers)+'</div>'
+          + '<div class="mini-label">下游用户</div><div>'+companyTags(links.downstreamUsers)+'</div>'
+          + '<div class="mini-label mt-1"><a href="'+esc(links.sourceUrl || 'https://data.eastmoney.com/ifdata/xhgp.html')+'" target="_blank" rel="noopener noreferrer">企业名单来源</a></div></div>'
+        : '<div class="mini-label mt-2">产业链企业名单：该品种暂未获取到可靠的自动数据</div>';
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(data.name || meta.name)+'</div><div class="mini-label">'+esc(data.unit || meta.unit || '价格')+'</div></div><span class="flag" style="margin:0">'+status+'</span></div>'
         + '<div class="d-flex align-items-baseline justify-content-between mt-2 gap-2"><div class="business-price tabular">'+(last == null ? '—' : formatNumber(last))+'</div><div class="'+tone+' fw-semibold">'+trend+'</div></div>'
@@ -106,6 +118,7 @@
         + (data.latestFutures != null && Number(data.latestFutures)>0 ? '<div class="mini-label">期货参考价：'+formatNumber(data.latestFutures)+' '+esc(data.unit || meta.unit || '')+' · '+esc(data.futuresDate || latestDate || '')+(data.futuresTime ? ' '+esc(data.futuresTime) : '')+' · '+esc(data.futuresSource || '主力合约参考价')+'</div>' : '')
         + '<div class="mt-2">'+chart+'</div>'
         + inventoryHtml
+        + industryLinksHtml
         + '<div class="mini-label mt-1">产业链：'+esc(data.chain || meta.chain)+'</div>'
         + '<div class="small mt-2">'+esc(data.drivers || meta.drivers)+'</div>'
         + '<div class="mt-2"><div class="mini-label mb-1">关联股票池</div>'+related+'</div>'

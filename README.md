@@ -26,6 +26,18 @@ python -m http.server 8089
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
 | `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K、分钟 K、分时） |
+| `business.js` `business-data.json` | 生意选项卡：自动读取商品现货/期货历史与期货连续报价，显示价格趋势、数据日期、来源及关联股票 |
+| `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
+| `.github/workflows/business-data.yml` | 工作日定时刷新商品数据（北京时间白天/晚间多个时段），也支持手动触发 GitHub Actions |
+
+## 生意 / 商品数据
+
+「生意」选项卡不要求用户手工录入价格。GitHub Actions 工作日定时运行 `scripts/fetch_business_data.py`，更新 `business-data.json`，首页自动读取最新缓存。主要数据源包括生意社现货/期货基差数据、东方财富现货与股票数据，以及新浪财经商品期货行情；卡片会区分现货与期货口径并显示数据日期/来源。
+
+- 自动抓取是定时更新，不是逐笔实时行情；期货连续报价只作市场参考，不等同于现货成交价。
+- 如果某个品种没有可靠匹配到公开数据源，会显示「等待可靠数据源」，不会生成虚构价格。
+- 商品涨价不必然让关联上市公司受益，仍要结合公司实际业务占比、成本、库存、供需和盈利质量判断。
+- 自动抓取任务与运行状态可在 [GitHub Actions](https://github.com/jiangood/stock-helper/actions/workflows/business-data.yml) 查看。
 
 ## 鳄鱼纪律
 

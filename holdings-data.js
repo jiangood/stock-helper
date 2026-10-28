@@ -19,12 +19,15 @@
     if (!Array.isArray(payload.holdings)) throw new Error('holdings.json holdings must be an array');
     var portfolio = payload.portfolio && typeof payload.portfolio === 'object' && !Array.isArray(payload.portfolio)
       ? payload.portfolio : {};
+    var seenCodes = {};
     var holdings = payload.holdings.map(function (holding, index) {
       if (!holding || typeof holding !== 'object' || Array.isArray(holding)) {
         throw new Error('holding #' + (index + 1) + ' must be an object');
       }
       var code = String(holding.code || '').trim().toLowerCase();
       if (!/^(sh|sz)\d{6}$/.test(code)) throw new Error('holding #' + (index + 1) + ' has an invalid code');
+      if (seenCodes[code]) throw new Error('duplicate holding code: ' + code);
+      seenCodes[code] = true;
       var quantity = positiveOrNull(holding.quantity, code + ' quantity', false);
       var cost = positiveOrNull(holding.cost, code + ' cost', false);
       var riskExitPrice = positiveOrNull(holding.riskExitPrice, code + ' riskExitPrice', true);

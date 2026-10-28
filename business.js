@@ -81,12 +81,20 @@
       var source = data.source || '暂未匹配到可靠的自动报价源';
       var sourceLink = data.sourceUrl ? '<a href="'+esc(data.sourceUrl)+'" target="_blank" rel="noopener noreferrer">查看来源</a>' : '';
       var status = data.status === 'ok' ? '现货 / 期货历史' : data.status === 'latest-only' ? '自动最新报价' : '等待可靠数据源';
+      var inventory = data.inventory && Number(data.inventory.latest) > 0 ? data.inventory : null;
+      var inventoryChange = inventory && Number.isFinite(Number(inventory.change))
+        ? ((Number(inventory.change) > 0 ? '+' : '') + formatNumber(inventory.change))
+        : '—';
+      var inventoryHtml = inventory
+        ? '<div class="mt-2 p-2 rounded border"><div class="mini-label">'+esc(inventory.label || '期货仓单库存')+'</div><div class="d-flex justify-content-between align-items-baseline gap-2"><strong>'+formatNumber(inventory.latest)+'</strong><span class="mini-label">较上期 '+inventoryChange+'</span></div><div class="mini-label">日期：'+esc(inventory.latestDate || '—')+' · <a href="'+esc(inventory.sourceUrl || 'https://data.eastmoney.com/ifdata/kcsj.html')+'" target="_blank" rel="noopener noreferrer">数据来源</a></div></div>'
+        : '<div class="mini-label mt-2">供需指标：该品种暂未取得可靠的自动仓单数据</div>';
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(data.name || meta.name)+'</div><div class="mini-label">'+esc(data.unit || meta.unit || '价格')+'</div></div><span class="flag" style="margin:0">'+status+'</span></div>'
         + '<div class="d-flex align-items-baseline justify-content-between mt-2 gap-2"><div class="business-price tabular">'+(last == null ? '—' : formatNumber(last))+'</div><div class="'+tone+' fw-semibold">'+trend+'</div></div>'
         + '<div class="mini-label">'+(latestDate ? '数据日期：'+esc(latestDate) : '当前没有有效报价')+' · '+(data.latestSpot != null && Number(data.latestSpot)>0 ? '现货价格' : '期货价格')+'</div>'
         + (data.latestFutures != null && Number(data.latestFutures)>0 ? '<div class="mini-label">期货参考价：'+formatNumber(data.latestFutures)+' '+esc(data.unit || meta.unit || '')+' · '+esc(data.futuresDate || latestDate || '')+(data.futuresTime ? ' '+esc(data.futuresTime) : '')+' · '+esc(data.futuresSource || '主力合约参考价')+'</div>' : '')
         + '<div class="mt-2">'+chart+'</div>'
+        + inventoryHtml
         + '<div class="mini-label mt-1">产业链：'+esc(data.chain || meta.chain)+'</div>'
         + '<div class="small mt-2">'+esc(data.drivers || meta.drivers)+'</div>'
         + '<div class="mt-2"><div class="mini-label mb-1">关联股票池</div>'+related+'</div>'

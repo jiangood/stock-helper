@@ -438,6 +438,8 @@ function rowClass(stock) {
   const pd = priceData[stock.code];
   if (!pd || stock.entry == null) return '';
   const zone = Croc.zoneOf(stock, pd.price);
+  // 价格进入计划区不等于可以买；ST、亏损或盈利数据缺失时不显示绿色买入底色。
+  if ((zone === 'heavy' || zone === 'entry') && !Croc.buyEligibility(stock, pd).eligible) return '';
   if (zone === 'heavy') return 'row-buy';
   if (zone === 'entry') return 'row-below';
   if (zone === 'above') return 'row-above';
@@ -485,8 +487,8 @@ function buildRow(stock) {
     ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
     : '<span class="text-body-tertiary">—</span>';
   const nameHtml = stock.code
-    ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}" title="查看 ${esc(stock.name)} 详情">${esc(stock.name)}</a>${flagHtml(e)}`
-    : `<span class="stock-name">${esc(stock.name)}</span>${flagHtml(e)}`;
+    ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}" title="查看 ${esc(stock.name)} 详情">${esc(stock.name)}</a>${flagHtml(e, stock, pd)}`
+    : `<span class="stock-name">${esc(stock.name)}</span>${flagHtml(e, stock, pd)}`;
 
   return `
     <td>${nameHtml}</td>
@@ -506,11 +508,16 @@ function buildRow(stock) {
     <td>${aliasHtml}</td>`;
 }
 
-function flagHtml(e) {
+function flagHtml(e, stock, quote) {
   if (e.st) return '<span class="flag flag-danger" title="ST 风险警示股：铁律不买 ST">ST</span>';
   if (e.loss) return '<span class="flag flag-warn" title="TTM 亏损：铁律不买亏损股">亏</span>';
-  if (e.pbGolden) return '<span class="flag flag-buy" title="PB≤0.8：净资产八折黄金买点">八折</span>';
-  if (e.pbUnder1) return '<span class="flag flag-buy" title="PB<1：破净">破净</span>';
+  const eligible = Croc.buyEligibility(stock, quote).eligible;
+  const cls = eligible ? 'flag-buy' : 'flag-warn';
+  const caveat = eligible
+    ? '仍需核对主营、行业周期与安全边际'
+    : '不是买点信号：先核实盈利并满足不买ST/亏损股纪律';
+  if (e.pbGolden) return `<span class="flag ${cls}" title="PB≤0.8：净资产八折估值参考；${caveat}">八折</span>`;
+  if (e.pbUnder1) return `<span class="flag ${cls}" title="PB<1：破净估值参考；${caveat}">破净</span>`;
   return '';
 }
 

@@ -95,6 +95,15 @@
     };
   }
 
+  /** 统一买入资格闸门：仅检查硬性禁买条件，不替代基本面/周期判断。 */
+  function buyEligibility(stock, quote) {
+    const e = evaluate(stock, quote);
+    if (e.st) return { eligible: false, reason: 'ST 风险股，不买' };
+    if (e.pe === null) return { eligible: false, reason: '盈利数据缺失，暂不判断买点' };
+    if (e.pe <= 0) return { eligible: false, reason: '亏损或无有效盈利，不买' };
+    return { eligible: true, reason: '' };
+  }
+
   /**
    * 可量化的选股纪律清单（对应资料里的铁律与估值锚）
    *   非 ST、非亏损、PE≤30、市值≤200 亿、PB<1（破净）
@@ -149,7 +158,8 @@
       case 'screen':  return screen(stock, quote).allPass;
       case 'screenbuy': {
         const sc = screen(stock, quote);
-        return sc.allPass && (e.zone === 'heavy' || e.zone === 'entry');
+        return sc.allPass && buyEligibility(stock, quote).eligible
+          && (e.zone === 'heavy' || e.zone === 'entry');
       }
       default:        return true;
     }
@@ -317,7 +327,7 @@
     const risk = rows.filter(r => r.e.st || r.e.loss);
     const screened = rows.map(r => ({ ...r, sc: screen(r.s, r.q) }));
     const passAll = screened.filter(r => r.sc.allPass);
-    const passBuy = passAll.filter(r => r.e.zone === 'heavy' || r.e.zone === 'entry');
+    const passBuy = passAll.filter(r => buyEligibility(r.s, r.q).eligible && (r.e.zone === 'heavy' || r.e.zone === 'entry'));
     const passNear = screened.filter(r => r.sc.complete && !r.sc.allPass && r.sc.passed === r.sc.total - 1);
     const movers = live.filter(r => isNum(num(r.q.todayChange)) && Math.abs(r.q.todayChange) >= 5)
       .sort((a, b) => Math.abs(b.q.todayChange) - Math.abs(a.q.todayChange));
@@ -366,6 +376,7 @@
     isST,
     zoneOf,
     evaluate,
+    buyEligibility,
     screen,
     matchStatus,
     limitUpPct,

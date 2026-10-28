@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: business-data-refresh-v2
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

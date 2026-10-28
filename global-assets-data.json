@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T13:09:45.535528Z",
+  "updatedAt": "2026-10-28T13:11:00.063002Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,11 +7,11 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4067.1,
+      "price": 4068.2,
       "prevClose": 4168.4,
-      "change": -101.3,
-      "changePct": -2.430189,
-      "quoteTime": "2026-10-28T12:59:41Z",
+      "change": -100.2,
+      "changePct": -2.4038,
+      "quoteTime": "2026-10-28T13:00:57Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF",
       "history": [
@@ -101,7 +101,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 4067.1001
+          "close": 4068.2
         }
       ]
     },
@@ -110,11 +110,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 80616.32,
+      "price": 80576.13,
       "prevClose": 83502.61,
-      "change": -2886.29,
-      "changePct": -3.456527,
-      "quoteTime": "2026-10-28T13:09:41Z",
+      "change": -2926.48,
+      "changePct": -3.504657,
+      "quoteTime": "2026-10-28T13:10:55Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD",
       "history": [
@@ -204,7 +204,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 80616.3203
+          "close": 80576.1328
         }
       ]
     },
@@ -213,11 +213,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2336.72,
+      "price": 2335.13,
       "prevClose": 2688.6687,
-      "change": -351.9487,
-      "changePct": -13.090073,
-      "quoteTime": "2026-10-28T13:09:39Z",
+      "change": -353.5387,
+      "changePct": -13.14921,
+      "quoteTime": "2026-10-28T13:10:50Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD",
       "history": [
@@ -307,7 +307,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 2336.72
+          "close": 2335.1299
         }
       ]
     },
@@ -629,7 +629,7 @@
       "prevClose": 16.07,
       "change": 1.31,
       "changePct": 8.151836,
-      "quoteTime": "2026-10-28T12:54:31Z",
+      "quoteTime": "2026-10-28T12:55:46Z",
       "sourceSymbol": "^VIX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EVIX",
       "history": [
@@ -723,9 +723,5 @@
         }
       ]
     }
-  ],
-  "error": true,
-  "errors": [
-    "gold (XAUUSD=X): HTTP Error 404: Not Found"
   ]
 }

@@ -1,6 +1,6 @@
 /* Stock Helper offline-first service worker. */
 'use strict';
-const CACHE_VERSION = 'stock-helper-v6';
+const CACHE_VERSION = 'stock-helper-v7';
 const APP_CACHE = CACHE_VERSION + '-app';
 const DATA_CACHE = CACHE_VERSION + '-data';
 const RUNTIME_CACHE = CACHE_VERSION + '-runtime';

@@ -124,7 +124,7 @@
       '<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3"><div><div id="risk-center-heading" class="panel-title">风险监控</div><div class="panel-subtitle">只读当前页面的持仓与行情；风险退出参考价、组合总资产和风险预算来自 holdings.json。不会下单，也不修改原有鳄鱼纪律。</div></div><div id="risk-quote-note" class="panel-subtitle">等待行情数据…</div></div>',
       '<div id="risk-summary" class="row g-2 mb-3"></div>',
       '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数（来自 holdings.json）</div><div class="d-flex flex-wrap gap-4"><div><div class="mini-label">组合总资产</div><div id="risk-account-equity-value" class="fw-semibold">未设置</div></div><div><div class="mini-label">组合风险预算</div><div id="risk-budget-value" class="fw-semibold">未设置</div></div></div><div id="risk-source-note" class="panel-subtitle mt-2">参数与持仓统一维护在 data/holdings.json 中。</div></section>',
-      '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"><div><div class="panel-title">实际持仓风险明细</div><div class="panel-subtitle">持仓、风险退出参考价和止盈覆盖值均从 holdings.json 读取；网页只读。</div></div><button id="risk-refresh" class="btn btn-sm btn-outline-secondary" type="button">重新读取 JSON</button></div>',
+      '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"><div><div class="panel-title">实际持仓风险明细</div><div class="panel-subtitle">持仓与风险退出参考价来自 holdings.json；止盈目标自动读取自选股票池；网页只读。</div></div><button id="risk-refresh" class="btn btn-sm btn-outline-secondary" type="button">重新读取 JSON</button></div>',
       '<div id="risk-positions" class="insight-grid mb-3"></div>',
       '<div class="panel-subtitle mt-2">口径说明：参考价风险敞口 = max(现价 − 风险退出参考价, 0) × 持股数量；仅在参考价低于有效现价时计算。未设参考价、行情缺失或参数无效的持仓不会被当作风险为零。鳄鱼体系强调区分正常波动与本金永久损失；这里的参考价只用于情景测算，不代表建议按价格机械止损，须结合基本面与周期逻辑。止盈收益是达到目标价时的静态情景，不是预测；未计手续费、税费、滑点、跳空和流动性影响。</div>',
       '<div class="panel-subtitle mt-2">风险预算比较只有在每只持仓都具备有效行情和有效风险退出参考价时才给出完整结论。组合总资产为手工输入，不会自动从券商同步。</div>'
@@ -155,8 +155,6 @@
     holdings.forEach(function (h) {
       var key = String(h.code || '').toLowerCase();
       planMap[key] = { stopLoss: h.riskExitPrice };
-      if (h.target1 !== null && h.target1 !== undefined) planMap[key].target1 = h.target1;
-      if (h.target2 !== null && h.target2 !== undefined) planMap[key].target2 = h.target2;
     });
     var equityValue = root.document.getElementById('risk-account-equity-value');
     var budgetValue = root.document.getElementById('risk-budget-value');
@@ -165,10 +163,9 @@
     if (budgetValue) budgetValue.textContent = settings.riskBudget > 0 ? '¥' + money(settings.riskBudget) : '未设置';
     if (sourceNote) sourceNote.textContent = '数据文件：data/holdings.json' +
       (data.updatedAt ? ' · 文件更新时间 ' + data.updatedAt : '') +
-      (data.sourceSnapshotDate ? ' · 初始持仓来源快照 ' + data.sourceSnapshotDate : '') +
       '。修改后需提交仓库并等待 GitHub Pages 更新；此文件公开可见。';
     var rows = holdings.map(function (h) {
-      var stock = stockForCode(h.code), quote = getQuote(h.code), plan = stock || { name: h.name || h.code };
+      var stock = stockForCode(h.code), quote = getQuote(h.code), plan = stock || { name: h.code };
       var custom = planMap[String(h.code || '').toLowerCase()] || planMap[String(stock && stock.code || '').toLowerCase()] || {};
       return calculateHolding(h, quote, plan, custom);
     });

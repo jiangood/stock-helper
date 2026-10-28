@@ -88,7 +88,7 @@
       loss: pe !== null && pe < 0,
       pbUnder1: pb !== null && pb > 0 && pb < 1,
       pbGolden: pb !== null && pb > 0 && pb <= PB_GOLDEN,
-      smallCap: cap !== null && cap > 0 && cap < SMALL_CAP,
+      smallCap: cap !== null && cap > 0 && cap <= SMALL_CAP,
       navGolden: nav !== null && nav > 0 ? nav * PB_GOLDEN : null,
       toEntry: price !== null && entry !== null && entry > 0 ? (price / entry - 1) * 100 : null,
       toHeavy: price !== null && heavy !== null && heavy > 0 ? (price / heavy - 1) * 100 : null
@@ -241,6 +241,30 @@
       }
       if (num(s.entry) !== null && num(s.heavy) !== null && s.heavy > s.entry) {
         push('warn', s, `重仓价 ${s.heavy} 高于入场价 ${s.entry}，区间可能写反`);
+      }
+
+      // updDate 代表计划价格最近一次人工复核日期，不是行情时间戳。
+      const updDate = String(s.updDate || '').trim();
+      if (!updDate) {
+        push('warn', s, '缺少计划更新时间，入场/重仓/止盈价需人工复核');
+      } else if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(updDate)) {
+        push('warn', s, `计划更新时间格式无效：${updDate}`);
+      } else {
+        const parts = updDate.split('-').map(Number);
+        const reviewedAt = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+        const validDate = reviewedAt.getUTCFullYear() === parts[0]
+          && reviewedAt.getUTCMonth() === parts[1] - 1
+          && reviewedAt.getUTCDate() === parts[2];
+        if (!validDate) {
+          push('warn', s, `计划更新时间不是有效日期：${updDate}`);
+        } else {
+          const ageDays = Math.floor((Date.now() - reviewedAt.getTime()) / 86400000);
+          if (ageDays < 0) {
+            push('warn', s, `计划更新时间在未来：${updDate}`);
+          } else if (ageDays > 180) {
+            push('warn', s, `计划价格已 ${ageDays} 天未复核（最近：${updDate}）`);
+          }
+        }
       }
       if (num(s.entry) !== null && num(s.tp1) !== null && s.tp1 <= s.entry) {
         push('warn', s, `止盈1 ${s.tp1} 不高于入场价 ${s.entry}`);

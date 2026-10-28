@@ -7,8 +7,6 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#2563eb">
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.prod.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
   :root { --up: #dc2626; --down: #16a34a; }
   [data-bs-theme="dark"] { --up: #f23645; --down: #26a69a; }
@@ -22,9 +20,6 @@
     color: #fff; font-size: 12px; font-weight: 700;
     box-shadow: 0 2px 6px rgba(37,99,235,.3);
   }
-
-  .refreshing .q-icon { animation: stock-refresh-spin .8s linear infinite; }
-  @keyframes stock-refresh-spin { to { transform: rotate(360deg); } }
 
   .text-up { color: var(--up) !important; }
   .text-down { color: var(--down) !important; }
@@ -168,29 +163,26 @@
 </head>
 <body class="bg-body-tertiary">
 
-<div id="q-app" data-shell-page="stock">
-<q-layout view="hHh lpR fFf" class="bg-body-tertiary">
-<q-header bordered class="bg-body text-body">
-  <q-toolbar class="px-2 px-sm-3">
-    <q-btn flat round dense icon="arrow_back" href="./index.html" title="返回股票池" aria-label="返回股票池"></q-btn>
-    <span class="logo ms-1">▲</span>
-    <div class="min-w-0 flex-grow-1 ms-2">
-      <div class="d-flex align-items-baseline gap-2 min-w-0">
-        <span class="fw-semibold text-truncate" style="font-size:15px" id="stock-name">加载中…</span>
-        <span class="font-monospace text-body-secondary" style="font-size:12px" id="stock-code">--</span>
-        <span class="tag d-none" id="group-tag"></span>
+<div class="sticky-top">
+  <nav class="navbar bg-body border-bottom px-3 py-2">
+    <div class="d-flex align-items-center gap-2 min-w-0">
+      <a class="btn btn-sm btn-outline-secondary px-2 py-1" href="index.html" title="返回股票池">←</a>
+      <span class="logo">▲</span>
+      <div class="min-w-0">
+        <div class="d-flex align-items-baseline gap-2 min-w-0">
+          <span class="fw-semibold text-truncate" style="font-size:15px" id="stock-name">加载中…</span>
+          <span class="font-monospace text-body-secondary" style="font-size:12px" id="stock-code">--</span>
+          <span class="tag d-none" id="group-tag"></span>
+        </div>
+        <div class="text-body-secondary text-truncate" style="font-size:11px" id="alias-line"></div>
       </div>
-      <div class="text-body-secondary text-truncate" style="font-size:11px" id="alias-line"></div>
     </div>
-    <div class="ms-auto d-flex align-items-center gap-1">
-      <q-btn id="refresh-btn" flat round dense icon="refresh" @click="refreshDetail" title="立即刷新" aria-label="立即刷新"></q-btn>
-      <q-btn id="theme-btn" flat round dense :icon="dark ? 'light_mode' : 'dark_mode'" @click="toggleHomeTheme" title="切换主题" aria-label="切换主题"></q-btn>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <button class="btn btn-sm btn-outline-secondary px-2 py-1" id="refresh-btn" onclick="refreshAll(true)" title="立即刷新">⟳</button>
+      <button class="btn btn-sm btn-outline-secondary px-2 py-1" id="theme-btn" onclick="toggleTheme()" title="切换主题">🌙</button>
     </div>
-  </q-toolbar>
-</q-header>
-<q-page-container>
-<q-page class="bg-body-tertiary">
-<div v-pre class="legacy-content">
+  </nav>
+</div>
 
 <main class="container-xxl py-3" style="max-width:1100px">
 
@@ -444,23 +436,6 @@
 
 <div class="alert position-fixed bottom-0 start-50 translate-middle-x mb-3 py-2 px-3 small shadow d-none" id="toast" style="z-index:1080"></div>
 
-</div>
-</q-page>
-</q-page-container>
-<q-footer bordered class="bg-body text-body">
-  <q-tabs v-model="tab" dense no-caps active-color="primary" indicator-color="primary" align="justify">
-    <q-tab name="stocks" href="./index.html" icon="table_chart" label="股票池"></q-tab>
-    <q-tab name="opportunity" href="./index.html#opportunity" icon="summarize" label="简报"></q-tab>
-    <q-tab name="business" href="./index.html#business" icon="storefront" label="生意"></q-tab>
-    <q-tab name="assets" href="./global-assets.html" icon="public" label="全球资产"></q-tab>
-  </q-tabs>
-</q-footer>
-</q-layout>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.umd.prod.js"></script>
-<script src="./quasar-shell.js"></script>
 <script src="croc.js"></script>
 <script src="quotes.js"></script>
 <script src="indicators.js"></script>

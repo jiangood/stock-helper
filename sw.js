@@ -1,6 +1,6 @@
 /* Stock Helper offline-first service worker. */
 'use strict';
-const CACHE_VERSION = 'stock-helper-v2';
+const CACHE_VERSION = 'stock-helper-v1';
 const APP_CACHE = CACHE_VERSION + '-app';
 const DATA_CACHE = CACHE_VERSION + '-data';
 const RUNTIME_CACHE = CACHE_VERSION + '-runtime';
@@ -8,19 +8,15 @@ const CORE_ASSETS = [
   './',
   './index.html',
   './stock.html',
-  './global-assets.html',
   './manifest.webmanifest',
   './icon.svg',
   './stocks.json',
   './business-data.json',
-  './global-assets-data.json',
   './croc.js',
   './indicators.js',
   './pinyin.js',
   './quotes.js',
   './business.js',
-  './global-assets.js',
-  './quasar-shell.js',
   './stock.js'
 ];
 

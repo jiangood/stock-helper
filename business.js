@@ -376,6 +376,6 @@
     renderOpportunity();
     fetchBusinessData();
   }
-  function onTab(target) { if(target==='business')renderBusiness(); if(target==='opportunity'){renderHoldings();renderOpportunity();fetchMarketIndices();} }
+  function onTab(target) { if(target==='business')renderBusiness(); if(target==='holdings')renderHoldings(); if(target==='opportunity'){renderOpportunity();fetchMarketIndices();} }
   global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness};
 })(window);

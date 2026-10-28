@@ -441,13 +441,13 @@ function toggleTheme() {
 })();
 
 (function bindBottomTabs() {
-  document.querySelectorAll('.bottom-tab').forEach(function (button) {
+  document.querySelectorAll('.bottom-tab[data-target]').forEach(function (button) {
     button.addEventListener('click', function () {
       const target = button.dataset.target;
       document.querySelectorAll('[data-pane]').forEach(function (pane) {
         pane.classList.toggle('d-none', pane.dataset.pane !== target);
       });
-      document.querySelectorAll('.bottom-tab').forEach(function (tab) {
+      document.querySelectorAll('.bottom-tab[data-target]').forEach(function (tab) {
         const active = tab.dataset.target === target;
         tab.classList.toggle('active', active);
         tab.setAttribute('aria-current', active ? 'page' : 'false');
@@ -458,6 +458,11 @@ function toggleTheme() {
       window.scrollTo({ top: 0, behavior: 'auto' });
     });
   });
+  const initialTarget = window.location.hash.slice(1);
+  if (initialTarget === 'opportunity' || initialTarget === 'business') {
+    const initialTab = document.querySelector('.bottom-tab[data-target="' + initialTarget + '"]');
+    if (initialTab) initialTab.click();
+  }
 })();
 
 (async function init() {

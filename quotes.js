@@ -1,5 +1,5 @@
 /*!
- * StockQuotes SDK v1.3.1
+ * StockQuotes SDK v1.4.0
  * ---------------------------------------------------------------------------
  * 股票行情 SDK —— A 股实时行情聚合封装（浏览器 / Node 通用，无依赖）
  *
@@ -10,6 +10,7 @@
  *
  * 特性
  *   · 批量拉取（自动分片，单次默认 60 只）、单只拉取
+ *   · 股息率（TTM：近 12 个月已除权分红 ÷ 现价，以腾讯口径为准，东财 f133 兜底）
  *   · 单只详情（开高低收、量额、换手、量比、振幅、PE/PB、市值、涨跌停）
  *   · K 线（日/周/月，前复权/后复权/不复权）与分时（含均价线）
  *   · 代码格式宽容：'002408' / 'sz002408' / 'SZ002408'
@@ -22,7 +23,7 @@
  *   const quotes = new StockQuotes.Client({ timeout: 8000, cacheTTL: 1000 });
  *   const data = await quotes.fetch(['sz002408', '600519']);
  *   // data = { sz002408: { code, name, price, prevClose, change, todayChange,
- *   //                     pe, pb, totalCap, floatCap, time }, ... }
+ *   //                     pe, pb, totalCap, floatCap, divYield, time }, ... }
  *
  * 单只详情 / K 线 / 分时（详情页使用）
  *   await quotes.fetchDetail('sz002408');
@@ -49,7 +50,7 @@
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
 
-  const VERSION = '1.3.1';
+  const VERSION = '1.4.0';
   const REFRESH_INTERVAL = 60000;   // 只看中期，盘中不做高频轮询
 
   const DEFAULTS = {
@@ -139,7 +140,8 @@
         pe: num(item.f9),
         pb: num(item.f23),
         totalCap: num(item.f20),
-        floatCap: num(item.f21)
+        floatCap: num(item.f21),
+        divYield: num(item.f133)          // 股息率（%），仅作兜底
       });
     }
     return out;
@@ -165,7 +167,8 @@
         pe: num(f[39]),                                       // 市盈率(TTM)
         pb: num(f[46]),
         totalCap: totalCapYi === null ? null : totalCapYi * 1e8,   // 亿 -> 元
-        floatCap: floatCapYi === null ? null : floatCapYi * 1e8
+        floatCap: floatCapYi === null ? null : floatCapYi * 1e8,
+        divYield: num(f[64])                                  // 股息率(TTM, %)
       });
     }
     return out;
@@ -182,6 +185,7 @@
       pb: e.pb === undefined ? null : e.pb,
       totalCap: e.totalCap === undefined ? null : e.totalCap,
       floatCap: e.floatCap === undefined ? null : e.floatCap,
+      divYield: e.divYield === undefined ? null : e.divYield,
       time: Date.now()
     };
   }
@@ -420,7 +424,7 @@
       async fetch(codes, ctx) {
         const secids = codes.map(toSecId).filter(Boolean).join(',');
         const path = `/api/qt/ulist.np/get?fltt=2&secids=${secids}`
-                   + `&fields=f2,f3,f4,f9,f12,f18,f20,f21,f23&_=${Date.now()}`;
+                   + `&fields=f2,f3,f4,f9,f12,f18,f20,f21,f23,f133&_=${Date.now()}`;
         const json = await requestJSON(this.hosts, path, ctx);
         return parseEastmoney(json);
       }
@@ -601,7 +605,8 @@
      * @param {boolean} [opts.force] 跳过缓存
      * @returns {Promise<Object<string, {code:string, name:string|null, price:number,
      *           prevClose:number|null, change:number|null, todayChange:number|null,
-     *           pe:number|null, pb:number|null, totalCap:number|null, floatCap:number|null}>>}
+     *           pe:number|null, pb:number|null, totalCap:number|null, floatCap:number|null,
+     *           divYield:number|null}>>}
      */
     async fetch(codes, opts) {
       const o = opts || {};
@@ -809,6 +814,7 @@
     async _fetchChunk(codes, ctx) {
       const missing = new Set(codes);
       const out = {};
+      const filledBy = {};
 
       for (const id of this.options.providers) {
         if (!missing.size) break;
@@ -821,6 +827,7 @@
           Object.keys(map).forEach(code => {
             if (missing.has(code)) {
               out[code] = map[code];
+              filledBy[code] = id;
               missing.delete(code);
             }
           });
@@ -832,7 +839,33 @@
           this._downUntil[id] = Date.now() + (this.options.providerBackoff || 0);
         }
       }
+
+      await this._supplementDividend(out, filledBy, ctx);
       return out;
+    }
+
+    /**
+     * 股息率补齐：腾讯口径（近 12 个月已除权分红 ÷ 现价）已实测校准，优先采用；
+     * 主源是东财且 f133 缺失/无值时，用腾讯再补一次。
+     */
+    async _supplementDividend(out, filledBy, ctx) {
+      const codes = Object.keys(out).filter(c => filledBy[c] !== 'tencent');
+      if (!codes.length) return;
+      if (Date.now() < (this._downUntil['dividend:tencent'] || 0)) return;
+
+      try {
+        const map = await PROVIDERS.tencent.fetch(codes, ctx);
+        codes.forEach(c => {
+          const d = map[c];
+          if (d && d.divYield != null) out[c].divYield = d.divYield;
+          else if (out[c].divYield == null) out[c].divYield = null;
+        });
+        this._downUntil['dividend:tencent'] = 0;
+      } catch (e) {
+        if (e && e.code === 'ABORTED') throw e;
+        this.stats.failures++;
+        this._downUntil['dividend:tencent'] = Date.now() + (this.options.providerBackoff || 0);
+      }
     }
 
     _readCache(key, force) {

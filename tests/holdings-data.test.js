@@ -8,10 +8,10 @@ const source = require('../data/holdings.json');
 
 test('validates the public holdings source and normalizes its fields', () => {
   const data = Holdings.validatePayload(source);
-  assert.equal(data.holdings.length, 4);
+  assert.equal(data.holdings.length, 5);
   assert.equal(data.holdings.find(h => h.code === 'sz300034').quantity, 6600);
   assert.equal(data.holdings.find(h => h.code === 'sh601618').cost, 3.058);
-  assert.equal(data.portfolio.totalAssets, null);
+  assert.equal(data.portfolio.totalAssets, 242452.26);
   assert.equal(data.portfolio.riskBudget, null);
   assert.ok(data.holdings.every(h => h.quantity > 0 && h.cost > 0));
 });

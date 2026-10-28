@@ -58,6 +58,12 @@
       }
     },
     methods: {
+      refreshHome: function () {
+        if (typeof window.loadPrices === 'function') window.loadPrices(true);
+      },
+      toggleHomeTheme: function () {
+        if (typeof window.toggleTheme === 'function') window.toggleTheme();
+      },
       syncSearch: function (value) {
         var input = document.getElementById('search-input');
         if (input) input.value = value || '';

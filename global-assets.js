@@ -8,7 +8,8 @@
     { id: 'nikkei225', name: '日经 225', symbol: '^N225', kind: '海外指数', unit: '指数点' },
     { id: 'nasdaq100', name: '纳斯达克 100', symbol: '^NDX', kind: '海外指数', unit: '指数点' },
     { id: 'sp500', name: '标普 500', symbol: '^GSPC', kind: '海外指数', unit: '指数点' },
-    { id: 'vix', name: 'VIX 恐慌指数', symbol: '^VIX', kind: '波动率指标', unit: '指数点' }
+    { id: 'vix', name: 'VIX 恐慌指数', symbol: '^VIX', kind: '波动率指标', unit: '指数点' },
+    { id: 'usdcny', name: '美元兑人民币', symbol: 'CNY=X', kind: '外汇', unit: 'CNY/USD' }
   ];
   var loading = false;
   var lastLoad = 0;
@@ -26,7 +27,7 @@
   function fmtPrice(value, id) {
     var n = numeric(value);
     if (n === null || n <= 0) return '—';
-    var digits = id === 'bitcoin' ? 0 : 2;
+    var digits = id === 'bitcoin' ? 0 : id === 'usdcny' ? 4 : 2;
     return n.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
   }
   function fmtPct(value) {
@@ -189,6 +190,7 @@
         + '<div class="' + tone(change) + ' fw-semibold">' + fmtPct(change) + '</div>'
         + '<div class="ga-card-trend">' + sparkline(historyOf(item, '1m'), meta.name) + '</div>'
         + (meta.id === 'vix' ? '<div class="mini-label">VIX 衡量标普 500 期权隐含的预期波动；上升通常代表市场担忧增强，不是方向预测。</div>' : '')
+        + (meta.id === 'usdcny' ? '<div class="mini-label">报价含义：1 美元可兑换多少人民币。数值上升代表美元走强、人民币相对走弱。</div>' : '')
         + '<div class="mini-label mt-1">' + esc(quoteTime) + '</div>'
         + '<div class="mini-label mt-1">代码：' + esc(item.sourceSymbol || meta.symbol) + ' · <a href="' + esc(source) + '" target="_blank" rel="noopener noreferrer">行情来源</a></div>'
         + '</article>';

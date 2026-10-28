@@ -45,6 +45,14 @@ class BusinessDataTests(unittest.TestCase):
             {"label": "2个月前", "value": 1100},
             {"label": "最新", "value": 1125},
         ])
+        dated = fetcher.normalize_source_monthly_prices({
+            "商品名称": "动力煤", "2026-08-01": 900, "2026-09-01": 950,
+            "2026-10-01": 1000, "最新价": 1050,
+        })
+        self.assertEqual(
+            [(point.get("date"), point["value"]) for point in dated if point.get("date")],
+            [("2026-08-01", 900), ("2026-09-01", 950), ("2026-10-01", 1000)],
+        )
 
     def test_normalize_company_list_splits_names_deduplicates_and_ignores_placeholders(self):
         self.assertEqual(

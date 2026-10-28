@@ -85,9 +85,12 @@
 <script>
 (function () {
   'use strict';
+  var initialDark = false;
+  try { initialDark = localStorage.getItem('stock-theme') === 'dark'; } catch (_) {}
+  document.documentElement.setAttribute('data-bs-theme', initialDark ? 'dark' : 'light');
   var app = Vue.createApp({
     data: function () {
-      return { tab: 'assets', dark: document.documentElement.getAttribute('data-bs-theme') === 'dark' };
+      return { tab: 'assets', dark: initialDark };
     },
     methods: {
       goHome: function () { window.location.href = './index.html'; },
@@ -103,11 +106,12 @@
       toggleTheme: function () {
         this.dark = !this.dark;
         document.documentElement.setAttribute('data-bs-theme', this.dark ? 'dark' : 'light');
+        try { localStorage.setItem('stock-theme', this.dark ? 'dark' : 'light'); } catch (_) {}
         this.$q.dark.set(this.dark);
       }
     }
   });
-  app.use(Quasar, { config: { dark: false } });
+  app.use(Quasar, { config: { dark: initialDark } });
   app.mount('#q-app');
 })();
 </script>

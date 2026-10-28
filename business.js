@@ -244,7 +244,7 @@
       var node = el(spec.id);
       if (!node || node.dataset.chartReady === '1') return;
       var data = (spec.data || []).filter(function(p) {
-        return p && /^\\d{4}-\\d{2}-\\d{2}$/.test(p.time) && Number.isFinite(Number(p.value)) && Number(p.value) > 0;
+        return p && /^\d{4}-\d{2}-\d{2}$/.test(p.time) && Number.isFinite(Number(p.value)) && Number(p.value) > 0;
       });
       if (data.length < 2) return;
       try {

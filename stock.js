@@ -1,6 +1,6 @@
 /*!
  * 股票详情页 —— stock.html 的页面逻辑
- * 依赖：quotes.js（行情 SDK）、lightweight-charts（日/周/月 K）
+ * 依赖：quotes.js（行情 SDK）、lightweight-charts（日/月 K）
  * 入口：stock.html?code=sz002408
  */
 (function () {

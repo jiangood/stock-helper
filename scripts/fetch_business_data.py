@@ -269,6 +269,12 @@ def fetch_data() -> dict[str, Any]:
         if code and isinstance(old_series, list):
             daily_by_symbol[code] = clean_series(old_series)
 
+    old_cost_inputs = existing_payload.get("costInputs", {})
+    if isinstance(old_cost_inputs, dict):
+        old_alumina = old_cost_inputs.get("alumina", {})
+        if isinstance(old_alumina, dict) and isinstance(old_alumina.get("series"), list):
+            daily_by_symbol["AO"] = clean_series(old_alumina["series"])
+
     core_codes = ["SA", "UR", "MA", "AL", "RU", "AO"]
     missing_history = [code for code in core_codes if len(daily_by_symbol.get(code, [])) < 5]
     fresh_data = False

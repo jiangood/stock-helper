@@ -240,6 +240,18 @@
     var textColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-body-color').trim() || '#212529';
     var borderColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-border-color').trim() || '#dee2e6';
     var primary = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim() || '#0d6efd';
+    function withAlpha(color, alpha) {
+      var value = String(color || '').trim();
+      var hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+      if (hex) {
+        var digits = hex[1];
+        if (digits.length === 3) digits = digits.split('').map(function(ch){ return ch + ch; }).join('');
+        return 'rgba(' + parseInt(digits.slice(0,2),16) + ',' + parseInt(digits.slice(2,4),16) + ',' + parseInt(digits.slice(4,6),16) + ',' + alpha + ')';
+      }
+      var rgb = value.match(/^rgba?\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)/i);
+      if (rgb) return 'rgba(' + rgb[1] + ',' + rgb[2] + ',' + rgb[3] + ',' + alpha + ')';
+      return value || 'rgba(13,110,253,' + alpha + ')';
+    }
     specs.forEach(function(spec) {
       var node = el(spec.id);
       if (!node || node.dataset.chartReady === '1') return;
@@ -278,8 +290,8 @@
         });
         var area = chart.addAreaSeries({
           lineColor: primary,
-          topColor: primary,
-          bottomColor: 'transparent',
+          topColor: withAlpha(primary, 0.22),
+          bottomColor: withAlpha(primary, 0.01),
           lineWidth: 2,
           priceLineVisible: true,
           lastValueVisible: true,

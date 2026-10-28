@@ -247,7 +247,7 @@
       const updDate = String(s.updDate || '').trim();
       if (!updDate) {
         push('warn', s, '缺少计划更新时间，入场/重仓/止盈价需人工复核');
-      } else if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(updDate)) {
+      } else if (!/^\d{4}-\d{2}-\d{2}$/.test(updDate)) {
         push('warn', s, `计划更新时间格式无效：${updDate}`);
       } else {
         const parts = updDate.split('-').map(Number);

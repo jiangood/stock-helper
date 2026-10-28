@@ -248,7 +248,7 @@
         if (digits.length === 3) digits = digits.split('').map(function(ch){ return ch + ch; }).join('');
         return 'rgba(' + parseInt(digits.slice(0,2),16) + ',' + parseInt(digits.slice(2,4),16) + ',' + parseInt(digits.slice(4,6),16) + ',' + alpha + ')';
       }
-      var rgb = value.match(/^rgba?\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)/i);
+      var rgb = value.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
       if (rgb) return 'rgba(' + rgb[1] + ',' + rgb[2] + ',' + rgb[3] + ',' + alpha + ')';
       return value || 'rgba(13,110,253,' + alpha + ')';
     }

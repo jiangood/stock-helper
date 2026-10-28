@@ -31,23 +31,16 @@
       var quantity = positiveOrNull(holding.quantity, code + ' quantity', false);
       var cost = positiveOrNull(holding.cost, code + ' cost', false);
       var riskExitPrice = positiveOrNull(holding.riskExitPrice, code + ' riskExitPrice', true);
-      var target1 = positiveOrNull(holding.target1, code + ' target1', true);
-      var target2 = positiveOrNull(holding.target2, code + ' target2', true);
       return {
         code: code,
-        name: String(holding.name || code),
         quantity: quantity,
         cost: cost,
-        riskExitPrice: riskExitPrice,
-        target1: target1,
-        target2: target2
+        riskExitPrice: riskExitPrice
       };
     });
     return {
       schemaVersion: Number(payload.schemaVersion) || 1,
       updatedAt: String(payload.updatedAt || ''),
-      sourceSnapshotDate: String(payload.sourceSnapshotDate || ''),
-      note: String(payload.note || ''),
       portfolio: {
         totalAssets: positiveOrNull(portfolio.totalAssets, 'portfolio.totalAssets', true),
         riskBudget: positiveOrNull(portfolio.riskBudget, 'portfolio.riskBudget', true)

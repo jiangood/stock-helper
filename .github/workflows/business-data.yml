@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: business-data-refresh
+  group: business-data-refresh-v2
   cancel-in-progress: true
 
 jobs:

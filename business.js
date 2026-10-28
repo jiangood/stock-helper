@@ -137,6 +137,39 @@
         + '<div class="mini-label mt-2">数据源：'+esc(source)+' '+sourceLink+'</div>'
         + '</article>';
     }).join('');
+    var costContainer = el('business-cost-inputs');
+    if (costContainer) {
+      var costInputs = businessData && businessData.costInputs && typeof businessData.costInputs === 'object'
+        ? Object.values(businessData.costInputs) : [];
+      costContainer.innerHTML = costInputs.map(function(input) {
+        var series = Array.isArray(input.series) ? input.series.filter(function(p) {
+          return p && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && (Number(p.spot)>0 || Number(p.futures)>0);
+        }).slice(-60) : [];
+        var latest = input.latest != null && Number(input.latest)>0 ? Number(input.latest) :
+          (series.length ? Number(series[series.length-1].spot || series[series.length-1].futures) : null);
+        var first = series.length ? Number(series[0].spot || series[0].futures) : null;
+        var lastValue = series.length ? Number(series[series.length-1].spot || series[series.length-1].futures) : null;
+        var change = first>0 && lastValue>0 ? (lastValue/first-1)*100 : null;
+        var tone = change == null ? 'text-body-secondary' : change>0 ? 'text-up' : change<0 ? 'text-down' : 'text-body-secondary';
+        var trend = change == null ? '趋势数据不足' : ((change>0?'+':'')+change.toFixed(2)+'%');
+        var chart = '<div class="empty-state py-2 small">暂未获取到可绘制的原料历史价格</div>';
+        if (series.length>=2) {
+          var vals=series.map(function(p){return Number(p.spot || p.futures);});
+          var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals), range=max-min||1;
+          var coords=vals.map(function(v,i){return (5+i*(270/Math.max(1,vals.length-1)))+','+(32-((v-min)/range)*23);});
+          chart='<svg class="trend-svg" viewBox="0 0 280 38" role="img" aria-label="'+esc(input.name)+'参考价格趋势"><polyline points="'+coords.join(' ')+'"></polyline></svg>';
+        }
+        var related=Array.isArray(input.relatedProducts)?input.relatedProducts:[];
+        return '<article class="insight-card">'
+          + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(input.name)+'</div><div class="mini-label">'+esc(input.role || '原料价格参考')+'</div></div><span class="flag" style="margin:0">'+(latest!=null?'自动行情':'等待数据')+'</span></div>'
+          + '<div class="d-flex align-items-baseline justify-content-between mt-2 gap-2"><div class="business-price tabular">'+(latest==null?'—':formatNumber(latest))+'</div><div class="'+tone+' fw-semibold">'+trend+'</div></div>'
+          + '<div class="mini-label">'+(input.latestDate?'数据日期：'+esc(input.latestDate):'当前没有有效报价')+' · '+esc(input.unit || '元/吨')+'</div>'
+          + '<div class="mt-2">'+chart+'</div>'
+          + '<div class="mini-label mt-1">关联观察：'+(related.length?related.map(esc).join('、'):'—')+'</div>'
+          + '<div class="mini-label mt-1">来源：'+(input.source?esc(input.source):'尚未获取到可靠数据')+' · <a href="'+esc(input.sourceUrl || 'https://www.100ppi.com/')+'" target="_blank" rel="noopener noreferrer">查看来源</a></div>'
+          + '</article>';
+      }).join('') || '<div class="empty-state">成本原料数据尚未初始化，等待自动抓取任务。</div>';
+    }
     var statusEl = el('business-data-status');
     if (statusEl) {
       if (!businessData) statusEl.textContent = '自动行情文件暂不可用；请稍后重新读取。';

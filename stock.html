@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>股票详情</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#2563eb">
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <style>
   :root { --up: #dc2626; --down: #16a34a; }
@@ -439,5 +441,15 @@
 <script src="indicators.js"></script>
 <script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
 <script src="stock.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').catch(function (error) {
+      console.warn('Service worker registration failed:', error);
+    });
+  });
+}
+</script>
+
 </body>
 </html>

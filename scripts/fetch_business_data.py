@@ -176,51 +176,81 @@ def fetch_data() -> dict[str, Any]:
         raise RuntimeError("AKShare is not installed. Install it with: pip install akshare") from exc
 
     end_day = date.today()
-    daily_by_symbol: dict[str, list[dict[str, Any]]] = {}
     errors: list[str] = []
+    existing_payload: dict[str, Any] = {}
+    try:
+        existing_payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
+        if not isinstance(existing_payload, dict):
+            existing_payload = {}
+    except (OSError, json.JSONDecodeError):
+        existing_payload = {}
 
-    # Use compact historical charts (one request per product) instead of
-    # scraping every calendar day separately.
-    chart_names = {"SA": "纯碱", "UR": "尿素", "MA": "甲醇", "AL": "铝", "RU": "天然橡胶"}
-    for code, chinese_name in chart_names.items():
+    # Keep the existing history and append only new observations on scheduled runs.
+    # This avoids re-downloading 120 calendar days four times a day.
+    daily_by_symbol: dict[str, list[dict[str, Any]]] = {}
+    old_items = existing_payload.get("items", {}) if isinstance(existing_payload.get("items"), dict) else {}
+    for product in PRODUCTS:
+        code = product.get("symbol")
+        old_item = old_items.get(product["id"], {})
+        old_series = old_item.get("series", []) if isinstance(old_item, dict) else []
+        if code and isinstance(old_series, list):
+            daily_by_symbol[code] = clean_series(old_series)
+
+    core_codes = ["SA", "UR", "MA", "AL", "RU"]
+    missing_history = [code for code in core_codes if len(daily_by_symbol.get(code, [])) < 5]
+    fresh_data = False
+
+    # Bootstrap history only when the cache is empty/incomplete. This source is
+    # daily but makes one request per calendar day, so do not call it on every refresh.
+    if missing_history:
         try:
-            frame = call_with_timeout(18, ak.futures_spot_sys, symbol=chinese_name, indicator="市场价格")
-            series = normalize_sys_frame(frame, today=end_day)
-            if series:
-                daily_by_symbol[code] = series
+            start_day = end_day - timedelta(days=LOOKBACK_DAYS)
+            frame = call_with_timeout(150, ak.futures_spot_price_daily,
+                start_day=start_day.strftime("%Y%m%d"),
+                end_day=end_day.strftime("%Y%m%d"),
+                vars_list=missing_history,
+            )
+            new_history = normalize_daily_frame(frame)
+            for code, points in new_history.items():
+                daily_by_symbol[code] = clean_series(daily_by_symbol.get(code, []) + points)
+            if any(new_history.get(code) for code in missing_history):
+                fresh_data = True
         except Exception as exc:
-            errors.append("futures_spot_sys/" + code + ": " + str(exc)[:120])
+            errors.append("futures_spot_price_daily bootstrap: " + str(exc)[:180])
 
-    # Fill the latest observation from the most recent available trading day if daily
-    # history is temporarily empty for a product. Do not invent a date or a price.
-    if any(not daily_by_symbol.get(code) for code in ("SA", "UR", "MA", "AL", "RU")):
-        for offset in range(0, 8):
-            day = end_day - timedelta(days=offset)
-            try:
-                frame = call_with_timeout(12, ak.futures_spot_price_previous, day.strftime("%Y%m%d"))
-                if frame is None or getattr(frame, "empty", True):
-                    continue
-                mapping = {"纯碱": "SA", "尿素": "UR", "甲醇MA": "MA", "甲醇": "MA", "铝": "AL", "天然橡胶": "RU"}
-                for _, row in frame.iterrows():
-                    label = str(row.get("商品", row.get("symbol", ""))).strip()
-                    code = mapping.get(label)
-                    if not code:
-                        continue
-                    spot = finite_number(row.get("现货价格", row.get("spot_price")))
-                    fut = finite_number(row.get("主力合约价格", row.get("dominant_price")))
-                    daily_by_symbol.setdefault(code, []).append({"date": day.isoformat(), "spot": spot, "futures": fut})
-                if all(daily_by_symbol.get(code) for code in ("SA", "UR", "MA", "AL", "RU")):
-                    break
-            except Exception as exc:
-                errors.append("futures_spot_price_previous: " + str(exc)[:120])
+    # Refresh the latest spot/settlement snapshot from Business Society. If today is
+    # not a trading day or one product is absent, try the previous few trading dates.
+    observed: set[str] = set()
+    mapping = {"纯碱": "SA", "尿素": "UR", "甲醇MA": "MA", "甲醇": "MA", "铝": "AL", "天然橡胶": "RU"}
+    for offset in range(0, 8):
+        day = end_day - timedelta(days=offset)
+        try:
+            frame = call_with_timeout(12, ak.futures_spot_price_previous, day.strftime("%Y%m%d"))
+            if frame is None or getattr(frame, "empty", True):
                 continue
+            for _, row in frame.iterrows():
+                label = str(row.get("商品", row.get("symbol", ""))).strip()
+                code = mapping.get(label)
+                if not code:
+                    continue
+                spot = finite_number(row.get("现货价格", row.get("spot_price")))
+                fut = finite_number(row.get("主力合约价格", row.get("dominant_price")))
+                if spot is None and fut is None:
+                    continue
+                point = {"date": day.isoformat(), "spot": spot, "futures": fut}
+                daily_by_symbol[code] = clean_series(daily_by_symbol.get(code, []) + [point])
+                observed.add(code)
+                fresh_data = True
+            if len(observed) == len(core_codes):
+                break
+        except Exception as exc:
+            errors.append("futures_spot_price_previous: " + str(exc)[:120])
 
     payload = build_payload(daily_by_symbol)
     payload["fetchErrors"] = errors[:5]
 
-    # Add a separate automatically fetched futures quote, clearly distinguished from spot.
-    realtime_names = {"SA": "纯碱", "UR": "尿素", "MA": "甲醇", "AL": "铝", "RU": "天然橡胶"}
-    for code, chinese_name in realtime_names.items():
+    # Add separate futures quotes where the source's product-name mapping supports them.
+    for code, chinese_name in {"SA": "纯碱", "UR": "尿素"}.items():
         try:
             frame = call_with_timeout(12, ak.futures_zh_realtime, symbol=chinese_name)
             if frame is None or getattr(frame, "empty", True):
@@ -245,60 +275,70 @@ def fetch_data() -> dict[str, Any]:
                 target["futuresTime"] = str(row.get("ticktime", "")).strip() or None
                 target["futuresSource"] = "新浪财经商品期货行情（经 AKShare 获取）"
                 target["futuresSourceUrl"] = "https://finance.sina.com.cn/futuremarket/"
-                if not target.get("latest"):
-                    target["latest"] = round(price, 4)
-                    target["latestDate"] = target["futuresDate"]
-                    target["status"] = "latest-only"
-                    target["source"] = target["futuresSource"]
-                    target["sourceUrl"] = target["futuresSourceUrl"]
+                fresh_data = True
         except Exception as exc:
             errors.append("futures_zh_realtime/" + code + ": " + str(exc)[:100])
-    payload["fetchErrors"] = errors[:5]
 
-    # For products without futures basis series, pull the latest public spot quote
-    # from Eastmoney's commodity/stock mapping endpoint if an exact product row exists.
-    try:
-        categories = ["能源", "化工", "塑料", "纺织", "有色", "钢铁", "建材", "农副"]
-        spot_rows: list[dict[str, Any]] = []
-        for category in categories:
-            try:
-                frame = call_with_timeout(15, ak.futures_spot_stock, symbol=category)
-                if frame is None or getattr(frame, "empty", True):
-                    continue
+    # Fetch current spot prices for non-futures commodities only where cache lacks a quote.
+    missing_ids = {product["id"] for product in PRODUCTS if not payload["items"][product["id"]].get("latest")}
+    category_by_product = {
+        "tio2": ["化工", "建材"],
+        "coal": ["能源"],
+        "rare-earth": ["有色"],
+    }
+    categories = []
+    for product_id in missing_ids:
+        categories.extend(category_by_product.get(product_id, []))
+    categories = list(dict.fromkeys(categories))
+    spot_rows: list[dict[str, Any]] = []
+    for category in categories:
+        try:
+            frame = call_with_timeout(15, ak.futures_spot_stock, symbol=category)
+            if frame is not None and not getattr(frame, "empty", True):
                 spot_rows.extend(frame.to_dict(orient="records"))
-            except Exception as exc:
-                errors.append("futures_spot_stock/" + category + ": " + str(exc)[:100])
-        for product in PRODUCTS:
-            target = payload["items"][product["id"]]
-            if target.get("latest"):
-                continue
-            for row in spot_rows:
-                name = str(row.get("商品名称", row.get("商品", row.get("名称", "")))).strip()
-                # Match exact commodity names/aliases only. In particular, never
-                # confuse electrolytic aluminium with alumina or generic rare earth with PrNd oxide.
-                if not name or name not in product["aliases"]:
-                    continue
-                latest = finite_number(row.get("最新价", row.get("最新价格")))
-                if latest is None:
-                    continue
-                target["name"] = name
-                target["latest"] = round(latest, 4)
-                target["latestDate"] = date.today().isoformat()
-                target["latestSpot"] = round(latest, 4)
-                target["source"] = "东方财富现货与股票数据（经 AKShare 获取）"
-                target["sourceUrl"] = "https://data.eastmoney.com/ifdata/xhgp.html"
-                target["status"] = "latest-only"
-                try:
-                    change = float(str(row.get("近半年涨跌幅", "")).replace("%", "").strip())
-                    if math.isfinite(change):
-                        target["changePct"] = change
-                except (TypeError, ValueError):
-                    pass
-                break
-        payload["fetchErrors"] = errors[:5]
-    except Exception as exc:
-        payload["fetchErrors"] = (errors + ["futures_spot_stock: " + str(exc)[:180]])[:5]
+        except Exception as exc:
+            errors.append("futures_spot_stock/" + category + ": " + str(exc)[:100])
 
+    for product in PRODUCTS:
+        target = payload["items"][product["id"]]
+        if target.get("latest"):
+            continue
+        for row in spot_rows:
+            name = str(row.get("商品名称", row.get("商品", row.get("名称", "")))).strip()
+            if not name or name not in product["aliases"]:
+                continue
+            latest = finite_number(row.get("最新价", row.get("最新价格")))
+            if latest is None:
+                continue
+            target["name"] = name
+            target["latest"] = round(latest, 4)
+            target["latestDate"] = date.today().isoformat()
+            target["latestSpot"] = round(latest, 4)
+            target["source"] = "东方财富现货与股票数据（经 AKShare 获取）"
+            target["sourceUrl"] = "https://data.eastmoney.com/ifdata/xhgp.html"
+            target["status"] = "latest-only"
+            try:
+                change = float(str(row.get("近半年涨跌幅", "")).replace("%", "").replace(",", "").strip())
+                if math.isfinite(change):
+                    target["changePct"] = change
+            except (TypeError, ValueError):
+                pass
+            fresh_data = True
+            break
+
+    # Preserve last good latest-only quotes when a provider is temporarily unavailable.
+    for product in PRODUCTS:
+        target = payload["items"][product["id"]]
+        old_item = old_items.get(product["id"], {})
+        if target.get("latest") is None and isinstance(old_item, dict) and old_item.get("latest") is not None:
+            for key in ("name", "latest", "latestDate", "latestSpot", "latestFutures", "changePct", "source", "sourceUrl", "status"):
+                if old_item.get(key) is not None:
+                    target[key] = old_item[key]
+            if not target.get("series") and isinstance(old_item.get("series"), list):
+                target["series"] = old_item["series"]
+
+    payload["fetchErrors"] = errors[:5]
+    payload["hasFreshData"] = fresh_data
     return payload
 
 def main() -> int:

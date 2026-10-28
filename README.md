@@ -86,3 +86,10 @@ await q.fetchTrends('sz002408');
 StockQuotes.marketSession();   // 'open' | 'pre' | 'lunch' | 'closed' | 'holiday'
 StockQuotes.isTrading();       // 是否处于需要刷新行情的时段
 ```
+
+
+## 生意选项卡数据口径
+
+- 商品价格：展示自动抓取的现货/期货参考价与可用历史趋势。
+- 供需辅助指标：尝试抓取交易所期货仓单库存；它不等同于全行业厂家库存、港口库存或社会库存，页面会明确标注口径。
+- 未获取到可靠数据时会显示缺失状态，不用人工填值或估算值补齐。

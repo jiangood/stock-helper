@@ -22,12 +22,45 @@ const REFRESH_INTERVAL = StockQuotes.REFRESH_INTERVAL;
 // 数据加载
 // ============================================================
 async function loadStocks() {
+  const dataUrl = new URL('data/stocks.json', document.baseURI).href;
   try {
-    const res = await fetch('data/stocks.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    STOCKS = await res.json();
+    const res = await fetch(dataUrl, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+    if (!res.ok) {
+      const detail = {
+        time: new Date().toISOString(),
+        type: '股票数据请求失败',
+        url: res.url || dataUrl,
+        status: res.status,
+        statusText: res.statusText,
+        page: location.href
+      };
+      throw Object.assign(new Error('HTTP ' + res.status + ' ' + res.statusText), { diagnostic: detail });
+    }
+    try {
+      STOCKS = await res.json();
+      if (!Array.isArray(STOCKS)) throw new Error('JSON 顶层不是数组');
+    } catch (parseError) {
+      throw Object.assign(parseError, { diagnostic: {
+        time: new Date().toISOString(),
+        type: '股票 JSON 解析失败',
+        url: res.url || dataUrl,
+        status: res.status,
+        page: location.href,
+        message: parseError.message
+      }});
+    }
   } catch (e) {
-    console.error('加载股票数据失败:', e);
+    const detail = e.diagnostic || {
+      time: new Date().toISOString(),
+      type: '股票数据加载失败',
+      url: dataUrl,
+      page: location.href,
+      message: e.message,
+      name: e.name,
+      stack: e.stack || ''
+    };
+    console.error('加载股票数据失败:', e, detail);
+    showErrorDialog(detail);
     STOCKS = [];
     showToast('股票数据加载失败：' + e.message);
   }
@@ -311,6 +344,94 @@ function spinRefresh() {
     btn.textContent = '⟳';
   }, 900);
 }
+
+// ============================================================
+// 可复制错误诊断弹窗：请求失败、脚本异常、未处理 Promise 和资源加载错误
+// ============================================================
+function showErrorDialog(detail) {
+  const previous = document.getElementById('diagnostic-error-dialog');
+  const details = previous ? previous.querySelector('textarea') : null;
+  const line = typeof detail === 'string' ? detail : JSON.stringify(detail, null, 2);
+  if (details) {
+    details.value += '\\n\\n--- 后续错误 ---\\n' + line;
+    return;
+  }
+
+  const dialog = document.createElement('dialog');
+  dialog.id = 'diagnostic-error-dialog';
+  dialog.style.cssText = 'width:min(760px,94vw);max-height:88vh;border:1px solid var(--bs-border-color,#ccc);border-radius:12px;padding:18px;background:var(--bs-body-bg,#fff);color:var(--bs-body-color,#222);box-shadow:0 12px 48px #0005;z-index:10000';
+  dialog.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px">
+      <strong style="font-size:17px">页面错误详情（可复制）</strong>
+      <button type="button" data-close style="font-size:22px;border:0;background:transparent;color:inherit;cursor:pointer" aria-label="关闭">×</button>
+    </div>
+    <p style="font-size:13px;margin:0 0 8px;color:var(--bs-secondary-color,#666)">请点击“复制错误信息”，然后把内容发给我。也可以手动选中文本复制。</p>
+    <textarea aria-label="错误详情" readonly spellcheck="false" style="box-sizing:border-box;width:100%;height:min(48vh,360px);resize:vertical;font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;padding:10px;border:1px solid var(--bs-border-color,#ccc);border-radius:6px;background:var(--bs-tertiary-bg,#f8f8f8);color:inherit"></textarea>
+    <div style="display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin-top:12px">
+      <button type="button" data-copy style="padding:8px 14px;border:0;border-radius:6px;background:#0d6efd;color:white;cursor:pointer">复制错误信息</button>
+      <button type="button" data-close style="padding:8px 14px;border:1px solid var(--bs-border-color,#ccc);border-radius:6px;background:transparent;color:inherit;cursor:pointer">关闭</button>
+    </div>`;
+  document.body.appendChild(dialog);
+  dialog.querySelector('textarea').value = line;
+  dialog.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => {
+    if (typeof dialog.close === 'function') dialog.close();
+    dialog.remove();
+  }));
+  dialog.querySelector('[data-copy]').addEventListener('click', async () => {
+    const area = dialog.querySelector('textarea');
+    try {
+      await navigator.clipboard.writeText(area.value);
+      dialog.querySelector('[data-copy]').textContent = '已复制';
+    } catch (_) {
+      area.focus();
+      area.select();
+      const copied = document.execCommand('copy');
+      dialog.querySelector('[data-copy]').textContent = copied ? '已复制' : '请手动复制';
+    }
+  });
+  if (typeof dialog.showModal === 'function') dialog.showModal();
+  else dialog.setAttribute('open', '');
+}
+
+(function bindRuntimeDiagnostics() {
+  window.addEventListener('error', event => {
+    // 捕获资源加载失败（例如脚本、样式、图片返回 404）。
+    if (event.target && event.target !== window) {
+      const target = event.target;
+      const url = target.src || target.href || '';
+      if (!url) return;
+      showErrorDialog({
+        time: new Date().toISOString(),
+        type: '资源加载失败（请检查 URL / Network 状态码）',
+        resourceType: target.tagName || 'unknown',
+        url,
+        page: location.href,
+        note: '浏览器资源错误事件通常不暴露 HTTP 状态码；请将此 URL 发回以进一步定位。'
+      });
+      return;
+    }
+    showErrorDialog({
+      time: new Date().toISOString(),
+      type: 'JavaScript 运行错误',
+      message: event.message || '未知脚本错误',
+      file: event.filename || '',
+      line: event.lineno || '',
+      column: event.colno || '',
+      stack: event.error && event.error.stack || '',
+      page: location.href
+    });
+  }, true);
+  window.addEventListener('unhandledrejection', event => {
+    const reason = event.reason;
+    showErrorDialog({
+      time: new Date().toISOString(),
+      type: '未处理的 Promise 异常',
+      message: reason && reason.message ? reason.message : String(reason),
+      stack: reason && reason.stack || '',
+      page: location.href
+    });
+  });
+})();
 
 function showToast(msg, type) {
   const t = $('toast');

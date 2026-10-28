@@ -155,7 +155,8 @@
   function initTheme() {
     if (localStorage.getItem('stock-theme') === 'dark') {
       document.documentElement.setAttribute('data-bs-theme', 'dark');
-      $('theme-btn').textContent = '☀️';
+      const themeBtn = $('theme-btn');
+      if (themeBtn && !themeBtn.classList.contains('q-btn')) themeBtn.textContent = '☀️';
     }
   }
 

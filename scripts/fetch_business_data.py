@@ -275,7 +275,7 @@ def fetch_data() -> dict[str, Any]:
         if isinstance(old_alumina, dict) and isinstance(old_alumina.get("series"), list):
             daily_by_symbol["AO"] = clean_series(old_alumina["series"])
 
-    core_codes = ["SA", "UR", "MA", "AL", "RU", "AO"]
+    core_codes = ["SA", "UR", "MA", "AL", "RU"]
     missing_history = [code for code in core_codes if len(daily_by_symbol.get(code, [])) < 5]
     fresh_data = False
 

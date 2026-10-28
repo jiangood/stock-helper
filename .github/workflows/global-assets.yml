@@ -8,7 +8,7 @@ on:
     branches: [master, main]
     paths:
       - "scripts/fetch_global_assets.py"
-      - "global-assets-data.json"
+      - "data/global-assets-data.json"
       - ".github/workflows/global-assets.yml"
 
 permissions:
@@ -29,13 +29,13 @@ jobs:
         run: python scripts/fetch_global_assets.py
       - name: Commit refreshed data
         run: |
-          if git diff --quiet -- global-assets-data.json; then
+          if git diff --quiet -- data/global-assets-data.json; then
             echo "No global asset data changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add global-assets-data.json
+          git add data/global-assets-data.json
           git commit -m "Refresh global asset quotes"
           git fetch origin "$GITHUB_REF_NAME"
           git rebase -X theirs "origin/$GITHUB_REF_NAME"

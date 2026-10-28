@@ -155,6 +155,8 @@ def build_payload(daily_by_symbol: dict[str, list[dict[str, Any]]], now: datetim
             "symbol": product["symbol"], "series": series,
             "latest": latest_price, "latestDate": latest.get("date"),
             "latestSpot": latest.get("spot"), "latestFutures": latest.get("futures"),
+            "futuresSource": "生意社主力合约参考价（历史数据）" if latest.get("futures") else None,
+            "futuresSourceUrl": "https://www.100ppi.com/" if latest.get("futures") else None,
             "changePct": None,
             "source": "生意社现货/期货基差数据（经 AKShare 获取）" if series else None,
             "sourceUrl": "https://www.100ppi.com/",
@@ -343,9 +345,10 @@ def fetch_data() -> dict[str, Any]:
 
 def main() -> int:
     payload = fetch_data()
+    fresh = bool(payload.pop("hasFreshData", False))
     successful = sum(1 for item in payload["items"].values() if item.get("latest"))
-    if successful == 0:
-        raise RuntimeError("No valid commodity observations were fetched; refusing to overwrite the last good file.")
+    if not fresh or successful == 0:
+        raise RuntimeError("No fresh valid commodity observations were fetched; preserving the last good file.")
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUTPUT.name}: {successful}/{len(PRODUCTS)} products with data")
     for item in payload["items"].values():

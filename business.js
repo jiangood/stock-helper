@@ -81,6 +81,17 @@
       var source = data.source || '暂未匹配到可靠的自动报价源';
       var sourceLink = data.sourceUrl ? '<a href="'+esc(data.sourceUrl)+'" target="_blank" rel="noopener noreferrer">查看来源</a>' : '';
       var status = data.status === 'ok' ? '现货 / 期货历史' : data.status === 'latest-only' ? '自动最新报价' : '等待可靠数据源';
+      var monthlyPrices = data.monthlyPrices && Array.isArray(data.monthlyPrices.series)
+        ? data.monthlyPrices.series.filter(function(p){ return p && Number(p.value)>0; }).slice(-6)
+        : [];
+      var monthlyPriceHtml = '';
+      if (monthlyPrices.length >= 2) {
+        var monthlyValues = monthlyPrices.map(function(p){ return Number(p.value); });
+        var monthlyMin = Math.min.apply(null, monthlyValues), monthlyMax = Math.max.apply(null, monthlyValues);
+        var monthlyRange = monthlyMax - monthlyMin || 1;
+        var monthlyCoords = monthlyValues.map(function(v,i){ return (5+i*(270/Math.max(1,monthlyValues.length-1)))+','+(32-((v-monthlyMin)/monthlyRange)*23); });
+        monthlyPriceHtml = '<div class="mt-2 p-2 rounded border"><div class="mini-label">近月价格快照（来源提供的月份口径）</div><svg class="trend-svg mt-1" viewBox="0 0 280 38" role="img" aria-label="'+esc(meta.name)+'近月价格快照"><polyline points="'+monthlyCoords.join(' ')+'"></polyline></svg><div class="d-flex justify-content-between flex-wrap gap-1">'+monthlyPrices.map(function(p){return '<span class="mini-label">'+esc(p.label)+' '+formatNumber(p.value)+'</span>';}).join('')+'</div><div class="mini-label mt-1"><a href="'+esc(data.monthlyPrices.sourceUrl || 'https://data.eastmoney.com/ifdata/xhgp.html')+'" target="_blank" rel="noopener noreferrer">快照来源</a> · 非日频行情</div></div>';
+      }
       var inventory = data.inventory && Number(data.inventory.latest) > 0 ? data.inventory : null;
       var inventoryChange = inventory && Number.isFinite(Number(inventory.change))
         ? ((Number(inventory.change) > 0 ? '+' : '') + formatNumber(inventory.change))
@@ -117,6 +128,7 @@
         + '<div class="mini-label">'+(latestDate ? '数据日期：'+esc(latestDate) : '当前没有有效报价')+' · '+(data.latestSpot != null && Number(data.latestSpot)>0 ? '现货价格' : '期货价格')+'</div>'
         + (data.latestFutures != null && Number(data.latestFutures)>0 ? '<div class="mini-label">期货参考价：'+formatNumber(data.latestFutures)+' '+esc(data.unit || meta.unit || '')+' · '+esc(data.futuresDate || latestDate || '')+(data.futuresTime ? ' '+esc(data.futuresTime) : '')+' · '+esc(data.futuresSource || '主力合约参考价')+'</div>' : '')
         + '<div class="mt-2">'+chart+'</div>'
+        + monthlyPriceHtml
         + inventoryHtml
         + industryLinksHtml
         + '<div class="mini-label mt-1">产业链：'+esc(data.chain || meta.chain)+'</div>'

@@ -14,6 +14,12 @@ test('validates the public holdings source and normalizes its fields', () => {
   assert.equal(data.portfolio.totalAssets, 242452.26);
   assert.equal(data.portfolio.riskBudget, null);
   assert.ok(data.holdings.every(h => h.quantity > 0 && h.cost > 0));
+  assert.deepEqual(Object.keys(source).sort(), ['holdings', 'portfolio', 'schemaVersion', 'updatedAt'].sort());
+  assert.deepEqual(Object.keys(source.holdings[0]).sort(), ['code', 'cost', 'quantity', 'riskExitPrice'].sort());
+  assert.equal(data.holdings[0].name, undefined);
+  assert.equal(data.holdings[0].target1, undefined);
+  assert.equal(data.sourceSnapshotDate, undefined);
+  assert.equal(data.note, undefined);
 });
 
 test('rejects invalid holding codes, quantities, costs and duplicate codes', () => {

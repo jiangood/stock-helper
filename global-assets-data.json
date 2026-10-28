@@ -1,0 +1,72 @@
+{
+  "updatedAt": null,
+  "source": "Yahoo Finance public chart endpoint",
+  "assets": [
+    {
+      "id": "gold",
+      "name": "黄金",
+      "sourceSymbol": "XAUUSD=X",
+      "price": null,
+      "changePct": null,
+      "quoteTime": null,
+      "status": "等待可靠报价",
+      "currency": "USD/盎司",
+      "sourceUrl": "https://finance.yahoo.com/quote/XAUUSD=X/"
+    },
+    {
+      "id": "bitcoin",
+      "name": "比特币",
+      "sourceSymbol": "BTC-USD",
+      "price": null,
+      "changePct": null,
+      "quoteTime": null,
+      "status": "等待可靠报价",
+      "currency": "USD",
+      "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD/"
+    },
+    {
+      "id": "ethereum",
+      "name": "以太坊",
+      "sourceSymbol": "ETH-USD",
+      "price": null,
+      "changePct": null,
+      "quoteTime": null,
+      "status": "等待可靠报价",
+      "currency": "USD",
+      "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD/"
+    },
+    {
+      "id": "nikkei225",
+      "name": "日经 225",
+      "sourceSymbol": "^N225",
+      "price": null,
+      "changePct": null,
+      "quoteTime": null,
+      "status": "等待可靠报价",
+      "currency": "指数点",
+      "sourceUrl": "https://finance.yahoo.com/quote/%5EN225/"
+    },
+    {
+      "id": "nasdaq100",
+      "name": "纳斯达克 100",
+      "sourceSymbol": "^NDX",
+      "price": null,
+      "changePct": null,
+      "quoteTime": null,
+      "status": "等待可靠报价",
+      "currency": "指数点",
+      "sourceUrl": "https://finance.yahoo.com/quote/%5ENDX/"
+    },
+    {
+      "id": "sp500",
+      "name": "标普 500",
+      "sourceSymbol": "^GSPC",
+      "price": null,
+      "changePct": null,
+      "quoteTime": null,
+      "status": "等待可靠报价",
+      "currency": "指数点",
+      "sourceUrl": "https://finance.yahoo.com/quote/%5EGSPC/"
+    }
+  ]
+}

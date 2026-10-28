@@ -79,35 +79,27 @@
     const tp = list.map(typical);
     const flow = list.map((b, i) => {
       const v = num(b && b.volume);
-      return tp[i] === null || v === null ? 0 : tp[i] * v;
+      return tp[i] === null || v === null ? null : tp[i] * v;
     });
 
     const series = new Array(list.length).fill(null);
-    let pos = 0;
-    let neg = 0;
 
-    for (let i = 1; i < list.length; i++) {
-      if (tp[i] === null || tp[i - 1] === null) continue;
-
-      const diff = tp[i] - tp[i - 1];
-      if (diff > 0) pos += flow[i];
-      else if (diff < 0) neg += flow[i];
-
-      if (i >= p) {
-        const j = i - p;                      // 移出窗口的一根
-        if (tp[j + 1] !== null && tp[j] !== null) {
-          const old = tp[j + 1] - tp[j];
-          if (old > 0) pos -= flow[j + 1];
-          else if (old < 0) neg -= flow[j + 1];
-        }
-        pos = Math.max(0, pos);
-        neg = Math.max(0, neg);
-
-        let v;
-        if (neg <= 0) v = pos > 0 ? 100 : 50;  // 负资金流为 0 -> 100；双零按中性 50
-        else v = clamp100(100 - 100 / (1 + pos / neg));
-        series[i] = v;
+    // MFI 的 p 个周期指 p 次价格变化：第一个值应在第 p 根 K 线上产生。
+    // 每个窗口直接按有效的相邻典型价变化计算，避免滚动和缺失数据时错移下标。
+    for (let i = p; i < list.length; i++) {
+      let pos = 0;
+      let neg = 0;
+      for (let k = i - p + 1; k <= i; k++) {
+        if (tp[k] === null || tp[k - 1] === null || flow[k] === null) continue;
+        const diff = tp[k] - tp[k - 1];
+        if (diff > 0) pos += flow[k];
+        else if (diff < 0) neg += flow[k];
       }
+
+      let value;
+      if (neg <= 0) value = pos > 0 ? 100 : 50;
+      else value = clamp100(100 - 100 / (1 + pos / neg));
+      series[i] = value;
     }
 
     const latest = series.length ? series[series.length - 1] : null;

@@ -132,7 +132,7 @@
 
   body { padding-bottom: 74px; }
   .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
-  .bottom-tab { border:0; background:transparent; color:var(--bs-secondary-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:48px; font-size:10px; border-radius:8px; }
+  .bottom-tab { text-decoration:none; border:0; background:transparent; color:var(--bs-secondary-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:48px; font-size:10px; border-radius:8px; }
   .bottom-tab .tab-icon { font-size:18px; line-height:1.15; }
   .bottom-tab.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
   .app-pane { min-height:calc(100vh - 120px); }
@@ -326,29 +326,12 @@
 </main>
 
 
-<main id="assets-pane" data-pane="assets" class="app-pane container-fluid px-3 py-3 d-none">
-  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
-    <div>
-      <div class="panel-title">全球资产</div>
-      <div class="panel-subtitle">黄金、比特币、以太坊与主要海外指数。展示公开行情源的最近有效报价，不代表逐笔实时成交价。</div>
-    </div>
-  </div>
-  <div class="insight-card mb-3">
-    <div class="fw-semibold">行情更新时间</div>
-    <div id="global-assets-updated" class="panel-subtitle">正在读取全球资产行情…</div>
-  </div>
-  <div id="global-assets-cards" class="insight-grid">
-    <div class="empty-state">正在加载黄金、加密资产和海外指数报价…</div>
-  </div>
-  <div class="panel-subtitle mt-3">数据源：Yahoo Finance 公开图表行情接口，经 GitHub Actions 定时抓取后缓存。不同市场交易时段、币种和报价口径不同；缺少有效报价时会明确显示，不用模拟价格补齐。</div>
-</main>
-
 
 <nav class="bottom-tabs" aria-label="主导航">
   <button class="bottom-tab active" type="button" data-target="stocks"><span class="tab-icon">▦</span><span>股票池</span></button>
   <button class="bottom-tab" type="button" data-target="opportunity"><span class="tab-icon">▤</span><span>简报</span></button>
   <button class="bottom-tab" type="button" data-target="business"><span class="tab-icon">↗</span><span>生意</span></button>
-  <button class="bottom-tab" type="button" data-target="assets"><span class="tab-icon">◎</span><span>全球资产</span></button>
+  <a class="bottom-tab" href="./global-assets.html" aria-label="全球资产"><span class="tab-icon">◎</span><span>全球资产</span></a>
 </nav>
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
 
@@ -365,7 +348,6 @@
 <script src="pinyin.js"></script>
 <script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
 <script src="business.js"></script>
-<script src="global-assets.js"></script>
 <script src="stock-dashboard.js"></script>
 
 <script src="password-gate.js"></script>

@@ -23,6 +23,7 @@
   let STOCKS = [];
   let PLAN = null;
   let DETAIL = null;
+  let holdingCost = null;
   let peersAt = 0;
   let historyAt = 0;
   let HISTORY = null;
@@ -123,14 +124,10 @@
 
   const fmtYi = v => isNum(v) ? (v / 1e8).toFixed(2) + '亿' : '—';
 
-  const costKey = () => 'croc-cost:' + CODE;
   const calcKey = () => 'croc-valuation:' + CODE;
 
   function readCost() {
-    try {
-      const v = Number(localStorage.getItem(costKey()));
-      return isFinite(v) && v > 0 ? v : null;
-    } catch (e) { return null; }
+    return isFinite(holdingCost) && holdingCost > 0 ? holdingCost : null;
   }
 
   function historyStats() {
@@ -1153,7 +1150,7 @@
     const el = $('sell-plan');
     const cost = readCost();
     if (!cost) {
-      el.innerHTML = '<span class="text-body-secondary">设置持仓成本后，显示翻倍卖点与当前盈亏。</span>';
+      el.innerHTML = '<span class="text-body-secondary">当前股票未在 holdings.json 中记录有效成本。</span>';
       return;
     }
 
@@ -1187,28 +1184,23 @@
       <div class="sell-line ${tone}">${esc(hint)}</div>`;
   }
 
-  function loadCost() {
-    const c = readCost();
-    if (c) $('cost-input').value = c.toFixed(2);
-  }
-
-  function saveCost() {
-    const v = Number($('cost-input').value);
-    if (!isFinite(v) || v <= 0) {
-      showToast('请输入大于 0 的持仓成本');
+  async function loadCost() {
+    const input = $('cost-input');
+    if (input) { input.readOnly = true; input.placeholder = '从 holdings.json 读取'; }
+    if (!window.StockHoldings) {
+      if (input) input.value = '';
       return;
     }
-    try { localStorage.setItem(costKey(), String(v)); } catch (e) { /* ignore */ }
-    $('cost-input').value = v.toFixed(2);
-    if (DETAIL) renderSellPlan(currentEval(DETAIL));
-    showToast('持仓成本已保存', 'success');
-  }
-
-  function clearCost() {
-    try { localStorage.removeItem(costKey()); } catch (e) { /* ignore */ }
-    $('cost-input').value = '';
-    if (DETAIL) renderSellPlan(currentEval(DETAIL));
-    showToast('持仓成本已清除', 'success');
+    try {
+      const data = await window.StockHoldings.load();
+      const holding = data.holdings.find(item => item.code === CODE);
+      holdingCost = holding ? Number(holding.cost) : null;
+      if (input) input.value = holdingCost > 0 ? holdingCost.toFixed(3) : '';
+    } catch (error) {
+      holdingCost = null;
+      if (input) { input.value = ''; input.placeholder = 'holdings.json 读取失败'; }
+      console.warn('[StockHoldings]', error);
+    }
   }
 
   /* ────────────────────────── 资源股估值计算 ────────────────────────── */
@@ -1497,8 +1489,6 @@
 
   window.refreshAll = refreshAll;
   window.toggleTheme = toggleTheme;
-  window.saveCost = saveCost;
-  window.clearCost = clearCost;
   window.updateCalc = updateCalc;
 
   (async function init() {
@@ -1528,7 +1518,7 @@
 
     await loadPlan();
     renderHeader();
-    loadCost();
+    await loadCost();
     loadCalc();
 
     await refreshAll(false);

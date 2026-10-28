@@ -18,10 +18,7 @@
   ];
   function el(id) { return document.getElementById(id); }
   function esc(v) { return String(v == null ? '' : v).replace(/[&<>\"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
-  var quoteClient = null, marketIndices = {}, holdingStorageKey = 'stock-helper-local-holdings-v1';
-  function readHoldings() {
-    try { var v=JSON.parse(global.localStorage.getItem(holdingStorageKey)||'[]'); return Array.isArray(v)?v.filter(function(h){return h&&typeof h.code==='string'&&Number(h.quantity)>0&&Number(h.cost)>0;}):[]; } catch(_){return [];}
-  }
+  var quoteClient = null, marketIndices = {};
   function fmtPct(v){return v===null||v===undefined||v===''||!Number.isFinite(Number(v))?'—':((Number(v)>0?'+':'')+Number(v).toFixed(2)+'%');}
   function fmtMoney(v){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
   function tone(v){return Number(v)>0?'text-up':Number(v)<0?'text-down':'text-body-secondary';}
@@ -51,32 +48,19 @@
   }
   function renderHoldings(){
     var summary=el('holdings-summary'),list=el('holdings-list');if(!summary||!list)return;
-    var hs=[];try{var raw=JSON.parse(global.localStorage.getItem(holdingStorageKey)||'[]');if(Array.isArray(raw))hs=raw;}catch(_){}
-    hs=hs.filter(function(h){return h&&h.code&&Number(h.quantity)>0&&Number(h.cost)>0;});
-    var rows=hs.map(function(h){var s=stockForCode(h.code),q=s?quotes[s.code]:null,p=q&&Number(q.price)>0?Number(q.price):null,qty=Number(h.quantity),cost=Number(h.cost);return {h:h,s:s,p:p,qty:qty,cost:cost,value:p==null?null:p*qty,pnl:p==null?null:(p-cost)*qty,pct:p==null?null:(p-cost)/cost*100};});
-    var missing=rows.filter(function(r){return r.p==null;}).length, value=rows.reduce(function(a,r){return a+(r.value||0);},0),pnl=rows.reduce(function(a,r){return a+(r.pnl||0);},0),cost=rows.reduce(function(a,r){return a+r.qty*r.cost;},0);
-    summary.innerHTML=[['持仓标的',rows.length+' 只'],['持仓市值',rows.length&&!missing?'¥'+fmtMoney(value):(rows.length?'部分行情缺失':'—')],['浮动盈亏',rows.length&&!missing?(pnl>0?'+':'')+'¥'+fmtMoney(pnl):(rows.length?'部分行情缺失':'—')],['整体盈亏率',cost>0&&!missing?fmtPct(pnl/cost*100):'—']].map(function(x){return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-5 fw-bold">'+x[1]+'</div></div></div>';}).join('');
-    if(!rows.length){list.innerHTML='<div class="empty-state">尚无本机持仓记录。点击「录入 / 修改持仓」添加代码、数量和成本；个人持仓不会写入公开仓库。</div>';return;}
-    list.innerHTML=rows.map(function(r){return '<article class="insight-card"><div class="d-flex justify-content-between gap-2"><div><div class="fw-bold">'+esc((r.s&&r.s.name)||r.h.name||r.h.code)+'</div><div class="mini-label">'+esc(r.h.code)+'</div></div><span class="flag" style="margin:0">'+(r.p==null?'行情缺失':'持仓')+'</span></div><div class="d-flex align-items-baseline justify-content-between gap-2 mt-2"><span class="business-price">'+(r.p==null?'—':r.p.toFixed(2))+'</span><span class="'+tone(r.pnl)+' fw-semibold">'+(r.pnl==null?'盈亏待计算':(r.pnl>0?'+':'')+'¥'+fmtMoney(r.pnl)+' ('+fmtPct(r.pct)+')')+'</span></div><div class="mini-label mt-1">数量 '+r.qty.toLocaleString('zh-CN')+' 股 · 成本 '+r.cost.toFixed(3)+' · 市值 '+(r.value==null?'—':'¥'+fmtMoney(r.value))+'</div>'+(r.s?'<div class="mini-label mt-1">计划价：重仓 '+(r.s.heavy==null?'—':r.s.heavy)+' · 入场 '+(r.s.entry==null?'—':r.s.entry)+' · 止盈 '+(r.s.tp1==null?'—':r.s.tp1)+'</div>':'')+'</article>';}).join('');
-  }
-  function appendHoldingRow(v){
-    var rows=el('holdings-rows');if(!rows)return;v=v||{};var row=document.createElement('div');row.className='row g-2 align-items-end mb-2 holding-edit-row';
-    row.innerHTML='<div class="col-12 col-md-4"><label class="form-label small mb-1">代码</label><input class="form-control form-control-sm holding-code" placeholder="sz000731" value="'+esc(v.code||'')+'" required></div><div class="col-6 col-md-3"><label class="form-label small mb-1">数量（股）</label><input class="form-control form-control-sm holding-qty" type="number" min="1" step="1" value="'+(v.quantity||'')+'" required></div><div class="col-6 col-md-3"><label class="form-label small mb-1">成本价</label><input class="form-control form-control-sm holding-cost" type="number" min="0.001" step="0.001" value="'+(v.cost||'')+'" required></div><div class="col-12 col-md-2"><button type="button" class="btn btn-sm btn-outline-danger w-100 holding-remove">删除此行</button></div>';
-    rows.appendChild(row);
-  }
-  function openHoldingsEditor(){
-    var form=el('holdings-form'),rows=el('holdings-rows');if(!form||!rows)return;rows.innerHTML='';
-    readHoldings().forEach(appendHoldingRow);if(!rows.children.length)appendHoldingRow({});form.classList.remove('d-none');
-  }
-  function bindHoldingsEditor(){
-    var toggle=el('holdings-toggle'),form=el('holdings-form');if(!toggle||!form||form.dataset.bound)return;form.dataset.bound='1';
-    toggle.addEventListener('click',function(){if(form.classList.contains('d-none'))openHoldingsEditor();else form.classList.add('d-none');});
-    el('holding-add').addEventListener('click',function(){appendHoldingRow({});});el('holdings-cancel').addEventListener('click',function(){form.classList.add('d-none');});
-    el('holdings-rows').addEventListener('click',function(e){var b=e.target.closest('.holding-remove');if(b){b.closest('.holding-edit-row').remove();if(!el('holdings-rows').children.length)appendHoldingRow({});}});
-    form.addEventListener('submit',function(e){e.preventDefault();var next=[],valid=true;
-      Array.prototype.forEach.call(el('holdings-rows').querySelectorAll('.holding-edit-row'),function(row){var code=row.querySelector('.holding-code').value.trim().toLowerCase(),qty=Number(row.querySelector('.holding-qty').value),cost=Number(row.querySelector('.holding-cost').value);if(!code&&!qty&&!cost)return;if(/^\d{6}$/.test(code))code=(/^[5689]/.test(code)?'sh':'sz')+code;if(!/^(sh|sz)\d{6}$/.test(code)||!(qty>0)||!(cost>0)){valid=false;return;}var s=stockForCode(code);next.push({code:code,name:s?s.name:'',quantity:qty,cost:cost});});
-      if(!valid){global.alert('请检查股票代码、数量和成本价。代码可用 6 位数字或 sh/sz 开头的 6 位代码。');return;}
-      try{global.localStorage.setItem(holdingStorageKey,JSON.stringify(next));}catch(_){global.alert('浏览器无法保存本地持仓，请检查存储权限。');return;}form.classList.add('d-none');renderHoldings();
+    summary.innerHTML='<div class="col-12"><div class="empty-state">正在读取 holdings.json…</div></div>';
+    list.innerHTML='';
+    if(!global.StockHoldings){list.innerHTML='<div class="empty-state">持仓数据模块未加载，请刷新页面。</div>';return;}
+    global.StockHoldings.load().then(function(data){
+      var hs=data.holdings;
+      var rows=hs.map(function(h){var s=stockForCode(h.code),q=s?quotes[s.code]:null,p=q&&Number(q.price)>0?Number(q.price):null,qty=Number(h.quantity),cost=Number(h.cost);return {h:h,s:s,p:p,qty:qty,cost:cost,value:p==null?null:p*qty,pnl:p==null?null:(p-cost)*qty,pct:p==null?null:(p-cost)/cost*100};});
+      var missing=rows.filter(function(r){return r.p==null;}).length, value=rows.reduce(function(a,r){return a+(r.value||0);},0),pnl=rows.reduce(function(a,r){return a+(r.pnl||0);},0),cost=rows.reduce(function(a,r){return a+r.qty*r.cost;},0);
+      summary.innerHTML=[['持仓标的',rows.length+' 只'],['持仓市值',rows.length&&!missing?'¥'+fmtMoney(value):(rows.length?'部分行情缺失':'—')],['浮动盈亏',rows.length&&!missing?(pnl>0?'+':'')+'¥'+fmtMoney(pnl):(rows.length?'部分行情缺失':'—')],['整体盈亏率',cost>0&&!missing?fmtPct(pnl/cost*100):'—']].map(function(x){return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-5 fw-bold">'+x[1]+'</div></div></div>';}).join('');
+      if(!rows.length){list.innerHTML='<div class="empty-state">holdings.json 中暂无持仓。修改仓位请编辑仓库根目录的 holdings.json；网页只读，不会在浏览器保存持仓。</div>';return;}
+      list.innerHTML=rows.map(function(r){return '<article class="insight-card"><div class="d-flex justify-content-between gap-2"><div><div class="fw-bold">'+esc((r.s&&r.s.name)||r.h.name||r.h.code)+'</div><div class="mini-label">'+esc(r.h.code)+'</div></div><span class="flag" style="margin:0">'+(r.p==null?'行情缺失':'持仓')+'</span></div><div class="d-flex align-items-baseline justify-content-between gap-2 mt-2"><span class="business-price">'+(r.p==null?'—':r.p.toFixed(2))+'</span><span class="'+tone(r.pnl)+' fw-semibold">'+(r.pnl==null?'盈亏待计算':(r.pnl>0?'+':'')+'¥'+fmtMoney(r.pnl)+' ('+fmtPct(r.pct)+')')+'</span></div><div class="mini-label mt-1">数量 '+r.qty.toLocaleString('zh-CN')+' 股 · 成本 '+r.cost.toFixed(3)+' · 市值 '+(r.value==null?'—':'¥'+fmtMoney(r.value))+'</div>'+(r.s?'<div class="mini-label mt-1">计划价：重仓 '+(r.s.heavy==null?'—':r.s.heavy)+' · 入场 '+(r.s.entry==null?'—':r.s.entry)+' · 止盈 '+(r.s.tp1==null?'—':r.s.tp1)+'</div>':'')+'</article>';}).join('');
+    }).catch(function(error){
+      summary.innerHTML='';
+      list.innerHTML='<div class="empty-state">读取 holdings.json 失败。请确认文件已提交并重新部署；错误：'+esc(error&&error.message||'未知错误')+'</div>';
     });
   }
   function renderOpportunity(){
@@ -387,11 +371,11 @@
     stocks = Array.isArray(stocksArg) ? stocksArg : [];
     quotes = quoteArg || {};
     quoteClient = quoteClientArg || null;
-    bindHoldingsEditor();
     fetchMarketIndices();
+    renderHoldings();
     renderOpportunity();
     fetchBusinessData();
   }
-  function onTab(target) { if(target==='business')renderBusiness(); if(target==='opportunity'){renderOpportunity();fetchMarketIndices();} }
+  function onTab(target) { if(target==='business')renderBusiness(); if(target==='opportunity'){renderHoldings();renderOpportunity();fetchMarketIndices();} }
   global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness};
 })(window);

@@ -1,4 +1,4 @@
-/* Local-only holdings risk center. Does not place orders or change Croc rules. */
+/* Read-only portfolio risk center backed by public holdings.json. Does not place orders or change Croc rules. */
 (function (root) {
   'use strict';
 
@@ -90,7 +90,6 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (!root || !root.document) return;
 
-  var HOLDINGS_KEY = 'stock-helper-local-holdings-v1', RISK_KEY = 'stock-helper-risk-plan-v1';
   var stocks = [], quotes = {}, initialized = false;
   function esc(value) {
     return String(value == null ? '' : value).replace(/[&<>\"']/g, function (c) {
@@ -103,28 +102,6 @@
   }
   function pct(value) {
     return value === null || value === undefined || !Number.isFinite(Number(value)) ? '—' : Number(value).toFixed(2) + '%';
-  }
-  function readJson(key, fallback) {
-    try { var value = JSON.parse(root.localStorage.getItem(key) || 'null'); return value == null ? fallback : value; }
-    catch (_) { return fallback; }
-  }
-  function readHoldings() {
-    var value = readJson(HOLDINGS_KEY, []);
-    return Array.isArray(value) ? value.filter(function (h) {
-      return h && typeof h.code === 'string' && num(h.quantity) > 0 && num(h.cost) > 0;
-    }) : [];
-  }
-  function readRiskPlan() {
-    var value = readJson(RISK_KEY, {});
-    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-  }
-  function saveRiskPlan(value) {
-    try { root.localStorage.setItem(RISK_KEY, JSON.stringify(value)); return true; }
-    catch (_) {
-      var status = root.document.getElementById('risk-save-status');
-      if (status) status.textContent = '保存失败：浏览器本地存储不可用。';
-      return false;
-    }
   }
   function stockForCode(code) {
     var c = String(code || '').trim().toLowerCase();
@@ -150,53 +127,56 @@
     pane.innerHTML = [
       '<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3"><div><div class="panel-title">持仓风险中心</div><div class="panel-subtitle">只读当前浏览器的持仓与页面行情；风险退出参考价、组合总资产和风险预算由你手工设定。不会下单，也不修改原有鳄鱼纪律。</div></div><div id="risk-quote-note" class="panel-subtitle">等待行情数据…</div></div>',
       '<div id="risk-summary" class="row g-2 mb-3"></div>',
-      '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数</div><div class="business-form">',
-      '<div><label for="risk-account-equity" class="form-label small mb-1">组合总资产（元，手工维护）</label><input id="risk-account-equity" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="未填写则不计算组合资产仓位"></div>',
-      '<div><label for="risk-budget" class="form-label small mb-1">组合风险预算（元，可选）</label><input id="risk-budget" class="form-control form-control-sm" type="number" min="0" step="0.01" placeholder="按你的纪律填写，不预设"></div>',
-      '<div class="wide d-flex flex-wrap gap-2 align-items-center"><button id="risk-save-settings" type="button" class="btn btn-sm btn-primary">保存参数</button><span id="risk-save-status" class="panel-subtitle">参数仅保存在本机浏览器。</span></div></div></section>',
-      '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"><div><div class="panel-title">实际持仓风险明细</div><div class="panel-subtitle">止损价默认留空；止盈目标优先读取股票池原计划价，可在此单独覆盖。</div></div><button id="risk-refresh" class="btn btn-sm btn-outline-secondary" type="button">刷新计算</button></div>',
+      '<section class="insight-card mb-3"><div class="fw-semibold mb-2">组合参数（来自 holdings.json）</div><div class="d-flex flex-wrap gap-4"><div><div class="mini-label">组合总资产</div><div id="risk-account-equity-value" class="fw-semibold">未设置</div></div><div><div class="mini-label">组合风险预算</div><div id="risk-budget-value" class="fw-semibold">未设置</div></div></div><div id="risk-source-note" class="panel-subtitle mt-2">参数与持仓统一维护在仓库根目录的 holdings.json 中。</div></section>',
+      '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2"><div><div class="panel-title">实际持仓风险明细</div><div class="panel-subtitle">持仓、风险退出参考价和止盈覆盖值均从 holdings.json 读取；网页只读。</div></div><button id="risk-refresh" class="btn btn-sm btn-outline-secondary" type="button">重新读取 JSON</button></div>',
       '<div id="risk-positions" class="insight-grid mb-3"></div>',
       '<div class="panel-subtitle mt-2">口径说明：参考价风险敞口 = max(现价 − 风险退出参考价, 0) × 持股数量；仅在参考价低于有效现价时计算。未设参考价、行情缺失或参数无效的持仓不会被当作风险为零。鳄鱼体系强调区分正常波动与本金永久损失；这里的参考价只用于情景测算，不代表建议按价格机械止损，须结合基本面与周期逻辑。止盈收益是达到目标价时的静态情景，不是预测；未计手续费、税费、滑点、跳空和流动性影响。</div>',
       '<div class="panel-subtitle mt-2">风险预算比较只有在每只持仓都具备有效行情和有效风险退出参考价时才给出完整结论。组合总资产为手工输入，不会自动从券商同步。</div>'
     ].join('');
     nav.parentNode.insertBefore(pane, nav);
-    var equityInput = pane.querySelector('#risk-account-equity'), budgetInput = pane.querySelector('#risk-budget');
-    var settings = readRiskPlan();
-    equityInput.value = settings.accountEquity || ''; budgetInput.value = settings.riskBudget || '';
-    pane.querySelector('#risk-save-settings').addEventListener('click', function () {
-      var next = readRiskPlan();
-      next.accountEquity = equityInput.value.trim(); next.riskBudget = budgetInput.value.trim();
-      if (saveRiskPlan(next)) {
-        var status = pane.querySelector('#risk-save-status');
-        if (status) status.textContent = '已保存到本机：' + new Date().toLocaleString('zh-CN', { hour12: false });
-        render();
-      }
-    });
-    pane.querySelector('#risk-refresh').addEventListener('click', render);
-    pane.addEventListener('change', function (event) {
-      var input = event.target;
-      if (!input.matches('[data-risk-code][data-risk-field]')) return;
-      var config = readRiskPlan();
-      config.plans = config.plans && typeof config.plans === 'object' ? config.plans : {};
-      var code = input.dataset.riskCode;
-      config.plans[code] = config.plans[code] || {};
-      config.plans[code][input.dataset.riskField] = input.value.trim();
-      if (saveRiskPlan(config)) render();
-    });
+    pane.querySelector('#risk-refresh').addEventListener('click', function () { render(true); });
     initialized = true;
   }
-  function render() {
+  function render(force) {
+    if (!initialized) return;
+    var listNode = root.document.getElementById('risk-positions');
+    if (!root.StockHoldings) {
+      if (listNode) listNode.innerHTML = '<div class="empty-state">持仓 JSON 模块未加载，请刷新页面。</div>';
+      return;
+    }
+    root.StockHoldings.load(!!force).then(function (data) { renderWithData(data); }).catch(function (error) {
+      var list = root.document.getElementById('risk-positions');
+      if (list) list.innerHTML = '<div class="empty-state">读取 holdings.json 失败；请确认文件已提交并部署。' + esc(error && error.message || '') + '</div>';
+    });
+  }
+  function renderWithData(data) {
     if (!initialized) return;
     var summaryNode = root.document.getElementById('risk-summary'), listNode = root.document.getElementById('risk-positions');
     if (!summaryNode || !listNode) return;
-    var holdings = readHoldings(), settings = readRiskPlan();
-    var planMap = settings.plans && typeof settings.plans === 'object' ? settings.plans : {};
+    var holdings = data && Array.isArray(data.holdings) ? data.holdings : [];
+    var settings = data && data.portfolio ? data.portfolio : {};
+    var planMap = {};
+    holdings.forEach(function (h) {
+      var key = String(h.code || '').toLowerCase();
+      planMap[key] = { stopLoss: h.riskExitPrice };
+      if (h.target1 !== null && h.target1 !== undefined) planMap[key].target1 = h.target1;
+      if (h.target2 !== null && h.target2 !== undefined) planMap[key].target2 = h.target2;
+    });
+    var equityValue = root.document.getElementById('risk-account-equity-value');
+    var budgetValue = root.document.getElementById('risk-budget-value');
+    var sourceNote = root.document.getElementById('risk-source-note');
+    if (equityValue) equityValue.textContent = settings.totalAssets > 0 ? '¥' + money(settings.totalAssets) : '未设置';
+    if (budgetValue) budgetValue.textContent = settings.riskBudget > 0 ? '¥' + money(settings.riskBudget) : '未设置';
+    if (sourceNote) sourceNote.textContent = '数据文件：holdings.json' +
+      (data.updatedAt ? ' · 文件更新时间 ' + data.updatedAt : '') +
+      (data.sourceSnapshotDate ? ' · 初始持仓来源快照 ' + data.sourceSnapshotDate : '') +
+      '。修改后需提交仓库并等待 GitHub Pages 更新；此文件公开可见。';
     var rows = holdings.map(function (h) {
       var stock = stockForCode(h.code), quote = getQuote(h.code), plan = stock || { name: h.name || h.code };
       var custom = planMap[String(h.code || '').toLowerCase()] || planMap[String(stock && stock.code || '').toLowerCase()] || {};
       return calculateHolding(h, quote, plan, custom);
     });
-    var summary = summarize(rows, settings.accountEquity, settings.riskBudget);
+    var summary = summarize(rows, settings.totalAssets, settings.riskBudget);
     var note = root.document.getElementById('risk-quote-note');
     if (note) note.textContent = '行情来自当前页面缓存；' + (rows.length && rows.every(function (r) { return r.quoteTime; }) ?
       '各持仓均有报价时间，仍请核对是否为最新。' : '部分报价时间缺失或行情不可用，风险金额可能不完整。');
@@ -212,7 +192,7 @@
       return '<div class="col-6 col-lg-4"><div class="insight-card h-100"><div class="mini-label">' + esc(item[0]) + '</div><div class="fs-5 fw-bold">' + esc(item[1]) + '</div><div class="mini-label mt-1">' + esc(item[2]) + '</div></div></div>';
     }).join('');
     if (!rows.length) {
-      listNode.innerHTML = '<div class="empty-state">当前浏览器尚无有效持仓。请先在「简报」页录入持仓；风险配置和持仓不会跨设备同步。</div>';
+      listNode.innerHTML = '<div class="empty-state">holdings.json 中暂无有效持仓。请维护仓库根目录的 holdings.json；网页不会保存持仓数据。</div>';
       return;
     }
     listNode.innerHTML = rows.map(function (r) {
@@ -228,22 +208,17 @@
       var marketStatus = r.price === null ? '行情缺失' : ('现价 ' + money(r.price) + (r.quoteTime ? ' · ' + r.quoteTime : ' · 时间未返回'));
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">' + esc(r.name) + '</div><div class="mini-label">' + esc(r.code) + ' · ' + esc(marketStatus) + '</div></div><span class="flag ' + riskClass + '" style="margin:0">' + esc(riskState) + '</span></div>'
-        + '<div class="d-flex flex-wrap justify-content-between gap-2 mt-2"><div><div class="mini-label">持仓市值</div><div class="fs-5 fw-bold">' + (r.marketValue === null ? '—' : '¥' + money(r.marketValue)) + '</div></div><div><div class="mini-label">持仓盈亏</div><div class="fw-semibold ' + (r.pnl > 0 ? 'text-up' : r.pnl < 0 ? 'text-down' : 'text-body-secondary') + '">' + (r.pnl === null ? '—' : (r.pnl > 0 ? '+' : '') + '¥' + money(r.pnl) + ' (' + pct(r.pnlPct) + ')') + '</div></div><div><div class="mini-label">股票仓位</div><div class="fw-semibold">' + pct(r.weightOfStocks) + '</div></div><div><div class="mini-label">账户仓位</div><div class="fw-semibold">' + pct(r.weightOfAssets) + '</div></div></div>'
-        + '<div class="row g-2 mt-1"><div class="col-12 col-md-4"><label class="form-label small mb-1">风险退出参考价（手工设定）</label><input class="form-control form-control-sm" type="number" min="0.001" step="0.001" placeholder="未设置" value="' + esc(config.stopLoss || '') + '" data-risk-code="' + esc(configKey) + '" data-risk-field="stopLoss"></div>'
-        + '<div class="col-6 col-md-4"><label class="form-label small mb-1">止盈目标 1（默认股票池计划）</label><input class="form-control form-control-sm" type="number" min="0.001" step="0.001" placeholder="' + (stock && stock.tp1 != null ? esc(stock.tp1) : '未设置') + '" value="' + esc(config.target1 || '') + '" data-risk-code="' + esc(configKey) + '" data-risk-field="target1"></div>'
-        + '<div class="col-6 col-md-4"><label class="form-label small mb-1">止盈目标 2（默认股票池计划）</label><input class="form-control form-control-sm" type="number" min="0.001" step="0.001" placeholder="' + (stock && stock.tp2 != null ? esc(stock.tp2) : '未设置') + '" value="' + esc(config.target2 || '') + '" data-risk-code="' + esc(configKey) + '" data-risk-field="target2"></div></div>'
+        + '<div class="d-flex flex-wrap justify-content-between gap-2 mt-2"><div><div class="mini-label">持仓市值</div><div class="fs-5 fw-bold">' + (r.marketValue === null ? '—' : '¥' + money(r.marketValue)) + '</div></div><div><div class="mini-label">持仓盈亏</div><div class="fw-semibold ' + (r.pnl > 0 ? 'text-up' : r.pnl < 0 ? 'text-down' : 'text-body-secondary') + '">' + (r.pnl === null ? '—' : (r.pnl > 0 ? '+' : '') + '¥' + money(r.pnl) + ' (' + pct(r.pnlPct) + ')') + '</div></div><div><div class="mini-label">股票仓位</div><div class="fw-semibold">' + pct(r.weightOfStocks) + '</div></div><div><div class="mini-label">组合资产仓位</div><div class="fw-semibold">' + pct(r.weightOfAssets) + '</div></div></div>'
+        + '<div class="row g-2 mt-1"><div class="col-12 col-md-4"><div class="mini-label">风险退出参考价 · JSON</div><div class="fw-semibold">' + (r.stopLoss === null ? '未设置' : money(r.stopLoss)) + '</div></div>'
+        + '<div class="col-6 col-md-4"><div class="mini-label">止盈目标 1 · JSON/股票池默认</div><div class="fw-semibold">' + (r.target1 === null ? '未设置' : money(r.target1)) + '</div></div>'
+        + '<div class="col-6 col-md-4"><div class="mini-label">止盈目标 2 · JSON/股票池默认</div><div class="fw-semibold">' + (r.target2 === null ? '未设置' : money(r.target2)) + '</div></div></div>'
         + '<div class="mini-label mt-2">成本翻倍参考价：' + (r.doublePrice === null ? '—' : money(r.doublePrice)) + ' · ' + (r.doubleReached ? '已到成本翻倍参考价' : '未到成本翻倍参考价') + '</div>'
         + '<div class="mini-label mt-2">' + esc(stopDetail) + ' · 止盈1：' + esc(targetDetail(r.target1, r.target1Gain, r.target1Reached)) + ' · 止盈2：' + esc(targetDetail(r.target2, r.target2Gain, r.target2Reached)) + '</div></article>';
     }).join('');
   }
-  function refreshInputsFromSettings() {
-    var settings = readRiskPlan(), equity = root.document.getElementById('risk-account-equity'), budget = root.document.getElementById('risk-budget');
-    if (equity) equity.value = settings.accountEquity || '';
-    if (budget) budget.value = settings.riskBudget || '';
-  }
   function initUi(stocksArg, quotesArg) {
     stocks = Array.isArray(stocksArg) ? stocksArg : []; quotes = quotesArg || {};
-    ensureUi(); refreshInputsFromSettings(); render();
+    ensureUi(); render();
   }
   function onTab(target) { if (target === 'risk') render(); }
   if (root.StockBusiness) {

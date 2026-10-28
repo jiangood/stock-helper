@@ -341,12 +341,10 @@
           <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
             <div class="input-group input-group-sm" style="max-width:230px">
               <span class="input-group-text">持仓成本</span>
-              <input type="number" class="form-control" id="cost-input" min="0" step="0.01"
-                     placeholder="如 5.50" inputmode="decimal" onkeydown="if(event.key==='Enter')saveCost()">
-              <button class="btn btn-outline-secondary" type="button" onclick="saveCost()">保存</button>
+              <input type="number" class="form-control" id="cost-input" min="0" step="0.001"
+                     placeholder="从 holdings.json 读取" readonly>
             </div>
-            <button class="btn btn-sm btn-outline-secondary" type="button" onclick="clearCost()">清除</button>
-            <span class="text-body-tertiary" style="font-size:10.5px">仅保存在本机浏览器</span>
+            <a class="text-body-tertiary" style="font-size:10.5px" href="https://github.com/jiangood/stock-helper/edit/master/holdings.json" target="_blank" rel="noopener noreferrer">在公开 JSON 中维护持仓成本</a>
           </div>
           <div class="sell-box mt-2" id="sell-plan">设置持仓成本后，显示翻倍卖点与当前盈亏。</div>
         </div>
@@ -439,6 +437,7 @@
 <script src="croc.js"></script>
 <script src="quotes.js"></script>
 <script src="indicators.js"></script>
+<script src="holdings-data.js"></script>
 <script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
 <script src="stock.js"></script>
 <script>

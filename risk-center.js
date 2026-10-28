@@ -116,7 +116,7 @@
     if (root.document.getElementById('risk-pane')) { initialized = true; return; }
     var nav = root.document.querySelector('.bottom-tabs');
     if (!nav) return;
-    nav.style.gridTemplateColumns = 'repeat(6, minmax(0, 1fr))';
+    nav.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
     var tab = root.document.createElement('button');
     tab.className = 'bottom-tab'; tab.type = 'button'; tab.dataset.target = 'risk';
     tab.innerHTML = '<span class="tab-icon">⚖</span><span>风险</span>';

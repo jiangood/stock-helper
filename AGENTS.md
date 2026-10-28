@@ -15,9 +15,14 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 顶部只保留标题 + 刷新/主题按钮：不显示时钟、休市/交易中、收盘等常识性提示
   - 名称列只显示名称，不显示股票代码；别名单独一列，放在分组之后
 - `principles.html` — 价值投资理念展示，全静态（`style.css` + `public.css`）
+- `stock.html` + `stock.js` — 个股详情页，入参 `stock.html?code=sz002408`（兼容 `002408` / `SH600519`）
+  - 模块：行情卡、分时 / 日周月 K（lightweight-charts 4.2.3，CDN）、估值与周期位置（PE/PB/ROE/52 周分位/同组中位数比价）、跟踪计划（价格刻度条 + 入场/重仓/止盈状态）
+  - 数据：`stocks.json` 匹配计划；不在股票池的代码也能看行情，计划区显示「未纳入股票池」
+  - 顶栏只保留标题 + 刷新/主题，不要加时钟、休市/交易中、收盘等提示
 - `quotes.js` — 行情 SDK，独立文件，可单独复用
   - 数据源：东方财富 push2（JSON）+ 腾讯财经 qt.gtimg.cn（GBK），多源自动降级、分片批量请求
   - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`
+  - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`、`fetchTrends(code)`
   - 交易时段：`StockQuotes.marketSession()` / `StockQuotes.isTrading()`
 
 ## stocks.json 字段

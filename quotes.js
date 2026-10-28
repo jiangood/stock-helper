@@ -1,14 +1,17 @@
 /*!
- * StockQuotes SDK v1.1.0
+ * StockQuotes SDK v1.2.0
  * ---------------------------------------------------------------------------
  * 股票行情 SDK —— A 股实时行情聚合封装（浏览器 / Node 通用，无依赖）
  *
  * 数据源（自动降级，取到数据即止）
  *   1) eastmoney  东方财富 push2 批量接口（JSON，支持跨域）
  *   2) tencent    腾讯财经 qt.gtimg.cn 批量接口（GBK，支持跨域）
+ *   3) tencent    腾讯 ifzq K 线 / 分钟线接口（JSON，支持跨域）
  *
  * 特性
  *   · 批量拉取（自动分片，单次默认 60 只）、单只拉取
+ *   · 单只详情（开高低收、量额、换手、量比、振幅、PE/PB、市值、涨跌停）
+ *   · K 线（日/周/月，前复权/后复权/不复权）与分时（含均价线）
  *   · 代码格式宽容：'002408' / 'sz002408' / 'SZ002408'
  *   · 多源 + 多域名自动降级，单个源缺数据时用下一个源补齐
  *   · 超时、重试、内置短时缓存、外部 AbortSignal 取消
@@ -19,6 +22,16 @@
  *   const quotes = new StockQuotes.Client({ timeout: 8000, cacheTTL: 1000 });
  *   const data = await quotes.fetch(['sz002408', '600519']);
  *   // data = { sz002408: { code, name, price, prevClose, change, todayChange, time }, ... }
+ *
+ * 单只详情 / K 线 / 分时（详情页使用）
+ *   await quotes.fetchDetail('sz002408');
+ *   // { code, name, price, open, high, low, prevClose, avg, volume, amount,
+ *   //   turnover, volumeRatio, amplitude, limitUp, limitDown, pe, pb,
+ *   //   totalCap, floatCap, change, todayChange, time }
+ *   await quotes.fetchKline('sz002408', { period: 'day', count: 240, adjust: 'qfq' });
+ *   // { code, period, adjust, bars: [{ time:'2026-10-28', open, close, high, low, volume }] }
+ *   await quotes.fetchTrends('sz002408');
+ *   // { code, name, preClose, points: [{ time:'2026-10-28 09:31', price, avg, volume }] }
  *
  * 交易时段
  *   StockQuotes.marketSession()   // 'holiday' | 'closed' | 'pre' | 'open' | 'lunch'
@@ -35,7 +48,7 @@
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
 
-  const VERSION = '1.1.0';
+  const VERSION = '1.2.0';
   const REFRESH_INTERVAL = 3000;
 
   const DEFAULTS = {
@@ -50,7 +63,9 @@
 
   const HOSTS = {
     eastmoney: ['push2delay.eastmoney.com', 'push2.eastmoney.com'],
-    tencent: ['qt.gtimg.cn']
+    eastmoneyHistory: ['push2his.eastmoney.com', 'push2delay.eastmoney.com'],
+    tencent: ['qt.gtimg.cn'],
+    tencentApp: ['web.ifzq.gtimg.cn', 'ifzq.gtimg.cn']
   };
 
   /* ────────────────────────── 错误 ────────────────────────── */
@@ -143,6 +158,204 @@
     return { code, name: name || null, price, prevClose, change, todayChange, time: Date.now() };
   }
 
+  /* ────────────────────── 单只详情解析 ────────────────────── */
+
+  /** 东方财富 stock/get JSON -> 详情 */
+  function parseEastmoneyDetail(json) {
+    const d = json && json.data;
+    if (!d) return null;
+    const price = num(d.f43);
+    if (price === null || price <= 0) return null;
+
+    const market = d.f107 === 1 ? 'sh' : d.f107 === 0 ? 'sz' : '';
+    const code = market + String(d.f57 || '');
+
+    return detail(code, {
+      name: d.f58 || null,
+      price,
+      prevClose: num(d.f60),
+      change: num(d.f169),
+      todayChange: num(d.f170),
+      open: num(d.f46),
+      high: num(d.f44),
+      low: num(d.f45),
+      avg: num(d.f71),
+      volume: num(d.f47),          // 手
+      amount: num(d.f48),          // 元
+      turnover: num(d.f168),       // %
+      volumeRatio: num(d.f50),
+      amplitude: num(d.f171),      // %
+      limitUp: num(d.f51),
+      limitDown: num(d.f52),
+      pe: num(d.f162),             // 市盈率（动）
+      peStatic: num(d.f163),       // 市盈率（静）
+      peTtm: num(d.f164),          // 市盈率（TTM）
+      pb: num(d.f167),
+      roe: num(d.f173),            // %
+      grossMargin: num(d.f186),    // %
+      netMargin: num(d.f187),      // %
+      revenue: num(d.f183),        // 元
+      revenueYoY: num(d.f184),     // %
+      profit: num(d.f105),         // 元
+      profitYoY: num(d.f185),      // %
+      navPerShare: num(d.f92),
+      high52: num(d.f174),
+      low52: num(d.f175),
+      listedAt: num(d.f189),
+      board: d.f198 || null,
+      totalShares: num(d.f84),
+      floatShares: num(d.f85),
+      totalCap: num(d.f116),       // 元
+      floatCap: num(d.f117),       // 元
+      time: d.f86 ? Number(d.f86) * 1000 : Date.now()
+    });
+  }
+
+  /** 腾讯 qt.gtimg.cn 文本 -> 详情 */
+  function parseTencentDetail(text) {
+    const m = /v_([a-z]{2}\d{6})="([^"]*)"/.exec(text || '');
+    if (!m) return null;
+    const f = m[2].split('~');
+    if (f.length < 50) return null;
+    const price = num(f[3]);
+    if (price === null || price <= 0) return null;
+
+    const amountWan = num(f[37]);
+    const totalCapYi = num(f[45]);
+    const floatCapYi = num(f[44]);
+
+    return detail(m[1], {
+      name: f[1] || null,
+      price,
+      prevClose: num(f[4]),
+      change: num(f[31]),
+      todayChange: num(f[32]),
+      open: num(f[5]),
+      high: num(f[33]),
+      low: num(f[34]),
+      avg: null,
+      volume: num(f[6]),
+      amount: amountWan === null ? null : amountWan * 1e4,
+      turnover: num(f[38]),
+      volumeRatio: num(f[49]),
+      amplitude: num(f[43]),
+      limitUp: num(f[47]),
+      limitDown: num(f[48]),
+      pe: null,
+      peStatic: null,
+      peTtm: num(f[39]),
+      pb: num(f[46]),
+      roe: null,
+      grossMargin: null,
+      netMargin: null,
+      revenue: null,
+      revenueYoY: null,
+      profit: null,
+      profitYoY: null,
+      navPerShare: null,
+      high52: null,
+      low52: null,
+      listedAt: null,
+      board: null,
+      totalShares: null,
+      floatShares: null,
+      totalCap: totalCapYi === null ? null : totalCapYi * 1e8,
+      floatCap: floatCapYi === null ? null : floatCapYi * 1e8,
+      time: parseTencentTime(f[30])
+    });
+  }
+
+  function detail(code, f) {
+    if (f.change === null && f.prevClose && f.price != null) {
+      f.change = f.price - f.prevClose;
+    }
+    if (f.todayChange === null && f.prevClose) {
+      f.todayChange = (f.price - f.prevClose) / f.prevClose * 100;
+    }
+    if (f.avg === null && f.amount && f.volume) {
+      f.avg = f.amount / (f.volume * 100);
+    }
+    f.code = code;
+    return f;
+  }
+
+  function parseTencentTime(s) {
+    const m = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/.exec(String(s || ''));
+    if (!m) return Date.now();
+    return new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]).getTime();
+  }
+
+  /* ────────────────────── K 线 / 分时解析 ────────────────────── */
+
+  /** 腾讯 fqkline JSON -> K 线数组（日期, 开, 收, 高, 低, 量） */
+  function parseTencentKline(json, code, period, adjust) {
+    const d = json && json.data && json.data[code];
+    if (!d) return [];
+    const rows = d[(adjust || '') + period] || d[period] || [];
+    if (!Array.isArray(rows)) return [];
+    return rows.map(r => ({
+      time: String(r[0]).slice(0, 10),
+      open: num(r[1]),
+      close: num(r[2]),
+      high: num(r[3]),
+      low: num(r[4]),
+      volume: num(r[5])
+    })).filter(b => b.open !== null && b.close !== null && b.high !== null && b.low !== null);
+  }
+
+  /** 东方财富 kline JSON -> K 线数组 */
+  function parseEastmoneyKline(json) {
+    const k = json && json.data && json.data.klines;
+    if (!Array.isArray(k)) return [];
+    return k.map(line => {
+      const f = String(line).split(',');
+      return {
+        time: f[0],
+        open: num(f[1]),
+        close: num(f[2]),
+        high: num(f[3]),
+        low: num(f[4]),
+        volume: num(f[5])
+      };
+    }).filter(b => b.open !== null && b.close !== null);
+  }
+
+  /** 东方财富 trends2 JSON -> 分时点（时间, 开, 收, 高, 低, 量, 额, 均价） */
+  function parseEastmoneyTrends(json) {
+    const d = json && json.data;
+    if (!d || !Array.isArray(d.trends)) return null;
+    const points = d.trends.map(line => {
+      const f = String(line).split(',');
+      return {
+        time: f[0],
+        price: num(f[2]),
+        avg: num(f[7]),
+        volume: num(f[5]),
+        amount: num(f[6])
+      };
+    }).filter(p => p.price !== null && p.price > 0);
+    return { name: d.name || null, preClose: num(d.preClose), points };
+  }
+
+  /** 腾讯 m1 JSON -> 分时点（无均价） */
+  function parseTencentTrends(json, code) {
+    const d = json && json.data && json.data[code];
+    if (!d || !Array.isArray(d.m1)) return null;
+    const qt = d.qt && d.qt[code];
+    const preClose = num(d.prec) != null ? num(d.prec) : (Array.isArray(qt) ? num(qt[4]) : null);
+    const points = d.m1.map(r => {
+      const t = String(r[0]);
+      return {
+        time: `${t.slice(0, 4)}-${t.slice(4, 6)}-${t.slice(6, 8)} ${t.slice(8, 10)}:${t.slice(10, 12)}`,
+        price: num(r[2]),
+        avg: null,
+        volume: num(r[5]),
+        amount: null
+      };
+    }).filter(p => p.price !== null && p.price > 0);
+    return { name: Array.isArray(qt) ? qt[1] || null : null, preClose, points };
+  }
+
   /* ────────────────────────── 交易时段 ────────────────────────── */
 
   /**
@@ -193,6 +406,81 @@
         const path = `/q=${codes.join(',')}&_=${Date.now()}`;
         const text = await requestText(this.hosts, path, ctx, 'gbk');
         return parseTencent(text);
+      }
+    }
+  };
+
+  /* ────────────────────── 单只详情 / K 线 / 分时数据源 ────────────────────── */
+
+  const DETAIL_FIELDS = [
+    'f43', 'f44', 'f45', 'f46', 'f47', 'f48', 'f50', 'f51', 'f52',
+    'f57', 'f58', 'f60', 'f71', 'f84', 'f85', 'f86', 'f92', 'f105', 'f107',
+    'f116', 'f117', 'f162', 'f163', 'f164', 'f167', 'f168', 'f169', 'f170', 'f171',
+    'f173', 'f174', 'f175', 'f183', 'f184', 'f185', 'f186', 'f187', 'f189', 'f198'
+  ].join(',');
+
+  const PERIOD_KLT = { day: 101, week: 102, month: 103 };
+  const ADJUST_FQT = { qfq: 1, hfq: 2, '': 0 };
+
+  const DETAIL_PROVIDERS = {
+    eastmoney: {
+      id: 'eastmoney',
+      async fetch(code, ctx) {
+        const path = `/api/qt/stock/get?fltt=2&secid=${toSecId(code)}&fields=${DETAIL_FIELDS}&_=${Date.now()}`;
+        const json = await requestJSON(HOSTS.eastmoney, path, ctx);
+        return parseEastmoneyDetail(json);
+      }
+    },
+    tencent: {
+      id: 'tencent',
+      async fetch(code, ctx) {
+        const path = `/q=${code}&_=${Date.now()}`;
+        const text = await requestText(HOSTS.tencent, path, ctx, 'gbk');
+        return parseTencentDetail(text);
+      }
+    }
+  };
+
+  const KLINE_PROVIDERS = {
+    tencent: {
+      id: 'tencent',
+      async fetch(code, opts, ctx) {
+        const path = `/appstock/app/fqkline/get?param=${code},${opts.period},,,${opts.count},${opts.adjust}&_=${Date.now()}`;
+        const json = await requestJSON(HOSTS.tencentApp, path, ctx);
+        return parseTencentKline(json, code, opts.period, opts.adjust);
+      }
+    },
+    eastmoney: {
+      id: 'eastmoney',
+      async fetch(code, opts, ctx) {
+        const path = `/api/qt/stock/kline/get?secid=${toSecId(code)}&fields1=f1,f2,f3,f4,f5,f6`
+                   + `&fields2=f51,f52,f53,f54,f55,f56,f57`
+                   + `&klt=${PERIOD_KLT[opts.period]}&fqt=${ADJUST_FQT[opts.adjust]}`
+                   + `&end=20500101&lmt=${opts.count}&_=${Date.now()}`;
+        const json = await requestJSON(HOSTS.eastmoneyHistory, path, ctx);
+        return parseEastmoneyKline(json);
+      }
+    }
+  };
+
+  const TRENDS_PROVIDERS = {
+    eastmoney: {
+      id: 'eastmoney',
+      async fetch(code, opts, ctx) {
+        const path = `/api/qt/stock/trends2/get?secid=${toSecId(code)}`
+                   + `&fields1=f1,f2,f3,f4,f5,f6,f7,f8&fields2=f51,f52,f53,f54,f55,f56,f57,f58`
+                   + `&iscr=0&ndays=${opts.days}&_=${Date.now()}`;
+        const json = await requestJSON(HOSTS.eastmoneyHistory, path, ctx);
+        return parseEastmoneyTrends(json);
+      }
+    },
+    tencent: {
+      id: 'tencent',
+      async fetch(code, opts, ctx) {
+        const limit = Math.min(800, 240 * opts.days);
+        const path = `/appstock/app/kline/mkline?param=${code},m1,,${limit}&_=${Date.now()}`;
+        const json = await requestJSON(HOSTS.tencentApp, path, ctx);
+        return parseTencentTrends(json, code);
       }
     }
   };
@@ -322,6 +610,172 @@
 
     clearCache() { this._cache.clear(); }
 
+    /**
+     * 单只详情（东方财富 stock/get 主源，腾讯降级）
+     * @param {string} code
+     * @param {object} [opts]
+     * @returns {Promise<{code:string, name:string|null, price:number, open:number|null,
+     *   high:number|null, low:number|null, prevClose:number|null, avg:number|null,
+     *   volume:number|null, amount:number|null, turnover:number|null, volumeRatio:number|null,
+     *   amplitude:number|null, limitUp:number|null, limitDown:number|null,
+     *   pe:number|null, peStatic:number|null, peTtm:number|null, pb:number|null,
+     *   roe:number|null, grossMargin:number|null, netMargin:number|null,
+     *   revenue:number|null, revenueYoY:number|null, profit:number|null, profitYoY:number|null,
+     *   navPerShare:number|null, high52:number|null, low52:number|null, listedAt:number|null,
+     *   board:string|null, totalCap:number|null, floatCap:number|null,
+     *   change:number|null, todayChange:number|null, time:number}>}
+     */
+    async fetchDetail(code, opts) {
+      const c = normalizeCode(code);
+      if (!c) throw new QuoteError('无效的股票代码: ' + code, 'PARSE');
+
+      const o = opts || {};
+      const key = 'detail:' + c;
+      const cached = this._readCache(key, o.force);
+      if (cached) return cached;
+
+      const ctx = this._context(o);
+      let lastErr = null;
+
+      for (const id of this.options.providers) {
+        const provider = DETAIL_PROVIDERS[id];
+        if (!provider) continue;
+        if (!this._available('detail:' + id)) continue;
+        try {
+          const data = await provider.fetch(c, ctx);
+          if (data && data.price > 0) return this._cacheResult(key, data);
+        } catch (e) {
+          if (e && e.code === 'ABORTED') throw e;
+          this.stats.failures++;
+          lastErr = e;
+          this._markDown('detail:' + id);
+        }
+      }
+
+      const err = lastErr || new QuoteError('所有行情源均不可用', 'UNAVAILABLE');
+      this._notifyError(err);
+      throw err;
+    }
+
+    /**
+     * K 线（腾讯 fqkline 主源，东方财富 kline 降级）
+     * @param {string} code
+     * @param {{period?:'day'|'week'|'month', count?:number, adjust?:'qfq'|'hfq'|'',
+     *          force?:boolean, signal?:AbortSignal}} [opts]
+     * @returns {Promise<{code:string, period:string, adjust:string,
+     *   bars:Array<{time:string, open:number, close:number, high:number, low:number, volume:number|null}>}>}
+     */
+    async fetchKline(code, opts) {
+      const c = normalizeCode(code);
+      if (!c) throw new QuoteError('无效的股票代码: ' + code, 'PARSE');
+
+      const o = opts || {};
+      const period = (o.period === 'week' || o.period === 'month') ? o.period : 'day';
+      const adjust = o.adjust === '' || o.adjust === 'none' ? '' : (o.adjust === 'hfq' ? 'hfq' : 'qfq');
+      const count = Math.min(1000, Math.max(10, o.count | 0 || 180));
+
+      const key = `kline:${c}:${period}:${adjust}:${count}`;
+      const cached = this._readCache(key, o.force);
+      if (cached) return cached;
+
+      const ctx = this._context(o);
+      const spec = { period, count, adjust };
+      let lastErr = null;
+
+      for (const id of ['tencent', 'eastmoney']) {
+        const provider = KLINE_PROVIDERS[id];
+        if (!this._available('kline:' + id)) continue;
+        try {
+          const bars = await provider.fetch(c, spec, ctx);
+          if (bars && bars.length) return this._cacheResult(key, { code: c, period, adjust, bars });
+        } catch (e) {
+          if (e && e.code === 'ABORTED') throw e;
+          this.stats.failures++;
+          lastErr = e;
+          this._markDown('kline:' + id);
+        }
+      }
+
+      const err = lastErr || new QuoteError('K 线数据不可用', 'UNAVAILABLE');
+      this._notifyError(err);
+      throw err;
+    }
+
+    /**
+     * 分时（东方财富 trends2 主源，含均价；腾讯 m1 降级）
+     * @param {string} code
+     * @param {{days?:number, force?:boolean, signal?:AbortSignal}} [opts]
+     * @returns {Promise<{code:string, name:string|null, preClose:number|null,
+     *   points:Array<{time:string, price:number, avg:number|null, volume:number|null}>}>}
+     */
+    async fetchTrends(code, opts) {
+      const c = normalizeCode(code);
+      if (!c) throw new QuoteError('无效的股票代码: ' + code, 'PARSE');
+
+      const o = opts || {};
+      const days = Math.min(5, Math.max(1, o.days | 0 || 1));
+
+      const key = `trends:${c}:${days}`;
+      const cached = this._readCache(key, o.force);
+      if (cached) return cached;
+
+      const ctx = this._context(o);
+      let lastErr = null;
+
+      for (const id of ['eastmoney', 'tencent']) {
+        const provider = TRENDS_PROVIDERS[id];
+        if (!this._available('trends:' + id)) continue;
+        try {
+          const data = await provider.fetch(c, { days }, ctx);
+          if (data && data.points.length) {
+            return this._cacheResult(key, Object.assign({ code: c }, data));
+          }
+        } catch (e) {
+          if (e && e.code === 'ABORTED') throw e;
+          this.stats.failures++;
+          lastErr = e;
+          this._markDown('trends:' + id);
+        }
+      }
+
+      const err = lastErr || new QuoteError('分时数据不可用', 'UNAVAILABLE');
+      this._notifyError(err);
+      throw err;
+    }
+
+    /* 内部工具 */
+
+    _context(o) {
+      return {
+        timeout: this.options.timeout,
+        retries: Math.max(0, this.options.retries | 0),
+        signal: o.signal || null,
+        stats: this.stats
+      };
+    }
+
+    _available(key) {
+      return Date.now() >= (this._downUntil[key] || 0);
+    }
+
+    _markDown(key) {
+      this._downUntil[key] = Date.now() + (this.options.providerBackoff || 0);
+    }
+
+    _cacheResult(key, data) {
+      this.lastError = null;
+      this.stats.lastAt = Date.now();
+      this._writeCache(key, data);
+      return data;
+    }
+
+    _notifyError(err) {
+      this.lastError = err;
+      if (typeof this.options.onError === 'function') {
+        try { this.options.onError(err); } catch (_) { /* ignore */ }
+      }
+    }
+
     /* 单个分片：按数据源顺序尝试，缺的代码交给下一个源补 */
     async _fetchChunk(codes, ctx) {
       const missing = new Set(codes);
@@ -393,6 +847,9 @@
     isTrading,
     fetch: (codes, opts) => defaultClient.fetch(codes, opts),
     fetchOne: (code, opts) => defaultClient.fetchOne(code, opts),
+    fetchDetail: (code, opts) => defaultClient.fetchDetail(code, opts),
+    fetchKline: (code, opts) => defaultClient.fetchKline(code, opts),
+    fetchTrends: (code, opts) => defaultClient.fetchTrends(code, opts),
     clearCache: () => defaultClient.clearCache(),
     get lastError() { return defaultClient.lastError; },
     get stats() { return defaultClient.stats; }

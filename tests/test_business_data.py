@@ -34,6 +34,14 @@ class BusinessDataTests(unittest.TestCase):
         self.assertIsNone(missing["latest"])
         self.assertEqual(missing["status"], "pending")
 
+    def test_normalize_company_list_splits_names_deduplicates_and_ignores_placeholders(self):
+        self.assertEqual(
+            fetcher.normalize_company_list("甲公司,乙公司，甲公司;丙公司"),
+            ["甲公司", "乙公司", "丙公司"],
+        )
+        self.assertEqual(fetcher.normalize_company_list("-"), [])
+        self.assertEqual(fetcher.normalize_company_list(None), [])
+
     def test_normalize_inventory_frame_preserves_date_value_and_signed_change(self):
         class FakeFrame:
             empty = False

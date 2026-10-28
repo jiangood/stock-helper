@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T12:56:42.068328Z",
+  "updatedAt": "2026-10-28T12:59:55.057744Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,11 +7,11 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4066,
+      "price": 4065.3,
       "prevClose": 4007.9,
-      "change": 58.1,
-      "changePct": 1.449637,
-      "quoteTime": "2026-10-28T12:46:32Z",
+      "change": 57.4,
+      "changePct": 1.432171,
+      "quoteTime": "2026-10-28T12:49:50Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF"
     },
@@ -20,11 +20,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 80617.46,
+      "price": 80616.04,
       "prevClose": 80790.836,
-      "change": -173.376,
-      "changePct": -0.214599,
-      "quoteTime": "2026-10-28T12:56:38Z",
+      "change": -174.796,
+      "changePct": -0.216356,
+      "quoteTime": "2026-10-28T12:59:47Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD"
     },
@@ -33,11 +33,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2335.67,
+      "price": 2336.58,
       "prevClose": 2355.9536,
-      "change": -20.2836,
-      "changePct": -0.860951,
-      "quoteTime": "2026-10-28T12:56:37Z",
+      "change": -19.3736,
+      "changePct": -0.822325,
+      "quoteTime": "2026-10-28T12:59:49Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD"
     },
@@ -83,16 +83,105 @@
     {
       "id": "vix",
       "name": "VIX 恐慌指数",
-      "currency": "指数点",
-      "status": "等待历史行情",
-      "price": null,
-      "prevClose": null,
-      "change": null,
-      "changePct": null,
-      "quoteTime": null,
+      "currency": "USD",
+      "status": "已更新",
+      "price": 17.39,
+      "prevClose": 16.07,
+      "change": 1.32,
+      "changePct": 8.214063,
+      "quoteTime": "2026-10-28T12:44:46Z",
       "sourceSymbol": "^VIX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EVIX",
-      "history": []
+      "history": [
+        {
+          "date": "2026-09-29",
+          "close": 16.04
+        },
+        {
+          "date": "2026-09-30",
+          "close": 16.34
+        },
+        {
+          "date": "2026-10-01",
+          "close": 16.39
+        },
+        {
+          "date": "2026-10-02",
+          "close": 15.31
+        },
+        {
+          "date": "2026-10-05",
+          "close": 15.52
+        },
+        {
+          "date": "2026-10-06",
+          "close": 15.01
+        },
+        {
+          "date": "2026-10-07",
+          "close": 15.08
+        },
+        {
+          "date": "2026-10-08",
+          "close": 15.41
+        },
+        {
+          "date": "2026-10-09",
+          "close": 14.84
+        },
+        {
+          "date": "2026-10-12",
+          "close": 15.21
+        },
+        {
+          "date": "2026-10-13",
+          "close": 15.27
+        },
+        {
+          "date": "2026-10-14",
+          "close": 16.87
+        },
+        {
+          "date": "2026-10-15",
+          "close": 16.46
+        },
+        {
+          "date": "2026-10-16",
+          "close": 19.99
+        },
+        {
+          "date": "2026-10-19",
+          "close": 18.44
+        },
+        {
+          "date": "2026-10-20",
+          "close": 17.31
+        },
+        {
+          "date": "2026-10-21",
+          "close": 16.68
+        },
+        {
+          "date": "2026-10-22",
+          "close": 19.03
+        },
+        {
+          "date": "2026-10-23",
+          "close": 19.45
+        },
+        {
+          "date": "2026-10-26",
+          "close": 18.39
+        },
+        {
+          "date": "2026-10-27",
+          "close": 17.52
+        },
+        {
+          "date": "2026-10-28",
+          "close": 17.39
+        }
+      ]
     }
   ],
   "error": true,

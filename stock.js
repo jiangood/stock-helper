@@ -194,7 +194,7 @@
 
   async function loadPlan() {
     try {
-      const res = await fetch('stocks.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+      const res = await fetch('data/stocks.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       STOCKS = await res.json();
       PLAN = STOCKS.find(s => StockQuotes.normalizeCode(s.code) === CODE) || null;

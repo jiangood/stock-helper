@@ -23,7 +23,7 @@ const REFRESH_INTERVAL = StockQuotes.REFRESH_INTERVAL;
 // ============================================================
 async function loadStocks() {
   try {
-    const res = await fetch('stocks.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+    const res = await fetch('data/stocks.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     STOCKS = await res.json();
   } catch (e) {

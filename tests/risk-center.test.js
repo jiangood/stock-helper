@@ -49,6 +49,11 @@ test('summarizes exposure and detects budget exceedance without hiding incomplet
   const summary = Risk.summarize(rows, 2000, 150);
   assert.equal(summary.totalMarketValue, 1400);
   assert.equal(summary.accountExposurePct, 70);
+  assert.equal(summary.totalCostValue, 1100);
+  assert.ok(Math.abs(summary.portfolioPnlPct - (300 / 1100 * 100)) < 1e-10);
+  assert.equal(summary.largestHoldingName, 'a');
+  assert.ok(Math.abs(summary.largestHoldingWeight - (800 / 1400 * 100)) < 1e-10);
+  assert.ok(Math.abs(summary.topThreeWeight - 100) < 1e-10);
   assert.equal(summary.knownRisk, 200);
   assert.equal(summary.riskComplete, true);
   assert.equal(summary.budgetExceeded, true);
@@ -61,4 +66,17 @@ test('summarizes exposure and detects budget exceedance without hiding incomplet
   assert.equal(incomplete.totalMarketValue, null);
   assert.equal(incomplete.riskComplete, false);
   assert.equal(incomplete.accountExposurePct, null);
+});
+
+
+test('portfolio concentration and return stay unknown when quote or cost data is incomplete', () => {
+  const rows = [
+    Risk.calculateHolding({ code: 'a', quantity: 100, cost: 6 }, { price: 8 }, { name: 'A' }, {}),
+    Risk.calculateHolding({ code: 'b', quantity: 50, cost: 10 }, {}, { name: 'B' }, {})
+  ];
+  const summary = Risk.summarize(rows, 2000, 150);
+  assert.equal(summary.totalMarketValue, null);
+  assert.equal(summary.portfolioPnlPct, null);
+  assert.equal(summary.largestHoldingWeight, null);
+  assert.equal(summary.topThreeWeight, null);
 });

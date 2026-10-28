@@ -282,16 +282,16 @@ def fetch_data() -> dict[str, Any]:
             errors.append("futures_zh_realtime/" + code + ": " + str(exc)[:100])
 
     # Fetch current spot prices for non-futures commodities only where cache lacks a quote.
-    missing_ids = {product["id"] for product in PRODUCTS if not payload["items"][product["id"]].get("latest")}
+    # These products do not have a reliable futures spot series in this pipeline,
+    # so refresh their latest quote from Eastmoney on every run.
     category_by_product = {
         "tio2": ["化工", "建材"],
         "coal": ["能源"],
         "rare-earth": ["有色"],
     }
-    categories = []
-    for product_id in missing_ids:
-        categories.extend(category_by_product.get(product_id, []))
-    categories = list(dict.fromkeys(categories))
+    categories = list(dict.fromkeys(
+        category for values in category_by_product.values() for category in values
+    ))
     spot_rows: list[dict[str, Any]] = []
     for category in categories:
         try:
@@ -303,7 +303,7 @@ def fetch_data() -> dict[str, Any]:
 
     for product in PRODUCTS:
         target = payload["items"][product["id"]]
-        if target.get("latest"):
+        if product["id"] not in category_by_product and target.get("latest"):
             continue
         for row in spot_rows:
             name = str(row.get("商品名称", row.get("商品", row.get("名称", "")))).strip()

@@ -26,6 +26,7 @@ python -m http.server 8089
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
 | `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K、分钟 K、分时） |
+| `risk-center.js` | 本机持仓风险中心：持仓权重、浮盈亏、手工止损风险、止盈情景和组合风险预算；数据只保存在本机，不自动下单 |
 | `business.js` `business-data.json` | 简报页展示指数行情、股票池温度、板块强弱、持仓盈亏和交易观察；生意选项卡自动读取商品现货/期货数据 |
 | `global-assets.js` `global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行、资产趋势对比和各资产近一个月迷你趋势图 |
 | `scripts/fetch_global_assets.py` | 从 Yahoo Finance 公开图表接口抓取全球资产报价，抓取失败时保留最近有效值并标记缓存状态 |

@@ -1,5 +1,5 @@
 /*!
- * StockQuotes SDK v1.4.0
+ * StockQuotes SDK v1.5.0
  * ---------------------------------------------------------------------------
  * 股票行情 SDK —— A 股实时行情聚合封装（浏览器 / Node 通用，无依赖）
  *
@@ -32,6 +32,8 @@
  *   //   totalCap, floatCap, change, todayChange, time }
  *   await quotes.fetchKline('sz002408', { period: 'day', count: 240, adjust: 'qfq' });
  *   // { code, period, adjust, bars: [{ time:'2026-10-28', open, close, high, low, volume }] }
+ *   await quotes.fetchMinuteKline('sz002408', { period: '15', count: 320 });
+ *   // { code, period, bars: [{ time:'2026-10-28 14:45', open, close, high, low, volume }] }
  *   await quotes.fetchTrends('sz002408');
  *   // { code, name, preClose, points: [{ time:'2026-10-28 09:31', price, avg, volume }] }
  *
@@ -50,7 +52,7 @@
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
 
-  const VERSION = '1.4.0';
+  const VERSION = '1.5.0';
   const REFRESH_INTERVAL = 60000;   // 只看中期，盘中不做高频轮询
 
   const DEFAULTS = {
@@ -1020,6 +1022,7 @@
     fetchOne: (code, opts) => defaultClient.fetchOne(code, opts),
     fetchDetail: (code, opts) => defaultClient.fetchDetail(code, opts),
     fetchKline: (code, opts) => defaultClient.fetchKline(code, opts),
+    fetchMinuteKline: (code, opts) => defaultClient.fetchMinuteKline(code, opts),
     fetchTrends: (code, opts) => defaultClient.fetchTrends(code, opts),
     clearCache: () => defaultClient.clearCache(),
     get lastError() { return defaultClient.lastError; },

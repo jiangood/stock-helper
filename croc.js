@@ -9,6 +9,7 @@
  *   · 入场区 / 重仓区判断
  *   · 连续涨停（卖其疯狂）识别
  *   · 月 K 历史分位
+ *   · 股票池筛选（ST / 亏损 / PE / 市值 / 破净）与「纪律全过」判定
  *   · 股票池数据体检、每日简报
  *
  * 浏览器：window.Croc；Node：module.exports
@@ -23,7 +24,7 @@
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
 
-  const VERSION = '1.0.0';
+  const VERSION = '1.1.0';
   const SMALL_CAP = 2e10;      // 200 亿（元）
   const PB_GOLDEN = 0.8;       // 净资产八折
   const PE_HIGH = 30;          // 30 倍估值算高
@@ -94,6 +95,40 @@
     };
   }
 
+  /**
+   * 可量化的选股纪律清单（对应资料里的铁律与估值锚）
+   *   非 ST、非亏损、PE≤30、市值≤200 亿、PB<1（破净）
+   * @param {object} stock
+   * @param {object|null} quote
+   * @returns {{checks:Array, passed:number, total:number, known:number,
+   *            complete:boolean, allPass:boolean, failed:Array, pending:Array}}
+   */
+  function screen(stock, quote) {
+    const q = quote || {};
+    const e = evaluate(stock, q);
+    const checks = [
+      { key: 'st',   label: 'ST',   ok: !e.st, known: true },
+      { key: 'loss', label: '亏损', ok: e.pe !== null && e.pe > 0, known: e.pe !== null },
+      { key: 'pe',   label: 'PE30', ok: e.pe !== null && e.pe > 0 && e.pe <= PE_HIGH, known: e.pe !== null },
+      { key: 'cap',  label: '市值', ok: e.cap !== null && e.cap > 0 && e.cap <= SMALL_CAP, known: e.cap !== null },
+      { key: 'pb',   label: '破净', ok: e.pb !== null && e.pb > 0 && e.pb < 1, known: e.pb !== null }
+    ];
+    const failed = checks.filter(c => c.known && !c.ok);
+    const pending = checks.filter(c => !c.known);
+    const known = checks.length - pending.length;
+    return {
+      checks,
+      passed: checks.filter(c => c.ok).length,
+      total: checks.length,
+      known,
+      complete: pending.length === 0,
+      allPass: pending.length === 0 && failed.length === 0,
+      failed,
+      pending,
+      e
+    };
+  }
+
   /** 首页状态筛选 */
   function matchStatus(stock, quote, key) {
     if (!key) return true;
@@ -111,6 +146,11 @@
       case 'small':   return e.smallCap;
       case 'risk':    return e.st || e.loss;
       case 'above':   return e.zone === 'above';
+      case 'screen':  return screen(stock, quote).allPass;
+      case 'screenbuy': {
+        const sc = screen(stock, quote);
+        return sc.allPass && (e.zone === 'heavy' || e.zone === 'entry');
+      }
       default:        return true;
     }
   }
@@ -251,6 +291,10 @@
     const pb = rows.filter(r => r.e.pbUnder1);
     const pb80 = rows.filter(r => r.e.pbGolden);
     const risk = rows.filter(r => r.e.st || r.e.loss);
+    const screened = rows.map(r => ({ ...r, sc: screen(r.s, r.q) }));
+    const passAll = screened.filter(r => r.sc.allPass);
+    const passBuy = passAll.filter(r => r.e.zone === 'heavy' || r.e.zone === 'entry');
+    const passNear = screened.filter(r => r.sc.complete && !r.sc.allPass && r.sc.passed === r.sc.total - 1);
     const movers = live.filter(r => isNum(num(r.q.todayChange)) && Math.abs(r.q.todayChange) >= 5)
       .sort((a, b) => Math.abs(b.q.todayChange) - Math.abs(a.q.todayChange));
 
@@ -272,6 +316,13 @@
     if (near.length) lines.push(`🟡 接近重仓 ${near.length}：${names(near, 8)}`);
     lines.push(`🔵 到入场 ${entry.length}${entry.length ? '：' + names(entry, 8) : ''}`);
     lines.push(`🟩 破净 ${pb.length}（八折 ${pb80.length}）${pb80.length ? '：' + names(pb80, 8) : ''}`);
+    lines.push(`✅ 纪律全过 ${passAll.length}${passAll.length ? '：' + names(passAll, 8) : ''}`);
+    if (passBuy.length) lines.push(`🎯 全过且到买点 ${passBuy.length}：${names(passBuy, 6)}`);
+    if (passNear.length) {
+      const nearText = passNear.slice(0, 8)
+        .map(r => `${r.s.name}（${r.sc.failed.map(f => f.label).join('/')}）`).join('、');
+      lines.push(`🟨 差一项 ${passNear.length}：${nearText}${passNear.length > 8 ? ` 等 ${passNear.length} 只` : ''}`);
+    }
     if (risk.length) {
       const riskNames = risk.slice(0, 8).map(r => `${r.s.name}（${r.e.st ? 'ST' : '亏损'}）`).join('、');
       lines.push(`🔴 风险 ${risk.length}：${riskNames}${risk.length > 8 ? ` 等 ${risk.length} 只` : ''}`);
@@ -291,6 +342,7 @@
     isST,
     zoneOf,
     evaluate,
+    screen,
     matchStatus,
     limitUpPct,
     limitUpInfo,

@@ -177,6 +177,8 @@
       <option value="pb">破净</option>
       <option value="pb80">八折</option>
       <option value="small">小市值</option>
+      <option value="screen">纪律全过</option>
+      <option value="screenbuy">全过 + 买点</option>
       <option value="risk">风险</option>
     </select>
 
@@ -213,6 +215,7 @@
           <th onclick="sortTable('pe')"       id="th-pe">       市盈率        <span class="sort-icon"></span></th>
           <th onclick="sortTable('pb')"       id="th-pb">       市净率        <span class="sort-icon"></span></th>
           <th onclick="sortTable('divYield')" id="th-divYield"> 股息率        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('screen')"   id="th-screen">   纪律          <span class="sort-icon"></span></th>
           <th onclick="sortTable('group')"    id="th-group">    分组          <span class="sort-icon"></span></th>
           <th onclick="sortTable('alias')"    id="th-alias">    别名          <span class="sort-icon"></span></th>
         </tr>
@@ -223,8 +226,7 @@
 </main>
 
 <footer class="text-center text-body-secondary py-2 border-top bg-body">
-  <div style="font-size:10px">交易时段每 60 秒自动刷新（09:15–11:30 / 13:00–15:00）</div>
-  <div class="mt-1" style="font-size:10px">免责声明：本页面仅供个人投资记录参考，不构成任何投资建议。股市有风险，投资需谨慎。</div>
+  <div style="font-size:10px">交易时段每 60 秒刷新 · 仅供个人记录，不构成投资建议</div>
 </footer>
 
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
@@ -310,6 +312,7 @@ function getSortValue(stock, col) {
     case 'pe':       return pd ? pd.pe : null;
     case 'pb':       return pd ? pd.pb : null;
     case 'divYield': return pd ? pd.divYield : null;
+    case 'screen':   return pd ? Croc.screen(stock, pd).passed : null;
     case 'entry':    return (price != null && stock.entry) ? (price - stock.entry) / stock.entry : null;
     case 'heavy':    return (price != null && stock.heavy) ? (price - stock.heavy) / stock.heavy : null;
     case 'tp1':      return stock.tp1;
@@ -334,7 +337,7 @@ function sortedView(list) {
 }
 
 function updateSortUI() {
-  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','group','alias'].forEach(col => {
+  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','group','alias'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
     th.classList.remove('sort-asc', 'sort-desc');
@@ -448,6 +451,7 @@ function buildRow(stock) {
     <td>${fmtRatio(pd && pd.pe)}</td>
     <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${fmtPct(pd && pd.divYield)}</td>
+    <td>${screenHtml(stock, pd, e)}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${aliasHtml}</td>`;
 }
@@ -458,6 +462,22 @@ function flagHtml(e) {
   if (e.pbGolden) return '<span class="flag flag-buy" title="PB≤0.8：净资产八折黄金买点">八折</span>';
   if (e.pbUnder1) return '<span class="flag flag-buy" title="PB<1：破净">破净</span>';
   return '';
+}
+
+/** 首页纪律列：5 项可量化选股条件的通过情况 */
+function screenHtml(stock, pd, e) {
+  if (!pd || !e || e.price === null) return '<span class="text-body-tertiary">—</span>';
+  const sc = Croc.screen(stock, pd);
+  const tip = '选股纪律：非ST · 非亏损 · PE≤30 · 市值≤200亿 · PB<1'
+    + (sc.failed.length ? `；未过 ${sc.failed.map(f => f.label).join('、')}` : '')
+    + (sc.pending.length ? `；未取到 ${sc.pending.map(f => f.label).join('、')}` : '');
+  if (sc.allPass) {
+    return `<span class="flag flag-buy" style="margin-left:0" title="${esc(tip)}">全过</span>`;
+  }
+  if (sc.complete && sc.passed === sc.total - 1) {
+    return `<span class="flag flag-warn" style="margin-left:0" title="${esc(tip)}">${sc.passed}/${sc.total}</span>`;
+  }
+  return `<span class="text-body-tertiary" style="font-size:11px" title="${esc(tip)}">${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
 }
 
 /** 市值：元 -> 亿 / 万亿 */

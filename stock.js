@@ -27,6 +27,32 @@
   let historyAt = 0;
   let HISTORY = null;
 
+  let MIN15 = null;
+  let MIN15At = 0;
+  let TRENDS = null;
+  let TRENDSAt = 0;
+
+  /* 做T / 补仓 判定阈值（集中调参） */
+  const T_RULES = {
+    vwapDev: 1.0,      // 偏离 VWAP 多少 % 算低吸 / 高抛
+    mfiLow: 25,        // 15 分 MFI 低吸
+    mfiHigh: 75,       // 15 分 MFI 高抛
+    volSurge: 1.3,     // 近 3 根 / 前 12 根 均量，放量阈值
+    trendDev: 2.5,     // 偏离超过多少 % 且放量 -> 单边
+    spread: 2,         // 默认 T 差价目标 %
+    stall: 0.5,        // 近 3 根涨跌幅多少 % 以内算滞涨
+    minuteTTL: 3 * 60 * 1000
+  };
+
+  const ADD_RULES = {
+    supportDist: 3,    // 距支撑多少 % 以内算到支撑
+    mfiLow: 20,        // MFI < 20 后回升上穿
+    mfiRecoverBars: 10,
+    maPeriod: 20,
+    obvLookback: 20,
+    profileLookback: 120
+  };
+
   let chartTab = 'day';
   let chart = null;
   let chartKey = '';
@@ -188,6 +214,8 @@
       loadPeers();
       warmupDaily();
       warmupHistory();
+      warmupTrends();
+      warmupMinute();
       return true;
     } catch (e) {
       console.warn('获取详情失败:', e);
@@ -206,6 +234,10 @@
     if (manual) spinRefresh();
     const ok = await loadQuote(manual);
     if (!ok) return;
+    if (manual) {
+      warmupTrends(true);
+      warmupMinute(true);
+    }
     loadChart(chartTab, manual).catch(() => {});
     if (manual) showToast('数据已刷新', 'success');
   }
@@ -217,6 +249,8 @@
     renderQuote(DETAIL);
     renderValuation(DETAIL);
     renderPlan(DETAIL);
+    renderT(DETAIL);
+    renderAdd(DETAIL);
     renderDiscipline(DETAIL);
     updateCalc();
   }
@@ -438,12 +472,14 @@
   async function warmupDaily() {
     if (klineCache.day) {
       renderDiscipline(DETAIL);
+      renderAdd(DETAIL);
       return;
     }
     try {
       klineCache.day = await quotes.fetchKline(CODE, { period: 'day', count: 250, adjust: 'qfq' });
       apply52WeekFallback(klineCache.day.bars);
       renderDiscipline(DETAIL);
+      renderAdd(DETAIL);
     } catch (e) {
       /* 日 K 失败不影响主流程 */
     }
@@ -481,6 +517,338 @@
     DETAIL.low52 = lo;
     renderRange(DETAIL);
     renderInsightTags(DETAIL);
+  }
+
+  /* ────────────────────────── 做T / 补仓数据 ────────────────────────── */
+
+  function dayBars() {
+    return klineCache.day && Array.isArray(klineCache.day.bars) ? klineCache.day.bars : [];
+  }
+
+  function minuteBars() {
+    return MIN15 && Array.isArray(MIN15.bars) ? MIN15.bars : [];
+  }
+
+  const todayStr = () => {
+    const t = new Date();
+    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+  };
+
+  const isStale = time => String(time || '').slice(0, 10) !== todayStr();
+
+  /** 当日 VWAP：优先分时均价，其次分时累计成交额/量，最后详情均价 */
+  function vwapOf(detail, trends) {
+    const points = trends && Array.isArray(trends.points) ? trends.points : [];
+    if (points.length) {
+      const last = points[points.length - 1];
+      if (isNum(last.avg) && last.avg > 0) {
+        return { value: last.avg, source: '分时均价', time: last.time, stale: isStale(last.time) };
+      }
+      let amount = 0;
+      let pv = 0;
+      let vol = 0;
+      for (const p of points) {
+        const v = isNum(p.volume) ? p.volume : 0;
+        if (isNum(p.amount) && p.amount > 0 && v > 0) {
+          amount += p.amount;
+          vol += v;
+        } else if (isNum(p.price) && v > 0) {
+          pv += p.price * v;
+          vol += v;
+        }
+      }
+      if (amount > 0 && vol > 0) {
+        // 东财 amount 为元、volume 为手
+        return { value: amount / (vol * 100), source: '分时成交额', time: last.time, stale: isStale(last.time) };
+      }
+      if (pv > 0 && vol > 0) {
+        return { value: pv / vol, source: '分时加权', time: last.time, stale: isStale(last.time) };
+      }
+    }
+    if (detail && isNum(detail.avg) && detail.avg > 0) {
+      return { value: detail.avg, source: '当日均价', time: null, stale: false };
+    }
+    return null;
+  }
+
+  async function warmupTrends(force) {
+    if (!CODE) return;
+    if (!force && TRENDS && Date.now() - TRENDSAt < 50 * 1000) return;
+    try {
+      TRENDS = await quotes.fetchTrends(CODE, { days: 1, force: !!force });
+      TRENDSAt = Date.now();
+    } catch (e) {
+      /* 分时失败时用详情均价兜底 */
+    }
+    renderT(DETAIL);
+  }
+
+  async function warmupMinute(force) {
+    if (!CODE) return;
+    if (!force && MIN15 && Date.now() - MIN15At < T_RULES.minuteTTL) return;
+    try {
+      MIN15 = await quotes.fetchMinuteKline(CODE, { period: '15', count: 320, force: !!force });
+      MIN15At = Date.now();
+    } catch (e) {
+      /* 分钟 K 失败不影响主流程 */
+    }
+    renderT(DETAIL);
+  }
+
+  /** 近 3 根是否放量滞涨 */
+  function recentStall(bars, pct) {
+    if (!bars || bars.length < 5) return false;
+    const last = bars[bars.length - 1];
+    const ref = bars[bars.length - 4];
+    if (!last || !ref || !isNum(last.close) || !isNum(ref.close) || !(ref.close > 0)) return false;
+    return Math.abs((last.close / ref.close - 1) * 100) <= pct;
+  }
+
+  function badge(el, text, cls) {
+    el.textContent = text;
+    el.className = 'badge rounded-pill ' + cls;
+  }
+
+  function renderT(d) {
+    if (!d || typeof TechInd === 'undefined') return;
+    const price = d.price;
+    const bars = minuteBars();
+    const vw = vwapOf(d, TRENDS);
+    const mfiRes = bars.length >= 16 ? TechInd.mfi(bars, 14) : null;
+    const mfi = mfiRes ? mfiRes.latest : null;
+    const vr = bars.length >= 15 ? TechInd.volumeRatio(bars, 3, 12) : null;
+    const dev = vw && isNum(price) ? (price / vw.value - 1) * 100 : null;
+    const surge = vr !== null && vr >= T_RULES.volSurge;
+    const single = dev !== null && Math.abs(dev) > T_RULES.trendDev && surge;
+    const stall = recentStall(bars, T_RULES.stall);
+
+    const buy = dev !== null && dev <= -T_RULES.vwapDev
+      && mfi !== null && mfi < T_RULES.mfiLow && !surge;
+    const sell = dev !== null && dev >= T_RULES.vwapDev
+      && mfi !== null && mfi > T_RULES.mfiHigh && surge && stall;
+
+    let text = '观望';
+    let tone = 'text-bg-secondary';
+    if (!bars.length && !vw) text = '加载中…';
+    else if (single) { text = '单边 · 不逆势做T'; tone = 'text-bg-warning'; }
+    else if (buy) { text = '正T 买点'; tone = 'text-bg-success'; }
+    else if (sell) { text = 'T 卖点'; tone = 'text-bg-warning'; }
+    else if (dev !== null && Math.abs(dev) > T_RULES.trendDev) { text = '单边，观望'; tone = 'text-bg-warning'; }
+    else if (dev !== null && Math.abs(dev) < 0.5) text = '贴近均价，等偏离';
+    badge($('t-badge'), text, tone);
+
+    const checks = [];
+
+    if (dev === null) {
+      checks.push(checkItem('neutral', 'VWAP 偏离', '—', '分时 / 均价数据加载中…'));
+    } else {
+      const t = dev <= -T_RULES.vwapDev ? 'ok' : dev >= T_RULES.vwapDev ? 'warn' : 'neutral';
+      const note = dev <= -T_RULES.vwapDev ? '现价低于均价，正T低吸区'
+        : dev >= T_RULES.vwapDev ? '现价高于均价，倒T高抛区' : '围绕均价震荡';
+      checks.push(checkItem(t, 'VWAP 偏离', `${fmtPct(dev)} · 均价 ${fmtNum(vw.value)}`, note));
+    }
+
+    const mfiTone = mfi === null ? 'neutral' : mfi < T_RULES.mfiLow ? 'ok' : mfi > T_RULES.mfiHigh ? 'warn' : 'neutral';
+    const mfiNote = mfi === null ? '15 分 K 数据不足'
+      : mfi < T_RULES.mfiLow ? `低于 ${T_RULES.mfiLow}，超卖`
+        : mfi > T_RULES.mfiHigh ? `高于 ${T_RULES.mfiHigh}，超买` : '中性区间';
+    checks.push(checkItem(mfiTone, '15 分 MFI', mfi === null ? '—' : mfi.toFixed(1), mfiNote));
+
+    checks.push(checkItem(
+      surge ? 'warn' : 'neutral',
+      '量能（3/12）',
+      vr === null ? '—' : `${vr.toFixed(2)}×`,
+      vr === null ? '分钟 K 数据不足' : surge ? '放量，追单需谨慎' : '未放量'
+    ));
+
+    checks.push(checkItem(
+      dev === null ? 'neutral' : single ? 'bad' : 'ok',
+      '单边过滤',
+      dev === null ? '—' : `${fmtPct(dev)} · ${surge ? '放量' : '正常量'}`,
+      single ? '单边行情，不逆势做T' : '未触发单边过滤'
+    ));
+
+    $('t-checks').innerHTML = checks.join('');
+
+    $('t-stats').innerHTML = [
+      ['现价', fmtNum(price)],
+      ['VWAP', vw ? fmtNum(vw.value) : '—'],
+      ['偏离均价', fmtPct(dev)],
+      ['15分 MFI', mfi === null ? '—' : mfi.toFixed(1)],
+      ['量比 3/12', vr === null ? '—' : vr.toFixed(2) + '×'],
+      ['分钟K样本', bars.length ? `${bars.length} 根` : '—']
+    ].map(([k, v]) => statItem(k, v)).join('');
+
+    if (!vw) {
+      $('t-ref').innerHTML = '<span class="text-body-secondary">均价数据加载中…</span>';
+    } else {
+      const lowBuy = vw.value * (1 - T_RULES.vwapDev / 100);
+      const highSell = vw.value * (1 + T_RULES.vwapDev / 100);
+      const target = lowBuy * (1 + T_RULES.spread / 100);
+      const sessionNote = !StockQuotes.isTrading() || vw.stale
+        ? `非交易时段 · 上一交易日 ${vw.time ? String(vw.time).slice(0, 16) : ''}`.trim()
+        : `均价来源：${vw.source}`;
+      $('t-ref').innerHTML = `
+        <div class="sell-line">正T：均价下 ${T_RULES.vwapDev}% 低吸 <b>${fmtNum(lowBuy)}</b>
+          → 回到均价 <b>${fmtNum(vw.value)}</b> 卖出 · 差价目标 ${T_RULES.spread}%（<b>${fmtNum(target)}</b>）</div>
+        <div class="sell-line">倒T：均价上 ${T_RULES.vwapDev}% 高抛 <b>${fmtNum(highSell)}</b>
+          → 回落接回，不等当日新低</div>
+        <div class="sell-line text-body-secondary">${esc(sessionNote)}
+          · 样本 ${bars.length || '—'} 根（约 20 个交易日）</div>`;
+    }
+
+    $('t-note').textContent = `15 分 K · ${bars.length || '—'} 根`
+      + (vw && vw.stale ? ' · 上一交易日' : '');
+  }
+
+  /** MFI < 20 后回升上穿 20 */
+  function mfiRecovery(series) {
+    const vals = Array.isArray(series) ? series : [];
+    const n = vals.length;
+    if (n < 3) return null;
+    const latest = vals[n - 1];
+    if (!isNum(latest) || latest < ADD_RULES.mfiLow) return null;
+
+    const from = Math.max(0, n - 1 - ADD_RULES.mfiRecoverBars);
+    for (let i = n - 2; i >= from; i--) {
+      if (isNum(vals[i]) && vals[i] < ADD_RULES.mfiLow) {
+        return { barsAgo: n - 1 - i, low: vals[i], latest };
+      }
+    }
+    return null;
+  }
+
+  /** 距 POC / 价值区下沿 / 重仓价的最近支撑 */
+  function nearestSupport(price, profile, plan) {
+    if (!isNum(price) || price <= 0) return null;
+    const cands = [];
+    if (profile) {
+      if (isNum(profile.poc)) cands.push({ label: 'POC', value: profile.poc });
+      if (isNum(profile.val)) cands.push({ label: '价值区下沿', value: profile.val });
+    }
+    if (plan && isNum(plan.heavy) && plan.heavy > 0) {
+      cands.push({ label: '重仓价', value: plan.heavy });
+    }
+    let best = null;
+    for (const c of cands) {
+      if (!(c.value > 0)) continue;
+      const dist = Math.abs(price / c.value - 1) * 100;
+      if (!best || dist < best.dist) best = { label: c.label, value: c.value, dist };
+    }
+    return best;
+  }
+
+  function renderAdd(d) {
+    if (!d || typeof TechInd === 'undefined') return;
+    const price = d.price;
+    const bars = dayBars();
+    const profile = bars.length >= 20
+      ? TechInd.volumeProfile(bars, { bins: 30, lookback: ADD_RULES.profileLookback }) : null;
+    const mfiRes = bars.length >= 16 ? TechInd.mfi(bars, 14) : null;
+    const mfi = mfiRes ? mfiRes.latest : null;
+    const div = mfiRes ? TechInd.detectDivergence(bars, mfiRes.series) : null;
+    const bottomDiv = div && div.type === 'bottom' ? div : null;
+    const recover = mfiRes ? mfiRecovery(mfiRes.series) : null;
+
+    const maRes = bars.length >= ADD_RULES.maPeriod ? TechInd.ma(bars, ADD_RULES.maPeriod) : null;
+    const maLatest = maRes ? maRes.latest : null;
+    const aboveMa = isNum(maLatest) && isNum(price) && price > maLatest;
+
+    let obvNewLow = null;
+    if (bars.length >= ADD_RULES.obvLookback) {
+      const obvRes = TechInd.obv(bars);
+      const arr = obvRes.series.slice(-ADD_RULES.obvLookback).filter(isNum);
+      if (arr.length >= 2) obvNewLow = arr[arr.length - 1] <= Math.min.apply(null, arr.slice(0, -1));
+    }
+
+    const trendKnown = isNum(maLatest) || obvNewLow !== null;
+    const trendOk = aboveMa || obvNewLow === false;
+
+    const support = nearestSupport(price, profile, PLAN);
+    const supportOk = !!support && support.dist <= ADD_RULES.supportDist;
+    const confirmOk = !!bottomDiv || !!recover;
+    const confirmKnown = !!mfiRes;
+    const score = [supportOk, confirmOk, trendOk].filter(Boolean).length;
+
+    let text = '加载中…';
+    let tone = 'text-bg-secondary';
+    if (!bars.length) {
+      // 日 K 尚未返回
+    } else if (score >= 3) { text = '可考虑分批补仓'; tone = 'text-bg-success'; }
+    else if (score === 2) { text = '小仓试探'; tone = 'text-bg-warning'; }
+    else { text = '观望'; tone = 'text-bg-secondary'; }
+    badge($('add-badge'), text, tone);
+
+    const checks = [];
+
+    if (!support) {
+      checks.push(checkItem('neutral', '① 到支撑', '—', bars.length ? '筹码 / 重仓价数据不足' : '日K 加载中…'));
+    } else {
+      checks.push(checkItem(
+        supportOk ? 'ok' : 'warn',
+        '① 到支撑',
+        `${fmtNum(price)} · 距${support.label} ${support.dist.toFixed(1)}%`,
+        `${support.label} ${fmtNum(support.value)}（阈值 ${ADD_RULES.supportDist}%）`
+      ));
+    }
+
+    if (!confirmKnown) {
+      checks.push(checkItem('neutral', '② 资金确认', '—', '日K 加载中…'));
+    } else if (bottomDiv) {
+      checks.push(checkItem('ok', '② 资金确认', `MFI ${fmtNum(mfi, 1)}`,
+        `MFI 底背离：${bottomDiv.barsAgo} 根前枢轴，指标 +${bottomDiv.indDelta.toFixed(1)}`));
+    } else if (recover) {
+      checks.push(checkItem('ok', '② 资金确认', `MFI ${fmtNum(mfi, 1)}`,
+        `MFI ${recover.low.toFixed(1)} 后回升上穿 ${ADD_RULES.mfiLow}（${recover.barsAgo} 根前）`));
+    } else {
+      checks.push(checkItem('warn', '② 资金确认', mfi === null ? '—' : `MFI ${mfi.toFixed(1)}`,
+        '无底背离，也未上穿 20'));
+    }
+
+    if (!trendKnown) {
+      checks.push(checkItem('neutral', '③ 趋势过滤', '—', '日K 加载中…'));
+    } else {
+      const trendText = trendOk ? '趋势未破' : '趋势偏弱';
+      const note = [
+        isNum(maLatest) ? `MA20 ${fmtNum(maLatest)}（现价${aboveMa ? '上方' : '下方'}）` : 'MA20 —',
+        obvNewLow === null ? 'OBV —' : obvNewLow ? 'OBV 20 日创新低' : 'OBV 未创新低'
+      ].join(' · ');
+      checks.push(checkItem(trendOk ? 'ok' : 'bad', '③ 趋势过滤', trendText, note));
+    }
+
+    $('add-checks').innerHTML = checks.join('');
+
+    const hint = $('add-hint');
+    let hintCls = 'alert-secondary';
+    let hintText;
+    if (!bars.length) {
+      hintText = '日K 数据加载中；补仓看日线是否止跌，三项缺一即降级。';
+    } else if (score >= 3) {
+      hintCls = 'alert-success';
+      hintText = '三项齐备：价格到支撑、资金出现确认、趋势未破。可考虑分批补仓，单次不超过计划仓位的 1/3。';
+    } else if (score === 2) {
+      hintCls = 'alert-warning';
+      hintText = '只满足 2/3，小仓试探；等缺失项补齐，不要一次打满。';
+    } else {
+      hintText = `仅满足 ${score}/3，观望；补仓看日线止跌，不接下跌趋势。`;
+    }
+    hint.className = `alert ${hintCls} mt-3 mb-0 py-2 px-3`;
+    hint.textContent = hintText + ' 辅助参考，不构成投资建议。';
+
+    $('add-stats').innerHTML = [
+      ['POC', profile ? fmtNum(profile.poc) : '—'],
+      ['价值区下沿', profile ? fmtNum(profile.val) : '—'],
+      ['价值区上沿', profile ? fmtNum(profile.vah) : '—'],
+      ['MA20', fmtNum(maLatest)],
+      ['日线 MFI', mfi === null ? '—' : mfi.toFixed(1)],
+      ['OBV 20日', obvNewLow === null ? '—' : obvNewLow ? '新低' : '未创新低'],
+      ['距支撑', support ? `${support.label} ${support.dist.toFixed(1)}%` : '—'],
+      ['筹码样本', profile ? `${profile.count} 根` : '—']
+    ].map(([k, v]) => statItem(k, v)).join('');
+
+    const lastDay = bars.length ? bars[bars.length - 1].time : '';
+    $('add-note').textContent = `日 K · ${profile ? profile.count : bars.length || '—'} 根 · 筹码近似`
+      + (lastDay && isStale(lastDay) ? ' · 上一交易日' : '');
   }
 
   /* ────────────────────────── 渲染：跟踪计划 ────────────────────────── */
@@ -919,7 +1287,10 @@
       }
       renderKline(klineCache[tab], tab);
       $('chart-empty').classList.add('d-none');
-      if (tab === 'day' && DETAIL) renderDiscipline(DETAIL);
+      if (tab === 'day' && DETAIL) {
+        renderDiscipline(DETAIL);
+        renderAdd(DETAIL);
+      }
     } catch (e) {
       console.warn('图表加载失败:', e);
       $('chart-empty').textContent = '图表加载失败：' + (e.message || '接口不可用');

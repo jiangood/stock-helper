@@ -900,7 +900,7 @@
     const price = d.price;
     const evalPlan = currentEval(d);
     // 与首页共用同一套硬性买入资格闸门。
-    const eligibility = Croc.buyEligibility(d, { name: evalPlan.name, pe: evalPlan.pe });
+    const eligibility = Croc.buyEligibility(PLAN || {}, { name: evalPlan.name, pe: evalPlan.pe });
     const buyBlock = eligibility.eligible ? null : eligibility.reason;
     const levels = [
       { key: 'heavy', label: '重仓', value: PLAN.heavy },

@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>股票池监控</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#2563eb">
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <style>
   :root { --up: #dc2626; --down: #16a34a; }
@@ -215,6 +217,7 @@
       <span class="fw-semibold" style="font-size:13px">股票池监控</span>
     </span>
     <div class="ms-auto d-flex align-items-center gap-1">
+      <span id="network-status" class="small text-secondary px-1" role="status" aria-live="polite" title="离线时展示最近缓存的数据">联网</span>
       <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="refresh-btn" onclick="loadPrices(true)" title="立即刷新">⟳</button>
       <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="theme-btn" onclick="toggleTheme()" title="切换主题">🌙</button>
     </div>
@@ -844,6 +847,31 @@ function toggleTheme() {
       input.select();
     }
   });
+})();
+</script>
+
+<script>
+(function () {
+  const status = document.getElementById('network-status');
+  function updateStatus() {
+    const online = navigator.onLine;
+    status.textContent = online ? '联网' : '离线缓存';
+    status.classList.toggle('text-warning', !online);
+    status.classList.toggle('text-secondary', online);
+    status.title = online
+      ? '网络可用；行情请求仍可能因数据源不可用而失败'
+      : '当前离线，页面和数据可能是缓存内容，请检查更新时间后再作判断';
+  }
+  window.addEventListener('online', updateStatus);
+  window.addEventListener('offline', updateStatus);
+  updateStatus();
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').catch(function (error) {
+        console.warn('Service worker registration failed:', error);
+      });
+    });
+  }
 })();
 </script>
 

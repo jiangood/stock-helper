@@ -28,7 +28,7 @@ PRODUCTS = [
     {"id": "aluminium", "name": "电解铝", "unit": "元/吨", "symbol": "AL", "aliases": ["铝", "电解铝", "AL"], "stocks": ["中国铝业"], "chain": "氧化铝/电力 → 电解铝 → 加工材", "drivers": "看铝价与氧化铝、电力成本价差，关注产能约束、库存和下游需求。"},
     {"id": "coal", "name": "煤炭", "unit": "元/吨", "symbol": None, "aliases": ["动力煤", "焦煤", "煤炭", "炼焦煤"], "stocks": ["华阳股份"], "chain": "矿山供给 → 电力、钢铁、化工", "drivers": "动力煤与焦煤用途不同；要区分煤种、产地和交货口径，不能混用价格。"},
     {"id": "rubber", "name": "天然橡胶", "unit": "元/吨", "symbol": "RU", "aliases": ["天然橡胶", "RU"], "stocks": ["海南橡胶"], "chain": "天然橡胶 → 轮胎、汽车、工业制品", "drivers": "看主产区天气、割胶季、库存、轮胎开工和合成胶价差。"},
-    {"id": "rare-earth", "name": "稀土（氧化镨钕）", "unit": "元/吨", "symbol": None, "aliases": ["氧化镨钕", "稀土"], "stocks": ["北方稀土", "盛和资源"], "chain": "稀土矿/分离 → 磁材 → 新能源车、风电、电机", "drivers": "关注配额、分离产量、磁材需求、出口政策和上下游库存。"},
+    {"id": "rare-earth", "name": "稀土（氧化镨钕）", "unit": "元/吨", "symbol": None, "aliases": ["氧化镨钕"], "stocks": ["北方稀土", "盛和资源"], "chain": "稀土矿/分离 → 磁材 → 新能源车、风电、电机", "drivers": "关注配额、分离产量、磁材需求、出口政策和上下游库存。"},
 ]
 
 def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:
@@ -45,7 +45,7 @@ def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) ->
 
 def finite_number(value: Any) -> float | None:
     try:
-        number = float(value)
+        if isinstance(value, str):\n            value = value.replace(",", "").strip()\n        number = float(value)
         return number if math.isfinite(number) and number > 0 else None
     except (TypeError, ValueError):
         return None
@@ -229,12 +229,14 @@ def fetch_data() -> dict[str, Any]:
                 continue
             for row in spot_rows:
                 name = str(row.get("商品名称", row.get("商品", row.get("名称", "")))).strip()
-                if not name or not any(alias in name for alias in product["aliases"]):
+                # Match exact commodity names/aliases only. In particular, never
+                # confuse electrolytic aluminium with alumina or generic rare earth with PrNd oxide.
+                if not name or name not in product["aliases"]:
                     continue
                 latest = finite_number(row.get("最新价", row.get("最新价格")))
                 if latest is None:
                     continue
-                target["latest"] = round(latest, 4)
+                target["name"] = name\n                target["latest"] = round(latest, 4)
                 target["latestDate"] = date.today().isoformat()
                 target["latestSpot"] = round(latest, 4)
                 target["source"] = "东方财富现货与股票数据（经 AKShare 获取）"

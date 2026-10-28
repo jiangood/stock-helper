@@ -56,7 +56,7 @@
       var rows=hs.map(function(h){var s=stockForCode(h.code),q=s?quotes[s.code]:null,p=q&&Number(q.price)>0?Number(q.price):null,qty=Number(h.quantity),cost=Number(h.cost);return {h:h,s:s,p:p,qty:qty,cost:cost,value:p==null?null:p*qty,pnl:p==null?null:(p-cost)*qty,pct:p==null?null:(p-cost)/cost*100};});
       var missing=rows.filter(function(r){return r.p==null;}).length, value=rows.reduce(function(a,r){return a+(r.value||0);},0),pnl=rows.reduce(function(a,r){return a+(r.pnl||0);},0),cost=rows.reduce(function(a,r){return a+r.qty*r.cost;},0);
       summary.innerHTML=[['持仓标的',rows.length+' 只'],['持仓市值',rows.length&&!missing?'¥'+fmtMoney(value):(rows.length?'部分行情缺失':'—')],['浮动盈亏',rows.length&&!missing?(pnl>0?'+':'')+'¥'+fmtMoney(pnl):(rows.length?'部分行情缺失':'—')],['整体盈亏率',cost>0&&!missing?fmtPct(pnl/cost*100):'—']].map(function(x){return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-5 fw-bold">'+x[1]+'</div></div></div>';}).join('');
-      if(!rows.length){list.innerHTML='<div class="empty-state">holdings.json 中暂无持仓。修改仓位请编辑仓库根目录的 holdings.json；网页只读，不会在浏览器保存持仓。</div>';return;}
+      if(!rows.length){list.innerHTML='<div class="empty-state">holdings.json 中暂无持仓。修改仓位请编辑data/holdings.json；网页只读，不会在浏览器保存持仓。</div>';return;}
       list.innerHTML=rows.map(function(r){return '<article class="insight-card"><div class="d-flex justify-content-between gap-2"><div><div class="fw-bold">'+esc((r.s&&r.s.name)||r.h.name||r.h.code)+'</div><div class="mini-label">'+esc(r.h.code)+'</div></div><span class="flag" style="margin:0">'+(r.p==null?'行情缺失':'持仓')+'</span></div><div class="d-flex align-items-baseline justify-content-between gap-2 mt-2"><span class="business-price">'+(r.p==null?'—':r.p.toFixed(2))+'</span><span class="'+tone(r.pnl)+' fw-semibold">'+(r.pnl==null?'盈亏待计算':(r.pnl>0?'+':'')+'¥'+fmtMoney(r.pnl)+' ('+fmtPct(r.pct)+')')+'</span></div><div class="mini-label mt-1">数量 '+r.qty.toLocaleString('zh-CN')+' 股 · 成本 '+r.cost.toFixed(3)+' · 市值 '+(r.value==null?'—':'¥'+fmtMoney(r.value))+'</div>'+(r.s?'<div class="mini-label mt-1">计划价：重仓 '+(r.s.heavy==null?'—':r.s.heavy)+' · 入场 '+(r.s.entry==null?'—':r.s.entry)+' · 止盈 '+(r.s.tp1==null?'—':r.s.tp1)+'</div>':'')+'</article>';}).join('');
     }).catch(function(error){
       summary.innerHTML='';
@@ -350,7 +350,7 @@
     if (businessFetchPromise) return businessFetchPromise;
     var statusEl = el('business-data-status');
     if (statusEl) statusEl.textContent = '正在读取自动抓取的商品数据…';
-    businessFetchPromise = fetch('business-data.json?t='+Date.now(), { cache:'no-store' })
+    businessFetchPromise = fetch('data/business-data.json?t='+Date.now(), { cache:'no-store' })
       .then(function(response){ if (!response.ok) throw new Error('HTTP '+response.status); return response.json(); })
       .then(function(payload){
         if (!payload || !payload.items || typeof payload.items !== 'object') throw new Error('数据格式不正确');

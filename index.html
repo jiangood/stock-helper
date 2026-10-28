@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>持仓监控</title>
+<title>股票池监控</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-  :root { --up: #dc2626; --down: #16a34a; --pool: #b45309; }
-  [data-bs-theme="dark"] { --up: #f23645; --down: #26a69a; --pool: #f0b429; }
+  :root { --up: #dc2626; --down: #16a34a; }
+  [data-bs-theme="dark"] { --up: #f23645; --down: #26a69a; }
 
   body { font-size: 13px; -webkit-font-smoothing: antialiased; }
 
@@ -56,7 +56,6 @@
   .row-above td:first-child { box-shadow: inset 3px 0 0 var(--up), inset -1px 0 0 var(--bs-border-color); }
   .row-below td:first-child { box-shadow: inset 3px 0 0 var(--down), inset -1px 0 0 var(--bs-border-color); }
   .row-buy   td:first-child { box-shadow: inset 3px 0 0 var(--down), inset -1px 0 0 var(--bs-border-color); }
-  .row-pool  td:first-child { box-shadow: inset 3px 0 0 var(--pool), inset -1px 0 0 var(--bs-border-color); }
   .row-below { background-color: rgba(22,163,74,.04); }
   .row-buy   { background-color: rgba(22,163,74,.08); }
 
@@ -73,8 +72,6 @@
     border: 1px solid var(--bs-border-color);
     color: var(--bs-secondary-color); background-color: var(--bs-tertiary-bg);
   }
-  .tag-pool { color: var(--pool); border-color: rgba(180,83,9,.35); background-color: rgba(245,158,11,.10); }
-  [data-bs-theme="dark"] .tag-pool { border-color: rgba(240,180,41,.3); background-color: rgba(240,180,41,.1); }
 
   .sort-icon { font-size: 9px; color: var(--bs-tertiary-color); }
   th.sort-asc .sort-icon::after { content: '▲'; color: var(--bs-primary); }
@@ -102,7 +99,7 @@
   <nav class="navbar bg-body border-bottom px-3 py-2">
     <span class="navbar-brand d-flex align-items-center gap-2 mb-0 p-0">
       <span class="logo">▲</span>
-      <span class="fw-semibold" style="font-size:14px">持仓监控</span>
+      <span class="fw-semibold" style="font-size:14px">股票池监控</span>
       <span class="badge rounded-pill text-bg-secondary fw-normal" id="session-tag">休市</span>
     </span>
     <div class="ms-auto d-flex align-items-center gap-2">
@@ -118,15 +115,6 @@
       <input type="text" class="form-control" id="search-input" placeholder="名称 / 代码 / 别名" oninput="applyFilter()">
     </div>
 
-    <div class="btn-group btn-group-sm" role="group" aria-label="范围筛选">
-      <input type="radio" class="btn-check" name="scope" id="scope-all" value="all" checked onchange="setScope('all')">
-      <label class="btn btn-outline-secondary" for="scope-all">全部</label>
-      <input type="radio" class="btn-check" name="scope" id="scope-holding" value="holding" onchange="setScope('holding')">
-      <label class="btn btn-outline-secondary" for="scope-holding">持仓</label>
-      <input type="radio" class="btn-check" name="scope" id="scope-pool" value="pool" onchange="setScope('pool')">
-      <label class="btn btn-outline-secondary" for="scope-pool">股票池</label>
-    </div>
-
     <select class="form-select form-select-sm w-auto" id="group-filter" onchange="applyFilter()" title="按分组筛选">
       <option value="">全部分组</option>
     </select>
@@ -136,7 +124,6 @@
     <div class="ms-auto d-none d-lg-flex align-items-center gap-3 text-body-secondary">
       <span><span class="legend-pip" style="background:var(--up)"></span> 高于入场</span>
       <span><span class="legend-pip" style="background:var(--down)"></span> 低于入场</span>
-      <span><span class="legend-pip" style="background:var(--pool)"></span> 股票池</span>
     </div>
   </div>
 </div>
@@ -166,7 +153,7 @@
 
 <footer class="text-center text-body-secondary py-3 border-top bg-body">
   <div style="font-size:11px">交易时段自动刷新（09:15–11:30 / 13:00–15:00，每 3 秒）</div>
-  <div class="mt-1" style="font-size:10px">免责声明：本页面仅供个人持仓记录参考，不构成任何投资建议。股市有风险，投资需谨慎。</div>
+  <div class="mt-1" style="font-size:10px">免责声明：本页面仅供个人投资记录参考，不构成任何投资建议。股市有风险，投资需谨慎。</div>
 </footer>
 
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
@@ -181,7 +168,6 @@ const priceData = {};          // code -> { price, prevClose, change, todayChang
 let lastUpdateTime = null;
 let refreshTimer = null;
 let filteredStocks = [];
-let scope = 'all';             // all | holding | pool
 let sortState = { col: null, dir: 1 };
 
 const $ = id => document.getElementById(id);
@@ -290,7 +276,7 @@ function buildTable() {
 
 function rowClass(stock) {
   const pd = priceData[stock.code];
-  if (!pd || stock.entry == null) return stock.pool ? 'row-pool' : '';
+  if (!pd || stock.entry == null) return '';
   const p = pd.price;
   if (stock.heavy != null && p <= stock.heavy) return 'row-buy';
   if (p <= stock.entry) return 'row-below';
@@ -348,7 +334,6 @@ function buildRow(stock) {
 
   const subs = [];
   if (stock.alias) subs.push(`<span class="tag d-none d-sm-inline" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`);
-  if (stock.pool)  subs.push('<span class="tag tag-pool">股票池</span>');
 
   const codeNum = stock.code ? stock.code.replace(/^(sh|sz)/, '') : '';
   const nameHtml = `
@@ -440,18 +425,11 @@ function updateClock() {
 // ============================================================
 // 筛选
 // ============================================================
-function setScope(next) {
-  scope = next;
-  applyFilter();
-}
-
 function applyFilter() {
   const q = ($('search-input').value || '').trim().toLowerCase();
   const group = $('group-filter').value;
 
   filteredStocks = STOCKS.filter(s => {
-    if (scope === 'holding' && s.pool) return false;
-    if (scope === 'pool' && !s.pool) return false;
     if (group && s.group !== group) return false;
     if (!q) return true;
     return s.name.toLowerCase().includes(q)

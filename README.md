@@ -2,7 +2,7 @@
 
 **在线查看：** https://jiangood.github.io/stock-helper/
 
-- 首页：持仓监控看板（表格、实时行情、搜索、分组、股票池）
+- 首页：股票池监控看板（表格、实时行情、搜索、分组）
 - 投资理念：https://jiangood.github.io/stock-helper/principles.html
 
 ## 本地预览
@@ -17,7 +17,7 @@ python -m http.server 8089
 
 | 文件 | 说明 |
 | --- | --- |
-| `index.html` | 持仓监控看板（Bootstrap 5） |
+| `index.html` | 股票池监控看板（Bootstrap 5） |
 | `principles.html` | 价值投资理念页 |
 | `stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
 | `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级） |

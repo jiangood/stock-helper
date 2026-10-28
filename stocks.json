@@ -11,7 +11,7 @@
     "tp2": 15,
     "prevChg": 0.16,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "振华新材",
@@ -25,7 +25,7 @@
     "tp2": 20,
     "prevChg": 0.69,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "天康生物",
@@ -39,7 +39,7 @@
     "tp2": 20,
     "prevChg": -1.29,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "海南橡胶",
@@ -53,7 +53,7 @@
     "tp2": 20,
     "prevChg": -5.52,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "钢研高纳",
@@ -67,7 +67,7 @@
     "tp2": 35,
     "prevChg": -3.9,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "国泰集团",
@@ -81,7 +81,7 @@
     "tp2": 20,
     "prevChg": -0.84,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "凯龙股份",
@@ -95,7 +95,7 @@
     "tp2": 15,
     "prevChg": 0.2,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "中钢国际",
@@ -109,7 +109,7 @@
     "tp2": 13,
     "prevChg": 0.14,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "安纳达",
@@ -123,7 +123,7 @@
     "tp2": null,
     "prevChg": 2.61,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "双环科技",
@@ -137,7 +137,7 @@
     "tp2": 15,
     "prevChg": 0.89,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "中化国际",
@@ -151,7 +151,7 @@
     "tp2": 15,
     "prevChg": -0.2,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "四川美丰",
@@ -165,7 +165,7 @@
     "tp2": 10,
     "prevChg": 2.39,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "中国中冶",
@@ -179,7 +179,7 @@
     "tp2": 6,
     "prevChg": 0.61,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "雪峰科技",
@@ -193,7 +193,7 @@
     "tp2": 15,
     "prevChg": 1.22,
     "updDate": "2026-03-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "中粮科工",
@@ -207,7 +207,7 @@
     "tp2": 20,
     "prevChg": 0.65,
     "updDate": "2026-01-02",
-    "pool": false
+    "pool": true
   },
   {
     "name": "贵研铂业",
@@ -221,7 +221,7 @@
     "tp2": 36,
     "prevChg": -2.59,
     "updDate": "2026-01-02",
-    "pool": false
+    "pool": true
   },
   {
     "name": "恒邦股份",
@@ -235,7 +235,7 @@
     "tp2": 22,
     "prevChg": -3.06,
     "updDate": "2026-01-02",
-    "pool": false
+    "pool": true
   },
   {
     "name": "泰山石油",
@@ -249,7 +249,7 @@
     "tp2": 20,
     "prevChg": -3.03,
     "updDate": "2026-01-13",
-    "pool": false
+    "pool": true
   },
   {
     "name": "中盐化工",
@@ -263,7 +263,7 @@
     "tp2": null,
     "prevChg": -2.59,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "岳阳林纸",
@@ -277,7 +277,7 @@
     "tp2": null,
     "prevChg": -4.13,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "华阳股份",
@@ -291,7 +291,7 @@
     "tp2": null,
     "prevChg": -1.17,
     "updDate": "2026-02-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "湖南海利",
@@ -305,7 +305,7 @@
     "tp2": null,
     "prevChg": 0.13,
     "updDate": "2026-02-05",
-    "pool": false
+    "pool": true
   },
   {
     "name": "安迪苏",
@@ -319,7 +319,7 @@
     "tp2": null,
     "prevChg": 7.74,
     "updDate": "2026-01-26",
-    "pool": false
+    "pool": true
   },
   {
     "name": "河钢资源",
@@ -333,7 +333,7 @@
     "tp2": 25,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "海油工程",
@@ -347,7 +347,7 @@
     "tp2": 7.5,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中国铝业",
@@ -361,7 +361,7 @@
     "tp2": 10,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "天富能源",
@@ -375,7 +375,7 @@
     "tp2": 10,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "昊华科技",
@@ -389,7 +389,7 @@
     "tp2": 43,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "钒钛股份",
@@ -403,7 +403,7 @@
     "tp2": 6,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中信金属",
@@ -417,7 +417,7 @@
     "tp2": 14,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "东华科技",
@@ -431,7 +431,7 @@
     "tp2": 15,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "沧州大化",
@@ -445,7 +445,7 @@
     "tp2": 20,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "南钢股份",
@@ -459,7 +459,7 @@
     "tp2": 6,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "利尔化学",
@@ -473,7 +473,7 @@
     "tp2": 15,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "鲁西化工",
@@ -487,7 +487,7 @@
     "tp2": 18,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "杭氧股份",
@@ -501,7 +501,7 @@
     "tp2": 35,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "扬农化工",
@@ -515,7 +515,7 @@
     "tp2": 90,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "金钼股份",
@@ -529,7 +529,7 @@
     "tp2": 20,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "锡业股份",
@@ -543,7 +543,7 @@
     "tp2": 25,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "东方钽业",
@@ -557,7 +557,7 @@
     "tp2": 24,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "华鲁恒升",
@@ -571,7 +571,7 @@
     "tp2": 40,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "宝光股份",
@@ -585,7 +585,7 @@
     "tp2": 20,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "宝钛股份",
@@ -599,7 +599,7 @@
     "tp2": 34,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "株冶集团",
@@ -613,7 +613,7 @@
     "tp2": 13,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "ST应急",
@@ -627,7 +627,7 @@
     "tp2": 13,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "华锡有色",
@@ -641,7 +641,7 @@
     "tp2": 30,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "金天钛业",
@@ -655,7 +655,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "厦门钨业",
@@ -725,7 +725,7 @@
     "tp2": 18,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "北元集团",
@@ -739,7 +739,7 @@
     "tp2": 8,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "航发控制",
@@ -753,7 +753,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中泰化学",
@@ -767,7 +767,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中钨高新",
@@ -781,7 +781,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "辉隆股份",
@@ -795,7 +795,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "安琪酵母",
@@ -809,7 +809,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中农立华",
@@ -823,7 +823,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "氯碱化工",
@@ -837,7 +837,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中密控股",
@@ -851,7 +851,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "耀皮玻璃",
@@ -865,7 +865,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中复神鹰",
@@ -879,7 +879,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "三友化工",
@@ -893,7 +893,7 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "中牧股份",
@@ -907,7 +907,7 @@
     "tp2": 20,
     "prevChg": null,
     "updDate": "2026-03-27",
-    "pool": false
+    "pool": true
   },
   {
     "name": "岳阳兴长",
@@ -921,7 +921,7 @@
     "tp2": 30,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   },
   {
     "name": "易普力",
@@ -935,6 +935,6 @@
     "tp2": null,
     "prevChg": null,
     "updDate": null,
-    "pool": false
+    "pool": true
   }
 ]

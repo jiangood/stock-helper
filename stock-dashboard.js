@@ -353,7 +353,7 @@ function showErrorDialog(detail) {
   const details = previous ? previous.querySelector('textarea') : null;
   const line = typeof detail === 'string' ? detail : JSON.stringify(detail, null, 2);
   if (details) {
-    details.value += '\\n\\n--- 后续错误 ---\\n' + line;
+    details.value += '\n\n--- 后续错误 ---\n' + line;
     return;
   }
 

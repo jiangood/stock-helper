@@ -1,9 +1,11 @@
 # 股票助手 Stock Helper
 
-**在线查看：** https://jiangood.github.io/stock-helper/
+## 访问地址
 
-- 首页：股票池监控看板（表格、实时行情、搜索、分组、纪律筛选）
-- 个股详情：https://jiangood.github.io/stock-helper/stock.html?code=sz002408
+- **在线首页：** [https://jiangood.github.io/stock-helper/](https://jiangood.github.io/stock-helper/)
+- **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
+
+首页提供股票池监控看板，支持实时行情、搜索、分组和纪律筛选；个股详情页可查看行情、K 线、估值与交易辅助面板。
 
 ## 本地预览
 

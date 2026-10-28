@@ -128,6 +128,23 @@
   .health-item:last-child { border-bottom: 0; }
   .health-item .flag { margin-left: 0; flex: 0 0 auto; margin-top: 1px; }
 
+  body { padding-bottom: 74px; }
+  .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
+  .bottom-tab { border:0; background:transparent; color:var(--bs-secondary-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:48px; font-size:10px; border-radius:8px; }
+  .bottom-tab .tab-icon { font-size:18px; line-height:1.15; }
+  .bottom-tab.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
+  .app-pane { min-height:calc(100vh - 120px); }
+  .panel-title { font-size:15px; font-weight:700; }
+  .panel-subtitle,.mini-label { font-size:11px; color:var(--bs-secondary-color); }
+  .insight-card { border:1px solid var(--bs-border-color); border-radius:12px; background:var(--bs-body-bg); padding:12px; }
+  .insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; }
+  .business-price { font-size:22px; font-weight:750; letter-spacing:-.5px; }
+  .trend-svg { width:100%; height:58px; display:block; }
+  .trend-svg polyline { fill:none; stroke:var(--bs-primary); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+  .empty-state { padding:24px 12px; text-align:center; color:var(--bs-secondary-color); border:1px dashed var(--bs-border-color); border-radius:12px; }
+  .business-form { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .business-form .wide { grid-column:1 / -1; }
+  @media (max-width:575.98px) { .business-form { grid-template-columns:1fr; } .business-form .wide { grid-column:auto; } }
   @media (max-width: 575.98px) {
     .table-scroll { max-height: calc(100vh - 112px); }
     .stock-table { min-width: 990px; }
@@ -194,7 +211,7 @@
     </div>
   </nav>
 
-  <div class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
+  <div id="stock-toolbar" class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
     <div class="input-group input-group-sm flex-nowrap" style="max-width:210px;min-width:0">
       <span class="input-group-text px-2">🔍</span>
       <input type="text" class="form-control" id="search-input" placeholder="名称 / 代码 / 别名 / 拼音" oninput="applyFilter()" style="min-width:0">
@@ -233,7 +250,7 @@
   </div>
 </div>
 
-<main class="container-fluid px-2 px-sm-3 py-1">
+<main id="stocks-pane" data-pane="stocks" class="app-pane container-fluid px-2 px-sm-3 py-1">
   <div class="table-scroll">
     <table class="table table-sm table-hover align-middle mb-0 stock-table" id="main-table">
       <thead>
@@ -260,10 +277,41 @@
   </div>
 </main>
 
+<main id="opportunity-pane" data-pane="opportunity" class="app-pane container-fluid px-3 py-3 d-none">
+  <div class="panel-title">机会雷达</div>
+  <div class="panel-subtitle mb-3">按计划价区间和量化纪律找观察对象，不把价格触及计划位直接等同于买入信号。</div>
+  <div id="opportunity-summary" class="row g-2 mb-3"></div>
+  <div id="opportunity-list" class="insight-grid"></div>
+  <div class="panel-subtitle mt-3">硬性门槛：ST 不买、亏损不买、盈利数据缺失先核实。仍需核对主营竞争力、行业周期、盈利质量和安全边际。</div>
+</main>
+
+<main id="business-pane" data-pane="business" class="app-pane container-fluid px-3 py-3 d-none">
+  <div class="panel-title">生意与产业链</div>
+  <div class="panel-subtitle mb-3">商品价格、供需和成本会影响企业盈利。当前价格观察点由你录入，避免把未接入的数据伪装成实时行情。</div>
+  <div class="insight-card mb-3">
+    <div class="fw-semibold mb-1">记录商品价格观察点</div>
+    <div class="panel-subtitle mb-2">记录将保存在当前浏览器，用于画趋势线；请尽量保持地区、规格和报价口径一致。</div>
+    <form id="business-observation-form" class="business-form">
+      <div><label for="business-product" class="form-label mb-1 mini-label">商品</label><select id="business-product" class="form-select form-select-sm" required></select></div>
+      <div><label for="business-date" class="form-label mb-1 mini-label">日期</label><input id="business-date" class="form-control form-control-sm" type="date" required></div>
+      <div><label for="business-price" class="form-label mb-1 mini-label">价格 / 指标值</label><input id="business-price" class="form-control form-control-sm" type="number" min="0" step="any" placeholder="输入数值" required></div>
+      <div><label for="business-note" class="form-label mb-1 mini-label">备注（可选）</label><input id="business-note" class="form-control form-control-sm" type="text" maxlength="120" placeholder="地区、来源、规格"></div>
+      <div class="wide d-flex flex-wrap gap-2 align-items-center"><button class="btn btn-sm btn-primary" type="submit">保存观察点</button><button class="btn btn-sm btn-outline-secondary" type="button" id="clear-business-history">清空记录</button></div>
+    </form>
+  </div>
+  <div id="business-cards" class="insight-grid"></div>
+  <div class="panel-subtitle mt-3">价格上涨不必然代表公司利润上升。还需检查库存、开工率、产能、原料成本、下游需求及上市公司实际业务暴露。</div>
+</main>
+
 <footer class="text-center text-body-secondary py-2 border-top bg-body">
   <div style="font-size:10px">交易时段每 60 秒刷新 · 仅供个人记录，不构成投资建议</div>
 </footer>
 
+<nav class="bottom-tabs" aria-label="主导航">
+  <button class="bottom-tab active" type="button" data-target="stocks"><span class="tab-icon">▦</span><span>股票池</span></button>
+  <button class="bottom-tab" type="button" data-target="opportunity"><span class="tab-icon">⌁</span><span>机会</span></button>
+  <button class="bottom-tab" type="button" data-target="business"><span class="tab-icon">↗</span><span>生意</span></button>
+</nav>
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
 
 <dialog id="health-dialog" class="health-dialog" aria-labelledby="health-title">
@@ -285,6 +333,7 @@
 <script src="croc.js"></script>
 <script src="quotes.js"></script>
 <script src="pinyin.js"></script>
+<script src="business.js"></script>
 <script>
 // ============================================================
 // State
@@ -701,6 +750,7 @@ function applyFilter() {
         ));
   });
   buildTable();
+  if (window.StockBusiness) window.StockBusiness.renderOpportunity();
 }
 
 // ============================================================
@@ -751,8 +801,28 @@ function toggleTheme() {
   });
 })();
 
+(function bindBottomTabs() {
+  document.querySelectorAll('.bottom-tab').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const target = button.dataset.target;
+      document.querySelectorAll('[data-pane]').forEach(function (pane) {
+        pane.classList.toggle('d-none', pane.dataset.pane !== target);
+      });
+      document.querySelectorAll('.bottom-tab').forEach(function (tab) {
+        const active = tab.dataset.target === target;
+        tab.classList.toggle('active', active);
+        tab.setAttribute('aria-current', active ? 'page' : 'false');
+      });
+      $('stock-toolbar').classList.toggle('d-none', target !== 'stocks');
+      if (window.StockBusiness) window.StockBusiness.onTab(target);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    });
+  });
+})();
+
 (async function init() {
   await loadStocks();
+  if (window.StockBusiness) window.StockBusiness.init(STOCKS, priceData);
   await loadPrices(false);
   scheduleRefresh();
 })();

@@ -7,12 +7,22 @@ on:
       - feature/holdings-risk-center
     paths:
       - 'risk-center.js'
+      - 'holdings-data.js'
+      - 'holdings.json'
+      - 'business.js'
+      - 'index.html'
       - 'tests/risk-center.test.js'
+      - 'tests/holdings-data.test.js'
       - '.github/workflows/risk-center-tests.yml'
   pull_request:
     paths:
       - 'risk-center.js'
+      - 'holdings-data.js'
+      - 'holdings.json'
+      - 'business.js'
+      - 'index.html'
       - 'tests/risk-center.test.js'
+      - 'tests/holdings-data.test.js'
       - '.github/workflows/risk-center-tests.yml'
 
 jobs:
@@ -23,7 +33,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Syntax check
-        run: node --check risk-center.js
-      - name: Risk calculation tests
-        run: node tests/risk-center.test.js
+      - name: Syntax checks
+        run: |
+          node --check risk-center.js
+          node --check holdings-data.js
+          node --check business.js
+      - name: Risk and holdings JSON tests
+        run: node --test tests/risk-center.test.js tests/holdings-data.test.js

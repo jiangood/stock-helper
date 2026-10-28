@@ -34,6 +34,18 @@ class BusinessDataTests(unittest.TestCase):
         self.assertIsNone(missing["latest"])
         self.assertEqual(missing["status"], "pending")
 
+    def test_normalize_source_monthly_prices_keeps_source_order_and_omits_missing(self):
+        points = fetcher.normalize_source_monthly_prices({
+            "近5月": 1000, "近4月": 1050, "近3月": None,
+            "近2月": "1,100", "近1月": "-", "最新价": 1125,
+        })
+        self.assertEqual(points, [
+            {"label": "5个月前", "value": 1000},
+            {"label": "4个月前", "value": 1050},
+            {"label": "2个月前", "value": 1100},
+            {"label": "最新", "value": 1125},
+        ])
+
     def test_normalize_company_list_splits_names_deduplicates_and_ignores_placeholders(self):
         self.assertEqual(
             fetcher.normalize_company_list("甲公司,乙公司，甲公司;丙公司"),

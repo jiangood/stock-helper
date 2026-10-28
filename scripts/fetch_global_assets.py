@@ -119,13 +119,16 @@ def main() -> int:
             "sourceSymbol": meta["symbols"][0],
             "sourceUrl": "https://finance.yahoo.com/",
         }
+        symbol_errors = []
         for symbol in meta["symbols"]:
             try:
                 quote = fetch_symbol(symbol, meta.get("range", "1mo"))
                 result.update(quote)
                 break
             except (OSError, ValueError, KeyError, RuntimeError, urllib.error.URLError) as error:
-                errors.append(f"{meta['id']} ({symbol}): {error}")
+                symbol_errors.append(f"{meta['id']} ({symbol}): {error}")
+        if result["price"] is None:
+            errors.extend(symbol_errors)
         if result["price"] is None and finite(old.get("price")):
             result.update({key: old.get(key) for key in (
                 "sourceSymbol", "price", "prevClose", "change", "changePct",

@@ -66,18 +66,12 @@
 
   .price-cell { font-size: 14.5px; font-weight: 700; letter-spacing: -.3px; }
 
-  /* 名称行：名称 + 别名，同排不换行 */
-  .name-cell {
-    display: flex; align-items: baseline; gap: .3rem;
-    min-width: 0; max-width: 280px;
-  }
-  .name-cell .stock-name {
-    font-weight: 600;
-    overflow: hidden; text-overflow: ellipsis;
-  }
+  /* 名称 / 别名 */
+  .stock-name { font-weight: 600; }
   .tag-alias {
-    font-size: 9.5px; max-width: 10em; flex-shrink: 10;
+    font-size: 9.5px; max-width: 120px; display: inline-block;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    vertical-align: bottom;
   }
 
   /* 数值旁的小号涨跌幅 */
@@ -109,8 +103,7 @@
     .badge-today { font-size: 9px; padding: .15em .35em; }
     .badge-tp { font-size: 9px; }
     .diff { font-size: 9px; margin-left: .1rem; }
-    .name-cell { max-width: 120px; flex-wrap: wrap; row-gap: 1px; }
-    .tag-alias { max-width: 100%; font-size: 9px; }
+    .tag-alias { font-size: 9px; max-width: 96px; }
   }
 </style>
 </head>
@@ -138,7 +131,7 @@
       <option value="">全部分组</option>
     </select>
 
-    <span class="text-body-secondary text-nowrap"><span id="stock-count" class="fw-semibold text-body">0</span> 只<span class="d-sm-none"> · ←滑动</span></span>
+    <span class="text-body-secondary text-nowrap"><span id="stock-count" class="fw-semibold text-body">0</span> 只</span>
 
     <div class="ms-auto d-none d-lg-flex align-items-center gap-3 text-body-secondary">
       <span><span class="legend-pip" style="background:var(--up)"></span> 高于入场</span>
@@ -162,6 +155,7 @@
           <th onclick="sortTable('tp2')"      id="th-tp2">      止盈2         <span class="sort-icon"></span></th>
           <th onclick="sortTable('yearInit')" id="th-yearInit"> 年初价        <span class="sort-icon"></span></th>
           <th onclick="sortTable('group')"    id="th-group">    分组          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('alias')"    id="th-alias">    别名          <span class="sort-icon"></span></th>
           <th onclick="sortTable('updDate')"  id="th-updDate">  更新          <span class="sort-icon"></span></th>
         </tr>
       </thead>
@@ -243,6 +237,7 @@ function getSortValue(stock, col) {
     case 'tp1':      return stock.tp1;
     case 'tp2':      return stock.tp2;
     case 'group':    return stock.group || '';
+    case 'alias':    return stock.alias || '';
     case 'updDate':  return stock.updDate || '';
     default:         return null;
   }
@@ -262,7 +257,7 @@ function sortedView(list) {
 }
 
 function updateSortUI() {
-  ['name','price','entry','heavy','today','prevChg','tp1','tp2','yearInit','group','updDate'].forEach(col => {
+  ['name','price','entry','heavy','today','prevChg','tp1','tp2','yearInit','group','alias','updDate'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
     th.classList.remove('sort-asc', 'sort-desc');
@@ -345,12 +340,8 @@ function buildRow(stock) {
 
   const aliasHtml = stock.alias
     ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
-    : '';
-  const nameHtml = `
-    <div class="name-cell">
-      <a class="stock-name text-decoration-none text-body" href="https://quote.eastmoney.com/${stock.code}.html" target="_blank" rel="noopener" title="${esc(stock.name)}">${esc(stock.name)}</a>
-      ${aliasHtml}
-    </div>`;
+    : '<span class="text-body-tertiary">—</span>';
+  const nameHtml = `<a class="stock-name text-decoration-none text-body" href="https://quote.eastmoney.com/${stock.code}.html" target="_blank" rel="noopener" title="${esc(stock.name)}">${esc(stock.name)}</a>`;
 
   return `
     <td>${nameHtml}</td>
@@ -363,6 +354,7 @@ function buildRow(stock) {
     <td>${tp2Html}</td>
     <td class="text-body-secondary">${stock.yearInit != null ? Number(stock.yearInit).toFixed(2) : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
+    <td>${aliasHtml}</td>
     <td class="text-body-secondary" style="font-size:10px">${stock.updDate || '<span class="text-body-tertiary">—</span>'}</td>`;
 }
 

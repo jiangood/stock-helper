@@ -6,7 +6,7 @@
 <title>股票池监控</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#2563eb">
-<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">\n<link href="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.prod.css" rel="stylesheet">\n<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
   :root { --up: #dc2626; --down: #16a34a; }
   [data-bs-theme="dark"] { --up: #f23645; --down: #26a69a; }
@@ -130,11 +130,13 @@
   .health-item:last-child { border-bottom: 0; }
   .health-item .flag { margin-left: 0; flex: 0 0 auto; margin-top: 1px; }
 
-  body { padding-bottom: 74px; }
-  .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
-  .bottom-tab { text-decoration:none; border:0; background:transparent; color:var(--bs-secondary-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:48px; font-size:10px; border-radius:8px; }
-  .bottom-tab .tab-icon { font-size:18px; line-height:1.15; }
-  .bottom-tab.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
+  .q-footer .q-tabs { min-height:58px; padding-bottom:env(safe-area-inset-bottom); }
+  .q-footer .q-tab { min-height:54px; font-size:10px; }
+  .q-footer .q-tab__icon { font-size:20px; }
+  .q-toolbar { min-height:48px; }
+  .legacy-content { width:100%; }
+  .bottom-tab { text-decoration:none; }
+  .q-page-container { background:var(--bs-tertiary-bg); }
   .app-pane { min-height:calc(100vh - 120px); }
   .panel-title { font-size:15px; font-weight:700; }
   .panel-subtitle,.mini-label { font-size:11px; color:var(--bs-secondary-color); }
@@ -210,18 +212,18 @@
 </div>
 
 
-<div class="sticky-top">
-  <nav class="navbar bg-body border-bottom px-2 px-sm-3 py-1">
-    <span class="navbar-brand d-flex align-items-center gap-2 mb-0 p-0">
-      <span class="logo">▲</span>
-      <span class="fw-semibold" style="font-size:13px">股票池监控</span>
-    </span>
+<div id="q-app" data-shell-page="home">
+<q-layout view="hHh lpR fFf" class="bg-body-tertiary">
+<q-header bordered class="bg-body text-body">
+  <q-toolbar class="px-2 px-sm-3">
+    <span class="logo">▲</span>
+    <q-toolbar-title class="fw-semibold" style="font-size:13px">股票池监控</q-toolbar-title>
     <div class="ms-auto d-flex align-items-center gap-1">
       <span id="network-status" class="small text-secondary px-1" role="status" aria-live="polite" title="离线时展示最近缓存的数据">联网</span>
-      <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="refresh-btn" onclick="loadPrices(true)" title="立即刷新">⟳</button>
-      <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="theme-btn" onclick="toggleTheme()" title="切换主题">🌙</button>
+      <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="refresh-btn" onclick="loadPrices(true)" title="立即刷新" aria-label="立即刷新">⟳</button>
+      <button class="btn btn-sm btn-outline-secondary px-2 py-0" id="theme-btn" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">🌙</button>
     </div>
-  </nav>
+  </q-toolbar>
 
   <div id="stock-toolbar" class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
     <div class="input-group input-group-sm flex-nowrap" style="max-width:210px;min-width:0">
@@ -259,7 +261,10 @@
       <button class="btn btn-sm btn-outline-secondary px-2 py-0" onclick="openHealth()" title="股票池体检" aria-label="股票池体检">🩺<span class="d-none d-lg-inline ms-1">体检</span></button>
     </div>
   </div>
-</div>
+</q-header>
+<q-page-container>
+<q-page class="bg-body-tertiary">
+<div v-pre class="legacy-content">
 
 <main id="stocks-pane" data-pane="stocks" class="app-pane container-fluid px-2 px-sm-3 py-1">
   <div class="table-scroll">
@@ -327,12 +332,18 @@
 
 
 
-<nav class="bottom-tabs" aria-label="主导航">
-  <button class="bottom-tab active" type="button" data-target="stocks"><span class="tab-icon">▦</span><span>股票池</span></button>
-  <button class="bottom-tab" type="button" data-target="opportunity"><span class="tab-icon">▤</span><span>简报</span></button>
-  <button class="bottom-tab" type="button" data-target="business"><span class="tab-icon">↗</span><span>生意</span></button>
-  <a class="bottom-tab" href="./global-assets.html" aria-label="全球资产"><span class="tab-icon">◎</span><span>全球资产</span></a>
-</nav>
+</div>
+</q-page>
+</q-page-container>
+<q-footer bordered class="bg-body text-body">
+  <q-tabs v-model="tab" dense no-caps active-color="primary" indicator-color="primary" align="justify">
+    <q-tab name="stocks" class="bottom-tab" data-target="stocks" icon="table_chart" label="股票池"></q-tab>
+    <q-tab name="opportunity" class="bottom-tab" data-target="opportunity" icon="summarize" label="简报"></q-tab>
+    <q-tab name="business" class="bottom-tab" data-target="business" icon="storefront" label="生意"></q-tab>
+    <q-tab name="assets" href="./global-assets.html" icon="public" label="全球资产"></q-tab>
+  </q-tabs>
+</q-footer>
+</q-layout>
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
 
 <dialog id="health-dialog" class="health-dialog" aria-labelledby="health-title">
@@ -342,7 +353,11 @@
   </div>
   <div class="px-3 pt-2 pb-3" id="health-body"></div>
 </dialog>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.umd.prod.js"></script>
+<script src="quasar-shell.js"></script>
 <script src="croc.js"></script>
 <script src="quotes.js"></script>
 <script src="pinyin.js"></script>

@@ -50,7 +50,7 @@
   'use strict';
 
   const VERSION = '1.3.0';
-  const REFRESH_INTERVAL = 3000;
+  const REFRESH_INTERVAL = 60000;   // 只看中期，盘中不做高频轮询
 
   const DEFAULTS = {
     providers: ['eastmoney', 'tencent'],  // 依次尝试

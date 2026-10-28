@@ -1,6 +1,6 @@
 /*!
  * 股票详情页 —— stock.html 的页面逻辑
- * 依赖：quotes.js（行情 SDK）、lightweight-charts（K 线 / 分时）
+ * 依赖：quotes.js（行情 SDK）、lightweight-charts（日/周/月 K）
  * 入口：stock.html?code=sz002408
  */
 (function () {
@@ -25,13 +25,11 @@
   let DETAIL = null;
   let peersAt = 0;
 
-  let chartTab = 'trend';
+  let chartTab = 'day';
   let chart = null;
   let chartKey = '';
   let series = {};
-  let timeLabels = new Map();
   const klineCache = {};
-  let trendCache = null;
 
   let quoteTimer = null;
   let chartTimer = null;
@@ -47,13 +45,6 @@
   const fmtPct = (v, d = 2) => isNum(v) ? `${v > 0 ? '+' : ''}${v.toFixed(d)}%` : '—';
 
   const fmtPctPlain = (v, d = 2) => isNum(v) ? `${v.toFixed(d)}%` : '—';
-
-  const fmtVolume = v => {
-    if (!isNum(v)) return '—';
-    if (v >= 1e8) return (v / 1e8).toFixed(2) + '亿手';
-    if (v >= 1e4) return (v / 1e4).toFixed(2) + '万手';
-    return Math.round(v) + '手';
-  };
 
   const fmtAmount = v => {
     if (!isNum(v)) return '—';
@@ -231,19 +222,11 @@
         + `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`
       : '--';
 
+    // 只看中期：不展示今开/最高/最低/均价/涨停/跌停/量比/振幅等日内指标
     $('stats').innerHTML = [
-      ['今开', fmtNum(d.open)],
-      ['最高', fmtNum(d.high)],
-      ['最低', fmtNum(d.low)],
       ['昨收', fmtNum(d.prevClose)],
-      ['均价', fmtNum(d.avg)],
-      ['涨停', fmtNum(d.limitUp)],
-      ['跌停', fmtNum(d.limitDown)],
-      ['成交量', fmtVolume(d.volume)],
       ['成交额', fmtAmount(d.amount)],
-      ['换手率', fmtPctPlain(d.turnover)],
-      ['量比', fmtNum(d.volumeRatio)],
-      ['振幅', fmtPctPlain(d.amplitude)]
+      ['换手率', fmtPctPlain(d.turnover)]
     ].map(([k, v]) => statItem(k, v)).join('');
   }
 
@@ -533,7 +516,6 @@
     chart = null;
     chartKey = '';
     series = {};
-    timeLabels = new Map();
   }
 
   function createChart(extra) {
@@ -576,123 +558,29 @@
   async function loadChart(tab, force) {
     if (!CODE) return;
 
-    $('chart-hint').textContent = tab === 'trend' ? '分时 · 含均价线' : '前复权 · 200 根';
+    $('chart-hint').textContent = '前复权 · 200 根';
 
-    const cached = tab === 'trend' ? trendCache : klineCache[tab];
-    if (!cached) {
+    if (!klineCache[tab]) {
       $('chart-empty').textContent = '图表加载中…';
       $('chart-empty').classList.remove('d-none');
     }
 
     try {
-      if (tab === 'trend') {
-        if (force || !trendCache) {
-          trendCache = await quotes.fetchTrends(CODE, { force: !!force });
-        }
-        renderTrend(trendCache);
-      } else {
-        if (force || !klineCache[tab]) {
-          klineCache[tab] = await quotes.fetchKline(CODE, {
-            period: tab,
-            count: 200,
-            adjust: 'qfq',
-            force: !!force
-          });
-        }
-        renderKline(klineCache[tab], tab);
+      if (force || !klineCache[tab]) {
+        klineCache[tab] = await quotes.fetchKline(CODE, {
+          period: tab,
+          count: 200,
+          adjust: 'qfq',
+          force: !!force
+        });
       }
+      renderKline(klineCache[tab], tab);
       $('chart-empty').classList.add('d-none');
     } catch (e) {
       console.warn('图表加载失败:', e);
       $('chart-empty').textContent = '图表加载失败：' + (e.message || '接口不可用');
       $('chart-empty').classList.remove('d-none');
       throw e;
-    }
-  }
-
-  function renderTrend(data) {
-    const points = (data.points || []).filter(p => isNum(p.price) && p.price > 0);
-    if (!points.length) throw new Error('暂无分时数据');
-
-    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(points[0].time || '');
-    const base = m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) / 1000 : Math.floor(Date.now() / 1000);
-    const key = 'trend:' + base;
-
-    const labels = new Map();
-    const priceData = [];
-    const avgData = [];
-
-    points.forEach((p, i) => {
-      const t = base + i * 60;
-      const clock = p.time && p.time.length >= 16 ? p.time.slice(11, 16) : '';
-      labels.set(t, clock);
-      priceData.push({ time: t, value: p.price });
-      if (isNum(p.avg) && p.avg > 0) avgData.push({ time: t, value: p.avg });
-    });
-
-    const isNew = !chart || chartKey !== key;
-    if (isNew) {
-      const border = cssVar('--bs-border-color') || '#dee2e6';
-      const dark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-      createChart({
-        timeScale: {
-          borderColor: border,
-          timeVisible: true,
-          secondsVisible: false,
-          rightOffset: 2,
-          barSpacing: 4,
-          tickMarkFormatter: t => timeLabels.get(t) || ''
-        },
-        localization: {
-          priceFormatter: v => Number(v).toFixed(2),
-          timeFormatter: t => timeLabels.get(t) || ''
-        }
-      });
-      chartKey = key;
-      // createChart 内部会重置 timeLabels，必须在建图之后再赋值
-      timeLabels = labels;
-      series.main = chart.addAreaSeries({
-        lineColor: dark ? '#60a5fa' : '#2563eb',
-        topColor: dark ? 'rgba(96,165,250,.25)' : 'rgba(37,99,235,.22)',
-        bottomColor: 'rgba(37,99,235,0)',
-        lineWidth: 2,
-        priceLineVisible: false,
-        lastValueVisible: true,
-        crosshairMarkerRadius: 3
-      });
-      series.avg = chart.addLineSeries({
-        color: '#f59e0b',
-        lineWidth: 1,
-        priceLineVisible: false,
-        lastValueVisible: false,
-        crosshairMarkerVisible: false
-      });
-    } else {
-      timeLabels = labels;
-    }
-
-    series.main.setData(priceData);
-    series.avg.setData(avgData);
-
-    if (series.preCloseLine) {
-      series.main.removePriceLine(series.preCloseLine);
-      series.preCloseLine = null;
-    }
-    if (isNum(data.preClose)) {
-      series.preCloseLine = series.main.createPriceLine({
-        price: data.preClose,
-        color: cssVar('--bs-secondary-color') || '#6c757d',
-        lineWidth: 1,
-        lineStyle: LightweightCharts.LineStyle.Dashed,
-        axisLabelVisible: true,
-        title: '昨收'
-      });
-    }
-
-    if (isNew) {
-      chart.timeScale().fitContent();
-      // 左侧留白，避免首个时间标签被裁掉（如 09:30 显示成 -30）
-      chart.timeScale().setVisibleLogicalRange({ from: -12, to: priceData.length + 2 });
     }
   }
 
@@ -763,9 +651,7 @@
 
   function rerenderChart() {
     destroyChart();
-    if (chartTab === 'trend' && trendCache) {
-      try { renderTrend(trendCache); } catch (e) { /* ignore */ }
-    } else if (klineCache[chartTab]) {
+    if (klineCache[chartTab]) {
       try { renderKline(klineCache[chartTab], chartTab); } catch (e) { /* ignore */ }
     } else {
       loadChart(chartTab, false).catch(() => {});
@@ -791,7 +677,7 @@
     chartTimer = null;
     if (!StockQuotes.isTrading()) return;
 
-    const ms = chartTab === 'trend' ? 30000 : 60000;
+    const ms = 60000;
     chartTimer = setInterval(() => {
       if (!StockQuotes.isTrading()) return;
       loadChart(chartTab, true).catch(() => {});

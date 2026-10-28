@@ -18,27 +18,81 @@
   ];
   function el(id) { return document.getElementById(id); }
   function esc(v) { return String(v == null ? '' : v).replace(/[&<>\"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
-  function renderOpportunity() {
-    var summary = el('opportunity-summary'), list = el('opportunity-list');
-    if (!summary || !list) return;
-    var ready = stocks.map(function(s){ return {stock:s, quote:quotes[s.code], eval:Croc.evaluate(s, quotes[s.code])}; }).filter(function(x){ return x.quote && x.quote.price > 0; });
-    var zone = ready.filter(function(x){ return x.eval.zone === 'heavy' || x.eval.zone === 'entry'; });
-    var eligible = zone.filter(function(x){ return Croc.buyEligibility(x.stock, x.quote).eligible; });
-    var screenbuy = ready.filter(function(x){ return Croc.matchStatus(x.stock, x.quote, 'screenbuy'); });
-    summary.innerHTML = [['进入计划区',zone.length],['通过硬门槛',eligible.length],['纪律全过+买点',screenbuy.length]].map(function(x){return '<div class="col-4"><div class="insight-card h-100 p-2"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div></div></div>';}).join('');
-    if (!ready.length) { list.innerHTML = '<div class="empty-state">行情尚未加载，请返回股票池刷新行情。</div>'; return; }
-    var cards = zone.slice().sort(function(a,b){ var ea=Croc.buyEligibility(a.stock,a.quote).eligible?0:1; var eb=Croc.buyEligibility(b.stock,b.quote).eligible?0:1; return ea-eb || (a.eval.zone === 'heavy' ? 0 : 1) - (b.eval.zone === 'heavy' ? 0 : 1); });
-    if (!cards.length) {
-      list.innerHTML = '<div class="empty-state">当前没有进入计划区且通过硬门槛的标的。可以继续观察价格，或查看量化纪律名单。</div>' + (screenbuy.length ? '<div class="insight-card"><div class="fw-semibold mb-2">量化纪律全过 + 计划买点</div><div class="d-flex flex-wrap gap-2">' + screenbuy.map(function(x){return '<a class="btn btn-sm btn-outline-secondary" href="stock.html?code='+encodeURIComponent(x.stock.code)+'">'+esc(x.stock.name)+'</a>';}).join('') + '</div></div>' : '');
-      return;
-    }
-    list.innerHTML = cards.map(function(x){
-      var s=x.stock, q=x.quote, e=x.eval, gate=Croc.buyEligibility(s,q);
-      var change = typeof q.todayChange === 'number' ? ((q.todayChange > 0 ? '+' : '') + q.todayChange.toFixed(2) + '%') : '—';
-      var changeClass = q.todayChange > 0 ? 'text-up' : q.todayChange < 0 ? 'text-down' : 'text-body-secondary';
-      return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div><a class="fw-bold text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+'</a><div class="mini-label">'+esc(s.group || '')+' · '+esc(s.code)+'</div></div><span class="flag '+(e.zone === 'heavy' ? 'flag-buy' : 'flag-warn')+'">'+(e.zone === 'heavy' ? '重仓价区间' : '入场价区间')+'</span></div><div class="d-flex align-items-baseline gap-2 mt-2"><span class="business-price">'+q.price.toFixed(2)+'</span><span class="'+changeClass+'">'+change+'</span></div><div class="d-flex flex-wrap gap-2 mt-2 mini-label"><span>入场 '+(s.entry == null ? '—' : Number(s.entry).toFixed(2))+'</span><span>重仓 '+(s.heavy == null ? '—' : Number(s.heavy).toFixed(2))+'</span><span>PE '+(q.pe == null ? '—' : q.pe.toFixed(2))+'</span><span>PB '+(q.pb == null ? '—' : q.pb.toFixed(2))+'</span></div><div class="mt-2 small '+(gate.eligible ? 'text-success' : 'text-warning-emphasis')+'">'+esc(gate.reason || '通过硬门槛；仍需核对基本面与周期')+'</div><a class="btn btn-sm btn-outline-primary mt-2" href="stock.html?code='+encodeURIComponent(s.code)+'">查看个股详情</a></article>';
-    }).join('');
+  var quoteClient = null, marketIndices = {}, holdingStorageKey = 'stock-helper-local-holdings-v1';
+  function readHoldings() {
+    try { var v=JSON.parse(global.localStorage.getItem(holdingStorageKey)||'[]'); return Array.isArray(v)?v.filter(function(h){return h&&typeof h.code==='string'&&Number(h.quantity)>0&&Number(h.cost)>0;}):[]; } catch(_){return [];}
   }
+  function fmtPct(v){return Number.isFinite(Number(v))?((Number(v)>0?'+':'')+Number(v).toFixed(2)+'%'):'—';}
+  function fmtMoney(v){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
+  function tone(v){return Number(v)>0?'text-up':Number(v)<0?'text-down':'text-body-secondary';}
+  function stockForCode(code){var c=String(code||'').trim().toLowerCase();if(/^\d{6}$/.test(c))c=(/^[5689]/.test(c)?'sh':'sz')+c;return stocks.find(function(s){return String(s.code||'').toLowerCase()===c;})||null;}
+  function renderMarketIndices(){
+    var node=el('market-index-summary');if(!node)return;
+    var specs=[{code:'sh000001',name:'上证指数'},{code:'sz399001',name:'深证成指'},{code:'sz399006',name:'创业板指'}];
+    node.innerHTML=specs.map(function(x){var q=marketIndices[x.code];return '<article class="insight-card"><div class="mini-label">'+x.name+'</div><div class="business-price">'+(q&&q.price>0?Number(q.price).toFixed(2):'—')+'</div><div class="'+(q?tone(q.todayChange):'text-body-secondary')+' fw-semibold">'+(q?fmtPct(q.todayChange):'指数行情暂不可用')+'</div><div class="mini-label mt-1">'+(q&&q.time?'行情时间：'+esc(q.time):'行情源未返回有效数据，不使用模拟值')+'</div></article>';}).join('');
+  }
+  function renderMarketPulse(){
+    var node=el('market-pulse-summary');if(!node)return;
+    var live=stocks.map(function(s){return {s:s,q:quotes[s.code]};}).filter(function(x){return x.q&&Number(x.q.price)>0;});
+    var up=live.filter(function(x){return Number(x.q.todayChange)>0;}).length,down=live.filter(function(x){return Number(x.q.todayChange)<0;}).length,flat=live.length-up-down;
+    var avg=live.length?live.reduce(function(a,x){return a+(Number.isFinite(Number(x.q.todayChange))?Number(x.q.todayChange):0);},0)/live.length:null;
+    var zone=live.filter(function(x){var z=Croc.evaluate(x.s,x.q).zone;return z==='heavy'||z==='entry';}).length;
+    var cards=[['有行情',live.length+'/'+stocks.length+' 只','股票池行情覆盖'],['涨 / 跌 / 平',up+' / '+down+' / '+flat,'仅统计本股票池，不代表全市场'],['股票池平均涨跌',fmtPct(avg),'等权平均温度参考'],['到计划价区',zone+' 只','按股票池入场 / 重仓计划价统计']];
+    node.innerHTML=cards.map(function(x){return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div><div class="mini-label">'+x[2]+'</div></div></div>';}).join('');
+  }
+  function renderSectors(){
+    var node=el('sector-hotspots');if(!node)return;var groups={};
+    stocks.forEach(function(s){var q=quotes[s.code],key=s.group||'未分类';if(!groups[key])groups[key]={name:key,count:0,live:0,up:0,down:0,sum:0,zone:0,leaders:[]};var g=groups[key];g.count++;
+      if(q&&Number(q.price)>0){g.live++;var ch=Number(q.todayChange);if(Number.isFinite(ch)){g.sum+=ch;if(ch>0)g.up++;if(ch<0)g.down++;g.leaders.push({name:s.name,code:s.code,change:ch});}
+        var z=Croc.evaluate(s,q).zone;if(z==='heavy'||z==='entry')g.zone++;}});
+    var rows=Object.keys(groups).map(function(k){var g=groups[k];g.avg=g.live?g.sum/g.live:null;g.leaders.sort(function(a,b){return b.change-a.change;});return g;}).sort(function(a,b){return (b.avg==null?-999:b.avg)-(a.avg==null?-999:a.avg);});
+    node.innerHTML=rows.map(function(g){var leaders=g.leaders.slice(0,3).map(function(s){return '<a class="text-body text-decoration-none me-2" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+' <span class="'+tone(s.change)+'">'+fmtPct(s.change)+'</span></a>';}).join('')||'<span class="mini-label">暂无有效涨跌数据</span>';
+      return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="fw-bold">'+esc(g.name)+'</div><span class="flag" style="margin:0">'+g.live+'/'+g.count+' 只有行情</span></div><div class="d-flex flex-wrap align-items-baseline gap-2 mt-2"><span class="business-price '+tone(g.avg)+'">'+fmtPct(g.avg)+'</span><span class="mini-label">平均涨跌</span><span class="mini-label">涨 '+g.up+' · 跌 '+g.down+' · 到计划区 '+g.zone+'</span></div><div class="mini-label mt-2 mb-1">板块内涨幅靠前</div><div>'+leaders+'</div></article>';}).join('')||'<div class="empty-state">暂无分组数据。</div>';
+  }
+  function renderHoldings(){
+    var summary=el('holdings-summary'),list=el('holdings-list');if(!summary||!list)return;
+    var hs=[];try{var raw=JSON.parse(global.localStorage.getItem(holdingStorageKey)||'[]');if(Array.isArray(raw))hs=raw;}catch(_){}
+    hs=hs.filter(function(h){return h&&h.code&&Number(h.quantity)>0&&Number(h.cost)>0;});
+    var rows=hs.map(function(h){var s=stockForCode(h.code),q=s?quotes[s.code]:null,p=q&&Number(q.price)>0?Number(q.price):null,qty=Number(h.quantity),cost=Number(h.cost);return {h:h,s:s,p:p,qty:qty,cost:cost,value:p==null?null:p*qty,pnl:p==null?null:(p-cost)*qty,pct:p==null?null:(p-cost)/cost*100};});
+    var missing=rows.filter(function(r){return r.p==null;}).length, value=rows.reduce(function(a,r){return a+(r.value||0);},0),pnl=rows.reduce(function(a,r){return a+(r.pnl||0);},0),cost=rows.reduce(function(a,r){return a+r.qty*r.cost;},0);
+    summary.innerHTML=[['持仓标的',rows.length+' 只'],['持仓市值',rows.length&&!missing?'¥'+fmtMoney(value):(rows.length?'部分行情缺失':'—')],['浮动盈亏',rows.length&&!missing?(pnl>0?'+':'')+'¥'+fmtMoney(pnl):(rows.length?'部分行情缺失':'—')],['整体盈亏率',cost>0&&!missing?fmtPct(pnl/cost*100):'—']].map(function(x){return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-5 fw-bold">'+x[1]+'</div></div></div>';}).join('');
+    if(!rows.length){list.innerHTML='<div class="empty-state">尚无本机持仓记录。点击「录入 / 修改持仓」添加代码、数量和成本；个人持仓不会写入公开仓库。</div>';return;}
+    list.innerHTML=rows.map(function(r){return '<article class="insight-card"><div class="d-flex justify-content-between gap-2"><div><div class="fw-bold">'+esc((r.s&&r.s.name)||r.h.name||r.h.code)+'</div><div class="mini-label">'+esc(r.h.code)+'</div></div><span class="flag" style="margin:0">'+(r.p==null?'行情缺失':'持仓')+'</span></div><div class="d-flex align-items-baseline justify-content-between gap-2 mt-2"><span class="business-price">'+(r.p==null?'—':r.p.toFixed(2))+'</span><span class="'+tone(r.pnl)+' fw-semibold">'+(r.pnl==null?'盈亏待计算':(r.pnl>0?'+':'')+'¥'+fmtMoney(r.pnl)+' ('+fmtPct(r.pct)+')')+'</span></div><div class="mini-label mt-1">数量 '+r.qty.toLocaleString('zh-CN')+' 股 · 成本 '+r.cost.toFixed(3)+' · 市值 '+(r.value==null?'—':'¥'+fmtMoney(r.value))+'</div>'+(r.s?'<div class="mini-label mt-1">计划价：重仓 '+(r.s.heavy==null?'—':r.s.heavy)+' · 入场 '+(r.s.entry==null?'—':r.s.entry)+' · 止盈 '+(r.s.tp1==null?'—':r.s.tp1)+'</div>':'')+'</article>';}).join('');
+  }
+  function appendHoldingRow(v){
+    var rows=el('holdings-rows');if(!rows)return;v=v||{};var row=document.createElement('div');row.className='row g-2 align-items-end mb-2 holding-edit-row';
+    row.innerHTML='<div class="col-12 col-md-4"><label class="form-label small mb-1">代码</label><input class="form-control form-control-sm holding-code" placeholder="sz000731" value="'+esc(v.code||'')+'" required></div><div class="col-6 col-md-3"><label class="form-label small mb-1">数量（股）</label><input class="form-control form-control-sm holding-qty" type="number" min="1" step="1" value="'+(v.quantity||'')+'" required></div><div class="col-6 col-md-3"><label class="form-label small mb-1">成本价</label><input class="form-control form-control-sm holding-cost" type="number" min="0.001" step="0.001" value="'+(v.cost||'')+'" required></div><div class="col-12 col-md-2"><button type="button" class="btn btn-sm btn-outline-danger w-100 holding-remove">删除此行</button></div>';
+    rows.appendChild(row);
+  }
+  function openHoldingsEditor(){
+    var form=el('holdings-form'),rows=el('holdings-rows');if(!form||!rows)return;rows.innerHTML='';
+    readHoldings().forEach(appendHoldingRow);if(!rows.children.length)appendHoldingRow({});form.classList.remove('d-none');
+  }
+  function bindHoldingsEditor(){
+    var toggle=el('holdings-toggle'),form=el('holdings-form');if(!toggle||!form||form.dataset.bound)return;form.dataset.bound='1';
+    toggle.addEventListener('click',function(){if(form.classList.contains('d-none'))openHoldingsEditor();else form.classList.add('d-none');});
+    el('holding-add').addEventListener('click',function(){appendHoldingRow({});});el('holdings-cancel').addEventListener('click',function(){form.classList.add('d-none');});
+    el('holdings-rows').addEventListener('click',function(e){var b=e.target.closest('.holding-remove');if(b){b.closest('.holding-edit-row').remove();if(!el('holdings-rows').children.length)appendHoldingRow({});}});
+    form.addEventListener('submit',function(e){e.preventDefault();var next=[],valid=true;
+      Array.prototype.forEach.call(el('holdings-rows').querySelectorAll('.holding-edit-row'),function(row){var code=row.querySelector('.holding-code').value.trim().toLowerCase(),qty=Number(row.querySelector('.holding-qty').value),cost=Number(row.querySelector('.holding-cost').value);if(!code&&!qty&&!cost)return;if(/^\d{6}$/.test(code))code=(/^[5689]/.test(code)?'sh':'sz')+code;if(!/^(sh|sz)\d{6}$/.test(code)||!(qty>0)||!(cost>0)){valid=false;return;}var s=stockForCode(code);next.push({code:code,name:s?s.name:'',quantity:qty,cost:cost});});
+      if(!valid){global.alert('请检查股票代码、数量和成本价。代码可用 6 位数字或 sh/sz 开头的 6 位代码。');return;}
+      try{global.localStorage.setItem(holdingStorageKey,JSON.stringify(next));}catch(_){global.alert('浏览器无法保存本地持仓，请检查存储权限。');return;}form.classList.add('d-none');renderHoldings();
+    });
+  }
+  function renderOpportunity(){
+    var summary=el('opportunity-summary'),list=el('opportunity-list');if(!summary||!list)return;
+    var ready=stocks.map(function(s){return {stock:s,quote:quotes[s.code],eval:Croc.evaluate(s,quotes[s.code])};}).filter(function(x){return x.quote&&x.quote.price>0;});
+    var zone=ready.filter(function(x){return x.eval.zone==='heavy'||x.eval.zone==='entry';}),eligible=zone.filter(function(x){return Croc.buyEligibility(x.stock,x.quote).eligible;}),screenbuy=ready.filter(function(x){return Croc.matchStatus(x.stock,x.quote,'screenbuy');});
+    summary.innerHTML=[['进入计划区',zone.length],['通过硬门槛',eligible.length],['纪律全过+买点',screenbuy.length]].map(function(x){return '<div class="col-4"><div class="insight-card h-100 p-2"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div></div></div>';}).join('');
+    if(!ready.length)list.innerHTML='<div class="empty-state">行情尚未加载，请返回股票池刷新行情。</div>';
+    else {var cards=zone.slice().sort(function(a,b){var ea=Croc.buyEligibility(a.stock,a.quote).eligible?0:1,eb=Croc.buyEligibility(b.stock,b.quote).eligible?0:1;return ea-eb||(a.eval.zone==='heavy'?0:1)-(b.eval.zone==='heavy'?0:1);});
+      if(!cards.length)list.innerHTML='<div class="empty-state">当前没有进入计划区的标的。可继续观察价格，或查看量化纪律名单。</div>'+(screenbuy.length?'<div class="insight-card"><div class="fw-semibold mb-2">量化纪律全过 + 计划买点</div><div class="d-flex flex-wrap gap-2">'+screenbuy.map(function(x){return '<a class="btn btn-sm btn-outline-secondary" href="stock.html?code='+encodeURIComponent(x.stock.code)+'">'+esc(x.stock.name)+'</a>';}).join('')+'</div></div>':'');
+      else list.innerHTML=cards.map(function(x){var s=x.stock,q=x.quote,e=x.eval,gate=Croc.buyEligibility(s,q);return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div><a class="fw-bold text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+'</a><div class="mini-label">'+esc(s.group||'')+' · '+esc(s.code)+'</div></div><span class="flag '+(e.zone==='heavy'?'flag-buy':'flag-warn')+'">'+(e.zone==='heavy'?'重仓价区间':'入场价区间')+'</span></div><div class="d-flex align-items-baseline gap-2 mt-2"><span class="business-price">'+Number(q.price).toFixed(2)+'</span><span class="'+tone(q.todayChange)+'">'+fmtPct(q.todayChange)+'</span></div><div class="d-flex flex-wrap gap-2 mt-2 mini-label"><span>入场 '+(s.entry==null?'—':Number(s.entry).toFixed(2))+'</span><span>重仓 '+(s.heavy==null?'—':Number(s.heavy).toFixed(2))+'</span><span>PE '+(q.pe==null?'—':Number(q.pe).toFixed(2))+'</span><span>PB '+(q.pb==null?'—':Number(q.pb).toFixed(2))+'</span></div><div class="mt-2 small '+(gate.eligible?'text-success':'text-warning-emphasis')+'">'+esc(gate.reason||'通过硬门槛；仍需核对基本面与周期')+'</div><a class="btn btn-sm btn-outline-primary mt-2" href="stock.html?code='+encodeURIComponent(s.code)+'">查看个股详情</a></article>';}).join('');
+    }
+    renderMarketIndices();renderMarketPulse();renderSectors();renderHoldings();
+    var updated=el('brief-updated');if(updated)updated.textContent='更新时间：'+new Date().toLocaleString('zh-CN',{hour12:false});
+  }
+  function fetchMarketIndices(){if(!quoteClient||typeof quoteClient.fetch!=='function')return;quoteClient.fetch(['sh000001','sz399001','sz399006']).then(function(data){marketIndices=data||{};renderMarketIndices();}).catch(function(){renderMarketIndices();});}
   function formatNumber(value) {
     var n = Number(value);
     return Number.isFinite(n) ? n.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) : '—';
@@ -329,9 +383,12 @@
       .then(function(value){ businessFetchPromise = null; return value; });
     return businessFetchPromise;
   }
-  function init(stocksArg, quoteArg) {
+  function init(stocksArg, quoteArg, quoteClientArg) {
     stocks = Array.isArray(stocksArg) ? stocksArg : [];
     quotes = quoteArg || {};
+    quoteClient = quoteClientArg || null;
+    bindHoldingsEditor();
+    fetchMarketIndices();
     var refresh = el('refresh-business-data');
     if (refresh && !refresh.dataset.bound) {
       refresh.dataset.bound = '1';
@@ -340,6 +397,6 @@
     renderOpportunity();
     fetchBusinessData();
   }
-  function onTab(target) { if(target==='business')renderBusiness(); if(target==='opportunity')renderOpportunity(); }
+  function onTab(target) { if(target==='business')renderBusiness(); if(target==='opportunity'){renderOpportunity();fetchMarketIndices();} }
   global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness};
 })(window);

@@ -317,42 +317,6 @@
       </div>
     </section>
 
-    <!-- 做T（日内） -->
-    <section class="card shadow-sm">
-      <div class="card-header bg-body d-flex flex-wrap align-items-center gap-2 py-2">
-        <span class="fw-semibold" style="font-size:13px">做T（日内）</span>
-        <span class="badge rounded-pill text-bg-secondary" id="t-badge">加载中…</span>
-        <span class="ms-auto text-body-secondary" style="font-size:10.5px" id="t-note">15 分 K</span>
-      </div>
-      <div class="card-body">
-        <div class="check-grid" id="t-checks"></div>
-        <div class="stat-grid mt-3" id="t-stats"></div>
-        <div class="sell-box mt-3" id="t-ref">正在计算均价与参考价位…</div>
-        <div class="text-body-tertiary mt-2" style="font-size:10.5px">
-          做T只降成本、不加仓位；分钟级指标噪音大，辅助参考，不构成投资建议。
-        </div>
-      </div>
-    </section>
-
-    <!-- 补仓（日线） -->
-    <section class="card shadow-sm">
-      <div class="card-header bg-body d-flex flex-wrap align-items-center gap-2 py-2">
-        <span class="fw-semibold" style="font-size:13px">补仓（日线）</span>
-        <span class="badge rounded-pill text-bg-secondary" id="add-badge">加载中…</span>
-        <span class="ms-auto text-body-secondary" style="font-size:10.5px" id="add-note">日 K</span>
-      </div>
-      <div class="card-body">
-        <div class="check-grid" id="add-checks"></div>
-        <div class="alert alert-secondary mt-3 mb-0 py-2 px-3" id="add-hint" style="font-size:12px">
-          补仓看日线是否止跌：到支撑 + 资金确认 + 趋势过滤，三项缺一即降级。辅助参考，不构成投资建议。
-        </div>
-        <div class="stat-grid mt-3" id="add-stats"></div>
-        <div class="text-body-tertiary mt-2" style="font-size:10.5px">
-          筹码分布按日 K 成交量均匀摊到价格区间，为<b>近似</b>值，不是真实逐笔筹码。
-        </div>
-      </div>
-    </section>
-
     <!-- 鳄鱼纪律 -->
     <section class="card shadow-sm">
       <div class="card-header bg-body d-flex align-items-center py-2">
@@ -423,6 +387,42 @@
             保守净利 = (P−C)×Q×1万×折扣；合理市值 = 保守净利×PE。结果只是模糊的正确，不构成投资建议。
           </div>
         </details>
+      </div>
+    </section>
+
+    <!-- 做T（日内） -->
+    <section class="card shadow-sm">
+      <div class="card-header bg-body d-flex flex-wrap align-items-center gap-2 py-2">
+        <span class="fw-semibold" style="font-size:13px">做T（日内）</span>
+        <span class="badge rounded-pill text-bg-secondary" id="t-badge">加载中…</span>
+        <span class="ms-auto text-body-secondary" style="font-size:10.5px" id="t-note">15 分 K</span>
+      </div>
+      <div class="card-body">
+        <div class="check-grid" id="t-checks"></div>
+        <div class="stat-grid mt-3" id="t-stats"></div>
+        <div class="sell-box mt-3" id="t-ref">正在计算均价与参考价位…</div>
+        <div class="text-body-tertiary mt-2" style="font-size:10.5px">
+          做T只降成本、不加仓位；分钟级指标噪音大，辅助参考，不构成投资建议。
+        </div>
+      </div>
+    </section>
+
+    <!-- 补仓（日线） -->
+    <section class="card shadow-sm">
+      <div class="card-header bg-body d-flex flex-wrap align-items-center gap-2 py-2">
+        <span class="fw-semibold" style="font-size:13px">补仓（日线）</span>
+        <span class="badge rounded-pill text-bg-secondary" id="add-badge">加载中…</span>
+        <span class="ms-auto text-body-secondary" style="font-size:10.5px" id="add-note">日 K</span>
+      </div>
+      <div class="card-body">
+        <div class="check-grid" id="add-checks"></div>
+        <div class="alert alert-secondary mt-3 mb-0 py-2 px-3" id="add-hint" style="font-size:12px">
+          补仓看日线是否止跌：到支撑 + 资金确认 + 趋势过滤，三项缺一即降级。辅助参考，不构成投资建议。
+        </div>
+        <div class="stat-grid mt-3" id="add-stats"></div>
+        <div class="text-body-tertiary mt-2" style="font-size:10.5px">
+          筹码分布按日 K 成交量均匀摊到价格区间，为<b>近似</b>值，不是真实逐笔筹码。
+        </div>
       </div>
     </section>
   </div>

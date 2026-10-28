@@ -59,5 +59,5 @@ test('股票池保持 67 只且新增的易普力保留在列表中', () => {
   assert.ok(stocks.some(stock => stock.code === 'sz002096' && stock.name === '易普力'));
   const codes = stocks.map(stock => stock.code);
   assert.equal(new Set(codes).size, codes.length, '股票代码不得重复');
-  assert.ok(codes.every(code => /^(sh|sz)\\d{6}$/.test(code)), '股票代码格式应为 sh/sz + 6 位数字');
+  assert.ok(codes.every(code => /^(sh|sz)\d{6}$/.test(code)), '股票代码格式应为 sh/sz + 6 位数字');
 });

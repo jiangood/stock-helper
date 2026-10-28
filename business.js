@@ -92,6 +92,14 @@
         var monthlyCoords = monthlyValues.map(function(v,i){ return (5+i*(270/Math.max(1,monthlyValues.length-1)))+','+(32-((v-monthlyMin)/monthlyRange)*23); });
         monthlyPriceHtml = '<div class="mt-2 p-2 rounded border"><div class="mini-label">近月价格快照（来源提供的月份口径）</div><svg class="trend-svg mt-1" viewBox="0 0 280 38" role="img" aria-label="'+esc(meta.name)+'近月价格快照"><polyline points="'+monthlyCoords.join(' ')+'"></polyline></svg><div class="d-flex justify-content-between flex-wrap gap-1">'+monthlyPrices.map(function(p){return '<span class="mini-label">'+esc(p.label)+' '+formatNumber(p.value)+'</span>';}).join('')+'</div><div class="mini-label mt-1"><a href="'+esc(data.monthlyPrices.sourceUrl || 'https://data.eastmoney.com/ifdata/xhgp.html')+'" target="_blank" rel="noopener noreferrer">快照来源</a> · 非日频行情</div></div>';
       }
+      var basisPoint = series.slice().reverse().find(function(p){return Number(p.spot)>0 && Number(p.futures)>0;});
+      var basisHtml = '';
+      if (basisPoint) {
+        var basisValue = Number(basisPoint.spot)-Number(basisPoint.futures);
+        var basisRate = basisValue/Number(basisPoint.futures)*100;
+        var basisLabel = basisValue>0 ? '现货升水' : basisValue<0 ? '现货贴水' : '现货期货平水';
+        basisHtml = '<div class="mini-label mt-2">历史同日基差：'+(basisValue>0?'+':'')+formatNumber(basisValue)+' '+esc(data.unit || meta.unit || '')+'（'+basisLabel+'，'+(basisRate>0?'+':'')+basisRate.toFixed(2)+'%） · 日期：'+esc(basisPoint.date)+'</div>';
+      }
       var inventory = data.inventory && Number(data.inventory.latest) > 0 ? data.inventory : null;
       var inventoryChange = inventory && Number.isFinite(Number(inventory.change))
         ? ((Number(inventory.change) > 0 ? '+' : '') + formatNumber(inventory.change))
@@ -146,6 +154,7 @@
         + (data.latestFutures != null && Number(data.latestFutures)>0 ? '<div class="mini-label">期货参考价：'+formatNumber(data.latestFutures)+' '+esc(data.unit || meta.unit || '')+' · '+esc(data.futuresDate || latestDate || '')+(data.futuresTime ? ' '+esc(data.futuresTime) : '')+' · '+esc(data.futuresSource || '主力合约参考价')+'</div>' : '')
         + '<div class="mt-2">'+chart+'</div>'
         + monthlyPriceHtml
+        + basisHtml
         + inventoryHtml
         + marketSignalHtml
         + industryLinksHtml

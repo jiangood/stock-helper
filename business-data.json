@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T11:32:22+00:00",
+  "updatedAt": "2026-10-28T11:34:18+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -3618,19 +3618,12 @@
       "status": "pending"
     }
   },
-  "fetchErrors": [
-    "futures_spot_sys/alumina: 'NoneType' object has no attribute 'find_all'",
-    "futures_spot_sys/synthetic-ammonia: 'NoneType' object has no attribute 'find_all'",
-    "futures_spot_sys/sulfuric-acid: 'NoneType' object has no attribute 'find_all'",
-    "futures_spot_sys/titanium-concentrate: 'NoneType' object has no attribute 'find_all'",
-    "futures_spot_sys/thermal-coal: 'NoneType' object has no attribute 'find_all'"
-  ],
+  "fetchErrors": [],
   "costInputs": {
     "alumina": {
       "id": "alumina",
       "name": "氧化铝",
       "unit": "元/吨",
-      "symbol": "氧化铝",
       "relatedProducts": [
         "电解铝"
       ],
@@ -3639,47 +3632,44 @@
       "latest": null,
       "latestDate": null,
       "source": null,
-      "sourceUrl": "https://www.100ppi.com/",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "pending"
     },
     "synthetic-ammonia": {
       "id": "synthetic-ammonia",
       "name": "合成氨",
       "unit": "元/吨",
-      "symbol": "合成氨",
       "relatedProducts": [
         "纯碱",
         "尿素"
       ],
       "role": "化工原料参考价",
       "series": [],
-      "latest": null,
-      "latestDate": null,
-      "source": null,
-      "sourceUrl": "https://www.100ppi.com/",
-      "status": "pending"
+      "latest": 2366.67,
+      "latestDate": "2026-10-28",
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "status": "latest-only"
     },
     "sulfuric-acid": {
       "id": "sulfuric-acid",
       "name": "硫酸",
       "unit": "元/吨",
-      "symbol": "硫酸",
       "relatedProducts": [
         "钛白粉"
       ],
       "role": "硫酸法钛白粉成本参考",
       "series": [],
-      "latest": null,
-      "latestDate": null,
-      "source": null,
-      "sourceUrl": "https://www.100ppi.com/",
-      "status": "pending"
+      "latest": 917.5,
+      "latestDate": "2026-10-28",
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "status": "latest-only"
     },
     "titanium-concentrate": {
       "id": "titanium-concentrate",
       "name": "钛精矿",
       "unit": "元/吨",
-      "symbol": "钛精矿",
       "relatedProducts": [
         "钛白粉"
       ],
@@ -3688,26 +3678,25 @@
       "latest": null,
       "latestDate": null,
       "source": null,
-      "sourceUrl": "https://www.100ppi.com/",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "pending"
     },
     "thermal-coal": {
       "id": "thermal-coal",
       "name": "动力煤",
       "unit": "元/吨",
-      "symbol": "动力煤",
       "relatedProducts": [
         "尿素",
         "甲醇",
         "纯碱"
       ],
-      "role": "煤化工能源成本参考，煤种/地区口径需核对",
+      "role": "煤化工能源成本参考；煤种/地区口径需核对",
       "series": [],
-      "latest": null,
-      "latestDate": null,
-      "source": null,
-      "sourceUrl": "https://www.100ppi.com/",
-      "status": "pending"
+      "latest": 710.0,
+      "latestDate": "2026-10-28",
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "status": "latest-only"
     }
   }
 }

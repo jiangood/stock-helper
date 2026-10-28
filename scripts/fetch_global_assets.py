@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "global-assets-data.json"
+OUTPUT = ROOT / "data" / "global-assets-data.json"
 SOURCE = "Yahoo Finance public chart endpoint"
 ASSETS = [
     {"id": "gold", "name": "黄金", "symbols": ["XAUUSD=X", "GC=F"], "currency": "USD/盎司", "unit": "贵金属"},

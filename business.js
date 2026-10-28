@@ -3,7 +3,8 @@
   'use strict';
   var stocks = [];
   var quotes = {};
-  var businessData = null;\n  var businessFetchPromise = null;
+  var businessData = null;
+  var businessFetchPromise = null;
   var items = [
     { id:'soda-ash', name:'纯碱', metric:'纯碱现货价', unit:'元/吨', stocks:['双环科技','中盐化工','三友化工'], chain:'玻璃、光伏玻璃、日用玻璃、硅酸钠', drivers:'重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨等成本。', query:'纯碱 现货价格 厂家库存 周度' },
     { id:'urea', name:'尿素', metric:'尿素现货价', unit:'元/吨', stocks:['四川美丰'], chain:'煤头/气头生产 → 农业与工业需求', drivers:'看农业需求季节性、出口政策、日产量、企业库存和煤气成本。', query:'尿素 现货价格 企业库存 日产量' },
@@ -52,7 +53,7 @@
     container.innerHTML = products.map(function (entry) {
       var meta = entry.meta, data = entry.data;
       var series = Array.isArray(data.series) ? data.series.filter(function (p) {
-        return p && /^\\d{4}-\\d{2}-\\d{2}$/.test(p.date) && (Number(p.spot) > 0 || Number(p.futures) > 0);
+        return p && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && (Number(p.spot) > 0 || Number(p.futures) > 0);
       }).slice().sort(function (a,b) { return a.date.localeCompare(b.date); }) : [];
       var metricKey = series.some(function(p){ return Number(p.spot)>0; }) ? 'spot' : 'futures';
       var points = series.filter(function(p){ return Number(p[metricKey])>0; }).slice(-60);

@@ -287,20 +287,13 @@
 
 <main id="business-pane" data-pane="business" class="app-pane container-fluid px-3 py-3 d-none">
   <div class="panel-title">生意与产业链</div>
-  <div class="panel-subtitle mb-3">商品价格、供需和成本会影响企业盈利。当前价格观察点由你录入，避免把未接入的数据伪装成实时行情。</div>
-  <div class="insight-card mb-3">
-    <div class="fw-semibold mb-1">记录商品价格观察点</div>
-    <div class="panel-subtitle mb-2">记录将保存在当前浏览器，用于画趋势线；请尽量保持地区、规格和报价口径一致。</div>
-    <form id="business-observation-form" class="business-form">
-      <div><label for="business-product" class="form-label mb-1 mini-label">商品</label><select id="business-product" class="form-select form-select-sm" required></select></div>
-      <div><label for="business-date" class="form-label mb-1 mini-label">日期</label><input id="business-date" class="form-control form-control-sm" type="date" required></div>
-      <div><label for="business-price" class="form-label mb-1 mini-label">价格 / 指标值</label><input id="business-price" class="form-control form-control-sm" type="number" min="0" step="any" placeholder="输入数值" required></div>
-      <div><label for="business-note" class="form-label mb-1 mini-label">备注（可选）</label><input id="business-note" class="form-control form-control-sm" type="text" maxlength="120" placeholder="地区、来源、规格"></div>
-      <div class="wide d-flex flex-wrap gap-2 align-items-center"><button class="btn btn-sm btn-primary" type="submit">保存观察点</button><button class="btn btn-sm btn-outline-secondary" type="button" id="clear-business-history">清空记录</button></div>
-    </form>
+  <div class="panel-subtitle mb-3">自动抓取公开商品现货与期货数据，按计划定时更新。优先展示真实数据和来源；抓取失败或来源不支持的品种会明确标记，不用模拟值填充。</div>
+  <div class="insight-card mb-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+    <div><div class="fw-semibold">自动行情状态</div><div id="business-data-status" class="panel-subtitle">正在读取最新商品数据…</div></div>
+    <button class="btn btn-sm btn-outline-primary" type="button" id="refresh-business-data">重新读取</button>
   </div>
   <div id="business-cards" class="insight-grid"></div>
-  <div class="panel-subtitle mt-3">价格上涨不必然代表公司利润上升。还需检查库存、开工率、产能、原料成本、下游需求及上市公司实际业务暴露。</div>
+  <div class="panel-subtitle mt-3">自动数据仍需结合库存、开工率、产能、成本和下游需求判断。现货与期货价格不是同一口径；每张卡片会标注数据类型、来源和日期。相关股票仅表示产业链关联，不代表公司一定受益。</div>
 </main>
 
 <footer class="text-center text-body-secondary py-2 border-top bg-body">

@@ -222,7 +222,7 @@
       })
       .finally(function () { loading = false; });
   }
-  function onTab(target) { if (target === 'assets') load(false); }
+  function onTab(target) { if (target === 'market') load(false); }
   function init() {
     ensureDashboard();
   }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T13:11:00.063002Z",
+  "updatedAt": "2026-10-28T13:29:26.331765Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,11 +7,11 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4068.2,
+      "price": 4065.5,
       "prevClose": 4168.4,
-      "change": -100.2,
-      "changePct": -2.4038,
-      "quoteTime": "2026-10-28T13:00:57Z",
+      "change": -102.9,
+      "changePct": -2.468573,
+      "quoteTime": "2026-10-28T13:19:17Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF",
       "history": [
@@ -101,7 +101,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 4068.2
+          "close": 4065.5
         }
       ]
     },
@@ -110,11 +110,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 80576.13,
+      "price": 80495.22,
       "prevClose": 83502.61,
-      "change": -2926.48,
-      "changePct": -3.504657,
-      "quoteTime": "2026-10-28T13:10:55Z",
+      "change": -3007.39,
+      "changePct": -3.601552,
+      "quoteTime": "2026-10-28T13:29:21Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD",
       "history": [
@@ -204,7 +204,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 80576.1328
+          "close": 80495.2188
         }
       ]
     },
@@ -213,11 +213,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2335.13,
+      "price": 2332.59,
       "prevClose": 2688.6687,
-      "change": -353.5387,
-      "changePct": -13.14921,
-      "quoteTime": "2026-10-28T13:10:50Z",
+      "change": -356.0787,
+      "changePct": -13.243681,
+      "quoteTime": "2026-10-28T13:29:20Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD",
       "history": [
@@ -307,7 +307,7 @@
         },
         {
           "date": "2026-10-28",
-          "close": 2335.1299
+          "close": 2332.5901
         }
       ]
     },
@@ -625,11 +625,11 @@
       "name": "VIX 恐慌指数",
       "currency": "USD",
       "status": "已更新",
-      "price": 17.38,
+      "price": 17.31,
       "prevClose": 16.07,
-      "change": 1.31,
-      "changePct": 8.151836,
-      "quoteTime": "2026-10-28T12:55:46Z",
+      "change": 1.24,
+      "changePct": 7.716241,
+      "quoteTime": "2026-10-28T13:14:16Z",
       "sourceSymbol": "^VIX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EVIX",
       "history": [
@@ -719,7 +719,110 @@
         },
         {
           "date": "2026-10-28",
-          "close": 17.38
+          "close": 17.31
+        }
+      ]
+    },
+    {
+      "id": "usdcny",
+      "name": "美元兑人民币",
+      "currency": "CNY",
+      "status": "已更新",
+      "price": 6.6656,
+      "prevClose": 6.7128,
+      "change": -0.0472,
+      "changePct": -0.703134,
+      "quoteTime": "2026-10-28T13:27:17Z",
+      "sourceSymbol": "CNY=X",
+      "sourceUrl": "https://finance.yahoo.com/quote/CNY%3DX",
+      "history": [
+        {
+          "date": "2026-09-28",
+          "close": 6.7103
+        },
+        {
+          "date": "2026-09-29",
+          "close": 6.703
+        },
+        {
+          "date": "2026-09-30",
+          "close": 6.7045
+        },
+        {
+          "date": "2026-10-01",
+          "close": 6.7045
+        },
+        {
+          "date": "2026-10-04",
+          "close": 6.7045
+        },
+        {
+          "date": "2026-10-05",
+          "close": 6.7045
+        },
+        {
+          "date": "2026-10-06",
+          "close": 6.7045
+        },
+        {
+          "date": "2026-10-07",
+          "close": 6.7045
+        },
+        {
+          "date": "2026-10-08",
+          "close": 6.7021
+        },
+        {
+          "date": "2026-10-11",
+          "close": 6.692
+        },
+        {
+          "date": "2026-10-12",
+          "close": 6.692
+        },
+        {
+          "date": "2026-10-13",
+          "close": 6.692
+        },
+        {
+          "date": "2026-10-14",
+          "close": 6.6926
+        },
+        {
+          "date": "2026-10-15",
+          "close": 6.6909
+        },
+        {
+          "date": "2026-10-18",
+          "close": 6.6909
+        },
+        {
+          "date": "2026-10-19",
+          "close": 6.6909
+        },
+        {
+          "date": "2026-10-20",
+          "close": 6.6779
+        },
+        {
+          "date": "2026-10-21",
+          "close": 6.6779
+        },
+        {
+          "date": "2026-10-22",
+          "close": 6.6779
+        },
+        {
+          "date": "2026-10-26",
+          "close": 6.6779
+        },
+        {
+          "date": "2026-10-27",
+          "close": 6.67
+        },
+        {
+          "date": "2026-10-28",
+          "close": 6.6656
         }
       ]
     }

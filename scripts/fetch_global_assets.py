@@ -21,6 +21,7 @@ ASSETS = [
     {"id": "nikkei225", "name": "日经 225", "symbols": ["^N225"], "currency": "指数点", "unit": "海外指数"},
     {"id": "nasdaq100", "name": "纳斯达克 100", "symbols": ["^NDX"], "currency": "指数点", "unit": "海外指数"},
     {"id": "sp500", "name": "标普 500", "symbols": ["^GSPC"], "currency": "指数点", "unit": "海外指数"},
+    {"id": "vix", "name": "VIX 恐慌指数", "symbols": ["^VIX"], "currency": "指数点", "unit": "波动率指标", "range": "1mo"},
 ]
 
 def finite(value: Any) -> float | None:
@@ -30,9 +31,9 @@ def finite(value: Any) -> float | None:
     except (TypeError, ValueError):
         return None
 
-def fetch_symbol(symbol: str) -> dict[str, Any]:
+def fetch_symbol(symbol: str, period: str = "5d") -> dict[str, Any]:
     encoded = urllib.parse.quote(symbol, safe="")
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}?range=5d&interval=1d"
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}?range={period}&interval=1d"
     request = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (compatible; StockHelper/1.0; +https://jiangood.github.io/stock-helper/)",
         "Accept": "application/json",
@@ -72,7 +73,17 @@ def fetch_symbol(symbol: str) -> dict[str, Any]:
     change_pct = (change / previous * 100) if previous and change is not None else None
     timestamp = meta.get("regularMarketTime") or last_timestamp
     quote_time = datetime.fromtimestamp(timestamp, timezone.utc).isoformat().replace("+00:00", "Z") if timestamp else None
-    return {
+    history = []
+    if period == "1mo":
+        for stamp, close_value in zip(timestamps, closes):
+            close = finite(close_value)
+            if close is not None:
+                history.append({
+                    "date": datetime.fromtimestamp(stamp, timezone.utc).date().isoformat(),
+                    "close": round(close, 4),
+                })
+        history = history[-22:]
+    quote = {
         "sourceSymbol": symbol,
         "price": round(price, 8),
         "prevClose": round(previous, 8) if previous else None,
@@ -83,6 +94,9 @@ def fetch_symbol(symbol: str) -> dict[str, Any]:
         "status": "已更新",
         "sourceUrl": "https://finance.yahoo.com/quote/" + urllib.parse.quote(symbol, safe=""),
     }
+    if history:
+        quote["history"] = history
+    return quote
 
 def main() -> int:
     try:
@@ -107,7 +121,7 @@ def main() -> int:
         }
         for symbol in meta["symbols"]:
             try:
-                quote = fetch_symbol(symbol)
+                quote = fetch_symbol(symbol, meta.get("range", "5d"))
                 result.update(quote)
                 break
             except (OSError, ValueError, KeyError, RuntimeError, urllib.error.URLError) as error:

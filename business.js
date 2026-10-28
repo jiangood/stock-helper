@@ -22,7 +22,7 @@
   function readHoldings() {
     try { var v=JSON.parse(global.localStorage.getItem(holdingStorageKey)||'[]'); return Array.isArray(v)?v.filter(function(h){return h&&typeof h.code==='string'&&Number(h.quantity)>0&&Number(h.cost)>0;}):[]; } catch(_){return [];}
   }
-  function fmtPct(v){return Number.isFinite(Number(v))?((Number(v)>0?'+':'')+Number(v).toFixed(2)+'%'):'—';}
+  function fmtPct(v){return v===null||v===undefined||v===''||!Number.isFinite(Number(v))?'—':((Number(v)>0?'+':'')+Number(v).toFixed(2)+'%');}
   function fmtMoney(v){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
   function tone(v){return Number(v)>0?'text-up':Number(v)<0?'text-down':'text-body-secondary';}
   function stockForCode(code){var c=String(code||'').trim().toLowerCase();if(/^\d{6}$/.test(c))c=(/^[5689]/.test(c)?'sh':'sz')+c;return stocks.find(function(s){return String(s.code||'').toLowerCase()===c;})||null;}

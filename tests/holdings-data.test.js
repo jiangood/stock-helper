@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const Holdings = require('../holdings-data.js');
-const source = require('../holdings.json');
+const source = require('../data/holdings.json');
 
 test('validates the public holdings source and normalizes its fields', () => {
   const data = Holdings.validatePayload(source);

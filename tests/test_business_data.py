@@ -34,6 +34,22 @@ class BusinessDataTests(unittest.TestCase):
         self.assertIsNone(missing["latest"])
         self.assertEqual(missing["status"], "pending")
 
+    def test_normalize_inventory_frame_preserves_date_value_and_signed_change(self):
+        class FakeFrame:
+            empty = False
+            def iterrows(self):
+                return iter(enumerate([
+                    {"日期": "2026-10-27", "库存": 1200, "增减": -25},
+                    {"日期": "2026-10-28", "库存": 1175, "增减": -25},
+                    {"日期": "invalid", "库存": 1000, "增减": 10},
+                    {"日期": "2026-10-29", "库存": 0, "增减": 0},
+                ]))
+        series = fetcher.normalize_inventory_frame(FakeFrame())
+        self.assertEqual(len(series), 2)
+        self.assertEqual(series[-1]["date"], "2026-10-28")
+        self.assertEqual(series[-1]["value"], 1175)
+        self.assertEqual(series[-1]["change"], -25)
+
     def test_compact_chart_dates_roll_over_year_correctly(self):
         class FakeFrame:
             empty = False

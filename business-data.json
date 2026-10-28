@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T11:21:40+00:00",
+  "updatedAt": "2026-10-28T11:22:57+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -340,6 +340,8 @@
       "latestDate": "2026-10-28",
       "latestSpot": 1061.43,
       "latestFutures": 979.0,
+      "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
+      "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -352,9 +354,7 @@
       "drivers": "重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨成本。",
       "status": "ok",
       "futuresDate": "2026-10-28",
-      "futuresTime": "15:00:00",
-      "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
-      "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/"
+      "futuresTime": "15:00:00"
     },
     "urea": {
       "id": "urea",
@@ -692,6 +692,8 @@
       "latestDate": "2026-10-28",
       "latestSpot": 1735.0,
       "latestFutures": 1694.0,
+      "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
+      "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -702,9 +704,7 @@
       "drivers": "看农业需求季节性、出口政策、日产量、企业库存和煤气成本。",
       "status": "ok",
       "futuresDate": "2026-10-28",
-      "futuresTime": "15:00:00",
-      "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
-      "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/"
+      "futuresTime": "15:00:00"
     },
     "methanol": {
       "id": "methanol",
@@ -1042,6 +1042,8 @@
       "latestDate": "2026-10-28",
       "latestSpot": 4000.0,
       "latestFutures": 3464.0,
+      "futuresSource": "生意社主力合约参考价（历史数据）",
+      "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -1058,11 +1060,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 13900.0,
+      "latest": 13740.0,
       "latestDate": "2026-10-28",
-      "latestSpot": 13900.0,
+      "latestSpot": 13740.0,
       "latestFutures": null,
-      "changePct": 3.12,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
+      "changePct": 1.93,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "stocks": [
@@ -1408,6 +1412,8 @@
       "latestDate": "2026-10-28",
       "latestSpot": 23896.7,
       "latestFutures": 23540.0,
+      "futuresSource": "生意社主力合约参考价（历史数据）",
+      "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -1428,6 +1434,8 @@
       "latestDate": "2026-10-28",
       "latestSpot": 1441.25,
       "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
       "changePct": 1.59,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -1774,6 +1782,8 @@
       "latestDate": "2026-10-28",
       "latestSpot": 19225.0,
       "latestFutures": 19570.0,
+      "futuresSource": "生意社主力合约参考价（历史数据）",
+      "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
       "source": "生意社现货/期货基差数据（经 AKShare 获取）",
       "sourceUrl": "https://www.100ppi.com/",
@@ -1794,6 +1804,8 @@
       "latestDate": null,
       "latestSpot": null,
       "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
       "changePct": null,
       "source": null,
       "sourceUrl": "https://www.100ppi.com/",
@@ -1806,6 +1818,5 @@
       "status": "pending"
     }
   },
-  "fetchErrors": [],
-  "hasFreshData": true
+  "fetchErrors": []
 }

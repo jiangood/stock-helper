@@ -7,7 +7,8 @@
     { id: 'ethereum', name: '以太坊', symbol: 'ETH-USD', kind: '加密资产', unit: 'USD' },
     { id: 'nikkei225', name: '日经 225', symbol: '^N225', kind: '海外指数', unit: '指数点' },
     { id: 'nasdaq100', name: '纳斯达克 100', symbol: '^NDX', kind: '海外指数', unit: '指数点' },
-    { id: 'sp500', name: '标普 500', symbol: '^GSPC', kind: '海外指数', unit: '指数点' }
+    { id: 'sp500', name: '标普 500', symbol: '^GSPC', kind: '海外指数', unit: '指数点' },
+    { id: 'vix', name: 'VIX 恐慌指数', symbol: '^VIX', kind: '波动率指标', unit: '指数点' }
   ];
   var loading = false;
   var lastLoad = 0;
@@ -19,7 +20,7 @@
   }
   function fmtPrice(value, id) {
     if (!Number.isFinite(Number(value)) || Number(value) <= 0) return '—';
-    var digits = id === 'bitcoin' ? 0 : id === 'ethereum' ? 2 : id === 'gold' ? 2 : 2;
+    var digits = id === 'bitcoin' ? 0 : id === 'vix' ? 2 : id === 'ethereum' ? 2 : id === 'gold' ? 2 : 2;
     return Number(value).toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
   }
   function fmtPct(value) {
@@ -36,6 +37,46 @@
     var date = new Date(value);
     if (!Number.isFinite(date.getTime())) return '报价时间未知';
     return '报价时间：' + date.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }) + '（北京时间）';
+  }
+  function renderVixTrend(history) {
+    var points = Array.isArray(history) ? history.filter(function (p) {
+      return p && Number.isFinite(Number(p.close)) && Number(p.close) > 0;
+    }).slice(-22) : [];
+    if (points.length < 2) {
+      return '<div class="mini-label mt-2">近一个月趋势暂不可用，等待历史行情数据</div>';
+    }
+    var values = points.map(function (p) { return Number(p.close); });
+    var min = Math.min.apply(null, values);
+    var max = Math.max.apply(null, values);
+    var span = max - min || 1;
+    var coords = values.map(function (v, i) {
+      return {
+        x: 4 + i * 272 / (values.length - 1),
+        y: 56 - (v - min) * 48 / span
+      };
+    });
+    var path = coords.map(function (p, i) {
+      return (i ? 'L' : 'M') + p.x.toFixed(1) + ',' + p.y.toFixed(1);
+    }).join(' ');
+    var first = values[0];
+    var last = values[values.length - 1];
+    var trendPct = first ? (last - first) / first * 100 : null;
+    var trendText = Number.isFinite(trendPct)
+      ? '区间变化 ' + (trendPct > 0 ? '+' : '') + trendPct.toFixed(2) + '%'
+      : '区间变化暂不可用';
+    var color = last > first ? 'var(--up)' : last < first ? 'var(--down)' : 'currentColor';
+    var startDate = points[0].date || '';
+    var endDate = points[points.length - 1].date || '';
+    return '<div class="mt-2">'
+      + '<div class="d-flex justify-content-between align-items-center mini-label"><span>近一个月走势</span><span>' + esc(trendText) + '</span></div>'
+      + '<svg viewBox="0 0 280 64" role="img" aria-label="VIX近一个月日收盘走势" style="width:100%;height:68px;display:block;overflow:visible;color:' + color + '">'
+      + '<line x1="4" y1="60" x2="276" y2="60" stroke="currentColor" stroke-opacity=".18" stroke-width="1"/>'
+      + '<path d="' + path + '" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
+      + '<circle cx="' + coords[coords.length - 1].x.toFixed(1) + '" cy="' + coords[coords.length - 1].y.toFixed(1) + '" r="3" fill="currentColor"/>'
+      + '</svg>'
+      + '<div class="d-flex justify-content-between mini-label"><span>' + esc(startDate) + '</span><span>' + esc(endDate) + '</span></div>'
+      + '<div class="mini-label mt-1">VIX衡量标普 500 期权隐含的预期波动；上升通常代表避险情绪增强，不代表市场方向预测。</div>'
+      + '</div>';
   }
   function render(payload) {
     var data = payload && Array.isArray(payload.assets) ? payload.assets : [];
@@ -54,6 +95,7 @@
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">' + esc(meta.name) + '</div><div class="mini-label">' + esc(meta.kind) + ' · ' + esc(item.currency || meta.unit) + '</div></div><span class="flag" style="margin:0">' + esc(status) + '</span></div>'
         + '<div class="business-price mt-2">' + (valid ? fmtPrice(item.price, meta.id) : '—') + '</div>'
         + '<div class="' + tone(change) + ' fw-semibold">' + fmtPct(change) + '</div>'
+        + (meta.id === 'vix' ? renderVixTrend(item.history) : '')
         + '<div class="mini-label mt-1">' + esc(quoteTime) + '</div>'
         + '<div class="mini-label mt-1">代码：' + esc(item.sourceSymbol || meta.symbol) + ' · <a href="' + esc(source) + '" target="_blank" rel="noopener noreferrer">行情来源</a></div>'
         + '</article>';

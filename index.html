@@ -21,7 +21,7 @@
     box-shadow: 0 2px 6px rgba(37,99,235,.3);
   }
 
-  .toolbar { font-size: 12px; }
+  .toolbar { font-size: 12px; }\n  .toolbar .stock-search { flex:0 1 220px; min-width:160px; }\n  .toolbar .stock-filter { flex:0 0 auto; min-width:120px; }\n  .toolbar .q-field__control { min-height:32px; }\n  .toolbar .q-field__native, .toolbar .q-field__input { font-size:12px; }
 
   /* 表格：吸顶表头 + 首列固定 */
   .table-scroll {
@@ -168,7 +168,7 @@
     .tag-alias { font-size: 9px; max-width: 96px; }
     .flag { font-size: 8px; padding: 0 .15rem; margin-left: .15rem; }
     .toolbar { flex-wrap: wrap !important; row-gap: .3rem; }
-    .toolbar .input-group { flex: 1 1 100%; max-width: none !important; }
+    .toolbar .stock-search { flex:1 1 100%; max-width:none !important; }\n    .toolbar .stock-filter { flex:1 1 calc(50% - .5rem); width:auto !important; min-width:0; }
   }
 
   /* 简单首页密码门禁：仅用于阻挡普通访客，不是安全认证 */
@@ -226,16 +226,16 @@
   </q-toolbar>
 
   <div id="stock-toolbar" class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
-    <div class="input-group input-group-sm flex-nowrap" style="max-width:210px;min-width:0">
-      <span class="input-group-text px-2">🔍</span>
-      <input type="text" class="form-control" id="search-input" placeholder="名称 / 代码 / 别名 / 拼音" oninput="applyFilter()" style="min-width:0">
-    </div>
+    <q-input id="search-input-q" input-id="search-input" class="stock-search" v-model="search" @update:model-value="syncSearch" dense outlined clearable placeholder="名称 / 代码 / 别名 / 拼音" aria-label="搜索股票">
+      <template v-slot:prepend><q-icon name="search"></q-icon></template>
+    </q-input>
 
-    <select class="form-select form-select-sm w-auto flex-shrink-0" id="group-filter" onchange="applyFilter()" title="按分组筛选">
+    <select class="form-select form-select-sm d-none" id="group-filter" onchange="applyFilter()" title="按分组筛选" aria-hidden="true" tabindex="-1">
       <option value="">全部分组</option>
     </select>
+    <q-select class="stock-filter" v-model="group" :options="groupOptions" @update:model-value="syncGroup" emit-value map-options dense outlined options-dense title="按分组筛选" style="width:130px" aria-label="按分组筛选"></q-select>
 
-    <select class="form-select form-select-sm w-auto flex-shrink-0" id="status-filter" onchange="applyFilter()" title="按鳄鱼纪律筛选">
+    <select class="form-select form-select-sm d-none" id="status-filter" onchange="applyFilter()" title="按鳄鱼纪律筛选" aria-hidden="true" tabindex="-1">
       <option value="">全部状态</option>
       <option value="heavy">重仓区</option>
       <option value="near">接近重仓</option>
@@ -247,6 +247,7 @@
       <option value="screenbuy">全过 + 买点</option>
       <option value="risk">风险</option>
     </select>
+    <q-select class="stock-filter" v-model="status" :options="statusOptions" @update:model-value="syncStatus" emit-value map-options dense outlined options-dense title="按鳄鱼纪律筛选" style="width:145px" aria-label="按鳄鱼纪律筛选"></q-select>
 
     <span class="text-body-secondary text-nowrap"><span id="stock-count" class="fw-semibold text-body">0</span> 只</span>
 

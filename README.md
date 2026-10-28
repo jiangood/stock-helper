@@ -4,7 +4,6 @@
 
 - 首页：股票池监控看板（表格、实时行情、搜索、分组）
 - 个股详情：https://jiangood.github.io/stock-helper/stock.html?code=sz002408
-- 投资理念：https://jiangood.github.io/stock-helper/principles.html
 
 ## 本地预览
 
@@ -20,10 +19,8 @@ python -m http.server 8089
 | --- | --- |
 | `index.html` | 股票池监控看板（Bootstrap 5） |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、分时 / 日周月 K、估值与周期位置、跟踪计划 |
-| `principles.html` | 价值投资理念页 |
 | `stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
 | `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级） |
-| `style.css` `public.css` | 理念页样式 |
 
 ## 行情 SDK
 

@@ -129,7 +129,7 @@ def main() -> int:
         if result["price"] is None and finite(old.get("price")):
             result.update({key: old.get(key) for key in (
                 "sourceSymbol", "price", "prevClose", "change", "changePct",
-                "quoteTime", "sourceUrl"
+                "quoteTime", "sourceUrl", "history"
             ) if key in old})
             result["status"] = "缓存（本次未刷新）"
         elif result["price"] is not None:

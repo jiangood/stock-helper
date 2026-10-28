@@ -84,7 +84,8 @@
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(data.name || meta.name)+'</div><div class="mini-label">'+esc(data.unit || meta.unit || '价格')+'</div></div><span class="flag" style="margin:0">'+status+'</span></div>'
         + '<div class="d-flex align-items-baseline justify-content-between mt-2 gap-2"><div class="business-price tabular">'+(last == null ? '—' : formatNumber(last))+'</div><div class="'+tone+' fw-semibold">'+trend+'</div></div>'
-        + '<div class="mini-label">'+(latestDate ? '数据日期：'+esc(latestDate) : '当前没有有效报价')+' · '+(metricKey === 'futures' ? '期货价格' : '现货价格')+'</div>'
+        + '<div class="mini-label">'+(latestDate ? '数据日期：'+esc(latestDate) : '当前没有有效报价')+' · '+(data.latestSpot != null && Number(data.latestSpot)>0 ? '现货价格' : '期货价格')+'</div>'
+        + (data.latestFutures != null && Number(data.latestFutures)>0 ? '<div class="mini-label">期货连续报价：'+formatNumber(data.latestFutures)+' '+esc(data.unit || meta.unit || '')+' · '+esc(data.futuresDate || '')+(data.futuresTime ? ' '+esc(data.futuresTime) : '')+'（新浪财经）</div>' : '')
         + '<div class="mt-2">'+chart+'</div>'
         + '<div class="mini-label mt-1">产业链：'+esc(data.chain || meta.chain)+'</div>'
         + '<div class="small mt-2">'+esc(data.drivers || meta.drivers)+'</div>'
@@ -115,8 +116,9 @@
         return payload;
       })
       .catch(function(error){
-        if (statusEl) statusEl.textContent = '读取失败：'+String(error && error.message || error)+'。自动任务完成后再试。';
+        businessData = null;
         renderBusiness();
+        if (statusEl) statusEl.textContent = '读取失败：'+String(error && error.message || error)+'。自动任务完成后再试。';
         return null;
       })
       .then(function(value){ businessFetchPromise = null; return value; });

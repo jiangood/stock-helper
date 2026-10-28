@@ -224,8 +224,6 @@
   }
   function onTab(target) { if (target === 'assets') load(false); }
   function init() {
-    var button = el('global-assets-refresh');
-    if (button) button.addEventListener('click', function () { lastLoad = 0; load(true); });
     ensureDashboard();
   }
   init();

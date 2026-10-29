@@ -140,7 +140,8 @@
         var reasons = add.reasons.slice();
         buySection = '<section class="combat-buy-conditions"><div class="combat-section-title">买入检查 · ' + (add.score || 0) + '/4 · ' + esc(add.regimeLabel || '') + '</div>'
           + '<div class="combat-reasons mt-2">' + reasons.map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div>'
-          + '<div class="combat-reasons mt-2">' + planChecks(s, r.quote, r.primary, r.eligible).map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div></section>';
+          + '<details class="combat-review-details mt-2"><summary class="combat-section-title">核对清单 · 行情 / 计划 / 纪律</summary>'
+          + '<div class="combat-reasons mt-2">' + planChecks(s, r.quote, r.primary, r.eligible).map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div></details></section>';
       }
 
       var exitSection = '';
@@ -160,10 +161,10 @@
         exitSection = '<section class="combat-exit-panel"><div class="combat-section-title">止盈跟踪 · ' + esc(exit.state)
           + (cooling ? '（冷却 ' + exit.cooldownDays + ' 日）' : '') + '</div>'
           + '<div class="combat-reasons mt-2">' + exitLines.map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div>'
-          + (exit.state === '已触发' ? '<div class="combat-invalidation mt-2"><div class="combat-section-title">触发说明</div><ul class="mb-0 mt-1 ps-3">'
+          + (exit.state === '已触发' ? '<details class="combat-review-details mt-2"><summary class="combat-section-title">触发说明</summary><ul class="mb-0 mt-2 ps-3">'
             + '<li>规则：近 60 日最低收盘 ×1.2 启动，启动后最高收盘回撤 5% 离场（不需要成本价）。</li>'
             + '<li>回测：367 段拉升中位 +24.1%（死拿 +9.7%），距峰值中位 −6.9%，73% 跑赢死拿。</li>'
-            + '<li>执行：收盘确认，次日出；卖出后 60 个交易日内不给买回提示。</li></ul></div>' : '')
+            + '<li>执行：收盘确认，次日出；卖出后 60 个交易日内不给买回提示。</li></ul></details>' : '')
           + '</section>';
       }
 
@@ -178,11 +179,11 @@
         '<div class="combat-indicator"><div class="mini-label">数据口径</div><strong>' + (ind.bars || 0) + ' 根日K</strong><span>' + (ind.bars >= 60 ? '可计算全部信号' : '历史长度不足') + '</span><small>RSI 用 14 期 Wilder 平滑；MACD 用 12/26/9；均线用前复权日 K。</small></div>' +
         '</div><div class="mini-label mt-2">读法：四项评分只决定「是否进入买入观察」，不代表可以重仓；卖出侧只有一条回撤止盈规则，不设止损。</div></details>';
 
-      var invalidation = '<div class="combat-invalidation mt-2"><div class="combat-section-title">计划失效 / 退出复核</div><ul class="mb-0 mt-1 ps-3"><li>行情过期、计划长期未复核或纪律拦截时，暂停新增操作并先核验数据。</li><li>商品供需/周期转向、公司经营假设被证伪时，重新评估持有逻辑与估值。</li><li>止盈触发后按规则次日卖出；卖出后 60 个交易日内不再买回。</li><li>本规则不设止损，亏损由仓位控制承担。</li></ul></div>';
+      var invalidation = '<details class="combat-invalidation mt-2"><summary class="combat-section-title">计划失效 / 退出复核</summary><ul class="mb-0 mt-2 ps-3"><li>行情过期、计划长期未复核或纪律拦截时，暂停新增操作并先核验数据。</li><li>商品供需/周期转向、公司经营假设被证伪时，重新评估持有逻辑与估值。</li><li>止盈触发后按规则次日卖出；卖出后 60 个交易日内不再买回。</li><li>本规则不设止损，亏损由仓位控制承担。</li></ul></details>';
 
       var quoteLabel = quoteTime(r.quote);
       var reviewed = planReviewLabel(s);
-      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · 股票池 / 自选</div><div class="mini-label">' + esc(quoteLabel) + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + '<div class="mini-label mt-1">' + esc(reviewed) + ' · 计划价需结合最新基本面与周期复核</div></div>' + buySection + exitSection + indicatorPanel + invalidation + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span></div></article>';
+      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · 股票池 / 自选</div><div class="mini-label">' + esc(quoteLabel) + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + '<details class="combat-note-details"><summary>' + esc(reviewed) + '</summary><p>计划价需结合最新基本面、商品周期与公司经营假设复核后再使用。</p></details></div>' + buySection + exitSection + indicatorPanel + invalidation + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span></div></article>';
     }).join('');
   }
   async function calculateOne(stock) {

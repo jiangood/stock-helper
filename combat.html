@@ -75,6 +75,80 @@
     body[data-page="combat"] .combat-grid { grid-template-columns:minmax(0,1fr); gap:10px; }
     body[data-page="combat"] .combat-card { padding:12px !important; }
   }
+  /* 手机端扁平化：去掉外层方框与阴影，改用留白 + 细分隔线分层，避免「框套框」 */
+  @media (max-width:700px) {
+    body[data-page="combat"] { background:var(--bs-body-bg) !important; }
+    body[data-page="combat"] #combat-pane { padding:14px 14px 24px !important; }
+
+    .combat-hero { padding:0 0 14px; margin-bottom:14px; gap:10px; border:0; border-bottom:1px solid var(--bs-border-color); border-radius:0; background:none; box-shadow:none; }
+    .combat-hero::after { display:none; }
+    .combat-kicker { margin-bottom:6px; }
+    .combat-hero h1 { margin-bottom:6px; }
+    .combat-hero .panel-subtitle { font-size:11.5px; }
+    .combat-hero-actions { gap:4px; }
+
+    /* 概览：三条毛边网格，不做独立卡片 */
+    body[data-page="combat"] #combat-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(94px,1fr)); margin:0 0 14px !important; }
+    body[data-page="combat"] #combat-summary > div { width:auto; max-width:none; padding:0; margin:0; }
+    body[data-page="combat"] #combat-summary .insight-card { height:100%; padding:8px 10px; border:0; border-radius:0; background:none; box-shadow:none; }
+    body[data-page="combat"] #combat-summary .insight-card:hover { transform:none; border-color:transparent; }
+    body[data-page="combat"] #combat-summary > div:nth-child(3n+2) .insight-card,
+    body[data-page="combat"] #combat-summary > div:nth-child(3n) .insight-card { border-left:1px solid var(--bs-border-color); }
+    body[data-page="combat"] #combat-summary > div:nth-child(n+4) .insight-card { border-top:1px solid var(--bs-border-color); }
+    body[data-page="combat"] #combat-summary .mini-label:first-child { font-size:11px; font-weight:600; }
+    body[data-page="combat"] #combat-summary .mini-label:last-child { font-size:9.5px; line-height:1.4; opacity:.85; }
+    body[data-page="combat"] #combat-summary .combat-metric { font-size:21px; margin:4px 0 2px; }
+
+    /* 规则说明：只留一条分隔线 */
+    .combat-rules { padding:0; margin-bottom:14px; border:0; border-bottom:1px solid var(--bs-border-color); border-radius:0; background:none; }
+    .combat-rules-summary { padding:10px 0; }
+    .combat-rules-grid { gap:0; margin-top:0; }
+    .combat-rule-block { padding:10px 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; }
+    .combat-rule-block ul { font-size:11.5px; }
+
+    /* 清单区：去掉外层工作台方框 */
+    .combat-workspace { padding:0; border:0; border-radius:0; background:none; box-shadow:none; }
+    .combat-workspace-head { margin-bottom:10px; }
+    .combat-toolbar { padding:0; margin-bottom:10px !important; border-radius:0; background:none; gap:6px; }
+    .combat-toolbar .btn { min-height:40px; padding:0 .7rem; border-color:var(--bs-border-color); border-radius:999px; background:none; font-weight:600; }
+    .combat-toolbar .btn.active { background:var(--bs-primary-bg-subtle); border-color:var(--bs-primary-border-subtle); color:var(--bs-primary); box-shadow:none; }
+
+    /* 单只标的：由「卡片」变为列表分节 */
+    body[data-page="combat"] .combat-grid { gap:0; }
+    body[data-page="combat"] .combat-card { padding:16px 0 !important; border:0 !important; border-top:1px solid var(--bs-border-color) !important; border-radius:0 !important; background:none; box-shadow:none; }
+    body[data-page="combat"] .combat-card:first-child { border-top:0 !important; }
+    body[data-page="combat"] .combat-name { font-size:17px; }
+    body[data-page="combat"] .combat-price { font-size:23px; }
+    body[data-page="combat"] .combat-badge { border:0; padding:2px 8px; }
+
+    /* 卡内分区：一律去框，用一条细线起段 */
+    body[data-page="combat"] .combat-buy-conditions,
+    body[data-page="combat"] .combat-exit-panel,
+    body[data-page="combat"] .combat-indicator-details,
+    body[data-page="combat"] .combat-review-details,
+    body[data-page="combat"] .combat-invalidation,
+    body[data-page="combat"] .combat-risk-card { margin:12px 0 0; padding:10px 0 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; }
+    body[data-page="combat"] .combat-card .combat-buy-conditions { margin-top:12px; }
+    body[data-page="combat"] .combat-plan { margin-top:10px !important; padding-top:8px; font-size:11px; }
+    body[data-page="combat"] .combat-section-title { font-size:11.5px; letter-spacing:.2px; color:var(--bs-secondary-color); }
+    body[data-page="combat"] details > summary.combat-section-title { color:var(--bs-emphasis-color); }
+    /* 折叠标题保持可点面积 */
+    body[data-page="combat"] .combat-review-details > summary,
+    body[data-page="combat"] .combat-invalidation > summary,
+    body[data-page="combat"] .combat-indicator-details > summary,
+    body[data-page="combat"] .combat-note-details > summary { min-height:34px; padding:6px 0; }
+
+    /* 理由与口径：去掉胶囊边框与圆点，直接排成一段段短句 */
+    body[data-page="combat"] .combat-reasons { flex-direction:column; gap:5px; font-size:11.5px; }
+    body[data-page="combat"] .combat-reason-chip { display:block; padding:0; border:0; border-radius:0; background:none; color:var(--bs-body-color); }
+    body[data-page="combat"] .combat-indicator-grid { grid-template-columns:minmax(0,1fr); gap:0; margin-top:8px !important; }
+    body[data-page="combat"] .combat-indicator { padding:8px 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; }
+    body[data-page="combat"] .combat-indicator:first-child { border-top:0; padding-top:0; }
+    body[data-page="combat"] .combat-indicator strong { font-size:14px; }
+    body[data-page="combat"] .combat-invalidation li { font-size:11.5px; }
+    .combat-footnote { margin-top:14px; padding:12px 0 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; font-size:10.5px; }
+    #combat-list > .empty-state { border:0; padding:20px 0; }
+  }
   @media (prefers-reduced-motion: reduce) {
     body[data-page="combat"] #combat-summary .insight-card { transition:none; }
     body[data-page="combat"] #combat-summary .insight-card:hover { transform:none; }
@@ -191,7 +265,7 @@
 <script src="static-quotes.js"></script>
 <script src="indicators.js"></script>
 <script src="trade-signals.js?v=20261029-1400-exitrules"></script>
-<script src="combat-center.js?v=20261029-1400-exitrules"></script>
+<script src="combat-center.js?v=20261029-1530-flatcard"></script>
 <script src="stock-dashboard.js"></script>
 
 <script src="password-gate.js"></script>

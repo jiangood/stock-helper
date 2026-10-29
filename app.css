@@ -211,10 +211,17 @@
   .combat-risk-card > summary::-webkit-details-marker { display:none; }
   .combat-risk-card > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
   .combat-risk-card[open] > summary::after { content:'−'; }
-  .combat-review-details > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0; }
-  .combat-review-details > summary::-webkit-details-marker { display:none; }
-  .combat-review-details > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
-  .combat-review-details[open] > summary::after { content:'−'; }
+  .combat-review-details > summary, .combat-invalidation > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0; }
+  .combat-review-details > summary::-webkit-details-marker, .combat-invalidation > summary::-webkit-details-marker { display:none; }
+  .combat-review-details > summary::after, .combat-invalidation > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
+  .combat-review-details[open] > summary::after, .combat-invalidation[open] > summary::after { content:'−'; }
+  /* 无边框的轻量折叠项：用于计划复核等一行说明 */
+  .combat-note-details { margin-top:4px; }
+  .combat-note-details > summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:5px; font-size:11px; color:var(--bs-secondary-color); }
+  .combat-note-details > summary::-webkit-details-marker { display:none; }
+  .combat-note-details > summary::after { content:'＋'; font-size:12px; line-height:1; }
+  .combat-note-details[open] > summary::after { content:'−'; }
+  .combat-note-details > p { margin:5px 0 0; font-size:11px; line-height:1.6; color:var(--bs-secondary-color); }
   .combat-invalidation li { margin-bottom:4px; line-height:1.5; }
   .combat-invalidation li:last-child { margin-bottom:0; }
   .combat-indicator-details > summary::-webkit-details-marker { display:none; }

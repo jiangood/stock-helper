@@ -7,15 +7,19 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'static-quotes.js'), 'utf8');
 
-function makeHarness(fetchImpl, indexedDB) {
-  const storage = new Map();
+function makeHarness(fetchImpl) {
+  let storageReads = 0;
+  let storageWrites = 0;
+  let indexedDbReads = 0;
   const window = {
-    indexedDB,
     localStorage: {
-      getItem(key) { return storage.has(key) ? storage.get(key) : null; },
-      setItem(key, value) { storage.set(key, value); }
+      getItem() { storageReads += 1; return null; },
+      setItem() { storageWrites += 1; }
     }
   };
+  Object.defineProperty(window, 'indexedDB', {
+    get() { indexedDbReads += 1; throw new Error('frontend database must not be accessed'); }
+  });
   const context = {
     window,
     document: { baseURI: 'https://example.test/stock-helper/' },
@@ -25,7 +29,10 @@ function makeHarness(fetchImpl, indexedDB) {
     console
   };
   vm.runInNewContext(source, context, { filename: 'static-quotes.js' });
-  return { api: window.StockQuotes, storage };
+  return {
+    api: window.StockQuotes,
+    getStorageAccesses: () => ({ storageReads, storageWrites, indexedDbReads })
+  };
 }
 
 const bars = Array.from({ length: 12 }, (_, index) => ({
@@ -37,7 +44,7 @@ const bars = Array.from({ length: 12 }, (_, index) => ({
   volume: 1000 + index
 }));
 
-test('static adapter reads quote, detail, daily/weekly/monthly and index caches only from same origin', async () => {
+test('static adapter reads quote, detail, daily/weekly/monthly and index data from same origin', async () => {
   const requested = [];
   const files = {
     'data/stock-quotes.json': { quotes: {
@@ -52,8 +59,8 @@ test('static adapter reads quote, detail, daily/weekly/monthly and index caches 
     },
     'data/index-cache.json': { monthly: { sh000001: { bars: bars.slice(0, 10) } } }
   };
-  const harness = makeHarness(async url => {
-    requested.push(String(url));
+  const harness = makeHarness(async (url, options) => {
+    requested.push({ url: String(url), cache: options && options.cache });
     const key = Object.keys(files).find(item => String(url).endsWith('/' + item));
     if (!key) throw new Error('Unexpected URL: ' + url);
     return { ok: true, status: 200, json: async () => files[key] };
@@ -68,77 +75,25 @@ test('static adapter reads quote, detail, daily/weekly/monthly and index caches 
   assert.equal((await client.fetchKline('sz002408', { period: 'month', count: 10 })).bars.length, 8);
   assert.equal((await client.fetchKline('sh000001', { period: 'month', count: 10 })).bars.length, 10);
   assert.equal(harness.api.isTrading(), false, 'browser-side intraday polling should be disabled');
-  assert.ok(requested.every(url => url.startsWith('https://example.test/stock-helper/')));
+  assert.ok(requested.every(item => item.url.startsWith('https://example.test/stock-helper/')));
+  assert.ok(requested.every(item => item.cache === 'no-store'));
+  assert.deepEqual(harness.getStorageAccesses(), { storageReads: 0, storageWrites: 0, indexedDbReads: 0 });
 });
 
-test('static adapter keeps a last-known-good local cache when same-origin fetch fails', async () => {
+test('every data request goes to network again and failed reads do not use stale browser cache', async () => {
+  let calls = 0;
   let fail = false;
-  const files = { 'data/stock-quotes.json': { quotes: { sz002408: { price: 4.36 } } } };
-  const harness = makeHarness(async url => {
+  const harness = makeHarness(async () => {
+    calls += 1;
     if (fail) throw new Error('offline');
-    const key = Object.keys(files).find(item => String(url).endsWith('/' + item));
-    return { ok: true, status: 200, json: async () => files[key] };
+    return { ok: true, status: 200, json: async () => ({ quotes: { sz002408: { price: 4.36 } } }) };
   });
   const client = new harness.api.Client();
   assert.equal((await client.fetch(['sz002408'])).sz002408.price, 4.36);
+  assert.equal((await client.fetch(['sz002408'])).sz002408.price, 4.36);
+  assert.equal(calls, 2, 'repeated reads must fetch the static source each time');
   fail = true;
-  const cached = await client.fetch(['sz002408'], { force: true });
-  assert.equal(cached.sz002408.price, 4.36);
-});
-
-
-test('IndexedDB connection is reused across cache reads and writes', async () => {
-  const records = new Map();
-  let openCount = 0;
-  const indexedDB = {
-    open() {
-      openCount += 1;
-      const request = {};
-      queueMicrotask(() => {
-        const db = {
-          objectStoreNames: { contains: name => name === 'snapshots' },
-          transaction() {
-            const tx = {
-              objectStore() {
-                return {
-                  get(key) {
-                    const req = {};
-                    queueMicrotask(() => {
-                      req.result = records.get(key);
-                      if (req.onsuccess) req.onsuccess();
-                      queueMicrotask(() => tx.oncomplete && tx.oncomplete());
-                    });
-                    return req;
-                  },
-                  put(value, key) {
-                    records.set(key, value);
-                    queueMicrotask(() => tx.oncomplete && tx.oncomplete());
-                  }
-                };
-              }
-            };
-            return tx;
-          },
-          close() {}
-        };
-        request.result = db;
-        if (request.onupgradeneeded) request.onupgradeneeded();
-        if (request.onsuccess) request.onsuccess();
-      });
-      return request;
-    }
-  };
-  const files = {
-    'data/stock-cache/sz002408.json': { dailyAdjusted: { bars } },
-    'data/stock-cache/sh600519.json': { dailyAdjusted: { bars: bars.slice(0, 10) } }
-  };
-  const harness = makeHarness(async url => {
-    const key = Object.keys(files).find(item => String(url).endsWith('/' + item));
-    if (!key) throw new Error('Unexpected URL: ' + url);
-    return { ok: true, status: 200, json: async () => files[key] };
-  }, indexedDB);
-  const client = new harness.api.Client();
-  assert.equal((await client.fetchKline('sz002408', { period: 'day' })).bars.length, 12);
-  assert.equal((await client.fetchKline('sh600519', { period: 'day' })).bars.length, 10);
-  assert.equal(openCount, 1, 'one database connection should serve multiple cache operations');
+  await assert.rejects(client.fetch(['sz002408']), /静态行情数据读取失败/);
+  assert.equal(calls, 3);
+  assert.deepEqual(harness.getStorageAccesses(), { storageReads: 0, storageWrites: 0, indexedDbReads: 0 });
 });

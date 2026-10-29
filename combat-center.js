@@ -1,7 +1,7 @@
 /* Home trading combat center: manual decision support only, never submits orders. */
 (function (root) {
   'use strict';
-  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, error: '', expanded: {}, sort: { col: null, dir: 1 } };
+  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, error: '', expanded: {}, sort: { col: null, dir: 1 }, progressDone: 0, progressTotal: 0, progressStartedAt: 0 };
   var COLUMN_COUNT = 9;
   var $ = function (id) { return root.document.getElementById(id); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
@@ -165,6 +165,26 @@
     });
     await Promise.all(workers);
   }
+  function updateProgress() {
+    var panel = $('combat-loading');
+    var fill = $('combat-loading-fill');
+    var label = $('combat-loading-label');
+    var detail = $('combat-loading-detail');
+    if (!panel || !fill || !label || !detail) return;
+    panel.hidden = !state.loading;
+    if (!state.loading) return;
+    var total = state.progressTotal || 0;
+    var done = state.progressDone || 0;
+    var percent = total ? Math.min(100, Math.round(done / total * 100)) : 0;
+    fill.style.width = percent + '%';
+    var percentLabel = $('combat-loading-percent');
+    var progressBar = panel.querySelector('[role="progressbar"]');
+    if (percentLabel) percentLabel.textContent = total ? percent + '%' : '处理中';
+    if (progressBar) progressBar.setAttribute('aria-valuenow', String(percent));
+    label.textContent = total ? '正在分析作战数据 · ' + done + '/' + total : '正在准备作战数据…';
+    var elapsed = state.progressStartedAt ? Math.max(0, Math.floor((Date.now() - state.progressStartedAt) / 1000)) : 0;
+    detail.textContent = '读取股票日K缓存并计算交易纪律与技术指标 · 已用时 ' + elapsed + ' 秒';
+  }
   function render() {
     var summary = $('combat-summary'), list = $('combat-list'), meta = $('combat-meta');
     if (!summary || !list || !meta) return;
@@ -191,9 +211,10 @@
       return '<div class="col-6 col-lg-4 col-xl-2"><div class="insight-card h-100"><div class="mini-label">' + x[0]
         + '</div><div class="combat-metric ' + x[3] + '-text">' + x[1] + '</div><div class="mini-label">' + x[2] + '</div></div></div>';
     }).join('');
-    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只股票池标的 · 买入观察 ' + counts.add
+    meta.textContent = (state.loading ? '正在计算 · ' : state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只股票池标的 · 买入观察 ' + counts.add
       + ' · 触发止盈 ' + counts.exit + ' · 跟踪中 ' + counts.tracking + ' · 冷却 ' + counts.cooling
       + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
+    updateProgress();
     var ordered = sortedRows(rows);
     applySortUI();
     if (!ordered.length) {
@@ -415,18 +436,22 @@
   async function run() {
     if (state.loading) return;
     if (!state.client || !Array.isArray(state.stocks)) return;
-    state.loading = true; state.error = ''; render();
+    state.loading = true; state.error = ''; state.progressDone = 0; state.progressTotal = 0; state.progressStartedAt = Date.now(); updateProgress(); render();
     try {
       var universe = mergeUniverse();
+      state.progressTotal = universe.length; state.progressDone = 0; updateProgress();
       state.rows = universe.map(function (stock) { return { stock: stock, quote: quoteFor(stock.code), primary: { status: '计算中', kind: 'data', reasons: [] }, add: null, exit: null }; });
       render();
       var results = [];
-      await limitedMap(universe, 4, async function (stock) {
+      await limitedMap(universe, 8, async function (stock) {
         try {
           results.push(await calculateOne(stock));
         } catch (e) {
           // Preserve coverage when one symbol fails; never silently drop it from the combat universe.
           results.push({ stock: stock, quote: quoteFor(stock.code), primary: { status: '数据不足', kind: 'data', reasons: ['单股计算失败：' + (e && e.message || '未知错误'), '本次不生成交易信号，请刷新复核'] }, add: null, exit: null, dataNote: '计算异常，未生成交易信号' });
+        } finally {
+          state.progressDone++;
+          updateProgress();
         }
       });
       state.rows = results.sort(function (a, b) {
@@ -454,6 +479,7 @@
       state.lastRun = Date.now();
     } catch (e) { state.error = e && e.message || '读取作战数据失败'; }
     state.loading = false;
+    updateProgress();
     render();
   }
   function ensureUi() {

@@ -108,7 +108,17 @@
       else list.innerHTML=cards.map(function(x){var s=x.stock,q=x.quote,e=x.eval,gate=Croc.buyEligibility(s,q);return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div><a class="fw-bold text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+'</a><div class="mini-label">'+esc(s.group||'')+' · '+esc(s.code)+'</div></div><span class="flag '+(e.zone==='heavy'?'flag-buy':'flag-warn')+'">'+(e.zone==='heavy'?'重仓价区间':'入场价区间')+'</span></div><div class="d-flex align-items-baseline gap-2 mt-2"><span class="business-price">'+Number(q.price).toFixed(2)+'</span><span class="'+tone(q.todayChange)+'">'+fmtPct(q.todayChange)+'</span></div><div class="d-flex flex-wrap gap-2 mt-2 mini-label"><span>入场 '+(s.entry==null?'—':Number(s.entry).toFixed(2))+'</span><span>重仓 '+(s.heavy==null?'—':Number(s.heavy).toFixed(2))+'</span><span>PE '+(q.pe==null?'—':Number(q.pe).toFixed(2))+'</span><span>PB '+(q.pb==null?'—':Number(q.pb).toFixed(2))+'</span></div><div class="mt-2 small '+(gate.eligible?'text-success':'text-warning-emphasis')+'">'+esc(gate.reason||'通过硬门槛；仍需核对基本面与周期')+'</div><a class="btn btn-sm btn-outline-primary mt-2" href="stock.html?code='+encodeURIComponent(s.code)+'">查看个股详情</a></article>';}).join('');
     }
     renderMarketIndices();renderMarketPulse();renderSectors();renderHoldings();
-    var updated=el('brief-updated');if(updated)updated.textContent='页面刷新：'+new Date().toLocaleString('zh-CN',{hour12:false});
+    var updated=el('brief-updated');
+    if(updated){
+      updated.textContent='正在读取行情缓存日期…';
+      if(window.StockQuotes&&typeof window.StockQuotes.snapshotInfo==='function'){
+        window.StockQuotes.snapshotInfo().then(function(info){
+          var marketDate=info&&info.marketDate?info.marketDate:'未知';
+          var cacheTime=info&&info.updatedAt?new Date(info.updatedAt).toLocaleString('zh-CN',{hour12:false}):'未知';
+          updated.textContent='行情日期：'+marketDate+' · 缓存生成：'+cacheTime+(info&&info.status==='stale'?' · 数据可能滞后':'');
+        }).catch(function(){updated.textContent='行情缓存状态暂不可用';});
+      }else updated.textContent='行情缓存日期暂不可用';
+    }
   }
   function fetchMarketIndices(){if(!quoteClient||typeof quoteClient.fetch!=='function')return;quoteClient.fetch(['sh000001','sz399001','sz399006']).then(function(data){marketIndices=data||{};renderMarketIndices();fetchMarketIndexKlines();}).catch(function(){renderMarketIndices();fetchMarketIndexKlines();});}
   function formatNumber(value) {

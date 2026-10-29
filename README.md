@@ -87,7 +87,9 @@ python -m http.server 8089
 - 页面优先读取静态缓存，网络不可用时回退到浏览器最近一次成功缓存；池外股票代码不再从浏览器实时回源。
 - 这套设计提供延迟的收盘行情，不是实时行情；GitHub Actions 的定时任务可能延迟。
 
-## 行情 SDK
+## 采集端行情 SDK
+
+`quotes.js` 只由 GitHub Actions 采集脚本调用。网页使用 `static-quotes.js`，仅读取同源静态缓存，不直接访问东方财富或腾讯行情接口。
 
 ```js
 const q = new StockQuotes.Client({ timeout: 8000, cacheTTL: 1000 });

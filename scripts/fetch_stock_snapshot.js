@@ -6,6 +6,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const StockQuotes = require('../quotes.js');
+const sectorMonthly = require('./build_sector_monthly.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
@@ -137,6 +138,8 @@ async function main() {
   if (coverage >= MIN_QUOTE_COVERAGE && !marketDateIsCurrent) {
     const changed = writeIfChanged(QUOTES_FILE, quotePayload, true);
     console.log(changed ? 'Marked quote snapshot stale.' : 'No new China market date; quote snapshot unchanged.');
+    // 行情日未推进时缓存不变，但仍刷新板块月线汇总，确保文件存在且与缓存一致。
+    sectorMonthly.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
     console.log('Skipping detail and K-line collection because the provider has not published a quote for today in China.');
     return;
   }
@@ -185,13 +188,13 @@ async function main() {
       }
     }
 
-    const nowMonth = new Date().toISOString().slice(0, 7);
-    if (!monthlyAdjusted || monthlyFetchedFor !== nowMonth) {
+    // 月线也要跟着最新行情日刷新，否则当月那根月 K 整月停留在月初，板块月线强弱会滞后。
+    if (!monthlyAdjusted || monthlyFetchedFor !== chinaDate) {
       try {
         const value = await client.fetchKline(code, { period: 'month', count: 240, adjust: 'qfq', force: true });
         if (validBars(value, 6)) {
           monthlyAdjusted = value;
-          monthlyFetchedFor = nowMonth;
+          monthlyFetchedFor = chinaDate;
         }
       } catch (error) {
         console.warn(code + ': monthly K-line unavailable; keeping cache if present (' + error.message + ')');
@@ -227,10 +230,10 @@ async function main() {
   const previousIndex = readJson(INDEX_FILE, { monthly: {} });
   const monthly = { ...(previousIndex.monthly || {}) };
   await mapLimit(INDEX_CODES, 2, async code => {
-    if (monthly[code] && monthly[code].fetchedFor === new Date().toISOString().slice(0, 7)) return;
+    if (monthly[code] && monthly[code].fetchedFor === chinaDate) return;
     try {
       const value = await client.fetchKline(code, { period: 'month', count: 24, adjust: 'none', force: true });
-      if (validBars(value, 6)) monthly[code] = { ...value, fetchedFor: new Date().toISOString().slice(0, 7) };
+      if (validBars(value, 6)) monthly[code] = { ...value, fetchedFor: chinaDate };
     } catch (error) {
       console.warn(code + ': index monthly history unavailable; keeping cache (' + error.message + ')');
     }
@@ -238,6 +241,9 @@ async function main() {
   const indexPayload = { schemaVersion: 1, updatedAt, monthly };
   const indexChanged = writeIfChanged(INDEX_FILE, indexPayload, true);
   console.log(indexChanged ? 'Updated data/index-cache.json' : 'Index history unchanged; kept previous snapshot.');
+
+  // 板块月线强弱用的小文件：只保留每只股票的各周期月线涨跌幅，页面无需再读个股缓存。
+  sectorMonthly.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
 }
 
 main().catch(error => {

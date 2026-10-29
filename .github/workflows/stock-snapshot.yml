@@ -40,13 +40,13 @@ jobs:
         run: node scripts/fetch_stock_snapshot.js
       - name: Commit changed snapshots only
         run: |
-          if [ -z "$(git status --porcelain -- data/stock-quotes.json data/index-cache.json data/stock-cache)" ]; then
+          if [ -z "$(git status --porcelain -- data/stock-quotes.json data/index-cache.json data/sector-monthly.json data/stock-cache)" ]; then
             echo "No stock snapshot changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/stock-quotes.json data/index-cache.json data/stock-cache
+          git add data/stock-quotes.json data/index-cache.json data/sector-monthly.json data/stock-cache
           git commit -m "Refresh value-investing stock cache"
           for attempt in 1 2 3; do
             git fetch origin "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"

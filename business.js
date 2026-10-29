@@ -3,6 +3,8 @@
   'use strict';
   var stocks = [];
   var quotes = {};
+  var sectorMonthly = null;
+  var sectorMonthlyStatus = 'idle';
   var businessData = null;
   var businessFetchPromise = null;
   var businessCharts = {};
@@ -74,24 +76,65 @@
     node.innerHTML=cards.map(function(x){return '<div class="col-6 col-xl-4"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div><div class="mini-label">'+x[2]+'</div></div></div>';}).join('');
   }
   function renderSectors(){
-    var node=el('sector-hotspots');if(!node)return;var groups={};
-    stocks.forEach(function(s){var q=quotes[s.code],key=s.group||'未分类';if(!groups[key])groups[key]={name:key,count:0,live:0,up:0,down:0,sum:0,zone:0,leaders:[]};var g=groups[key];g.count++;
-      if(q&&Number(q.price)>0){g.live++;var ch=Number(q.todayChange);if(Number.isFinite(ch)){g.sum+=ch;if(ch>0)g.up++;if(ch<0)g.down++;g.leaders.push({name:s.name,code:s.code,change:ch});}
-        var z=Croc.evaluate(s,q).zone;if(z==='heavy'||z==='entry')g.zone++;}});
-    var rows=Object.keys(groups).map(function(k){var g=groups[k];g.avg=g.live?g.sum/g.live:null;g.leaders.sort(function(a,b){return b.change-a.change;});return g;}).sort(function(a,b){return (b.avg==null?-999:b.avg)-(a.avg==null?-999:a.avg);});
-    node.innerHTML=rows.map(function(g){var leaders=g.leaders.slice(0,3).map(function(s){return '<a class="text-body text-decoration-none me-2" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+' <span class="'+tone(s.change)+'">'+fmtPct(s.change)+'</span></a>';}).join('')||'<span class="mini-label">暂无有效涨跌数据</span>';
-      return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="fw-bold">'+esc(g.name)+'</div><span class="flag" style="margin:0">'+g.live+'/'+g.count+' 只有行情</span></div><div class="d-flex flex-wrap align-items-baseline gap-2 mt-2"><span class="business-price '+tone(g.avg)+'">'+fmtPct(g.avg)+'</span><span class="mini-label">平均涨跌</span><span class="mini-label">涨 '+g.up+' · 跌 '+g.down+' · 到计划区 '+g.zone+'</span></div><div class="mini-label mt-2 mb-1">板块内涨幅靠前</div><div>'+leaders+'</div></article>';}).join('')||'<div class="empty-state">暂无分组数据。</div>';
-  }
-  function renderOpportunity(){
-    var summary=el('opportunity-summary'),list=el('opportunity-list');if(!summary||!list)return;
-    var ready=stocks.map(function(s){return {stock:s,quote:quotes[s.code],eval:Croc.evaluate(s,quotes[s.code])};}).filter(function(x){return x.quote&&x.quote.price>0;});
-    var zone=ready.filter(function(x){return x.eval.zone==='heavy'||x.eval.zone==='entry';}),eligible=zone.filter(function(x){return Croc.buyEligibility(x.stock,x.quote).eligible;}),screenbuy=ready.filter(function(x){return Croc.matchStatus(x.stock,x.quote,'screenbuy');});
-    summary.innerHTML=[['进入计划区',zone.length],['通过硬门槛',eligible.length],['纪律全过+买点',screenbuy.length]].map(function(x){return '<div class="col-4"><div class="insight-card h-100 p-2"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div></div></div>';}).join('');
-    if(!ready.length)list.innerHTML='<div class="empty-state">行情尚未加载，请返回股票池刷新行情。</div>';
-    else {var cards=zone.slice().sort(function(a,b){var ea=Croc.buyEligibility(a.stock,a.quote).eligible?0:1,eb=Croc.buyEligibility(b.stock,b.quote).eligible?0:1;return ea-eb||(a.eval.zone==='heavy'?0:1)-(b.eval.zone==='heavy'?0:1);});
-      if(!cards.length)list.innerHTML='<div class="empty-state">当前没有进入计划区的标的。可继续观察价格，或查看量化纪律名单。</div>'+(screenbuy.length?'<div class="insight-card"><div class="fw-semibold mb-2">量化纪律全过 + 计划买点</div><div class="d-flex flex-wrap gap-2">'+screenbuy.map(function(x){return '<a class="text-body text-decoration-none me-2" href="stock.html?code='+encodeURIComponent(x.stock.code)+'">'+esc(x.stock.name)+'</a>';}).join('')+'</div></div>':'');
-      else list.innerHTML=cards.map(function(x){var s=x.stock,q=x.quote,e=x.eval,gate=Croc.buyEligibility(s,q);return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div><a class="fw-bold text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+'</a><div class="mini-label">'+esc(s.group||'')+' · '+esc(s.code)+'</div></div><span class="flag '+(e.zone==='heavy'?'flag-buy':'flag-warn')+'">'+(e.zone==='heavy'?'重仓价区间':'入场价区间')+'</span></div><div class="d-flex align-items-baseline gap-2 mt-2"><span class="business-price">'+Number(q.price).toFixed(2)+'</span><span class="'+tone(q.todayChange)+'">'+fmtPct(q.todayChange)+'</span></div><div class="d-flex flex-wrap gap-2 mt-2 mini-label"><span>入场 '+(s.entry==null?'—':Number(s.entry).toFixed(2))+'</span><span>重仓 '+(s.heavy==null?'—':Number(s.heavy).toFixed(2))+'</span><span>PE '+(q.pe==null?'—':Number(q.pe).toFixed(2))+'</span><span>PB '+(q.pb==null?'—':Number(q.pb).toFixed(2))+'</span></div><div class="mt-2 small '+(gate.eligible?'text-body-secondary':'text-warning-emphasis')+'">'+esc(gate.eligible?'硬门槛通过':gate.reason||'未通过硬门槛')+'</div></article>';}).join('');
+    var node=el('sector-hotspots');if(!node)return;
+    renderSectorNote();
+    if(!sectorMonthly){
+      node.innerHTML='<div class="empty-state">'+(sectorMonthlyStatus==='error'?'板块月线数据暂不可用，等待每日缓存任务生成。':'正在读取板块月线数据…')+'</div>';
+      return;
     }
+    var stats=sectorMonthly.stocks||{};
+    var groups={};
+    stocks.forEach(function(s){
+      var key=s.group||'未分类';
+      if(!groups[key])groups[key]={name:key,count:0,covered:0,up:0,down:0,sum:0,zone:0,sum1:0,n1:0,sum3:0,n3:0,sum6:0,n6:0,leaders:[]};
+      var g=groups[key];g.count++;
+      var q=quotes[s.code];
+      if(q&&Number(q.price)>0){var z=Croc.evaluate(s,q).zone;if(z==='heavy'||z==='entry')g.zone++;}
+      var item=stats[s.code];if(!item)return;
+      var m12=Number(item.m12);
+      if(Number.isFinite(m12)){g.covered++;g.sum+=m12;if(m12>0)g.up++;else if(m12<0)g.down++;g.leaders.push({name:s.name,code:s.code,change:m12});}
+      var m1=Number(item.m1),m3=Number(item.m3),m6=Number(item.m6);
+      if(Number.isFinite(m1)){g.sum1+=m1;g.n1++;}
+      if(Number.isFinite(m3)){g.sum3+=m3;g.n3++;}
+      if(Number.isFinite(m6)){g.sum6+=m6;g.n6++;}
+    });
+    var rows=Object.keys(groups).map(function(k){
+      var g=groups[k];
+      g.avg=g.covered?g.sum/g.covered:null;
+      g.avg1=g.n1?g.sum1/g.n1:null;
+      g.avg3=g.n3?g.sum3/g.n3:null;
+      g.avg6=g.n6?g.sum6/g.n6:null;
+      g.leaders.sort(function(a,b){return b.change-a.change;});
+      return g;
+    }).sort(function(a,b){return (b.avg==null?-999:b.avg)-(a.avg==null?-999:a.avg);});
+    node.innerHTML=rows.map(function(g){
+      var leaders=g.leaders.slice(0,3).map(function(s){return '<a class="text-body text-decoration-none me-2" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+' <span class="'+tone(s.change)+'">'+fmtPct(s.change)+'</span></a>';}).join('')||'<span class="mini-label">暂无有效月线涨跌幅</span>';
+      var period='<span>近1月 <b class="'+tone(g.avg1)+'">'+fmtPct(g.avg1)+'</b></span><span>近3月 <b class="'+tone(g.avg3)+'">'+fmtPct(g.avg3)+'</b></span><span>近6月 <b class="'+tone(g.avg6)+'">'+fmtPct(g.avg6)+'</b></span>';
+      return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="fw-bold">'+esc(g.name)+'</div><span class="flag" style="margin:0">'+g.covered+'/'+g.count+' 有月线</span></div><div class="d-flex flex-wrap align-items-baseline gap-2 mt-2"><span class="business-price '+tone(g.avg)+'">'+fmtPct(g.avg)+'</span><span class="mini-label">近12月平均涨跌</span><span class="mini-label">涨 '+g.up+' · 跌 '+g.down+' · 到计划区 '+g.zone+'</span></div><div class="d-flex flex-wrap gap-2 mt-2 mini-label">'+period+'</div><div class="mini-label mt-2 mb-1">月线领先 · 近12个月</div><div>'+leaders+'</div></article>';
+    }).join('')||'<div class="empty-state">暂无分组数据。</div>';
+  }
+  function renderSectorNote(){
+    var note=el('sector-monthly-note');if(!note)return;
+    var base='按月线收盘价计算板块内等权平均涨跌幅，主导指标为近 12 个月；本月数据可能尚未收盘。';
+    var stats=sectorMonthly&&sectorMonthly.stocks?sectorMonthly.stocks:{};
+    var covered=stocks.filter(function(s){var item=stats[s.code];return item&&Number.isFinite(Number(item.m12));}).length;
+    if(!sectorMonthly||!stocks.length){note.textContent=base;return;}
+    note.textContent='数据日期：'+(sectorMonthly.marketDate||'未知')+' · '+covered+'/'+stocks.length+' 只有效月线涨跌幅 · '+base;
+  }
+  /** 只读取 Actions 预生成的小文件，不逐只拉个股缓存。 */
+  function loadSectorMonthly(force){
+    if(sectorMonthly&&!force){renderSectors();return;}
+    sectorMonthly=null;sectorMonthlyStatus='loading';renderSectors();
+    fetch('data/sector-monthly.json?t='+Date.now(),{cache:'no-store'})
+      .then(function(response){if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
+      .then(function(payload){
+        if(!payload||!payload.stocks||typeof payload.stocks!=='object')throw new Error('数据格式不正确');
+        sectorMonthly=payload;sectorMonthlyStatus='ready';
+      })
+      .catch(function(){sectorMonthly=null;sectorMonthlyStatus='error';})
+      .then(function(){renderSectors();});
+  }
+  function renderBrief(){
     renderMarketIndices();renderMarketPulse();renderSectors();
     var updated=el('brief-updated');
     if(updated){
@@ -438,13 +481,14 @@
     stocks = Array.isArray(stocksArg) ? stocksArg : [];
     quotes = quoteArg || {};
     quoteClient = quoteClientArg || null;
-    renderOpportunity();
+    renderBrief();
   }
-  // 只有进入行情页才拉取指数与商品数据，避免自选/作战页的无效请求。
+  // 只有进入行情页才拉取指数、板块月线与商品数据，避免自选/作战页的无效请求。
   function onTab(target) {
     if (target !== 'market') return;
-    renderOpportunity();
+    renderBrief();
     fetchMarketIndices();
+    loadSectorMonthly();
     fetchBusinessData();
   }
   /** 主题切换后按新配色重建商品走势图（配色取自 CSS 变量，不重建会保留旧主题颜色）。 */
@@ -453,7 +497,11 @@
     var container = el('business-cards');
     if (!container) return;
     renderBusiness();
-    renderOpportunity();
+    renderBrief();
   }
-  global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness,refreshCharts:refreshCharts};
+  /** 手动刷新时重新读取板块月线汇总（每天由 Actions 更新）。 */
+  function reloadSectors() {
+    loadSectorMonthly(true);
+  }
+  global.StockBusiness={init:init,onTab:onTab,renderBrief:renderBrief,renderBusiness:renderBusiness,reloadSectors:reloadSectors,refreshCharts:refreshCharts};
 })(window);

@@ -436,6 +436,7 @@ function spinRefresh() {
 
 /** 重新读取同源静态行情缓存 */
 function refreshQuotes() {
+  if (window.StockBusiness && typeof window.StockBusiness.reloadSectors === 'function') window.StockBusiness.reloadSectors();
   loadPrices(true);
 }
 window.refreshQuotes = refreshQuotes;
@@ -591,7 +592,7 @@ function applyFilter() {
         ));
   });
   buildTable();
-  if (window.StockBusiness) window.StockBusiness.renderOpportunity();
+  if (window.StockBusiness) window.StockBusiness.renderBrief();
 }
 
 // ============================================================

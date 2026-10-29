@@ -350,9 +350,14 @@
   <div class="panel-subtitle mt-3">纪律说明：计划价触发不等于买入信号；补仓需通过 ST / 亏损等硬性门槛，并结合支撑、资金确认和趋势过滤。筹码分布为日K估算。所有信号均为辅助参考，不构成投资建议。</div>
 </main>
 
-<main id="opportunity-pane" data-pane="opportunity" class="app-pane container-fluid px-3 py-3 d-none">
+
+
+<main id="market-pane" data-pane="market" class="app-pane container-fluid px-3 py-3 d-none">
+  <div class="panel-title mb-1">行情</div>
+  <div class="panel-subtitle mb-3">集中查看全球市场与产业链商品行情。全球资产反映跨市场风险偏好，生意与产业链用于跟踪原料、产品价格和成本变化。</div>
+<main id="market-brief-section" class="mb-4">
   <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
-    <div><div class="panel-title">大鱼池 · 每日简报</div><div class="panel-subtitle">大盘指数、股票池温度、板块强弱、持仓盈亏与交易计划集中查看。</div></div>
+    <div><div class="panel-title">行情简报</div><div class="panel-subtitle">指数走势、股票池温度、板块强弱与机会观察，一页掌握市场。</div></div>
   </div>
   <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 px-1">
     <div id="brief-market-time" class="panel-subtitle">A股行情基准：等待有效指数报价</div>
@@ -366,10 +371,77 @@
   <div class="panel-subtitle mt-3">硬性门槛：ST 不买、亏损不买、盈利数据缺失先核实。仍需核对主营竞争力、行业周期、盈利质量和安全边际。</div>
 </main>
 
-<main id="market-pane" data-pane="market" class="app-pane container-fluid px-3 py-3 d-none">
-  <div class="panel-title mb-1">行情</div>
-  <div class="panel-subtitle mb-3">集中查看全球市场与产业链商品行情。全球资产反映跨市场风险偏好，生意与产业链用于跟踪原料、产品价格和成本变化。</div>
-  <section aria-labelledby="global-market-heading" class="mb-4">
+
+<main id="reading-pane" data-pane="reading" class="app-pane container-fluid px-3 py-3 d-none">
+  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
+    <div><div class="panel-title">阅读 · 投资知识库</div><div class="panel-subtitle">从投资哲学到企业研究，把阅读转化为可执行的研究框架。</div></div>
+    <span class="tag">持续学习 · 独立判断</span>
+  </div>
+  <div class="insight-card mb-3">
+    <div class="panel-title mb-1">本项目投资理论</div>
+    <div class="panel-subtitle mb-2">根据仓库 docs/投资理论.md 整理，围绕周期、价值、安全边际、企业研究和风险控制。</div>
+    <div class="d-flex flex-wrap gap-2 mb-2">
+      <span class="tag">投资哲学</span><span class="tag">周期与价值</span><span class="tag">估值方法</span><span class="tag">风险纪律</span>
+    </div>
+    <a class="btn btn-sm btn-outline-primary" href="https://github.com/jiangood/stock-helper/blob/master/docs/%E6%8A%95%E8%B5%84%E7%90%86%E8%AE%BA.md" target="_blank" rel="noopener noreferrer">阅读项目理论原文 ↗</a>
+  </div>
+  <div class="panel-title mb-2">推荐书单</div>
+  <div class="panel-subtitle mb-3">按学习目标分类。书籍观点用于启发研究，不应直接替代个股分析或交易纪律。</div>
+  <div class="insight-grid mb-4">
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《聪明的投资者》</div><span class="tag">价值投资</span></div>
+      <div class="panel-subtitle mt-1 mb-2">本杰明·格雷厄姆</div>
+      <div class="small">理解安全边际、市场先生与投资和投机的区别。适合建立长期投资的基本框架。</div>
+    </article>
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《证券分析》</div><span class="tag">财务分析</span></div>
+      <div class="panel-subtitle mt-1 mb-2">本杰明·格雷厄姆、戴维·多德</div>
+      <div class="small">学习资产负债表、盈利能力、债券与股票估值的系统分析方法，适合进阶精读。</div>
+    </article>
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《怎样选择成长股》</div><span class="tag">企业研究</span></div>
+      <div class="panel-subtitle mt-1 mb-2">菲利普·费雪</div>
+      <div class="small">关注企业竞争力、管理层、研发与产业链调查，补足单纯看财务数字的局限。</div>
+    </article>
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《巴菲特致股东的信》</div><span class="tag">商业理解</span></div>
+      <div class="panel-subtitle mt-1 mb-2">沃伦·巴菲特</div>
+      <div class="small">从资本配置、护城河、管理层和长期复利理解企业价值，建议结合真实年报阅读。</div>
+    </article>
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《周期》</div><span class="tag">周期研究</span></div>
+      <div class="panel-subtitle mt-1 mb-2">霍华德·马克斯</div>
+      <div class="small">理解市场情绪、信用周期和风险偏好的摆动，重点练习识别周期位置而非预测精确拐点。</div>
+    </article>
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《投资最重要的事》</div><span class="tag">风险控制</span></div>
+      <div class="panel-subtitle mt-1 mb-2">霍华德·马克斯</div>
+      <div class="small">强调第二层思维、风险意识、逆向投资和避免永久性资本损失。</div>
+    </article>
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《股票作手回忆录》</div><span class="tag">交易心理</span></div>
+      <div class="panel-subtitle mt-1 mb-2">埃德温·勒费弗</div>
+      <div class="small">从交易故事中观察仓位、耐心、情绪与纪律；阅读时注意区分交易经验和可验证规则。</div>
+    </article>
+    <article class="insight-card">
+      <div class="d-flex align-items-start justify-content-between gap-2"><div class="fw-semibold">《随机漫步的傻瓜》</div><span class="tag">概率与认知</span></div>
+      <div class="panel-subtitle mt-1 mb-2">纳西姆·尼古拉斯·塔勒布</div>
+      <div class="small">反思幸存者偏差、运气与能力的区别，帮助避免把一次盈利误判为稳定优势。</div>
+    </article>
+  </div>
+  <div class="panel-title mb-2">建议阅读路径</div>
+  <div class="insight-grid mb-4">
+    <div class="insight-card"><div class="fw-semibold mb-1">01 · 建立框架</div><div class="small">《聪明的投资者》→《投资最重要的事》</div><div class="panel-subtitle mt-2">目标：安全边际、风险与市场情绪。</div></div>
+    <div class="insight-card"><div class="fw-semibold mb-1">02 · 学会研究公司</div><div class="small">《怎样选择成长股》→《证券分析》</div><div class="panel-subtitle mt-2">目标：从商业模式进入财务和估值。</div></div>
+    <div class="insight-card"><div class="fw-semibold mb-1">03 · 形成自己的系统</div><div class="small">《周期》→《巴菲特致股东的信》</div><div class="panel-subtitle mt-2">目标：把周期判断、企业质量和交易纪律结合。</div></div>
+  </div>
+  <div class="insight-card">
+    <div class="fw-semibold mb-1">读书笔记建议</div>
+    <div class="small">每读完一章，记录三个问题：核心观点是什么？它适用于什么条件？什么证据会推翻我的判断？再把结论用于行业和公司研究，而不是直接转化成买卖指令。</div>
+  </div>
+</main>
+
+  <section aria-labelledby="global-market-heading" class="pt-3 border-top mb-4">
     <div id="global-market-heading" class="panel-title mb-2">全球市场</div>
     <div class="panel-subtitle mb-3">黄金、比特币、以太坊与主要海外指数。展示公开行情源的最近有效报价，不代表逐笔实时成交价。</div>
     <div class="insight-card mb-3">
@@ -400,8 +472,8 @@
   <button class="bottom-tab active" type="button" data-target="stocks"><span class="tab-icon">☆</span><span>自选</span></button>
   <button class="bottom-tab" type="button" data-target="holdings"><span class="tab-icon">▤</span><span>持仓</span></button>
   <button class="bottom-tab" type="button" data-target="combat"><span class="tab-icon">⚔</span><span>作战</span></button>
-  <button class="bottom-tab" type="button" data-target="opportunity"><span class="tab-icon">▤</span><span>简报</span></button>
   <button class="bottom-tab" type="button" data-target="market"><span class="tab-icon">↗</span><span>行情</span></button>
+  <button class="bottom-tab" type="button" data-target="reading"><span class="tab-icon">📚</span><span>阅读</span></button>
 </nav>
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
 

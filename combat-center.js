@@ -375,7 +375,7 @@
       if (detail && detail.className && String(detail.className).indexOf('combat-detail-row') >= 0) detail.hidden = !on;
     });
   }
-  async function calculateOne(stock) {
+  async function calculateOne(stock, combatSnapshot) {
     var code = codeOf(stock.code), quote = quoteFor(code), price = quote && Number(quote.price) > 0 ? Number(quote.price) : null;
     var eligible = gate(stock, quote), add = null, exit = null, dataNote = '', day = null, indicators = null;
     var entry = Number(stock && stock.entry);
@@ -384,8 +384,15 @@
       var missing = { status: '数据不足', kind: 'data', reasons: ['当前行情无有效价格，不使用过期空值推断'], dataReady: false };
       return { stock: stock, quote: quote, primary: missing, add: null, exit: null, eligible: eligible, dataNote: '行情缺失' };
     }
-    try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
-    var bars = day && Array.isArray(day.bars) ? day.bars : [];
+    var bars = [];
+    if (combatSnapshot) {
+      var stockSnapshot = combatSnapshot.stocks && combatSnapshot.stocks[code];
+      bars = stockSnapshot && Array.isArray(stockSnapshot.bars) ? stockSnapshot.bars : [];
+    } else {
+      // Compatibility path for tests/older clients; production static client uses one bulk snapshot.
+      try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
+      bars = day && Array.isArray(day.bars) ? day.bars : [];
+    }
     if (root.TechInd && bars.length) {
       var rsiRes = root.TechInd.rsi ? root.TechInd.rsi(bars, 14) : null;
       var macdRes = root.TechInd.macd ? root.TechInd.macd(bars, 12, 26, 9) : null;
@@ -449,10 +456,20 @@
       state.progressTotal = universe.length; state.progressDone = 0; updateProgress();
       state.rows = universe.map(function (stock) { return { stock: stock, quote: quoteFor(stock.code), primary: { status: '计算中', kind: 'data', reasons: [] }, add: null, exit: null }; });
       render();
+      var combatSnapshot = null;
+      if (typeof state.client.fetchCombatKlines === 'function') {
+        try {
+          // One same-origin request for the whole universe replaces 60+ full cache downloads.
+          combatSnapshot = await state.client.fetchCombatKlines();
+        } catch (snapshotError) {
+          state.error = '作战日 K 快照读取失败：' + (snapshotError && snapshotError.message || '数据不可用');
+          combatSnapshot = { stocks: {} };
+        }
+      }
       var results = [];
       await limitedMap(universe, 8, async function (stock) {
         try {
-          results.push(await calculateOne(stock));
+          results.push(await calculateOne(stock, combatSnapshot));
         } catch (e) {
           // Preserve coverage when one symbol fails; never silently drop it from the combat universe.
           results.push({ stock: stock, quote: quoteFor(stock.code), primary: { status: '数据不足', kind: 'data', reasons: ['单股计算失败：' + (e && e.message || '未知错误'), '本次不生成交易信号，请刷新复核'] }, add: null, exit: null, dataNote: '计算异常，未生成交易信号' });

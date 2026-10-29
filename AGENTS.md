@@ -8,8 +8,8 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 
 - `index.html` — 首页，股票跟踪看板（表格），公开无密码
   - 样式基于 Bootstrap 5（CDN），少量自定义 CSS
-  - 数据：`data/stocks.json`（静态基础数据） + `quotes.js`（行情 SDK）
-  - 功能：搜索（名称 / 代码 / 别名 / 分组 / 拼音首字母与全拼）、分组筛选、全列排序、明暗主题、交易时段每 30 分钟自动刷新（价值投资节奏，休市时停止）
+  - 数据：`data/stocks.json`（静态基础数据） + `static-quotes.js`（浏览器只读同源缓存） + `data/stock-quotes.json` / `data/stock-cache/*.json`（Actions 生成的行情缓存）
+  - 功能：搜索（名称 / 代码 / 别名 / 分组 / 拼音首字母与全拼）、分组筛选、全列排序、明暗主题、每天由 GitHub Actions 在 A 股收盘后更新静态行情；浏览器不直接请求行情供应商，页面只读取同源缓存
   - 表格 15 列（名称/价格/入场/重仓/昨日/止盈1/止盈2/年初价/市值/市盈率/市净率/股息率/纪律/分组/别名）全部常显，窄屏靠横向滚动，不要再用 `d-none` 隐藏列
   - 紧凑风格：行高约 26px，入场/重仓/止盈1 的涨跌幅用小号字紧随数值、不另起一行
   - 顶部只保留标题 + 刷新/主题按钮：不显示时钟、休市/交易中、收盘等常识性提示
@@ -19,7 +19,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 - `stock.html` + `stock.js` — 个股详情页，入参 `stock.html?code=sz002408`（兼容 `002408` / `SH600519`）
   - 模块：行情卡（只留昨收/成交额/换手率，不展示今开/最高/最低/均价/涨停/跌停/量比/振幅等日内指标）、日/月 K（lightweight-charts 4.2.3，CDN，不含分时）、估值与周期位置（PE/PB/ROE/52 周分位/月 K 历史分位/同组中位数比价）、跟踪计划（价格刻度条 + 入场/重仓/止盈状态）、补仓（POC 支撑 / MFI 底背离 / MA20 与 OBV 趋势三项）、鳄鱼纪律（PB 八折/200 亿/PE 30 倍/位置/连板检查、连续涨停提示、持仓成本与翻倍/三倍卖点、资源股 `(P−C)×Q` 估值计算器）
   - 补仓与趋势参考仅使用日 K；不再提供分钟 K / 分时数据接口；结论旁固定标注「辅助参考，不构成投资建议」
-  - 数据：`data/stocks.json` 匹配计划；不在股票池的代码也能看行情，计划区显示「未纳入股票池」
+  - 数据：`data/stocks.json` 匹配计划；仅股票池/持仓缓存范围内的代码提供行情，池外代码不再实时回源，明确提示未纳入静态缓存
   - 本机数据：资源股估值参数 `localStorage['croc-valuation:<code>']`；持仓成本统一从公开 `data/holdings.json` 读取，个股详情页只读
   - 顶栏只保留标题 + 刷新/主题，不要加时钟、休市/交易中、收盘等提示
 - `croc.js` — 鳄鱼纪律工具（浏览器 `window.Croc` / Node `require`）
@@ -32,13 +32,16 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 - `pinyin.js` — 首页搜索拼音索引（浏览器 `window.Pinyin` / Node `require`）
   - `Pinyin.initials(str)` 首字母、`Pinyin.full(str)` 全拼、`Pinyin.syllable(char)` 单字读音
   - 字表覆盖 GB2312 一二级汉字 6763 字主读音，离线生成、无外部依赖；ü 记作 v（`lv`），检索同时兼容 `lu`
-- `quotes.js` — 行情 SDK，独立文件，可单独复用
-  - 数据源：东方财富 push2（JSON）+ 腾讯财经 qt.gtimg.cn（GBK），多源自动降级、分片批量请求
+- `static-quotes.js` — 浏览器端静态行情适配器，仅读取同源 JSON，并用 localStorage 保留最近一次有效缓存；缓存缺失时不直接回源外部行情接口
+- `quotes.js` — GitHub Actions 采集端使用的行情 SDK，不由网页直接加载
+- `scripts/fetch_stock_snapshot.js` + `.github/workflows/stock-snapshot.yml` — 每个工作日收盘后抓取股票池/持仓行情；日线每日更新、周线每周更新、月线每月更新；失败时保留已有有效缓存，仅提交有变化的数据
+- `data/stock-quotes.json`、`data/stock-cache/<code>.json`、`data/index-cache.json` — 行情、个股详情、日/周/月 K 线与指数历史静态缓存
+  - 数据源：东方财富与腾讯财经，多源自动降级；仅由 Actions 采集脚本调用
   - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`，返回 `price/prevClose/change/todayChange/pe/pb/totalCap/floatCap/divYield`
   - 股息率 `divYield`（%）：近 12 个月已除权分红 ÷ 现价，以腾讯口径为准（东财 f133 兜底），无分红返回 0 / null
   - 市值单位：`totalCap` / `floatCap` 为元（首页显示时换算成亿 / 万亿）
   - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`、
-  - 交易时段：`StockQuotes.marketSession()` / `StockQuotes.isTrading()`
+  - 交易时段：`StockQuotes.marketSession()` / `StockQuotes.isTrading()`（采集端辅助函数）
 
 ## data/stocks.json 字段
 

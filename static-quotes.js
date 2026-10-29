@@ -47,7 +47,7 @@
 
   async function loadStockCache(code) {
     const file = 'data/stock-cache/' + code + '.json';
-    try { return await loadJson(file);
+    try { return await loadJson(file); }
     catch (error) { throw new Error(code + ' 不在当前静态缓存范围内或缓存暂不可用。为避免浏览器直接访问外部行情接口，未进行实时回源。'); }
   }
 

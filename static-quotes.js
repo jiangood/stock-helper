@@ -122,28 +122,6 @@
     }
   }
 
-  function weeklyBars(dailyBars) {
-    const groups = new Map();
-    (dailyBars || []).forEach(bar => {
-      if (!bar || !bar.time) return;
-      const date = new Date(String(bar.time).slice(0, 10) + 'T00:00:00Z');
-      if (Number.isNaN(date.getTime())) return;
-      const day = (date.getUTCDay() + 6) % 7;
-      date.setUTCDate(date.getUTCDate() - day);
-      const key = date.toISOString().slice(0, 10);
-      let item = groups.get(key);
-      if (!item) {
-        item = { time: key, open: Number(bar.open), close: Number(bar.close), high: Number(bar.high), low: Number(bar.low), volume: 0 };
-        groups.set(key, item);
-      }
-      item.close = Number(bar.close);
-      item.high = Math.max(item.high, Number(bar.high));
-      item.low = Math.min(item.low, Number(bar.low));
-      if (Number.isFinite(Number(bar.volume))) item.volume += Number(bar.volume);
-    });
-    return Array.from(groups.values());
-  }
-
   async function loadStockCache(code, force) {
     const file = 'data/stock-cache/' + code + '.json';
     try { return await loadJson(file, force); }

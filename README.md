@@ -27,7 +27,10 @@ python -m http.server 8089
 | `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、纪律全过判定、入场/重仓区、连续涨停、月 K 分位、体检与简报 |
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
-| `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
+| `static-quotes.js` | 浏览器端静态行情适配器；只读同源 JSON，失败时回退最近一次本机缓存，不直接访问行情供应商 |
+| `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
+| `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池/持仓行情；日线每日、周线每周、月线每月更新；只提交有变化的数据 |
+| `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
 | `risk-center.js` | 持仓风险概览：自动计算市值、浮动盈亏、组合内仓位、前 3 大持仓集中度和股票池止盈情景；不要求手工维护止损价、账户总资产或风险预算 |
 | `business.js` `data/business-data.json` | 行情页合并指数行情、股票池温度、板块强弱、持仓盈亏、交易观察、全球资产及商品现货/期货；阅读页提供投资书单和项目理论资料 |
 | `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行、资产趋势对比和各资产近一个月迷你趋势图 |
@@ -75,6 +78,14 @@ python -m http.server 8089
 筹码分布按日 K 成交量均匀摊到价格区间，是**近似**值；所有结论仅辅助参考，不构成投资建议。
 
 拼音搜索示例：`tk` / `tksw` / `tiankang` / `kangsheng` 都能命中「天康生物」，`qitian` 命中别名「齐天大圣」。
+
+## 行情数据策略
+
+- 页面只读取 GitHub Pages 同源静态 JSON；东方财富/腾讯行情接口只由 GitHub Actions 采集脚本调用。
+- A 股缓存工作日北京时间收盘后更新；日线每日检查，周线每周检查，月线每月检查。全球资产每日检查，商品数据工作日每日检查。
+- 采集失败或数据质量不合格时保留上一次有效数据；数据没有实质变化时不更新时间、不产生新的数据提交。
+- 页面优先读取静态缓存，网络不可用时回退到浏览器最近一次成功缓存；池外股票代码不再从浏览器实时回源。
+- 这套设计提供延迟的收盘行情，不是实时行情；GitHub Actions 的定时任务可能延迟。
 
 ## 行情 SDK
 

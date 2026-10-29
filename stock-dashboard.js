@@ -524,7 +524,7 @@ function esc(s) {
 // ============================================================
 // 行情（通过同源静态缓存获取）
 // ============================================================
-async function loadPrices(manual) {
+async function loadPrices(manual, options) {
   if (!STOCKS.length) return;
   if (manual) spinRefresh();
 
@@ -535,11 +535,12 @@ async function loadPrices(manual) {
     Object.keys(priceData).forEach(k => { delete priceData[k]; });
     Object.assign(priceData, data);
 
-    applyFilter();
+    if (!(options && options.deferRender)) applyFilter();
     if (manual) showToast('已重新读取静态行情缓存', 'success');
   } catch (e) {
     console.error('获取行情失败:', e);
-    showToast('行情获取失败：' + e.message);
+    if (!(options && options.deferRender)) showToast('行情获取失败：' + e.message);
+    else console.warn('行情加载失败，页面将保留基础股票清单：', e.message);
   }
 }
 
@@ -750,17 +751,51 @@ function applyFilter() {
 
 // 页面导航由 index.html / combat.html / market.html 的独立 URL 负责，不再在单页内切换 tabs。
 
+function setPageLoading(message, done) {
+  const el = $('page-loading');
+  if (!el) return;
+  if (done) {
+    el.hidden = true;
+    el.removeAttribute('aria-busy');
+    return;
+  }
+  el.hidden = false;
+  el.setAttribute('aria-busy', 'true');
+  const text = el.querySelector('[data-loading-text]');
+  if (text) text.textContent = message;
+}
+
 (async function init() {
+  const startedAt = performance.now();
   const page = document.body.dataset.page || 'stocks';
   syncHeaderHeight();
   bindSortButtons();
   bindScrollHint();
   applyTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
+  setPageLoading('正在加载股票清单…');
+  const stocksStartedAt = performance.now();
   await loadStocks();
-  await Promise.all([loadResearchScores(), loadReportScores()]);
+  const stocksLoadedAt = performance.now();
+  setPageLoading(STOCKS.length ? '股票清单已显示，正在并行读取评分与行情…' : '股票清单加载失败，请检查网络后刷新。');
+  // 评分和行情互不依赖：并行请求，行情完成时暂不触发重复渲染。
+  const results = await Promise.allSettled([
+    loadResearchScores(),
+    loadReportScores(),
+    loadPrices(false, { deferRender: true })
+  ]);
   if (STOCKS.length) applyFilter();
+  const finishedAt = performance.now();
+  setPageLoading('', true);
+  console.info('[StockDashboard] 初始化耗时', {
+    stocksMs: Math.round(stocksLoadedAt - stocksStartedAt),
+    enrichmentMs: Math.round(finishedAt - stocksLoadedAt),
+    totalMs: Math.round(finishedAt - startedAt),
+    enrichment: results.map((result, index) => ({
+      task: ['researchScores', 'reportScores', 'quotes'][index],
+      status: result.status
+    }))
+  });
   if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
-  await loadPrices(false);
   if (page === 'combat' && window.StockCombat) {
     window.StockCombat.init(STOCKS, priceData, quotes);
     window.StockCombat.onTab('combat');

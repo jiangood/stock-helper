@@ -6,6 +6,7 @@
   var businessData = null;
   var businessFetchPromise = null;
   var businessCharts = {};
+  var chartsResizeBound = false;
   var items = [
     { id:'soda-ash', name:'纯碱', metric:'纯碱现货价', unit:'元/吨', stocks:['双环科技','中盐化工','三友化工'], chain:'玻璃、光伏玻璃、日用玻璃、硅酸钠', drivers:'重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨等成本。', query:'纯碱 现货价格 厂家库存 周度' },
     { id:'urea', name:'尿素', metric:'尿素现货价', unit:'元/吨', stocks:['四川美丰'], chain:'煤头/气头生产 → 农业与工业需求', drivers:'看农业需求季节性、出口政策、日产量、企业库存和煤气成本。', query:'尿素 现货价格 企业库存 日产量' },
@@ -113,7 +114,9 @@
     var container = el('business-cards');
     if (!container) return;
     Object.keys(businessCharts).forEach(function(key) {
-      try { businessCharts[key].remove(); } catch (error) { /* ignore detached charts */ }
+      try {
+        if (businessCharts[key] && typeof businessCharts[key].dispose === 'function') businessCharts[key].dispose();
+      } catch (error) { /* ignore detached charts */ }
     });
     businessCharts = {};
     var businessChartSpecs = [];
@@ -296,16 +299,19 @@
   }
   function renderBusinessCharts(specs) {
     if (!Array.isArray(specs) || !specs.length) return;
-    if (!global.LightweightCharts || typeof global.LightweightCharts.createChart !== 'function') {
+    var lib = global.echarts;
+    if (!lib || typeof lib.init !== 'function') {
       specs.forEach(function(spec) {
         var node = el(spec.id);
         if (node) node.innerHTML = '<div class="empty-state py-2 small">图表组件暂不可用</div>';
       });
       return;
     }
-    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-body-color').trim() || '#212529';
-    var borderColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-border-color').trim() || '#dee2e6';
-    var primary = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim() || '#0d6efd';
+    var rootStyle = getComputedStyle(document.documentElement);
+    var textColor = (rootStyle.getPropertyValue('--bs-body-color') || '').trim() || '#212529';
+    var borderColor = (rootStyle.getPropertyValue('--bs-border-color') || '').trim() || '#dee2e6';
+    var primary = (rootStyle.getPropertyValue('--bs-primary') || '').trim() || '#0d6efd';
+    var surface = (rootStyle.getPropertyValue('--bs-body-bg') || '').trim() || '#ffffff';
     function withAlpha(color, alpha) {
       var value = String(color || '').trim();
       var hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
@@ -318,6 +324,14 @@
       if (rgb) return 'rgba(' + rgb[1] + ',' + rgb[2] + ',' + rgb[3] + ',' + alpha + ')';
       return value || 'rgba(13,110,253,' + alpha + ')';
     }
+    if (!chartsResizeBound) {
+      chartsResizeBound = true;
+      global.addEventListener('resize', function () {
+        Object.keys(businessCharts).forEach(function (key) {
+          try { businessCharts[key].resize(); } catch (error) { /* ignore */ }
+        });
+      });
+    }
     specs.forEach(function(spec) {
       var node = el(spec.id);
       if (!node || node.dataset.chartReady === '1') return;
@@ -326,46 +340,71 @@
       });
       if (data.length < 2) return;
       try {
-        var chart = global.LightweightCharts.createChart(node, {
-          autoSize: true,
-          height: node.classList.contains('business-cost-chart') ? 112 : 148,
-          layout: {
-            background: { type: 'solid', color: 'transparent' },
-            textColor: textColor,
-            fontSize: 10,
-            fontFamily: 'inherit'
-          },
-          grid: {
-            vertLines: { color: borderColor },
-            horzLines: { color: borderColor }
-          },
-          rightPriceScale: { borderColor: borderColor, scaleMargins: { top: 0.12, bottom: 0.08 } },
-          timeScale: { borderColor: borderColor, rightOffset: 2, barSpacing: 7, timeVisible: false },
-          crosshair: {
-            mode: global.LightweightCharts.CrosshairMode.Normal,
-            vertLine: { labelBackgroundColor: primary },
-            horzLine: { labelBackgroundColor: primary }
-          },
-          localization: {
-            priceFormatter: function(value) {
-              return Number(value).toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+        var chart = lib.init(node, null, { renderer: 'canvas' });
+        var unit = spec.unit ? ' ' + spec.unit : '';
+        chart.setOption({
+          animation: false,
+          backgroundColor: 'transparent',
+          textStyle: { color: textColor, fontSize: 10, fontFamily: 'inherit' },
+          grid: { left: 22, right: 48, top: 10, bottom: 20 },
+          tooltip: {
+            trigger: 'axis',
+            backgroundColor: surface,
+            borderColor: borderColor,
+            borderWidth: 1,
+            padding: [5, 7],
+            textStyle: { color: textColor, fontSize: 10 },
+            formatter: function (params) {
+              var hit = Array.isArray(params) ? params[0] : params;
+              if (!hit) return '';
+              var value = Number(hit.data);
+              return esc(hit.axisValue) + '<br>' + esc(spec.name || '') + ' '
+                + (Number.isFinite(value) ? value.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) : '—')
+                + esc(unit);
             }
           },
-          handleScroll: { mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false },
-          handleScale: { mouseWheel: false, pinch: true, axisPressedMouseMove: true }
-        });
-        var area = chart.addAreaSeries({
-          lineColor: primary,
-          topColor: withAlpha(primary, 0.22),
-          bottomColor: withAlpha(primary, 0.01),
-          lineWidth: 2,
-          priceLineVisible: true,
-          lastValueVisible: true,
-          crosshairMarkerVisible: true,
-          priceFormat: { type: 'price', precision: 2, minMove: 0.01 }
-        });
-        area.setData(data);
-        chart.timeScale().fitContent();
+          xAxis: {
+            type: 'category',
+            data: data.map(function (p) { return p.time; }),
+            boundaryGap: false,
+            axisLine: { lineStyle: { color: borderColor } },
+            axisTick: { show: false },
+            axisLabel: {
+              color: textColor, fontSize: 9, hideOverlap: true,
+              formatter: function (value) { return String(value).slice(5); }
+            },
+            splitLine: { show: false }
+          },
+          yAxis: {
+            type: 'value',
+            scale: true,
+            position: 'right',
+            axisLine: { show: false },
+            axisTick: { show: false },
+            splitLine: { lineStyle: { color: borderColor, opacity: 0.5 } },
+            axisLabel: {
+              color: textColor, fontSize: 9,
+              formatter: function (value) { return Number(value).toLocaleString('zh-CN', { maximumFractionDigits: 2 }); }
+            }
+          },
+          series: [{
+            type: 'line',
+            data: data.map(function (p) { return Number(p.value); }),
+            showSymbol: false,
+            symbolSize: 5,
+            lineStyle: { color: primary, width: 2 },
+            itemStyle: { color: primary },
+            areaStyle: {
+              color: {
+                type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+                colorStops: [
+                  { offset: 0, color: withAlpha(primary, 0.22) },
+                  { offset: 1, color: withAlpha(primary, 0.01) }
+                ]
+              }
+            }
+          }]
+        }, true);
         node.dataset.chartReady = '1';
         businessCharts[spec.id] = chart;
       } catch (error) {
@@ -408,5 +447,13 @@
     fetchMarketIndices();
     fetchBusinessData();
   }
-  global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness};
+  /** 主题切换后按新配色重建商品走势图（配色取自 CSS 变量，不重建会保留旧主题颜色）。 */
+  function refreshCharts() {
+    if (!businessData) return;
+    var container = el('business-cards');
+    if (!container) return;
+    renderBusiness();
+    renderOpportunity();
+  }
+  global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness,refreshCharts:refreshCharts};
 })(window);

@@ -1,6 +1,6 @@
 /*!
  * 股票详情页 —— stock.html 的页面逻辑
- * 依赖：static-quotes.js（同源静态行情缓存）、lightweight-charts（日/月 K）
+ * 依赖：static-quotes.js（同源静态行情缓存）、ECharts（日/月 K，Apache-2.0，无署名要求）
  * 入口：stock.html?code=sz002408
  */
 (function () {
@@ -42,7 +42,6 @@
   let chartTab = 'day';
   let chart = null;
   let chartKey = '';
-  let series = {};
   const klineCache = {};
 
 
@@ -1002,39 +1001,169 @@
   /* ────────────────────────── 图表 ────────────────────────── */
 
   function destroyChart() {
-    if (chart) chart.remove();
+    if (chart && typeof chart.dispose === 'function') chart.dispose();
     chart = null;
     chartKey = '';
-    series = {};
   }
 
-  function createChart(extra) {
-    destroyChart();
-    const text = cssVar('--bs-body-color') || '#212529';
-    const border = cssVar('--bs-border-color') || '#dee2e6';
+  /** 图表配色取自当前主题的 CSS 变量，切换主题后重建。 */
+  function chartTokens() {
+    return {
+      text: cssVar('--bs-body-color') || '#212529',
+      bg: cssVar('--bs-body-bg') || '#ffffff',
+      border: cssVar('--bs-border-color') || '#dee2e6',
+      up: cssVar('--up') || '#dc2626',
+      down: cssVar('--down') || '#15803d',
+      primary: cssVar('--bs-primary') || '#0d6efd'
+    };
+  }
 
-    chart = LightweightCharts.createChart($('chart'), Object.assign({
-      autoSize: true,
-      layout: {
-        background: { type: 'solid', color: 'transparent' },
-        textColor: text,
-        fontSize: 11,
-        fontFamily: 'inherit'
-      },
-      grid: {
-        vertLines: { color: border },
-        horzLines: { color: border }
-      },
-      rightPriceScale: { borderColor: border },
-      timeScale: { borderColor: border, rightOffset: 2, barSpacing: 5 },
-      crosshair: {
-        mode: LightweightCharts.CrosshairMode.Normal,
-        vertLine: { labelBackgroundColor: '#1d4ed8' },
-        horzLine: { labelBackgroundColor: '#1d4ed8' }
-      },
-      localization: { priceFormatter: v => Number(v).toFixed(2) }
-    }, extra || {}));
+  function createChart() {
+    destroyChart();
+    if (!window.echarts || typeof window.echarts.init !== 'function') {
+      throw new Error('图表组件未加载');
+    }
+    chart = window.echarts.init($('chart'), null, { renderer: 'canvas' });
+    bindChartResize();
     return chart;
+  }
+
+  let chartResizeBound = false;
+  function bindChartResize() {
+    if (chartResizeBound) return;
+    chartResizeBound = true;
+    const fit = () => { if (chart) chart.resize(); };
+    window.addEventListener('resize', fit);
+    if (typeof ResizeObserver === 'function') {
+      const wrap = $('chart') && $('chart').parentElement;
+      if (wrap) new ResizeObserver(fit).observe(wrap);
+    }
+  }
+
+  function axisLabelOf(time, period) {
+    const s = String(time || '');
+    return period === 'month' ? s.slice(0, 7) : s.slice(5);
+  }
+
+  function buildChartOption(bars, period) {
+    const t = chartTokens();
+    const dates = bars.map(b => b.time);
+    const candle = bars.map(b => [b.open, b.close, b.low, b.high]);
+    const volume = bars.map(b => ({
+      value: b.volume || 0,
+      itemStyle: { color: rgba(b.close >= b.open ? t.up : t.down, 0.35) }
+    }));
+
+    return {
+      animation: false,
+      backgroundColor: 'transparent',
+      textStyle: { color: t.text, fontSize: 11, fontFamily: 'inherit' },
+      grid: [
+        { left: 24, right: 54, top: 10, height: '62%' },
+        { left: 24, right: 54, top: '74%', bottom: 24 }
+      ],
+      axisPointer: {
+        link: [{ xAxisIndex: 'all' }],
+        label: { backgroundColor: t.primary, fontSize: 10 }
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'cross', crossStyle: { color: t.border } },
+        backgroundColor: t.bg,
+        borderColor: t.border,
+        borderWidth: 1,
+        padding: [6, 8],
+        textStyle: { color: t.text, fontSize: 11 },
+        formatter: params => {
+          const list = Array.isArray(params) ? params : [params];
+          const hit = list.find(p => p.seriesType === 'candlestick');
+          if (!hit) return '';
+          const bar = bars[hit.dataIndex];
+          const prev = hit.dataIndex > 0 ? bars[hit.dataIndex - 1].close : null;
+          const chg = prev ? (bar.close / prev - 1) * 100 : null;
+          const tone = bar.close >= bar.open ? t.up : t.down;
+          return `<div style="font-weight:600;margin-bottom:3px">${esc(bar.time)}</div>`
+            + `<div>开 ${fmtNum(bar.open)} · 高 ${fmtNum(bar.high)}</div>`
+            + `<div>低 ${fmtNum(bar.low)} · 收 <b style="color:${tone}">${fmtNum(bar.close)}</b></div>`
+            + (chg == null ? '' : `<div>较前收 <span style="color:${chg >= 0 ? t.up : t.down}">${fmtPct(chg)}</span></div>`)
+            + `<div>量 ${fmtAmount(bar.volume)}</div>`;
+        }
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: dates,
+          boundaryGap: true,
+          axisLine: { lineStyle: { color: t.border } },
+          axisTick: { show: false },
+          splitLine: { show: false },
+          axisLabel: {
+            color: t.text, fontSize: 10, hideOverlap: true,
+            formatter: v => axisLabelOf(v, period)
+          }
+        },
+        {
+          type: 'category',
+          gridIndex: 1,
+          data: dates,
+          boundaryGap: true,
+          axisLine: { lineStyle: { color: t.border } },
+          axisTick: { show: false },
+          axisLabel: { show: false },
+          splitLine: { show: false }
+        }
+      ],
+      yAxis: [
+        {
+          scale: true,
+          position: 'right',
+          axisLine: { show: false },
+          axisTick: { show: false },
+          splitLine: { lineStyle: { color: t.border, opacity: 0.55 } },
+          axisLabel: { color: t.text, fontSize: 10, formatter: v => Number(v).toFixed(2) }
+        },
+        {
+          gridIndex: 1,
+          scale: true,
+          splitNumber: 2,
+          axisLine: { show: false },
+          axisTick: { show: false },
+          axisLabel: { show: false },
+          splitLine: { show: false }
+        }
+      ],
+      dataZoom: [
+        {
+          type: 'inside',
+          xAxisIndex: [0, 1],
+          // 滚轮留给页面滚动，Ctrl/⌘ + 滚轮缩放；拖拽平移、双指缩放照常。
+          zoomOnMouseWheel: 'ctrl',
+          moveOnMouseMove: true,
+          moveOnMouseWheel: false,
+          minValueSpan: 20
+        }
+      ],
+      series: [
+        {
+          type: 'candlestick',
+          data: candle,
+          barMaxWidth: 12,
+          itemStyle: {
+            color: t.up,
+            color0: t.down,
+            borderColor: t.up,
+            borderColor0: t.down
+          }
+        },
+        {
+          type: 'bar',
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+          data: volume,
+          barMaxWidth: 10
+        }
+      ]
+    };
   }
 
   function setTab(tab) {
@@ -1051,7 +1180,7 @@
   async function loadChart(tab, force) {
     if (!CODE) return;
 
-    $('chart-hint').textContent = '前复权 · 200 根';
+    $('chart-hint').textContent = '前复权 · 200 根 · 拖拽平移 / Ctrl 滚轮缩放';
 
     if (!klineCache[tab]) {
       $('chart-empty').textContent = '图表加载中…';
@@ -1087,56 +1216,12 @@
     if (!bars.length) throw new Error('暂无 K 线数据');
 
     const key = 'kline:' + period;
-    const up = cssVar('--up') || '#dc2626';
-    const down = cssVar('--down') || '#16a34a';
-    const isNew = !chart || chartKey !== key;
-
-    if (isNew) {
-      createChart({
-        timeScale: {
-          borderColor: cssVar('--bs-border-color') || '#dee2e6',
-          timeVisible: false,
-          rightOffset: 3,
-          barSpacing: 6
-        }
-      });
+    if (!chart || chartKey !== key) {
+      createChart();
       chartKey = key;
-      series.candles = chart.addCandlestickSeries({
-        upColor: up,
-        downColor: down,
-        borderUpColor: up,
-        borderDownColor: down,
-        wickUpColor: up,
-        wickDownColor: down,
-        priceLineVisible: true,
-        lastValueVisible: true
-      });
-      series.vol = chart.addHistogramSeries({
-        priceFormat: { type: 'volume' },
-        priceScaleId: 'vol',
-        priceLineVisible: false,
-        lastValueVisible: false
-      });
-      chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.82, bottom: 0.02 } });
     }
-
-    series.candles.setData(bars.map(b => ({
-      time: b.time,
-      open: b.open,
-      high: b.high,
-      low: b.low,
-      close: b.close
-    })));
-    series.vol.setData(bars.map(b => ({
-      time: b.time,
-      value: b.volume || 0,
-      color: b.close >= b.open ? rgba(up, .35) : rgba(down, .35)
-    })));
-
-    if (isNew) {
-      chart.timeScale().fitContent();
-      chart.timeScale().setVisibleLogicalRange({ from: -8, to: bars.length + 2 });
-    }
+    chart.setOption(buildChartOption(bars, period), true);
+    chart.resize();
   }
 
   function rgba(hex, alpha) {

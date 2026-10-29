@@ -456,6 +456,10 @@ function toggleTheme() {
   const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
   try { localStorage.setItem('stock-theme', next); } catch (e) {}
   applyTheme(next);
+  // 图表配色来自 CSS 变量，切换主题后需要重建。
+  if (window.StockBusiness && typeof window.StockBusiness.refreshCharts === 'function') {
+    window.StockBusiness.refreshCharts();
+  }
 }
 
 window.toggleTheme = toggleTheme;

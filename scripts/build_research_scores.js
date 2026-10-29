@@ -55,6 +55,7 @@ function scoreOfCache(cache) {
     },
     points: result.points,
     max: result.max,
+    percent: result.percent,
     complete: result.complete,
     band: result.band ? result.band.key : null,
     metrics: {

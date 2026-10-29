@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T08:24:51.605Z",
+  "updatedAt": "2026-10-29T08:33:47.588Z",
   "marketDate": "2026-10-29",
   "totalMax": 32,
   "weights": {
@@ -42,6 +42,7 @@
       },
       "points": 19.6,
       "max": 32,
+      "percent": 61.3,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -63,6 +64,7 @@
       },
       "points": 25,
       "max": 32,
+      "percent": 78.1,
       "complete": true,
       "band": "good",
       "metrics": {
@@ -84,6 +86,7 @@
       },
       "points": 17,
       "max": 32,
+      "percent": 53.1,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -105,6 +108,7 @@
       },
       "points": 19.5,
       "max": 32,
+      "percent": 60.9,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -126,6 +130,7 @@
       },
       "points": 15.8,
       "max": 32,
+      "percent": 49.4,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -147,6 +152,7 @@
       },
       "points": 19.4,
       "max": 32,
+      "percent": 60.6,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -168,6 +174,7 @@
       },
       "points": 22.4,
       "max": 32,
+      "percent": 70,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -189,6 +196,7 @@
       },
       "points": 19.2,
       "max": 32,
+      "percent": 60,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -210,6 +218,7 @@
       },
       "points": 19.7,
       "max": 32,
+      "percent": 61.6,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -231,6 +240,7 @@
       },
       "points": 21.7,
       "max": 32,
+      "percent": 67.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -252,6 +262,7 @@
       },
       "points": 22.2,
       "max": 32,
+      "percent": 69.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -273,6 +284,7 @@
       },
       "points": 19.2,
       "max": 32,
+      "percent": 60,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -294,6 +306,7 @@
       },
       "points": 15.9,
       "max": 32,
+      "percent": 49.7,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -315,6 +328,7 @@
       },
       "points": 19.2,
       "max": 32,
+      "percent": 60,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -336,6 +350,7 @@
       },
       "points": 21.7,
       "max": 32,
+      "percent": 67.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -357,6 +372,7 @@
       },
       "points": 17.8,
       "max": 32,
+      "percent": 55.6,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -378,6 +394,7 @@
       },
       "points": 16.9,
       "max": 32,
+      "percent": 52.8,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -399,6 +416,7 @@
       },
       "points": 18.8,
       "max": 32,
+      "percent": 58.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -420,6 +438,7 @@
       },
       "points": 20.4,
       "max": 32,
+      "percent": 63.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -441,6 +460,7 @@
       },
       "points": 20.9,
       "max": 32,
+      "percent": 65.3,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -462,6 +482,7 @@
       },
       "points": 13.9,
       "max": 32,
+      "percent": 43.4,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -483,6 +504,7 @@
       },
       "points": 23.3,
       "max": 32,
+      "percent": 72.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -504,6 +526,7 @@
       },
       "points": 22.3,
       "max": 32,
+      "percent": 69.7,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -525,6 +548,7 @@
       },
       "points": 19.7,
       "max": 32,
+      "percent": 61.6,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -546,6 +570,7 @@
       },
       "points": 13.6,
       "max": 32,
+      "percent": 42.5,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -567,6 +592,7 @@
       },
       "points": 14,
       "max": 32,
+      "percent": 43.8,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -588,6 +614,7 @@
       },
       "points": 20.4,
       "max": 32,
+      "percent": 63.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -609,6 +636,7 @@
       },
       "points": 19.3,
       "max": 32,
+      "percent": 60.3,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -630,6 +658,7 @@
       },
       "points": 18.1,
       "max": 32,
+      "percent": 56.6,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -651,6 +680,7 @@
       },
       "points": 14.2,
       "max": 32,
+      "percent": 44.4,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -672,6 +702,7 @@
       },
       "points": 18.7,
       "max": 32,
+      "percent": 58.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -693,6 +724,7 @@
       },
       "points": 20.6,
       "max": 32,
+      "percent": 64.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -714,6 +746,7 @@
       },
       "points": 15.9,
       "max": 32,
+      "percent": 49.7,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -735,6 +768,7 @@
       },
       "points": 15.9,
       "max": 32,
+      "percent": 49.7,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -756,6 +790,7 @@
       },
       "points": 17.9,
       "max": 32,
+      "percent": 55.9,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -777,6 +812,7 @@
       },
       "points": 18,
       "max": 32,
+      "percent": 56.3,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -798,6 +834,7 @@
       },
       "points": 20,
       "max": 32,
+      "percent": 62.5,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -819,6 +856,7 @@
       },
       "points": 16.8,
       "max": 32,
+      "percent": 52.5,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -840,6 +878,7 @@
       },
       "points": 16.8,
       "max": 32,
+      "percent": 52.5,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -861,6 +900,7 @@
       },
       "points": 15,
       "max": 32,
+      "percent": 46.9,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -882,6 +922,7 @@
       },
       "points": 18.9,
       "max": 32,
+      "percent": 59.1,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -903,6 +944,7 @@
       },
       "points": 21.9,
       "max": 32,
+      "percent": 68.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -924,6 +966,7 @@
       },
       "points": 15.8,
       "max": 32,
+      "percent": 49.4,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -945,6 +988,7 @@
       },
       "points": 17.7,
       "max": 32,
+      "percent": 55.3,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -966,6 +1010,7 @@
       },
       "points": 19,
       "max": 32,
+      "percent": 59.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -987,6 +1032,7 @@
       },
       "points": 14,
       "max": 32,
+      "percent": 43.8,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1008,6 +1054,7 @@
       },
       "points": 20.4,
       "max": 32,
+      "percent": 63.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1029,6 +1076,7 @@
       },
       "points": 16.8,
       "max": 32,
+      "percent": 52.5,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1050,6 +1098,7 @@
       },
       "points": 16.3,
       "max": 32,
+      "percent": 50.9,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1071,6 +1120,7 @@
       },
       "points": 14.3,
       "max": 32,
+      "percent": 44.7,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1092,6 +1142,7 @@
       },
       "points": 16.1,
       "max": 32,
+      "percent": 50.3,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1113,6 +1164,7 @@
       },
       "points": 21.5,
       "max": 32,
+      "percent": 67.2,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1134,6 +1186,7 @@
       },
       "points": 23.5,
       "max": 32,
+      "percent": 73.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1155,6 +1208,7 @@
       },
       "points": 16.4,
       "max": 32,
+      "percent": 51.3,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1176,6 +1230,7 @@
       },
       "points": 20.6,
       "max": 32,
+      "percent": 64.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1197,6 +1252,7 @@
       },
       "points": 15.2,
       "max": 32,
+      "percent": 47.5,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1218,6 +1274,7 @@
       },
       "points": 20.2,
       "max": 32,
+      "percent": 63.1,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1239,6 +1296,7 @@
       },
       "points": 16,
       "max": 32,
+      "percent": 50,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1260,6 +1318,7 @@
       },
       "points": 21,
       "max": 32,
+      "percent": 65.6,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1281,6 +1340,7 @@
       },
       "points": 15.7,
       "max": 32,
+      "percent": 49.1,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -1302,6 +1362,7 @@
       },
       "points": 19.3,
       "max": 32,
+      "percent": 60.3,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1323,6 +1384,7 @@
       },
       "points": 19,
       "max": 32,
+      "percent": 59.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1344,6 +1406,7 @@
       },
       "points": 20.1,
       "max": 32,
+      "percent": 62.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1365,6 +1428,7 @@
       },
       "points": 18.6,
       "max": 32,
+      "percent": 58.1,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1386,6 +1450,7 @@
       },
       "points": 21,
       "max": 32,
+      "percent": 65.6,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1407,6 +1472,7 @@
       },
       "points": 21.3,
       "max": 32,
+      "percent": 66.6,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1428,6 +1494,7 @@
       },
       "points": 16.8,
       "max": 32,
+      "percent": 52.5,
       "complete": true,
       "band": "high",
       "metrics": {

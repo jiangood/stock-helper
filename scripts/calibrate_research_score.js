@@ -23,24 +23,24 @@ const CACHE_DIR = path.join(ROOT, 'data', 'stock-cache');
 
 // 研报样本：code / 名称 / 报告日期 / 来源 / 第 7-10 项作者打分（10 分制）
 const SAMPLES = [
-  { code: 'sh600301', name: '华锡有色', date: '2024-10-14', report: '20241014 华锡有色 研究报告.pdf', cap: 7.0, consolidation: 5.0, bottom: 6.0, volume: 6.0 },
-  { code: 'sh600486', name: '扬农化工', date: '2025-03-03', report: '20250303 扬农化工研究报告.pdf', cap: 4.0, consolidation: 6.0, bottom: 7.5, volume: 5.0 },
-  { code: 'sz002430', name: '杭氧股份', date: '2025-03-24', report: '20250324 杭氧股份 研究报告.pdf', cap: 5.0, consolidation: 5.0, bottom: 5.0, volume: 5.0 },
-  { code: 'sh600727', name: '鲁北化工', date: '2025-03-30', report: '鲁北化工研究报告.pdf', cap: 9.0, consolidation: 5.0, bottom: 5.0, volume: 8.0 },
-  { code: 'sz000960', name: '锡业股份', date: '2025-06-16', report: '20250616 锡业股份跟踪报告.pdf', cap: 5.0, consolidation: 7.0, bottom: 6.0, volume: 4.0 },
-  { code: 'sz301058', name: '中粮科工', date: '2025-06-30', report: '20250630 中粮科工 研究报告.pdf', cap: 10.0, consolidation: 5.0, bottom: 5.0, volume: 4.0 },
-  { code: 'sh600426', name: '华鲁恒升', date: '2025-07-21', report: '华鲁恒升研究报告.pdf', cap: 4.0, consolidation: 5.0, bottom: 5.0, volume: 6.0 },
-  { code: 'sh600230', name: '沧州大化', date: '2025-08-04', report: '沧州大化研究报告.pdf', cap: 10.0, consolidation: 6.0, bottom: 5.0, volume: 7.0 },
-  { code: 'sh601568', name: '北元集团', date: '2025-09-22', report: '北元集团研究报告.pdf', cap: 9.5, consolidation: 9.5, bottom: 9.0, volume: 5.0 },
-  { code: 'sz002556', name: '辉隆股份', date: '2025-11-03', report: '辉隆股份研究报告.pdf', cap: 10.0, consolidation: 8.0, bottom: 8.0, volume: 8.0 },
-  { code: 'sh603970', name: '中农立华', date: '2025-11-17', report: '20251117 中农立华研究报告.pdf', cap: 9.5, consolidation: 6.0, bottom: 5.0, volume: 4.0 },
-  { code: 'sz300470', name: '中密控股', date: '2025-12-01', report: '中密控股研究报告.pdf', cap: 10.0, consolidation: 7.5, bottom: 7.0, volume: 6.0 },
-  { code: 'sh600819', name: '耀皮玻璃', date: '2025-12-08', report: '20251208 耀皮玻璃研究报告.pdf', cap: 9.0, consolidation: 3.0, bottom: 3.0, volume: 5.0 },
-  { code: 'sh688295', name: '中复神鹰', date: '2025-12-15', report: '中复神鹰研究报告.pdf', cap: 6.0, consolidation: 4.0, bottom: 5.0, volume: 4.0 },
-  { code: 'sh600348', name: '华阳股份', date: '2026-01-20', report: '华阳股份研究报告.pdf', cap: 5.0, consolidation: 7.5, bottom: 6.0, volume: 4.0 },
-  { code: 'sh601618', name: '中国中冶', date: '2026-03-09', report: '中国中冶研究报告20260302.pdf', cap: 4.0, consolidation: 6.0, bottom: 6.0, volume: 6.0 },
-  { code: 'sh601618', name: '中国中冶', date: '2026-03-15', report: '中国中冶研究报告（自制）.docx', cap: 8.0, consolidation: 9.0, bottom: 9.0, volume: 7.0 },
-  { code: 'sz300034', name: '钢研高纳', date: '2024-03-17', report: '钢研高纳研究报告.pdf', cap: 9.0, consolidation: 5.0, bottom: 5.0, volume: 3.0 }
+  { code: 'sh600301', name: '华锡有色', date: '2024-10-14', report: '20241014 华锡有色 研究报告.pdf', total: 77.10, cap: 7.0, consolidation: 5.0, bottom: 6.0, volume: 6.0 },
+  { code: 'sh600486', name: '扬农化工', date: '2025-03-03', report: '20250303 扬农化工研究报告.pdf', total: 66.05, cap: 4.0, consolidation: 6.0, bottom: 7.5, volume: 5.0 },
+  { code: 'sz002430', name: '杭氧股份', date: '2025-03-24', report: '20250324 杭氧股份 研究报告.pdf', total: 66.10, cap: 5.0, consolidation: 5.0, bottom: 5.0, volume: 5.0 },
+  { code: 'sh600727', name: '鲁北化工', date: '2025-03-30', report: '鲁北化工研究报告.pdf', total: 70.50, cap: 9.0, consolidation: 5.0, bottom: 5.0, volume: 8.0 },
+  { code: 'sz000960', name: '锡业股份', date: '2025-06-16', report: '20250616 锡业股份跟踪报告.pdf', total: 78.75, cap: 5.0, consolidation: 7.0, bottom: 6.0, volume: 4.0 },
+  { code: 'sz301058', name: '中粮科工', date: '2025-06-30', report: '20250630 中粮科工 研究报告.pdf', total: 73.35, cap: 10.0, consolidation: 5.0, bottom: 5.0, volume: 4.0 },
+  { code: 'sh600426', name: '华鲁恒升', date: '2025-07-21', report: '华鲁恒升研究报告.pdf', total: 62.90, cap: 4.0, consolidation: 5.0, bottom: 5.0, volume: 6.0 },
+  { code: 'sh600230', name: '沧州大化', date: '2025-08-04', report: '沧州大化研究报告.pdf', total: 67.10, cap: 10.0, consolidation: 6.0, bottom: 5.0, volume: 7.0 },
+  { code: 'sh601568', name: '北元集团', date: '2025-09-22', report: '北元集团研究报告.pdf', total: 70.20, cap: 9.5, consolidation: 9.5, bottom: 9.0, volume: 5.0 },
+  { code: 'sz002556', name: '辉隆股份', date: '2025-11-03', report: '辉隆股份研究报告.pdf', total: 73.20, cap: 10.0, consolidation: 8.0, bottom: 8.0, volume: 8.0 },
+  { code: 'sh603970', name: '中农立华', date: '2025-11-17', report: '20251117 中农立华研究报告.pdf', total: 67.40, cap: 9.5, consolidation: 6.0, bottom: 5.0, volume: 4.0 },
+  { code: 'sz300470', name: '中密控股', date: '2025-12-01', report: '中密控股研究报告.pdf', total: 80.05, cap: 10.0, consolidation: 7.5, bottom: 7.0, volume: 6.0 },
+  { code: 'sh600819', name: '耀皮玻璃', date: '2025-12-08', report: '20251208 耀皮玻璃研究报告.pdf', total: 63.40, cap: 9.0, consolidation: 3.0, bottom: 3.0, volume: 5.0 },
+  { code: 'sh688295', name: '中复神鹰', date: '2025-12-15', report: '中复神鹰研究报告.pdf', total: 64.80, cap: 6.0, consolidation: 4.0, bottom: 5.0, volume: 4.0 },
+  { code: 'sh600348', name: '华阳股份', date: '2026-01-20', report: '华阳股份研究报告.pdf', total: 66.00, cap: 5.0, consolidation: 7.5, bottom: 6.0, volume: 4.0 },
+  { code: 'sh601618', name: '中国中冶', date: '2026-03-09', report: '中国中冶研究报告20260302.pdf', total: 61.00, cap: 4.0, consolidation: 6.0, bottom: 6.0, volume: 6.0 },
+  { code: 'sh601618', name: '中国中冶', date: '2026-03-15', report: '中国中冶研究报告（自制）.docx', total: 83.00, cap: 8.0, consolidation: 9.0, bottom: 9.0, volume: 7.0 },
+  { code: 'sz300034', name: '钢研高纳', date: '2024-03-17', report: '钢研高纳研究报告.pdf', total: 70.80, cap: 9.0, consolidation: 5.0, bottom: 5.0, volume: 3.0 }
 ];
 
 const ITEMS = [
@@ -134,29 +134,40 @@ function main() {
 
   const pad = (text, width) => String(text).padEnd(width, ' ');
   const fmt = (v, digits = 1) => (v === null || v === undefined || !isFinite(v) ? '—' : v.toFixed(digits));
+  /** 研报 4 项（第 7-10 项）折算成百分制 */
+  const authored4Percent = sample => ITEMS.reduce((sum, item) => sum + Research.CONFIG.weights[item.key] * sample[item.key] / 10, 0) / 32 * 100;
 
-  console.log('研报评分校准：作者打分 vs 机器复算（10 分制，第 7-10 项，K 线截断到研报日期）\n');
-  console.log(pad('股票', 9) + pad('日期', 12) + '  ' + ITEMS.map(i => pad(i.label, 14)).join('') + '证据');
-  console.log('-'.repeat(118));
+  console.log('研报评分校准：机器 4 项 vs 研报打分（百分制，K 线截断到研报发布日）\n');
+  console.log(pad('股票', 9) + pad('日期', 12) + pad('机器分', 9) + pad('研报4项', 10) + pad('研报总分', 10) + '四项明细（机器 ← 作者，10 分制）');
+  console.log('-'.repeat(132));
 
   const errors = {};
   ITEMS.forEach(item => { errors[item.key] = []; });
+  const machinePercents = [];
+  const authoredPercents = [];
+  const authoredTotals = [];
 
   usable.forEach(({ sample, result }) => {
+    const machinePercent = result.percent;
+    const authored4 = authored4Percent(sample);
+    machinePercents.push(machinePercent);
+    authoredPercents.push(authored4);
+    authoredTotals.push(sample.total);
+
     const cells = ITEMS.map(item => {
       const authored = sample[item.key];
       const machine = result.items[item.key];
       const diff = machine === null ? null : machine - authored;
       if (diff !== null) errors[item.key].push(diff);
-      return pad(`${fmt(authored)} → ${fmt(machine)} (${diff === null ? '—' : (diff > 0 ? '+' : '') + diff.toFixed(1)})`, 14);
-    });
-    const m = result.metrics;
-    const note = `箱体${m.boxHeight === null ? '—' : (m.boxHeight * 100).toFixed(0) + '%'} 高点${m.months === null ? '—' : m.months + '月'}`
-      + ` 位置${m.position === null ? '—' : (m.position * 100).toFixed(0) + '%'} 量比${fmt(m.volRatio, 2)}`;
-    console.log(pad(sample.name, 9) + pad(sample.date, 12) + '  ' + cells.join('') + note);
+      return `${fmt(authored)}→${fmt(machine)}${diff === null ? '' : '(' + (diff > 0 ? '+' : '') + diff.toFixed(1) + ')'} `;
+    }).join('');
+
+    console.log(pad(sample.name, 9) + pad(sample.date, 12)
+      + pad(fmt(machinePercent, 1), 9) + pad(fmt(authored4, 1), 10) + pad(fmt(sample.total, 1), 10)
+      + cells);
   });
 
-  console.log('\n误差统计（机器 − 作者）：');
+  console.log('\n误差统计（机器 − 作者，10 分制）：');
   let maeSum = 0;
   let maeCount = 0;
   ITEMS.forEach(item => {
@@ -171,10 +182,18 @@ function main() {
   });
   console.log(`  四项平均 MAE ${(maeSum / Math.max(maeCount, 1)).toFixed(2)}`);
 
-  const machineTotal = usable.map(({ result }) => result.points);
-  const authoredTotal = usable.map(({ sample }) => ITEMS.reduce((sum, item) => sum + Research.CONFIG.weights[item.key] * sample[item.key] / 10, 0));
-  const totalMae = machineTotal.map((v, i) => Math.abs(v - authoredTotal[i])).reduce((s, v) => s + v, 0) / Math.max(machineTotal.length, 1);
-  console.log(`  合计 32 分：MAE ${totalMae.toFixed(2)} · 秩相关 ${fmt(spearman(machineTotal.map((v, i) => [authoredTotal[i], v])), 2)} （n=${machineTotal.length}）`);
+  const mean = list => list.reduce((s, v) => s + v, 0) / Math.max(list.length, 1);
+  const mae = (a, b) => mean(a.map((v, i) => Math.abs(v - b[i])));
+  const diff = (a, b) => mean(a.map((v, i) => v - b[i]));
+
+  console.log('\n百分制对比（n=' + usable.length + '）：');
+  console.log(`  机器分 vs 研报 4 项折算分：平均 ${fmt(mean(machinePercents))} 分 vs ${fmt(mean(authoredPercents))} 分`
+    + ` · 平均差 ${fmt(diff(machinePercents, authoredPercents), 1)} · MAE ${fmt(mae(machinePercents, authoredPercents), 1)}`
+    + ` · 秩相关 ${fmt(spearman(machinePercents.map((v, i) => [authoredPercents[i], v])), 2)}`);
+  console.log(`  机器分 vs 研报总分：      平均 ${fmt(mean(machinePercents))} 分 vs ${fmt(mean(authoredTotals))} 分`
+    + ` · 平均差 ${fmt(diff(machinePercents, authoredTotals), 1)} · MAE ${fmt(mae(machinePercents, authoredTotals), 1)}`
+    + ` · 秩相关 ${fmt(spearman(machinePercents.map((v, i) => [authoredTotals[i], v])), 2)}`);
+  console.log('  说明：机器只算 4 项（32 分权重），研报总分含另外 6 项基本面判断，所以机器分天然低约 10 分。');
 
   if (missing.length) {
     console.log('\n未参与校准：');

@@ -259,7 +259,9 @@
     const totalMax = Object.keys(weights).reduce((sum, key) => sum + weights[key], 0);
     const known = Object.keys(weights).filter(key => isNum(items[key])).length;
     const rounded = Math.round(points * 10) / 10;
-    const band = max === totalMax ? bandOf(rounded) : null;
+    const complete = known === Object.keys(weights).length;
+    const percent = complete ? Math.round(rounded / totalMax * 1000) / 10 : null;
+    const band = complete ? bandOf(rounded) : null;
 
     return {
       version: VERSION,
@@ -267,8 +269,9 @@
       points: known ? rounded : null,
       max: known ? max : null,
       totalMax,
+      percent,
       known,
-      complete: known === Object.keys(weights).length,
+      complete,
       band: known ? band : null,
       metrics: {
         capYi: num(src.cap) !== null ? num(src.cap) / 1e8 : null,

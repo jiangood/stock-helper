@@ -952,14 +952,15 @@
     }
 
     const max = isNum(score.max) && score.max > 0 ? score.max : (score.totalMax || 32);
+    const percent = isNum(score.percent) ? score.percent : score.points / max * 100;
     const band = score.band === 'good' ? '位置优秀' : score.band === 'high' ? '位置偏高' : '位置中性';
     const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
-    totalEl.innerHTML = `<span class="score score-${tone}">${score.points.toFixed(1)}</span>`
-      + `<span class="text-body-secondary">/${max} · ${band}</span>`;
-    noteEl.textContent = '研报 10 项评分卡中可自动复算的 4 项（8 + 9 + 9 + 6 = 32 分），只看位置，不含基本面。';
+    totalEl.innerHTML = `<span class="score score-${tone}">${percent.toFixed(1)} 分</span>`
+      + `<span class="text-body-secondary">&nbsp;· ${band}</span>`;
+    noteEl.textContent = '研报 10 项评分卡中可自动复算的 4 项（8 + 9 + 9 + 6 = 32 分），按百分制折算，只看位置、不含基本面。';
 
     barWrap.hidden = false;
-    bar.style.width = Math.max(0, Math.min(100, score.points / max * 100)).toFixed(1) + '%';
+    bar.style.width = Math.max(0, Math.min(100, percent)).toFixed(1) + '%';
 
     const m = score.metrics || {};
     const it = score.items || {};

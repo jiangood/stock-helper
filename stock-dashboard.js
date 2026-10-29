@@ -401,11 +401,12 @@ function screenHtml(stock, pd, e) {
   return `<span class="text-body-tertiary" style="font-size:11px" title="${esc(tip)}">${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
 }
 
-/** 首页评分列：研报 10 项评分卡里可自动复算的 4 项，32 分制 */
+/** 首页评分列：研报 10 项评分卡里可自动复算的 4 项，32 分制折算成百分比 */
 function researchHtml(stock) {
   const score = researchScores[stock.code];
   if (!score || !isFinite(score.points)) return '<span class="text-body-tertiary">—</span>';
   const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
+  const percent = isFinite(score.percent) ? score.percent : score.points / max * 100;
   const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
   const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
   const items = score.items || {};
@@ -415,11 +416,11 @@ function researchHtml(stock) {
     `月线 ${fmtScore(items.bottom)}/9`,
     `放量 ${fmtScore(items.volume)}/6`
   ].join(' · ');
-  const tip = `研报评分 ${score.points}/${max}${band ? ' · ' + band : ''}\n${detail}\n`
-    + '仅复算市值/盘整/月线位置/底部放量 4 项（32 分制），不含国资背景等基本面项；不构成投资建议';
+  const tip = `研报评分 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n`
+    + '仅复算市值/盘整/月线位置/底部放量 4 项并按百分制折算，不含国资背景等基本面项；不构成投资建议';
   const suffix = score.complete ? '' : '?';
-  return `<span class="score score-${tone}" title="${esc(tip)}">${score.points.toFixed(1)}`
-    + `<span class="unit">/${max}${suffix}</span></span>`;
+  return `<span class="score score-${tone}" title="${esc(tip)}">${percent.toFixed(1)}`
+    + `<span class="unit">分${suffix}</span></span>`;
 }
 
 function fmtScore(value) {

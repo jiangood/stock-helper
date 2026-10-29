@@ -66,6 +66,8 @@ test('compute 输出 32 分制合计与分档，缺数据时只统计已知项',
   assert.equal(full.max, 32);
   assert.equal(full.complete, true);
   assert.ok(full.points > 0 && full.points <= 32);
+  assert.ok(full.percent > 0 && full.percent <= 100);
+  assert.equal(full.percent, Math.round(full.points / 32 * 1000) / 10);
   assert.ok(full.band && ['good', 'mid', 'high'].includes(full.band.key));
 
   const partial = Research.compute({ cap: 60e8 });
@@ -73,10 +75,12 @@ test('compute 输出 32 分制合计与分档，缺数据时只统计已知项',
   assert.equal(partial.items.consolidation, null);
   assert.equal(partial.max, 8);
   assert.equal(partial.complete, false);
+  assert.equal(partial.percent, null, '缺项时不折算百分制');
   assert.equal(partial.band, null);
 
   const empty = Research.compute({});
   assert.equal(empty.points, null);
+  assert.equal(empty.percent, null);
 });
 
 test('周 K 可以合成月 K，缺失月 K 时自动兜底', () => {

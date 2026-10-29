@@ -1,7 +1,7 @@
 /* Home trading combat center: manual decision support only, never submits orders. */
 (function (root) {
   'use strict';
-  var state = { stocks: [], prices: {}, client: null, holdings: [], rows: [], initialized: false, loading: false, lastRun: 0, filter: 'all', error: '' };
+  var state = { stocks: [], prices: {}, client: null, holdings: [], rows: [], reviews: {}, initialized: false, loading: false, lastRun: 0, filter: 'all', error: '' };
   var $ = function (id) { return root.document.getElementById(id); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
   function money(v) { return v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v)) ? Number(v).toFixed(2) : '—'; }
@@ -25,6 +25,36 @@
     var age = Math.floor((Date.now() - date.getTime()) / 86400000);
     if (age < 0) return '计划复核日期在未来，请核对';
     return '计划复核 ' + value + (age > 180 ? ' · 已 ' + age + ' 天未复核，建议检查' : ' · ' + age + ' 天前');
+  }
+  function loadReviews() {
+    try {
+      var raw = root.localStorage && root.localStorage.getItem('stock-helper-combat-reviews-v1');
+      var parsed = raw ? JSON.parse(raw) : {};
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+    } catch (_) { return {}; }
+  }
+  function reviewFor(code) { return state.reviews[codeOf(code)] || {}; }
+  function saveReview(code, review) {
+    try {
+      if (!root.localStorage) return false;
+      state.reviews[codeOf(code)] = review;
+      root.localStorage.setItem('stock-helper-combat-reviews-v1', JSON.stringify(state.reviews));
+      return true;
+    } catch (_) { return false; }
+  }
+  function planChecks(stock, quote, primary) {
+    var checks = [], raw = quote && Number(quote.time), ts = raw > 0 ? new Date(raw < 1000000000000 ? raw * 1000 : raw).getTime() : NaN;
+    var quoteFresh = Number.isFinite(ts) && Date.now() - ts <= 5 * 86400000 && Date.now() - ts >= -5 * 60000;
+    checks.push((quoteFresh ? '✓' : '！') + ' 行情时间' + (quoteFresh ? '有效' : '待核对'));
+    var date = String(stock && stock.updDate || '');
+    var age = date && /^\\d{4}-\\d{2}-\\d{2}$/.test(date) ? Math.floor((Date.now() - new Date(date + 'T00:00:00Z').getTime()) / 86400000) : null;
+    var planFresh = age !== null && age >= 0 && age <= 180;
+    checks.push((planFresh ? '✓' : '！') + ' 计划复核' + (planFresh ? '未过期' : '需复核'));
+    var disciplineOk = primary && primary.kind !== 'risk' && primary.kind !== 'data';
+    checks.push((disciplineOk ? '✓' : '！') + ' 纪律门槛' + (disciplineOk ? '未拦截' : '未通过/数据不足'));
+    checks.push('! 未配置明确止损价；不得将重仓价直接视为止损线');
+    checks.push('! 下单前人工确认：商品周期、公司逻辑与仓位风险');
+    return checks;
   }
   function codeOf(code) { return String(code || '').trim().toLowerCase(); }
   function quoteFor(code) { return state.prices[code] || state.prices[codeOf(code)] || null; }
@@ -103,13 +133,22 @@
         '<div class="combat-indicator"><div class="mini-label">OBV · 能量潮</div><strong>' + (ind.obv == null ? '—' : Math.round(ind.obv).toLocaleString('zh-CN')) + '</strong><span>' + (ind.obv == null ? '数据不足' : '累计量价方向指标') + '</span><small>上涨日加量、下跌日减量，观察量价配合；绝对值不适合跨股票比较。</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">数据口径</div><strong>' + (ind.bars || 0) + ' 根日K</strong><span>' + (ind.bars >= 35 ? '可计算 RSI / MACD' : '历史长度可能不足') + '</span><small>RSI使用14期 Wilder平滑；MACD使用12/26/9；使用当前可获取的复权日K，结果会随新行情变化。</small></div>' +
         '</div><div class="mini-label mt-2">读法：RSI 与 MACD 仅作为辅助确认，仍需结合计划价、支撑、资金流量、趋势及硬性纪律；单个指标不能构成买入理由。</div></details>';
-      var buyConditions = '<section class="combat-buy-conditions"><div class="combat-section-title">买入条件</div><div class="combat-reasons mt-2">' + reasons.map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div></section>';
+      var buyConditions = '<section class="combat-buy-conditions"><div class="combat-section-title">买入前检查</div><div class="combat-reasons mt-2">' + reasons.map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-reasons mt-2">' + planChecks(s, r.quote, r.primary).map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-invalidation mt-2"><div class="combat-section-title">计划失效 / 退出复核</div><ul class="mb-0 mt-1 ps-3"><li>行情过期、计划长期未复核或纪律拦截时，暂停新增操作并先核验数据。</li><li>商品供需/周期转向、公司经营假设被证伪时，重新评估持有逻辑与估值。</li><li>达到既定止盈目标或触发项目卖出纪律时，按原计划复核退出，不因单一技术指标机械操作。</li><li>当前股票池未配置明确止损价；重仓价不是止损价，退出阈值需由投资者单独制定。</li></ul></div></section>';
+      var review = reviewFor(s.code);
+      var reviewPanel = '<details class="combat-review-details" data-review-code="' + esc(codeOf(s.code)) + '"><summary class="combat-section-title">交易后复盘记录（仅本机保存）</summary><div class="mt-2">' +
+        '<label class="form-label mini-label mb-1" for="review-action-' + esc(codeOf(s.code)) + '">操作</label><select class="form-select form-select-sm mb-2" id="review-action-' + esc(codeOf(s.code)) + '" data-review-field="action"><option value="未交易"' + (review.action === '未交易' || !review.action ? ' selected' : '') + '>未交易 / 观察</option><option value="买入/补仓"' + (review.action === '买入/补仓' ? ' selected' : '') + '>买入 / 补仓</option><option value="减仓"' + (review.action === '减仓' ? ' selected' : '') + '>减仓</option><option value="卖出"' + (review.action === '卖出' ? ' selected' : '') + '>卖出</option></select>' +
+        '<label class="form-label mini-label mb-1" for="review-date-' + esc(codeOf(s.code)) + '">交易日期</label><input class="form-control form-control-sm mb-2" type="date" id="review-date-' + esc(codeOf(s.code)) + '" data-review-field="date" value="' + esc(review.date || '') + '">' +
+        '<label class="form-label mini-label mb-1">交易理由 / 当时假设</label><textarea class="form-control form-control-sm mb-2" rows="2" maxlength="1200" data-review-field="thesis" placeholder="为什么操作？周期、估值、安全边际和买入条件是什么？">' + esc(review.thesis || '') + '</textarea>' +
+        '<label class="form-label mini-label mb-1">执行与风险控制</label><textarea class="form-control form-control-sm mb-2" rows="2" maxlength="1200" data-review-field="execution" placeholder="是否按计划执行？仓位、价格、纪律是否偏离？">' + esc(review.execution || '') + '</textarea>' +
+        '<label class="form-label mini-label mb-1">结果与经验</label><textarea class="form-control form-control-sm mb-2" rows="2" maxlength="1200" data-review-field="lesson" placeholder="结果如何？哪些判断被验证，哪些需要修正？">' + esc(review.lesson || '') + '</textarea>' +
+        '<div class="d-flex align-items-center gap-2"><button type="button" class="btn btn-sm btn-outline-primary" data-review-save="' + esc(codeOf(s.code)) + '">保存复盘</button><span class="mini-label" data-review-status>' + (review.savedAt ? '已保存 ' + esc(new Date(review.savedAt).toLocaleString('zh-CN')) : '尚未保存') + '</span></div>' +
+        '<div class="mini-label mt-2">记录仅存当前浏览器 localStorage，不会上传到 GitHub；清除浏览器网站数据可能导致记录丢失。</div></div></details>';
       var cost = held && h.cost !== null && h.cost !== undefined && h.cost !== '' && Number.isFinite(Number(h.cost)) ? Number(h.cost) : null;
       var validQty = held && Number.isFinite(qty) && qty > 0;
       var pnlText = validQty && cost !== null && p !== null ? ((p - cost) * qty > 0 ? '+' : '') + Math.round((p - cost) * qty).toLocaleString('zh-CN') + ' 元' : '—';
       var quoteLabel = quoteTime(r.quote);
       var reviewed = planReviewLabel(s);
-      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · ' + (held ? '持仓 ' + (validQty ? qty.toLocaleString('zh-CN') : '数量待核对') + ' 股' : '股票池 / 自选') + '</div><div class="mini-label">' + esc(quoteLabel) + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + (held ? ' · 成本 ' + money(cost) + ' · 浮盈亏 ' + pnlText : '') + '<div class="mini-label mt-1">' + esc(reviewed) + ' · 计划价需结合最新基本面与周期复核</div></div>' + buyConditions + indicatorPanel + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span><a class="btn btn-sm btn-outline-primary" href="stock.html?code=' + encodeURIComponent(s.code) + '">查看详情</a></div></article>';
+      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · ' + (held ? '持仓 ' + (validQty ? qty.toLocaleString('zh-CN') : '数量待核对') + ' 股' : '股票池 / 自选') + '</div><div class="mini-label">' + esc(quoteLabel) + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + (held ? ' · 成本 ' + money(cost) + ' · 浮盈亏 ' + pnlText : '') + '<div class="mini-label mt-1">' + esc(reviewed) + ' · 计划价需结合最新基本面与周期复核</div></div>' + buyConditions + indicatorPanel + reviewPanel + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span><a class="btn btn-sm btn-outline-primary" href="stock.html?code=' + encodeURIComponent(s.code) + '">查看详情</a></div></article>';
     }).join('');
   }
   async function calculateOne(stock) {
@@ -216,7 +255,27 @@
     state.loading = false;
     render();
   }
+  function bindReviewActions() {
+    var list = $('combat-list');
+    if (!list || list.dataset.reviewBound) return;
+    list.dataset.reviewBound = '1';
+    list.addEventListener('click', function (event) {
+      var button = event.target && event.target.closest ? event.target.closest('[data-review-save]') : null;
+      if (!button) return;
+      var code = codeOf(button.getAttribute('data-review-save'));
+      var panel = button.closest('[data-review-code]');
+      if (!panel || !code) return;
+      var values = {};
+      panel.querySelectorAll('[data-review-field]').forEach(function (field) { values[field.getAttribute('data-review-field')] = String(field.value || '').trim(); });
+      values.savedAt = new Date().toISOString();
+      var status = panel.querySelector('[data-review-status]');
+      if (saveReview(code, values)) {
+        if (status) status.textContent = '已保存 ' + new Date(values.savedAt).toLocaleString('zh-CN');
+      } else if (status) status.textContent = '保存失败：浏览器存储不可用';
+    });
+  }
   function ensureUi() {
+    bindReviewActions();
     ['combat-filter-all','combat-filter-add','combat-filter-watch','combat-filter-risk','combat-filter-data'].forEach(function (id) {
       var el = $(id); if (!el || el.dataset.bound) return;
       el.dataset.bound = '1';
@@ -230,6 +289,7 @@
     if (refresh && !refresh.dataset.bound) { refresh.dataset.bound = '1'; refresh.addEventListener('click', function () { run(true); }); }
   }
   function init(stocks, prices, client) {
+    state.reviews = loadReviews();
     state.stocks = Array.isArray(stocks) ? stocks : [];
     state.prices = prices || {};
     state.client = client || null;

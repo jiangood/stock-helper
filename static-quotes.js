@@ -33,10 +33,8 @@
     if (minutes <= 900) return 'open';
     return 'closed';
   }
-  function isTrading(date) {
-    const state = marketSession(date);
-    return state === 'open' || state === 'pre';
-  }
+  // Static snapshots update through Actions once per day; never poll market data in the browser.
+  function isTrading() { return false; }
 
   function storageGet(key) {
     try {

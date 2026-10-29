@@ -8,6 +8,7 @@ const path = require('node:path');
 const StockQuotes = require('../quotes.js');
 const sectorMonthly = require('./build_sector_monthly.js');
 const researchScores = require('./build_research_scores.js');
+const combatKline = require('./build_combat_kline.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
@@ -248,6 +249,9 @@ async function main() {
 
   // 研报评分（32 分制）：同样只为页面准备小文件，首页不再逐只拉个股缓存。
   researchScores.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
+
+  // 作战页专用读模型：一次读取全股票池最近 120 根前复权日 K，避免逐只下载完整缓存文件。
+  combatKline.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
 }
 
 main().catch(error => {

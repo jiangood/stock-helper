@@ -1235,7 +1235,7 @@
     chartTimer = null;
     if (!StockQuotes.isTrading()) return;
 
-    const ms = 60000;
+    const ms = StockQuotes.REFRESH_INTERVAL;
     chartTimer = setInterval(() => {
       if (!StockQuotes.isTrading()) return;
       loadChart(chartTab, true).catch(() => {});

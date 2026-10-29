@@ -15,6 +15,24 @@
 
   .toolbar { font-size: 12px; }
 
+  /* 首页初始化状态：不阻塞操作，明确反馈后台加载进度 */
+  .page-loading {
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    min-height: 42px; padding: 8px 12px; color: var(--bs-secondary-color);
+    font-size: 12px; background: var(--bs-body-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+  }
+  .page-loading[hidden] { display: none; }
+  .loading-spinner {
+    width: 14px; height: 14px; flex: 0 0 14px;
+    border: 2px solid var(--bs-border-color); border-top-color: var(--bs-primary);
+    border-radius: 50%; animation: page-loading-spin .75s linear infinite;
+  }
+  @keyframes page-loading-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .loading-spinner { animation-duration: 2s; }
+  }
+
   /* 表格：吸顶表头 + 首列固定 */
   .table-scroll {
     max-height: calc(100vh - var(--app-header-h, 96px));

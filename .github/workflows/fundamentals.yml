@@ -9,6 +9,7 @@ on:
     branches: [master, main]
     paths:
       - "scripts/fetch_fundamentals.py"
+      - "scripts/validate_stock_data.js"
       - ".github/workflows/fundamentals.yml"
 
 permissions:

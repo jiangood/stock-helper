@@ -31,6 +31,12 @@
     if (!Array.isArray(bars) || bars.length < 16 || !tech || !vw || !(price > 0)) {
       return { status: '数据不足', kind: 'data', reasons: ['做T需要有效分时均价与至少 16 根 15 分钟K'], dataReady: false };
     }
+    var todayCn = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+    var lastBarDate = String(bars[bars.length - 1] && bars[bars.length - 1].time || '').slice(0, 10);
+    var lastTrendDate = String(trends && trends.points && trends.points.length ? trends.points[trends.points.length - 1].time || '' : '').slice(0, 10);
+    if (lastBarDate !== todayCn || (lastTrendDate && lastTrendDate !== todayCn)) {
+      return { status: '数据不足', kind: 'data', reasons: ['分钟K / 分时均价不是北京时间今天的数据，避免使用过期信号做T'], dataReady: false };
+    }
     var mfiRes = tech.mfi(bars, 14), mfi = mfiRes ? mfiRes.latest : null;
     var vr = bars.length >= 15 ? tech.volumeRatio(bars, 3, 12) : null;
     var dev = (price / vw.value - 1) * 100, surge = vr !== null && vr >= T_RULES.volSurge;

@@ -306,12 +306,22 @@
       var quoteLabel = quoteTime(r.quote);
       var reviewed = planReviewLabel(s);
       var detailId = 'combat-detail-' + code;
+      var decisionReason = (r.primary && r.primary.reasons && r.primary.reasons[0])
+        || (add && add.reasons && add.reasons[0])
+        || (r.dataNote || '暂无明确原因，请核对行情与计划数据');
+      var exitIsUrgent = !!(exit && exit.state === '已触发');
+      var exitBlock = exitSection
+        ? (exitIsUrgent ? exitSection
+          : '<details class="combat-review-details"><summary class="combat-section-title">止盈规则与跟踪详情 · ' + esc(exit.state || '待确认') + '</summary>' + exitSection + '</details>')
+        : '';
       var detail = '<div class="combat-detail" id="' + detailId + '">'
-        + '<div class="combat-detail-meta">' + badges
-        + '<span>' + esc(plan || '未配置计划价') + '</span>'
-        + '<span>' + esc(quoteLabel) + '</span>'
-        + '<span>' + esc(reviewed) + '</span></div>'
-        + buySection + exitSection + indicatorPanel + invalidation
+        + '<div class="combat-decision-summary"><div><span class="mini-label">当前结论</span><div class="combat-decision-status ' + statusClass(r.primary.kind) + '-text">' + esc(r.primary.status) + '</div></div>'
+        + '<div><span class="mini-label">判断依据</span><div class="combat-decision-reason">' + esc(decisionReason) + '</div></div>'
+        + '<div><span class="mini-label">买入评分</span><div class="combat-decision-score">' + scoreText + '</div></div></div>'
+        + '<div class="combat-detail-meta"><span>' + esc(plan || '未配置计划价') + '</span>'
+        + '<span>' + esc(quoteLabel) + '</span><span>' + esc(reviewed) + '</span></div>'
+        + '<details class="combat-review-details"><summary class="combat-section-title">买入依据与纪律核对</summary>' + buySection + '</details>'
+        + exitBlock + indicatorPanel + invalidation
         + '<div class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + ' · 计划价需结合最新基本面与商品周期复核</div>'
         + '</div>';
       var name = esc(s.name || s.code);

@@ -5,11 +5,13 @@
 (function (global) {
   'use strict';
 
-  const REFRESH_INTERVAL = 30 * 60 * 1000;
+  const REFRESH_INTERVAL = 24 * 60 * 60 * 1000;
   const QUOTES_URL = 'data/stock-quotes.json';
   const INDEX_URL = 'data/index-cache.json';
   const INDEX_CODES = new Set(['sh000001', 'sz399001', 'sz399006']);
   const memory = new Map();
+  const memoryAt = new Map();
+  const MEMORY_TTL = 6 * 60 * 60 * 1000;
 
   function normalizeCode(code) {
     if (code === null || code === undefined) return null;
@@ -47,8 +49,8 @@
       if (global.localStorage) global.localStorage.setItem('stock-helper-cache:' + key, JSON.stringify(value));
     } catch (_) { /* quota/private mode: in-memory cache still works */ }
   }
-  async function loadJson(relativeUrl) {
-    if (memory.has(relativeUrl)) return memory.get(relativeUrl);
+  async function loadJson(relativeUrl, force) {
+    if (!force && memory.has(relativeUrl) && Date.now() - (memoryAt.get(relativeUrl) || 0) < MEMORY_TTL) return memory.get(relativeUrl);
     const cached = storageGet(relativeUrl);
     try {
       const url = new URL(relativeUrl, document.baseURI).href;
@@ -56,11 +58,13 @@
       if (!response.ok) throw new Error('HTTP ' + response.status);
       const value = await response.json();
       memory.set(relativeUrl, value);
+      memoryAt.set(relativeUrl, Date.now());
       storageSet(relativeUrl, value);
       return value;
     } catch (error) {
       if (cached) {
         memory.set(relativeUrl, cached);
+        memoryAt.set(relativeUrl, Date.now());
         return cached;
       }
       throw new Error('静态行情缓存不可用，且本机没有上次有效缓存：' + error.message);
@@ -89,16 +93,16 @@
     return Array.from(groups.values());
   }
 
-  async function loadStockCache(code) {
+  async function loadStockCache(code, force) {
     const file = 'data/stock-cache/' + code + '.json';
-    try { return await loadJson(file); }
+    try { return await loadJson(file, force); }
     catch (error) { throw new Error(code + ' 不在当前静态缓存范围内或缓存暂不可用。为避免浏览器直接访问外部行情接口，未进行实时回源。'); }
   }
 
   class Client {
     constructor(options) { this.options = options || {}; }
-    async fetch(codes) {
-      const payload = await loadJson(QUOTES_URL);
+    async fetch(codes, options) {
+      const payload = await loadJson(QUOTES_URL, options && options.force);
       const result = {};
       (codes || []).map(normalizeCode).filter(Boolean).forEach(code => {
         if (payload.quotes && payload.quotes[code]) result[code] = payload.quotes[code];
@@ -110,12 +114,12 @@
       const result = await this.fetch([code]);
       return result[normalizeCode(code)] || null;
     }
-    async fetchDetail(code) {
+    async fetchDetail(code, options) {
       const normalized = normalizeCode(code);
       if (!normalized) throw new Error('无效的股票代码');
-      const cache = await loadStockCache(normalized);
+      const cache = await loadStockCache(normalized, options && options.force);
       if (cache.detail && Number(cache.detail.price) > 0) return cache.detail;
-      const quote = await this.fetch([normalized]).catch(() => ({}));
+      const quote = await this.fetch([normalized], options).catch(() => ({}));
       if (quote[normalized]) return quote[normalized];
       throw new Error('静态缓存中没有该股票的有效详情数据。');
     }
@@ -128,12 +132,12 @@
       let bars = [];
       if (INDEX_CODES.has(normalized)) {
         if (period === 'month') {
-          const indexes = await loadJson(INDEX_URL);
+          const indexes = await loadJson(INDEX_URL, opts.force);
           const cached = indexes.monthly && indexes.monthly[normalized];
           bars = cached && Array.isArray(cached.bars) ? cached.bars : [];
         }
       } else {
-        const cache = await loadStockCache(normalized);
+        const cache = await loadStockCache(normalized, opts.force);
         if (period === 'day') {
           const value = adjust === 'none' ? cache.dailyRaw : cache.dailyAdjusted;
           bars = value && Array.isArray(value.bars) ? value.bars : [];

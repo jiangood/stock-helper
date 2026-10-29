@@ -513,7 +513,7 @@ if ('serviceWorker' in navigator) {
 }
 if ('caches' in window) {
   caches.keys().then(function (keys) {
-    return Promise.all(keys.filter(function (key) { return key.startsWith('stock-helper-"); }).map(function (key) { return caches.delete(key); }));
+    return Promise.all(keys.filter(function (key) { return key.startsWith('stock-helper-'); }).map(function (key) { return caches.delete(key); }));
   }).catch(function () {});
 }
 </script>

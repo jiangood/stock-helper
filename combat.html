@@ -38,6 +38,16 @@
   .combat-hero h1 { font-size:clamp(23px,3vw,32px); letter-spacing:-.8px; line-height:1.15; font-weight:800; margin:0 0 8px; }
   .combat-hero .panel-subtitle { max-width:620px; font-size:12px; line-height:1.7; }
   .combat-hero-actions { display:flex; flex-direction:column; align-items:flex-end; gap:9px; flex-shrink:0; }
+  .combat-loading { margin:0 0 16px; padding:14px 16px; border:1px solid var(--bs-primary-border-subtle); border-radius:13px; background:var(--bs-body-bg); }
+  .combat-loading[hidden] { display:none !important; }
+  .combat-loading-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:9px; font-size:12px; font-weight:700; }
+  .combat-loading-label { display:flex; align-items:center; gap:9px; }
+  .combat-loading-spinner { width:15px; height:15px; border:2px solid var(--bs-primary-border-subtle); border-top-color:var(--bs-primary); border-radius:50%; animation:combat-spin .8s linear infinite; flex-shrink:0; }
+  .combat-loading-track { width:100%; height:5px; border-radius:99px; overflow:hidden; background:var(--bs-tertiary-bg); }
+  .combat-loading-fill { height:100%; width:0; border-radius:99px; background:var(--bs-primary); transition:width .18s ease; }
+  .combat-loading-detail { margin-top:7px; font-size:10.5px; line-height:1.5; color:var(--bs-secondary-color); }
+  @keyframes combat-spin { to { transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .combat-loading-spinner { animation:none; } .combat-loading-fill { transition:none; } }
   .combat-safety-note { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--bs-secondary-color); white-space:nowrap; }
   .combat-safety-dot { width:7px; height:7px; border-radius:50%; background:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.12); }
   body[data-page="combat"] #combat-summary { margin-bottom:18px !important; }
@@ -200,6 +210,16 @@
     <div class="combat-hero-actions">
       <div class="combat-safety-note"><span class="combat-safety-dot"></span> 仅辅助决策 · 不会自动下单</div>
     </div>
+  </section>
+  <section id="combat-loading" class="combat-loading" aria-live="polite" aria-atomic="true" hidden>
+    <div class="combat-loading-top">
+      <span id="combat-loading-label" class="combat-loading-label"><span class="combat-loading-spinner" aria-hidden="true"></span>正在准备作战数据…</span>
+      <span id="combat-loading-percent">处理中</span>
+    </div>
+    <div class="combat-loading-track" role="progressbar" aria-label="作战分析进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div id="combat-loading-fill" class="combat-loading-fill"></div>
+    </div>
+    <div id="combat-loading-detail" class="combat-loading-detail">正在读取日K缓存并计算交易条件。</div>
   </section>
   <section aria-label="作战状态概览">
     <div id="combat-summary" class="row g-2">

@@ -1,7 +1,7 @@
 /* Home trading combat center: manual decision support only, never submits orders. */
 (function (root) {
   'use strict';
-  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, error: '', expanded: {}, sort: { col: null, dir: 1 }, progressDone: 0, progressTotal: 0, progressStartedAt: 0 };
+  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, error: '', expanded: {}, sort: { col: null, dir: 1 }, progressDone: 0, progressTotal: 0, progressStartedAt: 0, progressTimer: null };
   var COLUMN_COUNT = 9;
   var $ = function (id) { return root.document.getElementById(id); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
@@ -436,7 +436,7 @@
   async function run() {
     if (state.loading) return;
     if (!state.client || !Array.isArray(state.stocks)) return;
-    state.loading = true; state.error = ''; state.progressDone = 0; state.progressTotal = 0; state.progressStartedAt = Date.now(); updateProgress(); render();
+    state.loading = true; state.error = ''; state.progressDone = 0; state.progressTotal = 0; state.progressStartedAt = Date.now(); updateProgress(); if (state.progressTimer) root.clearInterval(state.progressTimer); state.progressTimer = root.setInterval(updateProgress, 1000); render();
     try {
       var universe = mergeUniverse();
       state.progressTotal = universe.length; state.progressDone = 0; updateProgress();
@@ -479,6 +479,7 @@
       state.lastRun = Date.now();
     } catch (e) { state.error = e && e.message || '读取作战数据失败'; }
     state.loading = false;
+    if (state.progressTimer) { root.clearInterval(state.progressTimer); state.progressTimer = null; }
     updateProgress();
     render();
   }

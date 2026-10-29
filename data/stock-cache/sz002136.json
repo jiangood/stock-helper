@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002136",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "安 纳 达",
     "price": 10.37,
@@ -12,10 +12,10 @@
     "high": 10.44,
     "low": 10.28,
     "avg": 10.37,
-    "volume": 20045,
-    "amount": 20787318,
-    "turnover": 0.93,
-    "volumeRatio": 1.99,
+    "volume": 20187,
+    "amount": 20934590,
+    "turnover": 0.94,
+    "volumeRatio": 1.96,
     "amplitude": 1.54,
     "limitUp": 11.4,
     "limitDown": 9.32,
@@ -39,7 +39,7 @@
     "floatShares": 214455760,
     "totalCap": 2229757400,
     "floatCap": 2223906231.2,
-    "time": 1793240097000,
+    "time": 1793240154000,
     "code": "sz002136"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 10.37,
         "high": 10.44,
         "low": 10.28,
-        "volume": 20045
+        "volume": 20187
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 10.37,
         "high": 10.44,
         "low": 10.28,
-        "volume": 20045
+        "volume": 20187
       }
     ]
   },

@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh601118",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "海南橡胶",
-    "price": 5.21,
+    "price": 5.18,
     "prevClose": 5.58,
-    "change": -0.37,
-    "todayChange": -6.63,
+    "change": -0.4,
+    "todayChange": -7.17,
     "open": 5.4,
     "high": 5.42,
     "low": 5.14,
     "avg": 5.23,
-    "volume": 627248,
-    "amount": 328215923,
-    "turnover": 1.47,
-    "volumeRatio": 2.76,
+    "volume": 632869,
+    "amount": 331135602,
+    "turnover": 1.48,
+    "volumeRatio": 2.73,
     "amplitude": 5.02,
     "limitUp": 6.14,
     "limitDown": 5.02,
-    "pe": -79,
-    "peStatic": -216.4,
-    "peTtm": -564.21,
-    "pb": 2.38,
+    "pe": -78.55,
+    "peStatic": -215.15,
+    "peTtm": -560.96,
+    "pb": 2.36,
     "roe": -2.14,
     "grossMargin": 3.3147357861,
     "netMargin": -1.55416206,
@@ -37,9 +37,9 @@
     "board": "BK1261",
     "totalShares": 4279427797,
     "floatShares": 4279427797,
-    "totalCap": 22295818822.37,
-    "floatCap": 22295818822.37,
-    "time": 1793240094000,
+    "totalCap": 22167435988.46,
+    "floatCap": 22167435988.46,
+    "time": 1793240152000,
     "code": "sh601118"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 5.4,
-        "close": 5.21,
+        "close": 5.18,
         "high": 5.42,
         "low": 5.14,
-        "volume": 627213
+        "volume": 632687
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 5.4,
-        "close": 5.21,
+        "close": 5.18,
         "high": 5.42,
         "low": 5.14,
-        "volume": 627248
+        "volume": 632687
       }
     ]
   },

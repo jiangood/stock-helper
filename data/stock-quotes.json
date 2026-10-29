@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "marketDate": "2026-10-29",
   "source": "Eastmoney/Tencent via GitHub Actions",
   "status": "ok",
@@ -8,30 +8,30 @@
     "sz002408": {
       "code": "sz002408",
       "name": null,
-      "price": 4.36,
+      "price": 4.35,
       "prevClose": 4.42,
-      "change": -0.06,
-      "todayChange": -1.36,
-      "pe": 244.06,
+      "change": -0.07,
+      "todayChange": -1.58,
+      "pe": 243.5,
       "pb": 1.11,
-      "totalCap": 12397828806,
-      "floatCap": 11997635707,
+      "totalCap": 12369393419,
+      "floatCap": 11970118194,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh688707": {
       "code": "sh688707",
       "name": null,
-      "price": 9.63,
+      "price": 9.62,
       "prevClose": 9.8,
-      "change": -0.17,
-      "todayChange": -1.73,
-      "pe": -12.93,
+      "change": -0.18,
+      "todayChange": -1.84,
+      "pe": -12.92,
       "pb": 1.32,
-      "totalCap": 4899168174,
-      "floatCap": 4899168174,
+      "totalCap": 4894080772,
+      "floatCap": 4894080772,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz002100": {
       "code": "sz002100",
@@ -45,35 +45,35 @@
       "totalCap": 10471479120,
       "floatCap": 10471479120,
       "divYield": 1.02,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh601118": {
       "code": "sh601118",
       "name": null,
-      "price": 5.21,
+      "price": 5.19,
       "prevClose": 5.58,
-      "change": -0.37,
-      "todayChange": -6.63,
-      "pe": -79,
-      "pb": 2.38,
-      "totalCap": 22295818822,
-      "floatCap": 22295818822,
+      "change": -0.39,
+      "todayChange": -6.99,
+      "pe": -78.7,
+      "pb": 2.37,
+      "totalCap": 22210230266,
+      "floatCap": 22210230266,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz300034": {
       "code": "sz300034",
       "name": null,
-      "price": 13.63,
+      "price": 13.6,
       "prevClose": 13.72,
-      "change": -0.09,
-      "todayChange": -0.66,
-      "pe": 69.5,
+      "change": -0.12,
+      "todayChange": -0.87,
+      "pe": 69.34,
       "pb": 2.8,
-      "totalCap": 10862586104,
-      "floatCap": 10454972967,
+      "totalCap": 10838677257,
+      "floatCap": 10431961287,
       "divYield": 0.26,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh603977": {
       "code": "sh603977",
@@ -87,35 +87,35 @@
       "totalCap": 6057107823,
       "floatCap": 6057107823,
       "divYield": 1.33,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz002783": {
       "code": "sz002783",
       "name": null,
       "price": 7.37,
       "prevClose": 7.44,
-      "change": -0.07,
-      "todayChange": -0.94,
-      "pe": 28.15,
-      "pb": 1.36,
-      "totalCap": 3679969584,
-      "floatCap": 3399146708,
-      "divYield": 1.36,
-      "time": 1793240094195
+      "change": -0.05,
+      "todayChange": -0.67,
+      "pe": 28.23,
+      "pb": 1.37,
+      "totalCap": 3689955933,
+      "floatCap": 3408370987,
+      "divYield": 1.35,
+      "time": 1793240140614
     },
     "sz000928": {
       "code": "sz000928",
       "name": null,
-      "price": 5.53,
+      "price": 5.51,
       "prevClose": 5.48,
-      "change": 0.05,
-      "todayChange": 0.91,
-      "pe": 10.52,
+      "change": 0.03,
+      "todayChange": 0.55,
+      "pe": 10.49,
       "pb": 0.91,
-      "totalCap": 7933584754,
-      "floatCap": 7933487703,
+      "totalCap": 7904891862,
+      "floatCap": 7904795161,
       "divYield": 3.8,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz002136": {
       "code": "sz002136",
@@ -129,21 +129,21 @@
       "totalCap": 2229757400,
       "floatCap": 2223906231,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000707": {
       "code": "sz000707",
       "name": null,
-      "price": 4.25,
+      "price": 4.26,
       "prevClose": 4.25,
-      "change": 0,
-      "todayChange": 0,
-      "pe": -13.76,
+      "change": 0.01,
+      "todayChange": 0.24,
+      "pe": -13.79,
       "pb": 0.94,
-      "totalCap": 2485048070,
-      "floatCap": 2340490253,
+      "totalCap": 2490895242,
+      "floatCap": 2345997289,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600500": {
       "code": "sh600500",
@@ -157,21 +157,21 @@
       "totalCap": 15106769536,
       "floatCap": 15106769536,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000731": {
       "code": "sz000731",
       "name": null,
-      "price": 6.75,
+      "price": 6.74,
       "prevClose": 6.89,
-      "change": -0.14,
-      "todayChange": -2.03,
-      "pe": -20.73,
-      "pb": 1,
-      "totalCap": 3704574825,
-      "floatCap": 3704574825,
+      "change": -0.15,
+      "todayChange": -2.18,
+      "pe": -20.7,
+      "pb": 0.99,
+      "totalCap": 3699086566,
+      "floatCap": 3699086566,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh601618": {
       "code": "sh601618",
@@ -185,21 +185,21 @@
       "totalCap": 51522131733,
       "floatCap": 44453021733,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh603227": {
       "code": "sh603227",
       "name": null,
-      "price": 6.72,
+      "price": 6.71,
       "prevClose": 6.79,
-      "change": -0.07,
-      "todayChange": -1.03,
-      "pe": 14.55,
-      "pb": 1.34,
-      "totalCap": 7201774870,
-      "floatCap": 7201774870,
-      "divYield": 2.23,
-      "time": 1793240094195
+      "change": -0.08,
+      "todayChange": -1.18,
+      "pe": 14.53,
+      "pb": 1.33,
+      "totalCap": 7191057943,
+      "floatCap": 7191057943,
+      "divYield": 2.24,
+      "time": 1793240140614
     },
     "sz301058": {
       "code": "sz301058",
@@ -210,38 +210,38 @@
       "todayChange": -1.74,
       "pe": 25.34,
       "pb": 1.75,
-      "totalCap": 4124759800,
-      "floatCap": 4057212020,
-      "divYield": 1.86,
-      "time": 1793240094195
+      "totalCap": 4119551770,
+      "floatCap": 4052089278,
+      "divYield": 1.87,
+      "time": 1793240140614
     },
     "sh600459": {
       "code": "sh600459",
       "name": null,
-      "price": 16.49,
+      "price": 16.46,
       "prevClose": 16.85,
-      "change": -0.36,
-      "todayChange": -2.14,
-      "pe": 19.42,
+      "change": -0.39,
+      "todayChange": -2.31,
+      "pe": 19.38,
       "pb": 1.51,
-      "totalCap": 13574192869,
-      "floatCap": 13574192869,
+      "totalCap": 13549497551,
+      "floatCap": 13549497551,
       "divYield": 1.51,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz002237": {
       "code": "sz002237",
       "name": null,
-      "price": 11.17,
+      "price": 11.16,
       "prevClose": 11.25,
-      "change": -0.08,
-      "todayChange": -0.71,
-      "pe": 12.32,
+      "change": -0.09,
+      "todayChange": -0.8,
+      "pe": 12.31,
       "pb": 1.14,
-      "totalCap": 15972769457,
-      "floatCap": 13318616609,
+      "totalCap": 15958469753,
+      "floatCap": 13306693049,
       "divYield": 1.2,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000554": {
       "code": "sz000554",
@@ -255,7 +255,7 @@
       "totalCap": 3189332052,
       "floatCap": 2400156044,
       "divYield": 2.18,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600328": {
       "code": "sh600328",
@@ -269,7 +269,7 @@
       "totalCap": 7918071478,
       "floatCap": 7918071478,
       "divYield": 0.47,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600963": {
       "code": "sh600963",
@@ -283,7 +283,7 @@
       "totalCap": 6731484881,
       "floatCap": 6731484881,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600348": {
       "code": "sh600348",
@@ -297,7 +297,7 @@
       "totalCap": 30447300000,
       "floatCap": 30447300000,
       "divYield": 2.81,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh603639": {
       "code": "sh603639",
@@ -308,24 +308,24 @@
       "todayChange": -2.78,
       "pe": 13.81,
       "pb": 0.96,
-      "totalCap": 3426552713,
-      "floatCap": 3330807693,
-      "divYield": 3.06,
-      "time": 1793240094195
+      "totalCap": 3433545678,
+      "floatCap": 3337605260,
+      "divYield": 3.05,
+      "time": 1793240140614
     },
     "sh600299": {
       "code": "sh600299",
       "name": null,
-      "price": 7.52,
+      "price": 7.5,
       "prevClose": 7.64,
-      "change": -0.12,
-      "todayChange": -1.57,
-      "pe": 12.8,
+      "change": -0.14,
+      "todayChange": -1.83,
+      "pe": 12.76,
       "pb": 1.17,
-      "totalCap": 23159940013,
-      "floatCap": 23159940013,
+      "totalCap": 23098344428,
+      "floatCap": 23098344428,
       "divYield": 2.01,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000923": {
       "code": "sz000923",
@@ -339,7 +339,7 @@
       "totalCap": 9340551432,
       "floatCap": 8985268376,
       "divYield": 4.19,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600583": {
       "code": "sh600583",
@@ -353,7 +353,7 @@
       "totalCap": 28473524912,
       "floatCap": 28473524912,
       "divYield": 3.04,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh601600": {
       "code": "sh601600",
@@ -367,35 +367,35 @@
       "totalCap": 144443068650,
       "floatCap": 111172122000,
       "divYield": 5.02,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600509": {
       "code": "sh600509",
       "name": null,
-      "price": 6.42,
+      "price": 6.41,
       "prevClose": 6.53,
-      "change": -0.11,
-      "todayChange": -1.68,
-      "pe": 17.38,
+      "change": -0.12,
+      "todayChange": -1.84,
+      "pe": 17.36,
       "pb": 1.1,
-      "totalCap": 8823631353,
-      "floatCap": 8823631353,
+      "totalCap": 8809887379,
+      "floatCap": 8809887379,
       "divYield": 1.31,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600378": {
       "code": "sh600378",
       "name": null,
-      "price": 33.26,
+      "price": 33.2,
       "prevClose": 34.65,
-      "change": -1.39,
-      "todayChange": -4.01,
-      "pe": 23.81,
-      "pb": 2.3,
-      "totalCap": 42905387361,
-      "floatCap": 35673523973,
+      "change": -1.45,
+      "todayChange": -4.18,
+      "pe": 23.77,
+      "pb": 2.29,
+      "totalCap": 42827987384,
+      "floatCap": 35609170052,
       "divYield": 1.18,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000629": {
       "code": "sz000629",
@@ -409,21 +409,21 @@
       "totalCap": 24156464397,
       "floatCap": 24155155518,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh601061": {
       "code": "sh601061",
       "name": null,
-      "price": 9.55,
+      "price": 9.53,
       "prevClose": 9.65,
-      "change": -0.1,
-      "todayChange": -1.04,
-      "pe": 9.31,
-      "pb": 1.83,
-      "totalCap": 46795000000,
-      "floatCap": 46795000000,
-      "divYield": 2.3,
-      "time": 1793240094195
+      "change": -0.12,
+      "todayChange": -1.24,
+      "pe": 9.29,
+      "pb": 1.82,
+      "totalCap": 46697000000,
+      "floatCap": 46697000000,
+      "divYield": 2.31,
+      "time": 1793240140614
     },
     "sz002140": {
       "code": "sz002140",
@@ -437,7 +437,7 @@
       "totalCap": 6605769426,
       "floatCap": 6595459804,
       "divYield": 2.14,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600230": {
       "code": "sh600230",
@@ -451,35 +451,35 @@
       "totalCap": 4872321147,
       "floatCap": 4872321147,
       "divYield": 0.2,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600282": {
       "code": "sh600282",
       "name": null,
       "price": 4.22,
       "prevClose": 4.24,
-      "change": -0.02,
-      "todayChange": -0.47,
-      "pe": 10.85,
-      "pb": 0.94,
-      "totalCap": 26016684066,
-      "floatCap": 26016684066,
-      "divYield": 5.79,
-      "time": 1793240094195
+      "change": -0.01,
+      "todayChange": -0.24,
+      "pe": 10.87,
+      "pb": 0.95,
+      "totalCap": 26078334977,
+      "floatCap": 26078334977,
+      "divYield": 5.78,
+      "time": 1793240140614
     },
     "sz002258": {
       "code": "sz002258",
       "name": null,
-      "price": 13.78,
+      "price": 13.77,
       "prevClose": 13.82,
-      "change": -0.04,
-      "todayChange": -0.29,
-      "pe": 23.9,
+      "change": -0.05,
+      "todayChange": -0.36,
+      "pe": 23.88,
       "pb": 1.37,
-      "totalCap": 11030025002,
-      "floatCap": 11011334733,
+      "totalCap": 11022020630,
+      "floatCap": 11003343924,
       "divYield": 1.45,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000830": {
       "code": "sz000830",
@@ -493,77 +493,77 @@
       "totalCap": 21004638691,
       "floatCap": 21003085745,
       "divYield": 2.72,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz002430": {
       "code": "sz002430",
       "name": null,
-      "price": 24.77,
+      "price": 24.76,
       "prevClose": 25.33,
-      "change": -0.56,
-      "todayChange": -2.21,
-      "pe": 18.4,
+      "change": -0.57,
+      "todayChange": -2.25,
+      "pe": 18.39,
       "pb": 2.35,
-      "totalCap": 24233972023,
-      "floatCap": 24223520322,
+      "totalCap": 24224188425,
+      "floatCap": 24213740943,
       "divYield": 2.02,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600486": {
       "code": "sh600486",
       "name": null,
-      "price": 52.26,
+      "price": 52.23,
       "prevClose": 52.89,
-      "change": -0.63,
-      "todayChange": -1.19,
-      "pe": 15.01,
+      "change": -0.66,
+      "todayChange": -1.25,
+      "pe": 15,
       "pb": 1.74,
-      "totalCap": 21118889880,
-      "floatCap": 21118889880,
-      "divYield": 1.83,
-      "time": 1793240094195
+      "totalCap": 21106766522,
+      "floatCap": 21106766522,
+      "divYield": 1.82,
+      "time": 1793240140614
     },
     "sh601958": {
       "code": "sh601958",
       "name": null,
-      "price": 16.25,
+      "price": 16.23,
       "prevClose": 16.83,
-      "change": -0.58,
-      "todayChange": -3.45,
-      "pe": 13.14,
+      "change": -0.6,
+      "todayChange": -3.57,
+      "pe": 13.12,
       "pb": 2.54,
-      "totalCap": 52432321500,
-      "floatCap": 52432321500,
+      "totalCap": 52367789412,
+      "floatCap": 52367789412,
       "divYield": 2.46,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000960": {
       "code": "sz000960",
       "name": null,
-      "price": 23.77,
+      "price": 23.75,
       "prevClose": 24.59,
-      "change": -0.82,
-      "todayChange": -3.33,
-      "pe": 11.42,
+      "change": -0.84,
+      "todayChange": -3.42,
+      "pe": 11.41,
       "pb": 1.78,
-      "totalCap": 39111917499,
-      "floatCap": 39111917499,
-      "divYield": 1.51,
-      "time": 1793240094195
+      "totalCap": 39079008860,
+      "floatCap": 39079008860,
+      "divYield": 1.52,
+      "time": 1793240140614
     },
     "sz000962": {
       "code": "sz000962",
       "name": null,
-      "price": 39.08,
+      "price": 39.04,
       "prevClose": 40.33,
-      "change": -1.25,
-      "todayChange": -3.1,
-      "pe": 61.65,
+      "change": -1.29,
+      "todayChange": -3.2,
+      "pe": 61.59,
       "pb": 4.96,
-      "totalCap": 20610212053,
-      "floatCap": 20108315820,
+      "totalCap": 20589116646,
+      "floatCap": 20087734125,
       "divYield": 0.41,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600426": {
       "code": "sh600426",
@@ -577,49 +577,49 @@
       "totalCap": 52853904748,
       "floatCap": 52853904748,
       "divYield": 2.35,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600379": {
       "code": "sh600379",
       "name": null,
-      "price": 11.02,
+      "price": 11.03,
       "prevClose": 11.36,
-      "change": -0.34,
-      "todayChange": -2.99,
-      "pe": 45.74,
+      "change": -0.33,
+      "todayChange": -2.9,
+      "pe": 45.78,
       "pb": 4.45,
-      "totalCap": 3638821235,
-      "floatCap": 3638821235,
+      "totalCap": 3642123251,
+      "floatCap": 3642123251,
       "divYield": 0.58,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600456": {
       "code": "sh600456",
       "name": null,
-      "price": 23.57,
+      "price": 23.52,
       "prevClose": 23.61,
-      "change": -0.04,
-      "todayChange": -0.17,
-      "pe": 38.65,
-      "pb": 1.57,
-      "totalCap": 11261216594,
-      "floatCap": 11261216594,
+      "change": -0.09,
+      "todayChange": -0.38,
+      "pe": 38.57,
+      "pb": 1.56,
+      "totalCap": 11237327717,
+      "floatCap": 11237327717,
       "divYield": 1.27,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600961": {
       "code": "sh600961",
       "name": null,
-      "price": 17.95,
+      "price": 17.9,
       "prevClose": 18.53,
-      "change": -0.58,
-      "todayChange": -3.13,
-      "pe": 4.94,
-      "pb": 3.29,
-      "totalCap": 19258065019,
-      "floatCap": 19258065019,
+      "change": -0.63,
+      "todayChange": -3.4,
+      "pe": 4.93,
+      "pb": 3.28,
+      "totalCap": 19204421384,
+      "floatCap": 19204421384,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz300527": {
       "code": "sz300527",
@@ -633,21 +633,21 @@
       "totalCap": 7341082086,
       "floatCap": 7341082086,
       "divYield": 0.07,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600301": {
       "code": "sh600301",
       "name": null,
-      "price": 43.79,
+      "price": 43.8,
       "prevClose": 44.14,
-      "change": -0.35,
-      "todayChange": -0.79,
-      "pe": 25.94,
+      "change": -0.34,
+      "todayChange": -0.77,
+      "pe": 25.95,
       "pb": 5.44,
-      "totalCap": 27700129905,
-      "floatCap": 12056949471,
+      "totalCap": 27706455580,
+      "floatCap": 12059702828,
       "divYield": 0.89,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh688750": {
       "code": "sh688750",
@@ -661,63 +661,63 @@
       "totalCap": 6072625000,
       "floatCap": 3058217620,
       "divYield": 0.18,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600549": {
       "code": "sh600549",
       "name": null,
-      "price": 34.67,
+      "price": 34.63,
       "prevClose": 35.55,
-      "change": -0.88,
-      "todayChange": -2.48,
-      "pe": 12.79,
+      "change": -0.92,
+      "todayChange": -2.59,
+      "pe": 12.78,
       "pb": 2.89,
-      "totalCap": 55041600587,
-      "floatCap": 53874821747,
+      "totalCap": 54978097154,
+      "floatCap": 53812664467,
       "divYield": 2.37,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600392": {
       "code": "sh600392",
       "name": null,
-      "price": 15.35,
+      "price": 15.33,
       "prevClose": 15.76,
-      "change": -0.41,
-      "todayChange": -2.6,
-      "pe": 15.17,
+      "change": -0.43,
+      "todayChange": -2.73,
+      "pe": 15.15,
       "pb": 2.06,
-      "totalCap": 26905887850,
-      "floatCap": 26905887850,
+      "totalCap": 26870831318,
+      "floatCap": 26870831318,
       "divYield": 2.28,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600111": {
       "code": "sh600111",
       "name": null,
-      "price": 34.96,
+      "price": 34.93,
       "prevClose": 35.51,
-      "change": -0.55,
-      "todayChange": -1.55,
-      "pe": 26,
+      "change": -0.58,
+      "todayChange": -1.63,
+      "pe": 25.97,
       "pb": 4.54,
-      "totalCap": 126382701836,
-      "floatCap": 126382701836,
+      "totalCap": 126274249861,
+      "floatCap": 126274249861,
       "divYield": 0.37,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600737": {
       "code": "sh600737",
       "name": null,
-      "price": 11.75,
+      "price": 11.73,
       "prevClose": 12.03,
-      "change": -0.28,
-      "todayChange": -2.33,
-      "pe": 20.21,
+      "change": -0.3,
+      "todayChange": -2.49,
+      "pe": 20.17,
       "pb": 2.2,
-      "totalCap": 25131466679,
-      "floatCap": 25131466679,
-      "divYield": 2.89,
-      "time": 1793240094195
+      "totalCap": 25088689714,
+      "floatCap": 25088689714,
+      "divYield": 2.9,
+      "time": 1793240140614
     },
     "sz002057": {
       "code": "sz002057",
@@ -731,7 +731,7 @@
       "totalCap": 5646588958,
       "floatCap": 5641894361,
       "divYield": 2.28,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh601568": {
       "code": "sh601568",
@@ -745,21 +745,21 @@
       "totalCap": 13823333340,
       "floatCap": 13823333340,
       "divYield": 1.44,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000738": {
       "code": "sz000738",
       "name": null,
-      "price": 17.87,
+      "price": 17.85,
       "prevClose": 17.8,
-      "change": 0.07,
-      "todayChange": 0.39,
-      "pe": 75.3,
+      "change": 0.05,
+      "todayChange": 0.28,
+      "pe": 75.22,
       "pb": 1.86,
-      "totalCap": 23502338098,
-      "floatCap": 23502338098,
+      "totalCap": 23476034418,
+      "floatCap": 23476034418,
       "divYield": 0.43,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz002092": {
       "code": "sz002092",
@@ -773,21 +773,21 @@
       "totalCap": 10277200673,
       "floatCap": 10276795189,
       "divYield": 0,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz000657": {
       "code": "sz000657",
       "name": null,
-      "price": 38.62,
+      "price": 38.57,
       "prevClose": 39.69,
-      "change": -1.07,
-      "todayChange": -2.7,
-      "pe": 22.16,
-      "pb": 7.18,
-      "totalCap": 87998944204,
-      "floatCap": 56132316510,
+      "change": -1.12,
+      "todayChange": -2.82,
+      "pe": 22.13,
+      "pb": 7.17,
+      "totalCap": 87885014965,
+      "floatCap": 56059643910,
       "divYield": 0.6,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sz002556": {
       "code": "sz002556",
@@ -801,63 +801,63 @@
       "totalCap": 3982848030,
       "floatCap": 3979014673,
       "divYield": 3.46,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh600298": {
       "code": "sh600298",
       "name": null,
-      "price": 36.61,
+      "price": 36.68,
       "prevClose": 37,
-      "change": -0.39,
-      "todayChange": -1.05,
-      "pe": 18.03,
-      "pb": 2.55,
-      "totalCap": 31770731715,
-      "floatCap": 31508473418,
+      "change": -0.32,
+      "todayChange": -0.86,
+      "pe": 18.07,
+      "pb": 2.56,
+      "totalCap": 31831478812,
+      "floatCap": 31568719065,
       "divYield": 1.5,
-      "time": 1793240094195
+      "time": 1793240140614
     },
     "sh603970": {
       "code": "sh603970",
       "name": null,
-      "price": 9.87,
+      "price": 9.86,
       "prevClose": 10.09,
-      "change": -0.22,
-      "todayChange": -2.18,
-      "pe": 15.4,
-      "pb": 1.66,
-      "totalCap": 2653057323,
-      "floatCap": 2653057323,
-      "divYield": 3.24,
-      "time": 1793240094195
+      "change": -0.23,
+      "todayChange": -2.28,
+      "pe": 15.39,
+      "pb": 1.65,
+      "totalCap": 2650369321,
+      "floatCap": 2650369321,
+      "divYield": 3.25,
+      "time": 1793240140614
     },
     "sh600618": {
       "code": "sh600618",
       "name": null,
-      "price": 8.81,
+      "price": 8.8,
       "prevClose": 9,
-      "change": -0.19,
-      "todayChange": -2.11,
-      "pe": 17.03,
+      "change": -0.2,
+      "todayChange": -2.22,
+      "pe": 17.01,
       "pb": 1.07,
-      "totalCap": 10187883789,
-      "floatCap": 6606090189,
-      "divYield": 2.72,
-      "time": 1793240094195
+      "totalCap": 10176319789,
+      "floatCap": 6598591789,
+      "divYield": 2.73,
+      "time": 1793240140614
     },
     "sz300470": {
       "code": "sz300470",
       "name": null,
-      "price": 27.29,
+      "price": 27.3,
       "prevClose": 27.51,
-      "change": -0.22,
-      "todayChange": -0.8,
-      "pe": 18.35,
+      "change": -0.21,
+      "todayChange": -0.76,
+      "pe": 18.36,
       "pb": 1.93,
-      "totalCap": 5674538973,
-      "floatCap": 5385263554,
+      "totalCap": 5676618320,
+      "floatCap": 5387236901,
       "divYield": 3.66,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sh600819": {
       "code": "sh600819",
@@ -871,21 +871,21 @@
       "totalCap": 5118207063,
       "floatCap": 4135707052,
       "divYield": 0.29,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sh688295": {
       "code": "sh688295",
       "name": null,
-      "price": 31.06,
+      "price": 30.94,
       "prevClose": 31.05,
-      "change": 0.01,
-      "todayChange": 0.03,
-      "pe": 195.54,
-      "pb": 5.82,
-      "totalCap": 27954000000,
-      "floatCap": 27954000000,
+      "change": -0.11,
+      "todayChange": -0.35,
+      "pe": 194.79,
+      "pb": 5.8,
+      "totalCap": 27846000000,
+      "floatCap": 27846000000,
       "divYield": 0.11,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sh600409": {
       "code": "sh600409",
@@ -899,91 +899,91 @@
       "totalCap": 11085556536,
       "floatCap": 11085556536,
       "divYield": 0.56,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sh600195": {
       "code": "sh600195",
       "name": null,
-      "price": 6.09,
+      "price": 6.07,
       "prevClose": 6.09,
-      "change": 0,
-      "todayChange": 0,
-      "pe": 80.04,
-      "pb": 1.1,
-      "totalCap": 6218792903,
-      "floatCap": 6218792903,
+      "change": -0.02,
+      "todayChange": -0.33,
+      "pe": 79.78,
+      "pb": 1.09,
+      "totalCap": 6198369938,
+      "floatCap": 6198369938,
       "divYield": 0.84,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sz000819": {
       "code": "sz000819",
       "name": null,
-      "price": 10.75,
+      "price": 10.72,
       "prevClose": 10.8,
-      "change": -0.05,
-      "todayChange": -0.46,
-      "pe": 138.41,
-      "pb": 1.88,
-      "totalCap": 3934716140,
-      "floatCap": 3934716140,
+      "change": -0.08,
+      "todayChange": -0.74,
+      "pe": 138.02,
+      "pb": 1.87,
+      "totalCap": 3923735536,
+      "floatCap": 3923735536,
       "divYield": 0,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sz002096": {
       "code": "sz002096",
       "name": null,
-      "price": 8.99,
+      "price": 8.97,
       "prevClose": 9.07,
-      "change": -0.08,
-      "todayChange": -0.88,
-      "pe": 17.03,
-      "pb": 1.38,
-      "totalCap": 11151562522,
-      "floatCap": 11144182550,
+      "change": -0.1,
+      "todayChange": -1.1,
+      "pe": 16.99,
+      "pb": 1.37,
+      "totalCap": 11126753707,
+      "floatCap": 11119390153,
       "divYield": 2.85,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sz399001": {
       "code": "sz399001",
       "name": null,
-      "price": 11189.75,
+      "price": 11176.56,
       "prevClose": 11473.18,
-      "change": -283.43,
-      "todayChange": -2.47,
+      "change": -296.62,
+      "todayChange": -2.59,
       "pe": 0,
       "pb": 0,
-      "totalCap": 37693056125609,
-      "floatCap": 32016538966153,
+      "totalCap": 37648860155603,
+      "floatCap": 31979616468699,
       "divYield": 0,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sz399006": {
       "code": "sz399006",
       "name": null,
-      "price": 2536.18,
+      "price": 2532.63,
       "prevClose": 2634.76,
-      "change": -98.58,
-      "todayChange": -3.74,
+      "change": -102.13,
+      "todayChange": -3.88,
       "pe": 0,
       "pb": 0,
-      "totalCap": 15313216488095,
-      "floatCap": 12232746686037,
+      "totalCap": 15288612551550,
+      "floatCap": 12212983977596,
       "divYield": 0,
-      "time": 1793240094198
+      "time": 1793240152125
     },
     "sh000001": {
       "code": "sh000001",
       "name": "上证指数",
-      "price": 3651.82,
+      "price": 3649.15,
       "prevClose": 3681.47,
-      "change": -29.65,
-      "todayChange": -0.81,
-      "pe": 16.08,
+      "change": -32.32,
+      "todayChange": -0.88,
+      "pe": 16.07,
       "pb": 0,
-      "totalCap": 63954048000000,
-      "floatCap": 57236996000000,
+      "totalCap": 63909856999999.99,
+      "floatCap": 57200241000000,
       "divYield": null,
-      "time": 1793240094946
+      "time": 1793240152724
     }
   }
 }

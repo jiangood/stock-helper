@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000830",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "鲁西化工",
     "price": 11.03,
@@ -12,10 +12,10 @@
     "high": 11.18,
     "low": 11.01,
     "avg": 11.05,
-    "volume": 51631,
-    "amount": 57067908,
+    "volume": 52222,
+    "amount": 57719817,
     "turnover": 0.27,
-    "volumeRatio": 1.99,
+    "volumeRatio": 2.01,
     "amplitude": 1.52,
     "limitUp": 12.29,
     "limitDown": 10.05,
@@ -39,7 +39,7 @@
     "floatShares": 1904178218,
     "totalCap": 21004638691.329998,
     "floatCap": 21003085744.539997,
-    "time": 1793240103000,
+    "time": 1793240157000,
     "code": "sz000830"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 11.03,
         "high": 11.18,
         "low": 11.01,
-        "volume": 51620
+        "volume": 52222
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 11.03,
         "high": 11.18,
         "low": 11.01,
-        "volume": 51620
+        "volume": 52222
       }
     ]
   },

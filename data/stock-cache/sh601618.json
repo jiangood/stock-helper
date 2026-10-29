@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601618",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中国中冶",
     "price": 2.48,
@@ -12,10 +12,10 @@
     "high": 2.5,
     "low": 2.47,
     "avg": 2.48,
-    "volume": 137868,
-    "amount": 34223012,
+    "volume": 140116,
+    "amount": 34780671,
     "turnover": 0.08,
-    "volumeRatio": 1.13,
+    "volumeRatio": 1.12,
     "amplitude": 1.2,
     "limitUp": 2.75,
     "limitDown": 2.25,
@@ -39,7 +39,7 @@
     "floatShares": 17852619170,
     "totalCap": 51315215541.6,
     "floatCap": 44274495541.6,
-    "time": 1793240098000,
+    "time": 1793240152000,
     "code": "sh601618"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 2.49,
         "high": 2.5,
         "low": 2.47,
-        "volume": 137709
+        "volume": 140116
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 2.49,
         "high": 2.5,
         "low": 2.47,
-        "volume": 137709
+        "volume": 140116
       }
     ]
   },

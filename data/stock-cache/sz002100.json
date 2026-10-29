@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002100",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "天康生物",
-    "price": 7.67,
+    "price": 7.66,
     "prevClose": 7.73,
-    "change": -0.06,
-    "todayChange": -0.78,
+    "change": -0.07,
+    "todayChange": -0.91,
     "open": 7.7,
     "high": 7.85,
     "low": 7.65,
     "avg": 7.74,
-    "volume": 70935,
-    "amount": 54910049,
-    "turnover": 0.52,
-    "volumeRatio": 1.2,
+    "volume": 71833,
+    "amount": 55598226,
+    "turnover": 0.53,
+    "volumeRatio": 1.18,
     "amplitude": 2.59,
     "limitUp": 8.5,
     "limitDown": 6.96,
-    "pe": -13.18,
-    "peStatic": 49.71,
-    "peTtm": -13.14,
+    "pe": -13.16,
+    "peStatic": 49.65,
+    "peTtm": -13.12,
     "pb": 1.64,
     "roe": -8.68,
     "grossMargin": 1.9404418601,
@@ -37,9 +37,9 @@
     "board": "BK1259",
     "totalShares": 1365251515,
     "floatShares": 1365251515,
-    "totalCap": 10471479120.05,
-    "floatCap": 10471479120.05,
-    "time": 1793240094000,
+    "totalCap": 10457826604.9,
+    "floatCap": 10457826604.9,
+    "time": 1793240151000,
     "code": "sz002100"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.7,
-        "close": 7.67,
+        "close": 7.66,
         "high": 7.85,
         "low": 7.65,
-        "volume": 70923
+        "volume": 71833
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 7.7,
-        "close": 7.67,
+        "close": 7.66,
         "high": 7.85,
         "low": 7.65,
-        "volume": 70935
+        "volume": 71833
       }
     ]
   },

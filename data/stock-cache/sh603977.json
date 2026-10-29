@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh603977",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "国泰集团",
-    "price": 9.75,
+    "price": 9.74,
     "prevClose": 9.77,
-    "change": -0.02,
-    "todayChange": -0.2,
+    "change": -0.03,
+    "todayChange": -0.31,
     "open": 9.78,
     "high": 9.79,
     "low": 9.66,
     "avg": 9.71,
-    "volume": 13588,
-    "amount": 13192527,
+    "volume": 13934,
+    "amount": 13529550,
     "turnover": 0.22,
     "volumeRatio": 1.22,
     "amplitude": 1.33,
     "limitUp": 10.75,
     "limitDown": 8.79,
-    "pe": 29.82,
-    "peStatic": 24.01,
-    "peTtm": 28.23,
+    "pe": 29.79,
+    "peStatic": 23.99,
+    "peTtm": 28.2,
     "pb": 1.73,
     "roe": 4.4,
     "grossMargin": 30.114417416,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 621241828,
     "floatShares": 621241828,
-    "totalCap": 6057107823,
-    "floatCap": 6057107823,
-    "time": 1793240096000,
+    "totalCap": 6050895404.72,
+    "floatCap": 6050895404.72,
+    "time": 1793240153000,
     "code": "sh603977"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 9.78,
-        "close": 9.75,
+        "close": 9.74,
         "high": 9.79,
         "low": 9.66,
-        "volume": 13579
+        "volume": 13934
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 9.78,
-        "close": 9.75,
+        "close": 9.74,
         "high": 9.79,
         "low": 9.66,
-        "volume": 13579
+        "volume": 13934
       }
     ]
   },

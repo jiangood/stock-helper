@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600549",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "厦门钨业",
-    "price": 34.66,
+    "price": 34.58,
     "prevClose": 35.55,
-    "change": -0.89,
-    "todayChange": -2.5,
+    "change": -0.97,
+    "todayChange": -2.73,
     "open": 35.21,
     "high": 35.7,
-    "low": 34.64,
-    "avg": 35.11,
-    "volume": 115529,
-    "amount": 405631133,
-    "turnover": 0.74,
-    "volumeRatio": 1.77,
-    "amplitude": 2.98,
+    "low": 34.58,
+    "avg": 35.1,
+    "volume": 119104,
+    "amount": 418004389,
+    "turnover": 0.77,
+    "volumeRatio": 1.78,
+    "amplitude": 3.15,
     "limitUp": 39.11,
     "limitDown": 32,
-    "pe": 12.79,
-    "peStatic": 23.83,
-    "peTtm": 14.63,
+    "pe": 12.76,
+    "peStatic": 23.77,
+    "peTtm": 14.59,
     "pb": 2.89,
     "roe": 17.49,
     "grossMargin": 20.6783283755,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 1587585826,
     "floatShares": 1553931980,
-    "totalCap": 55025724729.159996,
-    "floatCap": 53859282426.799995,
-    "time": 1793240106000,
+    "totalCap": 54898717863.079994,
+    "floatCap": 53734967868.399994,
+    "time": 1793240160000,
     "code": "sh600549"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 35.21,
-        "close": 34.67,
+        "close": 34.62,
         "high": 35.7,
-        "low": 34.64,
-        "volume": 114935
+        "low": 34.6,
+        "volume": 117751
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 35.21,
-        "close": 34.67,
+        "close": 34.62,
         "high": 35.7,
-        "low": 34.64,
-        "volume": 114935
+        "low": 34.6,
+        "volume": 117751
       }
     ]
   },

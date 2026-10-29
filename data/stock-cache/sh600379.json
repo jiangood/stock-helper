@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600379",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "宝光股份",
-    "price": 11.03,
+    "price": 11.01,
     "prevClose": 11.36,
-    "change": -0.33,
-    "todayChange": -2.9,
+    "change": -0.35,
+    "todayChange": -3.08,
     "open": 11.3,
     "high": 11.34,
-    "low": 11.02,
+    "low": 11.01,
     "avg": 11.14,
-    "volume": 17520,
-    "amount": 19519812,
-    "turnover": 0.53,
-    "volumeRatio": 1.15,
-    "amplitude": 2.82,
+    "volume": 18183,
+    "amount": 20250837,
+    "turnover": 0.55,
+    "volumeRatio": 1.17,
+    "amplitude": 2.9,
     "limitUp": 12.5,
     "limitDown": 10.22,
-    "pe": 45.78,
-    "peStatic": 71,
-    "peTtm": 59.23,
+    "pe": 45.7,
+    "peStatic": 70.87,
+    "peTtm": 59.13,
     "pb": 4.45,
     "roe": 7.48,
     "grossMargin": 21.791242062,
@@ -37,9 +37,9 @@
     "board": "BK0457",
     "totalShares": 330201564,
     "floatShares": 330201564,
-    "totalCap": 3642123250.9199996,
-    "floatCap": 3642123250.9199996,
-    "time": 1793240103000,
+    "totalCap": 3635519219.64,
+    "floatCap": 3635519219.64,
+    "time": 1793240160000,
     "code": "sh600379"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 11.3,
-        "close": 11.03,
+        "close": 11.02,
         "high": 11.34,
-        "low": 11.02,
-        "volume": 17520
+        "low": 11.01,
+        "volume": 18123
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 11.3,
-        "close": 11.03,
+        "close": 11.02,
         "high": 11.34,
-        "low": 11.02,
-        "volume": 17520
+        "low": 11.01,
+        "volume": 18123
       }
     ]
   },

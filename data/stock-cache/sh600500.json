@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600500",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中化国际",
-    "price": 4.22,
+    "price": 4.21,
     "prevClose": 4.31,
-    "change": -0.09,
-    "todayChange": -2.09,
+    "change": -0.1,
+    "todayChange": -2.32,
     "open": 4.29,
     "high": 4.34,
     "low": 4.21,
     "avg": 4.26,
-    "volume": 155095,
-    "amount": 66010214,
-    "turnover": 0.43,
-    "volumeRatio": 1.86,
+    "volume": 157344,
+    "amount": 66957879,
+    "turnover": 0.44,
+    "volumeRatio": 1.85,
     "amplitude": 3.02,
     "limitUp": 4.74,
     "limitDown": 3.88,
-    "pe": -26.95,
-    "peStatic": -6.81,
-    "peTtm": -9.36,
-    "pb": 1.49,
+    "pe": -26.88,
+    "peStatic": -6.8,
+    "peTtm": -9.33,
+    "pb": 1.48,
     "roe": -2.72,
     "grossMargin": 6.8995425052,
     "netMargin": -1.06163649,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 3588306303,
     "floatShares": 3588306303,
-    "totalCap": 15142652598.66,
-    "floatCap": 15142652598.66,
-    "time": 1793240097000,
+    "totalCap": 15106769535.63,
+    "floatCap": 15106769535.63,
+    "time": 1793240154000,
     "code": "sh600500"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 4.29,
-        "close": 4.22,
+        "close": 4.21,
         "high": 4.34,
         "low": 4.21,
-        "volume": 155095
+        "volume": 157344
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 4.29,
-        "close": 4.22,
+        "close": 4.21,
         "high": 4.34,
         "low": 4.21,
-        "volume": 155093
+        "volume": 157158
       }
     ]
   },

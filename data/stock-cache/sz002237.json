@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002237",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "恒邦股份",
-    "price": 11.17,
+    "price": 11.15,
     "prevClose": 11.25,
-    "change": -0.08,
-    "todayChange": -0.71,
+    "change": -0.1,
+    "todayChange": -0.89,
     "open": 11.3,
     "high": 11.34,
-    "low": 11.16,
+    "low": 11.15,
     "avg": 11.25,
-    "volume": 49659,
-    "amount": 55873514.11,
-    "turnover": 0.42,
-    "volumeRatio": 1.58,
-    "amplitude": 1.6,
+    "volume": 51364,
+    "amount": 57775281.11,
+    "turnover": 0.43,
+    "volumeRatio": 1.6,
+    "amplitude": 1.69,
     "limitUp": 12.38,
     "limitDown": 10.13,
-    "pe": 12.32,
-    "peStatic": 25.05,
-    "peTtm": 15.39,
+    "pe": 12.29,
+    "peStatic": 25,
+    "peTtm": 15.37,
     "pb": 1.14,
     "roe": 7.13,
     "grossMargin": 2.6352276555,
@@ -37,9 +37,9 @@
     "board": "BK0732",
     "totalShares": 1429970408,
     "floatShares": 1192356008,
-    "totalCap": 15972769457.36,
-    "floatCap": 13318616609.36,
-    "time": 1793240097000,
+    "totalCap": 15944170049.2,
+    "floatCap": 13294769489.2,
+    "time": 1793240154000,
     "code": "sz002237"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 11.3,
-        "close": 11.17,
+        "close": 11.15,
         "high": 11.34,
-        "low": 11.16,
-        "volume": 49629
+        "low": 11.15,
+        "volume": 51364
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 11.3,
-        "close": 11.17,
+        "close": 11.15,
         "high": 11.34,
-        "low": 11.16,
-        "volume": 49659
+        "low": 11.15,
+        "volume": 51364
       }
     ]
   },

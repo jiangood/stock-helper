@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600961",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "株冶集团",
-    "price": 17.93,
+    "price": 17.89,
     "prevClose": 18.53,
-    "change": -0.6,
-    "todayChange": -3.24,
+    "change": -0.64,
+    "todayChange": -3.45,
     "open": 18.4,
     "high": 18.5,
-    "low": 17.9,
-    "avg": 18.13,
-    "volume": 71101,
-    "amount": 128882231,
-    "turnover": 0.66,
-    "volumeRatio": 2.01,
-    "amplitude": 3.24,
+    "low": 17.88,
+    "avg": 18.12,
+    "volume": 72080,
+    "amount": 130634662,
+    "turnover": 0.67,
+    "volumeRatio": 2,
+    "amplitude": 3.35,
     "limitUp": 20.38,
     "limitDown": 16.68,
-    "pe": 4.94,
-    "peStatic": 17.1,
-    "peTtm": 7.73,
+    "pe": 4.93,
+    "peStatic": 17.06,
+    "peTtm": 7.71,
     "pb": 3.28,
     "roe": 39.52,
     "grossMargin": 20.0710366181,
@@ -37,9 +37,9 @@
     "board": "BK1287",
     "totalShares": 1072872703,
     "floatShares": 1072872703,
-    "totalCap": 19236607564.79,
-    "floatCap": 19236607564.79,
-    "time": 1793240103000,
+    "totalCap": 19193692656.670002,
+    "floatCap": 19193692656.670002,
+    "time": 1793240160000,
     "code": "sh600961"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 18.4,
-        "close": 17.93,
+        "close": 17.9,
         "high": 18.5,
-        "low": 17.9,
-        "volume": 71101
+        "low": 17.88,
+        "volume": 71864
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 18.4,
-        "close": 17.93,
+        "close": 17.89,
         "high": 18.5,
-        "low": 17.9,
-        "volume": 71101
+        "low": 17.88,
+        "volume": 72080
       }
     ]
   },

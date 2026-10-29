@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600737",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中粮糖业",
-    "price": 11.74,
+    "price": 11.72,
     "prevClose": 12.03,
-    "change": -0.29,
-    "todayChange": -2.41,
+    "change": -0.31,
+    "todayChange": -2.58,
     "open": 11.96,
     "high": 12.03,
     "low": 11.71,
     "avg": 11.8,
-    "volume": 161900,
-    "amount": 191024609,
-    "turnover": 0.76,
-    "volumeRatio": 1.96,
+    "volume": 164327,
+    "amount": 193871277,
+    "turnover": 0.77,
+    "volumeRatio": 1.95,
     "amplitude": 2.66,
     "limitUp": 13.23,
     "limitDown": 10.83,
-    "pe": 20.19,
-    "peStatic": 26.4,
-    "peTtm": 23.49,
+    "pe": 20.15,
+    "peStatic": 26.35,
+    "peTtm": 23.45,
     "pb": 2.2,
     "roe": 8.01,
     "grossMargin": 13.7929704968,
@@ -37,9 +37,9 @@
     "board": "BK1256",
     "totalShares": 2138848228,
     "floatShares": 2138848228,
-    "totalCap": 25110078196.72,
-    "floatCap": 25110078196.72,
-    "time": 1793240106000,
+    "totalCap": 25067301232.16,
+    "floatCap": 25067301232.16,
+    "time": 1793240160000,
     "code": "sh600737"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 11.96,
-        "close": 11.74,
+        "close": 11.72,
         "high": 12.03,
         "low": 11.71,
-        "volume": 161900
+        "volume": 164058
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 11.96,
-        "close": 11.74,
+        "close": 11.72,
         "high": 12.03,
         "low": 11.71,
-        "volume": 161900
+        "volume": 164058
       }
     ]
   },

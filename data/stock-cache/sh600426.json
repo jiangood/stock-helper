@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600426",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "华鲁恒升",
     "price": 19.22,
@@ -12,10 +12,10 @@
     "high": 19.45,
     "low": 19.08,
     "avg": 19.24,
-    "volume": 54724,
-    "amount": 105273844,
+    "volume": 54939,
+    "amount": 105686992,
     "turnover": 0.2,
-    "volumeRatio": 1.18,
+    "volumeRatio": 1.19,
     "amplitude": 1.9,
     "limitUp": 21.42,
     "limitDown": 17.52,
@@ -39,7 +39,7 @@
     "floatShares": 2749943015,
     "totalCap": 52853904748.299995,
     "floatCap": 52853904748.299995,
-    "time": 1793240103000,
+    "time": 1793240157000,
     "code": "sh600426"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 19.22,
         "high": 19.45,
         "low": 19.08,
-        "volume": 54719
+        "volume": 54939
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 19.22,
         "high": 19.45,
         "low": 19.08,
-        "volume": 54719
+        "volume": 54939
       }
     ]
   },

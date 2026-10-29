@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000707",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "双环科技",
     "price": 4.25,
@@ -12,10 +12,10 @@
     "high": 4.28,
     "low": 4.21,
     "avg": 4.24,
-    "volume": 12631,
-    "amount": 5361210.12,
-    "turnover": 0.23,
-    "volumeRatio": 1.17,
+    "volume": 13067,
+    "amount": 5546591.12,
+    "turnover": 0.24,
+    "volumeRatio": 1.16,
     "amplitude": 1.65,
     "limitUp": 4.68,
     "limitDown": 3.83,
@@ -39,7 +39,7 @@
     "floatShares": 550703589,
     "totalCap": 2485048070.25,
     "floatCap": 2340490253.25,
-    "time": 1793240097000,
+    "time": 1793240154000,
     "code": "sz000707"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 4.25,
         "high": 4.28,
         "low": 4.21,
-        "volume": 12631
+        "volume": 13067
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 4.25,
         "high": 4.28,
         "low": 4.21,
-        "volume": 12631
+        "volume": 13067
       }
     ]
   },

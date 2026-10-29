@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh688750",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "金天钛业",
-    "price": 13.14,
+    "price": 13.12,
     "prevClose": 13.25,
-    "change": -0.11,
-    "todayChange": -0.83,
+    "change": -0.13,
+    "todayChange": -0.98,
     "open": 13.26,
     "high": 13.37,
     "low": 13.05,
-    "avg": 13.1,
-    "volume": 4352,
-    "amount": 5703403,
-    "turnover": 0.19,
-    "volumeRatio": 1.02,
+    "avg": 13.11,
+    "volume": 4623,
+    "amount": 6059049,
+    "turnover": 0.2,
+    "volumeRatio": 1.09,
     "amplitude": 2.42,
     "limitUp": 15.9,
     "limitDown": 10.6,
-    "pe": 92.59,
-    "peStatic": 102.53,
-    "peTtm": 117.88,
+    "pe": 92.45,
+    "peStatic": 102.37,
+    "peTtm": 117.7,
     "pb": 2.44,
     "roe": 1.33,
     "grossMargin": 28.2429748838,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 462500000,
     "floatShares": 232918326,
-    "totalCap": 6077250000,
-    "floatCap": 3060546803.6400003,
-    "time": 1793240106000,
+    "totalCap": 6068000000,
+    "floatCap": 3055888437.12,
+    "time": 1793240160000,
     "code": "sh688750"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 13.26,
-        "close": 13.14,
+        "close": 13.12,
         "high": 13.37,
         "low": 13.05,
-        "volume": 435233
+        "volume": 462309
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 13.26,
-        "close": 13.14,
+        "close": 13.12,
         "high": 13.37,
         "low": 13.05,
-        "volume": 434833
+        "volume": 462309
       }
     ]
   },

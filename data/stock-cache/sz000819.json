@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz000819",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "岳阳兴长",
-    "price": 10.73,
+    "price": 10.72,
     "prevClose": 10.8,
-    "change": -0.07,
-    "todayChange": -0.65,
+    "change": -0.08,
+    "todayChange": -0.74,
     "open": 10.8,
     "high": 10.93,
     "low": 10.55,
     "avg": 10.67,
-    "volume": 14461,
-    "amount": 15432497.37,
+    "volume": 14503,
+    "amount": 15477563.37,
     "turnover": 0.4,
-    "volumeRatio": 2.35,
+    "volumeRatio": 2.31,
     "amplitude": 3.52,
     "limitUp": 11.88,
     "limitDown": 9.72,
-    "pe": 138.15,
-    "peStatic": -75.42,
-    "peTtm": -469.05,
+    "pe": 138.02,
+    "peStatic": -75.35,
+    "peTtm": -468.61,
     "pb": 1.87,
     "roe": 0.68,
     "grossMargin": 15.4685846587,
@@ -37,9 +37,9 @@
     "board": "BK1274",
     "totalShares": 366020106,
     "floatShares": 366020106,
-    "totalCap": 3927395737.38,
-    "floatCap": 3927395737.38,
-    "time": 1793240109000,
+    "totalCap": 3923735536.32,
+    "floatCap": 3923735536.32,
+    "time": 1793240163000,
     "code": "sz000819"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.8,
-        "close": 10.73,
+        "close": 10.72,
         "high": 10.93,
         "low": 10.55,
-        "volume": 14461
+        "volume": 14503
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.8,
-        "close": 10.73,
+        "close": 10.72,
         "high": 10.93,
         "low": 10.55,
-        "volume": 14461
+        "volume": 14503
       }
     ]
   },

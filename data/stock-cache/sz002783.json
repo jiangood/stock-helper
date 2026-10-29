@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002783",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "凯龙股份",
     "price": 7.37,
@@ -12,9 +12,9 @@
     "high": 7.44,
     "low": 7.34,
     "avg": 7.38,
-    "volume": 12973,
-    "amount": 9577883,
-    "turnover": 0.28,
+    "volume": 13191,
+    "amount": 9738767,
+    "turnover": 0.29,
     "volumeRatio": 0.87,
     "amplitude": 1.34,
     "limitUp": 8.18,
@@ -39,7 +39,7 @@
     "floatShares": 461213936,
     "totalCap": 3679969584.39,
     "floatCap": 3399146708.32,
-    "time": 1793240094000,
+    "time": 1793240148000,
     "code": "sz002783"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 7.37,
         "high": 7.44,
         "low": 7.34,
-        "volume": 12973
+        "volume": 13191
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 7.37,
         "high": 7.44,
         "low": 7.34,
-        "volume": 12973
+        "volume": 13191
       }
     ]
   },

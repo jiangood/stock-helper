@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600459",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "贵研铂业",
-    "price": 16.48,
+    "price": 16.45,
     "prevClose": 16.85,
-    "change": -0.37,
-    "todayChange": -2.2,
+    "change": -0.4,
+    "todayChange": -2.37,
     "open": 16.85,
     "high": 16.85,
     "low": 16.44,
     "avg": 16.59,
-    "volume": 36150,
-    "amount": 59965944,
+    "volume": 36448,
+    "amount": 60456530,
     "turnover": 0.44,
-    "volumeRatio": 2.06,
+    "volumeRatio": 2.03,
     "amplitude": 2.43,
     "limitUp": 18.54,
     "limitDown": 15.17,
-    "pe": 19.4,
-    "peStatic": 21.18,
-    "peTtm": 20.39,
+    "pe": 19.37,
+    "peStatic": 21.14,
+    "peTtm": 20.35,
     "pb": 1.51,
     "roe": 4.25,
     "grossMargin": 4.4297279376,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 823177251,
     "floatShares": 823177251,
-    "totalCap": 13565961096.48,
-    "floatCap": 13565961096.48,
-    "time": 1793240097000,
+    "totalCap": 13541265778.949999,
+    "floatCap": 13541265778.949999,
+    "time": 1793240154000,
     "code": "sh600459"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 16.85,
-        "close": 16.49,
+        "close": 16.45,
         "high": 16.85,
         "low": 16.44,
-        "volume": 36050
+        "volume": 36448
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 16.85,
-        "close": 16.48,
+        "close": 16.45,
         "high": 16.85,
         "low": 16.44,
-        "volume": 36150
+        "volume": 36434
       }
     ]
   },

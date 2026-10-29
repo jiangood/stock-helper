@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600392",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "盛和资源",
-    "price": 15.34,
+    "price": 15.33,
     "prevClose": 15.76,
-    "change": -0.42,
-    "todayChange": -2.66,
+    "change": -0.43,
+    "todayChange": -2.73,
     "open": 15.74,
     "high": 15.74,
     "low": 15.31,
     "avg": 15.47,
-    "volume": 91328,
-    "amount": 141314282,
-    "turnover": 0.52,
-    "volumeRatio": 1.59,
+    "volume": 92506,
+    "amount": 143119994,
+    "turnover": 0.53,
+    "volumeRatio": 1.61,
     "amplitude": 2.73,
     "limitUp": 17.34,
     "limitDown": 14.18,
-    "pe": 15.16,
-    "peStatic": 32.05,
-    "peTtm": 19.94,
+    "pe": 15.15,
+    "peStatic": 32.03,
+    "peTtm": 19.92,
     "pb": 2.06,
     "roe": 6.8,
     "grossMargin": 12.6425008214,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 1752826570,
     "floatShares": 1752826570,
-    "totalCap": 26888359583.8,
-    "floatCap": 26888359583.8,
-    "time": 1793240105000,
+    "totalCap": 26870831318.1,
+    "floatCap": 26870831318.1,
+    "time": 1793240159000,
     "code": "sh600392"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 15.74,
-        "close": 15.34,
+        "close": 15.33,
         "high": 15.74,
         "low": 15.31,
-        "volume": 91328
+        "volume": 92506
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 15.74,
-        "close": 15.34,
+        "close": 15.33,
         "high": 15.74,
         "low": 15.31,
-        "volume": 91328
+        "volume": 92506
       }
     ]
   },

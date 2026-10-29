@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh603639",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "海利尔",
-    "price": 9.8,
+    "price": 9.81,
     "prevClose": 10.08,
-    "change": -0.28,
-    "todayChange": -2.78,
+    "change": -0.27,
+    "todayChange": -2.68,
     "open": 10.1,
     "high": 10.15,
     "low": 9.8,
     "avg": 9.89,
-    "volume": 7829,
-    "amount": 7741772,
+    "volume": 7836,
+    "amount": 7748645,
     "turnover": 0.23,
-    "volumeRatio": 3.16,
+    "volumeRatio": 3.1,
     "amplitude": 3.47,
     "limitUp": 11.09,
     "limitDown": 9.07,
-    "pe": 13.81,
-    "peStatic": 18.83,
-    "peTtm": 32.76,
+    "pe": 13.82,
+    "peStatic": 18.85,
+    "peTtm": 32.79,
     "pb": 0.96,
     "roe": 3.55,
     "grossMargin": 25.7170376506,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 349648236,
     "floatShares": 339878336,
-    "totalCap": 3426552712.8,
-    "floatCap": 3330807692.8,
-    "time": 1793240096000,
+    "totalCap": 3430049195.1600003,
+    "floatCap": 3334206476.1600003,
+    "time": 1793240156000,
     "code": "sh603639"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.1,
-        "close": 9.8,
+        "close": 9.81,
         "high": 10.15,
         "low": 9.8,
-        "volume": 7829
+        "volume": 7836
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.1,
-        "close": 9.8,
+        "close": 9.81,
         "high": 10.15,
         "low": 9.8,
-        "volume": 7829
+        "volume": 7836
       }
     ]
   },

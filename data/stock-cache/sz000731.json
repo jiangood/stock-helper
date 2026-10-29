@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz000731",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "四川美丰",
-    "price": 6.74,
+    "price": 6.73,
     "prevClose": 6.89,
-    "change": -0.15,
-    "todayChange": -2.18,
+    "change": -0.16,
+    "todayChange": -2.32,
     "open": 6.92,
     "high": 6.92,
     "low": 6.72,
     "avg": 6.79,
-    "volume": 20702,
-    "amount": 14052529,
+    "volume": 20818,
+    "amount": 14130660,
     "turnover": 0.38,
-    "volumeRatio": 1.26,
+    "volumeRatio": 1.24,
     "amplitude": 2.9,
     "limitUp": 7.58,
     "limitDown": 6.2,
-    "pe": -20.7,
-    "peStatic": -30.34,
-    "peTtm": -14.88,
+    "pe": -20.67,
+    "peStatic": -30.3,
+    "peTtm": -14.85,
     "pb": 0.99,
     "roe": -3.54,
     "grossMargin": 7.037620349,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 548825900,
     "floatShares": 548825900,
-    "totalCap": 3699086566,
-    "floatCap": 3699086566,
-    "time": 1793240097000,
+    "totalCap": 3693598307,
+    "floatCap": 3693598307,
+    "time": 1793240154000,
     "code": "sz000731"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 6.92,
-        "close": 6.75,
+        "close": 6.73,
         "high": 6.92,
         "low": 6.72,
-        "volume": 20402
+        "volume": 20818
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 6.92,
-        "close": 6.75,
+        "close": 6.73,
         "high": 6.92,
         "low": 6.72,
-        "volume": 20402
+        "volume": 20818
       }
     ]
   },

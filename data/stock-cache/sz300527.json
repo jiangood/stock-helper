@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz300527",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中船应急",
     "price": 7.22,
@@ -12,10 +12,10 @@
     "high": 7.23,
     "low": 7.09,
     "avg": 7.16,
-    "volume": 27846,
-    "amount": 19924604,
-    "turnover": 0.27,
-    "volumeRatio": 1.44,
+    "volume": 28202,
+    "amount": 20181625,
+    "turnover": 0.28,
+    "volumeRatio": 1.46,
     "amplitude": 1.94,
     "limitUp": 8.65,
     "limitDown": 5.77,
@@ -37,9 +37,9 @@
     "board": "BK1229",
     "totalShares": 1016770372,
     "floatShares": 1016770372,
-    "totalCap": 7341082085.84,
-    "floatCap": 7341082085.84,
-    "time": 1793240103000,
+    "totalCap": 7330914382.12,
+    "floatCap": 7330914382.12,
+    "time": 1793240160000,
     "code": "sz300527"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.18,
-        "close": 7.22,
+        "close": 7.21,
         "high": 7.23,
         "low": 7.09,
-        "volume": 27846
+        "volume": 28202
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 7.22,
         "high": 7.23,
         "low": 7.09,
-        "volume": 27781
+        "volume": 28192
       }
     ]
   },

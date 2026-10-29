@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz301058",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中粮科工",
-    "price": 7.92,
+    "price": 7.89,
     "prevClose": 8.06,
-    "change": -0.14,
-    "todayChange": -1.74,
+    "change": -0.17,
+    "todayChange": -2.11,
     "open": 7.99,
     "high": 8.05,
     "low": 7.86,
     "avg": 7.91,
-    "volume": 29402,
-    "amount": 23248798.12,
-    "turnover": 0.57,
-    "volumeRatio": 3.35,
+    "volume": 29505,
+    "amount": 23330213.12,
+    "turnover": 0.58,
+    "volumeRatio": 3.29,
     "amplitude": 2.36,
     "limitUp": 9.67,
     "limitDown": 6.45,
-    "pe": 25.34,
-    "peStatic": 17.7,
-    "peTtm": 17.4,
+    "pe": 25.25,
+    "peStatic": 17.63,
+    "peTtm": 17.33,
     "pb": 1.75,
     "roe": 5.24,
     "grossMargin": 22.8852762717,
@@ -37,9 +37,9 @@
     "board": "BK0726",
     "totalShares": 520803005,
     "floatShares": 512274245,
-    "totalCap": 4124759799.6,
-    "floatCap": 4057212020.4,
-    "time": 1793240097000,
+    "totalCap": 4109135709.45,
+    "floatCap": 4041843793.0499997,
+    "time": 1793240148000,
     "code": "sz301058"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.99,
-        "close": 7.92,
+        "close": 7.89,
         "high": 8.05,
         "low": 7.86,
-        "volume": 29402
+        "volume": 29505
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 7.99,
-        "close": 7.92,
+        "close": 7.89,
         "high": 8.05,
         "low": 7.86,
-        "volume": 29402
+        "volume": 29505
       }
     ]
   },

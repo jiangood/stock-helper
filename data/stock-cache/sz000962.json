@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000962",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "东方钽业",
-    "price": 39.05,
+    "price": 39.01,
     "prevClose": 40.33,
-    "change": -1.28,
-    "todayChange": -3.17,
+    "change": -1.32,
+    "todayChange": -3.27,
     "open": 40.04,
     "high": 40.65,
     "low": 38.95,
-    "avg": 39.67,
-    "volume": 44570,
-    "amount": 176822810.38,
-    "turnover": 0.87,
-    "volumeRatio": 1.47,
+    "avg": 39.66,
+    "volume": 45253,
+    "amount": 179487584.38,
+    "turnover": 0.88,
+    "volumeRatio": 1.46,
     "amplitude": 4.22,
     "limitUp": 44.36,
     "limitDown": 36.3,
-    "pe": 61.6,
-    "peStatic": 79.74,
-    "peTtm": 68.49,
-    "pb": 4.96,
+    "pe": 61.54,
+    "peStatic": 79.66,
+    "peTtm": 68.42,
+    "pb": 4.95,
     "roe": 7.29,
     "grossMargin": 19.4195215377,
     "netMargin": 13.118062556499998,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 527385160,
     "floatShares": 514542370,
-    "totalCap": 20594390498,
-    "floatCap": 20092879548.5,
-    "time": 1793240103000,
+    "totalCap": 20573295091.6,
+    "floatCap": 20072297853.7,
+    "time": 1793240160000,
     "code": "sz000962"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 40.04,
-        "close": 39.05,
+        "close": 39.01,
         "high": 40.65,
         "low": 38.95,
-        "volume": 44570
+        "volume": 45244
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 40.04,
-        "close": 39.05,
+        "close": 39.01,
         "high": 40.65,
         "low": 38.95,
-        "volume": 44570
+        "volume": 45244
       }
     ]
   },

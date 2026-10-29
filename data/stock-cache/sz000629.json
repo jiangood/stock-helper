@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000629",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "钒钛股份",
     "price": 2.6,
@@ -12,10 +12,10 @@
     "high": 2.64,
     "low": 2.59,
     "avg": 2.61,
-    "volume": 232935,
-    "amount": 60910157,
+    "volume": 233816,
+    "amount": 61139247,
     "turnover": 0.25,
-    "volumeRatio": 2.02,
+    "volumeRatio": 1.98,
     "amplitude": 1.89,
     "limitUp": 2.9,
     "limitDown": 2.38,
@@ -39,7 +39,7 @@
     "floatShares": 9290444430,
     "totalCap": 24156464397,
     "floatCap": 24155155518,
-    "time": 1793240100000,
+    "time": 1793240157000,
     "code": "sz000629"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 2.6,
         "high": 2.64,
         "low": 2.59,
-        "volume": 232935
+        "volume": 233816
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 2.6,
         "high": 2.64,
         "low": 2.59,
-        "volume": 232935
+        "volume": 233816
       }
     ]
   },

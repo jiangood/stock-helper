@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002092",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中泰化学",
     "price": 3.99,
@@ -12,10 +12,10 @@
     "high": 4.02,
     "low": 3.96,
     "avg": 3.99,
-    "volume": 92992,
-    "amount": 37073942,
+    "volume": 93302,
+    "amount": 37197443,
     "turnover": 0.36,
-    "volumeRatio": 1.5,
+    "volumeRatio": 1.47,
     "amplitude": 1.49,
     "limitUp": 4.43,
     "limitDown": 3.63,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 2575739517,
     "floatShares": 2575637892,
-    "totalCap": 10277200672.83,
-    "floatCap": 10276795189.08,
-    "time": 1793240106000,
+    "totalCap": 10251443277.66,
+    "floatCap": 10251038810.16,
+    "time": 1793240160000,
     "code": "sz002092"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 3.99,
         "high": 4.02,
         "low": 3.96,
-        "volume": 92992
+        "volume": 93302
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 3.99,
         "high": 4.02,
         "low": 3.96,
-        "volume": 92992
+        "volume": 93302
       }
     ]
   },

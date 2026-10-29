@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600328",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中盐化工",
-    "price": 5.4,
+    "price": 5.39,
     "prevClose": 5.47,
-    "change": -0.07,
-    "todayChange": -1.28,
+    "change": -0.08,
+    "todayChange": -1.46,
     "open": 5.48,
     "high": 5.48,
     "low": 5.39,
     "avg": 5.42,
-    "volume": 40125,
-    "amount": 21739626,
-    "turnover": 0.27,
+    "volume": 41077,
+    "amount": 22253921,
+    "turnover": 0.28,
     "volumeRatio": 1.95,
     "amplitude": 1.65,
     "limitUp": 6.02,
     "limitDown": 4.92,
-    "pe": -14.54,
-    "peStatic": 107.07,
-    "peTtm": -31.54,
+    "pe": -14.52,
+    "peStatic": 106.88,
+    "peTtm": -31.49,
     "pb": 0.68,
     "roe": -2.3,
     "grossMargin": 3.541501191,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 1466309533,
     "floatShares": 1466309533,
-    "totalCap": 7918071478.200001,
-    "floatCap": 7918071478.200001,
-    "time": 1793240097000,
+    "totalCap": 7903408382.87,
+    "floatCap": 7903408382.87,
+    "time": 1793240154000,
     "code": "sh600328"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 5.4,
         "high": 5.48,
         "low": 5.39,
-        "volume": 40125
+        "volume": 41071
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 5.48,
-        "close": 5.4,
+        "close": 5.39,
         "high": 5.48,
         "low": 5.39,
-        "volume": 40125
+        "volume": 41077
       }
     ]
   },

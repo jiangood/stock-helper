@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002408",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "齐翔腾达",
-    "price": 4.36,
+    "price": 4.35,
     "prevClose": 4.42,
-    "change": -0.06,
-    "todayChange": -1.36,
+    "change": -0.07,
+    "todayChange": -1.58,
     "open": 4.42,
     "high": 4.43,
     "low": 4.35,
     "avg": 4.39,
-    "volume": 72321,
-    "amount": 31717139.9,
+    "volume": 72858,
+    "amount": 31950748.9,
     "turnover": 0.26,
-    "volumeRatio": 1.2,
+    "volumeRatio": 1.18,
     "amplitude": 1.81,
     "limitUp": 4.86,
     "limitDown": 3.98,
-    "pe": 244.06,
-    "peStatic": -21.58,
-    "peTtm": -31.74,
+    "pe": 243.5,
+    "peStatic": -21.53,
+    "peTtm": -31.66,
     "pb": 1.11,
     "roe": 0.34,
     "grossMargin": 4.9245765681,
@@ -37,9 +37,9 @@
     "board": "BK1274",
     "totalShares": 2843538717,
     "floatShares": 2751751309,
-    "totalCap": 12397828806.12,
-    "floatCap": 11997635707.240002,
-    "time": 1793240094000,
+    "totalCap": 12369393418.949999,
+    "floatCap": 11970118194.15,
+    "time": 1793240151000,
     "code": "sz002408"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 4.42,
-        "close": 4.36,
+        "close": 4.35,
         "high": 4.43,
         "low": 4.35,
-        "volume": 72321
+        "volume": 72858
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 4.42,
-        "close": 4.36,
+        "close": 4.35,
         "high": 4.43,
         "low": 4.35,
-        "volume": 72321
+        "volume": 72858
       }
     ]
   },

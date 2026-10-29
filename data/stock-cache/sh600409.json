@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600409",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "三友化工",
     "price": 5.37,
@@ -12,10 +12,10 @@
     "high": 5.54,
     "low": 5.36,
     "avg": 5.44,
-    "volume": 100738,
-    "amount": 54825728,
+    "volume": 101722,
+    "amount": 55354525,
     "turnover": 0.49,
-    "volumeRatio": 2.64,
+    "volumeRatio": 2.61,
     "amplitude": 3.25,
     "limitUp": 6.08,
     "limitDown": 4.98,
@@ -39,7 +39,7 @@
     "floatShares": 2064349448,
     "totalCap": 11085556535.76,
     "floatCap": 11085556535.76,
-    "time": 1793240109000,
+    "time": 1793240163000,
     "code": "sh600409"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 5.38,
         "high": 5.54,
         "low": 5.36,
-        "volume": 100724
+        "volume": 101722
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 5.38,
         "high": 5.54,
         "low": 5.36,
-        "volume": 100724
+        "volume": 101685
       }
     ]
   },

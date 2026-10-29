@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz000928",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "中钢国际",
-    "price": 5.53,
+    "price": 5.5,
     "prevClose": 5.48,
-    "change": 0.05,
-    "todayChange": 0.91,
+    "change": 0.02,
+    "todayChange": 0.36,
     "open": 5.46,
     "high": 5.53,
     "low": 5.43,
     "avg": 5.5,
-    "volume": 64664,
-    "amount": 35533456,
-    "turnover": 0.45,
-    "volumeRatio": 1.5,
+    "volume": 65806,
+    "amount": 36163244,
+    "turnover": 0.46,
+    "volumeRatio": 1.49,
     "amplitude": 1.82,
     "limitUp": 6.03,
     "limitDown": 4.93,
-    "pe": 10.52,
-    "peStatic": 16.35,
-    "peTtm": 16.03,
+    "pe": 10.47,
+    "peStatic": 16.26,
+    "peTtm": 15.94,
     "pb": 0.91,
     "roe": 6.6,
     "grossMargin": 13.4073734165,
@@ -37,9 +37,9 @@
     "board": "BK1248",
     "totalShares": 1434644621,
     "floatShares": 1434627071,
-    "totalCap": 7933584754.13,
-    "floatCap": 7933487702.63,
-    "time": 1793240097000,
+    "totalCap": 7890545415.5,
+    "floatCap": 7890448890.5,
+    "time": 1793240154000,
     "code": "sz000928"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 5.46,
-        "close": 5.53,
+        "close": 5.5,
         "high": 5.53,
         "low": 5.43,
-        "volume": 64664
+        "volume": 65799
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 5.46,
-        "close": 5.53,
+        "close": 5.5,
         "high": 5.53,
         "low": 5.43,
-        "volume": 64664
+        "volume": 65799
       }
     ]
   },

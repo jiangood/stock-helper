@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz300034",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "钢研高纳",
-    "price": 13.63,
+    "price": 13.59,
     "prevClose": 13.72,
-    "change": -0.09,
-    "todayChange": -0.66,
+    "change": -0.13,
+    "todayChange": -0.95,
     "open": 13.6,
     "high": 13.68,
     "low": 13.43,
-    "avg": 13.53,
-    "volume": 44392,
-    "amount": 60084028.54,
-    "turnover": 0.58,
-    "volumeRatio": 2.2,
+    "avg": 13.54,
+    "volume": 45898,
+    "amount": 62133325.54,
+    "turnover": 0.6,
+    "volumeRatio": 2.22,
     "amplitude": 1.82,
     "limitUp": 16.46,
     "limitDown": 10.98,
-    "pe": 69.5,
-    "peStatic": 124.22,
-    "peTtm": 135.59,
-    "pb": 2.8,
+    "pe": 69.29,
+    "peStatic": 123.85,
+    "peTtm": 135.19,
+    "pb": 2.79,
     "roe": 3.04,
     "grossMargin": 20.438409394,
     "netMargin": 5.6871064778,
@@ -37,9 +37,9 @@
     "board": "BK1231",
     "totalShares": 796961563,
     "floatShares": 767055977,
-    "totalCap": 10862586103.69,
-    "floatCap": 10454972966.51,
-    "time": 1793240094000,
+    "totalCap": 10830707641.17,
+    "floatCap": 10424290727.43,
+    "time": 1793240151000,
     "code": "sz300034"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 13.6,
-        "close": 13.63,
+        "close": 13.59,
         "high": 13.68,
         "low": 13.43,
-        "volume": 44392
+        "volume": 45898
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 13.6,
-        "close": 13.63,
+        "close": 13.59,
         "high": 13.68,
         "low": 13.43,
-        "volume": 44392
+        "volume": 45898
       }
     ]
   },

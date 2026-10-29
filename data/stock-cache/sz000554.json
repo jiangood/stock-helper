@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000554",
-  "updatedAt": "2026-10-29T02:14:55.103Z",
+  "updatedAt": "2026-10-29T02:15:52.882Z",
   "detail": {
     "name": "泰山石油",
-    "price": 6.69,
+    "price": 6.67,
     "prevClose": 6.63,
-    "change": 0.06,
-    "todayChange": 0.9,
+    "change": 0.04,
+    "todayChange": 0.6,
     "open": 6.87,
     "high": 6.98,
-    "low": 6.68,
+    "low": 6.66,
     "avg": 6.82,
-    "volume": 279063,
-    "amount": 190229078.84,
-    "turnover": 7.77,
-    "volumeRatio": 7.67,
-    "amplitude": 4.52,
+    "volume": 281507,
+    "amount": 191861086.84,
+    "turnover": 7.83,
+    "volumeRatio": 7.56,
+    "amplitude": 4.83,
     "limitUp": 7.29,
     "limitDown": 5.97,
-    "pe": 16.81,
-    "peStatic": 20.65,
-    "peTtm": 17.36,
-    "pb": 2.64,
+    "pe": 16.76,
+    "peStatic": 20.59,
+    "peTtm": 17.31,
+    "pb": 2.63,
     "roe": 12.2,
     "grossMargin": 19.604620369,
     "netMargin": 6.6905046733999995,
@@ -37,9 +37,9 @@
     "board": "BK1274",
     "totalShares": 477444918,
     "floatShares": 359304797,
-    "totalCap": 3194106501.42,
-    "floatCap": 2403749091.9300003,
-    "time": 1793240097000,
+    "totalCap": 3184557603.06,
+    "floatCap": 2396562995.99,
+    "time": 1793240154000,
     "code": "sz000554"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 6.87,
-        "close": 6.69,
+        "close": 6.67,
         "high": 6.98,
-        "low": 6.68,
-        "volume": 279063
+        "low": 6.66,
+        "volume": 281507
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 6.87,
-        "close": 6.69,
+        "close": 6.67,
         "high": 6.98,
-        "low": 6.68,
-        "volume": 279063
+        "low": 6.66,
+        "volume": 281507
       }
     ]
   },

@@ -442,9 +442,36 @@ function reportBandLabel(score) {
   return band ? band.label : '';
 }
 
-/** 首页评分列：有研报分就用研报分（注明来源与日期），没有才回落到 32 分制机器分 */
+/** 首页同时展示机器评分与研报评分；研报分始终标注报告日期。 */
 function researchHtml(stock) {
   const report = REPORT_SCORES[stock.code];
+  const score = researchScores[stock.code];
+
+  let machineHtml = '<div class="score-line score-machine"><span class="score-label">算</span><span class="text-body-tertiary">—</span></div>';
+  if (score && isFinite(score.points)) {
+    const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
+    const percent = isFinite(score.percent) ? score.percent : null;
+    if (percent !== null) {
+      const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
+      const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
+      const items = score.items || {};
+      const detail = [
+        `国资 ${fmtScore(items.owner)}/10`,
+        `主营 ${fmtScore(items.focus)}/9`,
+        `扣非 ${fmtScore(items.profit)}/14`,
+        `市值 ${fmtScore(items.cap)}/8`,
+        `盘整 ${fmtScore(items.consolidation)}/9`,
+        `月线 ${fmtScore(items.bottom)}/9`,
+        `放量 ${fmtScore(items.volume)}/6`
+      ].join(' · ');
+      const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\\n${detail}\\n按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议`;
+      machineHtml = `<div class="score-line score-machine" title="${esc(tip)}"><span class="score-label">算</span><span class="score score-${tone}">${percent.toFixed(1)}</span></div>`;
+    } else {
+      machineHtml = `<div class="score-line score-machine" title="机器评分数据不完整：${esc(String(score.points))}/${esc(String(max))}"><span class="score-label">算</span><span class="text-body-tertiary">—</span></div>`;
+    }
+  }
+
+  let reportHtml = '<div class="score-line score-report"><span class="score-label">研</span><span class="text-body-tertiary">—</span><span class="score-date">暂无</span></div>';
   if (report && isFinite(report.score)) {
     const months = monthsSince(report.date);
     const stale = months !== null && months >= 12;
@@ -452,39 +479,13 @@ function researchHtml(stock) {
     const alt = (report.alternates || [])
       .map(item => `${item.date} ${item.score.toFixed(1)} 分（${item.source}）`)
       .join('；');
-    const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}`
-      + `\n来源：${report.source}\n报告日期：${report.date}`
+    const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}\\n来源：${report.source}\\n报告日期：${report.date}`
       + (months !== null ? `（${months} 个月前${stale ? '，可能已过时' : ''}）` : '')
-      + (alt ? '\n另有：' + alt : '');
-    return `<span class="score score-${tone}" title="${esc(tip)}">${report.score.toFixed(1)}`
-      + `<span class="unit">分</span><span class="score-tag${stale ? ' score-tag-stale' : ''}">研${stale ? '·旧' : ''}</span></span>`;
+      + (alt ? '\\n另有：' + alt : '');
+    reportHtml = `<div class="score-line score-report" title="${esc(tip)}"><span class="score-label">研${stale ? '·旧' : ''}</span><span class="score score-${tone}">${report.score.toFixed(1)}</span><span class="score-date">${esc(report.date || '日期未知')}</span></div>`;
   }
 
-  const score = researchScores[stock.code];
-  if (!score || !isFinite(score.points)) return '<span class="text-body-tertiary">—</span>';
-  const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
-  const percent = isFinite(score.percent) ? score.percent : null;
-  if (percent === null) {
-    // 数据不全（例如缺主营构成或实控人）时不折算，避免半个分母冒充百分制
-    return `<span class="text-body-tertiary" title="评分数据不完整：${esc(String(score.points))}/${esc(String(max))}">—</span>`;
-  }
-  const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
-  const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
-  const items = score.items || {};
-  const detail = [
-    `国资 ${fmtScore(items.owner)}/10`,
-    `主营 ${fmtScore(items.focus)}/9`,
-    `扣非 ${fmtScore(items.profit)}/14`,
-    `市值 ${fmtScore(items.cap)}/8`,
-    `盘整 ${fmtScore(items.consolidation)}/9`,
-    `月线 ${fmtScore(items.bottom)}/9`,
-    `放量 ${fmtScore(items.volume)}/6`
-  ].join(' · ');
-  const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n`
-    + '暂无研报总分，按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议';
-  const suffix = score.complete ? '' : '?';
-  return `<span class="score score-${tone}" title="${esc(tip)}">${percent.toFixed(1)}`
-    + `<span class="unit">分${suffix}</span><span class="score-tag">算</span></span>`;
+  return `<div class="score-pair">${machineHtml}${reportHtml}</div>`;
 }
 
 function fmtScore(value) {

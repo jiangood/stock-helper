@@ -192,6 +192,17 @@
   .calc-out { font-size: 12px; font-variant-numeric: tabular-nums; }
   .calc-out b { font-weight: 700; }
 
+  .decision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .65rem; }
+  .decision-item { min-width: 0; padding: .7rem; border: 1px solid var(--bs-border-color); border-radius: 8px; background: var(--bs-tertiary-bg); }
+  .decision-label { font-size: 11px; color: var(--bs-secondary-color); margin-bottom: .25rem; }
+  .decision-value { font-size: 13px; font-weight: 650; line-height: 1.45; }
+  .decision-note { margin-top: .25rem; font-size: 11px; color: var(--bs-secondary-color); line-height: 1.5; }
+  .decision-status { display: inline-flex; align-items: center; gap: .3rem; border-radius: 999px; padding: .15rem .5rem; font-size: 11px; border: 1px solid var(--bs-border-color); }
+  .decision-status.ok { color: var(--down); border-color: rgba(22,163,74,.35); background: rgba(22,163,74,.07); }
+  .decision-status.warn { color: #b45309; border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.08); }
+  .decision-status.bad { color: var(--up); border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.07); }
+  [data-bs-theme="dark"] .decision-status.warn { color: #fbbf24; }
+
   @media (max-width: 575.98px) {
     .price-big { font-size: 32px; }
     #chart { height: 240px; }
@@ -268,6 +279,22 @@
         </div>
         <hr class="my-3">
         <div class="stat-grid" id="stats"></div>
+      </div>
+    </section>
+
+    <!-- 决策摘要：只汇总已有规则，不另造评分 -->
+    <section class="card shadow-sm" aria-labelledby="decision-title">
+      <div class="card-header bg-body d-flex align-items-center gap-2 py-2">
+        <h2 class="mb-0 fw-semibold" style="font-size:13px" id="decision-title">交易纪律摘要</h2>
+        <span class="ms-auto text-body-secondary" style="font-size:10.5px">规则汇总 · 非买卖指令</span>
+      </div>
+      <div class="card-body">
+        <div class="decision-grid" id="decision-grid" aria-live="polite">
+          <div class="decision-item"><div class="decision-label">计划区间</div><div class="decision-value">正在计算…</div></div>
+          <div class="decision-item"><div class="decision-label">硬性买入闸门</div><div class="decision-value">正在计算…</div></div>
+          <div class="decision-item"><div class="decision-label">选股纪律</div><div class="decision-value">正在计算…</div></div>
+        </div>
+        <div class="text-body-secondary mt-2" style="font-size:11px" id="decision-note">摘要基于当前可用数据；缺失项会标记为待核实，不等同于条件不通过。</div>
       </div>
     </section>
 

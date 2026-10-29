@@ -168,7 +168,7 @@
     }
     return { stock: stock, quote: quote, primary: primary, add: add, eligible: eligible, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
   }
-  async function run(force) {
+  async function run() {
     if (state.loading) return;
     if (!state.client || !Array.isArray(state.stocks)) return;
     state.loading = true; state.error = ''; render();
@@ -222,8 +222,6 @@
         render();
       });
     });
-    var refresh = $('combat-refresh');
-    if (refresh && !refresh.dataset.bound) { refresh.dataset.bound = '1'; refresh.addEventListener('click', function () { run(true); }); }
   }
   function init(stocks, prices, client) {
 
@@ -234,8 +232,8 @@
     ensureUi();
   }
   function onTab(target) {
-    if (target === 'combat' && state.initialized && (!state.lastRun || Date.now() - state.lastRun > 180000)) run(false);
+    if (target === 'combat' && state.initialized && (!state.lastRun || Date.now() - state.lastRun > 180000)) return run();
   }
-  root.StockCombat = { init: init, onTab: onTab, refresh: function () { return run(true); } };
+  root.StockCombat = { init: init, onTab: onTab };
   if (root.document) root.document.addEventListener('DOMContentLoaded', ensureUi);
 })(typeof window !== 'undefined' ? window : globalThis);

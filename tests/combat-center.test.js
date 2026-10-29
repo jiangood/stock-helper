@@ -39,7 +39,7 @@ async function runCombat(price) {
     { 'sz000001': { price, todayChange: 0 } },
     client
   );
-  await context.StockCombat.refresh();
+  await context.StockCombat.onTab('combat');
   return addCalls;
 }
 

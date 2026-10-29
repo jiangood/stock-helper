@@ -165,6 +165,18 @@ def read_json(path: Path, fallback):
         return fallback
 
 
+def merge_with_previous(fresh: dict, previous: dict, fields: tuple[str, ...]) -> dict:
+    """Keep the last known-good field when a provider returns an empty/null value."""
+    merged = {}
+    for key in fields:
+        value = fresh.get(key)
+        if value is None:
+            value = previous.get(key)
+        if value is not None:
+            merged[key] = value
+    return merged
+
+
 def main() -> int:
     stocks = read_json(STOCKS_FILE, [])
     if not isinstance(stocks, list) or not stocks:
@@ -189,21 +201,23 @@ def main() -> int:
         local_failures = 0
 
         try:
-            entry.update(fetch_owner(code))
+            fresh_owner = fetch_owner(code)
+            entry.update(merge_with_previous(fresh_owner, keep, ("owner", "ownerType")))
         except Exception as error:
             local_failures += 1
             print(f"{code}: owner unavailable ({error})", file=sys.stderr)
-            if keep.get("owner") is not None:
-                entry["owner"] = keep.get("owner")
-                entry["ownerType"] = keep.get("ownerType")
+            entry.update(merge_with_previous({}, keep, ("owner", "ownerType")))
         try:
-            entry.update(fetch_main_business(code))
+            fresh_business = fetch_main_business(code)
+            entry.update(merge_with_previous(
+                fresh_business, keep, ("mainItem", "mainRatio", "mainBasis", "mainDate")
+            ))
         except Exception as error:
             local_failures += 1
             print(f"{code}: main business unavailable ({error})", file=sys.stderr)
-            for key in ("mainItem", "mainRatio", "mainBasis", "mainDate"):
-                if keep.get(key) is not None:
-                    entry.setdefault(key, keep[key])
+            entry.update(merge_with_previous(
+                {}, keep, ("mainItem", "mainRatio", "mainBasis", "mainDate")
+            ))
         try:
             entry["annual"] = fetch_profit(code) or keep.get("annual") or []
         except Exception as error:

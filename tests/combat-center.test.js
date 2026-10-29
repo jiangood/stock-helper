@@ -96,3 +96,55 @@ test('trade review saves locally per symbol without a network dependency', () =>
   assert.ok(saved['sz000001'].savedAt);
   assert.match(status.textContent, /已保存/);
 });
+
+
+function riskBudget(params) {
+  const context = {
+    console, Map, Intl, Date, Number, String, Array, Object, Math, Promise,
+    document: { getElementById: () => null, addEventListener: () => {} }
+  };
+  context.window = context;
+  vm.runInNewContext(fs.readFileSync(require.resolve('../combat-center.js'), 'utf8'), context);
+  return context.StockCombat.calculateRiskBudget(params);
+}
+
+test('risk budget sizes a trade using risk, cash, portfolio and single-stock caps', () => {
+  const result = riskBudget({
+    equity: 100000, cash: 20000, tradePct: 1, portfolioPct: 50, singlePct: 20,
+    entry: 10, stop: 9, totalExposure: 20000, positionValue: 0
+  });
+  assert.equal(result.ready, true);
+  assert.equal(result.shares, 1000);
+  assert.equal(result.cost, 10000);
+  assert.equal(result.lossAtStop, 1000);
+  assert.equal(result.cap, '单笔风险预算');
+});
+
+test('risk budget respects available cash and existing portfolio exposure', () => {
+  const cashLimited = riskBudget({
+    equity: 100000, cash: 1500, tradePct: 10, portfolioPct: 80, singlePct: 50,
+    entry: 10, stop: 9, totalExposure: 10000, positionValue: 0
+  });
+  assert.equal(cashLimited.shares, 100);
+  assert.equal(cashLimited.cap, '可用现金');
+  const portfolioLimited = riskBudget({
+    equity: 100000, cash: 20000, tradePct: 10, portfolioPct: 50, singlePct: 50,
+    entry: 10, stop: 9, totalExposure: 49950, positionValue: 0
+  });
+  assert.equal(portfolioLimited.shares, 0);
+  assert.equal(portfolioLimited.cap, '组合持仓上限');
+});
+
+test('risk budget rejects invalid stop prices and respects single-stock concentration', () => {
+  const invalid = riskBudget({
+    equity: 100000, cash: 20000, tradePct: 1, portfolioPct: 80, singlePct: 20,
+    entry: 10, stop: 10, totalExposure: 10000, positionValue: 0
+  });
+  assert.equal(invalid.ready, false);
+  const concentrated = riskBudget({
+    equity: 100000, cash: 20000, tradePct: 10, portfolioPct: 80, singlePct: 20,
+    entry: 10, stop: 9, totalExposure: 10000, positionValue: 19950
+  });
+  assert.equal(concentrated.shares, 0);
+  assert.equal(concentrated.cap, '单股持仓上限');
+});

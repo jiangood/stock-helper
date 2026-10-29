@@ -53,7 +53,7 @@
   'use strict';
 
   const VERSION = '1.5.0';
-  const REFRESH_INTERVAL = 60000;   // 只看中期，盘中不做高频轮询
+  const REFRESH_INTERVAL = 1800000; // 价值投资：盘中最多每 30 分钟刷新一次
 
   const DEFAULTS = {
     providers: ['eastmoney', 'tencent'],  // 依次尝试

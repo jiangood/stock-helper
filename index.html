@@ -18,7 +18,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>股票池监控</title>
+<title>自选 · 股票助手</title>
 <meta name="theme-color" content="#2563eb">
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -144,12 +144,16 @@
   .health-item:last-child { border-bottom: 0; }
   .health-item .flag { margin-left: 0; flex: 0 0 auto; margin-top: 1px; }
 
-  body { padding-bottom: 74px; }
-  .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
-  .bottom-tab { border:0; background:transparent; color:var(--bs-secondary-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:48px; font-size:10px; border-radius:8px; }
-  .bottom-tab .tab-icon { width:20px; height:20px; display:block; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-  .bottom-tab.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
-  .app-pane { min-height:calc(100vh - 120px); }
+  .app-pane { min-height:calc(100vh - 105px); }
+  body:not([data-page="stocks"]) #stock-toolbar { display:none !important; }
+  body[data-page="stocks"] #combat-pane, body[data-page="stocks"] #market-pane,
+  body[data-page="combat"] #stocks-pane, body[data-page="combat"] #market-pane,
+  body[data-page="market"] #stocks-pane, body[data-page="market"] #combat-pane { display:none !important; }
+  body[data-page="stocks"] #stocks-pane, body[data-page="combat"] #combat-pane,
+  body[data-page="market"] #market-pane { display:block !important; }
+  .main-nav-link { color:var(--bs-secondary-color); text-decoration:none; border-radius:8px; padding:.45rem .7rem; font-size:13px; white-space:nowrap; }
+  .main-nav-link:hover { color:var(--bs-primary); background:var(--bs-tertiary-bg); }
+  .main-nav-link.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
   .panel-title { font-size:15px; font-weight:700; }
   .panel-subtitle,.mini-label { font-size:11px; color:var(--bs-secondary-color); }
   .insight-card { border:1px solid var(--bs-border-color); border-radius:12px; background:var(--bs-body-bg); padding:12px; }
@@ -257,7 +261,7 @@
 
 </style>
 </head>
-<body class="bg-body-tertiary">
+<body class="bg-body-tertiary" data-page="stocks">
 
 <div id="password-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
   <form class="gate-card" id="password-gate-form">
@@ -272,6 +276,12 @@
 
 
 <div class="sticky-top">
+  <nav class="bg-body border-bottom px-2 px-sm-3 py-2 d-flex align-items-center gap-2" aria-label="主导航">
+    <a class="d-flex align-items-center gap-2 text-body text-decoration-none me-auto" href="index.html"><span class="logo">股</span><strong style="font-size:14px">股票助手</strong></a>
+    <a class="main-nav-link" data-page-link="stocks" href="index.html">自选</a>
+    <a class="main-nav-link" data-page-link="combat" href="combat.html">作战</a>
+    <a class="main-nav-link" data-page-link="market" href="market.html">行情</a>
+  </nav>
   <div id="stock-toolbar" class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
     <div class="input-group input-group-sm flex-nowrap" style="max-width:210px;min-width:0">
       <span class="input-group-text px-2">🔍</span>
@@ -412,11 +422,6 @@
 </main>
 
 
-<nav class="bottom-tabs" aria-label="主导航">
-  <button class="bottom-tab active" type="button" data-target="stocks"><svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg><span>自选</span></button>
-  <button class="bottom-tab" type="button" data-target="combat"><svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 6 6m4 4 6 6M5 3l4 1-5 5-1-4 2-2ZM19 3l-6 6m-2 2-6 6M21 17l-1 4-5-5 4-1 2 2Z"/><path d="m9 13 2 2m2-6 2 2"/></svg><span>作战</span></button>
-  <button class="bottom-tab" type="button" data-target="market"><svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 9 11l4 3 7-8"/><path d="M14 6h6v6"/></svg><span>行情</span></button>
-</nav>
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
 
 <dialog id="health-dialog" class="health-dialog" aria-labelledby="health-title">
@@ -441,6 +446,17 @@
 <script src="password-gate.js"></script>
 
 <script src="network-status.js"></script>
+<script>
+(function () {
+  var page = document.body.dataset.page || 'stocks';
+  document.querySelectorAll('[data-page-link]').forEach(function (link) {
+    var active = link.dataset.pageLink === page;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+})();
+</script>
 <script>
 // Remove legacy PWA service workers and their caches for this site.
 if ('serviceWorker' in navigator) {

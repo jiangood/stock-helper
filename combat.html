@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>
+  // Follow the operating system's light/dark appearance preference.
+  (function () {
+    const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    function applyColorScheme() {
+      document.documentElement.setAttribute('data-bs-theme', colorScheme.matches ? 'dark' : 'light');
+    }
+    applyColorScheme();
+    if (typeof colorScheme.addEventListener === 'function') {
+      colorScheme.addEventListener('change', applyColorScheme);
+    } else if (typeof colorScheme.addListener === 'function') {
+      colorScheme.addListener(applyColorScheme);
+    }
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作战 · 股票助手</title>
+<meta name="theme-color" content="#2563eb">
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  :root { --up: #dc2626; --down: #16a34a; }
+  [data-bs-theme="dark"] { --up: #f23645; --down: #26a69a; }
+
+  body { font-size: 13px; -webkit-font-smoothing: antialiased; }
+
+  .logo {
+    width: 24px; height: 24px; border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(140deg, #1d4ed8 0%, #3b82f6 100%);
+    color: #fff; font-size: 11px; font-weight: 700;
+    box-shadow: 0 2px 6px rgba(37,99,235,.3);
+  }
+
+  .toolbar { font-size: 12px; }
+
+  /* 表格：吸顶表头 + 首列固定 */
+  .table-scroll {
+    max-height: calc(100vh - 78px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .stock-table { min-width: 1265px; }
+  .stock-table thead th {
+    position: sticky; top: 0; z-index: 3;
+    font-size: 11px; font-weight: 600; letter-spacing: .3px;
+    white-space: nowrap; cursor: pointer; user-select: none;
+    background-color: var(--bs-tertiary-bg);
+    text-align: right;
+    padding: .35rem .5rem;
+  }
+  .stock-table thead th:hover { color: var(--bs-primary); }
+  .stock-table thead th:first-child,
+  .stock-table tbody td:first-child {
+    position: sticky; left: 0; z-index: 2;
+    text-align: left;
+    background-color: var(--bs-body-bg);
+    box-shadow: inset -1px 0 0 var(--bs-border-color);
+  }
+  .stock-table thead th:first-child { z-index: 4; background-color: var(--bs-tertiary-bg); }
+  .stock-table thead th:nth-child(2) { text-align: center; }
+  .stock-table tbody td {
+    text-align: right; white-space: nowrap;
+    font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
+    padding: .22rem .5rem; line-height: 1.3;
+  }
+  .stock-table tbody td:nth-child(2) { text-align: center; }
+
+  /* 行状态 */
+  .row-above td:first-child { box-shadow: inset 3px 0 0 var(--up), inset -1px 0 0 var(--bs-border-color); }
+  .row-below td:first-child { box-shadow: inset 3px 0 0 var(--down), inset -1px 0 0 var(--bs-border-color); }
+  .row-buy   td:first-child { box-shadow: inset 3px 0 0 var(--down), inset -1px 0 0 var(--bs-border-color); }
+  .row-below { background-color: rgba(22,163,74,.04); }
+  .row-buy   { background-color: rgba(22,163,74,.08); }
+
+  /* 涨跌色 */
+  .text-up { color: var(--up) !important; }
+  .text-down { color: var(--down) !important; }
+
+  .price-cell { font-size: 14.5px; font-weight: 700; letter-spacing: -.3px; }
+
+  /* 名称 / 别名 */
+  .stock-name { font-weight: 600; }
+  .stock-name:hover { color: var(--bs-primary) !important; text-decoration: underline; }
+  .tag-alias {
+    font-size: 9.5px; max-width: 120px; display: inline-block;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    vertical-align: bottom;
+  }
+
+  /* 数值旁的小号涨跌幅 */
+  .diff { font-size: 10px; margin-left: .15rem; letter-spacing: -.1px; }
+  .unit { font-size: 9.5px; margin-left: .1rem; }
+  .badge-tp { font-size: 10px; font-weight: 500; }
+
+  .tag {
+    display: inline-block; font-size: 10px; line-height: 1.35;
+    padding: 0 .35rem; border-radius: 3px;
+    border: 1px solid var(--bs-border-color);
+    color: var(--bs-secondary-color); background-color: var(--bs-tertiary-bg);
+  }
+
+  .sort-icon { font-size: 9px; color: var(--bs-tertiary-color); }
+  th.sort-asc .sort-icon::after { content: '▲'; color: var(--bs-primary); }
+  th.sort-desc .sort-icon::after { content: '▼'; color: var(--bs-primary); }
+  th:not(.sort-asc):not(.sort-desc) .sort-icon::after { content: '↕'; }
+
+  .legend-pip { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+
+  /* 纪律旗标 */
+  .flag {
+    display: inline-block; font-size: 9px; line-height: 1.35; font-weight: 600;
+    padding: 0 .2rem; margin-left: .25rem; border-radius: 3px;
+    border: 1px solid var(--bs-border-color);
+    color: var(--bs-secondary-color); background: var(--bs-tertiary-bg);
+    vertical-align: 1px;
+  }
+  .flag-buy { color: var(--down); border-color: rgba(22,163,74,.35); background: rgba(22,163,74,.08); }
+  .flag-warn { color: #b45309; border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.1); }
+  .flag-danger { color: var(--up); border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.08); }
+  [data-bs-theme="dark"] .flag-warn { color: #fbbf24; }
+
+  /* 体检弹窗 */
+  .health-dialog {
+    width: min(560px, 92vw); max-height: 82vh; padding: 0; border: 0; border-radius: 10px;
+    color: var(--bs-body-color); background: var(--bs-body-bg);
+    box-shadow: 0 18px 50px rgba(0,0,0,.28);
+  }
+  .health-dialog::backdrop { background: rgba(15,23,42,.42); }
+  .health-list { max-height: 58vh; overflow: auto; }
+  .brief-text {
+    margin: 0; max-height: 62vh; overflow: auto;
+    white-space: pre-wrap; word-break: break-word;
+    font-family: inherit; font-size: 12px; line-height: 1.7;
+    color: var(--bs-body-color);
+  }
+  .health-item {
+    display: flex; align-items: flex-start; gap: .5rem;
+    padding: .45rem .1rem; border-bottom: 1px solid var(--bs-border-color);
+  }
+  .health-item:last-child { border-bottom: 0; }
+  .health-item .flag { margin-left: 0; flex: 0 0 auto; margin-top: 1px; }
+
+  .app-pane { min-height:calc(100vh - 105px); }
+  body:not([data-page="stocks"]) #stock-toolbar { display:none !important; }
+  body[data-page="stocks"] #combat-pane, body[data-page="stocks"] #market-pane,
+  body[data-page="combat"] #stocks-pane, body[data-page="combat"] #market-pane,
+  body[data-page="market"] #stocks-pane, body[data-page="market"] #combat-pane { display:none !important; }
+  body[data-page="stocks"] #stocks-pane, body[data-page="combat"] #combat-pane,
+  body[data-page="market"] #market-pane { display:block !important; }
+  .main-nav-link { color:var(--bs-secondary-color); text-decoration:none; border-radius:8px; padding:.45rem .7rem; font-size:13px; white-space:nowrap; }
+  .main-nav-link:hover { color:var(--bs-primary); background:var(--bs-tertiary-bg); }
+  .main-nav-link.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
+  .panel-title { font-size:15px; font-weight:700; }
+  .panel-subtitle,.mini-label { font-size:11px; color:var(--bs-secondary-color); }
+  .insight-card { border:1px solid var(--bs-border-color); border-radius:12px; background:var(--bs-body-bg); padding:12px; }
+  .index-market-card { min-width:0; }
+  .index-monthly-wrap { margin-top:10px; padding-top:8px; border-top:1px solid var(--bs-border-color); }
+  .index-monthly-curve { display:block; width:100%; height:78px; margin-top:3px; overflow:visible; }
+  .index-monthly-curve polyline { fill:none; stroke:var(--bs-primary); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .index-monthly-empty { min-height:96px; display:flex; align-items:center; justify-content:center; margin-top:10px; border-top:1px solid var(--bs-border-color); }
+  .insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; }
+  .business-price { font-size:22px; font-weight:750; letter-spacing:-.5px; }
+  .trend-svg { width:100%; height:58px; display:block; }
+  .trend-svg polyline { fill:none; stroke:var(--bs-primary); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+  .business-chart-wrap { margin-top: .35rem; padding: .4rem .45rem .1rem; border: 1px solid var(--bs-border-color); border-radius: 10px; background: var(--bs-tertiary-bg); overflow: hidden; }
+  .business-chart-caption { display:flex; justify-content:space-between; align-items:center; gap:8px; color:var(--bs-secondary-color); font-size:10px; margin:0 .2rem .1rem; }
+  .business-price-chart { width:100%; height:148px; min-width:0; }
+  .business-price-chart.business-cost-chart { height:112px; }
+  .business-price-chart a { color:var(--bs-secondary-color); }
+
+  .empty-state { padding:24px 12px; text-align:center; color:var(--bs-secondary-color); border:1px dashed var(--bs-border-color); border-radius:12px; }
+  .combat-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+  .combat-toolbar .btn.active { background:var(--bs-primary); border-color:var(--bs-primary); color:#fff; }
+  .combat-metric { font-size:24px; font-weight:750; letter-spacing:-.5px; }
+  .combat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:10px; }
+  .combat-card { min-width:0; }
+  .combat-name { color:var(--bs-body-color); text-decoration:none; font-weight:750; font-size:14px; }
+  .combat-name:hover { color:var(--bs-primary); text-decoration:underline; }
+  .combat-price { font-size:20px; font-weight:750; font-variant-numeric:tabular-nums; }
+  .combat-badge { display:inline-flex; align-items:center; border-radius:999px; padding:3px 8px; font-size:10px; font-weight:700; border:1px solid transparent; }
+  .combat-good { color:#15803d; background:rgba(22,163,74,.09); border-color:rgba(22,163,74,.28); }
+  .combat-warn { color:#a16207; background:rgba(245,158,11,.10); border-color:rgba(245,158,11,.32); }
+  .combat-risk { color:#b91c1c; background:rgba(220,38,38,.09); border-color:rgba(220,38,38,.28); }
+  .combat-data { color:var(--bs-secondary-color); background:var(--bs-tertiary-bg); border-color:var(--bs-border-color); }
+  .combat-neutral { color:var(--bs-secondary-color); background:var(--bs-tertiary-bg); border-color:var(--bs-border-color); }
+  .combat-buy-conditions, .combat-indicator-details { border:1px solid var(--bs-border-color); border-radius:9px; padding:9px 10px; font-size:11px; background:var(--bs-tertiary-bg); margin-bottom:8px; }
+  .combat-section-title { font-size:12px; line-height:1.4; font-weight:750; color:var(--bs-emphasis-color); }
+  .combat-reasons { display:flex; flex-wrap:wrap; gap:5px; font-size:12px; line-height:1.5; overflow-wrap:anywhere; }
+  .combat-reason-chip { display:inline-block; max-width:100%; padding:4px 7px; border-radius:6px; background:var(--bs-body-bg); border:1px solid var(--bs-border-color); }
+  .combat-plan { color:var(--bs-secondary-color); font-size:10.5px; border-top:1px solid var(--bs-border-color); padding-top:7px; }
+  .combat-indicator-details { border-top:1px solid var(--bs-border-color); padding-top:9px; font-size:11px; }
+  .combat-indicator-details > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0 6px; }
+  .combat-review-details, .combat-invalidation { border:1px solid var(--bs-border-color); border-radius:9px; padding:9px 10px; font-size:11px; background:var(--bs-tertiary-bg); margin-top:8px; }
+  .combat-risk-card { border:1px solid var(--bs-border-color); border-radius:9px; padding:9px 10px; font-size:11px; background:var(--bs-tertiary-bg); }
+  .combat-risk-card > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .combat-risk-card > summary::-webkit-details-marker { display:none; }
+  .combat-risk-card > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
+  .combat-risk-card[open] > summary::after { content:'−'; }
+  .combat-review-details > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0; }
+  .combat-review-details > summary::-webkit-details-marker { display:none; }
+  .combat-review-details > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
+  .combat-review-details[open] > summary::after { content:'−'; }
+  .combat-invalidation li { margin-bottom:4px; line-height:1.5; }
+  .combat-invalidation li:last-child { margin-bottom:0; }
+  .combat-indicator-details > summary::-webkit-details-marker { display:none; }
+  .combat-indicator-details > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
+  .combat-indicator-details[open] > summary::after { content:'−'; }
+  .combat-card .combat-buy-conditions { margin-top:10px; }
+  .combat-indicator-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,165px),1fr)); gap:6px; }
+  .combat-indicator { min-width:0; display:flex; flex-direction:column; gap:3px; padding:7px 8px; border:1px solid var(--bs-border-color); border-radius:8px; background:var(--bs-body-bg); }
+  .combat-indicator strong { font-size:15px; line-height:1.3; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+  .combat-indicator span { font-size:11px; font-weight:650; }
+  .combat-indicator small { color:var(--bs-secondary-color); font-size:10px; line-height:1.45; }
+  .business-form { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .business-form .wide { grid-column:1 / -1; }
+  @media (max-width:575.98px) { .business-form { grid-template-columns:1fr; } .business-form .wide { grid-column:auto; } }
+  @media (max-width: 575.98px) {
+    .table-scroll { max-height: calc(100vh - 112px); }
+    .stock-table { min-width: 990px; }
+    .stock-table thead th { padding: .3rem .25rem; font-size: 10px; letter-spacing: 0; }
+    .stock-table tbody td { padding: .18rem .25rem; font-size: 11px; }
+    .price-cell { font-size: 12.5px; }
+    .stock-table .tag { font-size: 9px; padding: 0 .25rem; }
+    .badge-tp { font-size: 9px; }
+    .diff { font-size: 9px; margin-left: .1rem; }
+    .unit { font-size: 8.5px; }
+    .tag-alias { font-size: 9px; max-width: 96px; }
+    .flag { font-size: 8px; padding: 0 .15rem; margin-left: .15rem; }
+    .toolbar { flex-wrap: wrap !important; row-gap: .3rem; }
+    .toolbar .input-group { flex: 1 1 100%; max-width: none !important; }
+  }
+
+  /* 简单首页密码门禁：仅用于阻挡普通访客，不是安全认证 */
+  #password-gate {
+    position: fixed; inset: 0; z-index: 99999; display: flex;
+    align-items: center; justify-content: center; padding: 24px;
+    background: #f3f6fb; color: #172033; font-family: system-ui, sans-serif;
+  }
+  #password-gate .gate-card {
+    width: 100%; max-width: 360px; padding: 28px; border-radius: 16px;
+    background: #fff; box-shadow: 0 12px 40px rgba(15,23,42,.12);
+  }
+  #password-gate h1 { font-size: 21px; margin: 0 0 8px; font-weight: 700; }
+  #password-gate p { color: #64748b; font-size: 13px; margin: 0 0 20px; }
+  #password-gate input {
+    box-sizing: border-box; width: 100%; padding: 12px;
+    border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px;
+    font-size: 16px;
+  }
+  #password-gate button {
+    width: 100%; padding: 12px; border: 0; border-radius: 8px;
+    background: #2563eb; color: white; font-weight: 600; cursor: pointer;
+  }
+  #password-gate .gate-remember { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; color: #475569; font-size: 13px; }
+  #password-gate .gate-remember input { width: 16px; height: 16px; margin: 0; }
+  #password-gate .gate-error { display: none; margin-top: 12px; color: #dc2626; font-size: 13px; }
+
+</style>
+</head>
+<body class="bg-body-tertiary" data-page="combat">
+
+<div id="password-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <form class="gate-card" id="password-gate-form">
+    <h1 id="gate-title">股票池监控</h1>
+    <p>请输入访问密码以继续</p>
+    <input id="gate-password" type="password" placeholder="输入密码" autocomplete="current-password" required autofocus>
+    <label class="gate-remember"><input id="gate-remember" type="checkbox" checked> 在此设备记住登录状态</label>
+    <button type="submit">进入首页</button>
+    <div id="gate-error" class="gate-error" role="alert">密码不正确，请重试。</div>
+  </form>
+</div>
+
+
+<div class="sticky-top">
+  <nav class="bg-body border-bottom px-2 px-sm-3 py-2 d-flex align-items-center gap-2" aria-label="主导航">
+    <a class="d-flex align-items-center gap-2 text-body text-decoration-none me-auto" href="index.html"><span class="logo">股</span><strong style="font-size:14px">股票助手</strong></a>
+    <a class="main-nav-link" data-page-link="stocks" href="index.html">自选</a>
+    <a class="main-nav-link" data-page-link="combat" href="combat.html">作战</a>
+    <a class="main-nav-link" data-page-link="market" href="market.html">行情</a>
+  </nav>
+  <div id="stock-toolbar" class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
+    <div class="input-group input-group-sm flex-nowrap" style="max-width:210px;min-width:0">
+      <span class="input-group-text px-2">🔍</span>
+      <input type="text" class="form-control" id="search-input" placeholder="名称 / 代码 / 别名 / 拼音" oninput="applyFilter()" style="min-width:0">
+    </div>
+
+    <select class="form-select form-select-sm w-auto flex-shrink-0" id="group-filter" onchange="applyFilter()" title="按分组筛选">
+      <option value="">全部分组</option>
+    </select>
+
+    <select class="form-select form-select-sm w-auto flex-shrink-0" id="status-filter" onchange="applyFilter()" title="按鳄鱼纪律筛选">
+      <option value="">全部状态</option>
+      <option value="heavy">重仓区</option>
+      <option value="near">接近重仓</option>
+      <option value="entry">入场区</option>
+      <option value="pb">破净</option>
+      <option value="pb80">八折</option>
+      <option value="small">小市值</option>
+      <option value="screen">纪律全过</option>
+      <option value="screenbuy">全过 + 买点</option>
+      <option value="risk">风险</option>
+    </select>
+
+    <span class="text-body-secondary text-nowrap"><span id="stock-count" class="fw-semibold text-body">0</span> 只</span>
+
+    <div class="ms-auto d-none d-xl-flex align-items-center gap-3 text-body-secondary">
+      <span id="board-summary" class="text-nowrap"></span>
+      <span class="vr opacity-25"></span>
+      <span><span class="legend-pip" style="background:var(--up)"></span> 高于入场</span>
+      <span><span class="legend-pip" style="background:var(--down)"></span> 低于入场</span>
+    </div>
+
+    <div class="ms-auto ms-xl-0 d-flex align-items-center gap-1">
+      <button class="btn btn-sm btn-outline-secondary px-2 py-0" onclick="openHealth()" title="股票池体检" aria-label="股票池体检">🩺<span class="d-none d-lg-inline ms-1">体检</span></button>
+    </div>
+  </div>
+</div>
+
+<main id="stocks-pane" data-pane="stocks" class="app-pane container-fluid px-2 px-sm-3 py-1">
+  <div class="table-scroll">
+    <table class="table table-sm table-hover align-middle mb-0 stock-table" id="main-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable('name')"     id="th-name">     名称          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('price')"    id="th-price">    价格          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('heavy')"    id="th-heavy">   重仓          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('entry')"    id="th-entry">    入场          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('prevChg')"  id="th-prevChg">  昨日          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('tp1')"      id="th-tp1">      止盈1         <span class="sort-icon"></span></th>
+          <th onclick="sortTable('tp2')"      id="th-tp2">      止盈2         <span class="sort-icon"></span></th>
+          <th onclick="sortTable('yearInit')" id="th-yearInit"> 年初价        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('totalCap')" id="th-totalCap"> 市值          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('pe')"       id="th-pe">       市盈率        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('pb')"       id="th-pb">       市净率        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('divYield')" id="th-divYield"> 股息率        <span class="sort-icon"></span></th>
+          <th onclick="sortTable('screen')"   id="th-screen">   纪律          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('group')"    id="th-group">    分组          <span class="sort-icon"></span></th>
+          <th onclick="sortTable('alias')"    id="th-alias">    别名          <span class="sort-icon"></span></th>
+        </tr>
+      </thead>
+      <tbody id="stock-tbody"></tbody>
+    </table>
+  </div>
+</main>
+
+<main id="combat-pane" data-pane="combat" class="app-pane container-fluid px-3 py-3 d-none">
+  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
+    <div><div class="panel-title">交易作战台</div><div class="panel-subtitle">汇总股票池标的的交易条件与理由，由你决定是否执行；不会自动下单。</div></div>
+    <button id="combat-refresh" class="btn btn-sm btn-outline-primary" type="button">⟳ 重新计算</button>
+  </div>
+    <div id="combat-summary" class="row g-2 mb-3">
+    <div class="col-12"><div class="empty-state">正在准备作战数据…</div></div>
+  </div>
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+    <div class="combat-toolbar" aria-label="作战信号筛选">
+      <button id="combat-filter-all" data-combat-filter class="btn btn-sm btn-outline-secondary active" type="button">全部</button>
+      <button id="combat-filter-add" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">买入观察</button>
+      <button id="combat-filter-watch" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">观望</button>
+      <button id="combat-filter-risk" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">风险拦截</button>
+      <button id="combat-filter-data" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">数据不足</button>
+    </div>
+    <div id="combat-meta" class="panel-subtitle">等待计算</div>
+  </div>
+  <div id="combat-list" class="combat-grid">
+    <div class="empty-state">进入此页后按需加载日K，减少不必要的行情请求。</div>
+  </div>
+  <div class="panel-subtitle mt-3">纪律说明：计划价触发不等于买入信号；补仓需通过 ST / 亏损等硬性门槛，并结合支撑、资金确认和趋势过滤。筹码分布为日K估算。所有信号均为辅助参考，不构成投资建议。</div>
+</main>
+
+
+
+<main id="market-pane" data-pane="market" class="app-pane container-fluid px-3 py-3 d-none">
+  <div class="panel-title mb-1">行情</div>
+  <div class="panel-subtitle mb-3">集中查看全球市场与产业链商品行情。全球资产反映跨市场风险偏好，生意与产业链用于跟踪原料、产品价格和成本变化。</div>
+<main id="market-brief-section" class="mb-4">
+  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
+    <div><div class="panel-title">行情简报</div><div class="panel-subtitle">指数走势、股票池温度、板块强弱与机会观察，一页掌握市场。</div></div>
+  </div>
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 px-1">
+    <div id="brief-market-time" class="panel-subtitle">A股行情基准：等待有效指数报价</div>
+    <div id="brief-updated" class="panel-subtitle">页面刷新：—</div>
+  </div>
+  <div class="panel-title mb-2">大盘行情</div><div id="market-index-summary" class="insight-grid mb-3"><div class="empty-state">正在获取指数行情…</div></div>
+  <div class="panel-title mb-2">股票池市场温度</div><div id="market-pulse-summary" class="row g-2 mb-3"></div>
+  <div class="panel-title mb-2">板块热点 / 强弱</div><div id="sector-hotspots" class="insight-grid mb-4"></div>
+  <div class="panel-title mb-2">机会与交易观察</div><div class="panel-subtitle mb-3">延续原机会页：计划价区间、量化纪律与买点观察；触及计划价不等于自动买入信号。</div>
+  <div id="opportunity-summary" class="row g-2 mb-3"></div><div id="opportunity-list" class="insight-grid"></div>
+  <div class="panel-subtitle mt-3">硬性门槛：ST 不买、亏损不买、盈利数据缺失先核实。仍需核对主营竞争力、行业周期、盈利质量和安全边际。</div>
+</main>
+
+
+
+
+  <section aria-labelledby="global-market-heading" class="pt-3 border-top mb-4">
+    <div id="global-market-heading" class="panel-title mb-2">全球市场</div>
+    <div class="panel-subtitle mb-3">黄金、比特币、以太坊与主要海外指数。展示公开行情源的最近有效报价，不代表逐笔实时成交价。</div>
+    <div class="insight-card mb-3">
+      <div class="fw-semibold">行情更新时间</div>
+      <div id="global-assets-updated" class="panel-subtitle">正在读取全球资产行情…</div>
+    </div>
+    <div id="global-assets-cards" class="insight-grid">
+      <div class="empty-state">正在加载黄金、加密资产和海外指数报价…</div>
+    </div>
+    <div class="panel-subtitle mt-3">数据源：Yahoo Finance 公开图表行情接口，经 GitHub Actions 定时抓取后缓存。不同市场交易时段、币种和报价口径不同；缺少有效报价时会明确显示，不用模拟价格补齐。</div>
+  </section>
+  <section aria-labelledby="business-heading" class="pt-3 border-top">
+    <div id="business-heading" class="panel-title">生意与产业链</div>
+    <div class="panel-subtitle mb-3">自动抓取公开商品现货与期货数据，按计划定时更新。优先展示真实数据和来源；抓取失败或来源不支持的品种会明确标记，不用模拟值填充。</div>
+    <div class="insight-card mb-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <div><div class="fw-semibold">自动行情状态</div><div id="business-data-status" class="panel-subtitle">正在读取最新商品数据…</div></div>
+    </div>
+    <div id="business-cards" class="insight-grid"></div>
+    <div class="panel-title mt-4">原料与成本观察</div>
+    <div class="panel-subtitle mb-2">自动跟踪相关原料参考价，帮助观察成本方向；不等于上市公司实际采购成本或毛利测算。</div>
+    <div id="business-cost-inputs" class="insight-grid"></div>
+    <div class="panel-subtitle mt-3">自动数据仍需结合库存、开工率、产能、成本和下游需求判断。现货与期货价格不是同一口径；每张卡片会标注数据类型、来源和日期。相关股票仅表示产业链关联，不代表公司一定受益。</div>
+  </section>
+</main>
+
+
+<div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
+
+<dialog id="health-dialog" class="health-dialog" aria-labelledby="health-title">
+  <div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom">
+    <strong id="health-title" style="font-size:13px">股票池体检</strong>
+    <button type="button" class="btn-close ms-auto" style="font-size:10px" onclick="closeHealth()" aria-label="关闭"></button>
+  </div>
+  <div class="px-3 pt-2 pb-3" id="health-body"></div>
+</dialog>
+
+<script src="croc.js"></script>
+<script src="static-quotes.js"></script>
+<script src="pinyin.js"></script>
+<script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
+<script src="indicators.js"></script>
+<script src="trade-signals.js"></script>
+<script src="combat-center.js?v=20261029-0300-riskpanel-cachefix"></script>
+<script src="business.js"></script>
+<script src="global-assets.js"></script>
+<script src="stock-dashboard.js"></script>
+
+<script src="password-gate.js"></script>
+
+<script src="network-status.js"></script>
+<script>
+(function () {
+  var page = document.body.dataset.page || 'stocks';
+  document.querySelectorAll('[data-page-link]').forEach(function (link) {
+    var active = link.dataset.pageLink === page;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+})();
+</script>
+<script>
+// Remove legacy PWA service workers and their caches for this site.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    return Promise.all(registrations.map(function (registration) { return registration.unregister(); }));
+  }).catch(function () {});
+}
+if ('caches' in window) {
+  caches.keys().then(function (keys) {
+    return Promise.all(keys.filter(function (key) { return key.startsWith('stock-helper-'); }).map(function (key) { return caches.delete(key); }));
+  }).catch(function () {});
+}
+</script>
+
+</body>
+</html>

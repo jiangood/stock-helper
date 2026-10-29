@@ -20,6 +20,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Build derived combat snapshot for validation
+        run: node scripts/build_combat_kline.js
       - name: Run indicator and syntax tests
         run: node --test tests/*.test.js
       - name: Set up Python

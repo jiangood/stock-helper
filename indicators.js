@@ -122,10 +122,7 @@
     const list = Array.isArray(bars) ? bars : [];
     const closes = list.map(b => num(b && b.close));
     const series = new Array(list.length).fill(null);
-    if (list.length <= p || closes.some(v => v === null)) {
-      if (list.length <= p) return { series, latest: null, period: p };
-    }
-    if (list.length <= p) return { series, latest: null, period: p };
+    if (list.length <= p || closes.some(v => v === null)) return { series, latest: null, period: p };
     let gain = 0, loss = 0;
     for (let i = 1; i <= p; i++) {
       const d = closes[i] - closes[i - 1];

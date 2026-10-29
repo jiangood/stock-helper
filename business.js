@@ -18,7 +18,7 @@
   ];
   function el(id) { return document.getElementById(id); }
   function esc(v) { return String(v == null ? '' : v).replace(/[&<>\"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
-  var quoteClient = null, marketIndices = {};
+  var quoteClient = null, marketIndices = {}, marketIndexKlines = {}, marketIndexKlineStatus = {};
   function fmtPct(v){return v===null||v===undefined||v===''||!Number.isFinite(Number(v))?'—':((Number(v)>0?'+':'')+Number(v).toFixed(2)+'%');}
   function fmtMoney(v){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
   function tone(v){return Number(v)>0?'text-up':Number(v)<0?'text-down':'text-body-secondary';}
@@ -28,11 +28,40 @@
     var available=Object.keys(marketIndices).some(function(code){var q=marketIndices[code];return q&&Number(q.price)>0;});
     node.textContent=available?'A股行情基准：指数最新有效报价 · 行情源未提供可核实的报价时间':'A股行情基准：暂无有效指数报价';
   }
+  function renderIndexMonthlyKline(code){
+    var bars=marketIndexKlines[code]||[];
+    var status=marketIndexKlineStatus[code];
+    if(!bars.length)return '<div class="index-monthly-empty mini-label">'+(status==='loading'?'月K加载中…':status==='error'?'月K暂不可用':'等待月K数据')+'</div>';
+    var visible=bars.slice(-12), lows=visible.map(function(b){return Number(b.low);}), highs=visible.map(function(b){return Number(b.high);});
+    var min=Math.min.apply(null,lows),max=Math.max.apply(null,highs),range=max-min||Math.max(Math.abs(max)*0.01,0.01);
+    var left=8,right=292,top=7,bottom=68,step=(right-left)/Math.max(1,visible.length),bodyW=Math.min(9,step*0.48);
+    var candles=visible.map(function(bar,i){
+      var x=left+step*(i+0.5),o=Number(bar.open),c=Number(bar.close),h=Number(bar.high),l=Number(bar.low);
+      function y(v){return top+(max-v)/range*(bottom-top);}
+      var color=c>=o?'var(--up)':'var(--down)',bodyTop=Math.min(y(o),y(c)),bodyHeight=Math.max(1.6,Math.abs(y(o)-y(c)));
+      return '<g><line x1="'+x.toFixed(2)+'" y1="'+y(h).toFixed(2)+'" x2="'+x.toFixed(2)+'" y2="'+y(l).toFixed(2)+'" stroke="'+color+'" stroke-width="1.3"/><rect x="'+(x-bodyW/2).toFixed(2)+'" y="'+bodyTop.toFixed(2)+'" width="'+bodyW.toFixed(2)+'" height="'+bodyHeight.toFixed(2)+'" fill="'+color+'" stroke="'+color+'" stroke-width="1"/></g>';
+    }).join('');
+    var first=String(visible[0].time||'').slice(0,7),last=String(visible[visible.length-1].time||'').slice(0,7);
+    return '<div class="index-monthly-wrap"><div class="d-flex justify-content-between align-items-center"><span class="mini-label">月K · 最近'+visible.length+'根</span><span class="mini-label">'+esc(first)+' — '+esc(last)+'</span></div><svg class="index-monthly-chart" viewBox="0 0 300 76" role="img" aria-label="'+esc(code)+'最近'+visible.length+'根月K走势">'+candles+'</svg><div class="mini-label">红涨绿跌 · 含本月未收盘K线（如有）</div></div>';
+  }
   function renderMarketIndices(){
     var node=el('market-index-summary');if(!node)return;
     var specs=[{code:'sh000001',name:'上证指数'},{code:'sz399001',name:'深证成指'},{code:'sz399006',name:'创业板指'}];
-    node.innerHTML=specs.map(function(x){var q=marketIndices[x.code];return '<article class="insight-card"><div class="mini-label">'+x.name+'</div><div class="business-price">'+(q&&q.price>0?Number(q.price).toFixed(2):'—')+'</div><div class="'+(q?tone(q.todayChange):'text-body-secondary')+' fw-semibold">'+(q?fmtPct(q.todayChange):'指数行情暂不可用')+'</div></article>';}).join('');
+    node.innerHTML=specs.map(function(x){var q=marketIndices[x.code];return '<article class="insight-card index-market-card"><div class="mini-label">'+x.name+'</div><div class="business-price">'+(q&&q.price>0?Number(q.price).toFixed(2):'—')+'</div><div class="'+(q?tone(q.todayChange):'text-body-secondary')+' fw-semibold">'+(q?fmtPct(q.todayChange):'指数行情暂不可用')+'</div>'+renderIndexMonthlyKline(x.code)+'</article>';}).join('');
     renderBriefMarketTime();
+  }
+  function fetchMarketIndexKlines(){
+    if(!quoteClient||typeof quoteClient.fetchKline!=='function')return;
+    ['sh000001','sz399001','sz399006'].forEach(function(code){
+      if(marketIndexKlineStatus[code]==='loading'||marketIndexKlineStatus[code]==='loaded')return;
+      marketIndexKlineStatus[code]='loading';
+      quoteClient.fetchKline(code,{period:'month',count:12,adjust:'none'}).then(function(result){
+        var bars=result&&Array.isArray(result.bars)?result.bars:[];
+        marketIndexKlines[code]=bars.filter(function(bar){return bar&&Number(bar.open)>0&&Number(bar.close)>0&&Number(bar.high)>0&&Number(bar.low)>0;});
+        marketIndexKlineStatus[code]=marketIndexKlines[code].length?'loaded':'error';
+        renderMarketIndices();
+      }).catch(function(){marketIndexKlineStatus[code]='error';renderMarketIndices();});
+    });
   }
   function renderMarketPulse(){
     var node=el('market-pulse-summary');if(!node)return;
@@ -82,7 +111,7 @@
     renderMarketIndices();renderMarketPulse();renderSectors();renderHoldings();
     var updated=el('brief-updated');if(updated)updated.textContent='页面刷新：'+new Date().toLocaleString('zh-CN',{hour12:false});
   }
-  function fetchMarketIndices(){if(!quoteClient||typeof quoteClient.fetch!=='function')return;quoteClient.fetch(['sh000001','sz399001','sz399006']).then(function(data){marketIndices=data||{};renderMarketIndices();}).catch(function(){renderMarketIndices();});}
+  function fetchMarketIndices(){if(!quoteClient||typeof quoteClient.fetch!=='function')return;quoteClient.fetch(['sh000001','sz399001','sz399006']).then(function(data){marketIndices=data||{};renderMarketIndices();fetchMarketIndexKlines();}).catch(function(){renderMarketIndices();fetchMarketIndexKlines();});}
   function formatNumber(value) {
     var n = Number(value);
     return Number.isFinite(n) ? n.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) : '—';

@@ -28,6 +28,7 @@
   let HISTORY = null;
   let RESEARCH_SCORE = null;
   let REPORTS = {};
+  let DISCIPLINE_RULES = null;
 
   let DAY_FAILED = false;
 
@@ -41,7 +42,7 @@
     profileLookback: 120
   };
 
-  let chartTab = 'day';
+  let chartTab = 'month';
   let chart = null;
   let chartKey = '';
   const klineCache = {};
@@ -195,6 +196,28 @@
     }
   }
 
+  /** 读取纪律与评分卡共用的展示规则，确保标签和分值口径统一。 */
+  async function loadDisciplineRules() {
+    try {
+      const res = await fetch('data/discipline-rules.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const payload = await res.json();
+      if (!payload || !Array.isArray(payload.scoreItems) || !Array.isArray(payload.manualItems)) {
+        throw new Error('纪律规则 JSON 格式无效');
+      }
+      DISCIPLINE_RULES = payload;
+    } catch (e) {
+      console.warn('纪律规则加载失败，使用内置默认规则:', e);
+      DISCIPLINE_RULES = {
+        schemaVersion: 1,
+        scoreItems: [{"key":"owner","label":"国资背景","max":10},{"key":"cap","label":"总市值","max":8},{"key":"focus","label":"主营集中","max":9},{"key":"profit","label":"扣非净利增长","max":14},{"key":"consolidation","label":"盘整 2-3 年","max":9},{"key":"bottom","label":"月线底部","max":9},{"key":"volume","label":"底部放量","max":6}],
+        manualItems: [{"key":"moat","label":"护城河","value":"无法自动判断","note":"需要人工评估成本优势、资源禀赋、品牌/渠道与竞争格局"}]
+      };
+    }
+    renderResearchScore();
+    if (DETAIL) renderDiscipline(DETAIL);
+  }
+
   /** 读取 Actions 预计算的 32 分制评分；缺失时卡片显示「暂无」 */
   async function loadResearchScore() {
     try {
@@ -209,6 +232,7 @@
       RESEARCH_SCORE = null;
     }
     renderResearchScore();
+    if (DETAIL) renderDiscipline(DETAIL);
   }
 
   async function loadQuote(force) {
@@ -938,14 +962,21 @@
     const extraEl = $('discipline-extra-checks');
     if (extraEl) extraEl.innerHTML = extraChecks.join('');
 
-    // 需要结合公司资料与行业研究的纪律：明确展示为灰色待人工核对，不伪造自动结论。
-    const manualChecks = [
-      checkItem('neutral', '国资背景', '无法自动判断', '需要核对实际控制人、股权结构及国资持股性质'),
-      checkItem('neutral', '主营集中度', '无法自动判断', '需要核对分业务收入/利润占比及主营业务变化'),
-      checkItem('neutral', '护城河', '无法自动判断', '需要人工评估成本优势、资源禀赋、品牌/渠道与竞争格局')
-    ];
+    // 评分卡和鳄鱼纪律共享同一份 JSON 规则与机器评分数据。
     const manualEl = $('discipline-manual-checks');
-    if (manualEl) manualEl.innerHTML = manualChecks.join('');
+    if (manualEl) {
+      const sharedItems = buildResearchScoreItems(RESEARCH_SCORE);
+      const manualRules = DISCIPLINE_RULES && Array.isArray(DISCIPLINE_RULES.manualItems)
+        ? DISCIPLINE_RULES.manualItems : [];
+      const sharedHtml = sharedItems.length
+        ? sharedItems.map(item => checkItem(item.tone, item.label, item.value, item.note)).join('')
+        : (DISCIPLINE_RULES && Array.isArray(DISCIPLINE_RULES.scoreItems) ? DISCIPLINE_RULES.scoreItems : [])
+          .map(rule => checkItem('neutral', rule.label, '暂无评分数据', '机器评分数据缺失，暂无法判断')).join('');
+      const manualHtml = manualRules.map(item =>
+        checkItem('neutral', item.label, item.value || '无法自动判断', item.note || '需要人工核对')
+      ).join('');
+      manualEl.innerHTML = sharedHtml + manualHtml;
+    }
 
     const scoreEl = $('discipline-score');
     if (scoreEl) {
@@ -1017,6 +1048,14 @@
       return;
     }
 
+    checksEl.innerHTML = buildResearchScoreItems(score)
+      .map(item => checkItem(item.tone, item.label, item.value, item.note))
+      .join('');
+  }
+
+  /** 从评分 JSON 生成共用检查项，供评分卡与鳄鱼纪律复用。 */
+  function buildResearchScoreItems(score) {
+    if (!score || !score.items || !DISCIPLINE_RULES || !Array.isArray(DISCIPLINE_RULES.scoreItems)) return [];
     const m = score.metrics || {};
     const it = score.items;
     const toneOf = (value, full) => {
@@ -1025,33 +1064,35 @@
       return ratio >= 0.75 ? 'ok' : ratio >= 0.45 ? 'warn' : 'bad';
     };
     const ownerLabel = { central: '央企', province: '省级国资', city: '地市国资', other: '其他' }[m.ownerType] || '未知';
-    const ownerNote = m.owner ? `${ownerLabel} · ${m.owner}` : '实控人未取到';
-    const focusNote = isNum(m.mainRatio)
-      ? `最大品类 ${(m.mainRatio * 100).toFixed(0)}%${m.mainItem ? '（' + m.mainItem + '）' : ''}`
-      : '主营构成未取到';
-    const profitNote = isNum(m.profitYoy)
-      ? `最近年报扣非同比 ${m.profitYoy.toFixed(1)}%${isNum(m.priorProfitYoy) ? ' · 前一年 ' + m.priorProfitYoy.toFixed(1) + '%' : ''}`
-      : '扣非数据未取到';
-    const capNote = isNum(m.capYi) ? `${Math.round(m.capYi)} 亿` : '市值缺失';
-    const consNote = [
-      isNum(m.boxHeight) ? `近 36 月箱体 ${(m.boxHeight * 100).toFixed(0)}%` : null,
-      isNum(m.months) ? `高点距今 ${m.months} 个月` : null
-    ].filter(Boolean).join(' · ') || '月 K 不足';
-    const bottomNote = [
-      isNum(m.pAll) ? `全历史分位 ${m.pAll.toFixed(0)}%` : null,
-      isNum(m.p52) ? `52 周位置 ${m.p52.toFixed(0)}%` : null
-    ].filter(Boolean).join(' · ') || '月 K 不足';
-    const volNote = isNum(m.volRatio) ? `近 6 月 / 前 36 月 量比 ${m.volRatio.toFixed(2)}` : '成交量不足';
-
-    checksEl.innerHTML = [
-      checkItem(toneOf(it.owner, 10), '国资背景', `${fmtNum(it.owner, 1)} / 10`, ownerNote),
-      checkItem(toneOf(it.focus, 9), '主营集中', `${fmtNum(it.focus, 1)} / 9`, focusNote),
-      checkItem(toneOf(it.profit, 14), '扣非净利增长', `${fmtNum(it.profit, 1)} / 14`, profitNote),
-      checkItem(toneOf(it.cap, 8), '总市值', `${fmtNum(it.cap, 1)} / 8`, capNote),
-      checkItem(toneOf(it.consolidation, 9), '盘整 2-3 年', `${fmtNum(it.consolidation, 1)} / 9`, consNote),
-      checkItem(toneOf(it.bottom, 9), '月线底部', `${fmtNum(it.bottom, 1)} / 9`, bottomNote),
-      checkItem(toneOf(it.volume, 6), '底部放量', `${fmtNum(it.volume, 1)} / 6`, volNote)
-    ].join('');
+    const notes = {
+      owner: m.owner ? `${ownerLabel} · ${m.owner}` : '实控人未取到',
+      focus: isNum(m.mainRatio)
+        ? `最大品类 ${(m.mainRatio * 100).toFixed(0)}%${m.mainItem ? '（' + m.mainItem + '）' : ''}`
+        : '主营构成未取到',
+      profit: isNum(m.profitYoy)
+        ? `最近年报扣非同比 ${m.profitYoy.toFixed(1)}%${isNum(m.priorProfitYoy) ? ' · 前一年 ' + m.priorProfitYoy.toFixed(1) + '%' : ''}`
+        : '扣非数据未取到',
+      cap: isNum(m.capYi) ? `${Math.round(m.capYi)} 亿` : '市值缺失',
+      consolidation: [
+        isNum(m.boxHeight) ? `近 36 月箱体 ${(m.boxHeight * 100).toFixed(0)}%` : null,
+        isNum(m.months) ? `高点距今 ${m.months} 个月` : null
+      ].filter(Boolean).join(' · ') || '月 K 不足',
+      bottom: [
+        isNum(m.pAll) ? `全历史分位 ${m.pAll.toFixed(0)}%` : null,
+        isNum(m.p52) ? `52 周位置 ${m.p52.toFixed(0)}%` : null
+      ].filter(Boolean).join(' · ') || '月 K 不足',
+      volume: isNum(m.volRatio) ? `近 6 月 / 前 36 月 量比 ${m.volRatio.toFixed(2)}` : '成交量不足'
+    };
+    return DISCIPLINE_RULES.scoreItems.map(rule => {
+      const value = it[rule.key];
+      return {
+        key: rule.key,
+        label: rule.label,
+        tone: toneOf(value, rule.max),
+        value: `${fmtNum(value, 1)} / ${rule.max}`,
+        note: notes[rule.key] || '暂无补充说明'
+      };
+    });
   }
 
   /** 距今月数 */
@@ -1463,7 +1504,7 @@
     $('em-link').href = `https://quote.eastmoney.com/${CODE}.html`;
     showState('加载中…', `${CODE6} 行情获取中，请稍候`, 'none');
 
-    await loadPlan();
+    await Promise.all([loadPlan(), loadDisciplineRules()]);
     renderHeader();
     loadCalc();
     loadReportScores().then(renderResearchScore);

@@ -50,7 +50,7 @@
       ['风险拦截', counts.risk, '硬性纪律优先'],
       ['数据不足', counts.data, '不生成确定信号']
     ].map(function (x) { return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">' + x[0] + '</div><div class="combat-metric">' + x[1] + '</div><div class="mini-label">' + x[2] + '</div></div></div>'; }).join('');
-    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只（持仓 + 股票池去重） + ' · 买入观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
+    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只（持仓 + 股票池去重） · 买入观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
     var filtered = rows.filter(function (r) {
       if (state.filter === 'add') return r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch');
       if (state.filter === 'watch') return r.primary.kind === 'watch';

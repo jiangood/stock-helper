@@ -884,8 +884,8 @@
       : '先核对该项；数据缺失时不应视为通过';
     const screenLabel = screen.allPass ? '5 项筛选全部通过' : '已通过 ' + screen.passed + '/' + screen.total + ' 项';
     const screenDetail = [
-      screen.failed.length ? '未通过：' + screen.failed.map(c => ({ st: 'ST', loss: '盈利', pe: 'PE≤30', cap: '市值≤200亿', pb: 'PB<1' }[c.key] || c.label).join('、') : '',
-      screen.pending.length ? '待核实：' + screen.pending.map(c => ({ loss: '盈利', pe: 'PE', cap: '市值', pb: 'PB' }[c.key] || c.label).join('、') : ''
+      screen.failed.length ? '未通过：' + screen.failed.map(c => ({ st: 'ST', loss: '盈利', pe: 'PE≤30', cap: '市值≤200亿', pb: 'PB<1' }[c.key] || c.label)).join('、') : '',
+      screen.pending.length ? '待核实：' + screen.pending.map(c => ({ loss: '盈利', pe: 'PE', cap: '市值', pb: 'PB' }[c.key] || c.label)).join('、') : ''
     ].filter(Boolean).join('；') || '5 项量化筛选均有数据；仍需人工核对企业质量与周期风险';
 
     grid.innerHTML = item('计划区间', planLabel, planDetail, zoneTone)

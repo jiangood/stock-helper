@@ -347,6 +347,21 @@
     <div><div class="panel-title">交易作战台</div><div class="panel-subtitle">持仓 + 股票池统一汇总。展示触发条件与理由，由你决定是否执行；不会自动下单。</div></div>
     <button id="combat-refresh" class="btn btn-sm btn-outline-primary" type="button">⟳ 重新计算</button>
   </div>
+  <section id="combat-risk-budget" class="insight-card mb-3" aria-labelledby="combat-risk-budget-title">
+    <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
+      <div><div id="combat-risk-budget-title" class="panel-title">仓位与风险预算</div><div class="panel-subtitle">账户参数只保存在当前浏览器。本面板不连接券商；参数留空时不推算仓位。</div></div>
+      <span class="tag">手动输入 · 本机保存</span>
+    </div>
+    <div class="row g-2">
+      <div class="col-6 col-lg-3"><label class="form-label mini-label" for="risk-account-equity">账户总资产（元）</label><input id="risk-account-equity" data-risk-setting="equity" class="form-control form-control-sm" type="number" min="0" step="1000" inputmode="decimal" placeholder="请输入总资产"></div>
+      <div class="col-6 col-lg-3"><label class="form-label mini-label" for="risk-available-cash">可用现金（元）</label><input id="risk-available-cash" data-risk-setting="cash" class="form-control form-control-sm" type="number" min="0" step="1000" inputmode="decimal" placeholder="请输入可用现金"></div>
+      <div class="col-6 col-lg-2"><label class="form-label mini-label" for="risk-trade-pct">单笔风险预算（%）</label><input id="risk-trade-pct" data-risk-setting="tradePct" class="form-control form-control-sm" type="number" min="0.01" max="100" step="0.1" inputmode="decimal" placeholder="例如 0.5"></div>
+      <div class="col-6 col-lg-2"><label class="form-label mini-label" for="risk-portfolio-pct">持仓上限（%总资产）</label><input id="risk-portfolio-pct" data-risk-setting="portfolioPct" class="form-control form-control-sm" type="number" min="1" max="100" step="1" inputmode="decimal" placeholder="自行设定"></div>
+      <div class="col-6 col-lg-2"><label class="form-label mini-label" for="risk-single-pct">单股上限（%总资产）</label><input id="risk-single-pct" data-risk-setting="singlePct" class="form-control form-control-sm" type="number" min="1" max="100" step="1" inputmode="decimal" placeholder="自行设定"></div>
+    </div>
+    <div id="combat-risk-budget-summary" class="row g-2 mt-1"><div class="col-12"><div class="mini-label">填写账户参数并刷新持仓行情后，显示组合暴露和剩余预算。</div></div></div>
+    <div class="mini-label mt-2">说明：单笔风险预算按“入场价至你手动设定的止损价”计算，不是亏损预测或保证；跳空、滑点、流动性、手续费和相关性可能扩大实际损失。止损价必须低于入场价，系统不会自动生成止损价。</div>
+  </section>
   <div id="combat-summary" class="row g-2 mb-3">
     <div class="col-12"><div class="empty-state">正在准备作战数据…</div></div>
   </div>

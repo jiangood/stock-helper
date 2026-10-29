@@ -116,7 +116,7 @@ async function main() {
     updatedAt,
     marketDate,
     source: 'Eastmoney/Tencent via GitHub Actions',
-    status: Object.keys(freshQuotes).length ? 'ok' : 'stale',
+    status: coverage >= MIN_QUOTE_COVERAGE ? 'ok' : 'stale',
     quotes
   };
   fs.mkdirSync(CACHE_DIR, { recursive: true });

@@ -992,7 +992,7 @@
     } else {
       totalEl.innerHTML = `<span class="score score-${score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid'}">${score.percent.toFixed(1)} 分</span>`
         + `<span class="text-body-secondary">&nbsp;· ${score.band === 'good' ? '位置优秀' : score.band === 'high' ? '位置偏高' : '位置中性'}</span>`;
-      noteEl.textContent = '暂无研报总分，按 4 项可复算指标（市值 / 盘整 / 月线 / 放量）折算成百分制。';
+      noteEl.textContent = '暂无研报总分，按 7 项可复算指标（国资背景 / 扣非增长 / 主营集中 / 市值 / 盘整 / 月线 / 放量）折算成百分制。';
       if (sourceEl) {
         sourceEl.textContent = '';
         sourceEl.classList.remove('text-warning-emphasis');
@@ -1014,6 +1014,14 @@
       const ratio = value / full;
       return ratio >= 0.75 ? 'ok' : ratio >= 0.45 ? 'warn' : 'bad';
     };
+    const ownerLabel = { central: '央企', province: '省级国资', city: '地市国资', other: '其他' }[m.ownerType] || '未知';
+    const ownerNote = m.owner ? `${ownerLabel} · ${m.owner}` : '实控人未取到';
+    const focusNote = isNum(m.mainRatio)
+      ? `最大品类 ${(m.mainRatio * 100).toFixed(0)}%${m.mainItem ? '（' + m.mainItem + '）' : ''}`
+      : '主营构成未取到';
+    const profitNote = isNum(m.profitYoy)
+      ? `最近年报扣非同比 ${m.profitYoy.toFixed(1)}%${isNum(m.priorProfitYoy) ? ' · 前一年 ' + m.priorProfitYoy.toFixed(1) + '%' : ''}`
+      : '扣非数据未取到';
     const capNote = isNum(m.capYi) ? `${Math.round(m.capYi)} 亿` : '市值缺失';
     const consNote = [
       isNum(m.boxHeight) ? `近 36 月箱体 ${(m.boxHeight * 100).toFixed(0)}%` : null,
@@ -1026,6 +1034,9 @@
     const volNote = isNum(m.volRatio) ? `近 6 月 / 前 36 月 量比 ${m.volRatio.toFixed(2)}` : '成交量不足';
 
     checksEl.innerHTML = [
+      checkItem(toneOf(it.owner, 10), '国资背景', `${fmtNum(it.owner, 1)} / 10`, ownerNote),
+      checkItem(toneOf(it.focus, 9), '主营集中', `${fmtNum(it.focus, 1)} / 9`, focusNote),
+      checkItem(toneOf(it.profit, 14), '扣非净利增长', `${fmtNum(it.profit, 1)} / 14`, profitNote),
       checkItem(toneOf(it.cap, 8), '总市值', `${fmtNum(it.cap, 1)} / 8`, capNote),
       checkItem(toneOf(it.consolidation, 9), '盘整 2-3 年', `${fmtNum(it.consolidation, 1)} / 9`, consNote),
       checkItem(toneOf(it.bottom, 9), '月线底部', `${fmtNum(it.bottom, 1)} / 9`, bottomNote),

@@ -30,7 +30,20 @@
    * 所有阈值集中在这里，便于用研报样本回归校准（scripts/calibrate_research_score.js）。
    */
   const CONFIG = {
-    weights: { cap: 8, consolidation: 9, bottom: 9, volume: 6 },
+    weights: { owner: 10, cap: 8, focus: 9, profit: 14, consolidation: 9, bottom: 9, volume: 6 },
+
+    // 实控人性质：央企 / 省级国资 / 地市国资 / 其他
+    owner: { central: 10, province: 9.5, city: 7.5, other: 5.5 },
+
+    // 主营集中度：单一品类收入占比 × 10 + 1.5（研报口径普遍比「最大单项占比」更宽松），夹在 2-10 分
+    focus: { min: 2, max: 10, offset: 1.5 },
+
+    // 扣非净利：看最近两个年报的同比，为负（亏损）直接低分
+    profit: {
+      loss: 2,
+      bothHuge: 10, huge: 8.5, strong: 7.5, warm: 6, flat: 5.5, mild: 4.5, worst: 3,
+      hugePct: 100, strongPct: 60, warmPct: 20, mildPct: -30
+    },
 
     // 市值：100 亿以内满分；100-200 亿（原准则的合格线内）给中等分；200 亿以上按对数衰减
     cap: { fullYi: 100, midYi: 200, midScore: 6.5, decay: 3, min: 3 },
@@ -45,8 +58,8 @@
     volume: { recent: 6, base: 36, zero: 0.6, full: 3.0, min: 0, max: 9, weeklyRecent: 4, weeklyBase: 24 },
 
     bands: [
-      { key: 'good', min: 24, label: '位置优秀' },
-      { key: 'mid', min: 18, label: '位置中性' },
+      { key: 'good', min: 75, label: '位置优秀' },
+      { key: 'mid', min: 56, label: '位置中性' },
       { key: 'high', min: -Infinity, label: '位置偏高' }
     ]
   };
@@ -117,6 +130,52 @@
     if (!month || !list.length) return list;
     while (list.length && String(list[list.length - 1].time || '').slice(0, 7) === month) list.pop();
     return list;
+  }
+
+  /** 第 1 项：央企 / 省国资委背景 */
+  function scoreOwner(type) {
+    const cfg = CONFIG.owner;
+    if (!type) return null;
+    const key = String(type).toLowerCase();
+    return isNum(cfg[key]) ? cfg[key] : null;
+  }
+
+  /** 第 5 项：主营集中度（单一品类收入占比 × 10 + 偏移） */
+  function scoreFocus(ratio) {
+    const cfg = CONFIG.focus;
+    const value = num(ratio);
+    if (value === null || value < 0 || value > 1) return null;
+    return clamp(value * 10 + cfg.offset, cfg.min, cfg.max);
+  }
+
+  /**
+   * 第 4 项：扣非净利润持续大涨
+   * @param {Array<{date:string, yoy:number|null, value:number|null}>} annual 年报序列（新→旧）
+   * @param {string} [asOf] 只使用该日期之前的年报（校准时用）
+   */
+  function scoreProfit(annual, asOf) {
+    const cfg = CONFIG.profit;
+    const list = (Array.isArray(annual) ? annual : [])
+      .filter(item => item && item.date && (!asOf || String(item.date) <= asOf))
+      .slice()
+      .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    if (!list.length) return { score: null, yoy: null, priorYoy: null };
+
+    const latest = list[0];
+    const prior = list[1] || null;
+    const yoy = num(latest.yoy);
+    const priorYoy = prior ? num(prior.yoy) : null;
+    const value = num(latest.value);
+    if (value !== null && value <= 0) return { score: cfg.loss, yoy, priorYoy };
+
+    if (yoy === null) return { score: null, yoy: null, priorYoy };
+    if (yoy >= cfg.hugePct && (priorYoy === null || priorYoy >= cfg.hugePct)) return { score: cfg.bothHuge, yoy, priorYoy };
+    if (yoy >= cfg.hugePct) return { score: cfg.huge, yoy, priorYoy };
+    if (yoy >= cfg.strongPct) return { score: cfg.strong, yoy, priorYoy };
+    if (yoy >= cfg.warmPct) return { score: cfg.warm, yoy, priorYoy };
+    if (yoy >= 0) return { score: cfg.flat, yoy, priorYoy };
+    if (yoy >= cfg.mildPct) return { score: cfg.mild, yoy, priorYoy };
+    return { score: cfg.worst, yoy, priorYoy };
   }
 
   /** 第 7 项：总市值 <200 亿 */
@@ -234,13 +293,19 @@
     if (monthly.length < 12 && weekly.length >= 12) monthly = deriveMonthly(weekly);
 
     const asOf = lastTime(daily) || lastTime(weekly) || lastTime(monthly);
+    const ownerScore = scoreOwner(src.ownerType);
     const cap = scoreCap(src.cap);
+    const focusScore = scoreFocus(src.mainRatio);
+    const profit = scoreProfit(src.annual, src.asOf);
     const consolidation = scoreConsolidation(monthly);
     const bottom = scoreBottom(monthly, src.price, src.high52, src.low52);
     const volume = scoreVolume(monthly, weekly, asOf);
 
     const items = {
+      owner: ownerScore,
       cap,
+      focus: focusScore,
+      profit: profit.score,
       consolidation: consolidation.score,
       bottom: bottom.score,
       volume: volume.score
@@ -261,7 +326,7 @@
     const rounded = Math.round(points * 10) / 10;
     const complete = known === Object.keys(weights).length;
     const percent = complete ? Math.round(rounded / totalMax * 1000) / 10 : null;
-    const band = complete ? bandOf(rounded) : null;
+    const band = complete ? bandOf(percent) : null;
 
     return {
       version: VERSION,
@@ -274,7 +339,11 @@
       complete,
       band: known ? band : null,
       metrics: {
+        ownerType: src.ownerType || null,
         capYi: num(src.cap) !== null ? num(src.cap) / 1e8 : null,
+        mainRatio: num(src.mainRatio),
+        profitYoy: profit.yoy,
+        priorProfitYoy: profit.priorYoy,
         boxHeight: consolidation.metrics.boxHeight,
         months: consolidation.metrics.months,
         position: isNum(bottom.position) ? bottom.position : null,
@@ -293,6 +362,9 @@
     num,
     clamp,
     percentile,
+    scoreOwner,
+    scoreFocus,
+    scoreProfit,
     scoreCap,
     scoreConsolidation,
     scoreBottom,

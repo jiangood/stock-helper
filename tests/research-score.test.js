@@ -14,8 +14,44 @@ function monthlyBars(closes, volumes) {
   }));
 }
 
-test('市值分档：100 亿以内满分，200 亿以内 6.5 分，之后按对数衰减且不低于 3 分', () => {
-  assert.equal(Research.scoreCap(50e8), 10);
+test('国资背景：央企 > 省级 > 地市 > 其他，未知返回 null', () => {
+  assert.equal(Research.scoreOwner('central'), 10);
+  assert.equal(Research.scoreOwner('province'), 9.5);
+  assert.equal(Research.scoreOwner('city'), 7.5);
+  assert.equal(Research.scoreOwner('other'), 5.5);
+  assert.equal(Research.scoreOwner(null), null);
+  assert.equal(Research.scoreOwner('unknown-type'), null);
+});
+
+test('主营集中度：按占比线性给分、加偏移并夹在 2-10', () => {
+  assert.equal(Research.scoreFocus(1), 10);
+  assert.equal(Research.scoreFocus(0.75), 9);
+  assert.equal(Research.scoreFocus(0.3), 4.5);
+  assert.equal(Research.scoreFocus(0.05), 2);
+  assert.equal(Research.scoreFocus(null), null);
+  assert.equal(Research.scoreFocus(1.4), null);
+});
+
+test('扣非净利：连续高增长满分，亏损或大幅下滑低分，并按 asOf 截断', () => {
+  const annual = [
+    { date: '2025-12-31', yoy: 120, value: 5e8 },
+    { date: '2024-12-31', yoy: 150, value: 3e8 },
+    { date: '2023-12-31', yoy: 10, value: 2e8 }
+  ];
+  assert.equal(Research.scoreProfit(annual).score, 10);
+  assert.equal(Research.scoreProfit(annual, '2025-06-30').score, 8.5, '只看到 2024 年报时应按单年 >100% 给分');
+  assert.equal(Research.scoreProfit(annual, '2024-06-30').score, 5.5, '只看到 2023 年报时按个位数增长给分');
+
+  assert.equal(Research.scoreProfit([{ date: '2025-12-31', yoy: -80, value: -1e8 }]).score, 2, '扣非为负直接低分');
+  assert.equal(Research.scoreProfit([{ date: '2025-12-31', yoy: 80, value: 1e8 }]).score, 7.5);
+  assert.equal(Research.scoreProfit([{ date: '2025-12-31', yoy: 30, value: 1e8 }]).score, 6);
+  assert.equal(Research.scoreProfit([{ date: '2025-12-31', yoy: 5, value: 1e8 }]).score, 5.5);
+  assert.equal(Research.scoreProfit([{ date: '2025-12-31', yoy: -10, value: 1e8 }]).score, 4.5);
+  assert.equal(Research.scoreProfit([{ date: '2025-12-31', yoy: -60, value: 1e8 }]).score, 3);
+  assert.equal(Research.scoreProfit([]).score, null);
+});
+
+test('市值分档：100 亿以内满分，200 亿以内 6.5 分，之后按对数衰减且不低于 3 分', () => {  assert.equal(Research.scoreCap(50e8), 10);
   assert.equal(Research.scoreCap(100e8), 10);
   assert.equal(Research.scoreCap(150e8), 6.5);
   assert.equal(Research.scoreCap(200e8), 6.5);
@@ -52,26 +88,37 @@ test('底部放量项：量比越高分越高，未走完的当月不计入均�
   assert.ok(result.metrics.volRatio > 2.5);
 });
 
-test('compute 输出 32 分制合计与分档，缺数据时只统计已知项', () => {
+test('compute 输出 7 项合计与分档，缺数据时只统计已知项', () => {
   const closes = Array.from({ length: 60 }, (_, i) => 8 + Math.sin(i / 3));
   const monthly = monthlyBars(closes, Array.from({ length: 60 }, () => 1000));
+  const annual = [
+    { date: '2025-12-31', yoy: 120, value: 5e8 },
+    { date: '2024-12-31', yoy: 150, value: 3e8 }
+  ];
   const full = Research.compute({
     cap: 60e8,
     monthly,
     price: 8,
     high52: 12,
-    low52: 7
+    low52: 7,
+    ownerType: 'central',
+    mainRatio: 0.9,
+    annual
   });
-  assert.equal(full.totalMax, 32);
-  assert.equal(full.max, 32);
+  assert.equal(full.totalMax, 65);
+  assert.equal(full.max, 65);
   assert.equal(full.complete, true);
-  assert.ok(full.points > 0 && full.points <= 32);
+  assert.ok(full.points > 0 && full.points <= 65);
   assert.ok(full.percent > 0 && full.percent <= 100);
-  assert.equal(full.percent, Math.round(full.points / 32 * 1000) / 10);
+  assert.equal(full.percent, Math.round(full.points / 65 * 1000) / 10);
   assert.ok(full.band && ['good', 'mid', 'high'].includes(full.band.key));
+  assert.equal(Research.bandOf(80).key, 'good');
+  assert.equal(Research.bandOf(60).key, 'mid');
+  assert.equal(Research.bandOf(40).key, 'high');
 
   const partial = Research.compute({ cap: 60e8 });
   assert.equal(partial.items.cap, 10);
+  assert.equal(partial.items.owner, null);
   assert.equal(partial.items.consolidation, null);
   assert.equal(partial.max, 8);
   assert.equal(partial.complete, false);

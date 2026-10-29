@@ -463,18 +463,25 @@ function researchHtml(stock) {
   const score = researchScores[stock.code];
   if (!score || !isFinite(score.points)) return '<span class="text-body-tertiary">—</span>';
   const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
-  const percent = isFinite(score.percent) ? score.percent : score.points / max * 100;
+  const percent = isFinite(score.percent) ? score.percent : null;
+  if (percent === null) {
+    // 数据不全（例如缺主营构成或实控人）时不折算，避免半个分母冒充百分制
+    return `<span class="text-body-tertiary" title="评分数据不完整：${esc(String(score.points))}/${esc(String(max))}">—</span>`;
+  }
   const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
   const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
   const items = score.items || {};
   const detail = [
+    `国资 ${fmtScore(items.owner)}/10`,
+    `主营 ${fmtScore(items.focus)}/9`,
+    `扣非 ${fmtScore(items.profit)}/14`,
     `市值 ${fmtScore(items.cap)}/8`,
     `盘整 ${fmtScore(items.consolidation)}/9`,
     `月线 ${fmtScore(items.bottom)}/9`,
     `放量 ${fmtScore(items.volume)}/6`
   ].join(' · ');
   const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n`
-    + '暂无研报总分，按 4 项位置指标折算；不含基本面项，不构成投资建议';
+    + '暂无研报总分，按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议';
   const suffix = score.complete ? '' : '?';
   return `<span class="score score-${tone}" title="${esc(tip)}">${percent.toFixed(1)}`
     + `<span class="unit">分${suffix}</span><span class="score-tag">算</span></span>`;

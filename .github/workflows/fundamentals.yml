@@ -1,0 +1,55 @@
+name: Refresh stock fundamentals
+
+on:
+  schedule:
+    # Weekly, Monday before the China session; fundamentals change slowly.
+    - cron: "10 22 * * 0"
+  workflow_dispatch:
+  push:
+    branches: [master, main]
+    paths:
+      - "scripts/fetch_fundamentals.py"
+      - ".github/workflows/fundamentals.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fundamentals
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate script
+        run: python -m py_compile scripts/fetch_fundamentals.py
+      - name: Fetch fundamentals
+        run: python scripts/fetch_fundamentals.py
+      - name: Commit changed fundamentals
+        run: |
+          if [ -z "$(git status --porcelain -- data/fundamentals.json)" ]; then
+            echo "No fundamentals changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/fundamentals.json
+          git commit -m "Refresh stock fundamentals"
+          for attempt in 1 2 3; do
+            git fetch origin "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"
+            git rebase -X theirs "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"; then
+              exit 0
+            fi
+            echo "Push raced with another commit (attempt $attempt); retrying."
+          done
+          echo "Unable to publish fundamentals after 3 attempts." >&2
+          exit 1

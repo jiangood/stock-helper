@@ -48,11 +48,11 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - `screen(stock, quote)`：5 项自动纪律（非ST/非亏损/PE≤30/市值≤200亿/PB<1），返回 `passed/total/allPass/failed/pending`，首页「纪律」列与每日简报共用
   - 规则：PB≤0.8 为八折、PB<1 为破净、总市值 200 亿、PE(TTM) 30 倍、ST、连续涨停（创业板/科创板 20%，北交所 30%，主板 ST 5%）
 - `research-score.js` — 研报评分工具（浏览器 `window.ResearchScore` / Node `require`）
-  - 只复算「资料/个股研报」10 项百分制评分卡里能靠行情算出来的 4 项：市值 8 分 / 盘整 9 分 / 月线底部 9 分 / 底部放量 6 分，合计 32 分
-  - `compute({ cap, monthly, weekly, daily, price, high52, low52 })` 返回 `items/points/max/complete/band/metrics`；缺数据只统计已知项并返回 `null` 分数，不返回 0 分
+  - 复算「资料/个股研报」10 项百分制评分卡里能靠公开数据算出来的 7 项：国资背景 10 / 扣非净利增长 14 / 主营集中 9 / 市值 8 / 盘整 9 / 月线底部 9 / 底部放量 6，合计 65 分
+  - `compute({ cap, monthly, weekly, daily, price, high52, low52, ownerType, mainRatio, annual, asOf })` 返回 `items/points/max/percent/complete/band/metrics`；缺数据只统计已知项并返回 `null` 分数，不返回 0 分
   - 阈值集中在 `CONFIG`；分档按百分制 ≥75 位置优秀 / 56–75 位置中性 / <56 位置偏高；月 K 缺失时用周 K 合成（`deriveMonthly`）
-  - `compute()` 同时返回 `points`（32 分制）与 `percent`（百分制折算，缺项时为 `null`）
-  - 只输出 4 项折算的位置分（页面按百分制显示），不输出 100 分制总分，也不提供人工录入
+  - `scoreProfit(annual, asOf)` 按发布日截断年报序列，校准时可复现历史分数
+  - 未覆盖「独一无二 14 / 产品持续涨价 13 / 盈利模式 8」共 35 分权重，需要人工判断，页面不提供录入
 - `indicators.js` — 量价指标纯函数（浏览器 `window.TechInd` / Node `require`）
   - `mfi` / `obv` / `adLine` / `ma` / `pivotLows` / `pivotHighs` / `detectDivergence` / `volumeProfile` / `volumeRatio`
   - 数据不足返回 `null`（不返回 0）；MFI 负资金流为 0 按 100 处理；筹码分布是日 K 均匀摊量的**近似**值
@@ -70,8 +70,10 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 - `data/stock-quotes.json`、`data/stock-cache/<code>.json`、`data/index-cache.json` — 行情、个股详情、日/周/月 K 线与指数历史静态缓存
 - `data/sector-monthly.json` — 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅与月线覆盖来源；由 `scripts/build_sector_monthly.js` 在每次行情采集后生成，行情页只读这个小文件，不逐只拉个股缓存
 - `data/research-reports.json` — 研报原始总分摘录（29 只）：分数、报告日期、来源文件名，中国中冶另存 2026-03-15 自制版 83.0 作对照；手工维护一次即可，页面直接展示并标注来源与「是否过时」（>12 个月）
-- `data/research-scores.json` — 机器复算的 32 分制评分汇总：每只股票的 4 项得分、`points`、`percent`、分档与中间指标（市值、箱体高度、高点距今年数、历史分位、52 周位置、量比）；由 `scripts/build_research_scores.js` 在每次行情采集后生成，没有研报分的股票才用它
-- `scripts/calibrate_research_score.js` — 用 17 份带评分卡明细的研报回归校准评分阈值；把 K 线截断到研报发布日再复算，输出 MAE 与秩相关（只读本地 `data/stock-cache`，不联网、不改数据）
+- `data/fundamentals.json` — 实控人 / 主营构成 / 扣非净利年报（最近 6 期），供评分使用；由 `scripts/fetch_fundamentals.py` 每周刷新，单个请求失败时保留上一次有效值
+- `data/research-scores.json` — 机器复算的评分汇总：7 项得分、`points`/`max`/`percent`、分档与中间指标（市值、主营占比、扣非同比、箱体高度、历史分位、量比）；由 `scripts/build_research_scores.js` 在每次行情采集后生成，没有研报分的股票才用它
+- `scripts/calibrate_research_score.js` — 用 18 份带评分卡明细的研报回归校准评分阈值；K 线与扣非年报都截断到研报发布日再复算，输出 7 项 MAE 与秩相关，以及机器分 vs 研报 7 项 / 研报总分的百分制对比（只读本地缓存，不联网、不改数据）
+- `.github/workflows/fundamentals.yml` — 每周刷新 `data/fundamentals.json`（实控人 / 主营构成 / 扣非净利），失败时保留上一份有效数据
 
 ## data/stocks.json 字段
 

@@ -14,10 +14,14 @@ const DATA = path.join(ROOT, 'data');
 const CACHE_DIR = path.join(DATA, 'stock-cache');
 const STOCKS_FILE = path.join(DATA, 'stocks.json');
 const QUOTES_FILE = path.join(DATA, 'stock-quotes.json');
+const FUNDAMENTALS_FILE = path.join(DATA, 'fundamentals.json');
 const SCORES_FILE = path.join(DATA, 'research-scores.json');
 
 const CRITERIA = {
+  owner: '实际控制人性质：央企 10 分 / 省级国资 9.5 / 地市国资 7.5 / 其他 5.5',
   cap: '总市值 ≤100 亿 10 分，100-200 亿 6.5 分，200 亿以上按对数衰减至 3 分',
+  focus: '单一品类主营收入占比 × 10 + 1.5，夹在 2-10 分',
+  profit: '最近两个年报扣非净利同比：连续 >100% 满分，亏损或大幅下滑给低分',
   consolidation: '近 36 个月收盘箱体：高度 ≤20% 且高点距今 ≥24 个月得满分',
   bottom: '全历史收盘分位 0.6 + 52 周位置 0.4，位置越低分越高',
   volume: '近 6 个月月均量 ÷ 之前 36 个月月均量，量比 0.6 起算、3.0 满分'
@@ -32,10 +36,11 @@ function round(value, digits = 2) {
   return Math.round(value * factor) / factor;
 }
 
-/** 一只股票的 32 分制评分；数据不足返回 null，不返回 0 分。 */
-function scoreOfCache(cache) {
+/** 一只股票的评分；数据不足返回 null，不返回 0 分。 */
+function scoreOfCache(cache, fundamentals) {
   if (!cache || typeof cache !== 'object') return null;
   const detail = cache.detail || {};
+  const fund = fundamentals || {};
   const result = ResearchScore.compute({
     cap: detail.totalCap,
     price: detail.price,
@@ -43,12 +48,18 @@ function scoreOfCache(cache) {
     low52: detail.low52,
     daily: cache.dailyAdjusted && cache.dailyAdjusted.bars,
     weekly: cache.weeklyAdjusted && cache.weeklyAdjusted.bars,
-    monthly: cache.monthlyAdjusted && cache.monthlyAdjusted.bars
+    monthly: cache.monthlyAdjusted && cache.monthlyAdjusted.bars,
+    ownerType: fund.ownerType,
+    mainRatio: fund.mainRatio,
+    annual: fund.annual
   });
   if (result.points === null) return null;
   return {
     items: {
+      owner: round(result.items.owner, 1),
       cap: round(result.items.cap, 1),
+      focus: round(result.items.focus, 1),
+      profit: round(result.items.profit, 1),
       consolidation: round(result.items.consolidation, 1),
       bottom: round(result.items.bottom, 1),
       volume: round(result.items.volume, 1)
@@ -59,7 +70,13 @@ function scoreOfCache(cache) {
     complete: result.complete,
     band: result.band ? result.band.key : null,
     metrics: {
+      ownerType: result.metrics.ownerType,
+      owner: fund.owner || null,
       capYi: round(result.metrics.capYi, 0),
+      mainRatio: round(result.metrics.mainRatio, 3),
+      mainItem: fund.mainItem || null,
+      profitYoy: round(result.metrics.profitYoy, 1),
+      priorProfitYoy: round(result.metrics.priorProfitYoy, 1),
       boxHeight: round(result.metrics.boxHeight, 3),
       months: result.metrics.months,
       position: round(result.metrics.position, 3),
@@ -73,6 +90,7 @@ function scoreOfCache(cache) {
 function buildPayload(options) {
   const opts = options || {};
   const stocks = Array.isArray(opts.stocks) ? opts.stocks : [];
+  const fundamentals = opts.fundamentals && opts.fundamentals.stocks ? opts.fundamentals.stocks : (opts.fundamentals || {});
   const readCache = typeof opts.readCache === 'function'
     ? opts.readCache
     : code => {
@@ -83,7 +101,7 @@ function buildPayload(options) {
   stocks.forEach(stock => {
     const code = String(stock && stock.code || '').trim().toLowerCase();
     if (!/^(sh|sz)\d{6}$/.test(code)) return;
-    const score = scoreOfCache(readCache(code));
+    const score = scoreOfCache(readCache(code), fundamentals[code]);
     if (score) scores[code] = score;
   });
   return {
@@ -121,13 +139,15 @@ function writePayload(file, payload) {
   return true;
 }
 
-/** Refresh data/research-scores.json from the per-stock caches. */
+/** Refresh data/research-scores.json from the per-stock caches + fundamentals. */
 function buildFile(options) {
   const opts = options || {};
   const stocks = Array.isArray(opts.stocks) ? opts.stocks : readJson(STOCKS_FILE, []);
   const quotes = opts.quotes || readJson(QUOTES_FILE, {});
+  const fundamentals = opts.fundamentals || readJson(FUNDAMENTALS_FILE, {});
   const payload = buildPayload({
     stocks,
+    fundamentals,
     marketDate: opts.marketDate || quotes.marketDate || null,
     updatedAt: opts.updatedAt,
     cacheDir: opts.cacheDir || CACHE_DIR,

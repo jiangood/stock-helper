@@ -53,5 +53,6 @@ test('entry-zone guard still evaluates add recommendation at or below entry pric
 
 test('render does not reference removed risk-budget or review panels', () => {
   const source = fs.readFileSync(require.resolve('../combat-center.js'), 'utf8');
-  assert.doesNotMatch(source, /\\briskPanel\\b|\\breviewPanel\\b/);
+  assert.equal(source.includes('riskPanel'), false);
+  assert.equal(source.includes('reviewPanel'), false);
 });

@@ -74,7 +74,7 @@
       var pnl = held && p !== null ? (p - Number(h.cost)) * qty : null;
       var ind = r.indicators || {};
       var macd = ind.macd;
-      var indicatorPanel = '<section class="combat-indicator-details"><div class="combat-section-title">指标详情</div><div class="combat-indicator-grid mt-2">'
+      var indicatorPanel = '<section class="combat-indicator-details"><div class="combat-section-title">指标详情</div><div class="combat-indicator-grid mt-2">' +
         '<div class="combat-indicator"><div class="mini-label">RSI(14) · 相对强弱</div><strong>' + (ind.rsi == null ? '—' : Number(ind.rsi).toFixed(1)) + '</strong><span>' + esc(ind.rsiState || '数据不足') + ' · ' + esc(ind.rsiTrend || '—') + '</span><small>比较近期平均涨幅与平均跌幅，常用 30/70 观察超卖/超买；极端行情中可能钝化。</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">MACD(12,26,9) · 趋势动能</div><strong>' + (macd ? 'DIF ' + Number(macd.dif).toFixed(3) : '—') + '</strong><span>' + esc(ind.macdState || '数据不足') + ' · ' + esc(ind.macdCross || '—') + '</span><small>比较快慢指数均线差（DIF）与信号线（DEA）；金叉/柱体改善可提示动能变化，但信号有滞后。</small><small>' + (macd ? 'DEA ' + Number(macd.dea).toFixed(3) + ' · 柱 ' + Number(macd.histogram).toFixed(3) : '历史K线不足，无法计算') + '</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">MFI(14) · 资金流量</div><strong>' + (ind.mfi == null ? '—' : Number(ind.mfi).toFixed(1)) + '</strong><span>' + (ind.mfi == null ? '数据不足' : ind.mfi < 20 ? '低位' : ind.mfi > 80 ? '高位' : '中间区间') + '</span><small>结合价格与成交量估算资金流入流出，不能直接等同真实资金净流。</small></div>' +

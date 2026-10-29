@@ -1,55 +1,8 @@
 /* Shared, pure trade-signal calculations for the combat center. */
 (function (root) {
   'use strict';
-  var T_RULES = { vwapDev: 1, mfiLow: 25, mfiHigh: 75, volSurge: 1.3, volShrink: 1, trendDev: 2.5, spread: 2, stall: 0.5 };
   var ADD_RULES = { supportDist: 3, mfiLow: 20, mfiRecoverBars: 10, maPeriod: 20, obvLookback: 20, profileLookback: 120 };
   function n(v) { var x = Number(v); return v !== null && v !== '' && Number.isFinite(x) ? x : null; }
-  function recentStall(bars) {
-    if (!bars || bars.length < 5) return false;
-    var last = bars[bars.length - 1], ref = bars[bars.length - 4];
-    return !!(last && ref && n(last.close) !== null && n(ref.close) > 0 && Math.abs((last.close / ref.close - 1) * 100) <= T_RULES.stall);
-  }
-  function vwap(detail, trends) {
-    var points = trends && Array.isArray(trends.points) ? trends.points : [];
-    if (points.length) {
-      var last = points[points.length - 1];
-      if (n(last.avg) > 0) return { value: n(last.avg), source: '分时均价', time: last.time };
-      var amount = 0, vol = 0, pv = 0;
-      points.forEach(function (p) {
-        var v = n(p.volume) || 0;
-        if (n(p.amount) > 0 && v > 0) { amount += p.amount; vol += v; }
-        else if (n(p.price) > 0 && v > 0) { pv += p.price * v; vol += v; }
-      });
-      if (amount > 0 && vol > 0) return { value: amount / (vol * 100), source: '分时成交额', time: last.time };
-      if (pv > 0 && vol > 0) return { value: pv / vol, source: '分时加权', time: last.time };
-    }
-    return detail && n(detail.avg) > 0 ? { value: n(detail.avg), source: '当日均价', time: detail.time || null } : null;
-  }
-  function evaluateT(price, detail, trends, bars, holdingQty) {
-    var reasons = [], vw = vwap(detail, trends), tech = root.TechInd;
-    if (!(holdingQty > 0)) return { status: '观望', kind: 'watch', reasons: ['无持仓：不生成做T卖出条件'], dataReady: true };
-    if (!Array.isArray(bars) || bars.length < 16 || !tech || !vw || !(price > 0)) {
-      return { status: '数据不足', kind: 'data', reasons: ['做T需要有效分时均价与至少 16 根 15 分钟K'], dataReady: false };
-    }
-    var todayCn = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
-    var lastBarDate = String(bars[bars.length - 1] && bars[bars.length - 1].time || '').slice(0, 10);
-    var lastTrendDate = String(trends && trends.points && trends.points.length ? trends.points[trends.points.length - 1].time || '' : '').slice(0, 10);
-    if (lastBarDate !== todayCn || (lastTrendDate && lastTrendDate !== todayCn)) {
-      return { status: '数据不足', kind: 'data', reasons: ['分钟K / 分时均价不是北京时间今天的数据，避免使用过期信号做T'], dataReady: false };
-    }
-    var mfiRes = tech.mfi(bars, 14), mfi = mfiRes ? mfiRes.latest : null;
-    var vr = bars.length >= 15 ? tech.volumeRatio(bars, 3, 12) : null;
-    var dev = (price / vw.value - 1) * 100, surge = vr !== null && vr >= T_RULES.volSurge;
-    var shrink = vr !== null && vr < T_RULES.volShrink, single = Math.abs(dev) > T_RULES.trendDev && surge;
-    var buy = dev <= -T_RULES.vwapDev && mfi !== null && mfi < T_RULES.mfiLow && shrink;
-    var sell = dev >= T_RULES.vwapDev && mfi !== null && mfi > T_RULES.mfiHigh && surge && recentStall(bars);
-    reasons.push('现价较均价 ' + (dev > 0 ? '+' : '') + dev.toFixed(2) + '%（阈值 ±' + T_RULES.vwapDev + '%）');
-    reasons.push('15分 MFI ' + (mfi === null ? '不足' : mfi.toFixed(1)) + '；量比 ' + (vr === null ? '不足' : vr.toFixed(2) + '×'));
-    if (single) return { status: '风险拦截', kind: 'risk', reasons: reasons.concat(['偏离均价超过 ' + T_RULES.trendDev + '% 且放量，禁止逆势做T']), dataReady: true };
-    if (buy) return { status: '做T低吸条件满足', kind: 't-buy', reasons: reasons.concat(['低于均价、MFI 超卖且缩量']), dataReady: true, vwap: vw.value, target: vw.value * (1 + T_RULES.spread / 100) };
-    if (sell) return { status: '做T高抛条件满足', kind: 't-sell', reasons: reasons.concat(['高于均价、MFI 超买、放量且近几根滞涨']), dataReady: true, vwap: vw.value };
-    return { status: '观望', kind: 'watch', reasons: reasons.concat([single ? '单边过滤' : '未同时满足做T触发条件']), dataReady: true, vwap: vw.value };
-  }
   function evaluateAdd(price, stock, bars) {
     var tech = root.TechInd, reasons = [];
     if (!(price > 0) || !Array.isArray(bars) || bars.length < 20 || !tech) {
@@ -103,5 +56,5 @@
     var actionName = '买入';
     return { status: score >= 4 ? actionName + '条件较齐备' : score >= 3 ? actionName + '条件部分满足' : '观望', kind: score >= 4 ? 'add-ready' : score >= 3 ? 'add-watch' : 'watch', action: actionName, reasons: reasons, score: score, scoreMax: 5, dataReady: true, support: support, supportDist: dist, profile: profile, mfi: mfi, rsi: rsi, macd: macd, confirmations: { support: supportOk, mfi: confirmOk, trend: trendOk, rsi: rsiOk, macd: macdOk } };
   }
-  root.StockTradeSignals = { evaluateT: evaluateT, evaluateAdd: evaluateAdd, rules: { t: T_RULES, add: ADD_RULES } };
+  root.StockTradeSignals = { evaluateAdd: evaluateAdd, rules: { add: ADD_RULES } };
 })(typeof window !== 'undefined' ? window : globalThis);

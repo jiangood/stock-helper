@@ -299,9 +299,12 @@
 </main>
 
 <main id="opportunity-pane" data-pane="opportunity" class="app-pane container-fluid px-3 py-3 d-none">
-  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
+  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
     <div><div class="panel-title">大鱼池 · 每日简报</div><div class="panel-subtitle">大盘指数、股票池温度、板块强弱、持仓盈亏与交易计划集中查看。</div></div>
-    <div id="brief-updated" class="panel-subtitle">行情加载中…</div>
+  </div>
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 px-1">
+    <div id="brief-market-time" class="panel-subtitle">A股行情基准：等待有效指数报价</div>
+    <div id="brief-updated" class="panel-subtitle">页面刷新：—</div>
   </div>
   <div class="panel-title mb-2">大盘行情</div><div id="market-index-summary" class="insight-grid mb-3"><div class="empty-state">正在获取指数行情…</div></div>
   <div class="panel-title mb-2">股票池市场温度</div><div id="market-pulse-summary" class="row g-2 mb-3"></div>

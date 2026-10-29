@@ -40,11 +40,17 @@
     if (n === null || n === 0) return 'text-body-secondary';
     return n > 0 ? 'text-up' : 'text-down';
   }
-  function timeText(value) {
-    if (!value) return '报价时间未知';
+  function formatQuoteDate(value) {
+    if (!value) return '报价日期未知';
     var date = new Date(value);
-    if (!Number.isFinite(date.getTime())) return '报价时间未知';
-    return '报价时间：' + date.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }) + '（北京时间）';
+    if (!Number.isFinite(date.getTime())) return '报价日期未知';
+    return '报价日期：' + date.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' });
+  }
+  function formatFetchTime(value) {
+    if (!value) return '数据抓取时间未知';
+    var date = new Date(value);
+    if (!Number.isFinite(date.getTime())) return '数据抓取时间未知';
+    return '数据抓取：' + date.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }) + '（北京时间）';
   }
   function historyOf(item, range) {
     var history = Array.isArray(item && item.history) ? item.history.filter(function (p) {
@@ -182,7 +188,6 @@
       var valid = numeric(item.price) !== null && Number(item.price) > 0;
       var change = item.changePct;
       var status = item.status || (valid ? '最近有效报价' : '等待可靠报价');
-      var quoteTime = item.quoteTime ? timeText(item.quoteTime) : '暂无有效报价时间';
       var source = item.sourceUrl || 'https://finance.yahoo.com/';
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">' + esc(meta.name) + '</div><div class="mini-label">' + esc(meta.kind) + ' · ' + esc(item.currency || meta.unit) + '</div></div><span class="flag" style="margin:0">' + esc(status) + '</span></div>'
@@ -191,13 +196,13 @@
         + '<div class="ga-card-trend">' + sparkline(historyOf(item, '1m'), meta.name) + '</div>'
         + (meta.id === 'vix' ? '<div class="mini-label">VIX 衡量标普 500 期权隐含的预期波动；上升通常代表市场担忧增强，不是方向预测。</div>' : '')
         + (meta.id === 'usdcny' ? '<div class="mini-label">报价含义：1 美元可兑换多少人民币。数值上升代表美元走强、人民币相对走弱。</div>' : '')
-        + '<div class="mini-label mt-1">' + esc(quoteTime) + '</div>'
+        + '<div class="mini-label mt-1">' + esc(item.quoteTime ? formatQuoteDate(item.quoteTime) : '报价日期未知') + '</div>'
         + '<div class="mini-label mt-1">代码：' + esc(item.sourceSymbol || meta.symbol) + ' · <a href="' + esc(source) + '" target="_blank" rel="noopener noreferrer">行情来源</a></div>'
         + '</article>';
     }).join('');
     var updated = el('global-assets-updated');
     if (updated) {
-      var when = payload && payload.updatedAt ? timeText(payload.updatedAt) : '尚无抓取记录';
+      var when = payload && payload.updatedAt ? formatFetchTime(payload.updatedAt) : '尚无抓取记录';
       updated.textContent = when + (payload && payload.source ? ' · 来源：' + payload.source : '');
       if (payload && payload.error) updated.textContent += ' · 最近抓取有品种失败，卡片保留状态标记';
     }

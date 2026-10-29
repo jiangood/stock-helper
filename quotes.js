@@ -1,7 +1,7 @@
 /*!
  * StockQuotes SDK v1.5.0
  * ---------------------------------------------------------------------------
- * 股票行情 SDK —— A 股实时行情聚合封装（浏览器 / Node 通用，无依赖）
+ * 股票行情 SDK —— A 股行情聚合封装（仅由 GitHub Actions / Node 采集端调用）
  *
  * 数据源（自动降级，取到数据即止）
  *   1) eastmoney  东方财富 push2 批量接口（JSON，支持跨域）
@@ -16,7 +16,7 @@
  *   · 代码格式宽容：'002408' / 'sz002408' / 'SZ002408'
  *   · 多源 + 多域名自动降级，单个源缺数据时用下一个源补齐
  *   · 超时、重试、内置短时缓存、外部 AbortSignal 取消
- *   · A 股交易时段判断（供自动刷新调度使用）
+ *   · A 股交易时段判断（采集调度辅助）
  *   · 结构化错误（QuoteError，带 code）
  *
  * 快速开始
@@ -25,7 +25,7 @@
  *   // data = { sz002408: { code, name, price, prevClose, change, todayChange,
  *   //                     pe, pb, totalCap, floatCap, divYield, time }, ... }
  *
- * 单只详情 / K 线（详情页使用）
+ * 单只详情 / K 线（供静态缓存采集脚本使用）
  *   await quotes.fetchDetail('sz002408');
  *   // { code, name, price, open, high, low, prevClose, avg, volume, amount,
  *   //   turnover, volumeRatio, amplitude, limitUp, limitDown, pe, pb,

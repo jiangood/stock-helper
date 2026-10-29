@@ -3,7 +3,6 @@
 // ============================================================
 let STOCKS = [];
 const priceData = {};          // code -> { price, prevClose, change, todayChange }
-let refreshTimer = null;
 let filteredStocks = [];
 let sortState = { col: null, dir: 1 };
 
@@ -16,7 +15,6 @@ const quotes = new StockQuotes.Client({
   cacheTTL: 1000,
   onError: err => console.warn('[StockQuotes]', err.code, err.message)
 });
-const REFRESH_INTERVAL = StockQuotes.REFRESH_INTERVAL;
 
 // ============================================================
 // 数据加载
@@ -524,15 +522,6 @@ function applyFilter() {
 // ============================================================
 // 自动刷新调度
 // ============================================================
-function scheduleRefresh() {
-  if (refreshTimer) clearTimeout(refreshTimer);
-  if (!StockQuotes.isTrading()) return;
-  refreshTimer = setTimeout(async () => {
-    await loadPrices(false);
-    scheduleRefresh();
-  }, REFRESH_INTERVAL);
-}
-
 // Theme switching removed; the dashboard uses dark mode by default.
 
 
@@ -573,5 +562,4 @@ function scheduleRefresh() {
   if (window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);
   if (window.StockCombat) window.StockCombat.init(STOCKS, priceData, quotes);
-  scheduleRefresh();
 })();

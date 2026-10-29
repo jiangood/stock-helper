@@ -170,6 +170,9 @@
   .combat-data { color:var(--bs-secondary-color); background:var(--bs-tertiary-bg); border-color:var(--bs-border-color); }
   .combat-neutral { color:var(--bs-secondary-color); background:var(--bs-tertiary-bg); border-color:var(--bs-border-color); }
   .combat-reasons { font-size:12px; line-height:1.65; overflow-wrap:anywhere; }
+  .combat-buy-conditions, .combat-indicator-details { border:1px solid var(--bs-border-color); border-radius:9px; padding:8px 10px; font-size:11px; background:var(--bs-tertiary-bg); margin-bottom:8px; }
+  .combat-buy-conditions summary, .combat-indicator-details summary { cursor:pointer; color:var(--bs-primary); font-weight:700; }
+  .combat-buy-conditions[open], .combat-indicator-details[open] { background:var(--bs-body-bg); }
   .combat-plan { color:var(--bs-secondary-color); font-size:10.5px; border-top:1px solid var(--bs-border-color); padding-top:7px; }
   .combat-indicator-details { border-top:1px solid var(--bs-border-color); padding-top:8px; font-size:11px; }
   .combat-indicator-details summary { cursor:pointer; color:var(--bs-primary); font-weight:650; }
@@ -345,7 +348,7 @@
     <div id="combat-meta" class="panel-subtitle">等待计算</div>
   </div>
   <div id="combat-list" class="combat-grid">
-    <div class="empty-state">进入此页后按需加载分钟K和日K，减少不必要的行情请求。</div>
+    <div class="empty-state">进入此页后按需加载日K，减少不必要的行情请求。</div>
   </div>
   <div class="panel-subtitle mt-3">纪律说明：计划价触发不等于买入信号；补仓需通过 ST / 亏损等硬性门槛，并结合支撑、资金确认和趋势过滤。筹码分布为日K估算。所有信号均为辅助参考，不构成投资建议。</div>
 </main>

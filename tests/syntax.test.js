@@ -7,10 +7,20 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 
 test('应用 JavaScript 文件均可通过语法解析', () => {
-  for (const file of ['croc.js', 'quotes.js', 'pinyin.js', 'indicators.js', 'stock.js', 'business.js']) {
+  for (const file of ['croc.js', 'quotes.js', 'static-quotes.js', 'scripts/fetch_stock_snapshot.js', 'pinyin.js', 'indicators.js', 'stock.js', 'business.js']) {
     const source = fs.readFileSync(path.join(root, file), 'utf8');
     assert.doesNotThrow(() => new vm.Script(source, { filename: file }), file + ' 语法错误');
   }
+});
+
+test('网页行情入口只使用同源静态缓存适配器', () => {
+  for (const file of ['index.html', 'stock.html']) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    assert.match(html, /<script src="static-quotes\.js"><\/script>/, file + ' 未加载静态行情适配器');
+    assert.doesNotMatch(html, /<script src="quotes\.js"><\/script>/, file + ' 仍加载外部行情 SDK');
+  }
+  const adapter = fs.readFileSync(path.join(root, 'static-quotes.js'), 'utf8');
+  assert.doesNotMatch(adapter, /push2(?:delay|his)?\.eastmoney\.com|qt\.gtimg\.cn|ifzq\.gtimg\.cn/, '浏览器静态适配器不应包含外部行情源');
 });
 
 test('首页内嵌 JavaScript 均可通过语法解析', () => {

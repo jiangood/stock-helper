@@ -30,6 +30,7 @@ python -m http.server 8089
 | `research-score.js` | 研报评分工具：复算研报评分卡里可自动化的 7 项（国资背景 / 扣非增长 / 主营集中 / 市值 / 盘整 / 月线位置 / 底部放量），合计 65 分后折算百分制 |
 | `data/research-scores.json` `scripts/build_research_scores.js` | 个股评分与中间指标；首页与详情页只读这个小文件，不逐只拉个股缓存 |
 | `data/fundamentals.json` `scripts/fetch_fundamentals.py` | 实控人 / 主营构成 / 扣非净利年报，供评分使用；每周由 Actions 刷新，失败时保留上一次有效值 |
+| `scripts/validate_stock_data.js` | Actions 发布前校验股票主数据、行情覆盖率、K 线 OHLC、基本面结构，防止异常数据进入主分支 |
 | `scripts/calibrate_research_score.js` | 用 17 份带评分卡明细的研报回归校准评分阈值（只读本地缓存，不联网） |
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |

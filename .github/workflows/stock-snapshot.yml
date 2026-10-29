@@ -10,6 +10,7 @@ on:
     paths:
       - "scripts/fetch_stock_snapshot.js"
       - "scripts/build_research_scores.js"
+      - "scripts/validate_stock_data.js"
       - "research-score.js"
       - "quotes.js"
       - "data/stocks.json"
@@ -42,6 +43,8 @@ jobs:
           node --check static-quotes.js
       - name: Fetch and validate static stock data
         run: node scripts/fetch_stock_snapshot.js
+      - name: Validate published data integrity
+        run: node scripts/validate_stock_data.js
       - name: Commit changed snapshots only
         run: |
           if [ -z "$(git status --porcelain -- data/stock-quotes.json data/index-cache.json data/sector-monthly.json data/research-scores.json data/stock-cache)" ]; then

@@ -1,7 +1,7 @@
 /* Home trading combat center: manual decision support only, never submits orders. */
 (function (root) {
   'use strict';
-  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, error: '', expanded: {} };
+  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, error: '', expanded: {}, sort: { col: null, dir: 1 } };
   var COLUMN_COUNT = 9;
   var $ = function (id) { return root.document.getElementById(id); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
@@ -97,6 +97,58 @@
       return String((a.stock && a.stock.name) || '').localeCompare(String((b.stock && b.stock.name) || ''), 'zh-CN');
     });
   }
+  // 表头排序：未选列时回到默认优先级排序，空值恒排最后
+  var SORT_COLUMNS = ['name', 'price', 'status', 'score', 'entry', 'heavy', 'exitState', 'exitLine', 'bars'];
+  function sortValueOf(r, col) {
+    var s = (r && r.stock) || {}, add = r && r.add, exit = r && r.exit;
+    var price = r && r.quote && Number(r.quote.price) > 0 ? Number(r.quote.price) : null;
+    switch (col) {
+      case 'name':      return String(s.name || '');
+      case 'price':     return price;
+      case 'status':    return priorityOf(r) * 10 + statusRankOf(r);
+      case 'score':     return add && add.dataReady && add.inZone ? (add.score || 0) : null;
+      case 'entry':     return Number(s.entry) > 0 ? Number(s.entry) : null;
+      case 'heavy':     return Number(s.heavy) > 0 ? Number(s.heavy) : null;
+      case 'exitState': return exit && exit.state ? exit.state : '';
+      case 'exitLine':  return exit ? Number(exit.armed ? exit.exitLine : exit.armLine) : null;
+      case 'bars':      return r && r.indicators && r.indicators.bars ? r.indicators.bars : null;
+      default:          return null;
+    }
+  }
+  function sortedRows(rows) {
+    var col = state.sort.col;
+    if (!col) return sortByPriority(rows);
+    return rows.slice().sort(function (a, b) {
+      var av = sortValueOf(a, col), bv = sortValueOf(b, col);
+      if (av === null && bv === null) return 0;
+      if (av === null) return 1;
+      if (bv === null) return -1;
+      if (typeof av === 'string') return av.localeCompare(bv, 'zh-CN') * state.sort.dir;
+      return (av - bv) * state.sort.dir;
+    });
+  }
+  function applySortUI() {
+    if (!root.document || typeof root.document.getElementById !== 'function') return;
+    SORT_COLUMNS.forEach(function (col) {
+      var th = $('cth-' + col);
+      if (!th) return;
+      var active = state.sort.col === col;
+      th.classList.toggle('sort-asc', active && state.sort.dir === 1);
+      th.classList.toggle('sort-desc', active && state.sort.dir === -1);
+      th.setAttribute('aria-sort', !active ? 'none' : state.sort.dir === 1 ? 'ascending' : 'descending');
+    });
+  }
+  function sortBy(col) {
+    if (SORT_COLUMNS.indexOf(col) < 0) return;
+    if (state.sort.col === col) {
+      if (state.sort.dir === 1) state.sort.dir = -1;
+      else { state.sort.col = null; state.sort.dir = 1; }
+    } else {
+      state.sort.col = col;
+      state.sort.dir = 1;
+    }
+    render();
+  }
   function mergeUniverse() {
     var map = new Map();
     state.stocks.filter(function (s) { return s && s.pool !== false && s.code; }).forEach(function (s) { map.set(codeOf(s.code), Object.assign({}, s, { inPool: true })); });
@@ -142,7 +194,8 @@
     meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只股票池标的 · 买入观察 ' + counts.add
       + ' · 触发止盈 ' + counts.exit + ' · 跟踪中 ' + counts.tracking + ' · 冷却 ' + counts.cooling
       + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
-    var ordered = sortByPriority(rows);
+    var ordered = sortedRows(rows);
+    applySortUI();
     if (!ordered.length) {
       list.innerHTML = '<tr><td colspan="' + COLUMN_COUNT + '"><div class="empty-state">' + (state.loading ? '正在分析…' : state.error ? '作战数据读取失败：' + esc(state.error) : '暂无可展示的标的。') + '</div></td></tr>';
       return;
@@ -246,8 +299,7 @@
       var name = esc(s.name || s.code);
       return '<tr class="combat-row' + (open ? ' is-open' : '') + '" data-code="' + esc(code) + '">'
         + '<td><button type="button" class="combat-toggle" data-combat-toggle="' + esc(code) + '" data-name="' + name + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + detailId + '" aria-label="' + (open ? '收起' : '展开') + name + '详情"><span class="combat-caret" aria-hidden="true">▸</span></button>'
-        + '<a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + name + '</a>'
-        + '<span class="combat-cell-sub">' + esc(s.code) + '</span></td>'
+        + '<a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + name + '</a></td>'
         + '<td class="price-cell">' + (p === null ? '—' : money(p)) + (chg === null ? '' : '<span class="combat-cell-sub ' + (chg > 0 ? 'text-up' : chg < 0 ? 'text-down' : '') + '">' + pct(chg) + '</span>') + '</td>'
         + '<td><span class="combat-signal ' + statusClass(r.primary.kind) + '-text">' + esc(r.primary.status) + '</span></td>'
         + '<td><span class="' + scoreClass + '">' + scoreText + '</span>' + (scoreSub ? '<span class="combat-cell-sub">' + scoreSub + '</span>' : '') + '</td>'
@@ -406,6 +458,18 @@
   }
   function ensureUi() {
     var list = $('combat-list');
+    var table = $('combat-table');
+    if (table && !table.dataset.combatSortBound) {
+      table.dataset.combatSortBound = '1';
+      table.addEventListener('click', function (event) {
+        var target = event.target;
+        if (!target || !target.closest) return;
+        var btn = target.closest('[data-combat-sort]');
+        if (!btn) return;
+        sortBy(btn.getAttribute('data-combat-sort'));
+      });
+      applySortUI();
+    }
     if (list && !list.dataset.combatExpandBound) {
       list.dataset.combatExpandBound = '1';
       list.addEventListener('click', function (event) {

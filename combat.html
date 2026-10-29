@@ -52,25 +52,36 @@
   .combat-workspace .panel-subtitle { line-height:1.6; }
   #combat-meta { font-size:11px; line-height:1.6; text-align:right; }
 
-  /* 清单表格：与首页自选同构，点击行内展开详情 */
-  .combat-table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  /* 清单表格：与首页自选同构，吸顶表头 + 首列固定 + 点击行内展开详情 */
+  .combat-table-scroll { -webkit-overflow-scrolling:touch; }
   .combat-table-scroll:focus-visible { outline:2px solid var(--bs-primary); outline-offset:-2px; }
   .combat-table { min-width:780px; }
-  .combat-table thead th { font-size:11px; font-weight:600; letter-spacing:.3px; white-space:nowrap; text-align:right; padding:.45rem .55rem; background:var(--bs-tertiary-bg); }
+  .combat-table thead th {
+    position: sticky; top: var(--app-header-h, 58px); z-index: 3;
+    font-size:11px; font-weight:600; letter-spacing:.3px;
+    white-space:nowrap; user-select:none; text-align:right;
+    padding:0;
+    background-color:var(--bs-tertiary-bg);
+    box-shadow: inset 0 -1px 0 var(--bs-border-color);
+  }
   .combat-table thead th:nth-child(1) { text-align:left; }
+  .combat-table .th-sort { padding:.45rem .55rem; }
   .combat-table tbody td { text-align:right; white-space:nowrap; padding:.32rem .55rem; line-height:1.45; font-variant-numeric:tabular-nums; }
   .combat-table tbody td:nth-child(1) { text-align:left; }
+  .combat-table tbody tr.combat-row > td:first-child { position:sticky; left:0; z-index:2; background-color:var(--bs-body-bg); box-shadow: inset -1px 0 0 var(--bs-border-color); }
+  .combat-table thead th:nth-child(1) { left:0; z-index:4; }
+  .combat-table tbody tr.combat-row:hover > td:first-child,
+  .combat-table tbody tr.combat-row.is-open > td:first-child { background-color: var(--bs-tertiary-bg); }
+  .combat-table tbody tr.combat-row.is-open > td:first-child { box-shadow:inset 2px 0 0 var(--bs-primary), inset -1px 0 0 var(--bs-border-color); }
   .combat-row { cursor:pointer; }
   .combat-row.is-open > td { background:var(--bs-tertiary-bg); }
-  .combat-row.is-open > td:nth-child(1) { box-shadow:inset 2px 0 0 var(--bs-primary); }
   .combat-toggle { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; margin-right:2px; padding:0; border:0; border-radius:4px; background:none; color:var(--bs-secondary-color); vertical-align:-6px; }
   .combat-toggle:hover { color:var(--bs-body-color); background:var(--bs-secondary-bg); }
   .combat-toggle:focus-visible { outline:2px solid var(--bs-primary); outline-offset:1px; }
   .combat-caret { display:block; font-size:10px; line-height:1; transition:transform .15s ease; }
   .combat-row.is-open .combat-caret { transform:rotate(90deg); }
   .combat-table .combat-name { font-size:13px; }
-  .combat-code { font-size:10px; line-height:1.3; }
-  .combat-cell-sub { display:block; font-size:10px; line-height:1.3; color:var(--bs-secondary-color); }
+  .combat-cell-sub { display:inline; margin-left:.25rem; font-size:10px; line-height:1.3; color:var(--bs-secondary-color); }
   .combat-signal { font-size:11.5px; font-weight:650; }
   .combat-detail-row > td { padding:0 !important; white-space:normal !important; text-align:left !important; background:var(--bs-tertiary-bg); font-variant-numeric:normal; }
   .combat-detail-row[hidden] { display:none; }
@@ -88,6 +99,11 @@
   .combat-detail .combat-indicator { padding:0; border:0; border-radius:0; background:none; }
   .combat-detail .combat-invalidation li { font-size:11.5px; }
   .combat-footnote { margin-top:16px; padding:12px 14px; border:1px solid var(--bs-border-color); border-radius:11px; background:var(--bs-body-bg); font-size:10.5px; line-height:1.7; color:var(--bs-secondary-color); }
+  /* 窄屏放不下 780px 表格：改为横向滚动区，表头在区内吸顶 */
+  @media (max-width:860px) {
+    .combat-table-scroll { overflow:auto; max-height:calc(100dvh - var(--app-header-h, 58px) - 24px); }
+    .combat-table thead th { top:0; }
+  }
   @media (max-width:700px) {
     body[data-page="combat"] { background:var(--bs-body-bg) !important; }
     body[data-page="combat"] #combat-pane { padding:14px 14px 24px !important; }
@@ -125,7 +141,7 @@
 
     /* 表格：压缩内边距，展开区单列阅读 */
     .combat-table { min-width:760px; }
-    .combat-table thead th { padding:.4rem .45rem; }
+    .combat-table .th-sort { padding:.4rem .45rem; }
     .combat-table tbody td { padding:.34rem .45rem; }
     .combat-table .combat-name { font-size:13.5px; }
     .combat-detail { padding:10px 12px 12px; gap:9px; }
@@ -230,24 +246,24 @@
     <div class="combat-workspace-head">
       <div>
         <h2 id="combat-list-heading" class="combat-workspace-title">标的作战清单</h2>
-        <div class="panel-subtitle mt-1">按优先级排序，触发止盈与买入观察排在最前；点击任意一行展开买入检查、止盈跟踪与技术指标，点股票名进入个股详情页。</div>
+        <div class="panel-subtitle mt-1">默认按优先级排序，触发止盈与买入观察排在最前；点表头可切换升序 / 降序 / 恢复默认，点击任意一行展开买入检查、止盈跟踪与技术指标，点股票名进入个股详情页。</div>
       </div>
       <div id="combat-meta" class="panel-subtitle">等待计算</div>
     </div>
-    <div class="combat-table-scroll" tabindex="0" role="region" aria-label="作战清单表格，可横向滚动查看全部列">
+    <div class="combat-table-scroll" tabindex="0" role="region" aria-label="作战清单表格，表头固定、可点表头排序，可横向滚动查看全部列">
       <table class="table table-sm table-hover align-middle mb-0 combat-table" id="combat-table">
         <caption class="visually-hidden">作战清单：名称、现价、涨跌、信号、买入评分、入场价、重仓价、止盈状态、止盈线、日K；点击任意行展开详情</caption>
         <thead>
           <tr>
-            <th scope="col">名称</th>
-            <th scope="col">现价</th>
-            <th scope="col">信号</th>
-            <th scope="col">买入</th>
-            <th scope="col">入场</th>
-            <th scope="col">重仓</th>
-            <th scope="col">止盈状态</th>
-            <th scope="col">止盈线</th>
-            <th scope="col">日K</th>
+            <th scope="col" id="cth-name" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="name">名称<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-price" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="price">现价<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-status" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="status">信号<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-score" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="score">买入<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-entry" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="entry">入场<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-heavy" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="heavy">重仓<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-exitState" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="exitState">止盈状态<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-exitLine" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="exitLine">止盈线<span class="sort-icon" aria-hidden="true"></span></button></th>
+            <th scope="col" id="cth-bars" aria-sort="none"><button type="button" class="th-sort" data-combat-sort="bars">日K<span class="sort-icon" aria-hidden="true"></span></button></th>
           </tr>
         </thead>
         <tbody id="combat-list">
@@ -266,7 +282,7 @@
 <script src="static-quotes.js"></script>
 <script src="indicators.js"></script>
 <script src="trade-signals.js?v=20261029-1400-exitrules"></script>
-<script src="combat-center.js?v=20261029-1700-detailwidth"></script>
+<script src="combat-center.js?v=20261029-1830-sort"></script>
 <script src="stock-dashboard.js"></script>
 
 <script src="password-gate.js"></script>

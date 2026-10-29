@@ -86,12 +86,10 @@ async function main() {
   }
 
   const stocks = readJson(path.join(DATA, 'stocks.json'), []);
-  const holdings = readJson(path.join(DATA, 'holdings.json'), { holdings: [] });
   if (!Array.isArray(stocks) || stocks.length === 0) throw new Error('data/stocks.json is missing or invalid');
 
   const codes = Array.from(new Set([
-    ...stocks.map(item => quoteCode(item && item.code)).filter(Boolean),
-    ...((holdings.holdings || []).map(item => quoteCode(item && item.code)).filter(Boolean))
+    ...stocks.map(item => quoteCode(item && item.code)).filter(Boolean)
   ]));
   const allCodes = Array.from(new Set([...codes, ...INDEX_CODES]));
   const client = new StockQuotes.Client({

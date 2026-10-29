@@ -191,6 +191,11 @@
   .combat-indicator-details { border-top:1px solid var(--bs-border-color); padding-top:9px; font-size:11px; }
   .combat-indicator-details > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0 6px; }
   .combat-review-details, .combat-invalidation { border:1px solid var(--bs-border-color); border-radius:9px; padding:9px 10px; font-size:11px; background:var(--bs-tertiary-bg); margin-top:8px; }
+  .combat-risk-card { border:1px solid var(--bs-border-color); border-radius:9px; padding:9px 10px; font-size:11px; background:var(--bs-tertiary-bg); }
+  .combat-risk-card > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .combat-risk-card > summary::-webkit-details-marker { display:none; }
+  .combat-risk-card > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
+  .combat-risk-card[open] > summary::after { content:'−'; }
   .combat-review-details > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0; }
   .combat-review-details > summary::-webkit-details-marker { display:none; }
   .combat-review-details > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }

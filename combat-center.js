@@ -97,8 +97,12 @@
       } else {
         t = { status: '观望', kind: 'watch', reasons: ['非持仓标的：不提供做T卖出条件'], dataReady: true };
       }
-      try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
-      add = root.StockTradeSignals.evaluateAdd(price, stock, day && day.bars || []);
+      // Only calculate/show add signals after price reaches the configured entry/heavy plan level.
+      // Holdings can still receive T signals above the buy zone, but must not be recommended for adding.
+      if (inBuyZone) {
+        try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
+        add = root.StockTradeSignals.evaluateAdd(price, stock, day && day.bars || []);
+      }
       if (!eligible.eligible && (inBuyZone || (add && add.kind === 'add-ready'))) {
         primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许补仓'] };
       } else if (t && (t.kind === 't-buy' || t.kind === 't-sell')) {

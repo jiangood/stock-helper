@@ -1,6 +1,6 @@
 /*!
  * 股票详情页 —— stock.html 的页面逻辑
- * 依赖：quotes.js（行情 SDK）、lightweight-charts（日/月 K）
+ * 依赖：static-quotes.js（同源静态行情缓存）、lightweight-charts（日/月 K）
  * 入口：stock.html?code=sz002408
  */
 (function () {
@@ -218,7 +218,7 @@
     if (manual) {
     }
     loadChart(chartTab, manual).catch(() => {});
-    if (manual) showToast('数据已刷新', 'success');
+    if (manual) showToast('已重新读取静态行情缓存', 'success');
   }
 
   /* ────────────────────────── 渲染：头部 / 行情 ────────────────────────── */

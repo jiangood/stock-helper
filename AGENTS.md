@@ -66,6 +66,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 股息率 `divYield`（%）：近 12 个月已除权分红 ÷ 现价，以腾讯口径为准，东方财富作兜底
   - 市值单位：`totalCap` / `floatCap` 为元（首页显示时换算成亿 / 万亿）
   - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`
+- `scripts/validate_stock_data.js` — 行情与基本面发布前的数据完整性校验；校验失败必须阻止提交，不得自动填充或修正缺失值
 - `scripts/fetch_stock_snapshot.js` + `.github/workflows/stock-snapshot.yml` — 每个工作日北京时间收盘后抓取股票池行情；日线每日更新、周线每周更新、月线随最新行情日更新（避免当月月 K 整月滞后）；非交易日期跳过详情/K线抓取，失败时保留有效缓存，只提交有变化的数据
 - `data/stock-quotes.json`、`data/stock-cache/<code>.json`、`data/index-cache.json` — 行情、个股详情、日/周/月 K 线与指数历史静态缓存
 - `data/sector-monthly.json` — 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅与月线覆盖来源；由 `scripts/build_sector_monthly.js` 在每次行情采集后生成，行情页只读这个小文件，不逐只拉个股缓存

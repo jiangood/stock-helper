@@ -33,8 +33,8 @@ python -m http.server 8089
 | `scripts/calibrate_research_score.js` | 用 17 份带评分卡明细的研报回归校准评分阈值（只读本地缓存，不联网） |
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
-| `static-quotes.js` | 浏览器端静态行情适配器；只读同源 JSON，优先使用 IndexedDB 缓存并复用数据库连接，失败时回退 localStorage，不直接访问行情供应商 |
-| `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、IndexedDB 约定、静态部署下 SQL 数据库的适用边界与迁移要求 |
+| `static-quotes.js` | 浏览器端静态行情适配器；每次直接读取同源 JSON，禁用 HTTP 缓存，不使用 IndexedDB、localStorage 或内存数据缓存，不直接访问行情供应商 |
+| `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、禁止前端数据缓存的约定，以及静态部署下 SQL 数据库的适用边界 |
 | `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
 | `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
 | `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
@@ -126,12 +126,12 @@ python -m http.server 8089
 - 页面只读取 GitHub Pages 同源静态 JSON；东方财富/腾讯行情接口只由 GitHub Actions 采集脚本调用。
 - A 股缓存工作日北京时间收盘后更新；日线每日检查，周线每周检查，月线随最新行情日检查（保证当月月 K 不滞后）。全球资产每日检查，商品数据工作日每日检查。
 - 采集失败或数据质量不合格时保留上一次有效数据；数据没有实质变化时不更新时间、不产生新的数据提交。
-- 页面优先读取静态缓存，网络不可用时回退到浏览器最近一次成功缓存；池外股票代码不再从浏览器实时回源。
+- 页面每次直接请求同源静态 JSON（`cache: 'no-store'`），不保留浏览器旧数据；网络不可用时明确显示读取失败；池外股票代码不再从浏览器实时回源。
 - 这套设计提供延迟的收盘行情，不是实时行情；GitHub Actions 的定时任务可能延迟。
 
 ## 采集端行情 SDK
 
-`quotes.js` 只由 GitHub Actions 采集脚本调用。网页使用 `static-quotes.js`，仅读取同源静态缓存，不直接访问东方财富或腾讯行情接口。
+`quotes.js` 只由 GitHub Actions 采集脚本调用。网页使用 `static-quotes.js`，每次直接读取同源静态 JSON，不使用浏览器缓存或前端数据库，也不直接访问东方财富或腾讯行情接口。
 
 ```js
 const q = new StockQuotes.Client({ timeout: 8000, cacheTTL: 1000 });

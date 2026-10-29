@@ -938,6 +938,15 @@
     const extraEl = $('discipline-extra-checks');
     if (extraEl) extraEl.innerHTML = extraChecks.join('');
 
+    // 需要结合公司资料与行业研究的纪律：明确展示为灰色待人工核对，不伪造自动结论。
+    const manualChecks = [
+      checkItem('neutral', '国资背景', '无法自动判断', '需要核对实际控制人、股权结构及国资持股性质'),
+      checkItem('neutral', '主营集中度', '无法自动判断', '需要核对分业务收入/利润占比及主营业务变化'),
+      checkItem('neutral', '护城河', '无法自动判断', '需要人工评估成本优势、资源禀赋、品牌/渠道与竞争格局')
+    ];
+    const manualEl = $('discipline-manual-checks');
+    if (manualEl) manualEl.innerHTML = manualChecks.join('');
+
     const scoreEl = $('discipline-score');
     if (scoreEl) {
       scoreEl.innerHTML = sc.allPass

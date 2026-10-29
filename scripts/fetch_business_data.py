@@ -568,6 +568,19 @@ def main() -> int:
     successful = sum(1 for item in payload["items"].values() if item.get("latest"))
     if not fresh or successful == 0:
         raise RuntimeError("No fresh valid commodity observations were fetched; preserving the last good file.")
+    # Avoid a commit caused only by advancing the collection timestamp.
+    try:
+        previous_payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        previous_payload = {}
+    comparable = dict(payload)
+    comparable.pop("updatedAt", None)
+    previous_comparable = dict(previous_payload) if isinstance(previous_payload, dict) else {}
+    previous_comparable.pop("updatedAt", None)
+    if previous_comparable and comparable == previous_comparable:
+        print("No commodity data changes; preserving the previous snapshot.")
+        return 0
+
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUTPUT.name}: {successful}/{len(PRODUCTS)} products with data")
     for item in payload["items"].values():

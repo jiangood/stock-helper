@@ -8,7 +8,7 @@
   function pct(v) { return v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v)) ? (Number(v) > 0 ? '+' : '') + Number(v).toFixed(2) + '%' : '—'; }
   function codeOf(code) { return String(code || '').trim().toLowerCase(); }
   function quoteFor(code) { return state.prices[code] || state.prices[codeOf(code)] || null; }
-  function statusClass(kind) { return ({ 't-buy':'combat-good','t-sell':'combat-warn','add-ready':'combat-good','add-watch':'combat-warn','risk':'combat-risk','data':'combat-data','watch':'combat-neutral' })[kind] || 'combat-neutral'; }
+  function statusClass(kind) { return ({ 'add-ready':'combat-good','add-watch':'combat-warn','risk':'combat-risk','data':'combat-data','watch':'combat-neutral' })[kind] || 'combat-neutral'; }
   function isHolding(code) { return state.holdings.some(function (h) { return codeOf(h.code) === codeOf(code); }); }
   function holdingFor(code) { return state.holdings.find(function (h) { return codeOf(h.code) === codeOf(code); }) || null; }
   function mergeUniverse() {
@@ -36,13 +36,12 @@
   function render() {
     var summary = $('combat-summary'), list = $('combat-list'), meta = $('combat-meta');
     if (!summary || !list || !meta) return;
-    var rows = state.rows, counts = { ready: 0, watch: 0, risk: 0, data: 0, t: 0, add: 0 };
+    var rows = state.rows, counts = { ready: 0, watch: 0, risk: 0, data: 0, add: 0 };
     rows.forEach(function (r) {
       if (r.primary.kind === 'risk') counts.risk++;
       else if (r.primary.kind === 'data') counts.data++;
       else if (r.primary.kind === 'watch' || r.primary.kind === 'add-watch') counts.watch++;
       else counts.ready++;
-      if (r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell')) counts.t++;
       if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) counts.add++;
     });
     summary.innerHTML = [
@@ -51,9 +50,8 @@
       ['风险拦截', counts.risk, '硬性纪律优先'],
       ['数据不足', counts.data, '不生成确定信号']
     ].map(function (x) { return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">' + x[0] + '</div><div class="combat-metric">' + x[1] + '</div><div class="mini-label">' + x[2] + '</div></div></div>'; }).join('');
-    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只（持仓 + 股票池去重） · 做T条件 ' + counts.t + ' · 买入观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
+    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只（持仓 + 股票池去重） · 买入观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
     var filtered = rows.filter(function (r) {
-      if (state.filter === 't') return r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell');
       if (state.filter === 'add') return r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch');
       if (state.filter === 'watch') return r.primary.kind === 'watch';
       if (state.filter === 'risk') return r.primary.kind === 'risk';
@@ -69,9 +67,8 @@
       var h = r.holding, held = !!h, qty = h ? Number(h.quantity) : 0;
       var actionName = '买入';
       var badges = '<span class="combat-badge ' + statusClass(r.primary.kind) + '">' + esc(r.primary.status) + '</span>';
-      if (r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell')) badges += '<span class="combat-badge ' + statusClass(r.t.kind) + '">' + esc(r.t.status) + '</span>';
       if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + esc(r.add.status) + ' ' + r.add.score + '/' + (r.add.scoreMax || 3) + '</span>';
-      var reasons = (r.primary.reasons || []).concat(r.t && Array.isArray(r.t.reasons) ? r.t.reasons.slice(0, 2).map(function (x) { return '做T：' + x; }) : [], r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return actionName + '：' + x; }) : []);
+      var reasons = (r.primary.reasons || []).concat(r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return actionName + '：' + x; }) : []);
       if (!reasons.length) reasons = ['价格未到计划区，暂不触发操作条件'];
       var plan = [s.heavy ? '重仓 ' + money(s.heavy) : null, s.entry ? '入场 ' + money(s.entry) : null, s.tp1 ? '止盈1 ' + money(s.tp1) : null].filter(Boolean).join(' · ');
       var pnl = held && p !== null ? (p - Number(h.cost)) * qty : null;
@@ -90,10 +87,10 @@
   }
   async function calculateOne(stock) {
     var code = codeOf(stock.code), quote = quoteFor(code), holding = holdingFor(code), price = quote && Number(quote.price) > 0 ? Number(quote.price) : null;
-    var eligible = gate(stock, quote), t = null, add = null, dataNote = '', day = null, indicators = null;
+    var eligible = gate(stock, quote), add = null, dataNote = '', day = null, indicators = null;
     if (price === null) {
       var missing = { status: '数据不足', kind: 'data', reasons: ['当前行情无有效价格，不使用过期空值推断'], dataReady: false };
-      return { stock: stock, quote: quote, holding: holding, primary: missing, t: null, add: null, dataNote: '行情缺失' };
+      return { stock: stock, quote: quote, holding: holding, primary: missing, add: null, dataNote: '行情缺失' };
     }
     try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
     var bars = day && Array.isArray(day.bars) ? day.bars : [];
@@ -125,34 +122,23 @@
     var poolWatch = stock.inPool || stock.pool !== false;
     var primary = { status: '观望', kind: 'watch', reasons: [inBuyZone ? '现价进入计划价区，但触价不等于买入信号' : nearPlan ? '接近计划价区，等待技术条件确认' : '现价未到计划价区，暂不追价'] };
     if ((holding || nearPlan || inBuyZone) && root.StockTradeSignals) {
-      var minute = null, trends = null;
-      if (holding) {
-        try { minute = await state.client.fetchMinuteKline(code, { period: '15', count: 320 }); } catch (_) {}
-        try { trends = await state.client.fetchTrends(code, { days: 1 }); } catch (_) {}
-        t = root.StockTradeSignals.evaluateT(price, quote, trends, minute && minute.bars || [], holding.quantity);
-      } else {
-        t = { status: '观望', kind: 'watch', reasons: ['非持仓标的：不提供做T卖出条件'], dataReady: true };
-      }
       // Only calculate/show add signals after price reaches the configured entry/heavy plan level.
-      // Holdings can still receive T signals above the buy zone, but must not be recommended for adding.
       if (inBuyZone) {
         // Same five-factor scoring for all candidates.
         add = root.StockTradeSignals.evaluateAdd(price, Object.assign({}, stock, { inHolding: !!holding }), bars);
       }
       if (!eligible.eligible && (inBuyZone || (add && add.kind === 'add-ready'))) {
         primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许买入'] };
-      } else if (t && (t.kind === 't-buy' || t.kind === 't-sell')) {
-        primary = { status: t.status, kind: t.kind, reasons: t.reasons };
       } else if (add && (add.kind === 'add-ready' || add.kind === 'add-watch')) {
         primary = { status: add.status, kind: add.kind, reasons: add.reasons.slice(0, 3) };
       } else if (add && add.kind === 'data') {
         primary = { status: '数据不足', kind: 'data', reasons: add.reasons };
       }
-      dataNote = '日K ' + (bars.length ? bars.length + ' 根' : '不可用') + ' · 分钟K ' + (minute && minute.bars ? minute.bars.length + ' 根' : (holding ? '不可用' : '不适用'));
+      dataNote = '日K ' + (bars.length ? bars.length + ' 根' : '不可用');
     } else if (inBuyZone && !eligible.eligible) {
       primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许补仓'] };
     }
-    return { stock: stock, quote: quote, holding: holding, primary: primary, t: t, add: add, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
+    return { stock: stock, quote: quote, holding: holding, primary: primary, add: add, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
   }
   async function run(force) {
     if (state.loading) return;
@@ -164,7 +150,7 @@
         state.holdings = data.holdings || [];
       }
       var universe = mergeUniverse();
-      state.rows = universe.map(function (stock) { return { stock: stock, quote: quoteFor(stock.code), holding: holdingFor(stock.code), primary: { status: '计算中', kind: 'data', reasons: [] }, t: null, add: null }; });
+      state.rows = universe.map(function (stock) { return { stock: stock, quote: quoteFor(stock.code), holding: holdingFor(stock.code), primary: { status: '计算中', kind: 'data', reasons: [] }, add: null }; });
       render();
       var results = [];
       await limitedMap(universe, 4, async function (stock) { results.push(await calculateOne(stock)); });
@@ -172,7 +158,7 @@
       state.rows = results.sort(function (a, b) {
         // Put genuinely actionable signals first; risk blocks and missing data must never outrank them.
         var rank = function (r) {
-          if (r.primary.kind === 't-buy' || r.primary.kind === 't-sell' || r.primary.kind === 'add-ready') return 0;
+          if (r.primary.kind === 'add-ready') return 0;
           if (r.primary.kind === 'add-watch') return 1;
           if (r.primary.kind === 'watch') return 2;
           if (r.primary.kind === 'risk') return 3;
@@ -181,10 +167,9 @@
         };
         var diff = rank(a) - rank(b);
         if (diff) return diff;
-        // Within actionable items, prioritize a higher-confidence add/T signal and keep holdings ahead of pool-only names.
+        // Within actionable items, prioritize higher-confidence buy signals and keep holdings ahead of pool-only names.
         var signalScore = function (r) {
           var score = 0;
-          if (r.primary.kind === 't-buy' || r.primary.kind === 't-sell') score += 30;
           if (r.primary.kind === 'add-ready') score += 25 + (Number(r.add && r.add.score) || 0);
           if (r.primary.kind === 'add-watch') score += 10 + (Number(r.add && r.add.score) || 0);
           if (r.holding) score += 2;
@@ -198,7 +183,7 @@
     render();
   }
   function ensureUi() {
-    ['combat-filter-all','combat-filter-t','combat-filter-add','combat-filter-watch','combat-filter-risk','combat-filter-data'].forEach(function (id) {
+    ['combat-filter-all','combat-filter-add','combat-filter-watch','combat-filter-risk','combat-filter-data'].forEach(function (id) {
       var el = $(id); if (!el || el.dataset.bound) return;
       el.dataset.bound = '1';
       el.addEventListener('click', function () {

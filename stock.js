@@ -28,26 +28,9 @@
   let historyAt = 0;
   let HISTORY = null;
 
-  let MIN15 = null;
-  let MIN15At = 0;
-  let MIN15Failed = false;
-  let TRENDS = null;
-  let TRENDSAt = 0;
   let DAY_FAILED = false;
 
-  /* 做T / 补仓 判定阈值（集中调参） */
-  const T_RULES = {
-    vwapDev: 1.0,      // 偏离 VWAP 多少 % 算低吸 / 高抛
-    mfiLow: 25,        // 15 分 MFI 低吸
-    mfiHigh: 75,       // 15 分 MFI 高抛
-    volSurge: 1.3,     // 近 3 根 / 前 12 根 均量，放量阈值
-    volShrink: 1.0,    // 低于该量比算缩量
-    trendDev: 2.5,     // 偏离超过多少 % 且放量 -> 单边
-    spread: 2,         // 默认 T 差价目标 %
-    stall: 0.5,        // 近 3 根涨跌幅多少 % 以内算滞涨
-    minuteTTL: 3 * 60 * 1000
-  };
-
+  /* 补仓（日线）判定阈值（集中调参） */
   const ADD_RULES = {
     supportDist: 3,    // 距支撑多少 % 以内算到支撑
     mfiLow: 20,        // MFI < 20 后回升上穿
@@ -214,8 +197,6 @@
       loadPeers();
       warmupDaily();
       warmupHistory();
-      warmupTrends();
-      warmupMinute();
       return true;
     } catch (e) {
       console.warn('获取详情失败:', e);
@@ -235,8 +216,6 @@
     const ok = await loadQuote(manual);
     if (!ok) return;
     if (manual) {
-      warmupTrends(true);
-      warmupMinute(true);
     }
     loadChart(chartTab, manual).catch(() => {});
     if (manual) showToast('数据已刷新', 'success');
@@ -249,7 +228,6 @@
     renderQuote(DETAIL);
     renderValuation(DETAIL);
     renderPlan(DETAIL);
-    renderT(DETAIL);
     renderAdd(DETAIL);
     renderDiscipline(DETAIL);
     updateCalc();
@@ -530,193 +508,16 @@
     renderInsightTags(DETAIL);
   }
 
-  /* ────────────────────────── 做T / 补仓数据 ────────────────────────── */
+  /* ────────────────────────── 补仓数据 ────────────────────────── */
 
   function dayBars() {
     return klineCache.day && Array.isArray(klineCache.day.bars) ? klineCache.day.bars : [];
   }
 
-  function minuteBars() {
-    return MIN15 && Array.isArray(MIN15.bars) ? MIN15.bars : [];
-  }
-
-  const todayStr = () => {
-    const t = new Date();
-    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
-  };
-
-  const isStale = time => String(time || '').slice(0, 10) !== todayStr();
-
-  /** 当日 VWAP：优先分时均价，其次分时累计成交额/量，最后详情均价 */
-  function vwapOf(detail, trends) {
-    const points = trends && Array.isArray(trends.points) ? trends.points : [];
-    if (points.length) {
-      const last = points[points.length - 1];
-      if (isNum(last.avg) && last.avg > 0) {
-        return { value: last.avg, source: '分时均价', time: last.time, stale: isStale(last.time) };
-      }
-      let amount = 0;
-      let pv = 0;
-      let vol = 0;
-      for (const p of points) {
-        const v = isNum(p.volume) ? p.volume : 0;
-        if (isNum(p.amount) && p.amount > 0 && v > 0) {
-          amount += p.amount;
-          vol += v;
-        } else if (isNum(p.price) && v > 0) {
-          pv += p.price * v;
-          vol += v;
-        }
-      }
-      if (amount > 0 && vol > 0) {
-        // 东财 amount 为元、volume 为手
-        return { value: amount / (vol * 100), source: '分时成交额', time: last.time, stale: isStale(last.time) };
-      }
-      if (pv > 0 && vol > 0) {
-        return { value: pv / vol, source: '分时加权', time: last.time, stale: isStale(last.time) };
-      }
-    }
-    if (detail && isNum(detail.avg) && detail.avg > 0) {
-      return { value: detail.avg, source: '当日均价', time: null, stale: false };
-    }
-    return null;
-  }
-
-  async function warmupTrends(force) {
-    if (!CODE) return;
-    if (!force && TRENDS && Date.now() - TRENDSAt < 50 * 1000) return;
-    try {
-      TRENDS = await quotes.fetchTrends(CODE, { days: 1, force: !!force });
-      TRENDSAt = Date.now();
-    } catch (e) {
-      /* 分时失败时用详情均价兜底 */
-    }
-    renderT(DETAIL);
-  }
-
-  async function warmupMinute(force) {
-    if (!CODE) return;
-    if (!force && MIN15 && Date.now() - MIN15At < T_RULES.minuteTTL) return;
-    try {
-      MIN15 = await quotes.fetchMinuteKline(CODE, { period: '15', count: 320, force: !!force });
-      MIN15At = Date.now();
-      MIN15Failed = false;
-    } catch (e) {
-      /* 分钟 K 失败不影响主流程 */
-      MIN15Failed = true;
-    }
-    renderT(DETAIL);
-  }
-
-  /** 近 3 根是否放量滞涨 */
-  function recentStall(bars, pct) {
-    if (!bars || bars.length < 5) return false;
-    const last = bars[bars.length - 1];
-    const ref = bars[bars.length - 4];
-    if (!last || !ref || !isNum(last.close) || !isNum(ref.close) || !(ref.close > 0)) return false;
-    return Math.abs((last.close / ref.close - 1) * 100) <= pct;
-  }
-
   function badge(el, text, cls) {
+    if (!el) return;
     el.textContent = text;
     el.className = 'badge rounded-pill ' + cls;
-  }
-
-  function renderT(d) {
-    if (!d || typeof TechInd === 'undefined') return;
-    const price = d.price;
-    const bars = minuteBars();
-    const vw = vwapOf(d, TRENDS);
-    const mfiRes = bars.length >= 16 ? TechInd.mfi(bars, 14) : null;
-    const mfi = mfiRes ? mfiRes.latest : null;
-    const vr = bars.length >= 15 ? TechInd.volumeRatio(bars, 3, 12) : null;
-    const dev = vw && isNum(price) ? (price / vw.value - 1) * 100 : null;
-    const surge = vr !== null && vr >= T_RULES.volSurge;
-    const shrink = vr !== null && vr < T_RULES.volShrink;
-    const single = dev !== null && Math.abs(dev) > T_RULES.trendDev && surge;
-    const stall = recentStall(bars, T_RULES.stall);
-
-    const buy = dev !== null && dev <= -T_RULES.vwapDev
-      && mfi !== null && mfi < T_RULES.mfiLow && shrink;
-    const sell = dev !== null && dev >= T_RULES.vwapDev
-      && mfi !== null && mfi > T_RULES.mfiHigh && surge && stall;
-
-    let text = '观望';
-    let tone = 'text-bg-secondary';
-    if (!bars.length && !vw) text = '加载中…';
-    else if (!bars.length) text = MIN15Failed ? '分钟K 不可用' : '分钟数据不足';
-    else if (single) { text = '单边 · 不逆势做T'; tone = 'text-bg-warning'; }
-    else if (buy) { text = '正T 买点'; tone = 'text-bg-success'; }
-    else if (sell) { text = 'T 卖点'; tone = 'text-bg-warning'; }
-    else if (dev !== null && Math.abs(dev) > T_RULES.trendDev) { text = '单边，观望'; tone = 'text-bg-warning'; }
-    else if (dev !== null && Math.abs(dev) < 0.5) text = '贴近均价，等偏离';
-    badge($('t-badge'), text, tone);
-
-    const checks = [];
-
-    if (dev === null) {
-      checks.push(checkItem('neutral', 'VWAP 偏离', '—', '分时 / 均价数据加载中…'));
-    } else {
-      const t = dev <= -T_RULES.vwapDev ? 'ok' : dev >= T_RULES.vwapDev ? 'warn' : 'neutral';
-      const note = dev <= -T_RULES.vwapDev ? '现价低于均价，正T低吸区'
-        : dev >= T_RULES.vwapDev ? '现价高于均价，倒T高抛区' : '围绕均价震荡';
-      checks.push(checkItem(t, 'VWAP 偏离', `${fmtPct(dev)} · 均价 ${fmtNum(vw.value)}`, note));
-    }
-
-    const mfiTone = mfi === null ? 'neutral' : mfi < T_RULES.mfiLow ? 'ok' : mfi > T_RULES.mfiHigh ? 'warn' : 'neutral';
-    const mfiNote = mfi === null ? '15 分 K 数据不足'
-      : mfi < T_RULES.mfiLow ? `低于 ${T_RULES.mfiLow}，超卖`
-        : mfi > T_RULES.mfiHigh ? `高于 ${T_RULES.mfiHigh}，超买` : '中性区间';
-    checks.push(checkItem(mfiTone, '15 分 MFI', mfi === null ? '—' : mfi.toFixed(1), mfiNote));
-
-    checks.push(checkItem(
-      surge ? 'warn' : shrink ? 'ok' : 'neutral',
-      '量能（3/12）',
-      vr === null ? '—' : `${vr.toFixed(2)}×`,
-      vr === null ? '分钟 K 数据不足' : surge ? '放量，追单需谨慎' : shrink ? '缩量，利于低吸' : '量能平稳'
-    ));
-
-    checks.push(checkItem(
-      dev === null ? 'neutral' : single ? 'bad' : 'ok',
-      '单边过滤',
-      dev === null ? '—' : `${fmtPct(dev)} · ${surge ? '放量' : '正常量'}`,
-      single ? '单边行情，不逆势做T' : '未触发单边过滤'
-    ));
-
-    $('t-checks').innerHTML = checks.join('');
-
-    $('t-stats').innerHTML = [
-      ['现价', fmtNum(price)],
-      ['VWAP', vw ? fmtNum(vw.value) : '—'],
-      ['偏离均价', fmtPct(dev)],
-      ['15分 MFI', mfi === null ? '—' : mfi.toFixed(1)],
-      ['量比 3/12', vr === null ? '—' : vr.toFixed(2) + '×'],
-      ['分钟K样本', bars.length ? `${bars.length} 根` : '—']
-    ].map(([k, v]) => statItem(k, v)).join('');
-
-    if (!vw) {
-      $('t-ref').innerHTML = '<span class="text-body-secondary">均价数据加载中…</span>';
-    } else {
-      const lowBuy = vw.value * (1 - T_RULES.vwapDev / 100);
-      const highSell = vw.value * (1 + T_RULES.vwapDev / 100);
-      const target = lowBuy * (1 + T_RULES.spread / 100);
-      const sessionNote = !StockQuotes.isTrading()
-        ? `${vw.stale ? '非交易时段 · 上一交易日' : '非交易时段 · 最近交易日'}${vw.time ? ' ' + String(vw.time).slice(0, 16) : ''}`
-        : `均价来源：${vw.source}`;
-      const sampleNote = bars.length
-        ? `样本 ${bars.length} 根（约 20 个交易日）`
-        : '分钟 K 数据不足';
-      $('t-ref').innerHTML = `
-        <div class="sell-line">正T：均价下 ${T_RULES.vwapDev}% 低吸 <b>${fmtNum(lowBuy)}</b>
-          → 回到均价 <b>${fmtNum(vw.value)}</b> 卖出 · 差价目标 ${T_RULES.spread}%（<b>${fmtNum(target)}</b>）</div>
-        <div class="sell-line">倒T：均价上 ${T_RULES.vwapDev}% 高抛 <b>${fmtNum(highSell)}</b>
-          → 回落接回，不等当日新低</div>
-        <div class="sell-line text-body-secondary">${esc(sessionNote)} · ${esc(sampleNote)}</div>`;
-    }
-
-    $('t-note').textContent = `15 分 K · ${bars.length || '—'} 根`
-      + (vw && vw.stale ? ' · 上一交易日' : '')
-      + (MIN15Failed ? ' · 获取失败' : '');
   }
 
   /** MFI < 20 后回升上穿 20 */
@@ -842,7 +643,7 @@
     let hintText;
     if (!bars.length) {
       hintText = DAY_FAILED
-        ? '日K 获取失败，补仓面板暂不可用；不影响行情与做T。'
+        ? '日K 获取失败，补仓面板暂不可用；不影响行情展示。'
         : '日K 数据加载中；补仓看日线是否止跌，三项缺一即降级。';
     } else if (score >= 3) {
       hintCls = 'alert-success';

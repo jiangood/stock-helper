@@ -5,7 +5,7 @@ global.TechInd = require('../indicators.js');
 require('../trade-signals.js');
 const Signals = global.StockTradeSignals;
 
-test('shared buy/add score includes RSI and MACD confirmations', () => {
+test('buy score includes RSI and MACD confirmations regardless of holding state', () => {
   const bars = Array.from({ length: 120 }, (_, i) => {
     const close = 20 + i * 0.03 + Math.sin(i / 3) * 1.5;
     return { open: close - 0.1, high: close + 0.5, low: close - 0.5, close, volume: 1000 + i * 2 };
@@ -23,7 +23,7 @@ test('shared buy/add score includes RSI and MACD confirmations', () => {
   assert.equal(result.action, '买入');
   assert.match(result.status, /买入条件/);
   const heldResult = Signals.evaluateAdd(bars[bars.length - 1].close, { heavy: bars[bars.length - 1].close, inHolding: true }, bars);
-  assert.equal(heldResult.action, '补仓');
-  assert.match(heldResult.status, /补仓条件/);
+  assert.equal(heldResult.action, '买入');
+  assert.match(heldResult.status, /买入条件/);
   assert.equal(heldResult.score, result.score, '持仓状态只改变动作名称，不改变评分');
 });

@@ -6,13 +6,13 @@
  * 数据源（自动降级，取到数据即止）
  *   1) eastmoney  东方财富 push2 批量接口（JSON，支持跨域）
  *   2) tencent    腾讯财经 qt.gtimg.cn 批量接口（GBK，支持跨域）
- *   3) tencent    腾讯 ifzq K 线 / 分钟线接口（JSON，支持跨域）
+ *   3) tencent    腾讯 ifzq K 线接口（JSON，支持跨域）
  *
  * 特性
  *   · 批量拉取（自动分片，单次默认 60 只）、单只拉取
  *   · 股息率（TTM：近 12 个月已除权分红 ÷ 现价，以腾讯口径为准，东财 f133 兜底）
  *   · 单只详情（开高低收、量额、换手、量比、振幅、PE/PB、市值、涨跌停）
- *   · K 线（日/周/月，前复权/后复权/不复权）与分时（含均价线）
+ *   · 日/周/月 K 线（前复权/后复权/不复权）
  *   · 代码格式宽容：'002408' / 'sz002408' / 'SZ002408'
  *   · 多源 + 多域名自动降级，单个源缺数据时用下一个源补齐
  *   · 超时、重试、内置短时缓存、外部 AbortSignal 取消
@@ -25,7 +25,7 @@
  *   // data = { sz002408: { code, name, price, prevClose, change, todayChange,
  *   //                     pe, pb, totalCap, floatCap, divYield, time }, ... }
  *
- * 单只详情 / K 线 / 分时（详情页使用）
+ * 单只详情 / K 线（详情页使用）
  *   await quotes.fetchDetail('sz002408');
  *   // { code, name, price, open, high, low, prevClose, avg, volume, amount,
  *   //   turnover, volumeRatio, amplitude, limitUp, limitDown, pe, pb,
@@ -315,7 +315,7 @@
     return new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]).getTime();
   }
 
-  /* ────────────────────── K 线 / 分时解析 ────────────────────── */
+  /* ────────────────────── K 线解析 ────────────────────── */
 
   /** 腾讯 fqkline JSON -> K 线数组（日期, 开, 收, 高, 低, 量） */
   function parseTencentKline(json, code, period, adjust) {
@@ -404,7 +404,7 @@
     }
   };
 
-  /* ────────────────────── 单只详情 / K 线 / 分时数据源 ────────────────────── */
+  /* ────────────────────── 单只详情 / K 线数据源 ────────────────────── */
 
   const DETAIL_FIELDS = [
     'f43', 'f44', 'f45', 'f46', 'f47', 'f48', 'f50', 'f51', 'f52',

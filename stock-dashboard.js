@@ -6,7 +6,9 @@ const priceData = {};          // code -> { price, prevClose, change, todayChang
 let filteredStocks = [];
 let sortState = { col: null, dir: 1 };
 let RESEARCH = { totalMax: 32, bands: [], criteria: {} };
-const researchScores = {};     // code -> { items, points, max, band, metrics }
+const researchScores = {};     // code -> { items, points, max, percent, band, metrics }
+let REPORT_SCORES = {};        // code -> { score, date, source, alternates }
+let REPORT_BANDS = [];
 
 const $ = id => document.getElementById(id);
 
@@ -90,6 +92,24 @@ async function loadResearchScores() {
   }
 }
 
+/** 读取研报已给出的总分（静态摘录，人工维护一次即可） */
+async function loadReportScores() {
+  try {
+    const res = await fetch(new URL('data/research-reports.json', document.baseURI).href, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const payload = await res.json();
+    REPORT_SCORES = payload && payload.reports ? payload.reports : {};
+    REPORT_BANDS = Array.isArray(payload && payload.bands) ? payload.bands : [];
+  } catch (e) {
+    console.warn('研报评分表加载失败：', e.message);
+    REPORT_SCORES = {};
+    REPORT_BANDS = [];
+  }
+}
+
 /** 预计算拼音检索键（名称 + 别名），只算一次 */
 function buildSearchKeys() {
   if (typeof Pinyin === 'undefined') return;
@@ -129,8 +149,10 @@ function getSortValue(stock, col) {
     case 'divYield': return pd ? pd.divYield : null;
     case 'screen':   return pd ? Croc.screen(stock, pd).passed : null;
     case 'research': {
+      const report = REPORT_SCORES[stock.code];
+      if (report && isFinite(report.score)) return report.score;
       const score = researchScores[stock.code];
-      return score && isFinite(score.points) ? score.points : null;
+      return score && isFinite(score.percent) ? score.percent : null;
     }
     case 'entry':    return (price != null && stock.entry) ? (price - stock.entry) / stock.entry : null;
     case 'heavy':    return (price != null && stock.heavy) ? (price - stock.heavy) / stock.heavy : null;
@@ -288,8 +310,13 @@ function updateSummary() {
     if (e.pbGolden) c.pb80++;
     if (e.st || e.loss) c.risk++;
     if (Croc.screen(s, priceData[s.code]).allPass) c.pass++;
-    const score = researchScores[s.code];
-    if (score && isFinite(score.points) && score.points >= 24) c.score++;
+    const report = REPORT_SCORES[s.code];
+    if (report && isFinite(report.score)) {
+      if (report.score >= 80) c.score++;
+    } else {
+      const score = researchScores[s.code];
+      if (score && isFinite(score.percent) && score.percent >= 75) c.score++;
+    }
   });
   el.innerHTML = `重仓 <b class="text-body">${c.heavy}</b> · 破净 <b class="text-body">${c.pb}</b>`
     + ` · 八折 <b class="text-body">${c.pb80}</b> · 纪律 <b class="text-body">${c.pass}</b>`
@@ -401,8 +428,38 @@ function screenHtml(stock, pd, e) {
   return `<span class="text-body-tertiary" style="font-size:11px" title="${esc(tip)}">${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
 }
 
-/** 首页评分列：研报 10 项评分卡里可自动复算的 4 项，32 分制折算成百分比 */
+/** 距今天数换算成月（用于标注研报是否过时） */
+function monthsSince(dateStr) {
+  const date = new Date(dateStr + 'T00:00:00');
+  if (isNaN(date.getTime())) return null;
+  const now = new Date();
+  const months = (now.getFullYear() - date.getFullYear()) * 12 + (now.getMonth() - date.getMonth());
+  return months < 0 ? 0 : months;
+}
+
+function reportBandLabel(score) {
+  const band = (REPORT_BANDS || []).find(item => score >= item.min);
+  return band ? band.label : '';
+}
+
+/** 首页评分列：有研报分就用研报分（注明来源与日期），没有才回落到 32 分制机器分 */
 function researchHtml(stock) {
+  const report = REPORT_SCORES[stock.code];
+  if (report && isFinite(report.score)) {
+    const months = monthsSince(report.date);
+    const stale = months !== null && months >= 12;
+    const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
+    const alt = (report.alternates || [])
+      .map(item => `${item.date} ${item.score.toFixed(1)} 分（${item.source}）`)
+      .join('；');
+    const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}`
+      + `\n来源：${report.source}\n报告日期：${report.date}`
+      + (months !== null ? `（${months} 个月前${stale ? '，可能已过时' : ''}）` : '')
+      + (alt ? '\n另有：' + alt : '');
+    return `<span class="score score-${tone}" title="${esc(tip)}">${report.score.toFixed(1)}`
+      + `<span class="unit">分</span><span class="score-tag${stale ? ' score-tag-stale' : ''}">研${stale ? '·旧' : ''}</span></span>`;
+  }
+
   const score = researchScores[stock.code];
   if (!score || !isFinite(score.points)) return '<span class="text-body-tertiary">—</span>';
   const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
@@ -416,11 +473,11 @@ function researchHtml(stock) {
     `月线 ${fmtScore(items.bottom)}/9`,
     `放量 ${fmtScore(items.volume)}/6`
   ].join(' · ');
-  const tip = `研报评分 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n`
-    + '仅复算市值/盘整/月线位置/底部放量 4 项并按百分制折算，不含国资背景等基本面项；不构成投资建议';
+  const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n`
+    + '暂无研报总分，按 4 项位置指标折算；不含基本面项，不构成投资建议';
   const suffix = score.complete ? '' : '?';
   return `<span class="score score-${tone}" title="${esc(tip)}">${percent.toFixed(1)}`
-    + `<span class="unit">分${suffix}</span></span>`;
+    + `<span class="unit">分${suffix}</span><span class="score-tag">算</span></span>`;
 }
 
 function fmtScore(value) {
@@ -624,12 +681,25 @@ function showToast(msg, type) {
 // ============================================================
 // 筛选
 // ============================================================
-/** 状态筛选：评分阈值由研报评分文件判断，其余交给 Croc */
+/** 状态筛选：评分相关由研报分与机器分共同判断，其余交给 Croc */
 function matchStatusFilter(stock, status) {
+  if (status === 'score-report') return !!REPORT_SCORES[stock.code];
+  if (status === 'score-report80') {
+    const report = REPORT_SCORES[stock.code];
+    return !!report && isFinite(report.score) && report.score >= 80;
+  }
+  if (status === 'score-low') {
+    const report = REPORT_SCORES[stock.code];
+    if (report && isFinite(report.score)) return report.score < 70;
+  }
   const score = researchScores[stock.code];
-  const points = score && isFinite(score.points) ? score.points : null;
-  if (status === 'score-good') return points !== null && points >= 24;
-  if (status === 'score-low') return points !== null && points < 18;
+  const percent = score && isFinite(score.percent) ? score.percent : null;
+  if (status === 'score-good') {
+    const report = REPORT_SCORES[stock.code];
+    if (report && isFinite(report.score)) return report.score >= 80;
+    return percent !== null && percent >= 75;
+  }
+  if (status === 'score-low') return percent !== null && percent < 56;
   return Croc.matchStatus(stock, priceData[stock.code], status);
 }
 
@@ -680,7 +750,7 @@ function applyFilter() {
   bindScrollHint();
   applyTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
   await loadStocks();
-  await loadResearchScores();
+  await Promise.all([loadResearchScores(), loadReportScores()]);
   if (STOCKS.length) applyFilter();
   if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);

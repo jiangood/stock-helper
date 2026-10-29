@@ -135,6 +135,26 @@ test('risk budget respects available cash and existing portfolio exposure', () =
   assert.equal(portfolioLimited.cap, '组合持仓上限');
 });
 
+test('review metrics only count explicit actual P&L and stop-discipline outcomes', () => {
+  const context = { console, Map, Intl, Date, Number, String, Array, Object, Math, Promise, setTimeout, clearTimeout };
+  context.window = context;
+  context.document = { getElementById: () => null, addEventListener: () => {} };
+  vm.runInNewContext(fs.readFileSync(require.resolve('../combat-center.js'), 'utf8'), context);
+  const result = context.StockCombat.summarizeReviews({
+    a: { savedAt: '2026-10-29T00:00:00Z', action: '买入/补仓', actualPnl: '120.5', stopAdherence: '遵守' },
+    b: { savedAt: '2026-10-29T00:00:00Z', action: '卖出', actualPnl: '-20.5', stopAdherence: '未遵守' },
+    c: { savedAt: '2026-10-29T00:00:00Z', action: '未交易', actualPnl: '999', stopAdherence: '遵守' },
+    d: { savedAt: '2026-10-29T00:00:00Z', action: '减仓', actualPnl: '', stopAdherence: '不适用' }
+  });
+  assert.equal(result.records, 4);
+  assert.equal(result.trades, 3);
+  assert.equal(result.pnlCount, 2);
+  assert.equal(result.pnlTotal, 100);
+  assert.equal(result.pnlAverage, 50);
+  assert.equal(result.adherenceCount, 2);
+  assert.equal(result.adherenceRate, 50);
+});
+
 test('risk budget rejects invalid stop prices and respects single-stock concentration', () => {
   const invalid = riskBudget({
     equity: 100000, cash: 20000, tradePct: 1, portfolioPct: 80, singlePct: 20,

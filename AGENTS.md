@@ -26,6 +26,14 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 数据：`data/stocks.json` 匹配计划；仅股票池范围内的代码提供行情，池外代码不再实时回源，明确提示未纳入静态缓存
   - 本机数据：资源股估值参数 `localStorage['croc-valuation:<code>']`
   - 顶栏只保留标题 + 刷新/主题，不要加时钟、休市/交易中、收盘等提示
+- `combat.html` + `combat-center.js` + `trade-signals.js` — 交易作战台（买入观察 + 止盈跟踪双向信号）
+  - 买入门槛：现价必须**低于** `data/stocks.json` 的计划入场价才会计算评分；高于入场价只显示「高于入场价，不追高」，未配置入场价不生成信号
+  - 四项评分（超跌深度 / RSI / MFI / 动能）各 1 分，≥3 分「条件较齐备」、2 分「部分满足」；按状态（上涨 / 回调 / 下跌）切换阈值
+  - 一票否决：下跌趋势且 MFI<20（回测 20 日 −7.0%、胜率 25%）
+  - 止盈：近 60 日最低收盘 ×1.2 启动跟踪，启动后最高收盘 ×0.95 离场（回撤 5%），**不需要成本价**；触发后 60 个交易日冷却，冷却期内不给买回提示
+  - 不设止损：回测显示加 MA20 止损会把最好一笔 +52.8% 砍到 +5.4%，风险由仓位承担
+  - 页面含「规则说明」折叠区（买入门槛 / 止盈口径 / 回测依据）；概览为 买入观察 / 触发止盈 / 止盈跟踪中 / 离场冷却 / 风险拦截 / 数据不足
+  - 回测脚本：`node scripts/backtest_signals.js`（评分分层 / 止盈规则 / 120 日 / 组合系统）
 - `croc.js` — 鳄鱼纪律工具（浏览器 `window.Croc` / Node `require`）
   - `evaluate` / `screen` / `matchStatus` / `brief` / `limitUpInfo` / `percentile`
   - `screen(stock, quote)`：5 项自动纪律（非ST/非亏损/PE≤30/市值≤200亿/PB<1），返回 `passed/total/allPass/failed/pending`，首页「纪律」列与每日简报共用

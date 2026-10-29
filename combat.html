@@ -125,6 +125,42 @@
       <div class="col-12"><div class="empty-state">正在准备作战数据…</div></div>
     </div>
   </section>
+  <details class="combat-rules" aria-labelledby="combat-rules-title">
+    <summary class="combat-rules-summary"><span id="combat-rules-title">规则说明 · 买入与止盈的完整口径</span><span class="mini-label">点击展开</span></summary>
+    <div class="combat-rules-grid">
+      <div class="combat-rule-block">
+        <div class="combat-section-title">买入（三项硬门槛 + 四项评分）</div>
+        <ul>
+          <li><b>门槛 1</b>：现价必须 <b>低于</b> 股票池里的计划入场价，否则只显示「高于入场价」，不生成买入信号。</li>
+          <li><b>门槛 2</b>：纪律五项（非 ST / 非亏损 / PE≤30 / 市值≤200 亿 / PB&lt;1）未通过时一律「风险拦截」。</li>
+          <li><b>门槛 3</b>：下跌趋势且 MFI&lt;20 一票否决（回测 20 日 −8.6%，胜率 29%）。</li>
+          <li><b>评分</b>：超跌深度 / RSI / MFI / 动能，各 1 分，满分 4 分。≥3 分「条件较齐备」，2 分「部分满足」。</li>
+          <li><b>状态</b>：上涨（现价≥MA20）/ 回调（MA20≥MA60）/ 下跌（其余），不同状态用不同阈值。</li>
+        </ul>
+      </div>
+      <div class="combat-rule-block">
+        <div class="combat-section-title">止盈（不需要成本价）</div>
+        <ul>
+          <li><b>启动</b>：现价达到「近 60 日最低收盘 × 1.2」后开始跟踪。</li>
+          <li><b>离场</b>：从启动后的最高收盘回撤 <b>5%</b> 即触发，收盘确认、次日出。</li>
+          <li><b>卖出后</b>：60 个交易日内不给买回提示，避免「卖飞了再追回来」。</li>
+          <li><b>不设止损</b>：回测显示加 MA20 止损会把最好一笔 +49.2% 砍到 +5.4%，风险由仓位承担。</li>
+        </ul>
+      </div>
+      <div class="combat-rule-block">
+        <div class="combat-section-title">回测依据（67 只 · 近一年）</div>
+        <ul>
+          <li>买入评分 ≥3（且现价低于入场价）：20 日中位 <b>+7.8%</b>，胜率 79%（126 个样本）；评分 ≤1：−2.5% / 41%。</li>
+          <li>止盈规则（367 段拉升）：中位 <b>+24.1%</b>（死拿 +9.7%），距峰值中位 −6.9%，73% 跑赢死拿。</li>
+          <li>过山车样本（涨 15~60% 后回吐，127 段）：中位 +15.7%（死拿 −3.7%），83% 跑赢。</li>
+          <li>120 日周期：规则 +3.9%，死拿 −18.5%，80% 跑赢。</li>
+          <li>组合系统：26 笔/年，中位 +7.9%，胜率 58%，持有中位 70 日，未平仓 11 笔。</li>
+          <li>局限：样本仅一年且为普跌行情，均值回归占优；趋势市可能失效。复跑：<code>node scripts/backtest_signals.js</code></li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
   <section class="combat-workspace mt-3" aria-labelledby="combat-list-heading">
     <div class="combat-workspace-head">
       <div>
@@ -136,6 +172,7 @@
     <div class="combat-toolbar mb-3" aria-label="作战信号筛选">
       <button id="combat-filter-all" data-combat-filter class="btn btn-sm btn-outline-secondary active" type="button">全部</button>
       <button id="combat-filter-add" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">买入观察</button>
+      <button id="combat-filter-exit" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">触发止盈</button>
       <button id="combat-filter-watch" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">观望</button>
       <button id="combat-filter-risk" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">风险拦截</button>
       <button id="combat-filter-data" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">数据不足</button>
@@ -144,7 +181,7 @@
       <div class="empty-state">进入此页后按需加载日K，减少不必要的行情请求。</div>
     </div>
   </section>
-  <aside class="combat-footnote">纪律说明：计划价触发不等于买入信号；补仓需通过 ST / 亏损等硬性门槛，并结合支撑、资金确认和趋势过滤。筹码分布为日K估算。所有信号均为辅助参考，不构成投资建议。</aside>
+  <aside class="combat-footnote">纪律说明：买入信号只在现价低于计划入场价时生成，且必须通过纪律门槛与四项评分；止盈规则为「近 60 日最低收盘 ×1.2 启动、最高收盘回撤 5% 离场」，不需要成本价，也不设止损。卖出后 60 个交易日内不给买回提示。所有信号均为辅助参考，不构成投资建议。</aside>
 </main>
 
 
@@ -153,8 +190,8 @@
 <script src="croc.js"></script>
 <script src="static-quotes.js"></script>
 <script src="indicators.js"></script>
-<script src="trade-signals.js"></script>
-<script src="combat-center.js?v=20261029-0300-riskpanel-cachefix"></script>
+<script src="trade-signals.js?v=20261029-1400-exitrules"></script>
+<script src="combat-center.js?v=20261029-1400-exitrules"></script>
 <script src="stock-dashboard.js"></script>
 
 <script src="password-gate.js"></script>

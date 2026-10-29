@@ -289,7 +289,8 @@
   const pivotHighs = (series, k) => pivots(series, k === undefined ? PIVOT_K : k, 'high');
 
   /**
-   * 价格与指标背离（默认找最近两个枢轴）
+   * 价格与指标背离：扫描窗口内所有相邻枢轴对，返回最近一次有效背离。
+   * （旧实现只比较最后两个枢轴，若之后出现更高的次高点，真正的顶背离会被覆盖）
    * @param {Array|Array<object>} price 价格序列或 bars
    * @param {Array<number|null>} ind 指标序列
    * @param {{k?:number, lookback?:number, minIndDiff?:number}} [opts]
@@ -318,9 +319,9 @@
 
     const candidates = [];
 
-    if (lows.length >= 2) {
-      const i1 = lows[lows.length - 2];
-      const i2 = lows[lows.length - 1];
+    for (let j = 1; j < lows.length; j++) {
+      const i1 = lows[j - 1];
+      const i2 = lows[j];
       const dInd = xs[i2] - xs[i1];
       if (ps[i2] < ps[i1] && dInd >= minDiff) {
         candidates.push({
@@ -336,9 +337,9 @@
       }
     }
 
-    if (highs.length >= 2) {
-      const i1 = highs[highs.length - 2];
-      const i2 = highs[highs.length - 1];
+    for (let j = 1; j < highs.length; j++) {
+      const i1 = highs[j - 1];
+      const i2 = highs[j];
       const dInd = xs[i1] - xs[i2];
       if (ps[i2] > ps[i1] && dInd >= minDiff) {
         candidates.push({

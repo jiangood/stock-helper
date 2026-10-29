@@ -69,27 +69,62 @@
       var h = r.holding, held = !!h, qty = h ? Number(h.quantity) : 0;
       var badges = '<span class="combat-badge ' + statusClass(r.primary.kind) + '">' + esc(r.primary.status) + '</span>';
       if (r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell')) badges += '<span class="combat-badge ' + statusClass(r.t.kind) + '">' + esc(r.t.status) + '</span>';
-      if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + esc(r.add.status) + ' ' + r.add.score + '/3</span>';
+      if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + esc(r.add.status) + ' ' + r.add.score + '/' + (r.add.scoreMax || 3) + '</span>';
       var reasons = (r.primary.reasons || []).concat(r.t && Array.isArray(r.t.reasons) ? r.t.reasons.slice(0, 2).map(function (x) { return '做T：' + x; }) : [], r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return '补仓：' + x; }) : []);
       if (!reasons.length) reasons = ['价格未到计划区，暂不触发操作条件'];
       var plan = [s.heavy ? '重仓 ' + money(s.heavy) : null, s.entry ? '入场 ' + money(s.entry) : null, s.tp1 ? '止盈1 ' + money(s.tp1) : null].filter(Boolean).join(' · ');
       var pnl = held && p !== null ? (p - Number(h.cost)) * qty : null;
-      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · ' + (held ? '持仓 ' + qty.toLocaleString('zh-CN') + ' 股' : '股票池 / 自选') + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-reasons mt-2">' + reasons.slice(0, 4).map(function (x) { return '<div>• ' + esc(x) + '</div>'; }).join('') + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + (held ? ' · 成本 ' + money(h.cost) + ' · 浮盈亏 ' + (pnl === null ? '—' : (pnl > 0 ? '+' : '') + Math.round(pnl).toLocaleString('zh-CN') + ' 元') : '') + '</div><div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span><a class="btn btn-sm btn-outline-primary" href="stock.html?code=' + encodeURIComponent(s.code) + '">查看详情</a></div></article>';
+      var ind = r.indicators || {};
+      var macd = ind.macd;
+      var indicatorPanel = '<details class="combat-indicator-details mt-3"><summary>指标详情与基本介绍</summary><div class="combat-indicator-grid mt-2">' +
+        '<div class="combat-indicator"><div class="mini-label">RSI(14) · 相对强弱</div><strong>' + (ind.rsi == null ? '—' : Number(ind.rsi).toFixed(1)) + '</strong><span>' + esc(ind.rsiState || '数据不足') + ' · ' + esc(ind.rsiTrend || '—') + '</span><small>比较近期平均涨幅与平均跌幅，常用 30/70 观察超卖/超买；极端行情中可能钝化。</small></div>' +
+        '<div class="combat-indicator"><div class="mini-label">MACD(12,26,9) · 趋势动能</div><strong>' + (macd ? 'DIF ' + Number(macd.dif).toFixed(3) : '—') + '</strong><span>' + esc(ind.macdState || '数据不足') + ' · ' + esc(ind.macdCross || '—') + '</span><small>比较快慢指数均线差（DIF）与信号线（DEA）；金叉/柱体改善可提示动能变化，但信号有滞后。</small><small>' + (macd ? 'DEA ' + Number(macd.dea).toFixed(3) + ' · 柱 ' + Number(macd.histogram).toFixed(3) : '历史K线不足，无法计算') + '</small></div>' +
+        '<div class="combat-indicator"><div class="mini-label">MFI(14) · 资金流量</div><strong>' + (ind.mfi == null ? '—' : Number(ind.mfi).toFixed(1)) + '</strong><span>' + (ind.mfi == null ? '数据不足' : ind.mfi < 20 ? '低位' : ind.mfi > 80 ? '高位' : '中间区间') + '</span><small>结合价格与成交量估算资金流入流出，不能直接等同真实资金净流。</small></div>' +
+        '<div class="combat-indicator"><div class="mini-label">MA20 · 20日均线</div><strong>' + (ind.ma20 == null ? '—' : money(ind.ma20)) + '</strong><span>' + (ind.ma20 == null || p === null ? '数据不足' : p > ind.ma20 ? '现价在均线上方' : '现价在均线下方') + '</span><small>过去20根日K收盘价平均值，用于观察中期价格趋势，不是支撑保证。</small></div>' +
+        '<div class="combat-indicator"><div class="mini-label">OBV · 能量潮</div><strong>' + (ind.obv == null ? '—' : Math.round(ind.obv).toLocaleString('zh-CN')) + '</strong><span>' + (ind.obv == null ? '数据不足' : '累计量价方向指标') + '</span><small>上涨日加量、下跌日减量，观察量价配合；绝对值不适合跨股票比较。</small></div>' +
+        '<div class="combat-indicator"><div class="mini-label">数据口径</div><strong>' + (ind.bars || 0) + ' 根日K</strong><span>' + (ind.bars >= 35 ? '可计算 RSI / MACD' : '历史长度可能不足') + '</span><small>RSI使用14期 Wilder平滑；MACD使用12/26/9；使用当前可获取的复权日K，结果会随新行情变化。</small></div>' +
+        '</div><div class="mini-label mt-2">读法：RSI 与 MACD 仅作为补仓信号的辅助确认，仍需结合计划价、支撑、MFI、趋势及买入纪律。指标不能单独构成买入理由。</div></details>';
+      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · ' + (held ? '持仓 ' + qty.toLocaleString('zh-CN') + ' 股' : '股票池 / 自选') + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-reasons mt-2">' + reasons.slice(0, 4).map(function (x) { return '<div>• ' + esc(x) + '</div>'; }).join('') + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + (held ? ' · 成本 ' + money(h.cost) + ' · 浮盈亏 ' + (pnl === null ? '—' : (pnl > 0 ? '+' : '') + Math.round(pnl).toLocaleString('zh-CN') + ' 元') : '') + '</div>' + indicatorPanel + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span><a class="btn btn-sm btn-outline-primary" href="stock.html?code=' + encodeURIComponent(s.code) + '">查看详情</a></div></article>';
     }).join('');
   }
   async function calculateOne(stock) {
     var code = codeOf(stock.code), quote = quoteFor(code), holding = holdingFor(code), price = quote && Number(quote.price) > 0 ? Number(quote.price) : null;
-    var eligible = gate(stock, quote), t = null, add = null, dataNote = '';
+    var eligible = gate(stock, quote), t = null, add = null, dataNote = '', day = null, indicators = null;
     if (price === null) {
       var missing = { status: '数据不足', kind: 'data', reasons: ['当前行情无有效价格，不使用过期空值推断'], dataReady: false };
       return { stock: stock, quote: quote, holding: holding, primary: missing, t: null, add: null, dataNote: '行情缺失' };
+    }
+    try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
+    var bars = day && Array.isArray(day.bars) ? day.bars : [];
+    if (root.TechInd && bars.length) {
+      var rsiRes = root.TechInd.rsi ? root.TechInd.rsi(bars, 14) : null;
+      var macdRes = root.TechInd.macd ? root.TechInd.macd(bars, 12, 26, 9) : null;
+      var mfiRes = root.TechInd.mfi ? root.TechInd.mfi(bars, 14) : null;
+      var maRes = root.TechInd.ma ? root.TechInd.ma(bars, 20) : null;
+      var obvRes = root.TechInd.obv ? root.TechInd.obv(bars) : null;
+      var rsiValue = rsiRes ? rsiRes.latest : null;
+      var rsiPrev = rsiRes && rsiRes.series.length > 1 ? rsiRes.series[rsiRes.series.length - 2] : null;
+      var macdValue = macdRes ? macdRes.latest : null;
+      var macdPrev = macdRes && macdRes.histogram.length > 1 ? macdRes.histogram[macdRes.histogram.length - 2] : null;
+      indicators = {
+        bars: bars.length,
+        rsi: rsiValue,
+        rsiTrend: rsiValue === null || rsiPrev === null ? '数据不足' : rsiValue > rsiPrev ? '回升' : rsiValue < rsiPrev ? '回落' : '持平',
+        rsiState: rsiValue === null ? '数据不足' : rsiValue < 30 ? '超卖区' : rsiValue < 45 ? '偏弱' : rsiValue <= 55 ? '中性' : rsiValue < 70 ? '偏强' : '超买区',
+        macd: macdValue,
+        macdState: macdValue === null ? '数据不足' : macdValue.dif > macdValue.dea ? (macdValue.histogram >= 0 ? '多头动能' : '偏多改善') : (macdPrev !== null && macdValue.histogram > macdPrev ? '空头动能减弱' : '偏空'),
+        macdCross: macdValue && macdRes.dif.length > 1 && macdRes.dea.length > 1 && macdRes.dif[macdRes.dif.length - 2] !== null && macdRes.dea[macdRes.dea.length - 2] !== null ? (macdValue.dif > macdValue.dea && macdRes.dif[macdRes.dif.length - 2] <= macdRes.dea[macdRes.dea.length - 2] ? '金叉' : macdValue.dif < macdValue.dea && macdRes.dif[macdRes.dif.length - 2] >= macdRes.dea[macdRes.dea.length - 2] ? '死叉' : '未新交叉') : '数据不足',
+        mfi: mfiRes ? mfiRes.latest : null,
+        ma20: maRes ? maRes.latest : null,
+        obv: obvRes ? obvRes.latest : null
+      };
     }
     var nearPlan = [stock.entry, stock.heavy].some(function (v) { return Number(v) > 0 && Math.abs(price / Number(v) - 1) <= 0.05; });
     var inBuyZone = [stock.entry, stock.heavy].some(function (v) { return Number(v) > 0 && price <= Number(v); });
     var poolWatch = stock.inPool || stock.pool !== false;
     var primary = { status: '观望', kind: 'watch', reasons: [inBuyZone ? '现价进入计划价区，但触价不等于买入信号' : nearPlan ? '接近计划价区，等待技术条件确认' : '现价未到计划价区，暂不追价'] };
     if ((holding || nearPlan || inBuyZone) && root.StockTradeSignals) {
-      var minute = null, trends = null, day = null;
+      var minute = null, trends = null;
       if (holding) {
         try { minute = await state.client.fetchMinuteKline(code, { period: '15', count: 320 }); } catch (_) {}
         try { trends = await state.client.fetchTrends(code, { days: 1 }); } catch (_) {}
@@ -100,8 +135,7 @@
       // Only calculate/show add signals after price reaches the configured entry/heavy plan level.
       // Holdings can still receive T signals above the buy zone, but must not be recommended for adding.
       if (inBuyZone) {
-        try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
-        add = root.StockTradeSignals.evaluateAdd(price, stock, day && day.bars || []);
+        add = root.StockTradeSignals.evaluateAdd(price, stock, bars);
       }
       if (!eligible.eligible && (inBuyZone || (add && add.kind === 'add-ready'))) {
         primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许补仓'] };
@@ -112,11 +146,11 @@
       } else if (add && add.kind === 'data') {
         primary = { status: '数据不足', kind: 'data', reasons: add.reasons };
       }
-      dataNote = '日K ' + (day && day.bars ? day.bars.length + ' 根' : '不可用') + ' · 分钟K ' + (minute && minute.bars ? minute.bars.length + ' 根' : (holding ? '不可用' : '不适用'));
+      dataNote = '日K ' + (bars.length ? bars.length + ' 根' : '不可用') + ' · 分钟K ' + (minute && minute.bars ? minute.bars.length + ' 根' : (holding ? '不可用' : '不适用'));
     } else if (inBuyZone && !eligible.eligible) {
       primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许补仓'] };
     }
-    return { stock: stock, quote: quote, holding: holding, primary: primary, t: t, add: add, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
+    return { stock: stock, quote: quote, holding: holding, primary: primary, t: t, add: add, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
   }
   async function run(force) {
     if (state.loading) return;

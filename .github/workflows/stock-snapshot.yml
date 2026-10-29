@@ -1,0 +1,54 @@
+name: Refresh value-investing stock cache
+
+on:
+  schedule:
+    # After the China A-share session; UTC 07:25 = Beijing 15:25.
+    - cron: "25 7 * * 1-5"
+  workflow_dispatch:
+  push:
+    branches: [master, main]
+    paths:
+      - "scripts/fetch_stock_snapshot.js"
+      - "quotes.js"
+      - "data/stocks.json"
+      - "data/holdings.json"
+      - ".github/workflows/stock-snapshot.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stock-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate scripts
+        run: |
+          node --check quotes.js
+          node --check scripts/fetch_stock_snapshot.js
+          node --check static-quotes.js
+      - name: Fetch and validate static stock data
+        run: node scripts/fetch_stock_snapshot.js
+      - name: Commit changed snapshots only
+        run: |
+          if git diff --quiet -- data/stock-quotes.json data/index-cache.json data/stock-cache; then
+            echo "No stock snapshot changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/stock-quotes.json data/index-cache.json data/stock-cache
+          git commit -m "Refresh value-investing stock cache"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase -X theirs "origin/$GITHUB_REF_NAME"
+          git push

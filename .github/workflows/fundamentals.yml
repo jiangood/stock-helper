@@ -33,6 +33,8 @@ jobs:
         run: python -m py_compile scripts/fetch_fundamentals.py
       - name: Fetch fundamentals
         run: python scripts/fetch_fundamentals.py
+      - name: Validate fundamentals data
+        run: node scripts/validate_stock_data.js --fundamentals-only
       - name: Commit changed fundamentals
         run: |
           if [ -z "$(git status --porcelain -- data/fundamentals.json)" ]; then

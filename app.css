@@ -137,7 +137,11 @@
   .flag-danger { color: var(--up); border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.08); }
   [data-bs-theme="dark"] .flag-warn { color: #fbbf24; }
 
-  /* 研报评分（32 分制） */
+  /* 首页双评分：机器分与研报分独立展示，研报日期常显 */
+  .score-pair { display: flex; flex-direction: column; gap: 2px; min-width: 105px; line-height: 1.35; }
+  .score-line { display: flex; align-items: baseline; gap: 4px; white-space: nowrap; }
+  .score-label { color: var(--bs-secondary-color); font-size: 10px; min-width: 19px; }
+  .score-date { color: var(--bs-secondary-color); font-size: 10px; font-weight: 400; }
   .score { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; font-weight: 600; }
   .score-good { color: var(--down); }
   .score-mid { color: #b45309; }

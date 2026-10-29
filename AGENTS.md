@@ -1,4 +1,4 @@
-每次修改代码后，执行提交和推送（git add、git commit、git push），确保修改立即部署到 GitHub Pages。
+修改代码时先从最新 master 创建独立分支，完成测试后创建 PR；通过审查与 CI 后再合并 master。禁止未经明确要求直接向 master 推送代码。
 
 ## 站点
 
@@ -67,6 +67,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 市值单位：`totalCap` / `floatCap` 为元（首页显示时换算成亿 / 万亿）
   - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`
 - `scripts/validate_stock_data.js` — 行情与基本面发布前的数据完整性校验；校验失败必须阻止提交，不得自动填充或修正缺失值
+- `scripts/build_combat_kline.js` / `data/combat-kline.json` — 从个股 K 线权威文件生成作战页专用读模型（每只最近 120 根前复权日 K）；作战页一次请求全股票池，减少逐只下载完整行情文件
 - `scripts/fetch_stock_snapshot.js` + `.github/workflows/stock-snapshot.yml` — 每个工作日北京时间收盘后抓取股票池行情；日线每日更新、周线每周更新、月线随最新行情日更新（避免当月月 K 整月滞后）；非交易日期跳过详情/K线抓取，失败时保留有效缓存，只提交有变化的数据
 - `data/stock-quotes.json`、`data/stock-cache/<code>.json`、`data/index-cache.json` — 行情、个股详情、日/周/月 K 线与指数历史静态缓存
 - `data/sector-monthly.json` — 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅与月线覆盖来源；由 `scripts/build_sector_monthly.js` 在每次行情采集后生成，行情页只读这个小文件，不逐只拉个股缓存

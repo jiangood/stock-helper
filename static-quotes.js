@@ -12,6 +12,10 @@
   const memory = new Map();
   const memoryAt = new Map();
   const MEMORY_TTL = 6 * 60 * 60 * 1000;
+  const MAX_BACKGROUND_REFRESHES = 4;
+  const refreshQueue = [];
+  const refreshingUrls = new Set();
+  let activeRefreshes = 0;
 
   function normalizeCode(code) {
     if (code === null || code === undefined) return null;
@@ -100,14 +104,54 @@
     const saved = await indexedDbSet(key, value);
     if (!saved) storageSet(key, value);
   }
-  async function loadJson(relativeUrl, force) {
+  async function fetchJson(relativeUrl) {
+    const url = new URL(relativeUrl, document.baseURI).href;
+    const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    return response.json();
+  }
+
+  function pumpRefreshQueue() {
+    while (activeRefreshes < MAX_BACKGROUND_REFRESHES && refreshQueue.length) {
+      const relativeUrl = refreshQueue.shift();
+      activeRefreshes += 1;
+      fetchJson(relativeUrl)
+        .then(async value => {
+          memory.set(relativeUrl, value);
+          memoryAt.set(relativeUrl, Date.now());
+          await cacheSet(relativeUrl, value);
+        })
+        .catch(() => { /* 保留上次有效缓存；后台刷新失败不影响当前结果 */ })
+        .finally(() => {
+          activeRefreshes -= 1;
+          refreshingUrls.delete(relativeUrl);
+          pumpRefreshQueue();
+        });
+    }
+  }
+
+  function scheduleRefresh(relativeUrl) {
+    if (refreshingUrls.has(relativeUrl)) return;
+    refreshingUrls.add(relativeUrl);
+    refreshQueue.push(relativeUrl);
+    pumpRefreshQueue();
+  }
+
+  async function loadJson(relativeUrl, force, cacheFirst) {
     if (!force && memory.has(relativeUrl) && Date.now() - (memoryAt.get(relativeUrl) || 0) < MEMORY_TTL) return memory.get(relativeUrl);
     const cached = await cacheGet(relativeUrl);
+
+    // K 线计算优先使用本机最近一次成功缓存，避免每只股票都等待网络响应。
+    // 后台刷新有并发上限；刷新失败不会覆盖或清空旧缓存。
+    if (!force && cacheFirst && cached) {
+      memory.set(relativeUrl, cached);
+      memoryAt.set(relativeUrl, Date.now());
+      scheduleRefresh(relativeUrl);
+      return cached;
+    }
+
     try {
-      const url = new URL(relativeUrl, document.baseURI).href;
-      const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      const value = await response.json();
+      const value = await fetchJson(relativeUrl);
       memory.set(relativeUrl, value);
       memoryAt.set(relativeUrl, Date.now());
       await cacheSet(relativeUrl, value);
@@ -122,9 +166,9 @@
     }
   }
 
-  async function loadStockCache(code, force) {
+  async function loadStockCache(code, force, cacheFirst) {
     const file = 'data/stock-cache/' + code + '.json';
-    try { return await loadJson(file, force); }
+    try { return await loadJson(file, force, cacheFirst); }
     catch (error) { throw new Error(code + ' 不在当前静态缓存范围内或缓存暂不可用。为避免浏览器直接访问外部行情接口，未进行实时回源。'); }
   }
 
@@ -166,7 +210,7 @@
           bars = cached && Array.isArray(cached.bars) ? cached.bars : [];
         }
       } else {
-        const cache = await loadStockCache(normalized, opts.force);
+        const cache = await loadStockCache(normalized, opts.force, true);
         if (period === 'day') {
           const value = adjust === 'none' ? cache.dailyRaw : cache.dailyAdjusted;
           bars = value && Array.isArray(value.bars) ? value.bars : [];

@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000707",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "双环科技",
-    "price": 4.25,
+    "price": 4.18,
     "prevClose": 4.25,
-    "change": 0,
-    "todayChange": 0,
+    "change": -0.07,
+    "todayChange": -1.65,
     "open": 4.25,
     "high": 4.28,
-    "low": 4.21,
-    "avg": 4.24,
-    "volume": 13067,
-    "amount": 5546591.12,
-    "turnover": 0.24,
-    "volumeRatio": 1.16,
-    "amplitude": 1.65,
+    "low": 4.18,
+    "avg": 4.22,
+    "volume": 44054,
+    "amount": 18608107.12,
+    "turnover": 0.8,
+    "volumeRatio": 0.75,
+    "amplitude": 2.35,
     "limitUp": 4.68,
     "limitDown": 3.83,
-    "pe": -13.76,
-    "peStatic": -27.95,
-    "peTtm": -12.54,
-    "pb": 0.94,
+    "pe": -13.53,
+    "peStatic": -27.49,
+    "peTtm": -12.34,
+    "pb": 0.92,
     "roe": -4.98,
     "grossMargin": 3.1963036179,
     "netMargin": -8.854673177199999,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 584717193,
     "floatShares": 550703589,
-    "totalCap": 2485048070.25,
-    "floatCap": 2340490253.25,
-    "time": 1793240154000,
+    "totalCap": 2444117866.74,
+    "floatCap": 2301941002.02,
+    "time": 1793259297000,
     "code": "sz000707"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 4.25,
-        "close": 4.25,
+        "close": 4.18,
         "high": 4.28,
-        "low": 4.21,
-        "volume": 13067
+        "low": 4.18,
+        "volume": 44054
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 4.25,
-        "close": 4.25,
+        "close": 4.18,
         "high": 4.28,
-        "low": 4.21,
-        "volume": 13067
+        "low": 4.18,
+        "volume": 44054
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 4.64,
-        "close": 4.25,
+        "close": 4.18,
         "high": 4.71,
         "low": 4.13,
-        "volume": 916532
+        "volume": 947955
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

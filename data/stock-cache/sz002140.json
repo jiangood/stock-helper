@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002140",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "东华科技",
-    "price": 9.35,
+    "price": 9.3,
     "prevClose": 9.34,
-    "change": 0.01,
-    "todayChange": 0.11,
+    "change": -0.04,
+    "todayChange": -0.43,
     "open": 9.28,
-    "high": 9.37,
+    "high": 9.47,
     "low": 9.16,
-    "avg": 9.25,
-    "volume": 34455,
-    "amount": 31867194,
-    "turnover": 0.49,
-    "volumeRatio": 2.77,
-    "amplitude": 2.25,
+    "avg": 9.33,
+    "volume": 92704,
+    "amount": 86448183.16,
+    "turnover": 1.31,
+    "volumeRatio": 1.43,
+    "amplitude": 3.32,
     "limitUp": 10.27,
     "limitDown": 8.41,
-    "pe": 11.97,
-    "peStatic": 12.42,
-    "peTtm": 11.36,
+    "pe": 11.91,
+    "peStatic": 12.36,
+    "peTtm": 11.3,
     "pb": 1.31,
     "roe": 8.45,
     "grossMargin": 11.845182098,
@@ -37,9 +37,9 @@
     "board": "BK1248",
     "totalShares": 708013872,
     "floatShares": 706908875,
-    "totalCap": 6619929703.2,
-    "floatCap": 6609597981.25,
-    "time": 1793240157000,
+    "totalCap": 6584529009.6,
+    "floatCap": 6574252537.500001,
+    "time": 1793259258000,
     "code": "sz002140"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 9.28,
-        "close": 9.35,
-        "high": 9.37,
+        "close": 9.3,
+        "high": 9.47,
         "low": 9.16,
-        "volume": 34455
+        "volume": 92704
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 9.28,
-        "close": 9.35,
-        "high": 9.37,
+        "close": 9.3,
+        "high": 9.47,
         "low": 9.16,
-        "volume": 34455
+        "volume": 92704
       }
     ]
   },
@@ -7536,12 +7536,12 @@
       {
         "time": "2026-10-29",
         "open": 9.17,
-        "close": 9.33,
-        "high": 9.45,
+        "close": 9.3,
+        "high": 9.47,
         "low": 8.45,
-        "volume": 800030
+        "volume": 858951
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

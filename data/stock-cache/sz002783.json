@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz002783",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "凯龙股份",
-    "price": 7.37,
+    "price": 7.33,
     "prevClose": 7.44,
-    "change": -0.07,
-    "todayChange": -0.94,
+    "change": -0.11,
+    "todayChange": -1.48,
     "open": 7.43,
     "high": 7.44,
-    "low": 7.34,
-    "avg": 7.38,
-    "volume": 13191,
-    "amount": 9738767,
-    "turnover": 0.29,
-    "volumeRatio": 0.87,
-    "amplitude": 1.34,
+    "low": 7.32,
+    "avg": 7.37,
+    "volume": 43716,
+    "amount": 32205972.4,
+    "turnover": 0.95,
+    "volumeRatio": 0.55,
+    "amplitude": 1.61,
     "limitUp": 8.18,
     "limitDown": 6.7,
-    "pe": 28.15,
-    "peStatic": 25.84,
-    "peTtm": 34.92,
-    "pb": 1.36,
+    "pe": 28,
+    "peStatic": 25.7,
+    "peTtm": 34.74,
+    "pb": 1.35,
     "roe": 4,
     "grossMargin": 27.9211937641,
     "netMargin": 6.2459537072,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 499317447,
     "floatShares": 461213936,
-    "totalCap": 3679969584.39,
-    "floatCap": 3399146708.32,
-    "time": 1793240148000,
+    "totalCap": 3659996886.51,
+    "floatCap": 3380698150.88,
+    "time": 1793259297000,
     "code": "sz002783"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.43,
-        "close": 7.37,
+        "close": 7.33,
         "high": 7.44,
-        "low": 7.34,
-        "volume": 13191
+        "low": 7.32,
+        "volume": 43716
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 7.43,
-        "close": 7.37,
+        "close": 7.33,
         "high": 7.44,
-        "low": 7.34,
-        "volume": 13191
+        "low": 7.32,
+        "volume": 43716
       }
     ]
   },
@@ -6728,12 +6728,12 @@
       {
         "time": "2026-10-29",
         "open": 8.14,
-        "close": 7.37,
+        "close": 7.33,
         "high": 8.19,
         "low": 7.23,
-        "volume": 1052510
+        "volume": 1083253
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

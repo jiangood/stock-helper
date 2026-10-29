@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh601600",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "中国铝业",
-    "price": 8.42,
+    "price": 8.43,
     "prevClose": 8.53,
-    "change": -0.11,
-    "todayChange": -1.29,
+    "change": -0.1,
+    "todayChange": -1.17,
     "open": 8.56,
     "high": 8.56,
-    "low": 8.4,
-    "avg": 8.47,
-    "volume": 498726,
-    "amount": 422669452,
-    "turnover": 0.38,
-    "volumeRatio": 1.65,
-    "amplitude": 1.88,
+    "low": 8.39,
+    "avg": 8.45,
+    "volume": 1313951,
+    "amount": 1109932419,
+    "turnover": 1,
+    "volumeRatio": 0.83,
+    "amplitude": 1.99,
     "limitUp": 9.38,
     "limitDown": 7.68,
-    "pe": 6.08,
-    "peStatic": 11.4,
-    "peTtm": 8.27,
+    "pe": 6.09,
+    "peStatic": 11.41,
+    "peTtm": 8.28,
     "pb": 1.81,
     "roe": 14.67,
     "grossMargin": 26.9404981068,
@@ -37,9 +37,9 @@
     "board": "BK1287",
     "totalShares": 17154758747,
     "floatShares": 13203339905,
-    "totalCap": 144443068649.74,
-    "floatCap": 111172122000.1,
-    "time": 1793240155000,
+    "totalCap": 144614616237.21,
+    "floatCap": 111304155399.15,
+    "time": 1793261515000,
     "code": "sh601600"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 8.56,
-        "close": 8.42,
+        "close": 8.43,
         "high": 8.56,
-        "low": 8.4,
-        "volume": 498726
+        "low": 8.39,
+        "volume": 1313951
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 8.56,
-        "close": 8.42,
+        "close": 8.43,
         "high": 8.56,
-        "low": 8.4,
-        "volume": 498726
+        "low": 8.39,
+        "volume": 1313951
       }
     ]
   },
@@ -7528,12 +7528,12 @@
       {
         "time": "2026-10-29",
         "open": 8.614,
-        "close": 8.42,
+        "close": 8.43,
         "high": 8.9,
         "low": 8.204,
-        "volume": 21156971
+        "volume": 21992556
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

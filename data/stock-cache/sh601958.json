@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh601958",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "金钼股份",
-    "price": 16.22,
+    "price": 16.18,
     "prevClose": 16.83,
-    "change": -0.61,
-    "todayChange": -3.62,
+    "change": -0.65,
+    "todayChange": -3.86,
     "open": 16.87,
     "high": 16.87,
-    "low": 16.21,
-    "avg": 16.46,
-    "volume": 114366,
-    "amount": 188196284,
-    "turnover": 0.35,
-    "volumeRatio": 2.86,
-    "amplitude": 3.92,
+    "low": 16.14,
+    "avg": 16.34,
+    "volume": 262332,
+    "amount": 428627963,
+    "turnover": 0.81,
+    "volumeRatio": 1.26,
+    "amplitude": 4.34,
     "limitUp": 18.51,
     "limitDown": 15.15,
-    "pe": 13.11,
-    "peStatic": 16.59,
-    "peTtm": 13.55,
+    "pe": 13.08,
+    "peStatic": 16.55,
+    "peTtm": 13.52,
     "pb": 2.53,
     "roe": 14.75,
     "grossMargin": 44.3162004839,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 3226604400,
     "floatShares": 3226604400,
-    "totalCap": 52335523368,
-    "floatCap": 52335523368,
-    "time": 1793240158000,
+    "totalCap": 52206459192,
+    "floatCap": 52206459192,
+    "time": 1793261521000,
     "code": "sh601958"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 16.87,
-        "close": 16.22,
+        "close": 16.18,
         "high": 16.87,
-        "low": 16.21,
-        "volume": 114366
+        "low": 16.14,
+        "volume": 262332
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 16.87,
-        "close": 16.22,
+        "close": 16.18,
         "high": 16.87,
-        "low": 16.21,
-        "volume": 114366
+        "low": 16.14,
+        "volume": 262332
       }
     ]
   },
@@ -7464,12 +7464,12 @@
       {
         "time": "2026-10-29",
         "open": 19.26,
-        "close": 16.25,
+        "close": 16.18,
         "high": 19.5,
-        "low": 16.23,
-        "volume": 3275800
+        "low": 16.14,
+        "volume": 3425885
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

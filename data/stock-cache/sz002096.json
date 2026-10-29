@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz002096",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "易普力",
-    "price": 8.97,
+    "price": 9,
     "prevClose": 9.07,
-    "change": -0.1,
-    "todayChange": -1.1,
+    "change": -0.07,
+    "todayChange": -0.77,
     "open": 9.07,
     "high": 9.08,
-    "low": 8.97,
-    "avg": 9,
-    "volume": 12264,
-    "amount": 11041388,
-    "turnover": 0.1,
-    "volumeRatio": 1.76,
-    "amplitude": 1.21,
+    "low": 8.93,
+    "avg": 8.99,
+    "volume": 35776,
+    "amount": 32174717,
+    "turnover": 0.29,
+    "volumeRatio": 1.01,
+    "amplitude": 1.65,
     "limitUp": 9.98,
     "limitDown": 8.16,
-    "pe": 16.99,
-    "peStatic": 14.04,
-    "peTtm": 15.64,
-    "pb": 1.37,
+    "pe": 17.05,
+    "peStatic": 14.08,
+    "peTtm": 15.69,
+    "pb": 1.38,
     "roe": 3.99,
     "grossMargin": 22.4355582328,
     "netMargin": 9.012097631300001,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 1240440770,
     "floatShares": 1239619861,
-    "totalCap": 11126753706.900002,
-    "floatCap": 11119390153.17,
-    "time": 1793240163000,
+    "totalCap": 11163966930,
+    "floatCap": 11156578749,
+    "time": 1793259252000,
     "code": "sz002096"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 9.07,
-        "close": 8.97,
+        "close": 9,
         "high": 9.08,
-        "low": 8.97,
-        "volume": 12261
+        "low": 8.93,
+        "volume": 35776
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 9.07,
-        "close": 8.97,
+        "close": 9,
         "high": 9.08,
-        "low": 8.97,
-        "volume": 12264
+        "low": 8.93,
+        "volume": 35776
       }
     ]
   },
@@ -7584,12 +7584,12 @@
       {
         "time": "2026-10-29",
         "open": 9.06,
-        "close": 8.99,
+        "close": 9,
         "high": 9.41,
         "low": 8.81,
-        "volume": 583671
+        "volume": 607911
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

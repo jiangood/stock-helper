@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600111",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "北方稀土",
-    "price": 34.91,
+    "price": 35.29,
     "prevClose": 35.51,
-    "change": -0.6,
-    "todayChange": -1.69,
+    "change": -0.22,
+    "todayChange": -0.62,
     "open": 35.73,
     "high": 35.73,
     "low": 34.84,
-    "avg": 35.04,
-    "volume": 92706,
-    "amount": 324816057,
-    "turnover": 0.26,
-    "volumeRatio": 1.21,
+    "avg": 35.05,
+    "volume": 260905,
+    "amount": 914494149,
+    "turnover": 0.72,
+    "volumeRatio": 0.66,
     "amplitude": 2.51,
     "limitUp": 39.06,
     "limitDown": 31.96,
-    "pe": 25.96,
-    "peStatic": 56.06,
-    "peTtm": 28.97,
-    "pb": 4.54,
+    "pe": 26.24,
+    "peStatic": 56.67,
+    "peTtm": 29.29,
+    "pb": 4.59,
     "roe": 13.9,
     "grossMargin": 15.7333117426,
     "netMargin": 10.5810626521,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 3615065842,
     "floatShares": 3615065842,
-    "totalCap": 126201948544.21999,
-    "floatCap": 126201948544.21999,
-    "time": 1793240161000,
+    "totalCap": 127575673564.18,
+    "floatCap": 127575673564.18,
+    "time": 1793261497000,
     "code": "sh600111"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 35.73,
-        "close": 34.91,
+        "close": 35.29,
         "high": 35.73,
         "low": 34.84,
-        "volume": 92689
+        "volume": 260905
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 35.73,
-        "close": 34.91,
+        "close": 35.29,
         "high": 35.73,
         "low": 34.84,
-        "volume": 92689
+        "volume": 260905
       }
     ]
   },

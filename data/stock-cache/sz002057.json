@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz002057",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "中钢天源",
-    "price": 7.48,
+    "price": 7.39,
     "prevClose": 7.59,
-    "change": -0.11,
-    "todayChange": -1.45,
+    "change": -0.2,
+    "todayChange": -2.64,
     "open": 7.56,
     "high": 7.57,
-    "low": 7.45,
-    "avg": 7.5,
-    "volume": 46570,
-    "amount": 34905287,
-    "turnover": 0.62,
-    "volumeRatio": 1.38,
-    "amplitude": 1.58,
+    "low": 7.37,
+    "avg": 7.46,
+    "volume": 117593,
+    "amount": 87666311.97,
+    "turnover": 1.56,
+    "volumeRatio": 0.68,
+    "amplitude": 2.64,
     "limitUp": 8.35,
     "limitDown": 6.83,
-    "pe": 18.84,
-    "peStatic": 31.99,
-    "peTtm": 31.5,
-    "pb": 1.71,
+    "pe": 18.61,
+    "peStatic": 31.61,
+    "peTtm": 31.12,
+    "pb": 1.69,
     "roe": 6.82,
     "grossMargin": 23.0387443712,
     "netMargin": 10.1799664516,
@@ -37,9 +37,9 @@
     "board": "BK1043",
     "totalShares": 753883706,
     "floatShares": 753256924,
-    "totalCap": 5639050120.88,
-    "floatCap": 5634361791.52,
-    "time": 1793240160000,
+    "totalCap": 5571200587.34,
+    "floatCap": 5566568668.36,
+    "time": 1793259297000,
     "code": "sz002057"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.56,
-        "close": 7.48,
+        "close": 7.39,
         "high": 7.57,
-        "low": 7.45,
-        "volume": 46570
+        "low": 7.37,
+        "volume": 117593
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 7.56,
-        "close": 7.47,
+        "close": 7.39,
         "high": 7.57,
-        "low": 7.45,
-        "volume": 46567
+        "low": 7.37,
+        "volume": 117593
       }
     ]
   },

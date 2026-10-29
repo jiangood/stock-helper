@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600282",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "南钢股份",
-    "price": 4.22,
+    "price": 4.25,
     "prevClose": 4.24,
-    "change": -0.02,
-    "todayChange": -0.47,
+    "change": 0.01,
+    "todayChange": 0.24,
     "open": 4.24,
-    "high": 4.26,
-    "low": 4.22,
+    "high": 4.27,
+    "low": 4.2,
     "avg": 4.24,
-    "volume": 70914,
-    "amount": 30063410,
-    "turnover": 0.12,
-    "volumeRatio": 0.68,
-    "amplitude": 0.94,
+    "volume": 238615,
+    "amount": 101131182,
+    "turnover": 0.39,
+    "volumeRatio": 0.44,
+    "amplitude": 1.65,
     "limitUp": 4.66,
     "limitDown": 3.82,
-    "pe": 10.85,
-    "peStatic": 9.07,
-    "peTtm": 10.45,
-    "pb": 0.94,
+    "pe": 10.93,
+    "peStatic": 9.14,
+    "peTtm": 10.52,
+    "pb": 0.95,
     "roe": 6.44,
     "grossMargin": 12.2909356822,
     "netMargin": 3.832129626,
@@ -37,9 +37,9 @@
     "board": "BK1226",
     "totalShares": 6165091011,
     "floatShares": 6165091011,
-    "totalCap": 26016684066.42,
-    "floatCap": 26016684066.42,
-    "time": 1793240158000,
+    "totalCap": 26201636796.75,
+    "floatCap": 26201636796.75,
+    "time": 1793261509000,
     "code": "sh600282"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 4.24,
-        "close": 4.22,
-        "high": 4.26,
-        "low": 4.22,
-        "volume": 70914
+        "close": 4.25,
+        "high": 4.27,
+        "low": 4.2,
+        "volume": 238615
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 4.24,
-        "close": 4.22,
-        "high": 4.26,
-        "low": 4.22,
-        "volume": 70914
+        "close": 4.25,
+        "high": 4.27,
+        "low": 4.2,
+        "volume": 238615
       }
     ]
   },

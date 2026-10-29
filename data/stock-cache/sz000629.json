@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000629",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "钒钛股份",
-    "price": 2.6,
+    "price": 2.59,
     "prevClose": 2.64,
-    "change": -0.04,
-    "todayChange": -1.52,
+    "change": -0.05,
+    "todayChange": -1.89,
     "open": 2.63,
     "high": 2.64,
     "low": 2.59,
     "avg": 2.61,
-    "volume": 233816,
-    "amount": 61139247,
-    "turnover": 0.25,
-    "volumeRatio": 1.98,
+    "volume": 671294,
+    "amount": 175028215.28,
+    "turnover": 0.72,
+    "volumeRatio": 1.09,
     "amplitude": 1.89,
     "limitUp": 2.9,
     "limitDown": 2.38,
-    "pe": 67.65,
-    "peStatic": -258.87,
-    "peTtm": 74.75,
-    "pb": 1.92,
+    "pe": 67.39,
+    "peStatic": -257.87,
+    "peTtm": 74.47,
+    "pb": 1.91,
     "roe": 2.15,
     "grossMargin": 9.9815391563,
     "netMargin": 4.1207552752,
@@ -37,9 +37,9 @@
     "board": "BK1228",
     "totalShares": 9290947845,
     "floatShares": 9290444430,
-    "totalCap": 24156464397,
-    "floatCap": 24155155518,
-    "time": 1793240157000,
+    "totalCap": 24063554918.55,
+    "floatCap": 24062251073.699997,
+    "time": 1793259273000,
     "code": "sz000629"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 2.63,
-        "close": 2.6,
+        "close": 2.59,
         "high": 2.64,
         "low": 2.59,
-        "volume": 233816
+        "volume": 671294
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 2.63,
-        "close": 2.6,
+        "close": 2.59,
         "high": 2.64,
         "low": 2.59,
-        "volume": 233816
+        "volume": 671294
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 2.82,
-        "close": 2.6,
+        "close": 2.59,
         "high": 2.87,
         "low": 2.59,
-        "volume": 8836537
+        "volume": 9274896
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

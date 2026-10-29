@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600426",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "华鲁恒升",
-    "price": 19.22,
+    "price": 19.48,
     "prevClose": 19.47,
-    "change": -0.25,
-    "todayChange": -1.28,
+    "change": 0.01,
+    "todayChange": 0.05,
     "open": 19.31,
-    "high": 19.45,
+    "high": 19.6,
     "low": 19.08,
-    "avg": 19.24,
-    "volume": 54939,
-    "amount": 105686992,
-    "turnover": 0.2,
-    "volumeRatio": 1.19,
-    "amplitude": 1.9,
+    "avg": 19.37,
+    "volume": 177865,
+    "amount": 344554695,
+    "turnover": 0.65,
+    "volumeRatio": 0.74,
+    "amplitude": 2.67,
     "limitUp": 21.42,
     "limitDown": 17.52,
-    "pe": 11.23,
-    "peStatic": 15.94,
-    "peTtm": 12.89,
-    "pb": 1.54,
+    "pe": 11.38,
+    "peStatic": 16.16,
+    "peTtm": 13.07,
+    "pb": 1.57,
     "roe": 6.87,
     "grossMargin": 24.0998324414,
     "netMargin": 14.8237363446,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 2749943015,
     "floatShares": 2749943015,
-    "totalCap": 52853904748.299995,
-    "floatCap": 52853904748.299995,
-    "time": 1793240157000,
+    "totalCap": 53568889932.200005,
+    "floatCap": 53568889932.200005,
+    "time": 1793261520000,
     "code": "sh600426"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 19.31,
-        "close": 19.22,
-        "high": 19.45,
+        "close": 19.48,
+        "high": 19.6,
         "low": 19.08,
-        "volume": 54939
+        "volume": 177865
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 19.31,
-        "close": 19.22,
-        "high": 19.45,
+        "close": 19.48,
+        "high": 19.6,
         "low": 19.08,
-        "volume": 54939
+        "volume": 177865
       }
     ]
   },

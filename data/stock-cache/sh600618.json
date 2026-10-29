@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600618",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "氯碱化工",
-    "price": 8.8,
+    "price": 8.83,
     "prevClose": 9,
-    "change": -0.2,
-    "todayChange": -2.22,
+    "change": -0.17,
+    "todayChange": -1.89,
     "open": 8.93,
     "high": 9,
     "low": 8.77,
     "avg": 8.86,
-    "volume": 23166,
-    "amount": 20532321,
-    "turnover": 0.31,
-    "volumeRatio": 2.41,
+    "volume": 56203,
+    "amount": 49770032,
+    "turnover": 0.75,
+    "volumeRatio": 1.15,
     "amplitude": 2.56,
     "limitUp": 9.9,
     "limitDown": 8.1,
-    "pe": 17.01,
-    "peStatic": 11.8,
-    "peTtm": 14.57,
-    "pb": 1.07,
+    "pe": 17.07,
+    "peStatic": 11.84,
+    "peTtm": 14.62,
+    "pb": 1.08,
     "roe": 4.75,
     "grossMargin": 14.5003654188,
     "netMargin": 7.6254786325,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 1156399976,
     "floatShares": 749839976,
-    "totalCap": 10176319788.800001,
-    "floatCap": 6598591788.8,
-    "time": 1793240161000,
+    "totalCap": 10211011788.08,
+    "floatCap": 6621086988.08,
+    "time": 1793261515000,
     "code": "sh600618"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 8.93,
-        "close": 8.8,
+        "close": 8.83,
         "high": 9,
         "low": 8.77,
-        "volume": 23166
+        "volume": 56203
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 8.93,
-        "close": 8.8,
+        "close": 8.83,
         "high": 9,
         "low": 8.77,
-        "volume": 23166
+        "volume": 56203
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 9.66,
-        "close": 8.82,
+        "close": 8.83,
         "high": 10.04,
         "low": 8.77,
-        "volume": 705205
+        "volume": 738712
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

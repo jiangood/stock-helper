@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000923",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "河钢资源",
-    "price": 14.3,
+    "price": 14.24,
     "prevClose": 14.58,
-    "change": -0.28,
-    "todayChange": -1.92,
+    "change": -0.34,
+    "todayChange": -2.33,
     "open": 14.48,
     "high": 14.53,
-    "low": 14.28,
-    "avg": 14.42,
-    "volume": 26570,
-    "amount": 38308744.6,
-    "turnover": 0.42,
-    "volumeRatio": 1.02,
-    "amplitude": 1.71,
+    "low": 14.21,
+    "avg": 14.35,
+    "volume": 67006,
+    "amount": 96151950.6,
+    "turnover": 1.07,
+    "volumeRatio": 0.49,
+    "amplitude": 2.19,
     "limitUp": 16.04,
     "limitDown": 13.12,
-    "pe": -269.7,
-    "peStatic": 16.46,
-    "peTtm": 2598.42,
-    "pb": 0.96,
+    "pe": -268.57,
+    "peStatic": 16.39,
+    "peTtm": 2587.52,
+    "pb": 0.95,
     "roe": -0.26,
     "grossMargin": 43.5636307053,
     "netMargin": -2.5414141215000003,
@@ -37,9 +37,9 @@
     "board": "BK1228",
     "totalShares": 652728961,
     "floatShares": 627901354,
-    "totalCap": 9334024142.300001,
-    "floatCap": 8978989362.2,
-    "time": 1793240157000,
+    "totalCap": 9294860404.64,
+    "floatCap": 8941315280.960001,
+    "time": 1793259276000,
     "code": "sz000923"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 14.48,
-        "close": 14.29,
+        "close": 14.24,
         "high": 14.53,
-        "low": 14.28,
-        "volume": 26558
+        "low": 14.21,
+        "volume": 67006
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 14.48,
-        "close": 14.29,
+        "close": 14.24,
         "high": 14.53,
-        "low": 14.28,
-        "volume": 26558
+        "low": 14.21,
+        "volume": 67006
       }
     ]
   },

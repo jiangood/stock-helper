@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh601618",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "中国中冶",
-    "price": 2.48,
+    "price": 2.47,
     "prevClose": 2.5,
-    "change": -0.02,
-    "todayChange": -0.8,
+    "change": -0.03,
+    "todayChange": -1.2,
     "open": 2.49,
     "high": 2.5,
     "low": 2.47,
     "avg": 2.48,
-    "volume": 140116,
-    "amount": 34780671,
-    "turnover": 0.08,
-    "volumeRatio": 1.12,
+    "volume": 410343,
+    "amount": 101727778,
+    "turnover": 0.23,
+    "volumeRatio": 0.63,
     "amplitude": 1.2,
     "limitUp": 2.75,
     "limitDown": 2.25,
-    "pe": 11.03,
-    "peStatic": 38.82,
-    "peTtm": 93.54,
+    "pe": 10.99,
+    "peStatic": 38.67,
+    "peTtm": 93.16,
     "pb": 0.5,
     "roe": 0.97,
     "grossMargin": 9.8019111987,
@@ -37,9 +37,9 @@
     "board": "BK1248",
     "totalShares": 20691619170,
     "floatShares": 17852619170,
-    "totalCap": 51315215541.6,
-    "floatCap": 44274495541.6,
-    "time": 1793240152000,
+    "totalCap": 51108299349.9,
+    "floatCap": 44095969349.9,
+    "time": 1793261518000,
     "code": "sh601618"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 2.49,
-        "close": 2.49,
+        "close": 2.47,
         "high": 2.5,
         "low": 2.47,
-        "volume": 140116
+        "volume": 410343
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 2.49,
-        "close": 2.49,
+        "close": 2.47,
         "high": 2.5,
         "low": 2.47,
-        "volume": 140116
+        "volume": 410343
       }
     ]
   },
@@ -7304,12 +7304,12 @@
       {
         "time": "2026-10-29",
         "open": 2.53,
-        "close": 2.48,
+        "close": 2.47,
         "high": 2.62,
         "low": 2.45,
-        "volume": 11897853
+        "volume": 12170328
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

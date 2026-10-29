@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600348",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "华阳股份",
-    "price": 8.42,
+    "price": 8.46,
     "prevClose": 8.42,
-    "change": 0,
-    "todayChange": 0,
+    "change": 0.04,
+    "todayChange": 0.48,
     "open": 8.44,
     "high": 8.51,
-    "low": 8.4,
-    "avg": 8.46,
-    "volume": 75516,
-    "amount": 63895434,
-    "turnover": 0.21,
-    "volumeRatio": 2.08,
-    "amplitude": 1.31,
+    "low": 8.38,
+    "avg": 8.45,
+    "volume": 199102,
+    "amount": 168335012,
+    "turnover": 0.55,
+    "volumeRatio": 1.05,
+    "amplitude": 1.54,
     "limitUp": 9.26,
     "limitDown": 7.58,
-    "pe": 14.31,
-    "peStatic": 17.84,
-    "peTtm": 15.33,
-    "pb": 1.1,
+    "pe": 14.38,
+    "peStatic": 17.92,
+    "peTtm": 15.4,
+    "pb": 1.11,
     "roe": 3.82,
     "grossMargin": 43.0980764017,
     "netMargin": 13.3424177898,
@@ -37,9 +37,9 @@
     "board": "BK1250",
     "totalShares": 3607500000,
     "floatShares": 3607500000,
-    "totalCap": 30375150000,
-    "floatCap": 30375150000,
-    "time": 1793240155000,
+    "totalCap": 30519450000.000004,
+    "floatCap": 30519450000.000004,
+    "time": 1793261497000,
     "code": "sh600348"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 8.44,
-        "close": 8.42,
+        "close": 8.46,
         "high": 8.51,
-        "low": 8.4,
-        "volume": 75507
+        "low": 8.38,
+        "volume": 199102
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 8.44,
-        "close": 8.42,
+        "close": 8.46,
         "high": 8.51,
-        "low": 8.4,
-        "volume": 75507
+        "low": 8.38,
+        "volume": 199102
       }
     ]
   },

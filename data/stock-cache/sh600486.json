@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600486",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "扬农化工",
-    "price": 52.3,
+    "price": 54.47,
     "prevClose": 52.89,
-    "change": -0.59,
-    "todayChange": -1.12,
+    "change": 1.58,
+    "todayChange": 2.99,
     "open": 52.75,
-    "high": 52.89,
+    "high": 54.7,
     "low": 51.79,
-    "avg": 52.31,
-    "volume": 9032,
-    "amount": 47243335,
-    "turnover": 0.22,
-    "volumeRatio": 1.37,
-    "amplitude": 2.08,
+    "avg": 53.73,
+    "volume": 55096,
+    "amount": 296048160,
+    "turnover": 1.36,
+    "volumeRatio": 1.6,
+    "amplitude": 5.5,
     "limitUp": 58.18,
     "limitDown": 47.6,
-    "pe": 15.02,
-    "peStatic": 16.44,
-    "peTtm": 16.43,
-    "pb": 1.74,
+    "pe": 15.64,
+    "peStatic": 17.12,
+    "peTtm": 17.12,
+    "pb": 1.82,
     "roe": 8.91,
     "grossMargin": 22.3819339632,
     "netMargin": 11.5597144261,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 404111938,
     "floatShares": 404111938,
-    "totalCap": 21135054357.399998,
-    "floatCap": 21135054357.399998,
-    "time": 1793240158000,
+    "totalCap": 22011977262.86,
+    "floatCap": 22011977262.86,
+    "time": 1793261500000,
     "code": "sh600486"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 52.75,
-        "close": 52.3,
-        "high": 52.89,
+        "close": 54.47,
+        "high": 54.7,
         "low": 51.79,
-        "volume": 9032
+        "volume": 55096
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 52.75,
-        "close": 52.3,
-        "high": 52.89,
+        "close": 54.47,
+        "high": 54.7,
         "low": 51.79,
-        "volume": 9032
+        "volume": 55096
       }
     ]
   },

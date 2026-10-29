@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000819",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "岳阳兴长",
-    "price": 10.72,
+    "price": 10.54,
     "prevClose": 10.8,
-    "change": -0.08,
-    "todayChange": -0.74,
+    "change": -0.26,
+    "todayChange": -2.41,
     "open": 10.8,
     "high": 10.93,
-    "low": 10.55,
-    "avg": 10.67,
-    "volume": 14503,
-    "amount": 15477563.37,
-    "turnover": 0.4,
-    "volumeRatio": 2.31,
-    "amplitude": 3.52,
+    "low": 10.51,
+    "avg": 10.64,
+    "volume": 37740,
+    "amount": 40169227.37,
+    "turnover": 1.03,
+    "volumeRatio": 1.18,
+    "amplitude": 3.89,
     "limitUp": 11.88,
     "limitDown": 9.72,
-    "pe": 138.02,
-    "peStatic": -75.35,
-    "peTtm": -468.61,
-    "pb": 1.87,
+    "pe": 135.71,
+    "peStatic": -74.09,
+    "peTtm": -460.74,
+    "pb": 1.84,
     "roe": 0.68,
     "grossMargin": 15.4685846587,
     "netMargin": 1.0955509494,
@@ -37,9 +37,9 @@
     "board": "BK1274",
     "totalShares": 366020106,
     "floatShares": 366020106,
-    "totalCap": 3923735536.32,
-    "floatCap": 3923735536.32,
-    "time": 1793240163000,
+    "totalCap": 3857851917.24,
+    "floatCap": 3857851917.24,
+    "time": 1793259261000,
     "code": "sz000819"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.8,
-        "close": 10.72,
+        "close": 10.54,
         "high": 10.93,
-        "low": 10.55,
-        "volume": 14503
+        "low": 10.51,
+        "volume": 37740
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.8,
-        "close": 10.72,
+        "close": 10.54,
         "high": 10.93,
-        "low": 10.55,
-        "volume": 14503
+        "low": 10.51,
+        "volume": 37740
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 12.18,
-        "close": 10.73,
+        "close": 10.54,
         "high": 12.4,
-        "low": 10.55,
-        "volume": 476288
+        "low": 10.51,
+        "volume": 499567
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

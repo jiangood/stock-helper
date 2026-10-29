@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600963",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "岳阳林纸",
-    "price": 3.83,
+    "price": 3.89,
     "prevClose": 3.9,
-    "change": -0.07,
-    "todayChange": -1.79,
+    "change": -0.01,
+    "todayChange": -0.26,
     "open": 3.87,
-    "high": 3.92,
-    "low": 3.82,
-    "avg": 3.85,
-    "volume": 250376,
-    "amount": 96358633,
-    "turnover": 1.42,
-    "volumeRatio": 1.99,
-    "amplitude": 2.56,
+    "high": 3.98,
+    "low": 3.8,
+    "avg": 3.88,
+    "volume": 833163,
+    "amount": 323258038,
+    "turnover": 4.74,
+    "volumeRatio": 1.27,
+    "amplitude": 4.62,
     "limitUp": 4.29,
     "limitDown": 3.51,
-    "pe": -345.16,
-    "peStatic": -28.65,
-    "peTtm": -17.37,
-    "pb": 0.88,
+    "pe": -350.57,
+    "peStatic": -29.1,
+    "peTtm": -17.65,
+    "pb": 0.9,
     "roe": -0.13,
     "grossMargin": 8.6909802303,
     "netMargin": -0.246596559,
@@ -37,9 +37,9 @@
     "board": "BK1267",
     "totalShares": 1757567854,
     "floatShares": 1757567854,
-    "totalCap": 6731484880.82,
-    "floatCap": 6731484880.82,
-    "time": 1793240154000,
+    "totalCap": 6836938952.06,
+    "floatCap": 6836938952.06,
+    "time": 1793261517000,
     "code": "sh600963"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 3.87,
-        "close": 3.84,
-        "high": 3.92,
-        "low": 3.82,
-        "volume": 250376
+        "close": 3.89,
+        "high": 3.98,
+        "low": 3.8,
+        "volume": 833163
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 3.87,
-        "close": 3.84,
-        "high": 3.92,
-        "low": 3.82,
-        "volume": 250336
+        "close": 3.89,
+        "high": 3.98,
+        "low": 3.8,
+        "volume": 833163
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 3.37,
-        "close": 3.84,
+        "close": 3.89,
         "high": 4,
         "low": 3.2,
-        "volume": 6318658
+        "volume": 6903267
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

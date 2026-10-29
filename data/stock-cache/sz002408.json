@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002408",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "齐翔腾达",
-    "price": 4.35,
+    "price": 4.33,
     "prevClose": 4.42,
-    "change": -0.07,
-    "todayChange": -1.58,
+    "change": -0.09,
+    "todayChange": -2.04,
     "open": 4.42,
     "high": 4.43,
-    "low": 4.35,
-    "avg": 4.39,
-    "volume": 72858,
-    "amount": 31950748.9,
-    "turnover": 0.26,
-    "volumeRatio": 1.18,
-    "amplitude": 1.81,
+    "low": 4.3,
+    "avg": 4.35,
+    "volume": 219422,
+    "amount": 95493257.76,
+    "turnover": 0.8,
+    "volumeRatio": 0.68,
+    "amplitude": 2.94,
     "limitUp": 4.86,
     "limitDown": 3.98,
-    "pe": 243.5,
-    "peStatic": -21.53,
-    "peTtm": -31.66,
+    "pe": 242.38,
+    "peStatic": -21.43,
+    "peTtm": -31.52,
     "pb": 1.11,
     "roe": 0.34,
     "grossMargin": 4.9245765681,
@@ -32,14 +32,14 @@
     "profitYoY": 126.134337306177,
     "navPerShare": 3.9155966,
     "high52": 7.15,
-    "low52": 4.35,
+    "low52": 4.3,
     "listedAt": 20100518,
     "board": "BK1274",
     "totalShares": 2843538717,
     "floatShares": 2751751309,
-    "totalCap": 12369393418.949999,
-    "floatCap": 11970118194.15,
-    "time": 1793240151000,
+    "totalCap": 12312522644.61,
+    "floatCap": 11915083167.97,
+    "time": 1793259294000,
     "code": "sz002408"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 4.42,
-        "close": 4.35,
+        "close": 4.33,
         "high": 4.43,
-        "low": 4.35,
-        "volume": 72858
+        "low": 4.3,
+        "volume": 219422
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 4.42,
-        "close": 4.35,
+        "close": 4.33,
         "high": 4.43,
-        "low": 4.35,
-        "volume": 72858
+        "low": 4.3,
+        "volume": 219422
       }
     ]
   },
@@ -7224,12 +7224,12 @@
       {
         "time": "2026-10-29",
         "open": 5.24,
-        "close": 4.36,
+        "close": 4.33,
         "high": 5.4,
-        "low": 4.35,
-        "volume": 3552773
+        "low": 4.3,
+        "volume": 3699874
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

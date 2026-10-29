@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600392",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "盛和资源",
-    "price": 15.33,
+    "price": 15.21,
     "prevClose": 15.76,
-    "change": -0.43,
-    "todayChange": -2.73,
+    "change": -0.55,
+    "todayChange": -3.49,
     "open": 15.74,
     "high": 15.74,
-    "low": 15.31,
-    "avg": 15.47,
-    "volume": 92506,
-    "amount": 143119994,
-    "turnover": 0.53,
-    "volumeRatio": 1.61,
-    "amplitude": 2.73,
+    "low": 15.2,
+    "avg": 15.38,
+    "volume": 251496,
+    "amount": 386742430,
+    "turnover": 1.43,
+    "volumeRatio": 0.84,
+    "amplitude": 3.43,
     "limitUp": 17.34,
     "limitDown": 14.18,
-    "pe": 15.15,
-    "peStatic": 32.03,
-    "peTtm": 19.92,
-    "pb": 2.06,
+    "pe": 15.03,
+    "peStatic": 31.78,
+    "peTtm": 19.77,
+    "pb": 2.04,
     "roe": 6.8,
     "grossMargin": 12.6425008214,
     "netMargin": 10.3671611116,
@@ -32,14 +32,14 @@
     "profitYoY": 135.235088233553,
     "navPerShare": 7.4498006,
     "high52": 34.3,
-    "low52": 15.24,
+    "low52": 15.2,
     "listedAt": 20030529,
     "board": "BK1027",
     "totalShares": 1752826570,
     "floatShares": 1752826570,
-    "totalCap": 26870831318.1,
-    "floatCap": 26870831318.1,
-    "time": 1793240159000,
+    "totalCap": 26660492129.7,
+    "floatCap": 26660492129.7,
+    "time": 1793261510000,
     "code": "sh600392"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 15.74,
-        "close": 15.33,
+        "close": 15.21,
         "high": 15.74,
-        "low": 15.31,
-        "volume": 92506
+        "low": 15.2,
+        "volume": 251496
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 15.74,
-        "close": 15.33,
+        "close": 15.21,
         "high": 15.74,
-        "low": 15.31,
-        "volume": 92506
+        "low": 15.2,
+        "volume": 251496
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 20.16,
-        "close": 15.34,
+        "close": 15.21,
         "high": 20.26,
-        "low": 15.24,
-        "volume": 5686051
+        "low": 15.2,
+        "volume": 5846219
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

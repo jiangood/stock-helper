@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600301",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "华锡有色",
-    "price": 43.76,
+    "price": 43.19,
     "prevClose": 44.14,
-    "change": -0.38,
-    "todayChange": -0.86,
+    "change": -0.95,
+    "todayChange": -2.15,
     "open": 44.13,
     "high": 44.44,
-    "low": 43.72,
-    "avg": 44.1,
-    "volume": 21290,
-    "amount": 93901156,
-    "turnover": 0.77,
-    "volumeRatio": 1.61,
-    "amplitude": 1.63,
+    "low": 43.16,
+    "avg": 43.8,
+    "volume": 74022,
+    "amount": 324212991,
+    "turnover": 2.69,
+    "volumeRatio": 1.07,
+    "amplitude": 2.9,
     "limitUp": 48.55,
     "limitDown": 39.73,
-    "pe": 25.92,
-    "peStatic": 34.57,
-    "peTtm": 29.05,
-    "pb": 5.44,
+    "pe": 25.59,
+    "peStatic": 34.12,
+    "peTtm": 28.67,
+    "pb": 5.37,
     "roe": 10.53,
     "grossMargin": 42.9411248542,
     "netMargin": 26.3147960282,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 632567479,
     "floatShares": 275335681,
-    "totalCap": 27681152881.039997,
-    "floatCap": 12048689400.56,
-    "time": 1793240159000,
+    "totalCap": 27320589418.01,
+    "floatCap": 11891748062.39,
+    "time": 1793261516000,
     "code": "sh600301"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 44.13,
-        "close": 43.76,
+        "close": 43.19,
         "high": 44.44,
-        "low": 43.72,
-        "volume": 21290
+        "low": 43.16,
+        "volume": 74022
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 44.13,
-        "close": 43.76,
+        "close": 43.19,
         "high": 44.44,
-        "low": 43.72,
-        "volume": 21264
+        "low": 43.16,
+        "volume": 74022
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 49.35,
-        "close": 43.8,
+        "close": 43.19,
         "high": 49.55,
-        "low": 43.72,
-        "volume": 1202343
+        "low": 43.16,
+        "volume": 1255470
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

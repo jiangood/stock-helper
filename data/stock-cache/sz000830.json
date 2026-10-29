@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000830",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "鲁西化工",
-    "price": 11.03,
+    "price": 11.16,
     "prevClose": 11.17,
-    "change": -0.14,
-    "todayChange": -1.25,
+    "change": -0.01,
+    "todayChange": -0.09,
     "open": 11.14,
-    "high": 11.18,
-    "low": 11.01,
-    "avg": 11.05,
-    "volume": 52222,
-    "amount": 57719817,
-    "turnover": 0.27,
-    "volumeRatio": 2.01,
-    "amplitude": 1.52,
+    "high": 11.28,
+    "low": 10.98,
+    "avg": 11.13,
+    "volume": 187254,
+    "amount": 208460662.46,
+    "turnover": 0.98,
+    "volumeRatio": 1.38,
+    "amplitude": 2.69,
     "limitUp": 12.29,
     "limitDown": 10.05,
-    "pe": 10.78,
-    "peStatic": 23.17,
-    "peTtm": 18.79,
-    "pb": 1.09,
+    "pe": 10.9,
+    "peStatic": 23.44,
+    "peTtm": 19.01,
+    "pb": 1.1,
     "roe": 5.01,
     "grossMargin": 14.758510891,
     "netMargin": 6.3503710261999995,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 1904319011,
     "floatShares": 1904178218,
-    "totalCap": 21004638691.329998,
-    "floatCap": 21003085744.539997,
-    "time": 1793240157000,
+    "totalCap": 21252200162.760002,
+    "floatCap": 21250628912.88,
+    "time": 1793259288000,
     "code": "sz000830"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 11.14,
-        "close": 11.03,
-        "high": 11.18,
-        "low": 11.01,
-        "volume": 52222
+        "close": 11.16,
+        "high": 11.28,
+        "low": 10.98,
+        "volume": 187254
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 11.14,
-        "close": 11.03,
-        "high": 11.18,
-        "low": 11.01,
-        "volume": 52222
+        "close": 11.16,
+        "high": 11.28,
+        "low": 10.98,
+        "volume": 187254
       }
     ]
   },

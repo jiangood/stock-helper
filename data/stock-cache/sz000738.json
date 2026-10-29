@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000738",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "航发控制",
-    "price": 17.85,
+    "price": 17.94,
     "prevClose": 17.8,
-    "change": 0.05,
-    "todayChange": 0.28,
+    "change": 0.14,
+    "todayChange": 0.79,
     "open": 17.69,
-    "high": 17.97,
+    "high": 18.15,
     "low": 17.53,
-    "avg": 17.74,
-    "volume": 42444,
-    "amount": 75277285,
-    "turnover": 0.32,
-    "volumeRatio": 1.53,
-    "amplitude": 2.47,
+    "avg": 17.9,
+    "volume": 136062,
+    "amount": 243590772.4,
+    "turnover": 1.03,
+    "volumeRatio": 0.94,
+    "amplitude": 3.48,
     "limitUp": 19.58,
     "limitDown": 16.02,
-    "pe": 75.22,
-    "peStatic": 70.2,
-    "peTtm": 140.09,
-    "pb": 1.86,
+    "pe": 75.59,
+    "peStatic": 70.55,
+    "peTtm": 140.8,
+    "pb": 1.87,
     "roe": 1.87,
     "grossMargin": 22.7435356725,
     "netMargin": 6.1506474308,
@@ -37,9 +37,9 @@
     "board": "BK1231",
     "totalShares": 1315184001,
     "floatShares": 1315184001,
-    "totalCap": 23476034417.850002,
-    "floatCap": 23476034417.850002,
-    "time": 1793240160000,
+    "totalCap": 23594400977.940002,
+    "floatCap": 23594400977.940002,
+    "time": 1793259279000,
     "code": "sz000738"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 17.69,
-        "close": 17.85,
-        "high": 17.97,
+        "close": 17.94,
+        "high": 18.15,
         "low": 17.53,
-        "volume": 42444
+        "volume": 136062
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 17.69,
-        "close": 17.85,
-        "high": 17.97,
+        "close": 17.94,
+        "high": 18.15,
         "low": 17.53,
-        "volume": 42444
+        "volume": 136062
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 18.8,
-        "close": 17.87,
+        "close": 17.94,
         "high": 19.36,
         "low": 17.36,
-        "volume": 2226208
+        "volume": 2320431
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

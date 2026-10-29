@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
   "code": "sh600459",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "贵研铂业",
-    "price": 16.45,
+    "price": 16,
     "prevClose": 16.85,
-    "change": -0.4,
-    "todayChange": -2.37,
+    "change": -0.85,
+    "todayChange": -5.04,
     "open": 16.85,
     "high": 16.85,
-    "low": 16.44,
-    "avg": 16.59,
-    "volume": 36448,
-    "amount": 60456530,
-    "turnover": 0.44,
-    "volumeRatio": 2.03,
-    "amplitude": 2.43,
+    "low": 15.98,
+    "avg": 16.32,
+    "volume": 146185,
+    "amount": 238571025,
+    "turnover": 1.78,
+    "volumeRatio": 1.56,
+    "amplitude": 5.16,
     "limitUp": 18.54,
     "limitDown": 15.17,
-    "pe": 19.37,
-    "peStatic": 21.14,
-    "peTtm": 20.35,
-    "pb": 1.51,
-    "roe": 4.25,
-    "grossMargin": 4.4297279376,
-    "netMargin": 1.6644993322,
-    "revenue": 22651848105.94,
-    "revenueYoY": -23.3550231536,
-    "profit": 349570955.98,
-    "profitYoY": 7.63216917822,
-    "navPerShare": 10.9698696,
+    "pe": 18.9,
+    "peStatic": 20.56,
+    "peTtm": 19.88,
+    "pb": 1.43,
+    "roe": 6.13,
+    "grossMargin": 4.6001486069,
+    "netMargin": 1.8410547550999998,
+    "revenue": 30252418988.74,
+    "revenueYoY": -33.0391965417,
+    "profit": 522719102.6,
+    "profitYoY": 4.416333370623,
+    "navPerShare": 11.1771716,
     "high52": 29.99,
     "low52": 15.61,
     "listedAt": 20030516,
     "board": "BK1027",
     "totalShares": 823177251,
     "floatShares": 823177251,
-    "totalCap": 13541265778.949999,
-    "floatCap": 13541265778.949999,
-    "time": 1793240154000,
+    "totalCap": 13170836016,
+    "floatCap": 13170836016,
+    "time": 1793261496000,
     "code": "sh600459"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 16.85,
-        "close": 16.45,
+        "close": 16,
         "high": 16.85,
-        "low": 16.44,
-        "volume": 36448
+        "low": 15.98,
+        "volume": 146185
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 16.85,
-        "close": 16.45,
+        "close": 16,
         "high": 16.85,
-        "low": 16.44,
-        "volume": 36434
+        "low": 15.98,
+        "volume": 146185
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 17.93,
-        "close": 16.48,
+        "close": 16,
         "high": 18.47,
-        "low": 16.24,
-        "volume": 1488894
+        "low": 15.98,
+        "volume": 1598929
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

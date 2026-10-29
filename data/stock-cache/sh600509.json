@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600509",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "天富能源",
-    "price": 6.4,
+    "price": 6.38,
     "prevClose": 6.53,
-    "change": -0.13,
-    "todayChange": -1.99,
+    "change": -0.15,
+    "todayChange": -2.3,
     "open": 6.51,
     "high": 6.55,
-    "low": 6.4,
-    "avg": 6.45,
-    "volume": 53261,
-    "amount": 34368023,
-    "turnover": 0.39,
-    "volumeRatio": 2.28,
-    "amplitude": 2.3,
+    "low": 6.35,
+    "avg": 6.42,
+    "volume": 136263,
+    "amount": 87482245,
+    "turnover": 0.99,
+    "volumeRatio": 1.12,
+    "amplitude": 3.06,
     "limitUp": 7.18,
     "limitDown": 5.88,
-    "pe": 17.33,
-    "peStatic": 38.23,
-    "peTtm": 37.19,
-    "pb": 1.1,
+    "pe": 17.28,
+    "peStatic": 38.11,
+    "peTtm": 37.07,
+    "pb": 1.09,
     "roe": 4.89,
     "grossMargin": 23.4046973676,
     "netMargin": 6.0672635877,
@@ -32,14 +32,14 @@
     "profitYoY": 1.721250072092,
     "navPerShare": 5.8421153,
     "high52": 11.28,
-    "low52": 6.4,
+    "low52": 6.35,
     "listedAt": 20020228,
     "board": "BK0428",
     "totalShares": 1374397407,
     "floatShares": 1374397407,
-    "totalCap": 8796143404.800001,
-    "floatCap": 8796143404.800001,
-    "time": 1793240157000,
+    "totalCap": 8768655456.66,
+    "floatCap": 8768655456.66,
+    "time": 1793261511000,
     "code": "sh600509"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 6.51,
-        "close": 6.4,
+        "close": 6.38,
         "high": 6.55,
-        "low": 6.4,
-        "volume": 53255
+        "low": 6.35,
+        "volume": 136263
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 6.51,
-        "close": 6.4,
+        "close": 6.38,
         "high": 6.55,
-        "low": 6.4,
-        "volume": 53261
+        "low": 6.35,
+        "volume": 136263
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 7.11,
-        "close": 6.41,
+        "close": 6.38,
         "high": 7.37,
-        "low": 6.4,
-        "volume": 2239649
+        "low": 6.35,
+        "volume": 2323448
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

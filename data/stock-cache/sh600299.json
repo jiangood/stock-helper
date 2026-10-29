@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600299",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "安迪苏",
-    "price": 7.51,
+    "price": 7.42,
     "prevClose": 7.64,
-    "change": -0.13,
-    "todayChange": -1.7,
+    "change": -0.22,
+    "todayChange": -2.88,
     "open": 7.61,
     "high": 7.64,
-    "low": 7.5,
-    "avg": 7.55,
-    "volume": 78556,
-    "amount": 59290104,
-    "turnover": 0.26,
-    "volumeRatio": 2.04,
-    "amplitude": 1.83,
+    "low": 7.4,
+    "avg": 7.48,
+    "volume": 220795,
+    "amount": 165245985,
+    "turnover": 0.72,
+    "volumeRatio": 1.1,
+    "amplitude": 3.14,
     "limitUp": 8.4,
     "limitDown": 6.88,
-    "pe": 12.78,
-    "peStatic": 20.03,
-    "peTtm": 17.53,
-    "pb": 1.17,
+    "pe": 12.63,
+    "peStatic": 19.79,
+    "peTtm": 17.32,
+    "pb": 1.16,
     "roe": 4.55,
     "grossMargin": 28.3767869279,
     "netMargin": 9.330277763,
@@ -32,14 +32,14 @@
     "profitYoY": 22.246545355522,
     "navPerShare": 6.4019611,
     "high52": 16.38,
-    "low52": 7.5,
+    "low52": 7.4,
     "listedAt": 20000420,
     "board": "BK0538",
     "totalShares": 3079779257,
     "floatShares": 3079779257,
-    "totalCap": 23129142220.07,
-    "floatCap": 23129142220.07,
-    "time": 1793240154000,
+    "totalCap": 22851962086.94,
+    "floatCap": 22851962086.94,
+    "time": 1793261511000,
     "code": "sh600299"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.61,
-        "close": 7.51,
+        "close": 7.42,
         "high": 7.64,
-        "low": 7.5,
-        "volume": 78556
+        "low": 7.4,
+        "volume": 220795
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 7.61,
-        "close": 7.51,
+        "close": 7.42,
         "high": 7.64,
-        "low": 7.5,
-        "volume": 78556
+        "low": 7.4,
+        "volume": 220795
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 8.2,
-        "close": 7.52,
+        "close": 7.42,
         "high": 8.53,
-        "low": 7.51,
-        "volume": 3233066
+        "low": 7.4,
+        "volume": 3376564
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

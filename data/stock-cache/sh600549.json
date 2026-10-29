@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600549",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "厦门钨业",
-    "price": 34.58,
+    "price": 34.27,
     "prevClose": 35.55,
-    "change": -0.97,
-    "todayChange": -2.73,
+    "change": -1.28,
+    "todayChange": -3.6,
     "open": 35.21,
     "high": 35.7,
-    "low": 34.58,
-    "avg": 35.1,
-    "volume": 119104,
-    "amount": 418004389,
-    "turnover": 0.77,
-    "volumeRatio": 1.78,
-    "amplitude": 3.15,
+    "low": 34.22,
+    "avg": 34.82,
+    "volume": 266660,
+    "amount": 928538384,
+    "turnover": 1.72,
+    "volumeRatio": 0.78,
+    "amplitude": 4.16,
     "limitUp": 39.11,
     "limitDown": 32,
-    "pe": 12.76,
-    "peStatic": 23.77,
-    "peTtm": 14.59,
-    "pb": 2.89,
+    "pe": 12.65,
+    "peStatic": 23.56,
+    "peTtm": 14.46,
+    "pb": 2.86,
     "roe": 17.49,
     "grossMargin": 20.6783283755,
     "netMargin": 8.1149550243,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 1587585826,
     "floatShares": 1553931980,
-    "totalCap": 54898717863.079994,
-    "floatCap": 53734967868.399994,
-    "time": 1793240160000,
+    "totalCap": 54406566257.020004,
+    "floatCap": 53253248954.600006,
+    "time": 1793261496000,
     "code": "sh600549"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 35.21,
-        "close": 34.62,
+        "close": 34.27,
         "high": 35.7,
-        "low": 34.6,
-        "volume": 117751
+        "low": 34.22,
+        "volume": 266660
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 35.21,
-        "close": 34.62,
+        "close": 34.27,
         "high": 35.7,
-        "low": 34.6,
-        "volume": 117751
+        "low": 34.22,
+        "volume": 266660
       }
     ]
   },
@@ -7600,12 +7600,12 @@
       {
         "time": "2026-10-29",
         "open": 43.72,
-        "close": 34.67,
+        "close": 34.27,
         "high": 44.49,
         "low": 33.65,
-        "volume": 5005616
+        "volume": 5157341
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

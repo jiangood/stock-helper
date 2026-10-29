@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh601568",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "北元化工",
-    "price": 3.46,
+    "price": 3.43,
     "prevClose": 3.52,
-    "change": -0.06,
-    "todayChange": -1.7,
+    "change": -0.09,
+    "todayChange": -2.56,
     "open": 3.52,
     "high": 3.52,
-    "low": 3.46,
-    "avg": 3.49,
-    "volume": 52513,
-    "amount": 18302473,
-    "turnover": 0.13,
-    "volumeRatio": 2.3,
-    "amplitude": 1.7,
+    "low": 3.38,
+    "avg": 3.44,
+    "volume": 265452,
+    "amount": 91253167,
+    "turnover": 0.67,
+    "volumeRatio": 2.27,
+    "amplitude": 3.98,
     "limitUp": 3.87,
     "limitDown": 3.17,
-    "pe": 94.26,
-    "peStatic": 126.9,
-    "peTtm": 320.04,
-    "pb": 1.22,
+    "pe": 93.44,
+    "peStatic": 125.8,
+    "peTtm": 317.26,
+    "pb": 1.21,
     "roe": 0.64,
     "grossMargin": 10.9589440404,
     "netMargin": 1.6695973619999998,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 3972222224,
     "floatShares": 3972222224,
-    "totalCap": 13743888895.039999,
-    "floatCap": 13743888895.039999,
-    "time": 1793240161000,
+    "totalCap": 13624722228.32,
+    "floatCap": 13624722228.32,
+    "time": 1793261512000,
     "code": "sh601568"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 3.52,
-        "close": 3.46,
+        "close": 3.43,
         "high": 3.52,
-        "low": 3.46,
-        "volume": 52513
+        "low": 3.38,
+        "volume": 265452
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 3.52,
-        "close": 3.46,
+        "close": 3.43,
         "high": 3.52,
-        "low": 3.46,
-        "volume": 52504
+        "low": 3.38,
+        "volume": 265452
       }
     ]
   },
@@ -6264,12 +6264,12 @@
       {
         "time": "2026-10-29",
         "open": 3.54,
-        "close": 3.48,
+        "close": 3.43,
         "high": 3.66,
-        "low": 3.44,
-        "volume": 2147707
+        "low": 3.38,
+        "volume": 2363189
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

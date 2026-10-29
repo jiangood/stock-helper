@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz002136",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "安 纳 达",
-    "price": 10.37,
+    "price": 10.07,
     "prevClose": 10.36,
-    "change": 0.01,
-    "todayChange": 0.1,
+    "change": -0.29,
+    "todayChange": -2.8,
     "open": 10.31,
     "high": 10.44,
-    "low": 10.28,
-    "avg": 10.37,
-    "volume": 20187,
-    "amount": 20934590,
-    "turnover": 0.94,
-    "volumeRatio": 1.96,
-    "amplitude": 1.54,
+    "low": 10.07,
+    "avg": 10.28,
+    "volume": 49919,
+    "amount": 51315567,
+    "turnover": 2.33,
+    "volumeRatio": 0.93,
+    "amplitude": 3.57,
     "limitUp": 11.4,
     "limitDown": 9.32,
-    "pe": 24.77,
-    "peStatic": -24.08,
-    "peTtm": 104.64,
-    "pb": 1.94,
+    "pe": 24.05,
+    "peStatic": -23.39,
+    "peTtm": 101.61,
+    "pb": 1.88,
     "roe": 6.05,
     "grossMargin": 12.5237774505,
     "netMargin": 4.4057793786,
@@ -32,14 +32,14 @@
     "profitYoY": 245.620968450508,
     "navPerShare": 5.3455095,
     "high52": 17.75,
-    "low52": 10.09,
+    "low52": 10.07,
     "listedAt": 20070530,
     "board": "BK1019",
     "totalShares": 215020000,
     "floatShares": 214455760,
-    "totalCap": 2229757400,
-    "floatCap": 2223906231.2,
-    "time": 1793240154000,
+    "totalCap": 2165251400,
+    "floatCap": 2159569503.2000003,
+    "time": 1793259252000,
     "code": "sz002136"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.31,
-        "close": 10.37,
+        "close": 10.07,
         "high": 10.44,
-        "low": 10.28,
-        "volume": 20187
+        "low": 10.07,
+        "volume": 49919
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.31,
-        "close": 10.37,
+        "close": 10.07,
         "high": 10.44,
-        "low": 10.28,
-        "volume": 20187
+        "low": 10.07,
+        "volume": 49919
       }
     ]
   },
@@ -7552,12 +7552,12 @@
       {
         "time": "2026-10-29",
         "open": 11.85,
-        "close": 10.37,
+        "close": 10.07,
         "high": 12.3,
-        "low": 10.09,
-        "volume": 780335
+        "low": 10.07,
+        "volume": 810209
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

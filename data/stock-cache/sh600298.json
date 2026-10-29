@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600298",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "安琪酵母",
-    "price": 36.63,
+    "price": 35.95,
     "prevClose": 37,
-    "change": -0.37,
-    "todayChange": -1,
+    "change": -1.05,
+    "todayChange": -2.84,
     "open": 37.01,
     "high": 37.14,
-    "low": 36.52,
-    "avg": 36.79,
-    "volume": 14231,
-    "amount": 52355321,
-    "turnover": 0.17,
-    "volumeRatio": 1.14,
-    "amplitude": 1.68,
+    "low": 35.79,
+    "avg": 36.34,
+    "volume": 115107,
+    "amount": 418255625,
+    "turnover": 1.34,
+    "volumeRatio": 1.77,
+    "amplitude": 3.65,
     "limitUp": 40.7,
     "limitDown": 33.3,
-    "pe": 18.04,
-    "peStatic": 20.58,
-    "peTtm": 19.55,
-    "pb": 2.55,
+    "pe": 17.71,
+    "peStatic": 20.2,
+    "peTtm": 19.19,
+    "pb": 2.51,
     "roe": 7.06,
     "grossMargin": 26.7979396289,
     "netMargin": 9.8621831683,
@@ -37,9 +37,9 @@
     "board": "BK1278",
     "totalShares": 867815671,
     "floatShares": 860652101,
-    "totalCap": 31788088028.730003,
-    "floatCap": 31525686459.63,
-    "time": 1793240163000,
+    "totalCap": 31197973372.45,
+    "floatCap": 30940443030.95,
+    "time": 1793261511000,
     "code": "sh600298"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 37.01,
-        "close": 36.63,
+        "close": 35.95,
         "high": 37.14,
-        "low": 36.52,
-        "volume": 14231
+        "low": 35.79,
+        "volume": 115107
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 37.01,
-        "close": 36.63,
+        "close": 35.95,
         "high": 37.14,
-        "low": 36.52,
-        "volume": 14231
+        "low": 35.79,
+        "volume": 115107
       }
     ]
   },

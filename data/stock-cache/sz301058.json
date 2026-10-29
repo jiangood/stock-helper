@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz301058",
-  "updatedAt": "2026-10-29T02:15:52.882Z",
+  "updatedAt": "2026-10-29T08:14:55.373Z",
   "detail": {
     "name": "中粮科工",
-    "price": 7.89,
+    "price": 7.86,
     "prevClose": 8.06,
-    "change": -0.17,
-    "todayChange": -2.11,
+    "change": -0.2,
+    "todayChange": -2.48,
     "open": 7.99,
     "high": 8.05,
-    "low": 7.86,
-    "avg": 7.91,
-    "volume": 29505,
-    "amount": 23330213.12,
-    "turnover": 0.58,
-    "volumeRatio": 3.29,
-    "amplitude": 2.36,
+    "low": 7.82,
+    "avg": 7.89,
+    "volume": 59538,
+    "amount": 46987758.12,
+    "turnover": 1.16,
+    "volumeRatio": 1.27,
+    "amplitude": 2.85,
     "limitUp": 9.67,
     "limitDown": 6.45,
-    "pe": 25.25,
-    "peStatic": 17.63,
-    "peTtm": 17.33,
-    "pb": 1.75,
+    "pe": 25.15,
+    "peStatic": 17.56,
+    "peTtm": 17.27,
+    "pb": 1.74,
     "roe": 5.24,
     "grossMargin": 22.8852762717,
     "netMargin": 6.8802571967,
@@ -37,9 +37,9 @@
     "board": "BK0726",
     "totalShares": 520803005,
     "floatShares": 512274245,
-    "totalCap": 4109135709.45,
-    "floatCap": 4041843793.0499997,
-    "time": 1793240148000,
+    "totalCap": 4093511619.3,
+    "floatCap": 4026475565.7000003,
+    "time": 1793259264000,
     "code": "sz301058"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.99,
-        "close": 7.89,
+        "close": 7.86,
         "high": 8.05,
-        "low": 7.86,
-        "volume": 29505
+        "low": 7.82,
+        "volume": 59538
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 7.99,
-        "close": 7.89,
+        "close": 7.86,
         "high": 8.05,
-        "low": 7.86,
-        "volume": 29505
+        "low": 7.82,
+        "volume": 59538
       }
     ]
   },
@@ -6176,12 +6176,12 @@
       {
         "time": "2026-10-29",
         "open": 8.55,
-        "close": 7.92,
+        "close": 7.86,
         "high": 9,
-        "low": 7.86,
-        "volume": 905593
+        "low": 7.82,
+        "volume": 935729
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10"
+  "monthlyFetchedFor": "2026-10-29"
 }

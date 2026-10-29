@@ -215,6 +215,61 @@
   .combat-indicator strong { font-size:15px; line-height:1.3; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
   .combat-indicator span { font-size:11px; font-weight:650; }
   .combat-indicator small { color:var(--bs-secondary-color); font-size:10px; line-height:1.45; }
+  /* 作战台布局重构：更清晰的层级、留白与响应式卡片 */
+  body[data-page="combat"] { background:var(--bs-tertiary-bg) !important; }
+  body[data-page="combat"] .app-pane { max-width:1480px; margin-inline:auto; }
+  body[data-page="combat"] #combat-pane { padding:clamp(14px,2.2vw,30px) !important; }
+  body[data-page="combat"] nav[aria-label="主导航"] { padding-inline:clamp(12px,2vw,28px) !important; min-height:58px; }
+  body[data-page="combat"] .main-nav-link { padding:.55rem .9rem; }
+  .combat-hero { position:relative; overflow:hidden; display:flex; align-items:center; justify-content:space-between; gap:18px; padding:clamp(18px,3vw,30px); margin-bottom:18px; border:1px solid var(--bs-border-color); border-radius:18px; background:linear-gradient(125deg,var(--bs-body-bg) 0%,var(--bs-body-bg) 62%,var(--bs-primary-bg-subtle) 100%); box-shadow:0 8px 24px rgba(15,23,42,.035); }
+  .combat-hero::after { content:""; position:absolute; width:190px; height:190px; right:12%; top:-115px; border:1px solid color-mix(in srgb,var(--bs-primary) 18%,transparent); border-radius:50%; pointer-events:none; }
+  .combat-kicker { display:flex; align-items:center; gap:7px; color:var(--bs-primary); font-size:10px; letter-spacing:1.5px; font-weight:800; text-transform:uppercase; margin-bottom:8px; }
+  .combat-kicker::before { content:""; width:18px; height:2px; background:var(--bs-primary); border-radius:2px; }
+  .combat-hero h1 { font-size:clamp(23px,3vw,32px); letter-spacing:-.8px; line-height:1.15; font-weight:800; margin:0 0 8px; }
+  .combat-hero .panel-subtitle { max-width:620px; font-size:12px; line-height:1.7; }
+  .combat-hero-actions { display:flex; flex-direction:column; align-items:flex-end; gap:9px; flex-shrink:0; }
+  .combat-safety-note { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--bs-secondary-color); white-space:nowrap; }
+  .combat-safety-dot { width:7px; height:7px; border-radius:50%; background:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.12); }
+  body[data-page="combat"] #combat-summary { margin-bottom:18px !important; }
+  body[data-page="combat"] #combat-summary > div { min-width:0; }
+  body[data-page="combat"] #combat-summary .insight-card { padding:16px; border-radius:14px; box-shadow:0 3px 12px rgba(15,23,42,.025); transition:transform .18s ease,border-color .18s ease; }
+  body[data-page="combat"] #combat-summary .insight-card:hover { transform:translateY(-2px); border-color:var(--bs-primary-border-subtle); }
+  body[data-page="combat"] #combat-summary .mini-label:first-child { font-weight:650; font-size:12px; color:var(--bs-body-color); }
+  body[data-page="combat"] #combat-summary .combat-metric { font-size:clamp(27px,3vw,34px); line-height:1.2; margin:7px 0 5px; font-variant-numeric:tabular-nums; }
+  .combat-workspace { padding:16px; border:1px solid var(--bs-border-color); border-radius:16px; background:var(--bs-body-bg); box-shadow:0 4px 16px rgba(15,23,42,.025); }
+  .combat-workspace-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px; }
+  .combat-workspace-title { font-size:14px; font-weight:800; letter-spacing:-.2px; }
+  .combat-workspace .panel-subtitle { line-height:1.6; }
+  .combat-toolbar { padding:4px; border-radius:10px; background:var(--bs-tertiary-bg); gap:4px; }
+  .combat-toolbar .btn { border:1px solid transparent; border-radius:7px; padding:.42rem .72rem; font-weight:600; }
+  .combat-toolbar .btn:not(.active) { color:var(--bs-secondary-color); }
+  .combat-toolbar .btn:not(.active):hover { background:var(--bs-body-bg); border-color:var(--bs-border-color); }
+  .combat-toolbar .btn.active { box-shadow:0 2px 5px rgba(15,23,42,.12); }
+  #combat-meta { font-size:11px; line-height:1.6; text-align:right; }
+  body[data-page="combat"] .combat-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,390px),1fr)); gap:14px; }
+  body[data-page="combat"] .combat-card { padding:16px !important; border-radius:14px !important; border:1px solid var(--bs-border-color) !important; background:var(--bs-body-bg); box-shadow:0 4px 16px rgba(15,23,42,.025); }
+  body[data-page="combat"] .combat-name { font-size:16px; letter-spacing:-.2px; }
+  body[data-page="combat"] .combat-price { font-size:24px; letter-spacing:-.5px; }
+  body[data-page="combat"] .combat-plan { line-height:1.8; }
+  body[data-page="combat"] .combat-reason-chip { border-radius:7px; }
+  body[data-page="combat"] .combat-buy-conditions, body[data-page="combat"] .combat-indicator-details, body[data-page="combat"] .combat-review-details, body[data-page="combat"] .combat-invalidation { border-radius:10px; }
+  .combat-footnote { margin-top:16px; padding:12px 14px; border:1px solid var(--bs-border-color); border-radius:11px; background:var(--bs-body-bg); font-size:10.5px; line-height:1.7; color:var(--bs-secondary-color); }
+  @media (max-width:700px) {
+    body[data-page="combat"] #combat-pane { padding:12px !important; }
+    .combat-hero { align-items:flex-start; flex-direction:column; gap:14px; border-radius:14px; }
+    .combat-hero-actions { width:100%; flex-direction:row; align-items:center; justify-content:space-between; }
+    .combat-safety-note { white-space:normal; }
+    .combat-workspace { padding:11px; }
+    .combat-workspace-head { flex-direction:column; }
+    #combat-meta { text-align:left; }
+    body[data-page="combat"] .combat-grid { grid-template-columns:minmax(0,1fr); gap:10px; }
+    body[data-page="combat"] .combat-card { padding:12px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body[data-page="combat"] #combat-summary .insight-card { transition:none; }
+    body[data-page="combat"] #combat-summary .insight-card:hover { transform:none; }
+  }
+
   .business-form { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .business-form .wide { grid-column:1 / -1; }
   @media (max-width:575.98px) { .business-form { grid-template-columns:1fr; } .business-form .wide { grid-column:auto; } }
@@ -348,27 +403,42 @@
 </main>
 
 <main id="combat-pane" data-pane="combat" class="app-pane container-fluid px-3 py-3 d-none">
-  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
-    <div><div class="panel-title">交易作战台</div><div class="panel-subtitle">汇总股票池标的的交易条件与理由，由你决定是否执行；不会自动下单。</div></div>
-    <button id="combat-refresh" class="btn btn-sm btn-outline-primary" type="button">⟳ 重新计算</button>
-  </div>
-    <div id="combat-summary" class="row g-2 mb-3">
-    <div class="col-12"><div class="empty-state">正在准备作战数据…</div></div>
-  </div>
-  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-    <div class="combat-toolbar" aria-label="作战信号筛选">
+  <section class="combat-hero" aria-labelledby="combat-page-title">
+    <div>
+      <div class="combat-kicker">TRADING DESK / A-SHARES</div>
+      <h1 id="combat-page-title">交易作战台</h1>
+      <div class="panel-subtitle">把计划价、纪律门槛与技术条件放在同一视图。先识别风险，再筛选机会，最后由你人工决策。</div>
+    </div>
+    <div class="combat-hero-actions">
+      <button id="combat-refresh" class="btn btn-primary btn-sm px-3 py-2" type="button">⟳ 重新计算</button>
+      <div class="combat-safety-note"><span class="combat-safety-dot"></span> 仅辅助决策 · 不会自动下单</div>
+    </div>
+  </section>
+  <section aria-label="作战状态概览">
+    <div id="combat-summary" class="row g-2">
+      <div class="col-12"><div class="empty-state">正在准备作战数据…</div></div>
+    </div>
+  </section>
+  <section class="combat-workspace mt-3" aria-labelledby="combat-list-heading">
+    <div class="combat-workspace-head">
+      <div>
+        <div id="combat-list-heading" class="combat-workspace-title">标的作战清单</div>
+        <div class="panel-subtitle mt-1">按状态快速过滤，展开单只股票可查看条件、指标与失效风险。</div>
+      </div>
+      <div id="combat-meta" class="panel-subtitle">等待计算</div>
+    </div>
+    <div class="combat-toolbar mb-3" aria-label="作战信号筛选">
       <button id="combat-filter-all" data-combat-filter class="btn btn-sm btn-outline-secondary active" type="button">全部</button>
       <button id="combat-filter-add" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">买入观察</button>
       <button id="combat-filter-watch" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">观望</button>
       <button id="combat-filter-risk" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">风险拦截</button>
       <button id="combat-filter-data" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">数据不足</button>
     </div>
-    <div id="combat-meta" class="panel-subtitle">等待计算</div>
-  </div>
-  <div id="combat-list" class="combat-grid">
-    <div class="empty-state">进入此页后按需加载日K，减少不必要的行情请求。</div>
-  </div>
-  <div class="panel-subtitle mt-3">纪律说明：计划价触发不等于买入信号；补仓需通过 ST / 亏损等硬性门槛，并结合支撑、资金确认和趋势过滤。筹码分布为日K估算。所有信号均为辅助参考，不构成投资建议。</div>
+    <div id="combat-list" class="combat-grid">
+      <div class="empty-state">进入此页后按需加载日K，减少不必要的行情请求。</div>
+    </div>
+  </section>
+  <aside class="combat-footnote">纪律说明：计划价触发不等于买入信号；补仓需通过 ST / 亏损等硬性门槛，并结合支撑、资金确认和趋势过滤。筹码分布为日K估算。所有信号均为辅助参考，不构成投资建议。</aside>
 </main>
 
 

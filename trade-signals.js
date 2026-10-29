@@ -87,7 +87,8 @@
     var supports = [];
     if (profile && n(profile.poc) > 0) supports.push({ label: 'POC', value: profile.poc });
     if (profile && n(profile.val) > 0) supports.push({ label: '价值区下沿', value: profile.val });
-    if (n(stock.heavy) > 0) supports.push({ label: '计划重仓价', value: stock.heavy });
+    if (n(stock.entry) > 0) supports.push({ label: stock.inHolding ? '计划入场价' : '计划买入价', value: stock.entry });
+    if (n(stock.heavy) > 0) supports.push({ label: stock.inHolding ? '计划补仓价' : '计划重仓价', value: stock.heavy });
     supports.sort(function (a, b) { return Math.abs(price / a.value - 1) - Math.abs(price / b.value - 1); });
     var support = supports[0] || null, dist = support ? Math.abs(price / support.value - 1) * 100 : null;
     var supportOk = !!support && dist <= ADD_RULES.supportDist, confirmOk = !!bottomDiv || recover;
@@ -99,7 +100,8 @@
     reasons.push('趋势过滤：' + (trendKnown ? (trendOk ? '通过' : '偏弱') : '数据不足') + '；MA20 ' + (n(maLatest) === null ? '—' : maLatest.toFixed(2)) + '；OBV ' + (obvNewLow === null ? '—' : obvNewLow ? '创新低' : '未创新低'));
     reasons.push('RSI(14) ' + (rsi === null ? '数据不足' : rsi.toFixed(1) + (rsiOk ? '（低位/回升确认）' : '（未确认）')));
     reasons.push('MACD ' + (macd === null ? '数据不足' : 'DIF ' + macd.dif.toFixed(3) + ' / DEA ' + macd.dea.toFixed(3) + (macdOk ? '（动能改善）' : '（未确认）')));
-    return { status: score >= 4 ? '补仓条件较齐备' : score >= 3 ? '补仓条件部分满足' : '观望', kind: score >= 4 ? 'add-ready' : score >= 3 ? 'add-watch' : 'watch', reasons: reasons, score: score, scoreMax: 5, dataReady: true, support: support, supportDist: dist, profile: profile, mfi: mfi, rsi: rsi, macd: macd, confirmations: { support: supportOk, mfi: confirmOk, trend: trendOk, rsi: rsiOk, macd: macdOk } };
+    var actionName = stock && stock.inHolding ? '补仓' : '买入';
+    return { status: score >= 4 ? actionName + '条件较齐备' : score >= 3 ? actionName + '条件部分满足' : '观望', kind: score >= 4 ? 'add-ready' : score >= 3 ? 'add-watch' : 'watch', action: actionName, reasons: reasons, score: score, scoreMax: 5, dataReady: true, support: support, supportDist: dist, profile: profile, mfi: mfi, rsi: rsi, macd: macd, confirmations: { support: supportOk, mfi: confirmOk, trend: trendOk, rsi: rsiOk, macd: macdOk } };
   }
   root.StockTradeSignals = { evaluateT: evaluateT, evaluateAdd: evaluateAdd, rules: { t: T_RULES, add: ADD_RULES } };
 })(typeof window !== 'undefined' ? window : globalThis);

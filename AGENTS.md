@@ -1,4 +1,4 @@
-每次修改代码后，执行提交和推送（git add、git commit、git push），确保修改立即部署到 GitHub Pages。
+修改代码时先从最新 master 创建独立分支，完成测试后创建 PR；通过审查与 CI 后再合并 master。禁止未经明确要求直接向 master 推送代码。
 
 ## 站点
 

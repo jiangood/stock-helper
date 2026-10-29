@@ -23,7 +23,6 @@
   let STOCKS = [];
   let PLAN = null;
   let DETAIL = null;
-  let holdingCost = null;
   let peersAt = 0;
   let historyAt = 0;
   let HISTORY = null;
@@ -106,10 +105,6 @@
   const fmtYi = v => isNum(v) ? (v / 1e8).toFixed(2) + '亿' : '—';
 
   const calcKey = () => 'croc-valuation:' + CODE;
-
-  function readCost() {
-    return isFinite(holdingCost) && holdingCost > 0 ? holdingCost : null;
-  }
 
   function historyStats() {
     if (!HISTORY || !Array.isArray(HISTORY.bars) || !HISTORY.bars.length || !DETAIL) return null;
@@ -909,7 +904,6 @@
     }
 
     renderLimitUpAlert(li);
-    renderSellPlan(e);
   }
 
   function renderLimitUpAlert(li) {
@@ -934,63 +928,6 @@
 
     el.className = `alert ${cls} mt-3 mb-0 py-2 px-3`;
     el.textContent = text;
-  }
-
-  function renderSellPlan(e) {
-    const el = $('sell-plan');
-    const cost = readCost();
-    if (!cost) {
-      el.innerHTML = '<span class="text-body-secondary">当前股票未在 holdings.json 中记录有效成本。</span>';
-      return;
-    }
-
-    const price = e.price;
-    const pnl = isNum(price) && price > 0 ? (price / cost - 1) * 100 : null;
-    const two = cost * 2;
-    const three = cost * 3;
-
-    let hint = '';
-    let tone = 'text-body-secondary';
-    if (isNum(price)) {
-      if (price >= three) {
-        hint = '已达三倍区间：参考资料目标，结合连续涨停信号分批清仓。';
-        tone = 'text-up';
-      } else if (price >= two) {
-        hint = '已达翻倍：按纪律卖出浮盈部分，收回本金，剩余为零成本底仓。';
-        tone = 'text-up';
-      } else if (price >= cost) {
-        hint = `未到翻倍，距翻倍还需 ${fmtPct((two / price - 1) * 100)}；逻辑不变就拿住。`;
-      } else {
-        hint = `低于成本 ${fmtPct((price / cost - 1) * 100)}；先核对买入逻辑是否被破坏。`;
-        tone = 'text-down';
-      }
-    }
-
-    el.innerHTML = `
-      <div class="sell-line">成本 <b>${cost.toFixed(2)}</b> · 现价 <b>${fmtNum(price)}</b>
-        · 浮动 <span class="${toneClass(pnl)}">${fmtPct(pnl)}</span></div>
-      <div class="sell-line text-body-secondary">翻倍卖利润 <b class="text-body">${two.toFixed(2)}</b>（+100%）
-        · 三倍目标 <b class="text-body">${three.toFixed(2)}</b>（+200%）</div>
-      <div class="sell-line ${tone}">${esc(hint)}</div>`;
-  }
-
-  async function loadCost() {
-    const input = $('cost-input');
-    if (input) { input.readOnly = true; input.placeholder = '从 holdings.json 读取'; }
-    if (!window.StockHoldings) {
-      if (input) input.value = '';
-      return;
-    }
-    try {
-      const data = await window.StockHoldings.load();
-      const holding = data.holdings.find(item => item.code === CODE);
-      holdingCost = holding ? Number(holding.cost) : null;
-      if (input) input.value = holdingCost > 0 ? holdingCost.toFixed(3) : '';
-    } catch (error) {
-      holdingCost = null;
-      if (input) { input.value = ''; input.placeholder = 'holdings.json 读取失败'; }
-      console.warn('[StockHoldings]', error);
-    }
   }
 
   /* ────────────────────────── 资源股估值计算 ────────────────────────── */
@@ -1272,7 +1209,6 @@
 
     await loadPlan();
     renderHeader();
-    await loadCost();
     loadCalc();
 
     await refreshAll(false);

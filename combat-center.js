@@ -10,7 +10,12 @@
     var raw = quote && quote.time, n = Number(raw);
     if (!raw || !Number.isFinite(n) || n <= 0) return '时间未提供';
     var d = new Date(n < 1000000000000 ? n * 1000 : n);
-    return Number.isNaN(d.getTime()) ? '时间格式异常' : '报价 ' + d.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    if (Number.isNaN(d.getTime())) return '时间格式异常';
+    var label = '报价 ' + d.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    var age = Date.now() - d.getTime();
+    if (age > 5 * 86400000) label += ' · 超过5天未更新';
+    else if (age < -5 * 60000) label += ' · 时间在未来，请核对';
+    return label;
   }
   function planReviewLabel(stock) {
     var value = String(stock && stock.updDate || '').trim();
@@ -175,7 +180,14 @@
       state.rows = universe.map(function (stock) { return { stock: stock, quote: quoteFor(stock.code), holding: holdingFor(stock.code), primary: { status: '计算中', kind: 'data', reasons: [] }, add: null }; });
       render();
       var results = [];
-      await limitedMap(universe, 4, async function (stock) { results.push(await calculateOne(stock)); });
+      await limitedMap(universe, 4, async function (stock) {
+        try {
+          results.push(await calculateOne(stock));
+        } catch (e) {
+          // Preserve coverage when one symbol fails; never silently drop it from the combat universe.
+          results.push({ stock: stock, quote: quoteFor(stock.code), holding: holdingFor(stock.code), primary: { status: '数据不足', kind: 'data', reasons: ['单股计算失败：' + (e && e.message || '未知错误'), '本次不生成交易信号，请刷新复核'] }, add: null, dataNote: '计算异常，未生成交易信号' });
+        }
+      });
       var order = new Map(results.map(function (r, i) { return [codeOf(r.stock.code), i]; }));
       state.rows = results.sort(function (a, b) {
         // Put genuinely actionable signals first; risk blocks and missing data must never outrank them.

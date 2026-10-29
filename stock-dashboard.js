@@ -776,7 +776,11 @@ function setPageLoading(message, done) {
   const stocksStartedAt = performance.now();
   await loadStocks();
   const stocksLoadedAt = performance.now();
-  setPageLoading(STOCKS.length ? '股票清单已显示，正在并行读取评分与行情…' : '股票清单加载失败，请检查网络后刷新。');
+  if (!STOCKS.length) {
+    setPageLoading('股票清单加载失败，请检查网络后刷新。');
+    return;
+  }
+  setPageLoading('股票清单已显示，正在并行读取评分与行情…');
   // 评分和行情互不依赖：并行请求，行情完成时暂不触发重复渲染。
   const results = await Promise.allSettled([
     loadResearchScores(),

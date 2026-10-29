@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>股票池监控</title>
-<link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#2563eb">
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -505,6 +504,19 @@
 <script src="password-gate.js"></script>
 
 <script src="network-status.js"></script>
+<script>
+// Remove legacy PWA service workers and their caches for this site.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    return Promise.all(registrations.map(function (registration) { return registration.unregister(); }));
+  }).catch(function () {});
+}
+if ('caches' in window) {
+  caches.keys().then(function (keys) {
+    return Promise.all(keys.filter(function (key) { return key.startsWith('stock-helper-"); }).map(function (key) { return caches.delete(key); }));
+  }).catch(function () {});
+}
+</script>
 
 </body>
 </html>

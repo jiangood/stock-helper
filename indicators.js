@@ -4,6 +4,8 @@
  * 做T / 补仓面板用的纯函数指标，浏览器 window.TechInd、Node module.exports 通用，无依赖。
  *
  *   mfi(bars, period)                资金流量指标 MFI（0~100）
+ *   rsi(bars, period)                相对强弱指标 RSI（0~100）
+ *   macd(bars, fast, slow, signal)   MACD（DIF / DEA / 柱）
  *   obv(bars)                        能量潮 OBV（累计）
  *   adLine(bars)                     累积/派发线 A/D
  *   ma(bars, n)                      简单移动平均
@@ -109,6 +111,84 @@
 
     const latest = series.length ? series[series.length - 1] : null;
     return { series, latest, period: p };
+  }
+
+  /**
+   * RSI 相对强弱指标，采用 Wilder 平滑法。
+   * @returns {{series:Array<number|null>, latest:number|null, period:number}}
+   */
+  function rsi(bars, period) {
+    const p = Math.max(1, Math.floor(num(period) || 14));
+    const list = Array.isArray(bars) ? bars : [];
+    const closes = list.map(b => num(b && b.close));
+    const series = new Array(list.length).fill(null);
+    if (list.length <= p || closes.some(v => v === null)) {
+      if (list.length <= p) return { series, latest: null, period: p };
+    }
+    if (list.length <= p) return { series, latest: null, period: p };
+    let gain = 0, loss = 0;
+    for (let i = 1; i <= p; i++) {
+      const d = closes[i] - closes[i - 1];
+      gain += Math.max(0, d);
+      loss += Math.max(0, -d);
+    }
+    gain /= p; loss /= p;
+    const value = () => loss === 0 ? (gain === 0 ? 50 : 100) : 100 - 100 / (1 + gain / loss);
+    series[p] = value();
+    for (let i = p + 1; i < closes.length; i++) {
+      const d = closes[i] - closes[i - 1];
+      gain = (gain * (p - 1) + Math.max(0, d)) / p;
+      loss = (loss * (p - 1) + Math.max(0, -d)) / p;
+      series[i] = value();
+    }
+    return { series, latest: series[series.length - 1], period: p };
+  }
+
+  /**
+   * MACD：DIF = EMA(fast)-EMA(slow)，DEA 为 DIF 的 signal 周期 EMA，
+   * histogram = 2 * (DIF-DEA)。无足够历史时相关值为 null。
+   */
+  function macd(bars, fast, slow, signal) {
+    const f = Math.max(1, Math.floor(num(fast) || 12));
+    const s = Math.max(f + 1, Math.floor(num(slow) || 26));
+    const sig = Math.max(1, Math.floor(num(signal) || 9));
+    const list = Array.isArray(bars) ? bars : [];
+    const closes = list.map(b => num(b && b.close));
+    const dif = new Array(list.length).fill(null);
+    const dea = new Array(list.length).fill(null);
+    const histogram = new Array(list.length).fill(null);
+    if (list.length < s + sig - 1 || closes.some(v => v === null)) {
+      return { dif, dea, histogram, latest: null, fast: f, slow: s, signal: sig };
+    }
+    function ema(values, period) {
+      const out = new Array(values.length).fill(null);
+      if (values.length < period) return out;
+      let seed = 0;
+      for (let i = 0; i < period; i++) seed += values[i];
+      let prev = seed / period;
+      out[period - 1] = prev;
+      const alpha = 2 / (period + 1);
+      for (let i = period; i < values.length; i++) {
+        prev = values[i] * alpha + prev * (1 - alpha);
+        out[i] = prev;
+      }
+      return out;
+    }
+    const fastEma = ema(closes, f);
+    const slowEma = ema(closes, s);
+    for (let i = s - 1; i < list.length; i++) dif[i] = fastEma[i] - slowEma[i];
+    const first = dif.findIndex(v => v !== null);
+    const compact = dif.slice(first).map(v => v === null ? 0 : v);
+    const signalEma = ema(compact, sig);
+    for (let i = first; i < list.length; i++) {
+      const v = signalEma[i - first];
+      if (v === null) continue;
+      dea[i] = v;
+      histogram[i] = 2 * (dif[i] - v);
+    }
+    const i = list.length - 1;
+    const latest = dif[i] === null || dea[i] === null ? null : { dif: dif[i], dea: dea[i], histogram: histogram[i] };
+    return { dif, dea, histogram, latest, fast: f, slow: s, signal: sig };
   }
 
   /**
@@ -401,6 +481,8 @@
     isNum,
     num,
     mfi,
+    rsi,
+    macd,
     obv,
     adLine,
     ma,

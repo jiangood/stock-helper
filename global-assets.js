@@ -84,22 +84,28 @@
     return numeric(item && item.changePct);
   }
   function ensureDashboard() {
-    var pane = el('assets-pane'), cards = el('global-assets-cards');
-    if (!pane || !cards || el('global-assets-overview')) return;
+    var cards = el('global-assets-cards');
+    if (!cards || el('global-assets-overview')) return;
+    var pane = cards.parentElement;
+    if (!pane) return;
     var overview = document.createElement('div');
     overview.id = 'global-assets-overview';
-    overview.innerHTML = '<div class="ga-section-head"><div><div class="panel-title">今日涨跌排行</div><div class="panel-subtitle">按最近报价的日涨跌幅排序；不同市场交易时段并不一致。</div></div></div>'
+    overview.innerHTML = '<div class="ga-section-head"><div><h3 class="panel-title">今日涨跌排行</h3><div class="panel-subtitle">按最近报价的日涨跌幅排序；不同市场交易时段并不一致。</div></div></div>'
       + '<div id="global-assets-ranking" class="ga-ranking insight-grid mb-3"></div>'
-      + '<div class="insight-card ga-comparison mb-3"><div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2"><div><div class="panel-title">趋势对比</div><div class="panel-subtitle">将各资产区间起点归一为 100，比较相对涨跌，不比较绝对价格。</div></div><div class="btn-group btn-group-sm" role="group" aria-label="趋势区间"><button type="button" class="btn btn-outline-secondary ga-range" data-range="1w">近 1 周</button><button type="button" class="btn btn-outline-secondary ga-range active" data-range="1m">近 1 月</button></div></div><div id="global-assets-comparison"></div><div class="panel-subtitle mt-2">仅对同时有有效历史点的资产绘图；缺失数据不补值。VIX 是波动率指标，方向含义与风险资产不同。</div></div>';
+      + '<div class="insight-card ga-comparison mb-3"><div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2"><div><h3 class="panel-title">趋势对比</h3><div class="panel-subtitle">将各资产区间起点归一为 100，比较相对涨跌，不比较绝对价格。</div></div><div class="btn-group btn-group-sm" role="group" aria-label="趋势区间"><button type="button" class="btn btn-outline-secondary ga-range" data-range="1w">近 1 周</button><button type="button" class="btn btn-outline-secondary ga-range active" data-range="1m">近 1 月</button></div></div><div id="global-assets-comparison"></div><div class="panel-subtitle mt-2">仅对同时有有效历史点的资产绘图；缺失数据不补值。VIX 是波动率指标，方向含义与风险资产不同。</div></div>';
     pane.insertBefore(overview, cards);
     var style = document.createElement('style');
     style.id = 'global-assets-style';
     style.textContent = '#global-assets-overview .ga-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}#global-assets-overview .ga-ranking{grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:8px}#global-assets-overview .ga-rank-card{border:1px solid var(--bs-border-color);border-radius:11px;background:var(--bs-body-bg);padding:10px 12px;min-width:0}#global-assets-overview .ga-rank-top{display:flex;justify-content:space-between;gap:8px;align-items:center}#global-assets-overview .ga-rank-number{font-size:10px;color:var(--bs-secondary-color);font-variant-numeric:tabular-nums}#global-assets-overview .ga-rank-name{font-weight:700;font-size:12px}#global-assets-overview .ga-rank-change{font-weight:750;font-size:18px;font-variant-numeric:tabular-nums}#global-assets-overview .ga-spark{width:100%;height:42px;display:block;margin-top:3px}#global-assets-overview .ga-spark-empty{height:42px;display:flex;align-items:center;font-size:10px;color:var(--bs-secondary-color)}#global-assets-overview .ga-comparison{overflow:hidden}#global-assets-overview .ga-chart{width:100%;height:auto;display:block;min-height:180px}#global-assets-overview .ga-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:8px}#global-assets-overview .ga-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--bs-secondary-color)}#global-assets-overview .ga-legend-line{width:15px;height:3px;border-radius:2px;display:inline-block}#global-assets-overview .ga-range.active{background:var(--bs-primary);border-color:var(--bs-primary);color:#fff}#global-assets-cards .insight-card{transition:transform .16s ease,border-color .16s ease}#global-assets-cards .insight-card:hover{transform:translateY(-2px);border-color:var(--bs-primary)}@media(max-width:575.98px){#global-assets-overview .ga-ranking{grid-template-columns:repeat(2,minmax(0,1fr))}#global-assets-overview .ga-rank-card{padding:9px}#global-assets-overview .ga-rank-change{font-size:16px}}';
     document.head.appendChild(style);
     overview.querySelectorAll('.ga-range').forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.classList.contains('active')));
       button.addEventListener('click', function () {
         compareRange = button.getAttribute('data-range') || '1m';
-        overview.querySelectorAll('.ga-range').forEach(function (b) { b.classList.toggle('active', b === button); });
+        overview.querySelectorAll('.ga-range').forEach(function (b) {
+          b.classList.toggle('active', b === button);
+          b.setAttribute('aria-pressed', String(b === button));
+        });
         renderComparison(lastPayload);
       });
     });
@@ -119,7 +125,7 @@
     }
     node.innerHTML = ranked.map(function (entry, index) {
       var item = entry.item, meta = entry.meta;
-      return '<article class="ga-rank-card"><div class="ga-rank-top"><span class="ga-rank-number">NO.' + (index + 1) + '</span><span class="ga-rank-name">' + esc(meta.name || item.name) + '</span><span class="' + tone(entry.change) + ' fw-semibold">' + fmtPct(entry.change) + '</span></div>'
+      return '<article class="ga-rank-card"><div class="ga-rank-top"><span class="ga-rank-number">NO.' + (index + 1) + '</span><span class="ga-rank-name">' + esc(meta.name || item.name) + '</span></div>'
         + '<div class="ga-rank-change ' + tone(entry.change) + '">' + (entry.change > 0 ? '▲' : entry.change < 0 ? '▼' : '—') + ' ' + Math.abs(entry.change).toFixed(2) + '%</div>'
         + sparkline(historyOf(item, '1m'), meta.name || item.id)
         + '<div class="mini-label">' + esc(item.status || '行情状态未知') + '</div></article>';
@@ -210,6 +216,7 @@
   function load(force) {
     if (loading) return;
     if (!force && Date.now() - lastLoad < 60000) return;
+    ensureDashboard();
     loading = true;
     var status = el('global-assets-updated');
     if (status) status.textContent = '正在读取全球资产行情缓存…';

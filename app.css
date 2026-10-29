@@ -131,7 +131,7 @@
   .main-nav-link:hover { color:var(--bs-primary); background:var(--bs-tertiary-bg); }
   .main-nav-link.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
   .panel-title { font-size:15px; font-weight:700; }
-  h1.panel-title, h2.panel-title { margin:0; }
+  h1.panel-title, h2.panel-title, h3.panel-title { margin:0; }
   .panel-title.page-title { font-size:18px; letter-spacing:-.3px; }
   .panel-subtitle,.mini-label { font-size:11px; color:var(--bs-secondary-color); }
   .insight-card { border:1px solid var(--bs-border-color); border-radius:12px; background:var(--bs-body-bg); padding:12px; }
@@ -149,6 +149,39 @@
   .business-price-chart { width:100%; height:148px; min-width:0; }
   .business-price-chart.business-cost-chart { height:112px; }
   .business-price-chart a { color:var(--bs-secondary-color); }
+
+  /* 顶栏图标按钮 */
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 34px; min-height: 34px; padding: 0;
+  }
+  .icon-btn svg { display: block; }
+  .icon-btn[aria-busy="true"] svg { animation: icon-spin .9s linear infinite; }
+  @keyframes icon-spin { to { transform: rotate(360deg); } }
+  .theme-icon-sun { display: none; }
+  .icon-btn .theme-icon-sun { display: none; }
+  [data-bs-theme="dark"] .icon-btn .theme-icon-sun { display: block; }
+  [data-bs-theme="dark"] .icon-btn .theme-icon-moon { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .icon-btn[aria-busy="true"] svg { animation: none; }
+  }
+  @media (max-width: 575.98px) { .icon-btn { min-width: 40px; min-height: 40px; } }
+
+  /* 键盘焦点统一可见 */
+  a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--bs-primary); outline-offset: 2px;
+  }
+  /* 跳到主要内容 */
+  .skip-link {
+    position: absolute; left: -9999px; top: 0; z-index: 100000;
+    padding: .5rem .8rem; border-radius: 0 0 8px 0;
+    background: var(--bs-body-bg); color: var(--bs-body-color);
+    border: 1px solid var(--bs-border-color); text-decoration: none;
+  }
+  .skip-link:focus { left: 0; }
+  /* 作战筛选按钮触摸目标 */
+  .combat-toolbar .btn { min-height: 40px; }
+  @media (max-width: 575.98px) { .combat-toolbar .btn { min-height: 44px; } }
 
   .empty-state { padding:24px 12px; text-align:center; color:var(--bs-secondary-color); border:1px dashed var(--bs-border-color); border-radius:12px; }
   .combat-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }

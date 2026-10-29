@@ -35,8 +35,23 @@
   }
   /* 主题按钮：浅色显示月亮（切到深色），深色显示太阳 */
   .theme-icon-sun { display: none; }
-  [data-bs-theme="dark"] .theme-icon-sun { display: block; }
-  [data-bs-theme="dark"] .theme-icon-moon { display: none; }
+  .icon-btn .theme-icon-sun { display: none; }
+  [data-bs-theme="dark"] .icon-btn .theme-icon-sun { display: block; }
+  [data-bs-theme="dark"] .icon-btn .theme-icon-moon { display: none; }
+
+  /* 键盘焦点统一可见 */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--bs-primary); outline-offset: 2px;
+  }
+  .skip-link {
+    position: absolute; left: -9999px; top: 0; z-index: 100000;
+    padding: .5rem .8rem; border-radius: 0 0 8px 0;
+    background: var(--bs-body-bg); color: var(--bs-body-color);
+    border: 1px solid var(--bs-border-color); text-decoration: none;
+  }
+  .skip-link:focus { left: 0; }
+  #chart-tabs .btn { min-height: 34px; }
+  @media (max-width: 575.98px) { #chart-tabs .btn { min-height: 40px; } }
 
   .logo {
     width: 28px; height: 28px; border-radius: 7px;
@@ -188,6 +203,8 @@
 </head>
 <body class="bg-body-tertiary">
 
+<a class="skip-link" href="#stock-detail">跳到主要内容</a>
+
 <div class="sticky-top">
   <nav class="navbar bg-body border-bottom px-3 py-2" aria-label="个股导航">
     <div class="d-flex align-items-center gap-2 min-w-0">
@@ -209,7 +226,7 @@
   </nav>
 </div>
 
-<main class="container-xxl py-3" style="max-width:1100px">
+<main id="stock-detail" tabindex="-1" class="container-xxl py-3" style="max-width:1100px">
 
   <!-- 空 / 错误状态 -->
   <div class="card shadow-sm d-none" id="state-box">

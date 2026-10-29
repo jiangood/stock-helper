@@ -425,14 +425,40 @@ async function loadPrices(manual) {
 function spinRefresh() {
   const btn = $('refresh-btn');
   if (!btn) return;
-  btn.classList.add('disabled');
-  btn.textContent = '◌';
+  btn.setAttribute('aria-busy', 'true');
+  btn.disabled = true;
   clearTimeout(btn._t);
   btn._t = setTimeout(() => {
-    btn.classList.remove('disabled');
-    btn.textContent = '⟳';
-  }, 900);
+    btn.removeAttribute('aria-busy');
+    btn.disabled = false;
+  }, 700);
 }
+
+/** 重新读取同源静态行情缓存 */
+function refreshQuotes() {
+  loadPrices(true);
+}
+window.refreshQuotes = refreshQuotes;
+
+/** 主题：手动选择写入 localStorage，其余页面共享同一偏好 */
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-bs-theme', theme);
+  const btn = $('theme-btn');
+  if (!btn) return;
+  const dark = theme === 'dark';
+  btn.setAttribute('aria-pressed', String(dark));
+  const label = dark ? '切换到浅色主题' : '切换到深色主题';
+  btn.setAttribute('aria-label', label);
+  btn.title = label;
+}
+
+function toggleTheme() {
+  const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('stock-theme', next); } catch (e) {}
+  applyTheme(next);
+}
+
+window.toggleTheme = toggleTheme;
 
 // ============================================================
 // 可复制错误诊断弹窗：请求失败、脚本异常、未处理 Promise 和资源加载错误
@@ -581,6 +607,7 @@ function applyFilter() {
   syncHeaderHeight();
   bindSortButtons();
   bindScrollHint();
+  applyTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
   await loadStocks();
   if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);

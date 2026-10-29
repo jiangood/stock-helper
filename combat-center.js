@@ -62,29 +62,27 @@
   function render() {
     var summary = $('combat-summary'), list = $('combat-list'), meta = $('combat-meta');
     if (!summary || !list || !meta) return;
-    var rows = state.rows, counts = { ready: 0, watch: 0, risk: 0, data: 0, add: 0 };
+    var rows = state.rows;
+    // 概览数字与筛选器含义保持一致，避免同一状态两种叫法。
+    var matches = function (r, filter) {
+      if (filter === 'add') return r.primary.kind === 'add-ready' || r.primary.kind === 'add-watch';
+      if (filter === 'watch') return r.primary.kind === 'watch' || r.primary.kind === 'add-watch';
+      if (filter === 'risk') return r.primary.kind === 'risk';
+      if (filter === 'data') return r.primary.kind === 'data';
+      return true;
+    };
+    var counts = { add: 0, watch: 0, risk: 0, data: 0 };
     rows.forEach(function (r) {
-      if (r.primary.kind === 'risk') counts.risk++;
-      else if (r.primary.kind === 'data') counts.data++;
-      else if (r.primary.kind === 'add-ready') counts.ready++;
-      else counts.watch++;
-      // Only count candidates that survived the final discipline gate.
-      if (r.primary.kind === 'add-ready' || r.primary.kind === 'add-watch') counts.add++;
+      ['add', 'watch', 'risk', 'data'].forEach(function (key) { if (matches(r, key)) counts[key]++; });
     });
     summary.innerHTML = [
-      ['条件较齐备', counts.ready, '仍需人工复核'],
-      ['等待确认', counts.watch, '条件未齐或未触发'],
+      ['买入观察', counts.add, '条件较齐备，仍需人工复核'],
+      ['观望', counts.watch, '条件未齐或未触发'],
       ['风险拦截', counts.risk, '硬性纪律优先'],
       ['数据不足', counts.data, '不生成确定信号']
     ].map(function (x) { return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">' + x[0] + '</div><div class="combat-metric">' + x[1] + '</div><div class="mini-label">' + x[2] + '</div></div></div>'; }).join('');
     meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只股票池标的 · 买入观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
-    var filtered = rows.filter(function (r) {
-      if (state.filter === 'add') return r.primary.kind === 'add-ready' || r.primary.kind === 'add-watch';
-      if (state.filter === 'watch') return r.primary.kind === 'watch' || r.primary.kind === 'add-watch';
-      if (state.filter === 'risk') return r.primary.kind === 'risk';
-      if (state.filter === 'data') return r.primary.kind === 'data';
-      return true;
-    });
+    var filtered = rows.filter(function (r) { return matches(r, state.filter); });
     if (!filtered.length) {
       list.innerHTML = '<div class="empty-state">' + (state.loading ? '正在分析…' : state.error ? '作战数据读取失败：' + esc(state.error) : '当前筛选下没有标的。可切换筛选或刷新。') + '</div>';
       return;
@@ -93,8 +91,18 @@
       var s = r.stock, p = r.quote && Number(r.quote.price) > 0 ? Number(r.quote.price) : null;
       var actionName = '买入';
       var badges = '<span class="combat-badge ' + statusClass(r.primary.kind) + '">' + esc(r.primary.status) + '</span>';
-      if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + esc(r.add.status) + ' ' + r.add.score + '/' + (r.add.scoreMax || 3) + '</span>';
-      var reasons = (r.primary.reasons || []).concat(r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return actionName + '：' + x; }) : []);
+      if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) {
+        var sameStatus = r.add.status === r.primary.status;
+        var scoreText = (r.add.score || 0) + '/' + (r.add.scoreMax || 3);
+        badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + (sameStatus ? '评分 ' + scoreText : esc(r.add.status) + ' ' + scoreText) + '</span>';
+      }
+      var reasons = (r.primary.reasons || []).slice();
+      if (r.add && Array.isArray(r.add.reasons)) {
+        r.add.reasons.forEach(function (x) {
+          var tagged = actionName + '：' + x;
+          if (reasons.indexOf(x) === -1 && reasons.indexOf(tagged) === -1) reasons.push(tagged);
+        });
+      }
       if (!reasons.length) reasons = ['价格未到计划区，暂不触发操作条件'];
       var plan = [Number(s.entry) > 0 ? '入场 ' + money(s.entry) : null, Number(s.heavy) > 0 ? '重仓 ' + money(s.heavy) : null, Number(s.tp1) > 0 ? '止盈1 ' + money(s.tp1) : null, Number(s.tp2) > 0 ? '止盈2 ' + money(s.tp2) : null].filter(Boolean).join(' · ');
       var ind = r.indicators || {};
@@ -218,9 +226,19 @@
       el.dataset.bound = '1';
       el.addEventListener('click', function () {
         state.filter = id === 'combat-filter-all' ? 'all' : id.replace('combat-filter-', '');
-        root.document.querySelectorAll('[data-combat-filter]').forEach(function (b) { b.classList.toggle('active', b.id === id); });
+        root.document.querySelectorAll('[data-combat-filter]').forEach(function (b) {
+          var active = b.id === id;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
         render();
       });
+    });
+    // 初始按下状态与 state.filter 对齐
+    if (!root.document.querySelectorAll) return;
+    var activeId = state.filter === 'all' ? 'combat-filter-all' : 'combat-filter-' + state.filter;
+    root.document.querySelectorAll('[data-combat-filter]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.id === activeId));
     });
   }
   function init(stocks, prices, client) {

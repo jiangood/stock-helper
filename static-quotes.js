@@ -48,7 +48,7 @@
   async function loadStockCache(code) {
     const file = 'data/stock-cache/' + code + '.json';
     try { return await loadJson(file); }
-    catch (error) { throw new Error(code + ' 不在当前静态缓存范围内或缓存暂不可用。为避免浏览器直接访问外部行情接口，未进行实时回源。'); }
+    catch (error) { throw new Error(code + ' 不在当前静态数据范围内或数据暂不可用。为避免浏览器直接访问外部行情接口，未进行实时回源。'); }
   }
 
   class Client {
@@ -59,7 +59,7 @@
       (codes || []).map(normalizeCode).filter(Boolean).forEach(code => {
         if (payload.quotes && payload.quotes[code]) result[code] = payload.quotes[code];
       });
-      if (!Object.keys(result).length) throw new Error('静态行情缓存中没有请求的股票代码。');
+      if (!Object.keys(result).length) throw new Error('静态行情数据中没有请求的股票代码。');
       return result;
     }
     async fetchOne(code) {
@@ -73,7 +73,7 @@
       if (cache.detail && Number(cache.detail.price) > 0) return cache.detail;
       const quote = await this.fetch([normalized], options).catch(() => ({}));
       if (quote[normalized]) return quote[normalized];
-      throw new Error('静态缓存中没有该股票的有效详情数据。');
+      throw new Error('静态数据中没有该股票的有效详情数据。');
     }
     async fetchKline(code, options) {
       const normalized = normalizeCode(code);
@@ -102,7 +102,7 @@
       }
       const count = Math.min(1000, Math.max(10, Number(opts.count) || 180));
       bars = bars.slice(-count);
-      if (!bars.length) throw new Error('静态缓存中没有 ' + period + ' K 线数据。');
+      if (!bars.length) throw new Error('静态数据中没有 ' + period + ' K 线数据。');
       return { code: normalized, period, adjust, bars };
     }
   }

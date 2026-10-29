@@ -32,16 +32,15 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 - `pinyin.js` — 首页搜索拼音索引（浏览器 `window.Pinyin` / Node `require`）
   - `Pinyin.initials(str)` 首字母、`Pinyin.full(str)` 全拼、`Pinyin.syllable(char)` 单字读音
   - 字表覆盖 GB2312 一二级汉字 6763 字主读音，离线生成、无外部依赖；ü 记作 v（`lv`），检索同时兼容 `lu`
-- `static-quotes.js` — 浏览器端静态行情适配器，仅读取同源 JSON，并用 localStorage 保留最近一次有效缓存；缓存缺失时不直接回源外部行情接口
+- `static-quotes.js` — 浏览器端静态行情适配器，只读取同源 JSON；优先用 IndexedDB 缓存较大的历史数据，localStorage 作兼容回退；缓存不可用时不直接回源外部行情接口
 - `quotes.js` — GitHub Actions 采集端使用的行情 SDK，不由网页直接加载
-- `scripts/fetch_stock_snapshot.js` + `.github/workflows/stock-snapshot.yml` — 每个工作日收盘后抓取股票池/持仓行情；日线每日更新、周线每周更新、月线每月更新；失败时保留已有有效缓存，仅提交有变化的数据
-- `data/stock-quotes.json`、`data/stock-cache/<code>.json`、`data/index-cache.json` — 行情、个股详情、日/周/月 K 线与指数历史静态缓存
   - 数据源：东方财富与腾讯财经，多源自动降级；仅由 Actions 采集脚本调用
   - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`，返回 `price/prevClose/change/todayChange/pe/pb/totalCap/floatCap/divYield`
-  - 股息率 `divYield`（%）：近 12 个月已除权分红 ÷ 现价，以腾讯口径为准（东财 f133 兜底），无分红返回 0 / null
+  - 股息率 `divYield`（%）：近 12 个月已除权分红 ÷ 现价，以腾讯口径为准，东方财富作兜底
   - 市值单位：`totalCap` / `floatCap` 为元（首页显示时换算成亿 / 万亿）
-  - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`、
-  - 交易时段：`StockQuotes.marketSession()` / `StockQuotes.isTrading()`（采集端辅助函数）
+  - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`
+- `scripts/fetch_stock_snapshot.js` + `.github/workflows/stock-snapshot.yml` — 每个工作日北京时间收盘后抓取股票池/持仓行情；日线每日更新、周线每周更新、月线每月更新；非交易日期跳过详情/K线抓取，失败时保留有效缓存，只提交有变化的数据
+- `data/stock-quotes.json`、`data/stock-cache/<code>.json`、`data/index-cache.json` — 行情、个股详情、日/周/月 K 线与指数历史静态缓存
 
 ## data/stocks.json 字段
 

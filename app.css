@@ -30,7 +30,7 @@
     background: linear-gradient(to right, transparent, var(--bs-body-bg));
   }
   .table-scroll-wrap.can-scroll-right .scroll-hint { opacity: 1; }
-  .stock-table { min-width: 1265px; }
+  .stock-table { min-width: 1340px; }
   .stock-table thead th {
     position: sticky; top: 0; z-index: 3;
     font-size: 11px; font-weight: 600; letter-spacing: .3px;
@@ -118,6 +118,16 @@
   .flag-warn { color: #b45309; border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.1); }
   .flag-danger { color: var(--up); border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.08); }
   [data-bs-theme="dark"] .flag-warn { color: #fbbf24; }
+
+  /* 研报评分（32 分制） */
+  .score { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; font-weight: 600; }
+  .score-good { color: var(--down); }
+  .score-mid { color: #b45309; }
+  .score-high { color: var(--bs-secondary-color); }
+  [data-bs-theme="dark"] .score-mid { color: #fbbf24; }
+  .score-bar { position: relative; height: 6px; border-radius: 999px; background: var(--bs-tertiary-bg); overflow: hidden; }
+  .score-bar-fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--bs-primary); }
+  .score-bar-tick { position: absolute; top: -2px; bottom: -2px; width: 1px; background: var(--bs-border-color); }
 
   .brief-text {
     margin: 0; max-height: 62vh; overflow: auto;
@@ -242,7 +252,7 @@
   .business-form .wide { grid-column:1 / -1; }
   @media (max-width:575.98px) { .business-form { grid-template-columns:1fr; } .business-form .wide { grid-column:auto; } }
   @media (max-width: 575.98px) {
-    .stock-table { min-width: 1040px; }
+    .stock-table { min-width: 1110px; }
     .th-sort { padding: .42rem .3rem; font-size: 10.5px; letter-spacing: 0; }
     .stock-table tbody td { padding: .24rem .3rem; font-size: 12px; }
     .price-cell { font-size: 13.5px; }

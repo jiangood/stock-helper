@@ -26,6 +26,7 @@
   let peersAt = 0;
   let historyAt = 0;
   let HISTORY = null;
+  let RESEARCH_SCORE = null;
 
   let DAY_FAILED = false;
 
@@ -180,6 +181,22 @@
     }
   }
 
+  /** 读取 Actions 预计算的 32 分制评分；缺失时卡片显示「暂无」 */
+  async function loadResearchScore() {
+    try {
+      const res = await fetch('data/research-scores.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const payload = await res.json();
+      const scores = payload && payload.scores ? payload.scores : {};
+      RESEARCH_SCORE = scores[CODE] || null;
+      RESEARCH_SCORE = RESEARCH_SCORE ? Object.assign({ totalMax: payload.totalMax || 32 }, RESEARCH_SCORE) : null;
+    } catch (e) {
+      console.warn('研报评分加载失败:', e);
+      RESEARCH_SCORE = null;
+    }
+    renderResearchScore();
+  }
+
   async function loadQuote(force) {
     try {
       const d = await quotes.fetchDetail(CODE, { force: !!force });
@@ -223,6 +240,7 @@
     renderPlan(DETAIL);
     renderAdd(DETAIL);
     renderDiscipline(DETAIL);
+    renderResearchScore();
     updateCalc();
   }
 
@@ -915,6 +933,60 @@
     renderLimitUpAlert(li);
   }
 
+  /** 研报评分：只展示研报 10 项里可复算的 4 项（32 分制） */
+  function renderResearchScore() {
+    const totalEl = $('research-score-total');
+    const noteEl = $('research-score-note');
+    const barWrap = $('research-score-bar-wrap');
+    const checksEl = $('research-score-checks');
+    const bar = $('research-score-bar');
+    if (!totalEl || !checksEl || !noteEl || !barWrap || !bar) return;
+
+    const score = RESEARCH_SCORE;
+    if (!score || !isNum(score.points)) {
+      totalEl.textContent = '';
+      noteEl.textContent = '暂无评分：该股票未纳入静态行情缓存，或评分文件尚未生成。';
+      barWrap.hidden = true;
+      checksEl.innerHTML = '';
+      return;
+    }
+
+    const max = isNum(score.max) && score.max > 0 ? score.max : (score.totalMax || 32);
+    const band = score.band === 'good' ? '位置优秀' : score.band === 'high' ? '位置偏高' : '位置中性';
+    const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
+    totalEl.innerHTML = `<span class="score score-${tone}">${score.points.toFixed(1)}</span>`
+      + `<span class="text-body-secondary">/${max} · ${band}</span>`;
+    noteEl.textContent = '研报 10 项评分卡中可自动复算的 4 项（8 + 9 + 9 + 6 = 32 分），只看位置，不含基本面。';
+
+    barWrap.hidden = false;
+    bar.style.width = Math.max(0, Math.min(100, score.points / max * 100)).toFixed(1) + '%';
+
+    const m = score.metrics || {};
+    const it = score.items || {};
+    const toneOf = (value, full) => {
+      if (!isNum(value)) return 'neutral';
+      const ratio = value / full;
+      return ratio >= 0.75 ? 'ok' : ratio >= 0.45 ? 'warn' : 'bad';
+    };
+    const capNote = isNum(m.capYi) ? `${Math.round(m.capYi)} 亿` : '市值缺失';
+    const consNote = [
+      isNum(m.boxHeight) ? `近 36 月箱体 ${(m.boxHeight * 100).toFixed(0)}%` : null,
+      isNum(m.months) ? `高点距今 ${m.months} 个月` : null
+    ].filter(Boolean).join(' · ') || '月 K 不足';
+    const bottomNote = [
+      isNum(m.pAll) ? `全历史分位 ${m.pAll.toFixed(0)}%` : null,
+      isNum(m.p52) ? `52 周位置 ${m.p52.toFixed(0)}%` : null
+    ].filter(Boolean).join(' · ') || '月 K 不足';
+    const volNote = isNum(m.volRatio) ? `近 6 月 / 前 36 月 量比 ${m.volRatio.toFixed(2)}` : '成交量不足';
+
+    checksEl.innerHTML = [
+      checkItem(toneOf(it.cap, 8), '总市值', `${fmtNum(it.cap, 1)} / 8`, capNote),
+      checkItem(toneOf(it.consolidation, 9), '盘整 2-3 年', `${fmtNum(it.consolidation, 1)} / 9`, consNote),
+      checkItem(toneOf(it.bottom, 9), '月线底部', `${fmtNum(it.bottom, 1)} / 9`, bottomNote),
+      checkItem(toneOf(it.volume, 6), '底部放量', `${fmtNum(it.volume, 1)} / 6`, volNote)
+    ].join('');
+  }
+
   function renderLimitUpAlert(li) {
     const el = $('limitup-alert');
     if (!li || (!li.opened && li.count < 2)) {
@@ -1310,6 +1382,7 @@
     await loadPlan();
     renderHeader();
     loadCalc();
+    loadResearchScore();
 
     await refreshAll(false);
   })();

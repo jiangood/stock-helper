@@ -5,6 +5,8 @@ let STOCKS = [];
 const priceData = {};          // code -> { price, prevClose, change, todayChange }
 let filteredStocks = [];
 let sortState = { col: null, dir: 1 };
+let RESEARCH = { totalMax: 32, bands: [], criteria: {} };
+const researchScores = {};     // code -> { items, points, max, band, metrics }
 
 const $ = id => document.getElementById(id);
 
@@ -67,6 +69,27 @@ async function loadStocks() {
   applyFilter();
 }
 
+/** 读取 Actions 生成的研报评分小文件；失败时静默降级为「—」 */
+async function loadResearchScores() {
+  try {
+    const res = await fetch(new URL('data/research-scores.json', document.baseURI).href, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const payload = await res.json();
+    Object.keys(researchScores).forEach(key => { delete researchScores[key]; });
+    Object.assign(researchScores, payload && payload.scores ? payload.scores : {});
+    RESEARCH = {
+      totalMax: Number(payload && payload.totalMax) || 32,
+      bands: Array.isArray(payload && payload.bands) ? payload.bands : [],
+      criteria: (payload && payload.criteria) || {}
+    };
+  } catch (e) {
+    console.warn('研报评分加载失败：', e.message);
+  }
+}
+
 /** 预计算拼音检索键（名称 + 别名），只算一次 */
 function buildSearchKeys() {
   if (typeof Pinyin === 'undefined') return;
@@ -105,6 +128,10 @@ function getSortValue(stock, col) {
     case 'pb':       return pd ? pd.pb : null;
     case 'divYield': return pd ? pd.divYield : null;
     case 'screen':   return pd ? Croc.screen(stock, pd).passed : null;
+    case 'research': {
+      const score = researchScores[stock.code];
+      return score && isFinite(score.points) ? score.points : null;
+    }
     case 'entry':    return (price != null && stock.entry) ? (price - stock.entry) / stock.entry : null;
     case 'heavy':    return (price != null && stock.heavy) ? (price - stock.heavy) / stock.heavy : null;
     case 'tp1':      return stock.tp1;
@@ -129,7 +156,7 @@ function sortedView(list) {
 }
 
 function updateSortUI() {
-  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','group','alias'].forEach(col => {
+  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','research','group','alias'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
     const active = sortState.col === col;
@@ -205,7 +232,7 @@ window.resetFilters = resetFilters;
 
 /** 表头排序按钮（原生按钮，键盘 Enter / Space 可用） */
 function bindSortButtons() {
-  document.querySelectorAll('.th-sort').forEach(btn => {
+  document.querySelectorAll('.th-sort[data-sort]').forEach(btn => {
     btn.addEventListener('click', () => sortTable(btn.dataset.sort));
   });
 }
@@ -253,7 +280,7 @@ function syncHeaderHeight() {
 function updateSummary() {
   const el = $('board-summary');
   if (!el) return;
-  const c = { heavy: 0, pb: 0, pb80: 0, risk: 0, pass: 0 };
+  const c = { heavy: 0, pb: 0, pb80: 0, risk: 0, pass: 0, score: 0 };
   STOCKS.forEach(s => {
     const e = Croc.evaluate(s, priceData[s.code]);
     if (e.zone === 'heavy') c.heavy++;
@@ -261,9 +288,12 @@ function updateSummary() {
     if (e.pbGolden) c.pb80++;
     if (e.st || e.loss) c.risk++;
     if (Croc.screen(s, priceData[s.code]).allPass) c.pass++;
+    const score = researchScores[s.code];
+    if (score && isFinite(score.points) && score.points >= 24) c.score++;
   });
   el.innerHTML = `重仓 <b class="text-body">${c.heavy}</b> · 破净 <b class="text-body">${c.pb}</b>`
     + ` · 八折 <b class="text-body">${c.pb80}</b> · 纪律 <b class="text-body">${c.pass}</b>`
+    + ` · 评分 <b class="text-body">${c.score}</b>`
     + ` · 风险 <b class="${c.risk ? 'text-up' : 'text-body'}">${c.risk}</b>`;
 }
 
@@ -337,6 +367,7 @@ function buildRow(stock) {
     <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${fmtPct(pd && pd.divYield)}</td>
     <td>${screenHtml(stock, pd, e)}</td>
+    <td>${researchHtml(stock)}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${aliasHtml}</td>`;
 }
@@ -368,6 +399,31 @@ function screenHtml(stock, pd, e) {
     return `<span class="flag flag-warn" style="margin-left:0" title="${esc(tip)}">${sc.passed}/${sc.total}</span>`;
   }
   return `<span class="text-body-tertiary" style="font-size:11px" title="${esc(tip)}">${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
+}
+
+/** 首页评分列：研报 10 项评分卡里可自动复算的 4 项，32 分制 */
+function researchHtml(stock) {
+  const score = researchScores[stock.code];
+  if (!score || !isFinite(score.points)) return '<span class="text-body-tertiary">—</span>';
+  const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
+  const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
+  const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
+  const items = score.items || {};
+  const detail = [
+    `市值 ${fmtScore(items.cap)}/8`,
+    `盘整 ${fmtScore(items.consolidation)}/9`,
+    `月线 ${fmtScore(items.bottom)}/9`,
+    `放量 ${fmtScore(items.volume)}/6`
+  ].join(' · ');
+  const tip = `研报评分 ${score.points}/${max}${band ? ' · ' + band : ''}\n${detail}\n`
+    + '仅复算市值/盘整/月线位置/底部放量 4 项（32 分制），不含国资背景等基本面项；不构成投资建议';
+  const suffix = score.complete ? '' : '?';
+  return `<span class="score score-${tone}" title="${esc(tip)}">${score.points.toFixed(1)}`
+    + `<span class="unit">/${max}${suffix}</span></span>`;
+}
+
+function fmtScore(value) {
+  return isFinite(value) ? Number(value).toFixed(1) : '—';
 }
 
 /** 市值：元 -> 亿 / 万亿 */
@@ -567,6 +623,15 @@ function showToast(msg, type) {
 // ============================================================
 // 筛选
 // ============================================================
+/** 状态筛选：评分阈值由研报评分文件判断，其余交给 Croc */
+function matchStatusFilter(stock, status) {
+  const score = researchScores[stock.code];
+  const points = score && isFinite(score.points) ? score.points : null;
+  if (status === 'score-good') return points !== null && points >= 24;
+  if (status === 'score-low') return points !== null && points < 18;
+  return Croc.matchStatus(stock, priceData[stock.code], status);
+}
+
 function applyFilter() {
   const searchEl = $('search-input');
   const groupEl = $('group-filter');
@@ -579,7 +644,7 @@ function applyFilter() {
 
   filteredStocks = STOCKS.filter(s => {
     if (group && s.group !== group) return false;
-    if (status && !Croc.matchStatus(s, priceData[s.code], status)) return false;
+    if (status && !matchStatusFilter(s, status)) return false;
     if (!q) return true;
     return s.name.toLowerCase().includes(q)
         || (s.code && s.code.toLowerCase().includes(q))
@@ -614,6 +679,8 @@ function applyFilter() {
   bindScrollHint();
   applyTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
   await loadStocks();
+  await loadResearchScores();
+  if (STOCKS.length) applyFilter();
   if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);
   if (page === 'combat' && window.StockCombat) {

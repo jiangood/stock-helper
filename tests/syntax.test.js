@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 
 test('应用 JavaScript 文件均可通过语法解析', () => {
-  for (const file of ['croc.js', 'quotes.js', 'static-quotes.js', 'scripts/fetch_stock_snapshot.js', 'scripts/build_sector_monthly.js', 'pinyin.js', 'indicators.js', 'stock.js', 'business.js']) {
+  for (const file of ['croc.js', 'research-score.js', 'quotes.js', 'static-quotes.js', 'scripts/fetch_stock_snapshot.js', 'scripts/build_sector_monthly.js', 'scripts/build_research_scores.js', 'pinyin.js', 'indicators.js', 'stock.js', 'business.js']) {
     const source = fs.readFileSync(path.join(root, file), 'utf8');
     assert.doesNotThrow(() => new vm.Script(source, { filename: file }), file + ' 语法错误');
   }

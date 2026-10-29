@@ -1,0 +1,1444 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-29T08:16:00.248Z",
+  "marketDate": "2026-10-29",
+  "totalMax": 32,
+  "weights": {
+    "cap": 8,
+    "consolidation": 9,
+    "bottom": 9,
+    "volume": 6
+  },
+  "bands": [
+    {
+      "key": "good",
+      "min": 24,
+      "label": "位置优秀"
+    },
+    {
+      "key": "mid",
+      "min": 18,
+      "label": "位置中性"
+    },
+    {
+      "key": "high",
+      "min": null,
+      "label": "位置偏高"
+    }
+  ],
+  "criteria": {
+    "cap": "总市值 ≤100 亿 10 分，100-200 亿 6.5 分，200 亿以上按对数衰减至 3 分",
+    "consolidation": "近 36 个月收盘箱体：高度 ≤20% 且高点距今 ≥24 个月得满分",
+    "bottom": "全历史收盘分位 0.6 + 52 周位置 0.4，位置越低分越高",
+    "volume": "近 6 个月月均量 ÷ 之前 36 个月月均量，量比 0.6 起算、3.0 满分"
+  },
+  "scores": {
+    "sz002408": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 8.2,
+        "volume": 5.8
+      },
+      "points": 19.6,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 124,
+        "boxHeight": 0.519,
+        "months": 6,
+        "position": 0.221,
+        "pAll": 36.8,
+        "p52": 0,
+        "volRatio": 1.99
+      }
+    },
+    "sh688707": {
+      "items": {
+        "cap": 10,
+        "consolidation": 5,
+        "bottom": 9.7,
+        "volume": 6.3
+      },
+      "points": 25,
+      "max": 32,
+      "complete": true,
+      "band": "good",
+      "metrics": {
+        "capYi": 49,
+        "boxHeight": 1.492,
+        "months": 35,
+        "position": 0.038,
+        "pAll": 3.2,
+        "p52": 4.7,
+        "volRatio": 2.1
+      }
+    },
+    "sz002100": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 7.9,
+        "bottom": 4,
+        "volume": 1.8
+      },
+      "points": 17,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 105,
+        "boxHeight": 0.453,
+        "months": 34,
+        "position": 0.714,
+        "pAll": 72.3,
+        "p52": 69.9,
+        "volRatio": 1.03
+      }
+    },
+    "sh601118": {
+      "items": {
+        "cap": 6.4,
+        "consolidation": 4,
+        "bottom": 7.6,
+        "volume": 6.3
+      },
+      "points": 19.3,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 222,
+        "boxHeight": 0.883,
+        "months": 8,
+        "position": 0.291,
+        "pAll": 38.4,
+        "p52": 15.2,
+        "volRatio": 2.12
+      }
+    },
+    "sz300034": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 6.9,
+        "volume": 1.5
+      },
+      "points": 15.8,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 108,
+        "boxHeight": 0.784,
+        "months": 8,
+        "position": 0.376,
+        "pAll": 61,
+        "p52": 2.5,
+        "volRatio": 0.95
+      }
+    },
+    "sh603977": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 6.6,
+        "volume": 3.3
+      },
+      "points": 19.5,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 61,
+        "boxHeight": 1.013,
+        "months": 7,
+        "position": 0.406,
+        "pAll": 65.8,
+        "p52": 2.7,
+        "volRatio": 1.38
+      }
+    },
+    "sz002783": {
+      "items": {
+        "cap": 10,
+        "consolidation": 6.3,
+        "bottom": 9.1,
+        "volume": 0.9
+      },
+      "points": 22.4,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 37,
+        "boxHeight": 0.641,
+        "months": 34,
+        "position": 0.116,
+        "pAll": 9.2,
+        "p52": 15.4,
+        "volRatio": 0.81
+      }
+    },
+    "sz000928": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4.1,
+        "bottom": 7.7,
+        "volume": 0.9
+      },
+      "points": 19.2,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 79,
+        "boxHeight": 0.37,
+        "months": 8,
+        "position": 0.284,
+        "pAll": 27.7,
+        "p52": 29.5,
+        "volRatio": 0.82
+      }
+    },
+    "sz002136": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 7.2,
+        "volume": 2.2
+      },
+      "points": 19.4,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 22,
+        "boxHeight": 0.705,
+        "months": 6,
+        "position": 0.335,
+        "pAll": 53.4,
+        "p52": 3.7,
+        "volRatio": 1.13
+      }
+    },
+    "sz000707": {
+      "items": {
+        "cap": 10,
+        "consolidation": 5,
+        "bottom": 8.5,
+        "volume": 2.3
+      },
+      "points": 21.6,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 25,
+        "boxHeight": 0.839,
+        "months": 25,
+        "position": 0.182,
+        "pAll": 26.7,
+        "p52": 5.5,
+        "volRatio": 1.16
+      }
+    },
+    "sh600500": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 8.8,
+        "volume": 9
+      },
+      "points": 22.1,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 151,
+        "boxHeight": 1.244,
+        "months": 4,
+        "position": 0.145,
+        "pAll": 19.2,
+        "p52": 7.5,
+        "volRatio": 5.62
+      }
+    },
+    "sz000731": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 5.7,
+        "volume": 3.7
+      },
+      "points": 18.9,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 37,
+        "boxHeight": 0.56,
+        "months": 1,
+        "position": 0.51,
+        "pAll": 54.2,
+        "p52": 46.1,
+        "volRatio": 1.5
+      }
+    },
+    "sh601618": {
+      "items": {
+        "cap": 5.3,
+        "consolidation": 4,
+        "bottom": 8.3,
+        "volume": 0.8
+      },
+      "points": 15.8,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 513,
+        "boxHeight": 0.578,
+        "months": 13,
+        "position": 0.202,
+        "pAll": 30,
+        "p52": 5.4,
+        "volRatio": 0.8
+      }
+    },
+    "sh603227": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 7.4,
+        "volume": 1.7
+      },
+      "points": 19.2,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 72,
+        "boxHeight": 0.738,
+        "months": 7,
+        "position": 0.319,
+        "pAll": 50.4,
+        "p52": 4.2,
+        "volRatio": 1.01
+      }
+    },
+    "sz301058": {
+      "items": {
+        "cap": 10,
+        "consolidation": 5.4,
+        "bottom": 9.6,
+        "volume": 0.4
+      },
+      "points": 21.7,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 41,
+        "boxHeight": 0.622,
+        "months": 20,
+        "position": 0.05,
+        "pAll": 3.2,
+        "p52": 7.7,
+        "volRatio": 0.7
+      }
+    },
+    "sh600459": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 5.3,
+        "volume": 6.9
+      },
+      "points": 17.7,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 135,
+        "boxHeight": 1.408,
+        "months": 4,
+        "position": 0.551,
+        "pAll": 87.9,
+        "p52": 5.8,
+        "volRatio": 2.26
+      }
+    },
+    "sz002237": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 6.7,
+        "volume": 3.4
+      },
+      "points": 16.9,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 159,
+        "boxHeight": 1.346,
+        "months": 9,
+        "position": 0.396,
+        "pAll": 65.8,
+        "p52": 0.4,
+        "volRatio": 1.43
+      }
+    },
+    "sz000554": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 6.3,
+        "volume": 2.2
+      },
+      "points": 18.5,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 32,
+        "boxHeight": 0.86,
+        "months": 8,
+        "position": 0.442,
+        "pAll": 60.4,
+        "p52": 19.9,
+        "volRatio": 1.12
+      }
+    },
+    "sh600328": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 8,
+        "volume": 2.5
+      },
+      "points": 20.3,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 79,
+        "boxHeight": 0.801,
+        "months": 8,
+        "position": 0.242,
+        "pAll": 40.4,
+        "p52": 0,
+        "volRatio": 1.21
+      }
+    },
+    "sh600963": {
+      "items": {
+        "cap": 10,
+        "consolidation": 5,
+        "bottom": 7.6,
+        "volume": 2.7
+      },
+      "points": 21,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 67,
+        "boxHeight": 1.062,
+        "months": 35,
+        "position": 0.285,
+        "pAll": 31.3,
+        "p52": 24.3,
+        "volRatio": 1.24
+      }
+    },
+    "sh600348": {
+      "items": {
+        "cap": 6,
+        "consolidation": 4,
+        "bottom": 5.3,
+        "volume": 1.6
+      },
+      "points": 14.1,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 304,
+        "boxHeight": 0.739,
+        "months": 6,
+        "position": 0.549,
+        "pAll": 66,
+        "p52": 38.3,
+        "volRatio": 0.98
+      }
+    },
+    "sh603639": {
+      "items": {
+        "cap": 10,
+        "consolidation": 6.9,
+        "bottom": 9.3,
+        "volume": 1.2
+      },
+      "points": 23.3,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 34,
+        "boxHeight": 0.574,
+        "months": 35,
+        "position": 0.087,
+        "pAll": 11,
+        "p52": 5.3,
+        "volRatio": 0.88
+      }
+    },
+    "sh600299": {
+      "items": {
+        "cap": 6.3,
+        "consolidation": 4,
+        "bottom": 9.1,
+        "volume": 9
+      },
+      "points": 22.2,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 231,
+        "boxHeight": 0.861,
+        "months": 6,
+        "position": 0.115,
+        "pAll": 19.2,
+        "p52": 0.1,
+        "volRatio": 3.68
+      }
+    },
+    "sz000923": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 6.9,
+        "volume": 3.2
+      },
+      "points": 19.7,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 93,
+        "boxHeight": 1.017,
+        "months": 8,
+        "position": 0.371,
+        "pAll": 51.1,
+        "p52": 16.2,
+        "volRatio": 1.36
+      }
+    },
+    "sh600583": {
+      "items": {
+        "cap": 6,
+        "consolidation": 4,
+        "bottom": 4.6,
+        "volume": 2.1
+      },
+      "points": 13.8,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 284,
+        "boxHeight": 0.495,
+        "months": 8,
+        "position": 0.622,
+        "pAll": 73.8,
+        "p52": 44.9,
+        "volRatio": 1.09
+      }
+    },
+    "sh601600": {
+      "items": {
+        "cap": 3.9,
+        "consolidation": 4,
+        "bottom": 5.7,
+        "volume": 3.5
+      },
+      "points": 14,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 1444,
+        "boxHeight": 1.918,
+        "months": 9,
+        "position": 0.503,
+        "pAll": 75.3,
+        "p52": 12.8,
+        "volRatio": 1.43
+      }
+    },
+    "sh600509": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 7.9,
+        "volume": 2.8
+      },
+      "points": 20.4,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 88,
+        "boxHeight": 0.974,
+        "months": 5,
+        "position": 0.25,
+        "pAll": 41.7,
+        "p52": 0,
+        "volRatio": 1.27
+      }
+    },
+    "sh600378": {
+      "items": {
+        "cap": 5.5,
+        "consolidation": 4,
+        "bottom": 6.5,
+        "volume": 9
+      },
+      "points": 19.3,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 428,
+        "boxHeight": 1.676,
+        "months": 4,
+        "position": 0.414,
+        "pAll": 63.8,
+        "p52": 7.8,
+        "volRatio": 12.17
+      }
+    },
+    "sz000629": {
+      "items": {
+        "cap": 6.3,
+        "consolidation": 4,
+        "bottom": 8.6,
+        "volume": 2.9
+      },
+      "points": 18.1,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 242,
+        "boxHeight": 0.824,
+        "months": 8,
+        "position": 0.172,
+        "pAll": 28.3,
+        "p52": 0.5,
+        "volRatio": 1.29
+      }
+    },
+    "sh601061": {
+      "items": {
+        "cap": 5.4,
+        "consolidation": 4,
+        "bottom": 6.5,
+        "volume": 0.9
+      },
+      "points": 14.3,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 467,
+        "boxHeight": 1.497,
+        "months": 8,
+        "position": 0.419,
+        "pAll": 69.8,
+        "p52": 0.1,
+        "volRatio": 0.82
+      }
+    },
+    "sz002140": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 7.3,
+        "volume": 0.9
+      },
+      "points": 18.7,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 66,
+        "boxHeight": 0.957,
+        "months": 8,
+        "position": 0.326,
+        "pAll": 45.7,
+        "p52": 13,
+        "volRatio": 0.81
+      }
+    },
+    "sh600230": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 6.9,
+        "volume": 4.5
+      },
+      "points": 20.5,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 49,
+        "boxHeight": 1.578,
+        "months": 8,
+        "position": 0.371,
+        "pAll": 59.6,
+        "p52": 3.3,
+        "volRatio": 1.69
+      }
+    },
+    "sh600282": {
+      "items": {
+        "cap": 6.2,
+        "consolidation": 4,
+        "bottom": 7,
+        "volume": 1.9
+      },
+      "points": 15.9,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 260,
+        "boxHeight": 0.952,
+        "months": 8,
+        "position": 0.36,
+        "pAll": 55.3,
+        "p52": 7,
+        "volRatio": 1.05
+      }
+    },
+    "sz002258": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 4.5,
+        "volume": 5.4
+      },
+      "points": 16.1,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 110,
+        "boxHeight": 1.691,
+        "months": 9,
+        "position": 0.633,
+        "pAll": 82.3,
+        "p52": 34.8,
+        "volRatio": 1.89
+      }
+    },
+    "sz000830": {
+      "items": {
+        "cap": 6.4,
+        "consolidation": 4,
+        "bottom": 7.5,
+        "volume": 4.2
+      },
+      "points": 18,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 210,
+        "boxHeight": 1.208,
+        "months": 9,
+        "position": 0.302,
+        "pAll": 48.9,
+        "p52": 2.1,
+        "volRatio": 1.6
+      }
+    },
+    "sz002430": {
+      "items": {
+        "cap": 6.3,
+        "consolidation": 4,
+        "bottom": 5.3,
+        "volume": 8.2
+      },
+      "points": 18.3,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 242,
+        "boxHeight": 0.86,
+        "months": 8,
+        "position": 0.55,
+        "pAll": 76.1,
+        "p52": 23.3,
+        "volRatio": 2.56
+      }
+    },
+    "sh600486": {
+      "items": {
+        "cap": 6.4,
+        "consolidation": 4,
+        "bottom": 8.5,
+        "volume": 7
+      },
+      "points": 20.6,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 211,
+        "boxHeight": 0.64,
+        "months": 8,
+        "position": 0.181,
+        "pAll": 23.4,
+        "p52": 10.2,
+        "volRatio": 2.28
+      }
+    },
+    "sh601958": {
+      "items": {
+        "cap": 5.2,
+        "consolidation": 4,
+        "bottom": 4.7,
+        "volume": 8
+      },
+      "points": 16.9,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 523,
+        "boxHeight": 2.503,
+        "months": 4,
+        "position": 0.607,
+        "pAll": 89.7,
+        "p52": 17.2,
+        "volRatio": 2.52
+      }
+    },
+    "sz000960": {
+      "items": {
+        "cap": 5.6,
+        "consolidation": 4,
+        "bottom": 5.3,
+        "volume": 6.5
+      },
+      "points": 16.8,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 390,
+        "boxHeight": 2.78,
+        "months": 8,
+        "position": 0.55,
+        "pAll": 85.4,
+        "p52": 9.4,
+        "volRatio": 2.17
+      }
+    },
+    "sz000962": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 4.2,
+        "volume": 4
+      },
+      "points": 15,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 206,
+        "boxHeight": 8.693,
+        "months": 4,
+        "position": 0.658,
+        "pAll": 96.3,
+        "p52": 20,
+        "volRatio": 1.57
+      }
+    },
+    "sh600426": {
+      "items": {
+        "cap": 5.2,
+        "consolidation": 4,
+        "bottom": 7.6,
+        "volume": 7.6
+      },
+      "points": 19.2,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 529,
+        "boxHeight": 0.974,
+        "months": 8,
+        "position": 0.287,
+        "pAll": 40.4,
+        "p52": 11.2,
+        "volRatio": 2.41
+      }
+    },
+    "sh600379": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 5.4,
+        "volume": 9
+      },
+      "points": 21.8,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 36,
+        "boxHeight": 1.163,
+        "months": 6,
+        "position": 0.538,
+        "pAll": 79.2,
+        "p52": 15.8,
+        "volRatio": 4.54
+      }
+    },
+    "sh600456": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 7.1,
+        "volume": 1.1
+      },
+      "points": 15.8,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 112,
+        "boxHeight": 0.903,
+        "months": 8,
+        "position": 0.348,
+        "pAll": 57.5,
+        "p52": 0.6,
+        "volRatio": 0.86
+      }
+    },
+    "sh600961": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 4.7,
+        "volume": 7.7
+      },
+      "points": 17.7,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 192,
+        "boxHeight": 3.455,
+        "months": 4,
+        "position": 0.611,
+        "pAll": 90.8,
+        "p52": 16.5,
+        "volRatio": 2.45
+      }
+    },
+    "sz300527": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 8.2,
+        "volume": 0
+      },
+      "points": 18.9,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 73,
+        "boxHeight": 0.935,
+        "months": 15,
+        "position": 0.224,
+        "pAll": 16.3,
+        "p52": 31.5,
+        "volRatio": 0.34
+      }
+    },
+    "sh600301": {
+      "items": {
+        "cap": 6.1,
+        "consolidation": 4,
+        "bottom": 4,
+        "volume": 3.2
+      },
+      "points": 14,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 277,
+        "boxHeight": 4.911,
+        "months": 8,
+        "position": 0.718,
+        "pAll": 96.3,
+        "p52": 35,
+        "volRatio": 1.38
+      }
+    },
+    "sh688750": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 9.8,
+        "volume": 0.2
+      },
+      "points": 20.6,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 61,
+        "boxHeight": 0.768,
+        "months": 14,
+        "position": 0.021,
+        "pAll": 0,
+        "p52": 5.2,
+        "volRatio": 0.64
+      }
+    },
+    "sh600549": {
+      "items": {
+        "cap": 5.2,
+        "consolidation": 4,
+        "bottom": 4.9,
+        "volume": 7.8
+      },
+      "points": 16.8,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 549,
+        "boxHeight": 5.315,
+        "months": 4,
+        "position": 0.593,
+        "pAll": 95,
+        "p52": 5.9,
+        "volRatio": 2.48
+      }
+    },
+    "sh600392": {
+      "items": {
+        "cap": 6.1,
+        "consolidation": 4,
+        "bottom": 5.7,
+        "volume": 4.4
+      },
+      "points": 16.3,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 269,
+        "boxHeight": 3.478,
+        "months": 8,
+        "position": 0.507,
+        "pAll": 84.2,
+        "p52": 0.5,
+        "volRatio": 1.67
+      }
+    },
+    "sh600111": {
+      "items": {
+        "cap": 4.1,
+        "consolidation": 4,
+        "bottom": 6.6,
+        "volume": 2.8
+      },
+      "points": 14.5,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 1262,
+        "boxHeight": 2.739,
+        "months": 8,
+        "position": 0.409,
+        "pAll": 66,
+        "p52": 3.2,
+        "volRatio": 1.28
+      }
+    },
+    "sh600737": {
+      "items": {
+        "cap": 6.2,
+        "consolidation": 4,
+        "bottom": 4.9,
+        "volume": 5
+      },
+      "points": 16,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 251,
+        "boxHeight": 1.613,
+        "months": 9,
+        "position": 0.59,
+        "pAll": 84.2,
+        "p52": 21.1,
+        "volRatio": 1.8
+      }
+    },
+    "sz002057": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 8.7,
+        "volume": 3.5
+      },
+      "points": 21.5,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 56,
+        "boxHeight": 1.075,
+        "months": 4,
+        "position": 0.163,
+        "pAll": 25.5,
+        "p52": 2.3,
+        "volRatio": 1.43
+      }
+    },
+    "sh601568": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 8.5,
+        "bottom": 9.7,
+        "volume": 3.1
+      },
+      "points": 23.5,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 137,
+        "boxHeight": 0.376,
+        "months": 35,
+        "position": 0.04,
+        "pAll": 1.4,
+        "p52": 8,
+        "volRatio": 1.35
+      }
+    },
+    "sz000738": {
+      "items": {
+        "cap": 6.3,
+        "consolidation": 4,
+        "bottom": 6.7,
+        "volume": 3
+      },
+      "points": 16.5,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 235,
+        "boxHeight": 0.882,
+        "months": 8,
+        "position": 0.388,
+        "pAll": 57.5,
+        "p52": 10.8,
+        "volRatio": 1.31
+      }
+    },
+    "sz002092": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 9.5,
+        "volume": 5.4
+      },
+      "points": 20.6,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 103,
+        "boxHeight": 1.139,
+        "months": 8,
+        "position": 0.065,
+        "pAll": 6.8,
+        "p52": 6,
+        "volRatio": 1.9
+      }
+    },
+    "sz000657": {
+      "items": {
+        "cap": 4.6,
+        "consolidation": 4,
+        "bottom": 4.3,
+        "volume": 6.8
+      },
+      "points": 15.2,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 879,
+        "boxHeight": 12.244,
+        "months": 4,
+        "position": 0.656,
+        "pAll": 95.8,
+        "p52": 20.3,
+        "volRatio": 2.23
+      }
+    },
+    "sz002556": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 8.9,
+        "volume": 1
+      },
+      "points": 20.2,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 40,
+        "boxHeight": 0.729,
+        "months": 8,
+        "position": 0.135,
+        "pAll": 22.3,
+        "p52": 0.3,
+        "volRatio": 0.83
+      }
+    },
+    "sh600298": {
+      "items": {
+        "cap": 5.9,
+        "consolidation": 4,
+        "bottom": 6,
+        "volume": 3.2
+      },
+      "points": 15.6,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 318,
+        "boxHeight": 0.619,
+        "months": 8,
+        "position": 0.472,
+        "pAll": 59.6,
+        "p52": 28.5,
+        "volRatio": 1.36
+      }
+    },
+    "sh603970": {
+      "items": {
+        "cap": 10,
+        "consolidation": 5,
+        "bottom": 8.3,
+        "volume": 1.6
+      },
+      "points": 20.9,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 27,
+        "boxHeight": 0.898,
+        "months": 29,
+        "position": 0.212,
+        "pAll": 30.6,
+        "p52": 7.3,
+        "volRatio": 0.99
+      }
+    },
+    "sh600618": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 6.8,
+        "volume": 1.4
+      },
+      "points": 15.8,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 102,
+        "boxHeight": 1.369,
+        "months": 9,
+        "position": 0.379,
+        "pAll": 62.9,
+        "p52": 0.3,
+        "volRatio": 0.93
+      }
+    },
+    "sz300470": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 7.4,
+        "volume": 1.9
+      },
+      "points": 19.4,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 57,
+        "boxHeight": 0.455,
+        "months": 8,
+        "position": 0.309,
+        "pAll": 45.3,
+        "p52": 9.3,
+        "volRatio": 1.04
+      }
+    },
+    "sh600819": {
+      "items": {
+        "cap": 10,
+        "consolidation": 4,
+        "bottom": 7.7,
+        "volume": 0.5
+      },
+      "points": 18.8,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 51,
+        "boxHeight": 1.06,
+        "months": 8,
+        "position": 0.276,
+        "pAll": 39.2,
+        "p52": 10.2,
+        "volRatio": 0.71
+      }
+    },
+    "sh688295": {
+      "items": {
+        "cap": 6.1,
+        "consolidation": 4,
+        "bottom": 7,
+        "volume": 9
+      },
+      "points": 20.1,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 279,
+        "boxHeight": 2.49,
+        "months": 4,
+        "position": 0.36,
+        "pAll": 49.1,
+        "p52": 16.5,
+        "volRatio": 3.28
+      }
+    },
+    "sh600409": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 8.3,
+        "volume": 3.9
+      },
+      "points": 18.6,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 111,
+        "boxHeight": 0.833,
+        "months": 8,
+        "position": 0.209,
+        "pAll": 34,
+        "p52": 1.2,
+        "volRatio": 1.54
+      }
+    },
+    "sh600195": {
+      "items": {
+        "cap": 10,
+        "consolidation": 5,
+        "bottom": 8.3,
+        "volume": 1.6
+      },
+      "points": 20.9,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 62,
+        "boxHeight": 0.995,
+        "months": 34,
+        "position": 0.209,
+        "pAll": 27.5,
+        "p52": 11,
+        "volRatio": 0.99
+      }
+    },
+    "sz000819": {
+      "items": {
+        "cap": 10,
+        "consolidation": 5.5,
+        "bottom": 8.2,
+        "volume": 1.9
+      },
+      "points": 21.5,
+      "max": 32,
+      "complete": true,
+      "band": "mid",
+      "metrics": {
+        "capYi": 39,
+        "boxHeight": 0.734,
+        "months": 35,
+        "position": 0.224,
+        "pAll": 35.8,
+        "p52": 2.2,
+        "volRatio": 1.04
+      }
+    },
+    "sz002096": {
+      "items": {
+        "cap": 6.5,
+        "consolidation": 4,
+        "bottom": 7.8,
+        "volume": 1.7
+      },
+      "points": 16.9,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 111,
+        "boxHeight": 0.685,
+        "months": 8,
+        "position": 0.267,
+        "pAll": 37,
+        "p52": 11.2,
+        "volRatio": 1.02
+      }
+    }
+  }
+}

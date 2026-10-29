@@ -72,6 +72,8 @@
       <option value="small">小市值</option>
       <option value="screen">纪律全过</option>
       <option value="screenbuy">全过 + 买点</option>
+      <option value="score-good">评分 ≥24</option>
+      <option value="score-low">评分 &lt;18</option>
       <option value="risk">风险</option>
     </select>
 
@@ -89,9 +91,9 @@
 <main id="stocks-pane" tabindex="-1" data-pane="stocks" class="app-pane container-fluid px-2 px-sm-3 py-1">
   <h1 class="visually-hidden">自选股票</h1>
   <div class="table-scroll-wrap">
-  <div class="table-scroll" tabindex="0" role="region" aria-label="自选股票表，可横向滚动查看全部 15 列">
+  <div class="table-scroll" tabindex="0" role="region" aria-label="自选股票表，可横向滚动查看全部 16 列">
     <table class="table table-sm table-hover align-middle mb-0 stock-table" id="main-table">
-      <caption class="visually-hidden">自选股票列表：名称、价格、重仓、入场、昨日、止盈1、止盈2、年初价、市值、市盈率、市净率、股息率、纪律、分组、别名</caption>
+      <caption class="visually-hidden">自选股票列表：名称、价格、重仓、入场、昨日、止盈1、止盈2、年初价、市值、市盈率、市净率、股息率、纪律、评分、分组、别名</caption>
       <thead>
         <tr>
           <th scope="col" id="th-name" aria-sort="none"><button type="button" class="th-sort" data-sort="name">名称<span class="sort-icon" aria-hidden="true"></span></button></th>
@@ -107,6 +109,7 @@
           <th scope="col" id="th-pb" aria-sort="none"><button type="button" class="th-sort" data-sort="pb">市净率<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-divYield" aria-sort="none"><button type="button" class="th-sort" data-sort="divYield">股息率<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-screen" aria-sort="none"><button type="button" class="th-sort" data-sort="screen">纪律<span class="sort-icon" aria-hidden="true"></span></button></th>
+          <th scope="col" id="th-research" aria-sort="none"><button type="button" class="th-sort" data-sort="research">评分<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-group" aria-sort="none"><button type="button" class="th-sort" data-sort="group">分组<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-alias" aria-sort="none"><button type="button" class="th-sort" data-sort="alias">别名<span class="sort-icon" aria-hidden="true"></span></button></th>
         </tr>

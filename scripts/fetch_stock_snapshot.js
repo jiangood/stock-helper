@@ -7,6 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const StockQuotes = require('../quotes.js');
 const sectorMonthly = require('./build_sector_monthly.js');
+const researchScores = require('./build_research_scores.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
@@ -244,6 +245,9 @@ async function main() {
 
   // 板块月线强弱用的小文件：只保留每只股票的各周期月线涨跌幅，页面无需再读个股缓存。
   sectorMonthly.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
+
+  // 研报评分（32 分制）：同样只为页面准备小文件，首页不再逐只拉个股缓存。
+  researchScores.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
 }
 
 main().catch(error => {

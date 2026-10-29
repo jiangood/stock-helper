@@ -75,6 +75,13 @@
       if (quote[normalized]) return quote[normalized];
       throw new Error('静态数据中没有该股票的有效详情数据。');
     }
+    async fetchCombatKlines() {
+      const payload = await loadJson('data/combat-kline.json');
+      if (!payload || payload.schemaVersion !== 1 || !payload.stocks || typeof payload.stocks !== 'object') {
+        throw new Error('作战日 K 快照格式无效。');
+      }
+      return payload;
+    }
     async fetchKline(code, options) {
       const normalized = normalizeCode(code);
       if (!normalized) throw new Error('无效的股票代码');

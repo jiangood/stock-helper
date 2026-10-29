@@ -1,0 +1,201 @@
+#!/usr/bin/env node
+'use strict';
+
+// Build same-origin, last-known-good snapshots for the value-investing UI.
+// This script runs in GitHub Actions; browser pages must never call quote providers.
+const fs = require('node:fs');
+const path = require('node:path');
+const StockQuotes = require('../quotes.js');
+
+const ROOT = path.resolve(__dirname, '..');
+const DATA = path.join(ROOT, 'data');
+const CACHE_DIR = path.join(DATA, 'stock-cache');
+const QUOTES_FILE = path.join(DATA, 'stock-quotes.json');
+const INDEX_FILE = path.join(DATA, 'index-cache.json');
+const INDEX_CODES = ['sh000001', 'sz399001', 'sz399006'];
+const MIN_QUOTE_COVERAGE = 0.8;
+const MAX_CONCURRENCY = 4;
+
+function readJson(file, fallback) {
+  try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
+  catch (_) { return fallback; }
+}
+function writeIfChanged(file, payload, ignoreVolatileTime = false) {
+  const previous = readJson(file, null);
+  const comparable = value => {
+    if (!value || typeof value !== 'object') return value;
+    const clone = JSON.parse(JSON.stringify(value));
+    delete clone.updatedAt;
+    if (ignoreVolatileTime) {
+      const strip = obj => {
+        if (!obj || typeof obj !== 'object') return;
+        delete obj.time;
+        if (obj.quotes && typeof obj.quotes === 'object') Object.values(obj.quotes).forEach(strip);
+        if (obj.details && typeof obj.details === 'object') Object.values(obj.details).forEach(strip);
+        if (obj.detail) strip(obj.detail);
+      };
+      strip(clone);
+    }
+    return clone;
+  };
+  if (previous && JSON.stringify(comparable(previous)) === JSON.stringify(comparable(payload))) return false;
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, JSON.stringify(payload, null, 2) + '\n', 'utf8');
+  return true;
+}
+async function mapLimit(items, limit, fn) {
+  const output = new Array(items.length);
+  let cursor = 0;
+  async function worker() {
+    while (true) {
+      const index = cursor++;
+      if (index >= items.length) return;
+      try { output[index] = await fn(items[index], index); }
+      catch (error) { output[index] = { error: error && error.message ? error.message : String(error) }; }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return output;
+}
+function validBars(result, min = 10) {
+  return !!(result && Array.isArray(result.bars) && result.bars.length >= min &&
+    result.bars.every(bar => bar && Number(bar.open) > 0 && Number(bar.close) > 0 &&
+      Number(bar.high) > 0 && Number(bar.low) > 0));
+}
+function quoteCode(code) { return StockQuotes.normalizeCode(code); }
+
+async function main() {
+  const stocks = readJson(path.join(DATA, 'stocks.json'), []);
+  const holdings = readJson(path.join(DATA, 'holdings.json'), { holdings: [] });
+  if (!Array.isArray(stocks) || stocks.length === 0) throw new Error('data/stocks.json is missing or invalid');
+
+  const codes = Array.from(new Set([
+    ...stocks.map(item => quoteCode(item && item.code)).filter(Boolean),
+    ...((holdings.holdings || []).map(item => quoteCode(item && item.code)).filter(Boolean))
+  ]));
+  const allCodes = Array.from(new Set([...codes, ...INDEX_CODES]));
+  const client = new StockQuotes.Client({
+    timeout: 12000,
+    retries: 1,
+    cacheTTL: 0,
+    onError: error => console.warn('[quote SDK]', error.code, error.message)
+  });
+
+  const previousQuotes = readJson(QUOTES_FILE, { quotes: {} });
+  console.log('Fetching snapshot for ' + codes.length + ' stock codes and ' + INDEX_CODES.length + ' indices.');
+  let freshQuotes = {};
+  try { freshQuotes = await client.fetch(allCodes, { force: true }); }
+  catch (error) { console.error('Bulk quote fetch failed:', error.message); }
+
+  const quotes = { ...(previousQuotes.quotes || {}) };
+  Object.assign(quotes, freshQuotes);
+  const freshStockCount = codes.filter(code => freshQuotes[code] && Number(freshQuotes[code].price) > 0).length;
+  const coverage = freshStockCount / Math.max(codes.length, 1);
+  console.log('Fresh stock quote coverage: ' + freshStockCount + '/' + codes.length + ' (' + Math.round(coverage * 100) + '%).');
+  if (coverage < MIN_QUOTE_COVERAGE && Object.keys(previousQuotes.quotes || {}).length === 0) {
+    throw new Error('Initial quote coverage too low (' + Math.round(coverage * 100) + '%); refusing to publish an incomplete first snapshot.');
+  }
+  if (Object.keys(quotes).length === 0) throw new Error('No fresh or cached quotes; preserving previous data.');
+
+  const updatedAt = new Date().toISOString();
+  const marketDate = Object.values(freshQuotes).map(q => q && q.time)
+    .filter(Boolean).map(t => {
+      const n = Number(t);
+      const d = new Date(n > 1e12 ? n : n * 1000);
+      return Number.isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+    }).filter(Boolean).sort().pop() || previousQuotes.marketDate || null;
+  const quotePayload = {
+    schemaVersion: 1,
+    updatedAt,
+    marketDate,
+    source: 'Eastmoney/Tencent via GitHub Actions',
+    status: Object.keys(freshQuotes).length ? 'ok' : 'stale',
+    quotes
+  };
+  const quoteChanged = writeIfChanged(QUOTES_FILE, quotePayload, true);
+  console.log(quoteChanged ? 'Updated data/stock-quotes.json' : 'Quotes unchanged; kept previous snapshot.');
+
+  fs.mkdirSync(CACHE_DIR, { recursive: true });
+  const results = await mapLimit(codes, MAX_CONCURRENCY, async code => {
+    const file = path.join(CACHE_DIR, code + '.json');
+    const previous = readJson(file, {});
+    let detail = previous.detail || null;
+    let dailyAdjusted = previous.dailyAdjusted || null;
+    let dailyRaw = previous.dailyRaw || null;
+    let monthlyAdjusted = previous.monthlyAdjusted || null;
+    let monthlyFetchedFor = previous.monthlyFetchedFor || null;
+    let detailFresh = false;
+
+    try {
+      const value = await client.fetchDetail(code, { force: true });
+      if (value && Number(value.price) > 0) {
+        detail = value;
+        detailFresh = true;
+      }
+    } catch (error) {
+      console.warn(code + ': detail unavailable; ' + (detail ? 'keeping cache' : 'will omit detail') + ' (' + error.message + ')');
+    }
+
+    const dayResults = await Promise.allSettled([
+      client.fetchKline(code, { period: 'day', count: 250, adjust: 'qfq', force: true }),
+      client.fetchKline(code, { period: 'day', count: 250, adjust: 'none', force: true })
+    ]);
+    if (dayResults[0].status === 'fulfilled' && validBars(dayResults[0].value)) dailyAdjusted = dayResults[0].value;
+    else console.warn(code + ': adjusted daily K-line unavailable; keeping cache if present.');
+    if (dayResults[1].status === 'fulfilled' && validBars(dayResults[1].value)) dailyRaw = dayResults[1].value;
+    else console.warn(code + ': raw daily K-line unavailable; keeping cache if present.');
+
+    const nowMonth = new Date().toISOString().slice(0, 7);
+    if (!monthlyAdjusted || monthlyFetchedFor !== nowMonth) {
+      try {
+        const value = await client.fetchKline(code, { period: 'month', count: 240, adjust: 'qfq', force: true });
+        if (validBars(value, 6)) {
+          monthlyAdjusted = value;
+          monthlyFetchedFor = nowMonth;
+        }
+      } catch (error) {
+        console.warn(code + ': monthly K-line unavailable; keeping cache if present (' + error.message + ')');
+      }
+    }
+
+    if (!detail && !dailyAdjusted && !dailyRaw && !monthlyAdjusted) return { code, skipped: true };
+    const payload = {
+      schemaVersion: 1,
+      code,
+      updatedAt,
+      detail,
+      dailyAdjusted,
+      dailyRaw,
+      monthlyAdjusted,
+      monthlyFetchedFor
+    };
+    const changed = writeIfChanged(file, payload, true);
+    return { code, changed, detailFresh, hasDaily: !!dailyAdjusted, hasMonthly: !!monthlyAdjusted };
+  });
+
+  const good = results.filter(item => item && !item.error && !item.skipped);
+  console.log('Stock caches: ' + good.length + '/' + codes.length + ' available; ' + good.filter(item => item.changed).length + ' changed.');
+  if (good.length < Math.ceil(codes.length * 0.7)) {
+    throw new Error('Too few valid stock caches; preserving existing data where possible.');
+  }
+
+  const previousIndex = readJson(INDEX_FILE, { monthly: {} });
+  const monthly = { ...(previousIndex.monthly || {}) };
+  await mapLimit(INDEX_CODES, 2, async code => {
+    if (monthly[code] && monthly[code].fetchedFor === new Date().toISOString().slice(0, 7)) return;
+    try {
+      const value = await client.fetchKline(code, { period: 'month', count: 24, adjust: 'none', force: true });
+      if (validBars(value, 6)) monthly[code] = { ...value, fetchedFor: new Date().toISOString().slice(0, 7) };
+    } catch (error) {
+      console.warn(code + ': index monthly history unavailable; keeping cache (' + error.message + ')');
+    }
+  });
+  const indexPayload = { schemaVersion: 1, updatedAt, monthly };
+  const indexChanged = writeIfChanged(INDEX_FILE, indexPayload, true);
+  console.log(indexChanged ? 'Updated data/index-cache.json' : 'Index history unchanged; kept previous snapshot.');
+}
+
+main().catch(error => {
+  console.error(error && error.stack ? error.stack : error);
+  process.exitCode = 1;
+});

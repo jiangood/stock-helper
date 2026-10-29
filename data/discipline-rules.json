@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "scoreItems": [
+    {
+      "key": "owner",
+      "label": "国资背景",
+      "max": 10
+    },
+    {
+      "key": "cap",
+      "label": "总市值",
+      "max": 8
+    },
+    {
+      "key": "focus",
+      "label": "主营集中",
+      "max": 9
+    },
+    {
+      "key": "profit",
+      "label": "扣非净利增长",
+      "max": 14
+    },
+    {
+      "key": "consolidation",
+      "label": "盘整 2-3 年",
+      "max": 9
+    },
+    {
+      "key": "bottom",
+      "label": "月线底部",
+      "max": 9
+    },
+    {
+      "key": "volume",
+      "label": "底部放量",
+      "max": 6
+    }
+  ],
+  "manualItems": [
+    {
+      "key": "moat",
+      "label": "护城河",
+      "value": "无法自动判断",
+      "note": "需要人工评估成本优势、资源禀赋、品牌/渠道与竞争格局"
+    }
+  ]
+}

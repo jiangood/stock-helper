@@ -1,7 +1,7 @@
 /*!
  * 量价指标 TechInd v1.0.0
  * ---------------------------------------------------------------------------
- * 做T / 补仓面板用的纯函数指标，浏览器 window.TechInd、Node module.exports 通用，无依赖。
+ * 长期买入 / 补仓分析用的纯函数指标，浏览器 window.TechInd、Node module.exports 通用，无依赖。
  *
  *   mfi(bars, period)                资金流量指标 MFI（0~100）
  *   rsi(bars, period)                相对强弱指标 RSI（0~100）

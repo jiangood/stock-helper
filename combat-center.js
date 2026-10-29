@@ -130,8 +130,27 @@
       await limitedMap(universe, 4, async function (stock) { results.push(await calculateOne(stock)); });
       var order = new Map(results.map(function (r, i) { return [codeOf(r.stock.code), i]; }));
       state.rows = results.sort(function (a, b) {
-        var rank = function (r) { return r.primary.kind === 'risk' ? 0 : (r.primary.kind === 't-buy' || r.primary.kind === 't-sell' || r.primary.kind === 'add-ready') ? 1 : r.primary.kind === 'add-watch' ? 2 : r.primary.kind === 'data' ? 3 : 4; };
-        return rank(a) - rank(b) || String(a.stock.name || '').localeCompare(String(b.stock.name || ''), 'zh');
+        // Put genuinely actionable signals first; risk blocks and missing data must never outrank them.
+        var rank = function (r) {
+          if (r.primary.kind === 't-buy' || r.primary.kind === 't-sell' || r.primary.kind === 'add-ready') return 0;
+          if (r.primary.kind === 'add-watch') return 1;
+          if (r.primary.kind === 'watch') return 2;
+          if (r.primary.kind === 'risk') return 3;
+          if (r.primary.kind === 'data') return 4;
+          return 2;
+        };
+        var diff = rank(a) - rank(b);
+        if (diff) return diff;
+        // Within actionable items, prioritize a higher-confidence add/T signal and keep holdings ahead of pool-only names.
+        var signalScore = function (r) {
+          var score = 0;
+          if (r.primary.kind === 't-buy' || r.primary.kind === 't-sell') score += 30;
+          if (r.primary.kind === 'add-ready') score += 25 + (Number(r.add && r.add.score) || 0);
+          if (r.primary.kind === 'add-watch') score += 10 + (Number(r.add && r.add.score) || 0);
+          if (r.holding) score += 2;
+          return score;
+        };
+        return signalScore(b) - signalScore(a) || String(a.stock.name || '').localeCompare(String(b.stock.name || ''), 'zh');
       });
       state.lastRun = Date.now();
     } catch (e) { state.error = e && e.message || '读取作战数据失败'; }

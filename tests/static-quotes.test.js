@@ -7,9 +7,10 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'static-quotes.js'), 'utf8');
 
-function makeHarness(fetchImpl) {
+function makeHarness(fetchImpl, indexedDB) {
   const storage = new Map();
   const window = {
+    indexedDB,
     localStorage: {
       getItem(key) { return storage.has(key) ? storage.get(key) : null; },
       setItem(key, value) { storage.set(key, value); }
@@ -83,4 +84,61 @@ test('static adapter keeps a last-known-good local cache when same-origin fetch 
   fail = true;
   const cached = await client.fetch(['sz002408'], { force: true });
   assert.equal(cached.sz002408.price, 4.36);
+});
+
+
+test('IndexedDB connection is reused across cache reads and writes', async () => {
+  const records = new Map();
+  let openCount = 0;
+  const indexedDB = {
+    open() {
+      openCount += 1;
+      const request = {};
+      queueMicrotask(() => {
+        const db = {
+          objectStoreNames: { contains: name => name === 'snapshots' },
+          transaction() {
+            const tx = {
+              objectStore() {
+                return {
+                  get(key) {
+                    const req = {};
+                    queueMicrotask(() => {
+                      req.result = records.get(key);
+                      if (req.onsuccess) req.onsuccess();
+                      queueMicrotask(() => tx.oncomplete && tx.oncomplete());
+                    });
+                    return req;
+                  },
+                  put(value, key) {
+                    records.set(key, value);
+                    queueMicrotask(() => tx.oncomplete && tx.oncomplete());
+                  }
+                };
+              }
+            };
+            return tx;
+          },
+          close() {}
+        };
+        request.result = db;
+        if (request.onupgradeneeded) request.onupgradeneeded();
+        if (request.onsuccess) request.onsuccess();
+      });
+      return request;
+    }
+  };
+  const files = {
+    'data/stock-cache/sz002408.json': { dailyAdjusted: { bars } },
+    'data/stock-cache/sh600519.json': { dailyAdjusted: { bars: bars.slice(0, 10) } }
+  };
+  const harness = makeHarness(async url => {
+    const key = Object.keys(files).find(item => String(url).endsWith('/' + item));
+    if (!key) throw new Error('Unexpected URL: ' + url);
+    return { ok: true, status: 200, json: async () => files[key] };
+  }, indexedDB);
+  const client = new harness.api.Client();
+  assert.equal((await client.fetchKline('sz002408', { period: 'day' })).bars.length, 12);
+  assert.equal((await client.fetchKline('sh600519', { period: 'day' })).bars.length, 10);
+  assert.equal(openCount, 1, 'one database connection should serve multiple cache operations');
 });

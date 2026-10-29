@@ -17,8 +17,8 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 点击名称进入个股详情页（`stock.html?code=...`），东方财富外链放在详情页
   - 纪律增强：工具栏「全部状态」筛选（重仓/接近重仓/入场/破净/八折/小市值/纪律全过/全过+买点/风险）；名称后显示 ST / 亏 / 八折 / 破净小旗标；「纪律」列显示 5 项自动筛选（非ST/非亏损/PE≤30/市值≤200亿/PB<1）的通过数，全过显示绿色「全过」，4/5 显示黄色；底部「行情」页合并市场简报与行情，包括指数行情、股票池涨跌温度、板块强弱、从公开 `data/holdings.json` 读取的组合持仓盈亏、原机会雷达、全球资产与产业链商品行情；新增「阅读」页，展示推荐投资书单与项目投资理论；持仓数据源由 `holdings-data.js` 校验，网页只读，不使用 localStorage 保存持仓；首页不再提供简报按钮；`🩺` 打开股票池体检（弹窗不改动顶栏）
 - `stock.html` + `stock.js` — 个股详情页，入参 `stock.html?code=sz002408`（兼容 `002408` / `SH600519`）
-  - 模块：行情卡（只留昨收/成交额/换手率，不展示今开/最高/最低/均价/涨停/跌停/量比/振幅等日内指标）、日/月 K（lightweight-charts 4.2.3，CDN，不含分时）、估值与周期位置（PE/PB/ROE/52 周分位/月 K 历史分位/同组中位数比价）、跟踪计划（价格刻度条 + 入场/重仓/止盈状态）、做T（15 分 VWAP 偏离 / MFI / 量能 / 单边过滤 + 参考价位）、补仓（POC 支撑 / MFI 底背离 / MA20 与 OBV 趋势三项）、鳄鱼纪律（PB 八折/200 亿/PE 30 倍/位置/连板检查、连续涨停提示、持仓成本与翻倍/三倍卖点、资源股 `(P−C)×Q` 估值计算器）
-  - 做T / 补仓为纯前端计算：日 K 120 根近似筹码、15 分 K 约 20 个交易日；数据缺失只降级为「加载中 / 数据不足」，不阻塞主流程；结论旁固定标注「辅助参考，不构成投资建议」
+  - 模块：行情卡（只留昨收/成交额/换手率，不展示今开/最高/最低/均价/涨停/跌停/量比/振幅等日内指标）、日/月 K（lightweight-charts 4.2.3，CDN，不含分时）、估值与周期位置（PE/PB/ROE/52 周分位/月 K 历史分位/同组中位数比价）、跟踪计划（价格刻度条 + 入场/重仓/止盈状态）、补仓（POC 支撑 / MFI 底背离 / MA20 与 OBV 趋势三项）、鳄鱼纪律（PB 八折/200 亿/PE 30 倍/位置/连板检查、连续涨停提示、持仓成本与翻倍/三倍卖点、资源股 `(P−C)×Q` 估值计算器）
+  - 补仓与趋势参考仅使用日 K；不再提供分钟 K / 分时数据接口；结论旁固定标注「辅助参考，不构成投资建议」
   - 数据：`data/stocks.json` 匹配计划；不在股票池的代码也能看行情，计划区显示「未纳入股票池」
   - 本机数据：资源股估值参数 `localStorage['croc-valuation:<code>']`；持仓成本统一从公开 `data/holdings.json` 读取，个股详情页只读
   - 顶栏只保留标题 + 刷新/主题，不要加时钟、休市/交易中、收盘等提示
@@ -37,8 +37,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`，返回 `price/prevClose/change/todayChange/pe/pb/totalCap/floatCap/divYield`
   - 股息率 `divYield`（%）：近 12 个月已除权分红 ÷ 现价，以腾讯口径为准（东财 f133 兜底），无分红返回 0 / null
   - 市值单位：`totalCap` / `floatCap` 为元（首页显示时换算成亿 / 万亿）
-  - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`、`fetchMinuteKline(code, { period:'5'|'15'|'30'|'60', count })`、`fetchTrends(code)`
-  - 分钟 K：腾讯 mkline 主源（约 20 个交易日），东财 klt 降级，返回 `{ code, period, bars:[{ time:'2026-10-28 14:45', open, close, high, low, volume }] }`
+  - 详情 / 图表：`fetchDetail(code)`、`fetchKline(code, { period, count, adjust })`、
   - 交易时段：`StockQuotes.marketSession()` / `StockQuotes.isTrading()`
 
 ## data/stocks.json 字段

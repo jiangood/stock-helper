@@ -262,7 +262,7 @@
       else {
         var updated = businessData.updatedAt ? new Date(businessData.updatedAt).toLocaleString('zh-CN', { timeZone:'Asia/Shanghai', hour12:false }) : '时间未知';
         var count = Object.keys(payloadItems).filter(function(k){return payloadItems[k] && Number(payloadItems[k].latest)>0;}).length;
-        statusEl.textContent = '最近抓取：'+updated+'（北京时间） · '+count+'/'+items.length+' 个品种有有效报价；数据非逐笔实时。';
+        statusEl.textContent = '数据抓取：'+updated+'（北京时间） · '+count+'/'+items.length+' 个品种有有效报价；数据非逐笔实时。';
       }
     }
   }

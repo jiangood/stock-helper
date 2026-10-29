@@ -165,10 +165,18 @@ function buildFile(options) {
     readCache: opts.readCache
   });
   const file = opts.file || SECTOR_FILE;
+  if (!Object.keys(payload.stocks).length) {
+    const previous = readJson(file, null);
+    if (previous && previous.stocks && Object.keys(previous.stocks).length) {
+      console.warn('No monthly returns were produced; preserving the last valid sector snapshot.');
+      return { payload: previous, changed: false, skipped: true };
+    }
+    throw new Error('No monthly returns were produced; refusing to publish an empty sector snapshot.');
+  }
   const changed = writePayload(file, payload);
   console.log('Sector monthly: ' + Object.keys(payload.stocks).length + '/' + stocks.length +
     ' stocks with monthly returns; ' + (changed ? 'updated' : 'unchanged') + ' ' + path.relative(ROOT, file) + '.');
-  return { payload, changed };
+  return { payload, changed, skipped: false };
 }
 
 function main() {

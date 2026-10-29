@@ -154,10 +154,18 @@ function buildFile(options) {
     readCache: opts.readCache
   });
   const file = opts.file || SCORES_FILE;
+  if (!Object.keys(payload.scores).length) {
+    const previous = readJson(file, null);
+    if (previous && previous.scores && Object.keys(previous.scores).length) {
+      console.warn('No research scores were produced; preserving the last valid score snapshot.');
+      return { payload: previous, changed: false, skipped: true };
+    }
+    throw new Error('No research scores were produced; refusing to publish an empty score snapshot.');
+  }
   const changed = writePayload(file, payload);
   console.log('Research scores: ' + Object.keys(payload.scores).length + '/' + stocks.length +
     ' stocks scored; ' + (changed ? 'updated' : 'unchanged') + ' ' + path.relative(ROOT, file) + '.');
-  return { payload, changed };
+  return { payload, changed, skipped: false };
 }
 
 function main() {

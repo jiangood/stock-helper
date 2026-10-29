@@ -842,62 +842,71 @@
   function renderDiscipline(d) {
     if (!d || typeof Croc === 'undefined') return;
     const e = currentEval(d);
-    const price = d.price;
-    const checks = [];
+    const extraChecks = [];
 
-    // 1. PB / 净资产八折
+    // 选股硬纪律：直接使用 Croc.screen() 的同一份结果，避免展示与计分口径不一致。
+    const sc = Croc.screen(
+      { name: e.name || (PLAN && PLAN.name) || '', code: CODE },
+      Object.assign({}, d, { pe: isNum(d.peTtm) ? d.peTtm : d.pe })
+    );
+    const hardLabels = {
+      st: 'ST / 风险警示',
+      loss: '亏损股',
+      pe: 'PE(TTM) / 30 倍',
+      cap: '市值 / 200 亿',
+      pb: '破净 / PB<1'
+    };
+    const hardNotes = {
+      st: c => c.ok ? '铁律：不买 ST，当前符合' : '铁律：不买 ST',
+      loss: c => c.known ? (c.ok ? '非亏损股' : 'TTM 亏损或无有效盈利') : '盈利数据缺失，暂无法判断',
+      pe: c => c.known ? (c.ok ? 'PE 在 0–30 倍以内' : 'PE 超过 30 倍或盈利无效') : '行情源未提供 PE',
+      cap: c => c.known ? (c.ok ? '总市值 ≤200 亿' : '总市值超过 200 亿或数据无效') : '行情源未提供总市值',
+      pb: c => c.known ? (c.ok ? 'PB<1，符合破净条件' : 'PB≥1 或数据无效') : '行情源未提供 PB'
+    };
+    const hardChecks = sc.checks.map(c => checkItem(
+      !c.known ? 'neutral' : c.ok ? 'ok' : 'bad',
+      hardLabels[c.key] || c.label,
+      !c.known ? '待补数据' : c.ok ? '通过' : '未通过',
+      hardNotes[c.key] ? hardNotes[c.key](c) : ''
+    ));
+    const hardEl = $('discipline-hard-checks');
+    if (hardEl) hardEl.innerHTML = hardChecks.join('');
+
+    // 辅助估值与交易检查：用于观察买点和风险，不计入上方 5 项得分。
     const pbVal = isNum(e.pb) ? `PB ${e.pb.toFixed(2)}` : 'PB —';
     const navVal = isNum(e.navGolden) ? ` · 八折价 ${e.navGolden.toFixed(2)}` : '';
     if (e.pbGolden) {
-      checks.push(checkItem('ok', 'PB / 净资产八折', pbVal + navVal, 'PB≤0.8：黄金买点'));
+      extraChecks.push(checkItem('ok', 'PB / 净资产八折', pbVal + navVal, 'PB≤0.8：黄金买点'));
     } else if (e.pbUnder1) {
-      checks.push(checkItem('warn', 'PB / 净资产八折', pbVal + navVal, '已破净，但未到八折'));
+      extraChecks.push(checkItem('warn', 'PB / 净资产八折', pbVal + navVal, '已破净，但未到八折'));
     } else if (e.pb !== null && e.pb > 0) {
-      checks.push(checkItem('bad', 'PB / 净资产八折', pbVal + navVal, '高于八折，安全边际不足'));
+      extraChecks.push(checkItem('bad', 'PB / 净资产八折', pbVal + navVal, '高于八折，安全边际不足'));
     } else {
-      checks.push(checkItem('neutral', 'PB / 净资产八折', pbVal, '行情源未提供 PB'));
+      extraChecks.push(checkItem('neutral', 'PB / 净资产八折', pbVal, '行情源未提供 PB'));
     }
 
-    // 2. 市值
-    if (isNum(e.cap) && e.cap > 0) {
-      checks.push(checkItem(e.smallCap ? 'ok' : 'bad', '市值 / 200 亿', fmtCap(e.cap),
-        e.smallCap ? '≤200 亿，弹性优先' : '>200 亿，弹性偏小'));
-    } else {
-      checks.push(checkItem('neutral', '市值 / 200 亿', '—', '行情源未提供总市值'));
-    }
-
-    // 3. PE
-    let peTone = 'neutral';
-    let peNote = '行情源未提供 PE';
-    if (e.loss) { peTone = 'bad'; peNote = 'TTM 亏损，PE 失效，改看 PB'; }
-    else if (e.pe !== null && e.pe > 30) { peTone = 'bad'; peNote = '30 倍以上算高'; }
-    else if (e.pe !== null) { peTone = 'ok'; peNote = '30 倍以内'; }
-    checks.push(checkItem(peTone, 'PE(TTM) / 30 倍', fmtPe(e.pe), peNote));
-
-    // 4. 52 周位置
+    const price = d.price;
     const pos52 = (isNum(d.low52) && isNum(d.high52) && d.high52 > d.low52)
       ? (price - d.low52) / (d.high52 - d.low52) * 100 : null;
-    checks.push(checkItem(
+    extraChecks.push(checkItem(
       pos52 == null ? 'neutral' : pos52 <= 25 ? 'ok' : pos52 >= 75 ? 'bad' : 'neutral',
       '52 周位置',
       pos52 == null ? '—' : `分位 ${pos52.toFixed(0)}%`,
       pos52 == null ? '区间数据缺失' : pos52 <= 25 ? '低位区' : pos52 >= 75 ? '高位区' : '中枢区'
     ));
 
-    // 5. 月 K 历史分位
     const hs = historyStats();
-    checks.push(checkItem(
+    extraChecks.push(checkItem(
       !hs || hs.pos == null ? 'neutral' : hs.pos <= 25 ? 'ok' : hs.pos >= 75 ? 'bad' : 'neutral',
       '历史分位（月K）',
       hs && hs.pos != null ? `${hs.pos.toFixed(0)}%` : '—',
       hs ? `${hs.count} 根月K · 低 ${hs.lo.toFixed(2)} / 高 ${hs.hi.toFixed(2)}` : HISTORY ? '月K 数据不足' : '月K 加载中…'
     ));
 
-    // 6. 计划区间
     if (!PLAN) {
-      checks.push(checkItem('neutral', '计划区间', '未纳入股票池', '无入场 / 重仓计划'));
+      extraChecks.push(checkItem('neutral', '计划区间', '未纳入股票池', '无入场 / 重仓计划'));
     } else if (!isNum(PLAN.entry) && !isNum(PLAN.heavy)) {
-      checks.push(checkItem('neutral', '计划区间', '未设置买点', '入场价与重仓价都为空'));
+      extraChecks.push(checkItem('neutral', '计划区间', '未设置买点', '入场价与重仓价都为空'));
     } else {
       const zoneText = e.zone === 'heavy' ? '重仓区' : e.zone === 'entry' ? '入场区'
         : e.zone === 'above' ? '高于入场' : '—';
@@ -909,17 +918,12 @@
         isNum(PLAN.entry) ? `入场 ${fmtNum(PLAN.entry)}` : null,
         buyBlock
       ].filter(Boolean).join(' · ');
-      checks.push(checkItem(
+      extraChecks.push(checkItem(
         buyBlock ? 'bad' : e.zone === 'heavy' || e.zone === 'entry' ? 'ok' : e.zone === 'above' ? 'warn' : 'neutral',
         '计划区间', buyBlock ? '禁止买入' : zoneText, note
       ));
     }
 
-    // 7. ST
-    checks.push(checkItem(e.st ? 'bad' : 'ok', 'ST / 风险警示', e.st ? '是' : '否',
-      e.st ? '铁律：不买 ST' : '非 ST'));
-
-    // 8. 连板
     const li = Croc.limitUpInfo(klineCache.dayRaw && klineCache.dayRaw.bars, CODE, e.name);
     let lTone = 'neutral';
     let lVal = '—';
@@ -929,19 +933,16 @@
       lVal = li.count ? `${li.count} 连板` : '无连板';
       lNote = li.opened ? '最近交易日涨停打开' : `涨停幅度 ${li.pct}%`;
     }
-    checks.push(checkItem(lTone, '连续涨停', lVal, lNote));
+    extraChecks.push(checkItem(lTone, '连续涨停', lVal, lNote));
 
-    $('discipline-checks').innerHTML = checks.join('');
+    const extraEl = $('discipline-extra-checks');
+    if (extraEl) extraEl.innerHTML = extraChecks.join('');
 
     const scoreEl = $('discipline-score');
-    if (scoreEl && typeof Croc !== 'undefined') {
-      const sc = Croc.screen(
-        { name: e.name || (PLAN && PLAN.name) || '', code: CODE },
-        Object.assign({}, d, { pe: isNum(d.peTtm) ? d.peTtm : d.pe })
-      );
+    if (scoreEl) {
       scoreEl.innerHTML = sc.allPass
-        ? '<span class="flag flag-buy" style="margin-left:0">纪律全过</span>'
-        : `<span class="${sc.passed === sc.total - 1 ? 'text-warning-emphasis' : 'text-body-tertiary'}">纪律 ${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
+        ? '<span class="flag flag-buy" style="margin-left:0">选股筛选全过</span>'
+        : `<span class="${sc.passed === sc.total - 1 ? 'text-warning-emphasis' : 'text-body-tertiary'}">选股筛选 ${sc.passed}/${sc.total}${sc.complete ? '' : '?'} </span>`;
     }
 
     renderLimitUpAlert(li);

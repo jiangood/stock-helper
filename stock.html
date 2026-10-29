@@ -367,10 +367,20 @@
         <span class="ms-auto text-body-secondary" style="font-size:10.5px" id="discipline-score"></span>
       </div>
       <div class="card-body">
-        <div class="check-grid" id="discipline-checks"></div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <h3 class="mb-0 fw-semibold" style="font-size:12px">选股硬纪律（5 项）</h3>
+          <span class="text-body-tertiary" style="font-size:10.5px">计入上方得分</span>
+        </div>
+        <div class="check-grid" id="discipline-hard-checks"></div>
 
-        <div class="text-body-tertiary mt-2" style="font-size:10.5px">
-          仓位纪律：单账户持仓 ≤3 只 · 主仓 ≥70% · 原则上不使用融资。自动项不含国资背景、主营集中、护城河，需人工核对。
+        <div class="d-flex align-items-center gap-2 mt-3 mb-1 pt-3 border-top">
+          <h3 class="mb-0 fw-semibold" style="font-size:12px">辅助估值与交易检查</h3>
+          <span class="text-body-tertiary" style="font-size:10.5px">不计入 5 项得分</span>
+        </div>
+        <div class="check-grid" id="discipline-extra-checks"></div>
+
+        <div class="text-body-tertiary mt-3" style="font-size:10.5px">
+          仓位纪律：单账户持仓 ≤3 只 · 主仓 ≥70% · 原则上不使用融资。国资背景、主营集中、护城河仍需人工核对。
         </div>
 
         <div class="alert d-none mt-3 mb-0 py-2 px-3" id="limitup-alert" style="font-size:12px"></div>

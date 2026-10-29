@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
-  validateStocks, validateQuotes, validateBars, validateFundamentals, validateAll
+  validateStocks, validateQuotes, validateBars, validateCombatSnapshot, validateFundamentals, validateAll
 } = require('../scripts/validate_stock_data');
 
 const stocks = [
@@ -53,4 +53,18 @@ test('committed project data passes the production data contract', () => {
   assert.ok(result.stocks > 0);
   assert.ok(result.quotes.coverage >= 0.7);
   assert.ok(result.caches.cacheFiles >= Math.ceil(result.stocks * 0.7));
+});
+
+test('combat K-line read model validates stock coverage and bar limit', () => {
+  const payload = {
+    schemaVersion: 1,
+    barLimit: 120,
+    stocks: {
+      sh600000: { bars: [{ time: '2026-10-29', open: 10, close: 11, high: 12, low: 9 }] },
+      sz000001: { bars: [{ time: '2026-10-29', open: 10, close: 11, high: 12, low: 9 }] }
+    }
+  };
+  assert.deepEqual(validateCombatSnapshot(payload, new Set(['sh600000', 'sz000001'])), { stocks: 2, bars: 2 });
+  assert.throws(() => validateCombatSnapshot({ ...payload, barLimit: 200 }, new Set(['sh600000', 'sz000001'])), /barLimit/);
+  assert.throws(() => validateCombatSnapshot({ ...payload, stocks: { sh600000: payload.stocks.sh600000 } }, new Set(['sh600000', 'sz000001'])), /coverage below 70%/);
 });

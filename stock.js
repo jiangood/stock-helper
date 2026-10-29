@@ -125,17 +125,27 @@
 
   /* ────────────────────────── 初始化 ────────────────────────── */
 
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-bs-theme', theme);
+    const btn = $('theme-btn');
+    if (!btn) return;
+    const dark = theme === 'dark';
+    btn.setAttribute('aria-pressed', String(dark));
+    const label = dark ? '切换到浅色主题' : '切换到深色主题';
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
+  }
+
   function initTheme() {
-    if (localStorage.getItem('stock-theme') === 'dark') {
-      document.documentElement.setAttribute('data-bs-theme', 'dark');
-      $('theme-btn').textContent = '☀️';
-    }
+    // 与列表页一致：用户手动选择优先，其次跟随系统。
+    const saved = localStorage.getItem('stock-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(saved || (prefersDark ? 'dark' : 'light'));
   }
 
   function toggleTheme() {
     const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-bs-theme', next);
-    $('theme-btn').textContent = next === 'dark' ? '☀️' : '🌙';
+    applyTheme(next);
     localStorage.setItem('stock-theme', next);
     rerenderChart();
   }
@@ -1030,7 +1040,11 @@
   function setTab(tab) {
     if (chartTab === tab) return;
     chartTab = tab;
-    Array.from($('chart-tabs').children).forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    Array.from($('chart-tabs').children).forEach(b => {
+      const active = b.dataset.tab === tab;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
     loadChart(tab, false).catch(() => {});
   }
 
@@ -1169,13 +1183,14 @@
 
   function spinRefresh() {
     const btn = $('refresh-btn');
-    btn.classList.add('disabled');
-    btn.textContent = '◌';
+    if (!btn) return;
+    btn.setAttribute('aria-busy', 'true');
+    btn.disabled = true;
     clearTimeout(btn._t);
     btn._t = setTimeout(() => {
-      btn.classList.remove('disabled');
-      btn.textContent = '⟳';
-    }, 900);
+      btn.removeAttribute('aria-busy');
+      btn.disabled = false;
+    }, 700);
   }
 
   /* ────────────────────────── 启动 ────────────────────────── */

@@ -80,6 +80,7 @@ function buildSearchKeys() {
 
 function buildGroupOptions() {
   const sel = $('group-filter');
+  if (!sel) return;
   const groups = Array.from(new Set(STOCKS.map(s => s.group).filter(Boolean)))
     .sort((a, b) => a.localeCompare(b, 'zh'));
   const current = sel.value;
@@ -131,8 +132,10 @@ function updateSortUI() {
   ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','group','alias'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
-    th.classList.remove('sort-asc', 'sort-desc');
-    if (sortState.col === col) th.classList.add(sortState.dir === 1 ? 'sort-asc' : 'sort-desc');
+    const active = sortState.col === col;
+    th.classList.toggle('sort-asc', active && sortState.dir === 1);
+    th.classList.toggle('sort-desc', active && sortState.dir === -1);
+    th.setAttribute('aria-sort', !active ? 'none' : sortState.dir === 1 ? 'ascending' : 'descending');
   });
 }
 
@@ -153,10 +156,97 @@ function sortTable(col) {
 // 渲染
 // ============================================================
 function buildTable() {
+  const tbody = $('stock-tbody');
+  if (!tbody) return;
   const view = sortedView(filteredStocks);
-  $('stock-tbody').innerHTML = view.map(s => `<tr class="${rowClass(s)}">${buildRow(s)}</tr>`).join('');
-  $('stock-count').textContent = view.length === STOCKS.length ? view.length : `${view.length}/${STOCKS.length}`;
+  if (!view.length) {
+    tbody.innerHTML = '';
+    setEmptyState(true, '没有匹配的标的。<button type="button" class="btn btn-sm btn-outline-secondary ms-2" onclick="resetFilters()">清空筛选</button>');
+  } else {
+    setEmptyState(false);
+    tbody.innerHTML = view.map(s => `<tr class="${rowClass(s)}">${buildRow(s)}</tr>`).join('');
+  }
+  const count = $('stock-count');
+  if (count) count.textContent = view.length === STOCKS.length ? view.length : `${view.length}/${STOCKS.length}`;
   updateSummary();
+  updateScrollHint();
+}
+
+/** 空结果提示放在滚动区之外，避免被首列固定定位吃掉 */
+function setEmptyState(show, message) {
+  const wrap = document.querySelector('.table-scroll-wrap');
+  if (!wrap) return;
+  let box = wrap.querySelector('.stock-empty');
+  if (show) {
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'stock-empty empty-state m-2 text-center';
+      wrap.appendChild(box);
+    }
+    box.innerHTML = message;
+    box.hidden = false;
+  } else if (box) {
+    box.hidden = true;
+  }
+}
+
+/** 清空搜索与筛选，恢复完整列表 */
+function resetFilters() {
+  const search = $('search-input');
+  const group = $('group-filter');
+  const status = $('status-filter');
+  if (search) search.value = '';
+  if (group) group.value = '';
+  if (status) status.value = '';
+  applyFilter();
+  if (search) search.focus();
+}
+window.resetFilters = resetFilters;
+
+/** 表头排序按钮（原生按钮，键盘 Enter / Space 可用） */
+function bindSortButtons() {
+  document.querySelectorAll('.th-sort').forEach(btn => {
+    btn.addEventListener('click', () => sortTable(btn.dataset.sort));
+  });
+}
+
+/** 表格横向滚动提示与滚动区焦点 */
+function updateScrollHint() {
+  const sc = document.querySelector('.table-scroll');
+  const wrap = sc && sc.closest('.table-scroll-wrap');
+  if (!sc || !wrap) return;
+  const remaining = sc.scrollWidth - sc.clientWidth - sc.scrollLeft;
+  wrap.classList.toggle('can-scroll-right', remaining > 4);
+}
+
+function bindScrollHint() {
+  const sc = document.querySelector('.table-scroll');
+  if (!sc) return;
+  sc.addEventListener('scroll', updateScrollHint, { passive: true });
+  window.addEventListener('resize', updateScrollHint);
+}
+
+/** 顶栏高度随换行变化，用于表格滚动区的动态高度 */
+function syncHeaderHeight() {
+  const head = document.querySelector('.sticky-top');
+  if (!head) return;
+  let last = -1;
+  let queued = false;
+  const measure = () => {
+    queued = false;
+    const h = Math.round(head.getBoundingClientRect().height);
+    if (!h || h === last) return;
+    last = h;
+    document.documentElement.style.setProperty('--app-header-h', h + 'px');
+  };
+  const schedule = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(measure);
+  };
+  measure();
+  if (typeof ResizeObserver === 'function') new ResizeObserver(schedule).observe(head);
+  window.addEventListener('resize', schedule);
 }
 
 /** 顶部摘要：重仓 / 破净 / 八折 / 风险 */
@@ -334,6 +424,7 @@ async function loadPrices(manual) {
 
 function spinRefresh() {
   const btn = $('refresh-btn');
+  if (!btn) return;
   btn.classList.add('disabled');
   btn.textContent = '◌';
   clearTimeout(btn._t);
@@ -393,6 +484,8 @@ function showErrorDialog(detail) {
 
 (function bindRuntimeDiagnostics() {
   window.addEventListener('error', event => {
+    // ResizeObserver 的循环通知是浏览器噪声，不影响页面功能。
+    if (/ResizeObserver loop/.test(event.message || '')) return;
     // 捕获资源加载失败（例如脚本、样式、图片返回 404）。
     if (event.target && event.target !== window) {
       const target = event.target;
@@ -444,11 +537,14 @@ function showToast(msg, type) {
 // 筛选
 // ============================================================
 function applyFilter() {
-  const q = ($('search-input').value || '').trim().toLowerCase();
+  const searchEl = $('search-input');
+  const groupEl = $('group-filter');
+  const statusEl = $('status-filter');
+  const q = ((searchEl && searchEl.value) || '').trim().toLowerCase();
   const key = q.replace(/\s+/g, '');
   const lettersOnly = /^[a-z]+$/.test(key);
-  const group = $('group-filter').value;
-  const status = $('status-filter').value;
+  const group = (groupEl && groupEl.value) || '';
+  const status = (statusEl && statusEl.value) || '';
 
   filteredStocks = STOCKS.filter(s => {
     if (group && s.group !== group) return false;
@@ -481,6 +577,9 @@ function applyFilter() {
 // 页面导航由 index.html / combat.html / market.html 的独立 URL 负责，不再在单页内切换 tabs。
 
 (async function init() {
+  syncHeaderHeight();
+  bindSortButtons();
+  bindScrollHint();
   await loadStocks();
   if (window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);

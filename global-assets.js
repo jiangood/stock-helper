@@ -188,7 +188,6 @@
       var valid = numeric(item.price) !== null && Number(item.price) > 0;
       var change = item.changePct;
       var status = item.status || (valid ? '最近有效报价' : '等待可靠报价');
-      var quoteTime = item.quoteTime ? timeText(item.quoteTime) : '暂无有效报价时间';
       var source = item.sourceUrl || 'https://finance.yahoo.com/';
       return '<article class="insight-card">'
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">' + esc(meta.name) + '</div><div class="mini-label">' + esc(meta.kind) + ' · ' + esc(item.currency || meta.unit) + '</div></div><span class="flag" style="margin:0">' + esc(status) + '</span></div>'

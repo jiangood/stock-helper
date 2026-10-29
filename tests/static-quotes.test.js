@@ -93,7 +93,7 @@ test('every data request goes to network again and failed reads do not use stale
   assert.equal((await client.fetch(['sz002408'])).sz002408.price, 4.36);
   assert.equal(calls, 2, 'repeated reads must fetch the static source each time');
   fail = true;
-  await assert.rejects(client.fetch(['sz002408']), /静态行情数据读取失败/);
+  await assert.rejects(client.fetch(['sz002408']), /offline/);
   assert.equal(calls, 3);
   assert.deepEqual(harness.getStorageAccesses(), { storageReads: 0, storageWrites: 0, indexedDbReads: 0 });
 });

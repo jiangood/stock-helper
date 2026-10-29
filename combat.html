@@ -46,36 +46,48 @@
   body[data-page="combat"] #combat-summary .insight-card:hover { transform:translateY(-2px); border-color:var(--bs-primary-border-subtle); }
   body[data-page="combat"] #combat-summary .mini-label:first-child { font-weight:650; font-size:12px; color:var(--bs-body-color); }
   body[data-page="combat"] #combat-summary .combat-metric { font-size:clamp(27px,3vw,34px); line-height:1.2; margin:7px 0 5px; font-variant-numeric:tabular-nums; }
-  .combat-workspace { padding:16px; border:1px solid var(--bs-border-color); border-radius:16px; background:var(--bs-body-bg); box-shadow:0 4px 16px rgba(15,23,42,.025); }
-  .combat-workspace-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px; }
+  .combat-workspace { padding:0; border:0; background:none; box-shadow:none; }
+  .combat-workspace-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
   .combat-workspace-title { font-size:14px; font-weight:800; letter-spacing:-.2px; }
   .combat-workspace .panel-subtitle { line-height:1.6; }
-  .combat-toolbar { padding:4px; border-radius:10px; background:var(--bs-tertiary-bg); gap:4px; }
-  .combat-toolbar .btn { border:1px solid transparent; border-radius:7px; padding:.42rem .72rem; font-weight:600; }
-  .combat-toolbar .btn:not(.active) { color:var(--bs-secondary-color); }
-  .combat-toolbar .btn:not(.active):hover { background:var(--bs-body-bg); border-color:var(--bs-border-color); }
-  .combat-toolbar .btn.active { box-shadow:0 2px 5px rgba(15,23,42,.12); }
   #combat-meta { font-size:11px; line-height:1.6; text-align:right; }
-  body[data-page="combat"] .combat-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,390px),1fr)); gap:14px; }
-  body[data-page="combat"] .combat-card { padding:16px !important; border-radius:14px !important; border:1px solid var(--bs-border-color) !important; background:var(--bs-body-bg); box-shadow:0 4px 16px rgba(15,23,42,.025); }
-  body[data-page="combat"] .combat-name { font-size:16px; letter-spacing:-.2px; }
-  body[data-page="combat"] .combat-price { font-size:24px; letter-spacing:-.5px; }
-  body[data-page="combat"] .combat-plan { line-height:1.8; }
-  body[data-page="combat"] .combat-reason-chip { border-radius:7px; }
-  body[data-page="combat"] .combat-buy-conditions, body[data-page="combat"] .combat-indicator-details, body[data-page="combat"] .combat-review-details, body[data-page="combat"] .combat-invalidation { border-radius:10px; }
+
+  /* 清单表格：与首页自选同构，点击行内展开详情 */
+  .combat-table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .combat-table-scroll:focus-visible { outline:2px solid var(--bs-primary); outline-offset:-2px; }
+  .combat-table { min-width:780px; }
+  .combat-table thead th { font-size:11px; font-weight:600; letter-spacing:.3px; white-space:nowrap; text-align:right; padding:.45rem .55rem; background:var(--bs-tertiary-bg); }
+  .combat-table thead th:nth-child(1) { text-align:left; }
+  .combat-table tbody td { text-align:right; white-space:nowrap; padding:.32rem .55rem; line-height:1.45; font-variant-numeric:tabular-nums; }
+  .combat-table tbody td:nth-child(1) { text-align:left; }
+  .combat-row { cursor:pointer; }
+  .combat-row.is-open > td { background:var(--bs-tertiary-bg); }
+  .combat-row.is-open > td:nth-child(1) { box-shadow:inset 2px 0 0 var(--bs-primary); }
+  .combat-toggle { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; margin-right:2px; padding:0; border:0; border-radius:4px; background:none; color:var(--bs-secondary-color); vertical-align:-6px; }
+  .combat-toggle:hover { color:var(--bs-body-color); background:var(--bs-secondary-bg); }
+  .combat-toggle:focus-visible { outline:2px solid var(--bs-primary); outline-offset:1px; }
+  .combat-caret { display:block; font-size:10px; line-height:1; transition:transform .15s ease; }
+  .combat-row.is-open .combat-caret { transform:rotate(90deg); }
+  .combat-table .combat-name { font-size:13px; }
+  .combat-code { font-size:10px; line-height:1.3; }
+  .combat-cell-sub { display:block; font-size:10px; line-height:1.3; color:var(--bs-secondary-color); }
+  .combat-signal { font-size:11.5px; font-weight:650; }
+  .combat-detail-row > td { padding:0 !important; white-space:normal !important; text-align:left !important; background:var(--bs-tertiary-bg); font-variant-numeric:normal; }
+  .combat-detail-row[hidden] { display:none; }
+  /* 表格可横向滚动，展开区宽度跟随可视区域，避免长文本被推出屏幕 */
+  .combat-detail { position:sticky; left:0; display:grid; gap:11px; padding:12px 14px 14px; }
+  .combat-detail-meta { display:flex; flex-wrap:wrap; gap:3px 14px; font-size:11px; color:var(--bs-secondary-color); }
+  .combat-detail .combat-buy-conditions,
+  .combat-detail .combat-exit-panel,
+  .combat-detail .combat-indicator-details,
+  .combat-detail .combat-review-details,
+  .combat-detail .combat-invalidation { margin:0; padding:10px 0 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; font-size:11.5px; }
+  .combat-detail .combat-reasons { flex-direction:column; gap:4px; }
+  .combat-detail .combat-reason-chip { display:block; padding:0; border:0; border-radius:0; background:none; }
+  .combat-detail .combat-indicator-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:8px 20px; }
+  .combat-detail .combat-indicator { padding:0; border:0; border-radius:0; background:none; }
+  .combat-detail .combat-invalidation li { font-size:11.5px; }
   .combat-footnote { margin-top:16px; padding:12px 14px; border:1px solid var(--bs-border-color); border-radius:11px; background:var(--bs-body-bg); font-size:10.5px; line-height:1.7; color:var(--bs-secondary-color); }
-  @media (max-width:700px) {
-    body[data-page="combat"] #combat-pane { padding:12px !important; }
-    .combat-hero { align-items:flex-start; flex-direction:column; gap:14px; border-radius:14px; }
-    .combat-hero-actions { width:100%; flex-direction:row; align-items:center; justify-content:space-between; }
-    .combat-safety-note { white-space:normal; }
-    .combat-workspace { padding:11px; }
-    .combat-workspace-head { flex-direction:column; }
-    #combat-meta { text-align:left; }
-    body[data-page="combat"] .combat-grid { grid-template-columns:minmax(0,1fr); gap:10px; }
-    body[data-page="combat"] .combat-card { padding:12px !important; }
-  }
-  /* 手机端扁平化：去掉外层方框与阴影，改用留白 + 细分隔线分层，避免「框套框」 */
   @media (max-width:700px) {
     body[data-page="combat"] { background:var(--bs-body-bg) !important; }
     body[data-page="combat"] #combat-pane { padding:14px 14px 24px !important; }
@@ -86,6 +98,7 @@
     .combat-hero h1 { margin-bottom:6px; }
     .combat-hero .panel-subtitle { font-size:11.5px; }
     .combat-hero-actions { gap:4px; }
+    .combat-safety-note { white-space:normal; }
 
     /* 概览：三条毛边网格，不做独立卡片 */
     body[data-page="combat"] #combat-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(94px,1fr)); margin:0 0 14px !important; }
@@ -106,48 +119,26 @@
     .combat-rule-block { padding:10px 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; }
     .combat-rule-block ul { font-size:11.5px; }
 
-    /* 清单区：去掉外层工作台方框 */
-    .combat-workspace { padding:0; border:0; border-radius:0; background:none; box-shadow:none; }
-    .combat-workspace-head { margin-bottom:10px; }
-    .combat-toolbar { padding:0; margin-bottom:10px !important; border-radius:0; background:none; gap:6px; }
-    .combat-toolbar .btn { min-height:40px; padding:0 .7rem; border-color:var(--bs-border-color); border-radius:999px; background:none; font-weight:600; }
-    .combat-toolbar .btn.active { background:var(--bs-primary-bg-subtle); border-color:var(--bs-primary-border-subtle); color:var(--bs-primary); box-shadow:none; }
+    /* 清单区：无外框，表格直接铺开 */
+    .combat-workspace-head { flex-direction:column; margin-bottom:10px; }
+    #combat-meta { text-align:left; }
 
-    /* 单只标的：由「卡片」变为列表分节 */
-    body[data-page="combat"] .combat-grid { gap:0; }
-    body[data-page="combat"] .combat-card { padding:16px 0 !important; border:0 !important; border-top:1px solid var(--bs-border-color) !important; border-radius:0 !important; background:none; box-shadow:none; }
-    body[data-page="combat"] .combat-card:first-child { border-top:0 !important; }
-    body[data-page="combat"] .combat-name { font-size:17px; }
-    body[data-page="combat"] .combat-price { font-size:23px; }
-    body[data-page="combat"] .combat-badge { border:0; padding:2px 8px; }
+    /* 表格：压缩内边距，展开区单列阅读 */
+    .combat-table { min-width:760px; }
+    .combat-table thead th { padding:.4rem .45rem; }
+    .combat-table tbody td { padding:.34rem .45rem; }
+    .combat-table .combat-name { font-size:13.5px; }
+    .combat-detail { padding:10px 12px 12px; gap:9px; }
+    .combat-detail .combat-indicator-grid { grid-template-columns:minmax(0,1fr); gap:8px; }
+    .combat-detail-meta { font-size:10.5px; }
 
-    /* 卡内分区：一律去框，用一条细线起段 */
-    body[data-page="combat"] .combat-buy-conditions,
-    body[data-page="combat"] .combat-exit-panel,
-    body[data-page="combat"] .combat-indicator-details,
-    body[data-page="combat"] .combat-review-details,
-    body[data-page="combat"] .combat-invalidation,
-    body[data-page="combat"] .combat-risk-card { margin:12px 0 0; padding:10px 0 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; }
-    body[data-page="combat"] .combat-card .combat-buy-conditions { margin-top:12px; }
-    body[data-page="combat"] .combat-plan { margin-top:10px !important; padding-top:8px; font-size:11px; }
-    body[data-page="combat"] .combat-section-title { font-size:11.5px; letter-spacing:.2px; color:var(--bs-secondary-color); }
-    body[data-page="combat"] details > summary.combat-section-title { color:var(--bs-emphasis-color); }
     /* 折叠标题保持可点面积 */
     body[data-page="combat"] .combat-review-details > summary,
     body[data-page="combat"] .combat-invalidation > summary,
-    body[data-page="combat"] .combat-indicator-details > summary,
-    body[data-page="combat"] .combat-note-details > summary { min-height:34px; padding:6px 0; }
-
-    /* 理由与口径：去掉胶囊边框与圆点，直接排成一段段短句 */
-    body[data-page="combat"] .combat-reasons { flex-direction:column; gap:5px; font-size:11.5px; }
-    body[data-page="combat"] .combat-reason-chip { display:block; padding:0; border:0; border-radius:0; background:none; color:var(--bs-body-color); }
-    body[data-page="combat"] .combat-indicator-grid { grid-template-columns:minmax(0,1fr); gap:0; margin-top:8px !important; }
-    body[data-page="combat"] .combat-indicator { padding:8px 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; }
-    body[data-page="combat"] .combat-indicator:first-child { border-top:0; padding-top:0; }
-    body[data-page="combat"] .combat-indicator strong { font-size:14px; }
-    body[data-page="combat"] .combat-invalidation li { font-size:11.5px; }
+    body[data-page="combat"] .combat-indicator-details > summary { min-height:34px; padding:6px 0; }
+    body[data-page="combat"] .combat-section-title { font-size:11.5px; letter-spacing:.2px; }
     .combat-footnote { margin-top:14px; padding:12px 0 0; border:0; border-top:1px solid var(--bs-border-color); border-radius:0; background:none; font-size:10.5px; }
-    #combat-list > .empty-state { border:0; padding:20px 0; }
+    .combat-table .empty-state { border:0; padding:18px 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     body[data-page="combat"] #combat-summary .insight-card { transition:none; }
@@ -239,20 +230,30 @@
     <div class="combat-workspace-head">
       <div>
         <h2 id="combat-list-heading" class="combat-workspace-title">标的作战清单</h2>
-        <div class="panel-subtitle mt-1">按状态快速过滤，展开单只股票可查看条件、指标与失效风险。</div>
+        <div class="panel-subtitle mt-1">按优先级排序，触发止盈与买入观察排在最前；点击任意一行展开买入检查、止盈跟踪与技术指标，点股票名进入个股详情页。</div>
       </div>
       <div id="combat-meta" class="panel-subtitle">等待计算</div>
     </div>
-    <div class="combat-toolbar mb-3" aria-label="作战信号筛选">
-      <button id="combat-filter-all" data-combat-filter class="btn btn-sm btn-outline-secondary active" type="button">全部</button>
-      <button id="combat-filter-add" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">买入观察</button>
-      <button id="combat-filter-exit" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">触发止盈</button>
-      <button id="combat-filter-watch" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">观望</button>
-      <button id="combat-filter-risk" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">风险拦截</button>
-      <button id="combat-filter-data" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">数据不足</button>
-    </div>
-    <div id="combat-list" class="combat-grid">
-      <div class="empty-state">进入此页后按需加载日K，减少不必要的行情请求。</div>
+    <div class="combat-table-scroll" tabindex="0" role="region" aria-label="作战清单表格，可横向滚动查看全部列">
+      <table class="table table-sm table-hover align-middle mb-0 combat-table" id="combat-table">
+        <caption class="visually-hidden">作战清单：名称、现价、涨跌、信号、买入评分、入场价、重仓价、止盈状态、止盈线、日K；点击任意行展开详情</caption>
+        <thead>
+          <tr>
+            <th scope="col">名称</th>
+            <th scope="col">现价</th>
+            <th scope="col">信号</th>
+            <th scope="col">买入</th>
+            <th scope="col">入场</th>
+            <th scope="col">重仓</th>
+            <th scope="col">止盈状态</th>
+            <th scope="col">止盈线</th>
+            <th scope="col">日K</th>
+          </tr>
+        </thead>
+        <tbody id="combat-list">
+          <tr><td colspan="9"><div class="empty-state">进入此页后按需加载日K，减少不必要的行情请求。</div></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
   <aside class="combat-footnote">纪律说明：买入信号只在现价低于计划入场价时生成，且必须通过纪律门槛与四项评分；止盈规则为「近 60 日最低收盘 ×1.2 启动、最高收盘回撤 5% 离场」，不需要成本价，也不设止损。卖出后 60 个交易日内不给买回提示。所有信号均为辅助参考，不构成投资建议。</aside>
@@ -265,7 +266,7 @@
 <script src="static-quotes.js"></script>
 <script src="indicators.js"></script>
 <script src="trade-signals.js?v=20261029-1400-exitrules"></script>
-<script src="combat-center.js?v=20261029-1530-flatcard"></script>
+<script src="combat-center.js?v=20261029-1700-detailwidth"></script>
 <script src="stock-dashboard.js"></script>
 
 <script src="password-gate.js"></script>

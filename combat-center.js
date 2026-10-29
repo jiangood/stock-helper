@@ -1,7 +1,8 @@
 /* Home trading combat center: manual decision support only, never submits orders. */
 (function (root) {
   'use strict';
-  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, filter: 'all', error: '' };
+  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, error: '', expanded: {} };
+  var COLUMN_COUNT = 9;
   var $ = function (id) { return root.document.getElementById(id); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
   function money(v) { return v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v)) ? Number(v).toFixed(2) : '—'; }
@@ -50,6 +51,52 @@
       'exit-closed': 'combat-neutral'
     })[kind] || 'combat-neutral';
   }
+  // 默认排序：可执行的操作放前面（止盈触发 → 买入观察 → 止盈跟踪 → 观望/未启动 → 风险拦截 → 数据不足）
+  function priorityOf(r) {
+    var kind = r && r.primary && r.primary.kind;
+    if (kind === 'exit') return 0;
+    if (kind === 'add-ready') return 1;
+    if (kind === 'add-watch') return 2;
+    if (kind === 'exit-armed') return 3;
+    if (kind === 'risk') return 5;
+    if (kind === 'data') return 6;
+    return 4;
+  }
+  function buyScoreOf(r) {
+    var add = r && r.add;
+    return add && add.dataReady && add.inZone ? (add.score || 0) : -1;
+  }
+  function buyGapOf(r) {
+    var add = r && r.add;
+    return add && Number.isFinite(Number(add.gapPct)) ? Number(add.gapPct) : null;
+  }
+  // 同一优先级内按状态归块，避免「观望 / 已离场」交替出现
+  function statusTextOf(r) {
+    return String((r && r.primary && r.primary.status) || '');
+  }
+  function statusRankOf(r) {
+    var st = statusTextOf(r);
+    if (st.indexOf('观望') === 0) return 0;
+    if (st.indexOf('高于入场价') === 0) return 1;
+    if (st.indexOf('离场冷却') === 0) return 2;
+    if (st.indexOf('未配置入场价') === 0) return 3;
+    return 4;
+  }
+  function sortByPriority(rows) {
+    return rows.slice().sort(function (a, b) {
+      var d = priorityOf(a) - priorityOf(b);
+      if (d) return d;
+      var k = statusRankOf(a) - statusRankOf(b);
+      if (k) return k;
+      var t = statusTextOf(a).localeCompare(statusTextOf(b), 'zh-CN');
+      if (t) return t;
+      var s = buyScoreOf(b) - buyScoreOf(a);
+      if (s) return s;
+      var ga = buyGapOf(a), gb = buyGapOf(b);
+      if (ga !== null && gb !== null && ga !== gb) return ga - gb;
+      return String((a.stock && a.stock.name) || '').localeCompare(String((b.stock && b.stock.name) || ''), 'zh-CN');
+    });
+  }
   function mergeUniverse() {
     var map = new Map();
     state.stocks.filter(function (s) { return s && s.pool !== false && s.code; }).forEach(function (s) { map.set(codeOf(s.code), Object.assign({}, s, { inPool: true })); });
@@ -70,18 +117,14 @@
     var summary = $('combat-summary'), list = $('combat-list'), meta = $('combat-meta');
     if (!summary || !list || !meta) return;
     var rows = state.rows;
-    // 概览数字与筛选器含义保持一致，避免同一状态两种叫法。
-    var matches = function (r, filter) {
-      if (filter === 'add') return r.primary.kind === 'add-ready' || r.primary.kind === 'add-watch';
-      if (filter === 'exit') return r.primary.kind === 'exit';
-      if (filter === 'watch') return r.primary.kind === 'watch';
-      if (filter === 'risk') return r.primary.kind === 'risk';
-      if (filter === 'data') return r.primary.kind === 'data';
-      return true;
-    };
     var counts = { add: 0, exit: 0, watch: 0, risk: 0, data: 0, tracking: 0, cooling: 0 };
     rows.forEach(function (r) {
-      ['add', 'exit', 'watch', 'risk', 'data'].forEach(function (key) { if (matches(r, key)) counts[key]++; });
+      var kind = r.primary && r.primary.kind;
+      if (kind === 'add-ready' || kind === 'add-watch') counts.add++;
+      else if (kind === 'exit') counts.exit++;
+      else if (kind === 'risk') counts.risk++;
+      else if (kind === 'data') counts.data++;
+      else counts.watch++;
       if (r.exit && r.exit.state === '跟踪中') counts.tracking++;
       if (r.exit && r.exit.cooldownDays > 0) counts.cooling++;
     });
@@ -99,19 +142,27 @@
     meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只股票池标的 · 买入观察 ' + counts.add
       + ' · 触发止盈 ' + counts.exit + ' · 跟踪中 ' + counts.tracking + ' · 冷却 ' + counts.cooling
       + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
-    var filtered = rows.filter(function (r) { return matches(r, state.filter); });
-    if (!filtered.length) {
-      list.innerHTML = '<div class="empty-state">' + (state.loading ? '正在分析…' : state.error ? '作战数据读取失败：' + esc(state.error) : '当前筛选下没有标的。可切换筛选或刷新。') + '</div>';
+    var ordered = sortByPriority(rows);
+    if (!ordered.length) {
+      list.innerHTML = '<tr><td colspan="' + COLUMN_COUNT + '"><div class="empty-state">' + (state.loading ? '正在分析…' : state.error ? '作战数据读取失败：' + esc(state.error) : '暂无可展示的标的。') + '</div></td></tr>';
       return;
     }
-    list.innerHTML = filtered.map(function (r) {
+    list.innerHTML = ordered.map(function (r) {
       var s = r.stock, p = r.quote && Number(r.quote.price) > 0 ? Number(r.quote.price) : null;
       var add = r.add, exit = r.exit;
       var cooling = !!(exit && exit.cooldownDays > 0);
+      var code = codeOf(s.code);
+      var open = !!state.expanded[code];
+      var chg = r.quote && Number.isFinite(Number(r.quote.todayChange)) ? Number(r.quote.todayChange) : null;
+      var scoreReady = !!(add && add.dataReady && add.inZone && !cooling);
+      var score = scoreReady ? (add.score || 0) : null;
+      var scoreText = score === null ? '—' : score + '/' + (add.scoreMax || 4);
+      var scoreClass = score === null ? 'combat-data-text' : score >= 3 ? 'combat-good-text' : score === 2 ? 'combat-warn-text' : 'combat-risk-text';
+      var scoreSub = score !== null ? '' : cooling ? '冷却期' : !add || !add.dataReady ? '日K不足' : !add.inZone ? '未到入场' : '';
+      var entryVal = Number(s.entry) > 0 ? Number(s.entry) : null;
+      var entryGap = p !== null && entryVal ? (p / entryVal - 1) * 100 : null;
       var badges = '<span class="combat-badge ' + statusClass(r.primary.kind) + '">' + esc(r.primary.status) + '</span>';
-      if (add && add.dataReady && add.inZone && !cooling) {
-        badges += '<span class="combat-badge ' + statusClass(add.kind) + '">买入评分 ' + (add.score || 0) + '/' + (add.scoreMax || 4) + '</span>';
-      }
+      if (scoreReady) badges += '<span class="combat-badge ' + statusClass(add.kind) + '">买入评分 ' + scoreText + '</span>';
       if (exit && exit.state === '已触发') {
         badges += '<span class="combat-badge combat-exit">止盈 · 已触发</span>';
       } else if (exit && exit.state === '跟踪中') {
@@ -170,7 +221,7 @@
 
       var ind = r.indicators || {};
       var macd = ind.macd;
-      var indicatorPanel = '<details class="combat-indicator-details"><summary class="combat-section-title">技术指标详情（点击展开）</summary><div class="combat-indicator-grid mt-2">' +
+      var indicatorPanel = '<details class="combat-indicator-details" open><summary class="combat-section-title">技术指标 · RSI / MACD / MFI / 均线 / OBV</summary><div class="combat-indicator-grid mt-2">' +
         '<div class="combat-indicator"><div class="mini-label">RSI(14) · 相对强弱</div><strong>' + (ind.rsi == null ? '—' : Number(ind.rsi).toFixed(1)) + '</strong><span>' + esc(ind.rsiState || '数据不足') + ' · ' + esc(ind.rsiTrend || '—') + '</span><small>比较近期平均涨幅与平均跌幅；下跌趋势需 ≤30，回调需 25–35，上涨需 ≤45。</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">MACD(12,26,9) · 趋势动能</div><strong>' + (macd ? 'DIF ' + Number(macd.dif).toFixed(3) : '—') + '</strong><span>' + esc(ind.macdState || '数据不足') + ' · ' + esc(ind.macdCross || '—') + '</span><small>柱体改善即算动能项通过；未改善则看 OBV 是否创新低。</small><small>' + (macd ? 'DEA ' + Number(macd.dea).toFixed(3) + ' · 柱 ' + Number(macd.histogram).toFixed(3) : '历史K线不足，无法计算') + '</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">MFI(14) · 资金流量</div><strong>' + (ind.mfi == null ? '—' : Number(ind.mfi).toFixed(1)) + '</strong><span>' + (ind.mfi == null ? '数据不足' : ind.mfi < 20 ? '低位（下跌趋势中否决）' : ind.mfi > 80 ? '高位' : '中间区间') + '</span><small>下跌趋势要求 ≥30（资金未持续流出）；回调/上涨要求 &lt;25。</small></div>' +
@@ -183,8 +234,66 @@
 
       var quoteLabel = quoteTime(r.quote);
       var reviewed = planReviewLabel(s);
-      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · 股票池 / 自选</div><div class="mini-label">' + esc(quoteLabel) + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + '<details class="combat-note-details"><summary>' + esc(reviewed) + '</summary><p>计划价需结合最新基本面、商品周期与公司经营假设复核后再使用。</p></details></div>' + buySection + exitSection + indicatorPanel + invalidation + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span></div></article>';
+      var detailId = 'combat-detail-' + code;
+      var detail = '<div class="combat-detail" id="' + detailId + '">'
+        + '<div class="combat-detail-meta">' + badges
+        + '<span>' + esc(plan || '未配置计划价') + '</span>'
+        + '<span>' + esc(quoteLabel) + '</span>'
+        + '<span>' + esc(reviewed) + '</span></div>'
+        + buySection + exitSection + indicatorPanel + invalidation
+        + '<div class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + ' · 计划价需结合最新基本面与商品周期复核</div>'
+        + '</div>';
+      var name = esc(s.name || s.code);
+      return '<tr class="combat-row' + (open ? ' is-open' : '') + '" data-code="' + esc(code) + '">'
+        + '<td><button type="button" class="combat-toggle" data-combat-toggle="' + esc(code) + '" data-name="' + name + '" aria-expanded="' + (open ? 'true' : 'false') + '" aria-controls="' + detailId + '" aria-label="' + (open ? '收起' : '展开') + name + '详情"><span class="combat-caret" aria-hidden="true">▸</span></button>'
+        + '<a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + name + '</a>'
+        + '<span class="combat-cell-sub">' + esc(s.code) + '</span></td>'
+        + '<td class="price-cell">' + (p === null ? '—' : money(p)) + (chg === null ? '' : '<span class="combat-cell-sub ' + (chg > 0 ? 'text-up' : chg < 0 ? 'text-down' : '') + '">' + pct(chg) + '</span>') + '</td>'
+        + '<td><span class="combat-signal ' + statusClass(r.primary.kind) + '-text">' + esc(r.primary.status) + '</span></td>'
+        + '<td><span class="' + scoreClass + '">' + scoreText + '</span>' + (scoreSub ? '<span class="combat-cell-sub">' + scoreSub + '</span>' : '') + '</td>'
+        + '<td>' + money(entryVal) + (entryGap === null ? '' : '<span class="combat-cell-sub ' + (entryGap > 0 ? 'text-up' : entryGap < 0 ? 'text-down' : '') + '">' + pct(entryGap) + '</span>') + '</td>'
+        + '<td>' + (Number(s.heavy) > 0 ? money(s.heavy) : '—') + '</td>'
+        + '<td>' + esc(exit && exit.state ? exit.state : '—') + '</td>'
+        + '<td>' + (exit ? money(exit.armed ? exit.exitLine : exit.armLine) : '—') + '</td>'
+        + '<td>' + (r.indicators && r.indicators.bars ? r.indicators.bars + ' 根' : '—') + '</td>'
+        + '</tr>'
+        + '<tr class="combat-detail-row"' + (open ? '' : ' hidden') + '><td colspan="' + COLUMN_COUNT + '">' + detail + '</td></tr>';
     }).join('');
+    applyExpanded();
+    sizeDetailCells();
+  }
+  // 展开区随可视宽度自适应，横向滚动时仍完整可读
+  function sizeDetailCells() {
+    if (!root.document || typeof root.document.querySelector !== 'function') return;
+    var scroll = root.document.querySelector('.combat-table-scroll');
+    var list = $('combat-list');
+    if (!scroll || !list || !list.querySelectorAll) return;
+    var width = scroll.clientWidth || 0;
+    if (!width) return;
+    Array.prototype.forEach.call(list.querySelectorAll('.combat-detail'), function (el) {
+      el.style.width = width + 'px';
+    });
+  }
+  function toggleRow(code) {
+    if (!code) return;
+    if (state.expanded[code]) delete state.expanded[code];
+    else state.expanded[code] = true;
+    applyExpanded();
+  }
+  function applyExpanded() {
+    var list = $('combat-list');
+    if (!list || !list.querySelectorAll) return;
+    Array.prototype.forEach.call(list.querySelectorAll('.combat-row'), function (row) {
+      var on = !!state.expanded[row.getAttribute('data-code')];
+      row.classList.toggle('is-open', on);
+      var btn = row.querySelector('[data-combat-toggle]');
+      if (btn) {
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', (on ? '收起' : '展开') + (btn.getAttribute('data-name') || '') + '详情');
+      }
+      var detail = row.nextElementSibling;
+      if (detail && detail.className && String(detail.className).indexOf('combat-detail-row') >= 0) detail.hidden = !on;
+    });
   }
   async function calculateOne(stock) {
     var code = codeOf(stock.code), quote = quoteFor(code), price = quote && Number(quote.price) > 0 ? Number(quote.price) : null;
@@ -296,25 +405,23 @@
     render();
   }
   function ensureUi() {
-    ['combat-filter-all','combat-filter-add','combat-filter-exit','combat-filter-watch','combat-filter-risk','combat-filter-data'].forEach(function (id) {
-      var el = $(id); if (!el || el.dataset.bound) return;
-      el.dataset.bound = '1';
-      el.addEventListener('click', function () {
-        state.filter = id === 'combat-filter-all' ? 'all' : id.replace('combat-filter-', '');
-        root.document.querySelectorAll('[data-combat-filter]').forEach(function (b) {
-          var active = b.id === id;
-          b.classList.toggle('active', active);
-          b.setAttribute('aria-pressed', String(active));
-        });
-        render();
+    var list = $('combat-list');
+    if (list && !list.dataset.combatExpandBound) {
+      list.dataset.combatExpandBound = '1';
+      list.addEventListener('click', function (event) {
+        var target = event.target;
+        if (!target || !target.closest) return;
+        if (target.closest('a, summary')) return;
+        var toggle = target.closest('[data-combat-toggle]');
+        var row = toggle ? toggle.closest('tr') : target.closest('tr.combat-row');
+        if (!row || !row.getAttribute) return;
+        toggleRow(row.getAttribute('data-code'));
       });
-    });
-    // 初始按下状态与 state.filter 对齐
-    if (!root.document.querySelectorAll) return;
-    var activeId = state.filter === 'all' ? 'combat-filter-all' : 'combat-filter-' + state.filter;
-    root.document.querySelectorAll('[data-combat-filter]').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(b.id === activeId));
-    });
+    }
+    if (root.addEventListener && !state.resizeBound) {
+      state.resizeBound = true;
+      root.addEventListener('resize', sizeDetailCells);
+    }
   }
   function init(stocks, prices, client) {
 

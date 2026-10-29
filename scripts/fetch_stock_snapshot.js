@@ -72,6 +72,19 @@ function isoWeekKey(date = new Date()) {
 }
 
 async function main() {
+  // Scheduled and code-push runs must not publish intraday snapshots.
+  // Manual workflow_dispatch is an explicit operator override for backfills.
+  if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch') {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Shanghai', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(new Date()).map(part => [part.type, part.value]));
+    const minutes = Number(parts.hour) * 60 + Number(parts.minute);
+    if (parts.weekday === 'Sat' || parts.weekday === 'Sun' || minutes < 15 * 60 + 15) {
+      console.log('Skipping stock collection before the China close window; the existing cache remains untouched.');
+      return;
+    }
+  }
+
   const stocks = readJson(path.join(DATA, 'stocks.json'), []);
   const holdings = readJson(path.join(DATA, 'holdings.json'), { holdings: [] });
   if (!Array.isArray(stocks) || stocks.length === 0) throw new Error('data/stocks.json is missing or invalid');

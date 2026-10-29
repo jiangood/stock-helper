@@ -50,3 +50,9 @@ test('entry-zone guard suppresses add recommendation above entry price', async (
 test('entry-zone guard still evaluates add recommendation at or below entry price', async () => {
   assert.equal(await runCombat(9.5), 1);
 });
+
+test('render does not reference removed risk-budget or review panels', () => {
+  const source = fs.readFileSync(require.resolve('../combat-center.js'), 'utf8');
+  assert.equal(source.includes('riskPanel'), false);
+  assert.equal(source.includes('reviewPanel'), false);
+});

@@ -577,15 +577,17 @@ function applyFilter() {
 // 页面导航由 index.html / combat.html / market.html 的独立 URL 负责，不再在单页内切换 tabs。
 
 (async function init() {
+  const page = document.body.dataset.page || 'stocks';
   syncHeaderHeight();
   bindSortButtons();
   bindScrollHint();
   await loadStocks();
-  if (window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
+  if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);
-  if (window.StockCombat) window.StockCombat.init(STOCKS, priceData, quotes);
-  const page = document.body.dataset.page || 'stocks';
-  if (page === 'combat' && window.StockCombat) window.StockCombat.onTab('combat');
+  if (page === 'combat' && window.StockCombat) {
+    window.StockCombat.init(STOCKS, priceData, quotes);
+    window.StockCombat.onTab('combat');
+  }
   if (page === 'market') {
     if (window.StockBusiness) window.StockBusiness.onTab('market');
     if (window.StockGlobalAssets) window.StockGlobalAssets.onTab('market');

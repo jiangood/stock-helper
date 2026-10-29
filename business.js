@@ -398,10 +398,14 @@
     stocks = Array.isArray(stocksArg) ? stocksArg : [];
     quotes = quoteArg || {};
     quoteClient = quoteClientArg || null;
-    fetchMarketIndices();
     renderOpportunity();
+  }
+  // 只有进入行情页才拉取指数与商品数据，避免自选/作战页的无效请求。
+  function onTab(target) {
+    if (target !== 'market') return;
+    renderOpportunity();
+    fetchMarketIndices();
     fetchBusinessData();
   }
-  function onTab(target) { if(target==='market')renderBusiness(); if(target==='opportunity'){renderOpportunity();fetchMarketIndices();} }
   global.StockBusiness={init:init,onTab:onTab,renderOpportunity:renderOpportunity,renderBusiness:renderBusiness};
 })(window);

@@ -231,6 +231,5 @@
   function init() {
     ensureDashboard();
   }
-  init();
   global.StockGlobalAssets = { init: init, load: load, onTab: onTab };
 })(window);

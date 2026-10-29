@@ -9,7 +9,7 @@ let sortState = { col: null, dir: 1 };
 
 const $ = id => document.getElementById(id);
 
-// 行情 SDK（接口细节见 quotes.js）
+// 行情从 static-quotes.js 读取同源静态缓存，不在浏览器访问外部行情源
 const quotes = new StockQuotes.Client({
   timeout: 8000,
   retries: 1,
@@ -313,7 +313,7 @@ function esc(s) {
 }
 
 // ============================================================
-// 行情（通过 quotes.js SDK 获取）
+// 行情（通过同源静态缓存获取）
 // ============================================================
 async function loadPrices(manual) {
   if (!STOCKS.length) return;
@@ -327,7 +327,7 @@ async function loadPrices(manual) {
     Object.assign(priceData, data);
 
     applyFilter();
-    if (manual) showToast('行情已刷新', 'success');
+    if (manual) showToast('已重新读取静态行情缓存', 'success');
   } catch (e) {
     console.error('获取行情失败:', e);
     showToast('行情获取失败：' + e.message);

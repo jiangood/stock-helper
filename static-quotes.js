@@ -144,8 +144,8 @@
         } else if (period === 'month') {
           bars = cache.monthlyAdjusted && Array.isArray(cache.monthlyAdjusted.bars) ? cache.monthlyAdjusted.bars : [];
         } else {
-          const value = cache.dailyAdjusted;
-          bars = weeklyBars(value && Array.isArray(value.bars) ? value.bars : []);
+          const value = cache.weeklyAdjusted;
+          bars = value && Array.isArray(value.bars) ? value.bars : [];
         }
       }
       const count = Math.min(1000, Math.max(10, Number(opts.count) || 180));

@@ -41,7 +41,13 @@ function buildPayload(stocks, options) {
 
 function writePayload(file, payload) {
   const previous = readJson(file, null);
-  if (previous && JSON.stringify(previous) === JSON.stringify(payload)) return false;
+  const comparable = value => {
+    if (!value || typeof value !== 'object') return value;
+    const copy = JSON.parse(JSON.stringify(value));
+    delete copy.updatedAt;
+    return copy;
+  };
+  if (previous && JSON.stringify(comparable(previous)) === JSON.stringify(comparable(payload))) return false;
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const temp = file + '.tmp';
   fs.writeFileSync(temp, JSON.stringify(payload) + '\n', 'utf8');

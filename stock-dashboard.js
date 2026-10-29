@@ -533,24 +533,8 @@ function scheduleRefresh() {
   }, REFRESH_INTERVAL);
 }
 
-// ============================================================
-// 主题
-// ============================================================
-function toggleTheme() {
-  const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-bs-theme', next);
-  const themeButton = $('theme-btn');
-  if (themeButton) themeButton.textContent = next === 'dark' ? '☀️' : '🌙';
-  localStorage.setItem('stock-theme', next);
-}
+// Theme switching removed; the dashboard uses dark mode by default.
 
-(function initTheme() {
-  if (localStorage.getItem('stock-theme') === 'dark') {
-    document.documentElement.setAttribute('data-bs-theme', 'dark');
-    const themeButton = $('theme-btn');
-    if (themeButton) themeButton.textContent = '☀️';
-  }
-})();
 
 // ============================================================
 // 启动

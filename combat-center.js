@@ -201,6 +201,35 @@
       return '<div class="col-6 col-xl"><div class="insight-card h-100"><div class="mini-label">' + esc(x[0]) + '</div><div class="fs-6 fw-bold">' + esc(x[1]) + '</div><div class="mini-label mt-1">' + esc(x[2]) + '</div></div></div>';
     }).join('');
   }
+  function summarizeReviews(reviews) {
+    var records = Object.keys(reviews || {}).map(function (code) {
+      var r = reviews[code] || {};
+      return { review: r, action: String(r.action || '未交易'), pnl: inputNumber(r.actualPnl) };
+    }).filter(function (x) { return !!x.review.savedAt; });
+    var trades = records.filter(function (x) { return x.action !== '未交易'; });
+    var pnlRecords = trades.filter(function (x) { return x.pnl !== null; });
+    var pnlTotal = pnlRecords.reduce(function (sum, x) { return sum + x.pnl; }, 0);
+    var adherence = trades.filter(function (x) { return x.review.stopAdherence === '遵守' || x.review.stopAdherence === '未遵守'; });
+    var adhered = adherence.filter(function (x) { return x.review.stopAdherence === '遵守'; }).length;
+    return { records: records.length, trades: trades.length, pnlCount: pnlRecords.length, pnlTotal: pnlTotal,
+      pnlAverage: pnlRecords.length ? pnlTotal / pnlRecords.length : null, adherenceCount: adherence.length,
+      adherenceRate: adherence.length ? adhered / adherence.length * 100 : null };
+  }
+  function renderReviewMetrics() {
+    var node = $('combat-review-metrics');
+    if (!node) return;
+    var s = summarizeReviews(state.reviews);
+    var cards = [
+      ['已保存复盘', s.records + ' 条', '按标的汇总，保存在当前浏览器'],
+      ['已记录交易', s.trades + ' 笔', '操作不为“未交易”的记录'],
+      ['实际盈亏合计', s.pnlCount ? (s.pnlTotal > 0 ? '+' : '') + money(s.pnlTotal) + ' 元' : '待填写', s.pnlCount ? '已填写盈亏 ' + s.pnlCount + ' 笔' : '只统计手工填写的实际盈亏'],
+      ['平均单笔盈亏', s.pnlCount ? (s.pnlAverage > 0 ? '+' : '') + money(s.pnlAverage) + ' 元' : '待填写', '仅按有实际盈亏数据的交易计算'],
+      ['止损纪律执行率', s.adherenceRate === null ? '待记录' : s.adherenceRate.toFixed(1) + '%', s.adherenceCount ? '已记录是否遵守止损 ' + s.adherenceCount + ' 笔' : '不适用/未填写不纳入分母']
+    ];
+    node.innerHTML = cards.map(function (x) {
+      return '<div class="col-6 col-xl"><div class="insight-card h-100"><div class="mini-label">' + esc(x[0]) + '</div><div class="fs-6 fw-bold">' + esc(x[1]) + '</div><div class="mini-label mt-1">' + esc(x[2]) + '</div></div></div>';
+    }).join('');
+  }
   function planChecks(stock, quote, primary, eligible) {
     var checks = [], raw = quote && Number(quote.time), ts = raw > 0 ? new Date(raw < 1000000000000 ? raw * 1000 : raw).getTime() : NaN;
     var quoteFresh = Number.isFinite(ts) && Date.now() - ts <= 5 * 86400000 && Date.now() - ts >= -5 * 60000;

@@ -123,7 +123,6 @@
     var primary = { status: '观望', kind: 'watch', reasons: [inBuyZone ? '现价进入计划价区，但触价不等于买入信号' : nearPlan ? '接近计划价区，等待技术条件确认' : '现价未到计划价区，暂不追价'] };
     if ((holding || nearPlan || inBuyZone) && root.StockTradeSignals) {
       // Only calculate/show add signals after price reaches the configured entry/heavy plan level.
-      // Holdings can still receive T signals above the buy zone, but must not be recommended for adding.
       if (inBuyZone) {
         // Same five-factor scoring for all candidates.
         add = root.StockTradeSignals.evaluateAdd(price, Object.assign({}, stock, { inHolding: !!holding }), bars);

@@ -190,6 +190,13 @@
   .combat-plan { color:var(--bs-secondary-color); font-size:10.5px; border-top:1px solid var(--bs-border-color); padding-top:7px; }
   .combat-indicator-details { border-top:1px solid var(--bs-border-color); padding-top:9px; font-size:11px; }
   .combat-indicator-details > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0 6px; }
+  .combat-review-details, .combat-invalidation { border:1px solid var(--bs-border-color); border-radius:9px; padding:9px 10px; font-size:11px; background:var(--bs-tertiary-bg); margin-top:8px; }
+  .combat-review-details > summary { cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 0; }
+  .combat-review-details > summary::-webkit-details-marker { display:none; }
+  .combat-review-details > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
+  .combat-review-details[open] > summary::after { content:'−'; }
+  .combat-invalidation li { margin-bottom:4px; line-height:1.5; }
+  .combat-invalidation li:last-child { margin-bottom:0; }
   .combat-indicator-details > summary::-webkit-details-marker { display:none; }
   .combat-indicator-details > summary::after { content:'＋'; color:var(--bs-secondary-color); font-size:14px; }
   .combat-indicator-details[open] > summary::after { content:'−'; }

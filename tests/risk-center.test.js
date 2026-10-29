@@ -15,8 +15,8 @@ test('calculates market value, P&L, portfolio weight and target scenarios', () =
   assert.ok(Math.abs(row.pnlPct - 100 / 3) < 1e-10);
   assert.equal(row.target1Gain, 200);
   assert.equal(row.target2Gain, 400);
-  assert.equal(row.doublePrice, 12);
-  assert.equal(row.doubleReached, false);
+  assert.equal(row.doublePrice, undefined);
+  assert.equal(row.doubleReached, undefined);
 });
 
 test('stock-pool targets are used automatically and missing targets remain unknown', () => {

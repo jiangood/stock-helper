@@ -14,14 +14,13 @@
     var costValue = validQuantity && validCost ? quantity * cost : null;
     var pnl = marketValue !== null && costValue !== null ? marketValue - costValue : null;
     var pnlPct = pnl !== null && costValue > 0 ? pnl / costValue * 100 : null;
-    var doublePrice = validCost ? cost * 2 : null;
     var target1 = num(plan.tp1), target2 = num(plan.tp2);
     function targetGain(target) { return validPrice && validQuantity && target !== null && target > price ? (target - price) * quantity : null; }
     return {
       code: String(holding.code || '').toLowerCase(), name: plan.name || holding.code || '未命名',
       quantity: validQuantity ? quantity : null, cost: validCost ? cost : null, price: validPrice ? price : null,
       quoteTime: quote.time || null, marketValue: marketValue, costValue: costValue, pnl: pnl, pnlPct: pnlPct,
-      weightOfStocks: null, doublePrice: doublePrice, doubleReached: validPrice && doublePrice !== null && price >= doublePrice,
+      weightOfStocks: null,
       target1: target1, target2: target2, target1Gain: targetGain(target1), target2Gain: targetGain(target2),
       target1Reached: validPrice && target1 !== null && price >= target1, target2Reached: validPrice && target2 !== null && price >= target2
     };
@@ -132,7 +131,6 @@
         + '<div class="d-flex flex-wrap justify-content-between gap-2 mt-2"><div><div class="mini-label">持仓市值</div><div class="fs-5 fw-bold">' + (r.marketValue === null ? '—' : '¥' + money(r.marketValue)) + '</div></div><div><div class="mini-label">持仓盈亏</div><div class="fw-semibold ' + (r.pnl > 0 ? 'text-up' : r.pnl < 0 ? 'text-down' : 'text-body-secondary') + '">' + (r.pnl === null ? '—' : (r.pnl > 0 ? '+' : '') + '¥' + money(r.pnl) + ' (' + pct(r.pnlPct) + ')') + '</div></div><div><div class="mini-label">股票仓位</div><div class="fw-semibold">' + pct(r.weightOfStocks) + '</div></div></div>'
         + '<div class="row g-2 mt-1"><div class="col-6"><div class="mini-label">止盈目标 1 · 股票池</div><div class="fw-semibold">' + (r.target1 === null ? '未设置' : money(r.target1)) + '</div></div>'
         + '<div class="col-6"><div class="mini-label">止盈目标 2 · 股票池</div><div class="fw-semibold">' + (r.target2 === null ? '未设置' : money(r.target2)) + '</div></div></div>'
-        + '<div class="mini-label mt-2">成本翻倍参考价：' + (r.doublePrice === null ? '—' : money(r.doublePrice)) + ' · ' + (r.doubleReached ? '已到成本翻倍参考价' : '未到成本翻倍参考价') + '</div>'
         + '<div class="mini-label mt-2">止盈1：' + esc(targetDetail(r.target1, r.target1Gain, r.target1Reached)) + ' · 止盈2：' + esc(targetDetail(r.target2, r.target2Gain, r.target2Reached)) + '</div></article>';
     }).join('');
   }

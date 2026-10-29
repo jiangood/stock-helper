@@ -201,12 +201,9 @@
       if (r.exit && r.exit.cooldownDays > 0) counts.cooling++;
     });
     summary.innerHTML = [
-      ['买入观察', counts.add, '现价低于入场价且评分≥2', 'combat-good'],
-      ['触发止盈', counts.exit, '近 3 日触发，次日确认', 'combat-exit'],
-      ['止盈跟踪中', counts.tracking, '已启动，未到离场线', 'combat-armed'],
-      ['离场冷却', counts.cooling, '60 个交易日内不买回', 'combat-neutral'],
-      ['风险拦截', counts.risk, '纪律门槛优先', 'combat-risk'],
-      ['数据不足', counts.data, '不生成确定信号', 'combat-data']
+      ['买入观察', counts.add, '低于计划入场价，评分满足条件', 'combat-good'],
+      ['触发止盈', counts.exit, '收盘确认，次日复核', 'combat-exit'],
+      ['止盈跟踪中', counts.tracking, '已启动，尚未触及离场线', 'combat-armed']
     ].map(function (x) {
       return '<div class="col-6 col-lg-4 col-xl-2"><div class="insight-card h-100"><div class="mini-label">' + x[0]
         + '</div><div class="combat-metric ' + x[3] + '-text">' + x[1] + '</div><div class="mini-label">' + x[2] + '</div></div></div>';
@@ -295,7 +292,7 @@
 
       var ind = r.indicators || {};
       var macd = ind.macd;
-      var indicatorPanel = '<details class="combat-indicator-details" open><summary class="combat-section-title">技术指标 · RSI / MACD / MFI / 均线 / OBV</summary><div class="combat-indicator-grid mt-2">' +
+      var indicatorPanel = '<details class="combat-indicator-details"><summary class="combat-section-title">技术指标 · RSI / MACD / MFI / 均线 / OBV</summary><div class="combat-indicator-grid mt-2">' +
         '<div class="combat-indicator"><div class="mini-label">RSI(14) · 相对强弱</div><strong>' + (ind.rsi == null ? '—' : Number(ind.rsi).toFixed(1)) + '</strong><span>' + esc(ind.rsiState || '数据不足') + ' · ' + esc(ind.rsiTrend || '—') + '</span><small>比较近期平均涨幅与平均跌幅；下跌趋势需 ≤30，回调需 25–35，上涨需 ≤45。</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">MACD(12,26,9) · 趋势动能</div><strong>' + (macd ? 'DIF ' + Number(macd.dif).toFixed(3) : '—') + '</strong><span>' + esc(ind.macdState || '数据不足') + ' · ' + esc(ind.macdCross || '—') + '</span><small>柱体改善即算动能项通过；未改善则看 OBV 是否创新低。</small><small>' + (macd ? 'DEA ' + Number(macd.dea).toFixed(3) + ' · 柱 ' + Number(macd.histogram).toFixed(3) : '历史K线不足，无法计算') + '</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">MFI(14) · 资金流量</div><strong>' + (ind.mfi == null ? '—' : Number(ind.mfi).toFixed(1)) + '</strong><span>' + (ind.mfi == null ? '数据不足' : ind.mfi < 20 ? '低位（下跌趋势中否决）' : ind.mfi > 80 ? '高位' : '中间区间') + '</span><small>下跌趋势要求 ≥30（资金未持续流出）；回调/上涨要求 &lt;25。</small></div>' +

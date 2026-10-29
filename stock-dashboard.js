@@ -238,8 +238,8 @@ function buildRow(stock) {
   return `
     <td>${nameHtml}</td>
     <td>${priceHtml}</td>
-    <td>${entryHtml}${entryDiff}</td>
     <td>${heavyHtml}${heavyDiff}</td>
+    <td>${entryHtml}${entryDiff}</td>
     <td>${prevChgHtml}</td>
     <td>${tp1Html}</td>
     <td>${tp2Html}</td>

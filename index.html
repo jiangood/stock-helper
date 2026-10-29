@@ -92,6 +92,10 @@
 
 <main id="stocks-pane" tabindex="-1" data-pane="stocks" class="app-pane container-fluid px-2 px-sm-3 py-1">
   <h1 class="visually-hidden">自选股票</h1>
+  <div id="page-loading" class="page-loading" role="status" aria-live="polite" aria-atomic="true" aria-busy="true">
+    <span class="loading-spinner" aria-hidden="true"></span>
+    <span data-loading-text>正在准备股票清单…</span>
+  </div>
   <div class="table-scroll-wrap">
   <div class="table-scroll" tabindex="0" role="region" aria-label="自选股票表，可横向滚动查看全部 16 列">
     <table class="table table-sm table-hover align-middle mb-0 stock-table" id="main-table">

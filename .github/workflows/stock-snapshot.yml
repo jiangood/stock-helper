@@ -41,7 +41,7 @@ jobs:
         run: node scripts/fetch_stock_snapshot.js
       - name: Commit changed snapshots only
         run: |
-          if git diff --quiet -- data/stock-quotes.json data/index-cache.json data/stock-cache; then
+          if [ -z "$(git status --porcelain -- data/stock-quotes.json data/index-cache.json data/stock-cache)" ]; then
             echo "No stock snapshot changes."
             exit 0
           fi

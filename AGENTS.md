@@ -10,8 +10,8 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 样式基于 Bootstrap 5（CDN），列表页共享样式在 `app.css`，页面只保留本页特有样式
   - 三个列表页各自只加载需要的脚本：自选页不加载图表库 / 作战 / 行情模块，行情数据只在行情页请求
   - 访问门禁：三个列表页共用 `password-gate.js` 前端弱校验（仅阻止普通访客，不是安全认证）；门禁显示时背景内容设为 `inert`，焦点限制在弹窗内
-  - 数据：`data/stocks.json`（静态基础数据） + `static-quotes.js`（浏览器只读同源缓存） + `data/stock-quotes.json` / `data/stock-cache/*.json`（Actions 生成的行情缓存）
-  - 功能：搜索（名称 / 代码 / 别名 / 分组 / 拼音首字母与全拼）、分组筛选、全列排序、明暗主题、每天由 GitHub Actions 在 A 股收盘后更新静态行情；浏览器不直接请求行情供应商，页面只读取同源缓存
+  - 数据：`data/stocks.json`（静态基础数据） + `static-quotes.js`（浏览器每次直接读取同源 JSON，不做缓存） + `data/stock-quotes.json` / `data/stock-cache/*.json`（Actions 生成的行情缓存）
+  - 功能：搜索（名称 / 代码 / 别名 / 分组 / 拼音首字母与全拼）、分组筛选、全列排序、明暗主题、每天由 GitHub Actions 在 A 股收盘后更新静态行情；浏览器不直接请求行情供应商，页面每次直接读取同源 JSON，不使用浏览器缓存
   - 无障碍：表头吸顶（固定标题行），表头排序是原生 `button` + `aria-sort`（Tab / Enter / Space 可用）；表格横向滚动区可聚焦（`role="region"`）并带右侧渐隐提示；搜索无结果时显示空状态与「清空筛选」；结果数量 `aria-live` 播报
   - 主题：手动选择写入 `localStorage['stock-theme']`，未选择时跟随系统；四个页面共用同一偏好
   - 表格 16 列（名称/价格/入场/重仓/昨日/止盈1/止盈2/年初价/市值/市盈率/市净率/股息率/纪律/评分/分组/别名）全部常显，窄屏靠横向滚动，不要再用 `d-none` 隐藏列
@@ -59,7 +59,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 - `pinyin.js` — 首页搜索拼音索引（浏览器 `window.Pinyin` / Node `require`）
   - `Pinyin.initials(str)` 首字母、`Pinyin.full(str)` 全拼、`Pinyin.syllable(char)` 单字读音
   - 字表覆盖 GB2312 一二级汉字 6763 字主读音，离线生成、无外部依赖；ü 记作 v（`lv`），检索同时兼容 `lu`
-- `static-quotes.js` — 浏览器端静态行情适配器，只读取同源 JSON；优先用 IndexedDB 缓存较大的历史数据，localStorage 作兼容回退；缓存不可用时不直接回源外部行情接口
+- `static-quotes.js` — 浏览器端静态行情适配器，每次直接读取同源 JSON，使用 `cache: 'no-store'`；不使用 IndexedDB、localStorage、内存缓存或后台刷新队列；不直接回源外部行情接口
 - `quotes.js` — GitHub Actions 采集端使用的行情 SDK，不由网页直接加载
   - 数据源：东方财富与腾讯财经，多源自动降级；仅由 Actions 采集脚本调用
   - 用法：`new StockQuotes.Client({ timeout, cacheTTL }).fetch(['sz002408', '600519'])`，返回 `price/prevClose/change/todayChange/pe/pb/totalCap/floatCap/divYield`

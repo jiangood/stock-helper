@@ -24,6 +24,16 @@
 <meta name="theme-color" content="#2563eb">
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
+
+<style>
+  .market-extra-section { border-top: 1px solid var(--bs-border-color); padding-top: 10px; }
+  .market-extra-summary { display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; list-style:none; font-size:14px; font-weight:700; padding:5px 2px; }
+  .market-extra-summary::-webkit-details-marker { display:none; }
+  .market-extra-summary::after { content:"＋"; color:var(--bs-secondary-color); font-size:18px; font-weight:400; }
+  .market-extra-section[open] > .market-extra-summary::after { content:"−"; }
+  #brief-market-time { font-size:11px; color:var(--bs-secondary-color); }
+  @media (max-width:575.98px) { .market-extra-summary { min-height:42px; } }
+</style>
 </head>
 <body class="bg-body-tertiary" data-page="market">
 
@@ -55,26 +65,19 @@
 </div>
 <main id="market-pane" tabindex="-1" data-pane="market" class="app-pane container-fluid px-3 py-3">
   <h1 class="panel-title page-title mb-1">行情</h1>
-  <div class="panel-subtitle mb-3">集中查看全球市场与产业链商品行情。全球资产反映跨市场风险偏好，生意与产业链用于跟踪原料、产品价格和成本变化。</div>
-<section id="market-brief-section" class="mb-4" aria-label="行情简报">
-  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
-    <div><h2 class="panel-title">行情简报</h2><div class="panel-subtitle">指数走势、股票池温度与板块月线强弱，一页掌握市场。</div></div>
-  </div>
-  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 px-1">
+  <section id="market-brief-section" class="mb-4" aria-label="行情概览">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
     <div id="brief-market-time" class="panel-subtitle">A股行情基准：等待有效指数报价</div>
     <div id="brief-updated" class="panel-subtitle">页面刷新：—</div>
   </div>
-  <h2 class="panel-title mb-2">大盘行情</h2><div id="market-index-summary" class="insight-grid mb-3"><div class="empty-state">正在获取指数行情…</div></div>
-  <h2 class="panel-title mb-2">股票池市场温度</h2><div id="market-pulse-summary" class="row g-2 mb-3"></div>
-  <h2 class="panel-title mb-2">板块月线强弱</h2><div id="sector-monthly-note" class="panel-subtitle mb-2">按月线收盘价计算板块内等权平均涨跌幅，主导指标为近 12 个月；本月数据可能尚未收盘。</div><div id="sector-hotspots" class="insight-grid mb-4"></div>
+  <h2 class="panel-title mb-2">大盘指数</h2><div id="market-index-summary" class="insight-grid mb-3"><div class="empty-state">正在获取指数行情…</div></div>
+  <h2 class="panel-title mb-2">股票池温度</h2><div id="market-pulse-summary" class="row g-2 mb-3"></div>
+  <h2 class="panel-title mb-2">板块强弱 <span class="panel-subtitle fw-normal">近 12 个月月线表现</span></h2><div id="sector-monthly-note" class="visually-hidden">按月线收盘价计算板块内等权平均涨跌幅，主导指标为近 12 个月；本月数据可能尚未收盘。</div><div id="sector-hotspots" class="insight-grid mb-4"></div>
 </section>
 
-
-
-
-  <section aria-labelledby="global-market-heading" class="pt-3 border-top mb-4">
-    <h2 id="global-market-heading" class="panel-title mb-2">全球市场</h2>
-    <div class="panel-subtitle mb-3">黄金、比特币、以太坊与主要海外指数。展示公开行情源的最近有效报价，不代表逐笔实时成交价。</div>
+  <details class="market-extra-section mb-3">
+    <summary class="market-extra-summary"><span id="global-market-heading">全球市场</span><span class="panel-subtitle">黄金 · 海外指数 · 加密资产</span></summary>
+    <section aria-labelledby="global-market-heading" class="pt-3 mb-3">
     <div class="insight-card mb-3">
       <div class="fw-semibold">行情更新时间</div>
       <div id="global-assets-updated" class="panel-subtitle">正在读取全球资产行情…</div>
@@ -82,20 +85,22 @@
     <div id="global-assets-cards" class="insight-grid">
       <div class="empty-state">正在加载黄金、加密资产和海外指数报价…</div>
     </div>
-    <div class="panel-subtitle mt-3">数据源：Yahoo Finance 公开图表行情接口，经 GitHub Actions 定时抓取后缓存。不同市场交易时段、币种和报价口径不同；缺少有效报价时会明确显示，不用模拟价格补齐。</div>
+    <div class="panel-subtitle mt-3">行情由定时任务缓存，非逐笔实时；缺少有效报价时不会用模拟值补齐。</div>
   </section>
-  <section aria-labelledby="business-heading" class="pt-3 border-top">
-    <h2 id="business-heading" class="panel-title">生意与产业链</h2>
-    <div class="panel-subtitle mb-3">自动抓取公开商品现货与期货数据，按计划定时更新。优先展示真实数据和来源；抓取失败或来源不支持的品种会明确标记，不用模拟值填充。</div>
+  </details>
+  <details class="market-extra-section mb-3">
+    <summary class="market-extra-summary"><span id="business-heading">产业链与成本</span><span class="panel-subtitle">商品价格 · 原料参考</span></summary>
+  <section aria-labelledby="business-heading" class="pt-3">
     <div class="insight-card mb-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div><div class="fw-semibold">自动行情状态</div><div id="business-data-status" class="panel-subtitle">正在读取最新商品数据…</div></div>
     </div>
     <div id="business-cards" class="insight-grid"></div>
     <h2 class="panel-title mt-4">原料与成本观察</h2>
-    <div class="panel-subtitle mb-2">自动跟踪相关原料参考价，帮助观察成本方向；不等于上市公司实际采购成本或毛利测算。</div>
+    <div class="panel-subtitle mb-2">原料参考价仅用于观察成本方向。</div>
     <div id="business-cost-inputs" class="insight-grid"></div>
-    <div class="panel-subtitle mt-3">自动数据仍需结合库存、开工率、产能、成本和下游需求判断。现货与期货价格不是同一口径；每张卡片会标注数据类型、来源和日期。相关股票仅表示产业链关联，不代表公司一定受益。</div>
+    <div class="panel-subtitle mt-3">结合库存、开工率、产能与下游需求综合判断；产业链关联不代表公司一定受益。</div>
   </section>
+  </details>
 </main>
 
 

@@ -40,8 +40,8 @@
     var up=live.filter(function(x){return Number(x.q.todayChange)>0;}).length,down=live.filter(function(x){return Number(x.q.todayChange)<0;}).length,flat=live.length-up-down;
     var avg=live.length?live.reduce(function(a,x){return a+(Number.isFinite(Number(x.q.todayChange))?Number(x.q.todayChange):0);},0)/live.length:null;
     var zone=live.filter(function(x){var z=Croc.evaluate(x.s,x.q).zone;return z==='heavy'||z==='entry';}).length;
-    var cards=[['有行情',live.length+'/'+stocks.length+' 只','股票池行情覆盖'],['涨 / 跌 / 平',up+' / '+down+' / '+flat,'仅统计本股票池，不代表全市场'],['股票池平均涨跌',fmtPct(avg),'等权平均温度参考'],['到计划价区',zone+' 只','按股票池入场 / 重仓计划价统计']];
-    node.innerHTML=cards.map(function(x){return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div><div class="mini-label">'+x[2]+'</div></div></div>';}).join('');
+    var cards=[['涨 / 跌 / 平',up+' / '+down+' / '+flat,'仅统计本股票池，不代表全市场'],['股票池平均涨跌',fmtPct(avg),'等权平均温度参考'],['到计划价区',zone+' 只','按股票池入场 / 重仓计划价统计']];
+    node.innerHTML=cards.map(function(x){return '<div class="col-6 col-xl-4"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div><div class="mini-label">'+x[2]+'</div></div></div>';}).join('');
   }
   function renderSectors(){
     var node=el('sector-hotspots');if(!node)return;var groups={};

@@ -148,11 +148,17 @@ function getSortValue(stock, col) {
     case 'pb':       return pd ? pd.pb : null;
     case 'divYield': return pd ? pd.divYield : null;
     case 'screen':   return pd ? Croc.screen(stock, pd).passed : null;
-    case 'research': {
-      const report = REPORT_SCORES[stock.code];
-      if (report && isFinite(report.score)) return report.score;
+    case 'researchMachine': {
       const score = researchScores[stock.code];
       return score && isFinite(score.percent) ? score.percent : null;
+    }
+    case 'researchReport': {
+      const report = REPORT_SCORES[stock.code];
+      return report && isFinite(report.score) ? report.score : null;
+    }
+    case 'researchDate': {
+      const report = REPORT_SCORES[stock.code];
+      return report && /^\\d{4}-\\d{2}-\\d{2}$/.test(report.date || '') ? report.date : null;
     }
     case 'entry':    return (price != null && stock.entry) ? (price - stock.entry) / stock.entry : null;
     case 'heavy':    return (price != null && stock.heavy) ? (price - stock.heavy) / stock.heavy : null;
@@ -178,7 +184,7 @@ function sortedView(list) {
 }
 
 function updateSortUI() {
-  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','research','group','alias'].forEach(col => {
+  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','researchMachine','researchReport','researchDate','group','alias'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
     const active = sortState.col === col;
@@ -394,7 +400,7 @@ function buildRow(stock) {
     <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${fmtPct(pd && pd.divYield)}</td>
     <td>${screenHtml(stock, pd, e)}</td>
-    <td>${researchHtml(stock)}</td>
+    <td>${researchMachineHtml(stock)}</td>\n    <td>${researchReportHtml(stock)}</td>\n    <td>${researchDateHtml(stock)}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${aliasHtml}</td>`;
 }
@@ -443,49 +449,41 @@ function reportBandLabel(score) {
 }
 
 /** 首页同时展示机器评分与研报评分；研报分始终标注报告日期。 */
-function researchHtml(stock) {
-  const report = REPORT_SCORES[stock.code];
+/** 机器评分独立展示，按 32 分制折算百分制，缺失时不伪造分数。 */
+function researchMachineHtml(stock) {
   const score = researchScores[stock.code];
+  if (!score || !isFinite(score.points) || !isFinite(score.percent)) return '<span class="text-body-tertiary">—</span>';
+  const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
+  const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
+  const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
+  const items = score.items || {};
+  const detail = [
+    `国资 ${fmtScore(items.owner)}/10`, `主营 ${fmtScore(items.focus)}/9`,
+    `扣非 ${fmtScore(items.profit)}/14`, `市值 ${fmtScore(items.cap)}/8`,
+    `盘整 ${fmtScore(items.consolidation)}/9`, `月线 ${fmtScore(items.bottom)}/9`,
+    `放量 ${fmtScore(items.volume)}/6`
+  ].join(' · ');
+  const tip = `机器复算 ${score.percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\\n${detail}\\n按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议`;
+  return `<span class="score score-${tone}" title="${esc(tip)}">${score.percent.toFixed(1)}</span>`;
+}
 
-  let machineHtml = '<div class="score-line score-machine"><span class="score-label">算</span><span class="text-body-tertiary">—</span></div>';
-  if (score && isFinite(score.points)) {
-    const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
-    const percent = isFinite(score.percent) ? score.percent : null;
-    if (percent !== null) {
-      const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
-      const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
-      const items = score.items || {};
-      const detail = [
-        `国资 ${fmtScore(items.owner)}/10`,
-        `主营 ${fmtScore(items.focus)}/9`,
-        `扣非 ${fmtScore(items.profit)}/14`,
-        `市值 ${fmtScore(items.cap)}/8`,
-        `盘整 ${fmtScore(items.consolidation)}/9`,
-        `月线 ${fmtScore(items.bottom)}/9`,
-        `放量 ${fmtScore(items.volume)}/6`
-      ].join(' · ');
-      const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\\n${detail}\\n按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议`;
-      machineHtml = `<div class="score-line score-machine" title="${esc(tip)}"><span class="score-label">算</span><span class="score score-${tone}">${percent.toFixed(1)}</span></div>`;
-    } else {
-      machineHtml = `<div class="score-line score-machine" title="机器评分数据不完整：${esc(String(score.points))}/${esc(String(max))}"><span class="score-label">算</span><span class="text-body-tertiary">—</span></div>`;
-    }
-  }
+/** 研报原始总分独立展示，不回退为机器评分。 */
+function researchReportHtml(stock) {
+  const report = REPORT_SCORES[stock.code];
+  if (!report || !isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
+  const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
+  const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}\\n来源：${report.source || '未知'}\\n报告日期：${report.date || '日期未知'}`;
+  return `<span class="score score-${tone}" title="${esc(tip)}">${report.score.toFixed(1)}</span>`;
+}
 
-  let reportHtml = '<div class="score-line score-report"><span class="score-label">研</span><span class="text-body-tertiary">—</span><span class="score-date">暂无</span></div>';
-  if (report && isFinite(report.score)) {
-    const months = monthsSince(report.date);
-    const stale = months !== null && months >= 12;
-    const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
-    const alt = (report.alternates || [])
-      .map(item => `${item.date} ${item.score.toFixed(1)} 分（${item.source}）`)
-      .join('；');
-    const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}\\n来源：${report.source}\\n报告日期：${report.date}`
-      + (months !== null ? `（${months} 个月前${stale ? '，可能已过时' : ''}）` : '')
-      + (alt ? '\\n另有：' + alt : '');
-    reportHtml = `<div class="score-line score-report" title="${esc(tip)}"><span class="score-label">研${stale ? '·旧' : ''}</span><span class="score score-${tone}">${report.score.toFixed(1)}</span><span class="score-date">${esc(report.date || '日期未知')}</span></div>`;
-  }
-
-  return `<div class="score-pair">${machineHtml}${reportHtml}</div>`;
+/** 研报日期独立展示和排序；过期标记不改变用于排序的原始日期。 */
+function researchDateHtml(stock) {
+  const report = REPORT_SCORES[stock.code];
+  if (!report || !/^\\d{4}-\\d{2}-\\d{2}$/.test(report.date || '')) return '<span class="text-body-tertiary">—</span>';
+  const months = monthsSince(report.date);
+  const stale = months !== null && months >= 12;
+  const tip = `报告来源：${report.source || '未知'}${months !== null ? `\\n距今约 ${months} 个月` : ''}`;
+  return `<span class="score-date${stale ? ' text-warning' : ''}" title="${esc(tip)}">${esc(report.date)}${stale ? ' ·旧' : ''}</span>`;
 }
 
 function fmtScore(value) {

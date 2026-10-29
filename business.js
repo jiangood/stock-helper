@@ -23,10 +23,16 @@
   function fmtMoney(v){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
   function tone(v){return Number(v)>0?'text-up':Number(v)<0?'text-down':'text-body-secondary';}
   function stockForCode(code){var c=String(code||'').trim().toLowerCase();if(/^\d{6}$/.test(c))c=(/^[5689]/.test(c)?'sh':'sz')+c;return stocks.find(function(s){return String(s.code||'').toLowerCase()===c;})||null;}
+  function renderBriefMarketTime(){
+    var node=el('brief-market-time');if(!node)return;
+    var available=Object.keys(marketIndices).some(function(code){var q=marketIndices[code];return q&&Number(q.price)>0;});
+    node.textContent=available?'A股行情基准：指数最新有效报价 · 行情源未提供可核实的报价时间':'A股行情基准：暂无有效指数报价';
+  }
   function renderMarketIndices(){
     var node=el('market-index-summary');if(!node)return;
     var specs=[{code:'sh000001',name:'上证指数'},{code:'sz399001',name:'深证成指'},{code:'sz399006',name:'创业板指'}];
-    node.innerHTML=specs.map(function(x){var q=marketIndices[x.code];return '<article class="insight-card"><div class="mini-label">'+x.name+'</div><div class="business-price">'+(q&&q.price>0?Number(q.price).toFixed(2):'—')+'</div><div class="'+(q?tone(q.todayChange):'text-body-secondary')+' fw-semibold">'+(q?fmtPct(q.todayChange):'指数行情暂不可用')+'</div><div class="mini-label mt-1">'+(q&&q.time?'行情时间：'+esc(q.time):'行情源未返回有效数据，不使用模拟值')+'</div></article>';}).join('');
+    node.innerHTML=specs.map(function(x){var q=marketIndices[x.code];return '<article class="insight-card"><div class="mini-label">'+x.name+'</div><div class="business-price">'+(q&&q.price>0?Number(q.price).toFixed(2):'—')+'</div><div class="'+(q?tone(q.todayChange):'text-body-secondary')+' fw-semibold">'+(q?fmtPct(q.todayChange):'指数行情暂不可用')+'</div></article>';}).join('');
+    renderBriefMarketTime();
   }
   function renderMarketPulse(){
     var node=el('market-pulse-summary');if(!node)return;
@@ -74,7 +80,7 @@
       else list.innerHTML=cards.map(function(x){var s=x.stock,q=x.quote,e=x.eval,gate=Croc.buyEligibility(s,q);return '<article class="insight-card"><div class="d-flex justify-content-between align-items-start gap-2"><div><a class="fw-bold text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(s.code)+'">'+esc(s.name)+'</a><div class="mini-label">'+esc(s.group||'')+' · '+esc(s.code)+'</div></div><span class="flag '+(e.zone==='heavy'?'flag-buy':'flag-warn')+'">'+(e.zone==='heavy'?'重仓价区间':'入场价区间')+'</span></div><div class="d-flex align-items-baseline gap-2 mt-2"><span class="business-price">'+Number(q.price).toFixed(2)+'</span><span class="'+tone(q.todayChange)+'">'+fmtPct(q.todayChange)+'</span></div><div class="d-flex flex-wrap gap-2 mt-2 mini-label"><span>入场 '+(s.entry==null?'—':Number(s.entry).toFixed(2))+'</span><span>重仓 '+(s.heavy==null?'—':Number(s.heavy).toFixed(2))+'</span><span>PE '+(q.pe==null?'—':Number(q.pe).toFixed(2))+'</span><span>PB '+(q.pb==null?'—':Number(q.pb).toFixed(2))+'</span></div><div class="mt-2 small '+(gate.eligible?'text-success':'text-warning-emphasis')+'">'+esc(gate.reason||'通过硬门槛；仍需核对基本面与周期')+'</div><a class="btn btn-sm btn-outline-primary mt-2" href="stock.html?code='+encodeURIComponent(s.code)+'">查看个股详情</a></article>';}).join('');
     }
     renderMarketIndices();renderMarketPulse();renderSectors();renderHoldings();
-    var updated=el('brief-updated');if(updated)updated.textContent='更新时间：'+new Date().toLocaleString('zh-CN',{hour12:false});
+    var updated=el('brief-updated');if(updated)updated.textContent='页面刷新：'+new Date().toLocaleString('zh-CN',{hour12:false});
   }
   function fetchMarketIndices(){if(!quoteClient||typeof quoteClient.fetch!=='function')return;quoteClient.fetch(['sh000001','sz399001','sz399006']).then(function(data){marketIndices=data||{};renderMarketIndices();}).catch(function(){renderMarketIndices();});}
   function formatNumber(value) {

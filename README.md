@@ -39,6 +39,7 @@ python -m http.server 8089
 | `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
 | `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
 | `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
+| `data/combat-kline.json` `scripts/build_combat_kline.js` | 作战页专用读模型：每只股票只保留最近 120 根前复权日 K；作战页一次请求全股票池，不逐只下载完整 K 线文件 |
 | `business.js` `data/business-data.json` | 行情页渲染指数行情、股票池温度、板块月线强弱、全球资产及商品现货/期货 |
 | `data/sector-monthly.json` `scripts/build_sector_monthly.js` | 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅，行情页只读这个小文件 |
 | `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行、资产趋势对比和各资产近一个月迷你趋势图 |

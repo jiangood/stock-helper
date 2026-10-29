@@ -111,6 +111,27 @@ function validateStockCaches(stockCodes) {
   return { cacheFiles: files, bars };
 }
 
+function validateCombatSnapshot(payload, stockCodes) {
+  if (!isObject(payload) || payload.schemaVersion !== 1 || !isObject(payload.stocks)) {
+    fail('data/combat-kline.json must contain schemaVersion 1 and stocks object');
+  }
+  if (payload.barLimit !== 120) fail('data/combat-kline.json barLimit must be 120');
+  let covered = 0;
+  let bars = 0;
+  Object.entries(payload.stocks).forEach(([code, value]) => {
+    if (!stockCodes.has(code) || !isObject(value)) fail('invalid combat K-line record: ' + code);
+    if (!Array.isArray(value.bars) || !value.bars.length || value.bars.length > payload.barLimit) {
+      fail('combat K-line ' + code + '.bars must contain 1..120 bars');
+    }
+    bars += validateBars(value.bars, 'combat-kline/' + code + '.bars');
+    covered += 1;
+  });
+  if (covered < Math.ceil(stockCodes.size * 0.7)) {
+    fail('combat K-line coverage below 70%: ' + covered + '/' + stockCodes.size);
+  }
+  return { stocks: covered, bars };
+}
+
 function validateFundamentals(payload, stockCodes) {
   if (!isObject(payload) || !isObject(payload.stocks)) fail('data/fundamentals.json must contain stocks object');
   Object.entries(payload.stocks).forEach(([code, value]) => {
@@ -145,6 +166,7 @@ function validateAll(options) {
   if (!opts.fundamentalsOnly) {
     result.quotes = validateQuotes(readJson(path.join(DATA, 'stock-quotes.json')), codes);
     result.caches = validateStockCaches(codes);
+    result.combat = validateCombatSnapshot(readJson(path.join(DATA, 'combat-kline.json')), codes);
   }
   const fundamentalsFile = path.join(DATA, 'fundamentals.json');
   if (fs.existsSync(fundamentalsFile)) {
@@ -163,4 +185,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateFundamentals, validateAll };
+module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateCombatSnapshot, validateFundamentals, validateAll };

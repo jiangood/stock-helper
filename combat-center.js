@@ -1,7 +1,7 @@
 /* Home trading combat center: manual decision support only, never submits orders. */
 (function (root) {
   'use strict';
-  var state = { stocks: [], prices: {}, client: null, holdings: [], rows: [], initialized: false, loading: false, lastRun: 0, filter: 'all', error: '' };
+  var state = { stocks: [], prices: {}, client: null, rows: [], initialized: false, loading: false, lastRun: 0, filter: 'all', error: '' };
   var $ = function (id) { return root.document.getElementById(id); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
   function money(v) { return v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v)) ? Number(v).toFixed(2) : '—'; }
@@ -43,17 +43,9 @@
   function codeOf(code) { return String(code || '').trim().toLowerCase(); }
   function quoteFor(code) { return state.prices[code] || state.prices[codeOf(code)] || null; }
   function statusClass(kind) { return ({ 'add-ready':'combat-good','add-watch':'combat-warn','risk':'combat-risk','data':'combat-data','watch':'combat-neutral' })[kind] || 'combat-neutral'; }
-  function isHolding(code) { return state.holdings.some(function (h) { return codeOf(h.code) === codeOf(code); }); }
-  function holdingFor(code) { return state.holdings.find(function (h) { return codeOf(h.code) === codeOf(code); }) || null; }
   function mergeUniverse() {
     var map = new Map();
     state.stocks.filter(function (s) { return s && s.pool !== false && s.code; }).forEach(function (s) { map.set(codeOf(s.code), Object.assign({}, s, { inPool: true })); });
-    state.holdings.forEach(function (h) {
-      var code = codeOf(h.code), old = map.get(code);
-      if (old) old.inHolding = true;
-      else map.set(code, { code: code, name: code, pool: false, inPool: false, inHolding: true });
-    });
-    map.forEach(function (s, code) { s.inHolding = s.inHolding || isHolding(code); });
     return Array.from(map.values());
   }
   function gate(stock, quote) {
@@ -85,7 +77,7 @@
       ['风险拦截', counts.risk, '硬性纪律优先'],
       ['数据不足', counts.data, '不生成确定信号']
     ].map(function (x) { return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">' + x[0] + '</div><div class="combat-metric">' + x[1] + '</div><div class="mini-label">' + x[2] + '</div></div></div>'; }).join('');
-    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只（持仓 + 股票池去重） · 买入观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
+    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只股票池标的 · 买入观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
     var filtered = rows.filter(function (r) {
       if (state.filter === 'add') return r.primary.kind === 'add-ready' || r.primary.kind === 'add-watch';
       if (state.filter === 'watch') return r.primary.kind === 'watch' || r.primary.kind === 'add-watch';
@@ -99,14 +91,12 @@
     }
     list.innerHTML = filtered.map(function (r) {
       var s = r.stock, p = r.quote && Number(r.quote.price) > 0 ? Number(r.quote.price) : null;
-      var h = r.holding, held = !!h, qty = h ? Number(h.quantity) : 0;
       var actionName = '买入';
       var badges = '<span class="combat-badge ' + statusClass(r.primary.kind) + '">' + esc(r.primary.status) + '</span>';
       if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + esc(r.add.status) + ' ' + r.add.score + '/' + (r.add.scoreMax || 3) + '</span>';
       var reasons = (r.primary.reasons || []).concat(r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return actionName + '：' + x; }) : []);
       if (!reasons.length) reasons = ['价格未到计划区，暂不触发操作条件'];
       var plan = [Number(s.entry) > 0 ? '入场 ' + money(s.entry) : null, Number(s.heavy) > 0 ? '重仓 ' + money(s.heavy) : null, Number(s.tp1) > 0 ? '止盈1 ' + money(s.tp1) : null, Number(s.tp2) > 0 ? '止盈2 ' + money(s.tp2) : null].filter(Boolean).join(' · ');
-      var pnl = held && p !== null ? (p - Number(h.cost)) * qty : null;
       var ind = r.indicators || {};
       var macd = ind.macd;
       var indicatorPanel = '<details class="combat-indicator-details"><summary class="combat-section-title">技术指标详情（点击展开）</summary><div class="combat-indicator-grid mt-2">' +
@@ -118,20 +108,17 @@
         '<div class="combat-indicator"><div class="mini-label">数据口径</div><strong>' + (ind.bars || 0) + ' 根日K</strong><span>' + (ind.bars >= 35 ? '可计算 RSI / MACD' : '历史长度可能不足') + '</span><small>RSI使用14期 Wilder平滑；MACD使用12/26/9；使用当前可获取的复权日K，结果会随新行情变化。</small></div>' +
         '</div><div class="mini-label mt-2">读法：RSI 与 MACD 仅作为辅助确认，仍需结合计划价、支撑、资金流量、趋势及硬性纪律；单个指标不能构成买入理由。</div></details>';
       var buyConditions = '<section class="combat-buy-conditions"><div class="combat-section-title">买入前检查</div><div class="combat-reasons mt-2">' + reasons.map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-reasons mt-2">' + planChecks(s, r.quote, r.primary, r.eligible).map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-invalidation mt-2"><div class="combat-section-title">计划失效 / 退出复核</div><ul class="mb-0 mt-1 ps-3"><li>行情过期、计划长期未复核或纪律拦截时，暂停新增操作并先核验数据。</li><li>商品供需/周期转向、公司经营假设被证伪时，重新评估持有逻辑与估值。</li><li>达到既定止盈目标或触发项目卖出纪律时，按原计划复核退出，不因单一技术指标机械操作。</li><li>当前股票池未配置明确止损价；重仓价不是止损价，退出阈值需由投资者单独制定。</li></ul></div></section>';
-      var cost = held && h.cost !== null && h.cost !== undefined && h.cost !== '' && Number.isFinite(Number(h.cost)) ? Number(h.cost) : null;
-      var validQty = held && Number.isFinite(qty) && qty > 0;
-      var pnlText = validQty && cost !== null && p !== null ? ((p - cost) * qty > 0 ? '+' : '') + Math.round((p - cost) * qty).toLocaleString('zh-CN') + ' 元' : '—';
       var quoteLabel = quoteTime(r.quote);
       var reviewed = planReviewLabel(s);
-      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · ' + (held ? '持仓 ' + (validQty ? qty.toLocaleString('zh-CN') : '数量待核对') + ' 股' : '股票池 / 自选') + '</div><div class="mini-label">' + esc(quoteLabel) + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + (held ? ' · 成本 ' + money(cost) + ' · 浮盈亏 ' + pnlText : '') + '<div class="mini-label mt-1">' + esc(reviewed) + ' · 计划价需结合最新基本面与周期复核</div></div>' + buyConditions + indicatorPanel + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span><a class="btn btn-sm btn-outline-primary" href="stock.html?code=' + encodeURIComponent(s.code) + '">查看详情</a></div></article>';
+      return '<article class="insight-card combat-card"><div class="d-flex justify-content-between align-items-start gap-2"><div class="min-w-0"><a class="combat-name" href="stock.html?code=' + encodeURIComponent(s.code) + '">' + esc(s.name || s.code) + '</a><div class="mini-label">' + esc(s.code) + ' · ' + '股票池 / 自选' + '</div><div class="mini-label">' + esc(quoteLabel) + '</div></div><div class="text-end flex-shrink-0"><div class="combat-price">' + (p === null ? '—' : money(p)) + '</div><div class="mini-label ' + (r.quote && Number(r.quote.todayChange) > 0 ? 'text-up' : r.quote && Number(r.quote.todayChange) < 0 ? 'text-down' : '') + '">' + (r.quote ? pct(r.quote.todayChange) : '行情缺失') + '</div></div></div><div class="d-flex flex-wrap gap-1 mt-2">' + badges + '</div><div class="combat-plan mt-2">' + esc(plan || '未配置计划价') + '<div class="mini-label mt-1">' + esc(reviewed) + ' · 计划价需结合最新基本面与周期复核</div></div>' + buyConditions + indicatorPanel + '<div class="d-flex justify-content-between align-items-center gap-2 mt-3"><span class="mini-label">' + esc(r.dataNote || '辅助参考，不构成投资建议') + '</span><a class="btn btn-sm btn-outline-primary" href="stock.html?code=' + encodeURIComponent(s.code) + '">查看详情</a></div></article>';
     }).join('');
   }
   async function calculateOne(stock) {
-    var code = codeOf(stock.code), quote = quoteFor(code), holding = holdingFor(code), price = quote && Number(quote.price) > 0 ? Number(quote.price) : null;
+    var code = codeOf(stock.code), quote = quoteFor(code), price = quote && Number(quote.price) > 0 ? Number(quote.price) : null;
     var eligible = gate(stock, quote), add = null, dataNote = '', day = null, indicators = null;
     if (price === null) {
       var missing = { status: '数据不足', kind: 'data', reasons: ['当前行情无有效价格，不使用过期空值推断'], dataReady: false };
-      return { stock: stock, quote: quote, holding: holding, primary: missing, add: null, eligible: eligible, dataNote: '行情缺失' };
+      return { stock: stock, quote: quote, primary: missing, add: null, eligible: eligible, dataNote: '行情缺失' };
     }
     try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
     var bars = day && Array.isArray(day.bars) ? day.bars : [];
@@ -162,11 +149,11 @@
     var inBuyZone = [stock.entry, stock.heavy].some(function (v) { return Number(v) > 0 && price <= Number(v); });
     var poolWatch = stock.inPool || stock.pool !== false;
     var primary = { status: '观望', kind: 'watch', reasons: [inBuyZone ? '现价进入计划价区，但触价不等于买入信号' : nearPlan ? '接近计划价区，等待技术条件确认' : '现价未到计划价区，暂不追价'] };
-    if ((holding || nearPlan || inBuyZone) && root.StockTradeSignals) {
+    if ((nearPlan || inBuyZone) && root.StockTradeSignals) {
       // Only calculate/show add signals after price reaches the configured entry/heavy plan level.
       if (inBuyZone) {
         // Same five-factor scoring for all candidates.
-        add = root.StockTradeSignals.evaluateAdd(price, Object.assign({}, stock, { inHolding: !!holding }), bars);
+        add = root.StockTradeSignals.evaluateAdd(price, Object.assign({}, stock), bars);
       }
       if (!eligible.eligible && (inBuyZone || (add && add.kind === 'add-ready'))) {
         primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许买入'] };
@@ -179,19 +166,15 @@
     } else if (inBuyZone && !eligible.eligible) {
       primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许补仓'] };
     }
-    return { stock: stock, quote: quote, holding: holding, primary: primary, add: add, eligible: eligible, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
+    return { stock: stock, quote: quote, primary: primary, add: add, eligible: eligible, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
   }
   async function run(force) {
     if (state.loading) return;
     if (!state.client || !Array.isArray(state.stocks)) return;
     state.loading = true; state.error = ''; render();
     try {
-      if (root.StockHoldings) {
-        var data = await root.StockHoldings.load(!!force);
-        state.holdings = data.holdings || [];
-      }
       var universe = mergeUniverse();
-      state.rows = universe.map(function (stock) { return { stock: stock, quote: quoteFor(stock.code), holding: holdingFor(stock.code), primary: { status: '计算中', kind: 'data', reasons: [] }, add: null }; });
+      state.rows = universe.map(function (stock) { return { stock: stock, quote: quoteFor(stock.code), primary: { status: '计算中', kind: 'data', reasons: [] }, add: null }; });
       render();
       var results = [];
       await limitedMap(universe, 4, async function (stock) {
@@ -199,7 +182,7 @@
           results.push(await calculateOne(stock));
         } catch (e) {
           // Preserve coverage when one symbol fails; never silently drop it from the combat universe.
-          results.push({ stock: stock, quote: quoteFor(stock.code), holding: holdingFor(stock.code), primary: { status: '数据不足', kind: 'data', reasons: ['单股计算失败：' + (e && e.message || '未知错误'), '本次不生成交易信号，请刷新复核'] }, add: null, dataNote: '计算异常，未生成交易信号' });
+          results.push({ stock: stock, quote: quoteFor(stock.code), primary: { status: '数据不足', kind: 'data', reasons: ['单股计算失败：' + (e && e.message || '未知错误'), '本次不生成交易信号，请刷新复核'] }, add: null, dataNote: '计算异常，未生成交易信号' });
         }
       });
       var order = new Map(results.map(function (r, i) { return [codeOf(r.stock.code), i]; }));
@@ -215,12 +198,11 @@
         };
         var diff = rank(a) - rank(b);
         if (diff) return diff;
-        // Within actionable items, prioritize higher-confidence buy signals and keep holdings ahead of pool-only names.
+        // Within actionable items, prioritize higher-confidence buy signals.
         var signalScore = function (r) {
           var score = 0;
           if (r.primary.kind === 'add-ready') score += 25 + (Number(r.add && r.add.score) || 0);
           if (r.primary.kind === 'add-watch') score += 10 + (Number(r.add && r.add.score) || 0);
-          if (r.holding) score += 2;
           return score;
         };
         return signalScore(b) - signalScore(a) || String(a.stock.name || '').localeCompare(String(b.stock.name || ''), 'zh');

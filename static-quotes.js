@@ -45,11 +45,64 @@
   function storageSet(key, value) {
     try {
       if (global.localStorage) global.localStorage.setItem('stock-helper-cache:' + key, JSON.stringify(value));
-    } catch (_) { /* quota/private mode: in-memory cache still works */ }
+    } catch (_) { /* large history files may exceed localStorage quota */ }
+  }
+  function indexedDbGet(key) {
+    return new Promise(resolve => {
+      if (!global.indexedDB) return resolve(null);
+      let request;
+      try { request = global.indexedDB.open('stock-helper-static-cache', 1); }
+      catch (_) { return resolve(null); }
+      request.onupgradeneeded = () => {
+        try { if (!request.result.objectStoreNames.contains('snapshots')) request.result.createObjectStore('snapshots'); } catch (_) {}
+      };
+      request.onerror = () => resolve(null);
+      request.onsuccess = () => {
+        const db = request.result;
+        try {
+          const tx = db.transaction('snapshots', 'readonly');
+          const get = tx.objectStore('snapshots').get(key);
+          get.onsuccess = () => resolve(get.result || null);
+          get.onerror = () => resolve(null);
+          tx.oncomplete = () => db.close();
+          tx.onerror = () => { db.close(); resolve(null); };
+        } catch (_) { try { db.close(); } catch (_) {} resolve(null); }
+      };
+    });
+  }
+  function indexedDbSet(key, value) {
+    return new Promise(resolve => {
+      if (!global.indexedDB) return resolve(false);
+      let request;
+      try { request = global.indexedDB.open('stock-helper-static-cache', 1); }
+      catch (_) { return resolve(false); }
+      request.onupgradeneeded = () => {
+        try { if (!request.result.objectStoreNames.contains('snapshots')) request.result.createObjectStore('snapshots'); } catch (_) {}
+      };
+      request.onerror = () => resolve(false);
+      request.onsuccess = () => {
+        const db = request.result;
+        try {
+          const tx = db.transaction('snapshots', 'readwrite');
+          tx.objectStore('snapshots').put(value, key);
+          tx.oncomplete = () => { db.close(); resolve(true); };
+          tx.onerror = () => { db.close(); resolve(false); };
+          tx.onabort = () => { db.close(); resolve(false); };
+        } catch (_) { try { db.close(); } catch (_) {} resolve(false); }
+      };
+    });
+  }
+  async function cacheGet(key) {
+    const indexed = await indexedDbGet(key);
+    return indexed || storageGet(key);
+  }
+  async function cacheSet(key, value) {
+    const saved = await indexedDbSet(key, value);
+    if (!saved) storageSet(key, value);
   }
   async function loadJson(relativeUrl, force) {
     if (!force && memory.has(relativeUrl) && Date.now() - (memoryAt.get(relativeUrl) || 0) < MEMORY_TTL) return memory.get(relativeUrl);
-    const cached = storageGet(relativeUrl);
+    const cached = await cacheGet(relativeUrl);
     try {
       const url = new URL(relativeUrl, document.baseURI).href;
       const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
@@ -57,7 +110,7 @@
       const value = await response.json();
       memory.set(relativeUrl, value);
       memoryAt.set(relativeUrl, Date.now());
-      storageSet(relativeUrl, value);
+      await cacheSet(relativeUrl, value);
       return value;
     } catch (error) {
       if (cached) {

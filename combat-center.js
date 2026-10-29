@@ -42,7 +42,7 @@
       return true;
     } catch (_) { return false; }
   }
-  function planChecks(stock, quote, primary) {
+  function planChecks(stock, quote, primary, eligible) {
     var checks = [], raw = quote && Number(quote.time), ts = raw > 0 ? new Date(raw < 1000000000000 ? raw * 1000 : raw).getTime() : NaN;
     var quoteFresh = Number.isFinite(ts) && Date.now() - ts <= 5 * 86400000 && Date.now() - ts >= -5 * 60000;
     checks.push((quoteFresh ? '✓' : '！') + ' 行情时间' + (quoteFresh ? '有效' : '待核对'));
@@ -50,7 +50,7 @@
     var age = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? Math.floor((Date.now() - new Date(date + 'T00:00:00Z').getTime()) / 86400000) : null;
     var planFresh = age !== null && age >= 0 && age <= 180;
     checks.push((planFresh ? '✓' : '！') + ' 计划复核' + (planFresh ? '未过期' : '需复核'));
-    var disciplineOk = primary && primary.kind !== 'risk' && primary.kind !== 'data';
+    var disciplineOk = !!(eligible && eligible.eligible === true) && primary && primary.kind !== 'risk' && primary.kind !== 'data';
     checks.push((disciplineOk ? '✓' : '！') + ' 纪律门槛' + (disciplineOk ? '未拦截' : '未通过/数据不足'));
     checks.push('! 未配置明确止损价；不得将重仓价直接视为止损线');
     checks.push('! 下单前人工确认：商品周期、公司逻辑与仓位风险');
@@ -133,7 +133,7 @@
         '<div class="combat-indicator"><div class="mini-label">OBV · 能量潮</div><strong>' + (ind.obv == null ? '—' : Math.round(ind.obv).toLocaleString('zh-CN')) + '</strong><span>' + (ind.obv == null ? '数据不足' : '累计量价方向指标') + '</span><small>上涨日加量、下跌日减量，观察量价配合；绝对值不适合跨股票比较。</small></div>' +
         '<div class="combat-indicator"><div class="mini-label">数据口径</div><strong>' + (ind.bars || 0) + ' 根日K</strong><span>' + (ind.bars >= 35 ? '可计算 RSI / MACD' : '历史长度可能不足') + '</span><small>RSI使用14期 Wilder平滑；MACD使用12/26/9；使用当前可获取的复权日K，结果会随新行情变化。</small></div>' +
         '</div><div class="mini-label mt-2">读法：RSI 与 MACD 仅作为辅助确认，仍需结合计划价、支撑、资金流量、趋势及硬性纪律；单个指标不能构成买入理由。</div></details>';
-      var buyConditions = '<section class="combat-buy-conditions"><div class="combat-section-title">买入前检查</div><div class="combat-reasons mt-2">' + reasons.map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-reasons mt-2">' + planChecks(s, r.quote, r.primary).map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-invalidation mt-2"><div class="combat-section-title">计划失效 / 退出复核</div><ul class="mb-0 mt-1 ps-3"><li>行情过期、计划长期未复核或纪律拦截时，暂停新增操作并先核验数据。</li><li>商品供需/周期转向、公司经营假设被证伪时，重新评估持有逻辑与估值。</li><li>达到既定止盈目标或触发项目卖出纪律时，按原计划复核退出，不因单一技术指标机械操作。</li><li>当前股票池未配置明确止损价；重仓价不是止损价，退出阈值需由投资者单独制定。</li></ul></div></section>';
+      var buyConditions = '<section class="combat-buy-conditions"><div class="combat-section-title">买入前检查</div><div class="combat-reasons mt-2">' + reasons.map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-reasons mt-2">' + planChecks(s, r.quote, r.primary, r.eligible).map(function (x) { return '<span class="combat-reason-chip">' + esc(x) + '</span>'; }).join('') + '</div><div class="combat-invalidation mt-2"><div class="combat-section-title">计划失效 / 退出复核</div><ul class="mb-0 mt-1 ps-3"><li>行情过期、计划长期未复核或纪律拦截时，暂停新增操作并先核验数据。</li><li>商品供需/周期转向、公司经营假设被证伪时，重新评估持有逻辑与估值。</li><li>达到既定止盈目标或触发项目卖出纪律时，按原计划复核退出，不因单一技术指标机械操作。</li><li>当前股票池未配置明确止损价；重仓价不是止损价，退出阈值需由投资者单独制定。</li></ul></div></section>';
       var review = reviewFor(s.code);
       var reviewPanel = '<details class="combat-review-details" data-review-code="' + esc(codeOf(s.code)) + '"><summary class="combat-section-title">交易后复盘记录（仅本机保存）</summary><div class="mt-2">' +
         '<label class="form-label mini-label mb-1" for="review-action-' + esc(codeOf(s.code)) + '">操作</label><select class="form-select form-select-sm mb-2" id="review-action-' + esc(codeOf(s.code)) + '" data-review-field="action"><option value="未交易"' + (review.action === '未交易' || !review.action ? ' selected' : '') + '>未交易 / 观察</option><option value="买入/补仓"' + (review.action === '买入/补仓' ? ' selected' : '') + '>买入 / 补仓</option><option value="减仓"' + (review.action === '减仓' ? ' selected' : '') + '>减仓</option><option value="卖出"' + (review.action === '卖出' ? ' selected' : '') + '>卖出</option></select>' +
@@ -156,7 +156,7 @@
     var eligible = gate(stock, quote), add = null, dataNote = '', day = null, indicators = null;
     if (price === null) {
       var missing = { status: '数据不足', kind: 'data', reasons: ['当前行情无有效价格，不使用过期空值推断'], dataReady: false };
-      return { stock: stock, quote: quote, holding: holding, primary: missing, add: null, dataNote: '行情缺失' };
+      return { stock: stock, quote: quote, holding: holding, primary: missing, add: null, eligible: eligible, dataNote: '行情缺失' };
     }
     try { day = await state.client.fetchKline(code, { period: 'day', count: 120, adjust: 'qfq' }); } catch (_) {}
     var bars = day && Array.isArray(day.bars) ? day.bars : [];
@@ -204,7 +204,7 @@
     } else if (inBuyZone && !eligible.eligible) {
       primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许补仓'] };
     }
-    return { stock: stock, quote: quote, holding: holding, primary: primary, add: add, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
+    return { stock: stock, quote: quote, holding: holding, primary: primary, add: add, eligible: eligible, indicators: indicators, dataNote: dataNote || '行情来自当前页面报价缓存；操作由用户决定' };
   }
   async function run(force) {
     if (state.loading) return;

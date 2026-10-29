@@ -30,7 +30,7 @@ async function runCombat(price) {
       return { status: '建议补仓', kind: 'add-ready', score: 3, reasons: [] };
     }
   };
-  context.document = undefined;
+  context.document = { getElementById: () => null, addEventListener: () => {} };
   vm.runInNewContext(fs.readFileSync(require.resolve('../combat-center.js'), 'utf8'), context);
   const client = {
     fetchMinuteKline: async () => ({ bars: [] }),

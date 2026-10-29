@@ -172,6 +172,35 @@
       return true;
     } catch (_) { return false; }
   }
+  function summarizeReviews(reviews) {
+    var records = Object.keys(reviews || {}).map(function (code) {
+      var r = reviews[code] || {};
+      return { code: code, review: r, action: String(r.action || '未交易'), pnl: inputNumber(r.actualPnl) };
+    }).filter(function (x) { return !!x.review.savedAt; });
+    var trades = records.filter(function (x) { return x.action !== '未交易'; });
+    var pnlRecords = trades.filter(function (x) { return x.pnl !== null; });
+    var pnlTotal = pnlRecords.reduce(function (sum, x) { return sum + x.pnl; }, 0);
+    var adherence = trades.filter(function (x) { return x.review.stopAdherence === '遵守' || x.review.stopAdherence === '未遵守'; });
+    var adhered = adherence.filter(function (x) { return x.review.stopAdherence === '遵守'; }).length;
+    return { records: records.length, trades: trades.length, pnlCount: pnlRecords.length, pnlTotal: pnlTotal,
+      pnlAverage: pnlRecords.length ? pnlTotal / pnlRecords.length : null, adherenceCount: adherence.length,
+      adherenceRate: adherence.length ? adhered / adherence.length * 100 : null };
+  }
+  function renderReviewMetrics() {
+    var node = $('combat-review-metrics');
+    if (!node) return;
+    var s = summarizeReviews(state.reviews);
+    var cards = [
+      ['已保存复盘', s.records + ' 条', '按标的汇总，保存在当前浏览器'],
+      ['已记录交易', s.trades + ' 笔', '操作不为“未交易”的记录'],
+      ['实际盈亏合计', s.pnlCount ? (s.pnlTotal > 0 ? '+' : '') + money(s.pnlTotal) + ' 元' : '待填写', s.pnlCount ? '已填写盈亏 ' + s.pnlCount + ' 笔' : '只统计手工填写的实际盈亏'],
+      ['平均单笔盈亏', s.pnlCount ? (s.pnlAverage > 0 ? '+' : '') + money(s.pnlAverage) + ' 元' : '待填写', '仅按有实际盈亏数据的交易计算'],
+      ['止损纪律执行率', s.adherenceRate === null ? '待记录' : s.adherenceRate.toFixed(1) + '%', s.adherenceCount ? '已记录是否遵守止损 ' + s.adherenceCount + ' 笔' : '不适用/未填写不纳入分母']
+    ];
+    node.innerHTML = cards.map(function (x) {
+      return '<div class="col-6 col-xl"><div class="insight-card h-100"><div class="mini-label">' + esc(x[0]) + '</div><div class="fs-6 fw-bold">' + esc(x[1]) + '</div><div class="mini-label mt-1">' + esc(x[2]) + '</div></div></div>';
+    }).join('');
+  }
   function planChecks(stock, quote, primary, eligible) {
     var checks = [], raw = quote && Number(quote.time), ts = raw > 0 ? new Date(raw < 1000000000000 ? raw * 1000 : raw).getTime() : NaN;
     var quoteFresh = Number.isFinite(ts) && Date.now() - ts <= 5 * 86400000 && Date.now() - ts >= -5 * 60000;
@@ -226,6 +255,7 @@
       if (r.primary.kind === 'add-ready' || r.primary.kind === 'add-watch') counts.add++;
     });
     renderRiskBudgetSummary();
+    renderReviewMetrics();
     summary.innerHTML = [
       ['条件较齐备', counts.ready, '仍需人工复核'],
       ['等待确认', counts.watch, '条件未齐或未触发'],
@@ -277,6 +307,10 @@
         '<label class="form-label mini-label mb-1" for="review-date-' + esc(codeOf(s.code)) + '">交易日期</label><input class="form-control form-control-sm mb-2" type="date" id="review-date-' + esc(codeOf(s.code)) + '" data-review-field="date" value="' + esc(review.date || '') + '">' +
         '<label class="form-label mini-label mb-1">交易理由 / 当时假设</label><textarea class="form-control form-control-sm mb-2" rows="2" maxlength="1200" data-review-field="thesis" placeholder="为什么操作？周期、估值、安全边际和买入条件是什么？">' + esc(review.thesis || '') + '</textarea>' +
         '<label class="form-label mini-label mb-1">执行与风险控制</label><textarea class="form-control form-control-sm mb-2" rows="2" maxlength="1200" data-review-field="execution" placeholder="是否按计划执行？仓位、价格、纪律是否偏离？">' + esc(review.execution || '') + '</textarea>' +
+        '<label class="form-label mini-label mb-1">计划风险快照（保存时自动记录）</label><div class="mini-label mb-2">' + (review.plannedRiskAmount !== undefined && review.plannedRiskAmount !== null ? '计划风险 ¥' + money(review.plannedRiskAmount) + ' · 参考股数 ' + Number(review.plannedShares || 0).toLocaleString('zh-CN') + ' 股 · 入场 ' + money(review.plannedEntry) + ' · 止损 ' + money(review.plannedStop) : '保存复盘时尝试记录当前仓位测算；参数不完整则标记为未计算') + '</div>' +
+        '<label class="form-label mini-label mb-1">实际盈亏（元，可填已实现盈亏）</label><input class="form-control form-control-sm mb-2" type="number" step="0.01" data-review-field="actualPnl" value="' + (review.actualPnl === undefined || review.actualPnl === null ? '' : esc(review.actualPnl)) + '" placeholder="未平仓或未知可留空">' +
+        '<label class="form-label mini-label mb-1">止损纪律</label><select class="form-select form-select-sm mb-2" data-review-field="stopAdherence"><option value=""' + (!review.stopAdherence ? ' selected' : '') + '>未记录</option><option value="遵守"' + (review.stopAdherence === '遵守' ? ' selected' : '') + '>遵守止损纪律</option><option value="未遵守"' + (review.stopAdherence === '未遵守' ? ' selected' : '') + '>未遵守止损纪律</option><option value="不适用"' + (review.stopAdherence === '不适用' ? ' selected' : '') + '>未触发 / 不适用</option></select>' +
+        '<label class="form-label mini-label mb-1">偏离计划原因</label><textarea class="form-control form-control-sm mb-2" rows="2" maxlength="1200" data-review-field="deviationReason" placeholder="如追价、提前卖出、未按止损执行；无偏离可留空">' + esc(review.deviationReason || '') + '</textarea>' +
         '<label class="form-label mini-label mb-1">结果与经验</label><textarea class="form-control form-control-sm mb-2" rows="2" maxlength="1200" data-review-field="lesson" placeholder="结果如何？哪些判断被验证，哪些需要修正？">' + esc(review.lesson || '') + '</textarea>' +
         '<div class="d-flex align-items-center gap-2"><button type="button" class="btn btn-sm btn-outline-primary" data-review-save="' + esc(codeOf(s.code)) + '">保存复盘</button><span class="mini-label" data-review-status>' + (review.savedAt ? '已保存 ' + esc(new Date(review.savedAt).toLocaleString('zh-CN')) : '尚未保存') + '</span></div>' +
         '<div class="mini-label mt-2">记录仅存当前浏览器 localStorage，不会上传到 GitHub；清除浏览器网站数据可能导致记录丢失。</div></div></details>';
@@ -447,9 +481,17 @@
       if (!panel || !code) return;
       var values = {};
       panel.querySelectorAll('[data-review-field]').forEach(function (field) { values[field.getAttribute('data-review-field')] = String(field.value || '').trim(); });
+      var row = state.rows.find(function (r) { return codeOf(r.stock.code) === code; });
+      var planned = row ? riskCalculation(row.stock, row, riskPlanFor(code, row.stock)) : { ready: false };
+      values.plannedRiskAmount = planned.ready ? planned.riskAmount : null;
+      values.plannedShares = planned.ready ? planned.shares : null;
+      values.plannedEntry = planned.ready ? planned.entry : null;
+      values.plannedStop = planned.ready ? planned.stop : null;
+      values.actualPnl = values.actualPnl === '' ? null : inputNumber(values.actualPnl);
       values.savedAt = new Date().toISOString();
       var status = panel.querySelector('[data-review-status]');
       if (saveReview(code, values)) {
+        renderReviewMetrics();
         if (status) status.textContent = '已保存 ' + new Date(values.savedAt).toLocaleString('zh-CN');
       } else if (status) status.textContent = '保存失败：浏览器存储不可用';
     });
@@ -482,6 +524,6 @@
   function onTab(target) {
     if (target === 'combat' && state.initialized && (!state.lastRun || Date.now() - state.lastRun > 180000)) run(false);
   }
-  root.StockCombat = { init: init, onTab: onTab, refresh: function () { return run(true); }, calculateRiskBudget: calculateRiskBudget };
+  root.StockCombat = { init: init, onTab: onTab, refresh: function () { return run(true); }, calculateRiskBudget: calculateRiskBudget, summarizeReviews: summarizeReviews };
   if (root.document) root.document.addEventListener('DOMContentLoaded', ensureUi);
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -4,8 +4,8 @@
   var state = { stocks: [], prices: {}, client: null, holdings: [], rows: [], initialized: false, loading: false, lastRun: 0, filter: 'all', error: '' };
   var $ = function (id) { return root.document.getElementById(id); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
-  function money(v) { return Number.isFinite(Number(v)) ? Number(v).toFixed(2) : '—'; }
-  function pct(v) { return Number.isFinite(Number(v)) ? (Number(v) > 0 ? '+' : '') + Number(v).toFixed(2) + '%' : '—'; }
+  function money(v) { return v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v)) ? Number(v).toFixed(2) : '—'; }
+  function pct(v) { return v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v)) ? (Number(v) > 0 ? '+' : '') + Number(v).toFixed(2) + '%' : '—'; }
   function codeOf(code) { return String(code || '').trim().toLowerCase(); }
   function quoteFor(code) { return state.prices[code] || state.prices[codeOf(code)] || null; }
   function statusClass(kind) { return ({ 't-buy':'combat-good','t-sell':'combat-warn','add-ready':'combat-good','add-watch':'combat-warn','risk':'combat-risk','data':'combat-data','watch':'combat-neutral' })[kind] || 'combat-neutral'; }
@@ -40,7 +40,7 @@
     rows.forEach(function (r) {
       if (r.primary.kind === 'risk') counts.risk++;
       else if (r.primary.kind === 'data') counts.data++;
-      else if (r.primary.kind === 'watch') counts.watch++;
+      else if (r.primary.kind === 'watch' || r.primary.kind === 'add-watch') counts.watch++;
       else counts.ready++;
       if (r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell')) counts.t++;
       if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) counts.add++;
@@ -70,7 +70,7 @@
       var badges = '<span class="combat-badge ' + statusClass(r.primary.kind) + '">' + esc(r.primary.status) + '</span>';
       if (r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell')) badges += '<span class="combat-badge ' + statusClass(r.t.kind) + '">' + esc(r.t.status) + '</span>';
       if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + esc(r.add.status) + ' ' + r.add.score + '/3</span>';
-      var reasons = (r.primary.reasons || []).concat(r.t && r.t.kind !== 'watch' ? r.t.reasons.slice(0, 2).map(function (x) { return '做T：' + x; }) : [], r.add && r.add.kind !== 'watch' ? r.add.reasons.slice(0, 2).map(function (x) { return '补仓：' + x; }) : []);
+      var reasons = (r.primary.reasons || []).concat(r.t && Array.isArray(r.t.reasons) ? r.t.reasons.slice(0, 2).map(function (x) { return '做T：' + x; }) : [], r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return '补仓：' + x; }) : []);
       if (!reasons.length) reasons = ['价格未到计划区，暂不触发操作条件'];
       var plan = [s.heavy ? '重仓 ' + money(s.heavy) : null, s.entry ? '入场 ' + money(s.entry) : null, s.tp1 ? '止盈1 ' + money(s.tp1) : null].filter(Boolean).join(' · ');
       var pnl = held && p !== null ? (p - Number(h.cost)) * qty : null;

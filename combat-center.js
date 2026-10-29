@@ -14,7 +14,7 @@
   }
   function planReviewLabel(stock) {
     var value = String(stock && stock.updDate || '').trim();
-    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return '计划复核日期未设置';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return '计划复核日期未设置';
     var parts = value.split('-').map(Number), date = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
     if (date.getUTCFullYear() !== parts[0] || date.getUTCMonth() !== parts[1] - 1 || date.getUTCDate() !== parts[2]) return '计划复核日期无效';
     var age = Math.floor((Date.now() - date.getTime()) / 86400000);

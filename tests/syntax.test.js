@@ -36,3 +36,17 @@ test('首页内嵌 JavaScript 均可通过语法解析', () => {
     );
   });
 });
+
+
+test('首页机器评分、研报评分和研报日期为独立可排序列', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
+  for (const key of ['researchMachine', 'researchReport', 'researchDate']) {
+    assert.match(html, new RegExp('data-sort="' + key + '"'), key + ' 缺少独立表头');
+    assert.match(dashboard, new RegExp("case '" + key + "'"), key + ' 缺少独立排序值');
+  }
+  assert.match(dashboard, /function researchMachineHtml/);
+  assert.match(dashboard, /function researchReportHtml/);
+  assert.match(dashboard, /function researchDateHtml/);
+  assert.doesNotMatch(html, /data-sort="research"/);
+});

@@ -2,7 +2,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 global.TechInd = require('../indicators.js');
-const Signals = require('../trade-signals.js');
+require('../trade-signals.js');
+const Signals = global.StockTradeSignals;
 
 test('add-signal score includes RSI and MACD confirmations', () => {
   const bars = Array.from({ length: 120 }, (_, i) => {

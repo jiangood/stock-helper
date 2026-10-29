@@ -1,5 +1,8 @@
 (function () {
   const status = document.getElementById('network-status');
+  // The status indicator was removed from the page; skip UI updates when absent.
+  if (!status) return;
+
   function updateStatus() {
     const online = navigator.onLine;
     status.textContent = online ? '联网' : '离线';

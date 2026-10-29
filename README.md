@@ -33,7 +33,8 @@ python -m http.server 8089
 | `scripts/calibrate_research_score.js` | 用 17 份带评分卡明细的研报回归校准评分阈值（只读本地缓存，不联网） |
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
-| `static-quotes.js` | 浏览器端静态行情适配器；只读同源 JSON，失败时回退最近一次本机缓存，不直接访问行情供应商 |
+| `static-quotes.js` | 浏览器端静态行情适配器；只读同源 JSON，优先使用 IndexedDB 缓存并复用数据库连接，失败时回退 localStorage，不直接访问行情供应商 |
+| `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、IndexedDB 约定、静态部署下 SQL 数据库的适用边界与迁移要求 |
 | `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
 | `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
 | `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |

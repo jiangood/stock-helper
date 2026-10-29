@@ -63,6 +63,13 @@ function validBars(result, min = 10) {
       Number(bar.high) > 0 && Number(bar.low) > 0));
 }
 function quoteCode(code) { return StockQuotes.normalizeCode(code); }
+function isoWeekKey(date = new Date()) {
+  const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const week = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return d.getUTCFullYear() + '-W' + String(week).padStart(2, '0');
+}
 
 async function main() {
   const stocks = readJson(path.join(DATA, 'stocks.json'), []);
@@ -119,6 +126,8 @@ async function main() {
     let detail = previous.detail || null;
     let dailyAdjusted = previous.dailyAdjusted || null;
     let dailyRaw = previous.dailyRaw || null;
+    let weeklyAdjusted = previous.weeklyAdjusted || null;
+    let weeklyFetchedFor = previous.weeklyFetchedFor || null;
     let monthlyAdjusted = previous.monthlyAdjusted || null;
     let monthlyFetchedFor = previous.monthlyFetchedFor || null;
     let detailFresh = false;
@@ -142,6 +151,19 @@ async function main() {
     if (dayResults[1].status === 'fulfilled' && validBars(dayResults[1].value)) dailyRaw = dayResults[1].value;
     else console.warn(code + ': raw daily K-line unavailable; keeping cache if present.');
 
+    const nowWeek = isoWeekKey();
+    if (!weeklyAdjusted || weeklyFetchedFor !== nowWeek) {
+      try {
+        const value = await client.fetchKline(code, { period: 'week', count: 200, adjust: 'qfq', force: true });
+        if (validBars(value, 6)) {
+          weeklyAdjusted = value;
+          weeklyFetchedFor = nowWeek;
+        }
+      } catch (error) {
+        console.warn(code + ': weekly K-line unavailable; keeping cache if present (' + error.message + ')');
+      }
+    }
+
     const nowMonth = new Date().toISOString().slice(0, 7);
     if (!monthlyAdjusted || monthlyFetchedFor !== nowMonth) {
       try {
@@ -163,6 +185,8 @@ async function main() {
       detail,
       dailyAdjusted,
       dailyRaw,
+      weeklyAdjusted,
+      weeklyFetchedFor,
       monthlyAdjusted,
       monthlyFetchedFor
     };

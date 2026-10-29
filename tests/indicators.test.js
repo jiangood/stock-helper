@@ -38,3 +38,22 @@ test('MFI returns null latest when there are fewer than period + 1 bars', () => 
   assert.equal(result.latest, null);
   assert.deepEqual(result.series, []);
 });
+
+test('RSI uses Wilder smoothing and reports neutral for a flat series', () => {
+  const flat = TechInd.rsi(barsFromPrices(Array(20).fill(10)), 14);
+  assert.equal(flat.latest, 50);
+  const rising = TechInd.rsi(barsFromPrices(Array.from({ length: 20 }, (_, i) => 10 + i)), 14);
+  assert.equal(rising.latest, 100);
+  const short = TechInd.rsi(barsFromPrices([10, 11, 12]), 14);
+  assert.equal(short.latest, null);
+});
+
+test('MACD returns DIF, DEA and histogram after enough daily bars', () => {
+  const prices = Array.from({ length: 60 }, (_, i) => 10 + i * 0.2 + Math.sin(i / 3));
+  const result = TechInd.macd(barsFromPrices(prices));
+  assert.ok(result.latest);
+  assert.ok(Number.isFinite(result.latest.dif));
+  assert.ok(Number.isFinite(result.latest.dea));
+  assert.ok(Number.isFinite(result.latest.histogram));
+  assert.equal(TechInd.macd(barsFromPrices([10, 11, 12])).latest, null);
+});

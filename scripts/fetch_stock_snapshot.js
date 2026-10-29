@@ -142,6 +142,7 @@ async function main() {
     console.log(changed ? 'Marked quote snapshot stale.' : 'No new China market date; quote snapshot unchanged.');
     // 行情日未推进时缓存不变，但仍刷新板块月线汇总，确保文件存在且与缓存一致。
     sectorMonthly.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
+    combatKline.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
     console.log('Skipping detail and K-line collection because the provider has not published a quote for today in China.');
     return;
   }

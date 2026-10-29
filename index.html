@@ -1,6 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-bs-theme="dark">
+<html lang="zh-CN">
 <head>
+<script>
+  // Follow the operating system's light/dark appearance preference.
+  (function () {
+    const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    function applyColorScheme() {
+      document.documentElement.setAttribute('data-bs-theme', colorScheme.matches ? 'dark' : 'light');
+    }
+    applyColorScheme();
+    if (typeof colorScheme.addEventListener === 'function') {
+      colorScheme.addEventListener('change', applyColorScheme);
+    } else if (typeof colorScheme.addListener === 'function') {
+      colorScheme.addListener(applyColorScheme);
+    }
+  })();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>股票池监控</title>

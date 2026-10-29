@@ -42,7 +42,7 @@
     profileLookback: 120
   };
 
-  let chartTab = 'day';
+  let chartTab = 'month';
   let chart = null;
   let chartKey = '';
   const klineCache = {};
@@ -232,6 +232,7 @@
       RESEARCH_SCORE = null;
     }
     renderResearchScore();
+    if (DETAIL) renderDiscipline(DETAIL);
   }
 
   async function loadQuote(force) {

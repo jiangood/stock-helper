@@ -279,6 +279,7 @@
     renderAdd(DETAIL);
     renderDiscipline(DETAIL);
     renderResearchScore();
+    renderDecisionSummary(DETAIL);
     updateCalc();
   }
 
@@ -516,6 +517,7 @@
       apply52WeekFallback(klineCache.day.bars);
       renderDiscipline(DETAIL);
       renderAdd(DETAIL);
+      renderDecisionSummary(DETAIL);
     } catch (e) {
       /* 日 K 失败不影响主流程 */
       DAY_FAILED = true;
@@ -532,6 +534,7 @@
       historyAt = Date.now();
       renderHistoryRange();
       renderDiscipline(DETAIL);
+      renderDecisionSummary(DETAIL);
     } catch (e) {
       /* 月 K 失败不影响主流程 */
       HISTORY = { bars: [] };
@@ -841,6 +844,54 @@
     return price >= value
       ? `<span class="badge ${key === 'tp1' ? 'text-bg-warning' : 'text-bg-primary'}">已达成</span>`
       : '<span class="text-body-secondary">未达成</span>';
+  }
+
+  /* ────────────────────────── 渲染：交易纪律摘要 ────────────────────────── */
+
+  function renderDecisionSummary(d) {
+    const grid = $('decision-grid');
+    const note = $('decision-note');
+    if (!grid || !note) return;
+    if (!d || typeof Croc === 'undefined') {
+      grid.textContent = '行情数据尚未就绪，暂无法汇总。';
+      return;
+    }
+
+    const quote = Object.assign({}, d, { pe: isNum(d.peTtm) ? d.peTtm : d.pe });
+    const evaluation = Croc.evaluate(PLAN || {}, quote);
+    const eligibility = Croc.buyEligibility(PLAN || {}, quote);
+    const screen = Croc.screen({ name: evaluation.name || (PLAN && PLAN.name) || '', code: CODE }, quote);
+    const zoneLabels = { heavy: '已进入重仓价区间', entry: '已进入入场价区间', above: '尚高于入场价', unknown: '未设置有效买入价位' };
+    const zoneTone = evaluation.zone === 'heavy' || evaluation.zone === 'entry' ? 'ok' : evaluation.zone === 'above' ? 'warn' : 'neutral';
+    const gateTone = eligibility.eligible ? 'ok' : eligibility.reason.includes('缺失') ? 'warn' : 'bad';
+    const screenTone = screen.allPass ? 'ok' : screen.failed.length ? 'bad' : 'warn';
+    const position = isNum(d.low52) && isNum(d.high52) && d.high52 > d.low52
+      ? Math.min(100, Math.max(0, (d.price - d.low52) / (d.high52 - d.low52) * 100)) : null;
+    const status = (tone, text) => '<span class="decision-status ' + tone + '">' + esc(text) + '</span>';
+    const item = (label, value, detail, tone) => '<div class="decision-item"><div class="decision-label">' + esc(label)
+      + '</div><div class="decision-value">' + (tone ? status(tone, value) : esc(value))
+      + '</div><div class="decision-note">' + esc(detail || '') + '</div></div>';
+
+    const planLabel = !PLAN ? '未纳入股票池' : (zoneLabels[evaluation.zone] || '计划区间未知');
+    const planDetail = !PLAN ? '没有入场价与重仓价计划' : [
+      isNum(PLAN.entry) ? '入场 ' + fmtNum(PLAN.entry) : '入场价未设置',
+      isNum(PLAN.heavy) ? '重仓 ' + fmtNum(PLAN.heavy) : '重仓价未设置',
+      position == null ? '52 周位置待核实' : '52 周区间 ' + position.toFixed(0) + '%'
+    ].join(' · ');
+    const gateLabel = eligibility.eligible ? '未触发硬性禁买条件' : eligibility.reason;
+    const gateDetail = eligibility.eligible
+      ? '仅代表 ST / 盈利数据闸门未触发，不代表估值或基本面合格'
+      : '先核对该项；数据缺失时不应视为通过';
+    const screenLabel = screen.allPass ? '5 项筛选全部通过' : '已通过 ' + screen.passed + '/' + screen.total + ' 项';
+    const screenDetail = [
+      screen.failed.length ? '未通过：' + screen.failed.map(c => ({ st: 'ST', loss: '盈利', pe: 'PE≤30', cap: '市值≤200亿', pb: 'PB<1' }[c.key] || c.label).join('、') : '',
+      screen.pending.length ? '待核实：' + screen.pending.map(c => ({ loss: '盈利', pe: 'PE', cap: '市值', pb: 'PB' }[c.key] || c.label).join('、') : ''
+    ].filter(Boolean).join('；') || '5 项量化筛选均有数据；仍需人工核对企业质量与周期风险';
+
+    grid.innerHTML = item('计划区间', planLabel, planDetail, zoneTone)
+      + item('硬性买入闸门', gateLabel, gateDetail, gateTone)
+      + item('选股纪律', screenLabel, screenDetail, screenTone);
+    note.textContent = '摘要沿用鳄鱼纪律的现有规则，不生成新的综合买入评分。价格进入计划区间不等于应立即交易；人工判断、数据日期与企业基本面仍需单独核对。';
   }
 
   /* ────────────────────────── 渲染：鳄鱼纪律 ────────────────────────── */

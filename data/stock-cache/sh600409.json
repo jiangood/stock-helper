@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600409",
-  "updatedAt": "2026-10-29T08:24:51.605Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "三友化工",
     "price": 5.39,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 5.57,
-        "close": 5.47,
-        "high": 5.66,
-        "low": 5.47,
-        "volume": 188308
-      },
       {
         "time": "2025-10-20",
         "open": 5.52,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz300470",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "中密控股",
     "price": 27.65,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 36.88,
-        "close": 35.95,
-        "high": 36.91,
-        "low": 35.82,
-        "volume": 30883
-      },
       {
         "time": "2025-10-20",
         "open": 35.72,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000554",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "泰山石油",
     "price": 6.45,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 6.76,
-        "close": 6.78,
-        "high": 6.87,
-        "low": 6.75,
-        "volume": 165654
-      },
       {
         "time": "2025-10-20",
         "open": 6.78,

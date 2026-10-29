@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh603639",
-  "updatedAt": "2026-10-29T08:35:44.921Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "海利尔",
     "price": 9.79,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 14.8,
-        "close": 14.5,
-        "high": 14.8,
-        "low": 14.46,
-        "volume": 18439
-      },
       {
         "time": "2025-10-20",
         "open": 14.6,

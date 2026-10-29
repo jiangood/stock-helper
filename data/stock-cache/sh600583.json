@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600583",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "海油工程",
     "price": 6.54,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 5.46,
-        "close": 5.39,
-        "high": 5.48,
-        "low": 5.37,
-        "volume": 349220
-      },
       {
         "time": "2025-10-20",
         "open": 5.4,

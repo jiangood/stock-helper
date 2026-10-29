@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh688750",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "金天钛业",
     "price": 13.04,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 21.09,
-        "close": 20.37,
-        "high": 21.2,
-        "low": 20.36,
-        "volume": 2767599
-      },
       {
         "time": "2025-10-20",
         "open": 20.57,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600328",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "中盐化工",
     "price": 5.3,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 7.84,
-        "close": 7.75,
-        "high": 7.9,
-        "low": 7.71,
-        "volume": 134117
-      },
       {
         "time": "2025-10-20",
         "open": 7.8,

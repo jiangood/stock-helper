@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh603977",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "国泰集团",
     "price": 9.75,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 12.78,
-        "close": 12.37,
-        "high": 13.03,
-        "low": 12.34,
-        "volume": 137607
-      },
       {
         "time": "2025-10-20",
         "open": 12.37,

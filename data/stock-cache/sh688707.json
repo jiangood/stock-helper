@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh688707",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "振华新材",
     "price": 9.44,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 14.33,
-        "close": 13.67,
-        "high": 14.6,
-        "low": 13.65,
-        "volume": 8461854
-      },
       {
         "time": "2025-10-20",
         "open": 13.75,

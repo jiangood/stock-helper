@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002136",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "安 纳 达",
     "price": 10.07,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 11.05,
-        "close": 11.06,
-        "high": 11.33,
-        "low": 11.04,
-        "volume": 46144
-      },
       {
         "time": "2025-10-20",
         "open": 11.11,

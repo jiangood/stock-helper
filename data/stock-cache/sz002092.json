@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002092",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "中泰化学",
     "price": 3.95,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 4.62,
-        "close": 4.55,
-        "high": 4.68,
-        "low": 4.55,
-        "volume": 325963
-      },
       {
         "time": "2025-10-20",
         "open": 4.58,

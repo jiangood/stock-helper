@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000629",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "钒钛股份",
     "price": 2.59,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 3.03,
-        "close": 2.97,
-        "high": 3.09,
-        "low": 2.96,
-        "volume": 1313851
-      },
       {
         "time": "2025-10-20",
         "open": 3,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601568",
-  "updatedAt": "2026-10-29T08:24:51.605Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "北元化工",
     "price": 3.43,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 3.95,
-        "close": 3.94,
-        "high": 3.99,
-        "low": 3.94,
-        "volume": 172086
-      },
       {
         "time": "2025-10-20",
         "open": 3.95,

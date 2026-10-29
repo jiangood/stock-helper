@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002430",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "杭氧股份",
     "price": 25.33,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 25.69,
-        "close": 24.26,
-        "high": 25.87,
-        "low": 24.19,
-        "volume": 149219
-      },
       {
         "time": "2025-10-20",
         "open": 24.59,

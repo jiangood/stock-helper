@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002556",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "辉隆股份",
     "price": 4.21,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 5.52,
-        "close": 5.6,
-        "high": 5.74,
-        "low": 5.51,
-        "volume": 287390
-      },
       {
         "time": "2025-10-20",
         "open": 5.63,

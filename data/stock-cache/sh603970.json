@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh603970",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "中农立华",
     "price": 9.73,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 13.61,
-        "close": 13.48,
-        "high": 13.74,
-        "low": 13.48,
-        "volume": 21297
-      },
       {
         "time": "2025-10-20",
         "open": 13.59,

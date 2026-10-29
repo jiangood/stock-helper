@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600500",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "中化国际",
     "price": 4.14,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 4.15,
-        "close": 4.1,
-        "high": 4.19,
-        "low": 4.09,
-        "volume": 216542
-      },
       {
         "time": "2025-10-20",
         "open": 4.11,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600459",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "贵研铂业",
     "price": 16,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 17.54,
-        "close": 16.93,
-        "high": 17.79,
-        "low": 16.85,
-        "volume": 284794
-      },
       {
         "time": "2025-10-20",
         "open": 16.6,

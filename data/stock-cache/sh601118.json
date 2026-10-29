@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601118",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T09:54:34.311Z",
   "detail": {
     "name": "海南橡胶",
     "price": 5.09,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 5.45,
-        "close": 5.41,
-        "high": 5.52,
-        "low": 5.38,
-        "volume": 498659
-      },
       {
         "time": "2025-10-20",
         "open": 5.45,

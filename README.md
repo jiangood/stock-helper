@@ -5,7 +5,7 @@
 - **在线首页：** [https://jiangood.github.io/stock-helper/](https://jiangood.github.io/stock-helper/)
 - **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
 
-首页提供股票池监控看板，支持实时行情、搜索、分组和纪律筛选；个股详情页可查看行情、K 线、估值与交易辅助面板。
+首页提供股票池监控看板，支持实时行情、搜索、分组和纪律筛选；个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
 
 ## 本地预览
 

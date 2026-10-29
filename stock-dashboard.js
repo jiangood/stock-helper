@@ -574,6 +574,7 @@ function toggleTheme() {
         tab.setAttribute('aria-current', active ? 'page' : 'false');
       });
       $('stock-toolbar').classList.toggle('d-none', target !== 'stocks');
+      if (window.StockCombat) window.StockCombat.onTab(target);
       if (window.StockBusiness) window.StockBusiness.onTab(target);
       if (window.StockGlobalAssets) window.StockGlobalAssets.onTab(target);
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -585,5 +586,6 @@ function toggleTheme() {
   await loadStocks();
   if (window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);
+  if (window.StockCombat) window.StockCombat.init(STOCKS, priceData, quotes);
   scheduleRefresh();
 })();

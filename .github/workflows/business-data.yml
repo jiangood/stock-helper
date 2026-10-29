@@ -2,8 +2,8 @@ name: Fetch commodity business data
 
 on:
   schedule:
-    # Four refresh windows on weekdays (UTC); covers China daytime and evening.
-    - cron: "15 2,6,8,10 * * 1-5"
+    # Value-investing cadence: one daily snapshot after the China daytime session.
+    - cron: "25 8 * * 1-5"
   workflow_dispatch:
   push:
     branches: [master, main]

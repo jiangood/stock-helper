@@ -49,6 +49,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/stock-quotes.json data/index-cache.json data/stock-cache
           git commit -m "Refresh value-investing stock cache"
-          git fetch origin "$GITHUB_REF_NAME"
-          git rebase -X theirs "origin/$GITHUB_REF_NAME"
-          git push
+          for attempt in 1 2 3; do
+            git fetch origin "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"
+            git rebase -X theirs "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"; then
+              exit 0
+            fi
+            echo "Push raced with another commit (attempt $attempt); retrying."
+          done
+          echo "Unable to publish stock cache after 3 attempts." >&2
+          exit 1

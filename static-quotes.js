@@ -51,49 +51,63 @@
       if (global.localStorage) global.localStorage.setItem('stock-helper-cache:' + key, JSON.stringify(value));
     } catch (_) { /* large history files may exceed localStorage quota */ }
   }
-  function indexedDbGet(key) {
-    return new Promise(resolve => {
-      if (!global.indexedDB) return resolve(null);
+  // Keep one IndexedDB connection per page. Reopening/closing it for every
+  // stock and K-line read adds avoidable latency on detail and combat pages.
+  let indexedDbPromise = null;
+  function openIndexedDb() {
+    if (!global.indexedDB) return Promise.resolve(null);
+    if (indexedDbPromise) return indexedDbPromise;
+    indexedDbPromise = new Promise(resolve => {
       let request;
       try { request = global.indexedDB.open('stock-helper-static-cache', 1); }
-      catch (_) { return resolve(null); }
+      catch (_) { indexedDbPromise = null; return resolve(null); }
       request.onupgradeneeded = () => {
-        try { if (!request.result.objectStoreNames.contains('snapshots')) request.result.createObjectStore('snapshots'); } catch (_) {}
+        try {
+          if (!request.result.objectStoreNames.contains('snapshots')) {
+            request.result.createObjectStore('snapshots');
+          }
+        } catch (_) {}
       };
-      request.onerror = () => resolve(null);
+      request.onerror = () => { indexedDbPromise = null; resolve(null); };
+      request.onblocked = () => { indexedDbPromise = null; resolve(null); };
       request.onsuccess = () => {
         const db = request.result;
-        try {
-          const tx = db.transaction('snapshots', 'readonly');
-          const get = tx.objectStore('snapshots').get(key);
-          get.onsuccess = () => resolve(get.result || null);
-          get.onerror = () => resolve(null);
-          tx.oncomplete = () => db.close();
-          tx.onerror = () => { db.close(); resolve(null); };
-        } catch (_) { try { db.close(); } catch (_) {} resolve(null); }
+        db.onversionchange = () => {
+          try { db.close(); } catch (_) {}
+          indexedDbPromise = null;
+        };
+        resolve(db);
       };
     });
+    return indexedDbPromise;
   }
-  function indexedDbSet(key, value) {
+  async function indexedDbGet(key) {
+    const db = await openIndexedDb();
+    if (!db) return null;
     return new Promise(resolve => {
-      if (!global.indexedDB) return resolve(false);
-      let request;
-      try { request = global.indexedDB.open('stock-helper-static-cache', 1); }
-      catch (_) { return resolve(false); }
-      request.onupgradeneeded = () => {
-        try { if (!request.result.objectStoreNames.contains('snapshots')) request.result.createObjectStore('snapshots'); } catch (_) {}
-      };
-      request.onerror = () => resolve(false);
-      request.onsuccess = () => {
-        const db = request.result;
-        try {
-          const tx = db.transaction('snapshots', 'readwrite');
-          tx.objectStore('snapshots').put(value, key);
-          tx.oncomplete = () => { db.close(); resolve(true); };
-          tx.onerror = () => { db.close(); resolve(false); };
-          tx.onabort = () => { db.close(); resolve(false); };
-        } catch (_) { try { db.close(); } catch (_) {} resolve(false); }
-      };
+      try {
+        const tx = db.transaction('snapshots', 'readonly');
+        const get = tx.objectStore('snapshots').get(key);
+        let value = null;
+        get.onsuccess = () => { value = get.result || null; };
+        get.onerror = () => resolve(null);
+        tx.oncomplete = () => resolve(value);
+        tx.onerror = () => resolve(null);
+        tx.onabort = () => resolve(null);
+      } catch (_) { resolve(null); }
+    });
+  }
+  async function indexedDbSet(key, value) {
+    const db = await openIndexedDb();
+    if (!db) return false;
+    return new Promise(resolve => {
+      try {
+        const tx = db.transaction('snapshots', 'readwrite');
+        tx.objectStore('snapshots').put(value, key);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+        tx.onabort = () => resolve(false);
+      } catch (_) { resolve(false); }
     });
   }
   async function cacheGet(key) {

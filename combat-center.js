@@ -107,6 +107,35 @@
     if (entry === null) entry = inputNumber(stock && stock.entry);
     return { entry: entry, stop: inputNumber(saved.stop) };
   }
+  function calculateRiskBudget(params) {
+    params = params || {};
+    var equity = inputNumber(params.equity), cash = inputNumber(params.cash), tradePct = inputNumber(params.tradePct);
+    var portfolioPct = inputNumber(params.portfolioPct), singlePct = inputNumber(params.singlePct);
+    var entry = inputNumber(params.entry), stop = inputNumber(params.stop);
+    var exposure = inputNumber(params.totalExposure), positionValue = inputNumber(params.positionValue);
+    if (equity === null || equity <= 0 || cash === null || cash < 0 ||
+        tradePct === null || tradePct <= 0 || tradePct > 100 ||
+        portfolioPct === null || portfolioPct <= 0 || portfolioPct > 100 ||
+        singlePct === null || singlePct <= 0 || singlePct > 100 ||
+        entry === null || entry <= 0 || stop === null || stop <= 0 || stop >= entry ||
+        exposure === null || exposure < 0 || positionValue === null || positionValue < 0) {
+      return { ready: false, message: '风险参数不完整或无效；止损价必须低于入场价。' };
+    }
+    var riskAmount = equity * tradePct / 100, riskPerShare = entry - stop;
+    var caps = [
+      { shares: Math.floor(riskAmount / riskPerShare / 100) * 100, label: '单笔风险预算' },
+      { shares: Math.floor(cash / entry / 100) * 100, label: '可用现金' },
+      { shares: Math.floor(Math.max(0, equity * portfolioPct / 100 - exposure) / entry / 100) * 100, label: '组合持仓上限' },
+      { shares: Math.floor(Math.max(0, equity * singlePct / 100 - positionValue) / entry / 100) * 100, label: '单股持仓上限' }
+    ];
+    caps.sort(function (a, b) { return a.shares - b.shares; });
+    var limiting = caps[0], shares = Math.max(0, limiting.shares);
+    return {
+      ready: true, shares: shares, cost: shares * entry, lossAtStop: shares * riskPerShare,
+      riskAmount: riskAmount, cap: limiting.label, entry: entry, stop: stop,
+      message: shares > 0 ? '最大参考股数 ' + shares.toLocaleString('zh-CN') + ' 股 · 参考金额 ¥' + money(shares * entry) + ' · 止损价情景损失 ¥' + money(shares * riskPerShare) + ' · 约束：' + limiting.label : '当前参数下可计算股数为 0；不要为凑出买入额度而放宽纪律。'
+    };
+  }
   function riskCalculation(stock, row, plan) {
     var equity = settingNumber('equity'), cash = settingNumber('cash'), tradePct = settingNumber('tradePct');
     var portfolioPct = settingNumber('portfolioPct'), singlePct = settingNumber('singlePct');
@@ -121,17 +150,11 @@
     if (stop === null || stop <= 0 || entry !== null && stop >= entry) missing.push('低于入场价的止损价');
     if (!exposure.complete) missing.push('完整且较新的持仓行情');
     if (missing.length) return { ready: false, message: '暂不计算：请补齐' + missing.join('、') };
-    var riskAmount = equity * tradePct / 100, riskPerShare = entry - stop;
-    var riskShares = Math.floor(riskAmount / riskPerShare / 100) * 100;
-    var cashShares = Math.floor(cash / entry / 100) * 100;
-    var currentValue = exposure.byCode[codeOf(stock.code)] || 0;
-    var portfolioRoom = Math.max(0, equity * portfolioPct / 100 - exposure.total);
-    var singleRoom = Math.max(0, equity * singlePct / 100 - currentValue);
-    var portfolioShares = Math.floor(portfolioRoom / entry / 100) * 100;
-    var singleShares = Math.floor(singleRoom / entry / 100) * 100;
-    var shares = Math.max(0, Math.min(riskShares, cashShares, portfolioShares, singleShares));
-    var cap = shares === riskShares ? '单笔风险预算' : shares === cashShares ? '可用现金' : shares === portfolioShares ? '组合持仓上限' : '单股持仓上限';
-    return { ready: true, shares: shares, cost: shares * entry, lossAtStop: shares * riskPerShare, riskAmount: riskAmount, cap: cap, message: shares > 0 ? '最大参考股数 ' + shares.toLocaleString('zh-CN') + ' 股 · 参考金额 ¥' + money(shares * entry) + ' · 止损价情景损失 ¥' + money(shares * riskPerShare) + ' · 约束：' + cap : '当前参数下可计算股数为 0；不要为凑出买入额度而放宽纪律。' };
+    return calculateRiskBudget({
+      equity: equity, cash: cash, tradePct: tradePct, portfolioPct: portfolioPct, singlePct: singlePct,
+      entry: entry, stop: stop, totalExposure: exposure.total,
+      positionValue: exposure.byCode[codeOf(stock.code)] || 0
+    });
   }
   function loadReviews() {
     try {
@@ -459,6 +482,6 @@
   function onTab(target) {
     if (target === 'combat' && state.initialized && (!state.lastRun || Date.now() - state.lastRun > 180000)) run(false);
   }
-  root.StockCombat = { init: init, onTab: onTab, refresh: function () { return run(true); } };
+  root.StockCombat = { init: init, onTab: onTab, refresh: function () { return run(true); }, calculateRiskBudget: calculateRiskBudget };
   if (root.document) root.document.addEventListener('DOMContentLoaded', ensureUi);
 })(typeof window !== 'undefined' ? window : globalThis);

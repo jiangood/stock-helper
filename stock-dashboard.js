@@ -536,30 +536,17 @@ function applyFilter() {
   });
 })();
 
-(function bindBottomTabs() {
-  document.querySelectorAll('.bottom-tab').forEach(function (button) {
-    button.addEventListener('click', function () {
-      const target = button.dataset.target;
-      document.querySelectorAll('[data-pane]').forEach(function (pane) {
-        pane.classList.toggle('d-none', pane.dataset.pane !== target);
-      });
-      document.querySelectorAll('.bottom-tab').forEach(function (tab) {
-        const active = tab.dataset.target === target;
-        tab.classList.toggle('active', active);
-        tab.setAttribute('aria-current', active ? 'page' : 'false');
-      });
-      $('stock-toolbar').classList.toggle('d-none', target !== 'stocks');
-      if (window.StockCombat) window.StockCombat.onTab(target);
-      if (window.StockBusiness) window.StockBusiness.onTab(target);
-      if (window.StockGlobalAssets) window.StockGlobalAssets.onTab(target);
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    });
-  });
-})();
+// 页面导航由 index.html / combat.html / market.html 的独立 URL 负责，不再在单页内切换 tabs。
 
 (async function init() {
   await loadStocks();
   if (window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
   await loadPrices(false);
   if (window.StockCombat) window.StockCombat.init(STOCKS, priceData, quotes);
+  const page = document.body.dataset.page || 'stocks';
+  if (page === 'combat' && window.StockCombat) window.StockCombat.onTab('combat');
+  if (page === 'market') {
+    if (window.StockBusiness) window.StockBusiness.onTab('market');
+    if (window.StockGlobalAssets) window.StockGlobalAssets.onTab('market');
+  }
 })();

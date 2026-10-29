@@ -112,9 +112,6 @@ async function main() {
     status: Object.keys(freshQuotes).length ? 'ok' : 'stale',
     quotes
   };
-  const quoteChanged = writeIfChanged(QUOTES_FILE, quotePayload, true);
-  console.log(quoteChanged ? 'Updated data/stock-quotes.json' : 'Quotes unchanged; kept previous snapshot.');
-
   fs.mkdirSync(CACHE_DIR, { recursive: true });
   const results = await mapLimit(codes, MAX_CONCURRENCY, async code => {
     const file = path.join(CACHE_DIR, code + '.json');
@@ -178,6 +175,9 @@ async function main() {
   if (good.length < Math.ceil(codes.length * 0.7)) {
     throw new Error('Too few valid stock caches; preserving existing data where possible.');
   }
+
+  const quoteChanged = writeIfChanged(QUOTES_FILE, quotePayload, true);
+  console.log(quoteChanged ? 'Updated data/stock-quotes.json' : 'Quotes unchanged; kept previous snapshot.');
 
   const previousIndex = readJson(INDEX_FILE, { monthly: {} });
   const monthly = { ...(previousIndex.monthly || {}) };

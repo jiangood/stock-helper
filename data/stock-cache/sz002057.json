@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002057",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中钢天源",
     "price": 7.49,
@@ -12,10 +12,10 @@
     "high": 7.57,
     "low": 7.45,
     "avg": 7.5,
-    "volume": 45973,
-    "amount": 34458568,
+    "volume": 46131,
+    "amount": 34576916,
     "turnover": 0.61,
-    "volumeRatio": 1.43,
+    "volumeRatio": 1.4,
     "amplitude": 1.58,
     "limitUp": 8.35,
     "limitDown": 6.83,
@@ -39,7 +39,7 @@
     "floatShares": 753256924,
     "totalCap": 5646588957.940001,
     "floatCap": 5641894360.76,
-    "time": 1793240073000,
+    "time": 1793240106000,
     "code": "sz002057"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 7.49,
         "high": 7.57,
         "low": 7.45,
-        "volume": 45973
+        "volume": 46058
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 7.49,
         "high": 7.57,
         "low": 7.45,
-        "volume": 45973
+        "volume": 46131
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 7.49,
         "high": 7.88,
         "low": 7.45,
-        "volume": 460284
+        "volume": 460442
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh688707",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "振华新材",
     "price": 9.63,
@@ -12,10 +12,10 @@
     "high": 9.8,
     "low": 9.6,
     "avg": 9.65,
-    "volume": 16418,
-    "amount": 15847812,
+    "volume": 16506,
+    "amount": 15932725,
     "turnover": 0.32,
-    "volumeRatio": 1.63,
+    "volumeRatio": 1.64,
     "amplitude": 2.04,
     "limitUp": 11.76,
     "limitDown": 7.84,
@@ -39,7 +39,7 @@
     "floatShares": 508740205,
     "totalCap": 4899168174.150001,
     "floatCap": 4899168174.150001,
-    "time": 1793240048000,
+    "time": 1793240093000,
     "code": "sh688707"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 9.63,
         "high": 9.8,
         "low": 9.6,
-        "volume": 1641756
+        "volume": 1650568
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 9.63,
         "high": 9.8,
         "low": 9.6,
-        "volume": 1641756
+        "volume": 1650568
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 9.63,
         "high": 10.05,
         "low": 9.58,
-        "volume": 14443638
+        "volume": 14452450
       }
     ]
   },
@@ -6179,7 +6179,7 @@
         "close": 9.63,
         "high": 11.48,
         "low": 9.15,
-        "volume": 122885029
+        "volume": 122893441
       }
     ]
   },

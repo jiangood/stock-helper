@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600500",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中化国际",
     "price": 4.22,
@@ -10,13 +10,13 @@
     "todayChange": -2.09,
     "open": 4.29,
     "high": 4.34,
-    "low": 4.22,
+    "low": 4.21,
     "avg": 4.26,
-    "volume": 151769,
-    "amount": 64606576,
-    "turnover": 0.42,
-    "volumeRatio": 1.82,
-    "amplitude": 2.78,
+    "volume": 155095,
+    "amount": 66010214,
+    "turnover": 0.43,
+    "volumeRatio": 1.86,
+    "amplitude": 3.02,
     "limitUp": 4.74,
     "limitDown": 3.88,
     "pe": -26.95,
@@ -39,7 +39,7 @@
     "floatShares": 3588306303,
     "totalCap": 15142652598.66,
     "floatCap": 15142652598.66,
-    "time": 1793240061000,
+    "time": 1793240097000,
     "code": "sh600500"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 4.29,
-        "close": 4.23,
+        "close": 4.22,
         "high": 4.34,
-        "low": 4.22,
-        "volume": 151104
+        "low": 4.21,
+        "volume": 155095
       }
     ]
   },
@@ -4067,8 +4067,8 @@
         "open": 4.29,
         "close": 4.22,
         "high": 4.34,
-        "low": 4.22,
-        "volume": 151769
+        "low": 4.21,
+        "volume": 155093
       }
     ]
   },
@@ -5674,8 +5674,8 @@
         "open": 4.55,
         "close": 4.22,
         "high": 4.56,
-        "low": 4.22,
-        "volume": 1377521
+        "low": 4.21,
+        "volume": 1380847
       }
     ]
   },
@@ -7602,8 +7602,8 @@
         "open": 5.14,
         "close": 4.22,
         "high": 5.33,
-        "low": 4.22,
-        "volume": 7776021
+        "low": 4.21,
+        "volume": 7779347
       }
     ]
   },

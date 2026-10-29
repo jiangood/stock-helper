@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600299",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "安迪苏",
-    "price": 7.52,
+    "price": 7.51,
     "prevClose": 7.64,
-    "change": -0.12,
-    "todayChange": -1.57,
+    "change": -0.13,
+    "todayChange": -1.7,
     "open": 7.61,
     "high": 7.64,
     "low": 7.51,
     "avg": 7.55,
-    "volume": 77017,
-    "amount": 58134276,
+    "volume": 77297,
+    "amount": 58344681,
     "turnover": 0.25,
     "volumeRatio": 2.05,
     "amplitude": 1.7,
     "limitUp": 8.4,
     "limitDown": 6.88,
-    "pe": 12.8,
-    "peStatic": 20.06,
-    "peTtm": 17.56,
+    "pe": 12.78,
+    "peStatic": 20.03,
+    "peTtm": 17.53,
     "pb": 1.17,
     "roe": 4.55,
     "grossMargin": 28.3767869279,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 3079779257,
     "floatShares": 3079779257,
-    "totalCap": 23159940012.64,
-    "floatCap": 23159940012.64,
-    "time": 1793240064000,
+    "totalCap": 23129142220.07,
+    "floatCap": 23129142220.07,
+    "time": 1793240100000,
     "code": "sh600299"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 7.52,
         "high": 7.64,
         "low": 7.51,
-        "volume": 77017
+        "volume": 77297
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 7.52,
         "high": 7.64,
         "low": 7.51,
-        "volume": 77017
+        "volume": 77297
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 7.52,
         "high": 7.87,
         "low": 7.51,
-        "volume": 710040
+        "volume": 710320
       }
     ]
   },
@@ -7603,7 +7603,7 @@
         "close": 7.52,
         "high": 8.53,
         "low": 7.51,
-        "volume": 3232786
+        "volume": 3233066
       }
     ]
   },

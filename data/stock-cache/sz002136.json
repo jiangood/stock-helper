@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002136",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "安 纳 达",
-    "price": 10.38,
+    "price": 10.37,
     "prevClose": 10.36,
-    "change": 0.02,
-    "todayChange": 0.19,
+    "change": 0.01,
+    "todayChange": 0.1,
     "open": 10.31,
     "high": 10.44,
     "low": 10.28,
     "avg": 10.37,
-    "volume": 19957,
-    "amount": 20695990,
+    "volume": 20045,
+    "amount": 20787318,
     "turnover": 0.93,
-    "volumeRatio": 1.98,
+    "volumeRatio": 1.99,
     "amplitude": 1.54,
     "limitUp": 11.4,
     "limitDown": 9.32,
-    "pe": 24.79,
-    "peStatic": -24.11,
-    "peTtm": 104.74,
+    "pe": 24.77,
+    "peStatic": -24.08,
+    "peTtm": 104.64,
     "pb": 1.94,
     "roe": 6.05,
     "grossMargin": 12.5237774505,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 215020000,
     "floatShares": 214455760,
-    "totalCap": 2231907600,
-    "floatCap": 2226050788.8,
-    "time": 1793240058000,
+    "totalCap": 2229757400,
+    "floatCap": 2223906231.2,
+    "time": 1793240097000,
     "code": "sz002136"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.31,
-        "close": 10.38,
+        "close": 10.37,
         "high": 10.44,
         "low": 10.28,
-        "volume": 19957
+        "volume": 20045
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.31,
-        "close": 10.38,
+        "close": 10.37,
         "high": 10.44,
         "low": 10.28,
-        "volume": 19957
+        "volume": 20045
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 10.51,
-        "close": 10.38,
+        "close": 10.37,
         "high": 10.79,
         "low": 10.16,
-        "volume": 179622
+        "volume": 179710
       }
     ]
   },
@@ -7552,10 +7552,10 @@
       {
         "time": "2026-10-29",
         "open": 11.85,
-        "close": 10.38,
+        "close": 10.37,
         "high": 12.3,
         "low": 10.09,
-        "volume": 780247
+        "volume": 780335
       }
     ]
   },

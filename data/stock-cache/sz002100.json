@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002100",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "天康生物",
     "price": 7.67,
@@ -12,10 +12,10 @@
     "high": 7.85,
     "low": 7.65,
     "avg": 7.74,
-    "volume": 70350,
-    "amount": 54461625,
+    "volume": 70935,
+    "amount": 54910049,
     "turnover": 0.52,
-    "volumeRatio": 1.19,
+    "volumeRatio": 1.2,
     "amplitude": 2.59,
     "limitUp": 8.5,
     "limitDown": 6.96,
@@ -39,7 +39,7 @@
     "floatShares": 1365251515,
     "totalCap": 10471479120.05,
     "floatCap": 10471479120.05,
-    "time": 1793240058000,
+    "time": 1793240094000,
     "code": "sz002100"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 7.67,
         "high": 7.85,
         "low": 7.65,
-        "volume": 70350
+        "volume": 70923
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 7.67,
         "high": 7.85,
         "low": 7.65,
-        "volume": 70350
+        "volume": 70935
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 7.67,
         "high": 8.16,
         "low": 7.6,
-        "volume": 1031962
+        "volume": 1032547
       }
     ]
   },

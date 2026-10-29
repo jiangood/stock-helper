@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601568",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "北元化工",
     "price": 3.47,
@@ -12,9 +12,9 @@
     "high": 3.52,
     "low": 3.47,
     "avg": 3.49,
-    "volume": 48729,
-    "amount": 16989852,
-    "turnover": 0.12,
+    "volume": 49987,
+    "amount": 17426420,
+    "turnover": 0.13,
     "volumeRatio": 2.23,
     "amplitude": 1.42,
     "limitUp": 3.87,
@@ -39,7 +39,7 @@
     "floatShares": 3972222224,
     "totalCap": 13783611117.28,
     "floatCap": 13783611117.28,
-    "time": 1793240071000,
+    "time": 1793240107000,
     "code": "sh601568"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 3.52,
-        "close": 3.47,
+        "close": 3.48,
         "high": 3.52,
         "low": 3.47,
-        "volume": 48729
+        "volume": 49970
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 3.52,
-        "close": 3.47,
+        "close": 3.48,
         "high": 3.52,
         "low": 3.47,
-        "volume": 48729
+        "volume": 49970
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 3.52,
-        "close": 3.47,
+        "close": 3.48,
         "high": 3.61,
         "low": 3.47,
-        "volume": 358193
+        "volume": 359434
       }
     ]
   },
@@ -6264,10 +6264,10 @@
       {
         "time": "2026-10-29",
         "open": 3.54,
-        "close": 3.47,
+        "close": 3.48,
         "high": 3.66,
         "low": 3.44,
-        "volume": 2146466
+        "volume": 2147707
       }
     ]
   },

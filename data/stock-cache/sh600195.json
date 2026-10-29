@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600195",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中牧股份",
     "price": 6.08,
@@ -12,10 +12,10 @@
     "high": 6.16,
     "low": 6.05,
     "avg": 6.08,
-    "volume": 25555,
-    "amount": 15549996,
-    "turnover": 0.25,
-    "volumeRatio": 1.73,
+    "volume": 26799,
+    "amount": 16306351,
+    "turnover": 0.26,
+    "volumeRatio": 1.77,
     "amplitude": 1.81,
     "limitUp": 6.7,
     "limitDown": 5.48,
@@ -39,7 +39,7 @@
     "floatShares": 1021148260,
     "totalCap": 6208581420.8,
     "floatCap": 6208581420.8,
-    "time": 1793240077000,
+    "time": 1793240107000,
     "code": "sh600195"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 6.1,
-        "close": 6.09,
+        "close": 6.08,
         "high": 6.16,
         "low": 6.05,
-        "volume": 25553
+        "volume": 26799
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 6.1,
-        "close": 6.09,
+        "close": 6.08,
         "high": 6.16,
         "low": 6.05,
-        "volume": 25553
+        "volume": 26799
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 6.63,
-        "close": 6.09,
+        "close": 6.08,
         "high": 6.69,
         "low": 6.05,
-        "volume": 300336
+        "volume": 301582
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 6.78,
-        "close": 6.09,
+        "close": 6.08,
         "high": 6.93,
         "low": 6.05,
-        "volume": 1071134
+        "volume": 1072380
       }
     ]
   },

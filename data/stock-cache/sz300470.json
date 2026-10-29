@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz300470",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中密控股",
     "price": 27.29,
@@ -12,10 +12,10 @@
     "high": 27.52,
     "low": 27.2,
     "avg": 27.34,
-    "volume": 5341,
-    "amount": 14600717,
+    "volume": 5346,
+    "amount": 14614362,
     "turnover": 0.27,
-    "volumeRatio": 0.99,
+    "volumeRatio": 0.97,
     "amplitude": 1.16,
     "limitUp": 33.01,
     "limitDown": 22.01,
@@ -39,7 +39,7 @@
     "floatShares": 197334685,
     "totalCap": 5674538972.73,
     "floatCap": 5385263553.65,
-    "time": 1793240070000,
+    "time": 1793240103000,
     "code": "sz300470"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 27.29,
         "high": 27.52,
         "low": 27.2,
-        "volume": 5341
+        "volume": 5346
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 27.29,
         "high": 27.52,
         "low": 27.2,
-        "volume": 5341
+        "volume": 5346
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 27.29,
         "high": 27.95,
         "low": 27.01,
-        "volume": 82022
+        "volume": 82027
       }
     ]
   },
@@ -6779,7 +6779,7 @@
         "close": 27.29,
         "high": 27.95,
         "low": 26,
-        "volume": 283339
+        "volume": 283344
       }
     ]
   },

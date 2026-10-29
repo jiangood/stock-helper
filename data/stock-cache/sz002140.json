@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002140",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "东华科技",
-    "price": 9.34,
+    "price": 9.33,
     "prevClose": 9.34,
-    "change": 0,
-    "todayChange": 0,
+    "change": -0.01,
+    "todayChange": -0.11,
     "open": 9.28,
     "high": 9.37,
     "low": 9.16,
     "avg": 9.25,
-    "volume": 33728,
-    "amount": 31188282,
+    "volume": 33783,
+    "amount": 31239625,
     "turnover": 0.48,
-    "volumeRatio": 2.78,
+    "volumeRatio": 2.72,
     "amplitude": 2.25,
     "limitUp": 10.27,
     "limitDown": 8.41,
-    "pe": 11.96,
-    "peStatic": 12.41,
-    "peTtm": 11.35,
+    "pe": 11.94,
+    "peStatic": 12.4,
+    "peTtm": 11.34,
     "pb": 1.31,
     "roe": 8.45,
     "grossMargin": 11.845182098,
@@ -37,9 +37,9 @@
     "board": "BK1248",
     "totalShares": 708013872,
     "floatShares": 706908875,
-    "totalCap": 6612849564.48,
-    "floatCap": 6602528892.5,
-    "time": 1793240067000,
+    "totalCap": 6605769425.76,
+    "floatCap": 6595459803.75,
+    "time": 1793240100000,
     "code": "sz002140"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 9.28,
-        "close": 9.32,
+        "close": 9.33,
         "high": 9.37,
         "low": 9.16,
-        "volume": 33630
+        "volume": 33783
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 9.28,
-        "close": 9.32,
+        "close": 9.33,
         "high": 9.37,
         "low": 9.16,
-        "volume": 33630
+        "volume": 33783
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 8.75,
-        "close": 9.34,
+        "close": 9.33,
         "high": 9.42,
         "low": 8.73,
-        "volume": 277637
+        "volume": 277692
       }
     ]
   },
@@ -7536,10 +7536,10 @@
       {
         "time": "2026-10-29",
         "open": 9.17,
-        "close": 9.34,
+        "close": 9.33,
         "high": 9.45,
         "low": 8.45,
-        "volume": 799975
+        "volume": 800030
       }
     ]
   },

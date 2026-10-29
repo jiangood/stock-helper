@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600459",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "贵研铂业",
-    "price": 16.49,
+    "price": 16.48,
     "prevClose": 16.85,
-    "change": -0.36,
-    "todayChange": -2.14,
+    "change": -0.37,
+    "todayChange": -2.2,
     "open": 16.85,
     "high": 16.85,
     "low": 16.44,
     "avg": 16.59,
-    "volume": 35966,
-    "amount": 59662639,
+    "volume": 36150,
+    "amount": 59965944,
     "turnover": 0.44,
-    "volumeRatio": 2.05,
+    "volumeRatio": 2.06,
     "amplitude": 2.43,
     "limitUp": 18.54,
     "limitDown": 15.17,
-    "pe": 19.42,
-    "peStatic": 21.19,
-    "peTtm": 20.4,
+    "pe": 19.4,
+    "peStatic": 21.18,
+    "peTtm": 20.39,
     "pb": 1.51,
     "roe": 4.25,
     "grossMargin": 4.4297279376,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 823177251,
     "floatShares": 823177251,
-    "totalCap": 13574192868.989998,
-    "floatCap": 13574192868.989998,
-    "time": 1793240061000,
+    "totalCap": 13565961096.48,
+    "floatCap": 13565961096.48,
+    "time": 1793240097000,
     "code": "sh600459"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 16.49,
         "high": 16.85,
         "low": 16.44,
-        "volume": 35966
+        "volume": 36050
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 16.85,
-        "close": 16.49,
+        "close": 16.48,
         "high": 16.85,
         "low": 16.44,
-        "volume": 35966
+        "volume": 36150
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 17.04,
-        "close": 16.49,
+        "close": 16.48,
         "high": 17.17,
         "low": 16.32,
-        "volume": 300756
+        "volume": 300940
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 17.93,
-        "close": 16.49,
+        "close": 16.48,
         "high": 18.47,
         "low": 16.24,
-        "volume": 1488710
+        "volume": 1488894
       }
     ]
   },

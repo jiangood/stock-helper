@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002096",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "易普力",
     "price": 8.99,
@@ -12,10 +12,10 @@
     "high": 9.08,
     "low": 8.97,
     "avg": 9,
-    "volume": 11516,
-    "amount": 10369814,
+    "volume": 11536,
+    "amount": 10387790,
     "turnover": 0.09,
-    "volumeRatio": 1.73,
+    "volumeRatio": 1.69,
     "amplitude": 1.21,
     "limitUp": 9.98,
     "limitDown": 8.16,
@@ -39,7 +39,7 @@
     "floatShares": 1239619861,
     "totalCap": 11151562522.300001,
     "floatCap": 11144182550.39,
-    "time": 1793240076000,
+    "time": 1793240109000,
     "code": "sz002096"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 9.07,
-        "close": 8.99,
+        "close": 8.98,
         "high": 9.08,
         "low": 8.97,
-        "volume": 11514
+        "volume": 11534
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 8.99,
         "high": 9.08,
         "low": 8.97,
-        "volume": 11514
+        "volume": 11536
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 8.99,
         "high": 9.34,
         "low": 8.97,
-        "volume": 114012
+        "volume": 114032
       }
     ]
   },
@@ -7587,7 +7587,7 @@
         "close": 8.99,
         "high": 9.41,
         "low": 8.81,
-        "volume": 583651
+        "volume": 583671
       }
     ]
   },

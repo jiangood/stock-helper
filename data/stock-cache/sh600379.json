@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600379",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "宝光股份",
-    "price": 11.04,
+    "price": 11.03,
     "prevClose": 11.36,
-    "change": -0.32,
-    "todayChange": -2.82,
+    "change": -0.33,
+    "todayChange": -2.9,
     "open": 11.3,
     "high": 11.34,
     "low": 11.02,
     "avg": 11.14,
-    "volume": 16998,
-    "amount": 18943638,
-    "turnover": 0.51,
-    "volumeRatio": 1.14,
+    "volume": 17520,
+    "amount": 19519812,
+    "turnover": 0.53,
+    "volumeRatio": 1.15,
     "amplitude": 2.82,
     "limitUp": 12.5,
     "limitDown": 10.22,
-    "pe": 45.82,
-    "peStatic": 71.06,
-    "peTtm": 59.29,
-    "pb": 4.46,
+    "pe": 45.78,
+    "peStatic": 71,
+    "peTtm": 59.23,
+    "pb": 4.45,
     "roe": 7.48,
     "grossMargin": 21.791242062,
     "netMargin": 5.475742561400001,
@@ -37,9 +37,9 @@
     "board": "BK0457",
     "totalShares": 330201564,
     "floatShares": 330201564,
-    "totalCap": 3645425266.56,
-    "floatCap": 3645425266.56,
-    "time": 1793240070000,
+    "totalCap": 3642123250.9199996,
+    "floatCap": 3642123250.9199996,
+    "time": 1793240103000,
     "code": "sh600379"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 11.3,
-        "close": 11.06,
+        "close": 11.03,
         "high": 11.34,
         "low": 11.02,
-        "volume": 16979
+        "volume": 17520
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 11.3,
-        "close": 11.04,
+        "close": 11.03,
         "high": 11.34,
         "low": 11.02,
-        "volume": 16998
+        "volume": 17520
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 11.86,
-        "close": 11.06,
+        "close": 11.03,
         "high": 12.18,
         "low": 11.02,
-        "volume": 191653
+        "volume": 192194
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 13.94,
-        "close": 11.04,
+        "close": 11.03,
         "high": 14.21,
         "low": 11.02,
-        "volume": 1193205
+        "volume": 1193727
       }
     ]
   },

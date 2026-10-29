@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600961",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "株冶集团",
-    "price": 17.98,
+    "price": 17.93,
     "prevClose": 18.53,
-    "change": -0.55,
-    "todayChange": -2.97,
+    "change": -0.6,
+    "todayChange": -3.24,
     "open": 18.4,
     "high": 18.5,
-    "low": 17.92,
+    "low": 17.9,
     "avg": 18.13,
-    "volume": 68634,
-    "amount": 124462518,
-    "turnover": 0.64,
-    "volumeRatio": 1.99,
-    "amplitude": 3.13,
+    "volume": 71101,
+    "amount": 128882231,
+    "turnover": 0.66,
+    "volumeRatio": 2.01,
+    "amplitude": 3.24,
     "limitUp": 20.38,
     "limitDown": 16.68,
-    "pe": 4.95,
-    "peStatic": 17.14,
-    "peTtm": 7.75,
-    "pb": 3.29,
+    "pe": 4.94,
+    "peStatic": 17.1,
+    "peTtm": 7.73,
+    "pb": 3.28,
     "roe": 39.52,
     "grossMargin": 20.0710366181,
     "netMargin": 13.772278335400001,
@@ -37,9 +37,9 @@
     "board": "BK1287",
     "totalShares": 1072872703,
     "floatShares": 1072872703,
-    "totalCap": 19290251199.94,
-    "floatCap": 19290251199.94,
-    "time": 1793240070000,
+    "totalCap": 19236607564.79,
+    "floatCap": 19236607564.79,
+    "time": 1793240103000,
     "code": "sh600961"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 18.4,
-        "close": 17.98,
+        "close": 17.93,
         "high": 18.5,
-        "low": 17.92,
-        "volume": 68634
+        "low": 17.9,
+        "volume": 71101
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 18.4,
-        "close": 17.98,
+        "close": 17.93,
         "high": 18.5,
-        "low": 17.92,
-        "volume": 68634
+        "low": 17.9,
+        "volume": 71101
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 18.97,
-        "close": 17.98,
+        "close": 17.93,
         "high": 19.13,
-        "low": 17.92,
-        "volume": 556691
+        "low": 17.9,
+        "volume": 559158
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 22.4,
-        "close": 17.98,
+        "close": 17.93,
         "high": 22.75,
-        "low": 17.92,
-        "volume": 2884161
+        "low": 17.9,
+        "volume": 2886628
       }
     ]
   },

@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600737",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中粮糖业",
-    "price": 11.76,
+    "price": 11.74,
     "prevClose": 12.03,
-    "change": -0.27,
-    "todayChange": -2.24,
+    "change": -0.29,
+    "todayChange": -2.41,
     "open": 11.96,
     "high": 12.03,
     "low": 11.71,
     "avg": 11.8,
-    "volume": 161061,
-    "amount": 190038832,
-    "turnover": 0.75,
-    "volumeRatio": 1.99,
+    "volume": 161900,
+    "amount": 191024609,
+    "turnover": 0.76,
+    "volumeRatio": 1.96,
     "amplitude": 2.66,
     "limitUp": 13.23,
     "limitDown": 10.83,
-    "pe": 20.22,
-    "peStatic": 26.44,
-    "peTtm": 23.53,
-    "pb": 2.21,
+    "pe": 20.19,
+    "peStatic": 26.4,
+    "peTtm": 23.49,
+    "pb": 2.2,
     "roe": 8.01,
     "grossMargin": 13.7929704968,
     "netMargin": 6.3028978695,
@@ -37,9 +37,9 @@
     "board": "BK1256",
     "totalShares": 2138848228,
     "floatShares": 2138848228,
-    "totalCap": 25152855161.28,
-    "floatCap": 25152855161.28,
-    "time": 1793240073000,
+    "totalCap": 25110078196.72,
+    "floatCap": 25110078196.72,
+    "time": 1793240106000,
     "code": "sh600737"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 11.96,
-        "close": 11.75,
+        "close": 11.74,
         "high": 12.03,
         "low": 11.71,
-        "volume": 160934
+        "volume": 161900
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 11.96,
-        "close": 11.75,
+        "close": 11.74,
         "high": 12.03,
         "low": 11.71,
-        "volume": 160934
+        "volume": 161900
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 13.05,
-        "close": 11.75,
+        "close": 11.74,
         "high": 13.1,
         "low": 11.71,
-        "volume": 1374430
+        "volume": 1375396
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 15.22,
-        "close": 11.75,
+        "close": 11.74,
         "high": 16.5,
         "low": 11.71,
-        "volume": 11142845
+        "volume": 11143811
       }
     ]
   },

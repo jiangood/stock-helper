@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000819",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "岳阳兴长",
-    "price": 10.77,
+    "price": 10.73,
     "prevClose": 10.8,
-    "change": -0.03,
-    "todayChange": -0.28,
+    "change": -0.07,
+    "todayChange": -0.65,
     "open": 10.8,
     "high": 10.93,
     "low": 10.55,
     "avg": 10.67,
-    "volume": 14448,
-    "amount": 15418526.37,
-    "turnover": 0.39,
-    "volumeRatio": 2.4,
+    "volume": 14461,
+    "amount": 15432497.37,
+    "turnover": 0.4,
+    "volumeRatio": 2.35,
     "amplitude": 3.52,
     "limitUp": 11.88,
     "limitDown": 9.72,
-    "pe": 138.67,
-    "peStatic": -75.71,
-    "peTtm": -470.8,
-    "pb": 1.88,
+    "pe": 138.15,
+    "peStatic": -75.42,
+    "peTtm": -469.05,
+    "pb": 1.87,
     "roe": 0.68,
     "grossMargin": 15.4685846587,
     "netMargin": 1.0955509494,
@@ -37,9 +37,9 @@
     "board": "BK1274",
     "totalShares": 366020106,
     "floatShares": 366020106,
-    "totalCap": 3942036541.62,
-    "floatCap": 3942036541.62,
-    "time": 1793240076000,
+    "totalCap": 3927395737.38,
+    "floatCap": 3927395737.38,
+    "time": 1793240109000,
     "code": "sz000819"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.8,
-        "close": 10.77,
+        "close": 10.73,
         "high": 10.93,
         "low": 10.55,
-        "volume": 14448
+        "volume": 14461
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.8,
-        "close": 10.77,
+        "close": 10.73,
         "high": 10.93,
         "low": 10.55,
-        "volume": 14422
+        "volume": 14461
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 11.18,
-        "close": 10.77,
+        "close": 10.73,
         "high": 11.35,
         "low": 10.55,
-        "volume": 96633
+        "volume": 96672
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 12.18,
-        "close": 10.77,
+        "close": 10.73,
         "high": 12.4,
         "low": 10.55,
-        "volume": 476249
+        "volume": 476288
       }
     ]
   },

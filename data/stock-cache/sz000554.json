@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz000554",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "泰山石油",
-    "price": 6.68,
+    "price": 6.69,
     "prevClose": 6.63,
-    "change": 0.05,
-    "todayChange": 0.75,
+    "change": 0.06,
+    "todayChange": 0.9,
     "open": 6.87,
     "high": 6.98,
     "low": 6.68,
     "avg": 6.82,
-    "volume": 278740,
-    "amount": 190013270.84,
-    "turnover": 7.76,
-    "volumeRatio": 7.66,
+    "volume": 279063,
+    "amount": 190229078.84,
+    "turnover": 7.77,
+    "volumeRatio": 7.67,
     "amplitude": 4.52,
     "limitUp": 7.29,
     "limitDown": 5.97,
-    "pe": 16.78,
-    "peStatic": 20.62,
-    "peTtm": 17.33,
+    "pe": 16.81,
+    "peStatic": 20.65,
+    "peTtm": 17.36,
     "pb": 2.64,
     "roe": 12.2,
     "grossMargin": 19.604620369,
@@ -37,9 +37,9 @@
     "board": "BK1274",
     "totalShares": 477444918,
     "floatShares": 359304797,
-    "totalCap": 3189332052.24,
-    "floatCap": 2400156043.96,
-    "time": 1793240064000,
+    "totalCap": 3194106501.42,
+    "floatCap": 2403749091.9300003,
+    "time": 1793240097000,
     "code": "sz000554"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 6.87,
-        "close": 6.68,
+        "close": 6.69,
         "high": 6.98,
         "low": 6.68,
-        "volume": 278711
+        "volume": 279063
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 6.87,
-        "close": 6.68,
+        "close": 6.69,
         "high": 6.98,
         "low": 6.68,
-        "volume": 278711
+        "volume": 279063
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 6.03,
-        "close": 6.68,
+        "close": 6.69,
         "high": 6.98,
         "low": 5.98,
-        "volume": 1033221
+        "volume": 1033573
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 6.12,
-        "close": 6.68,
+        "close": 6.69,
         "high": 6.98,
         "low": 5.84,
-        "volume": 2535813
+        "volume": 2536136
       }
     ]
   },

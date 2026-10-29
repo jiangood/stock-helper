@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600963",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "岳阳林纸",
     "price": 3.84,
@@ -12,8 +12,8 @@
     "high": 3.92,
     "low": 3.82,
     "avg": 3.85,
-    "volume": 248285,
-    "amount": 95555835,
+    "volume": 248554,
+    "amount": 95659107,
     "turnover": 1.41,
     "volumeRatio": 2.02,
     "amplitude": 2.56,
@@ -39,7 +39,7 @@
     "floatShares": 1757567854,
     "totalCap": 6749060559.36,
     "floatCap": 6749060559.36,
-    "time": 1793240064000,
+    "time": 1793240097000,
     "code": "sh600963"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 3.87,
-        "close": 3.83,
+        "close": 3.84,
         "high": 3.92,
         "low": 3.82,
-        "volume": 248273
+        "volume": 248554
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 3.87,
-        "close": 3.83,
+        "close": 3.84,
         "high": 3.92,
         "low": 3.82,
-        "volume": 248273
+        "volume": 248554
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 3.45,
-        "close": 3.83,
+        "close": 3.84,
         "high": 4,
         "low": 3.43,
-        "volume": 2751603
+        "volume": 2751884
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 3.37,
-        "close": 3.83,
+        "close": 3.84,
         "high": 4,
         "low": 3.2,
-        "volume": 6318377
+        "volume": 6318658
       }
     ]
   },

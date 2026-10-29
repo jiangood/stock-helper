@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600298",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "安琪酵母",
     "price": 36.65,
@@ -12,10 +12,10 @@
     "high": 37.14,
     "low": 36.52,
     "avg": 36.79,
-    "volume": 14009,
-    "amount": 51541769,
+    "volume": 14055,
+    "amount": 51710241,
     "turnover": 0.16,
-    "volumeRatio": 1.15,
+    "volumeRatio": 1.13,
     "amplitude": 1.68,
     "limitUp": 40.7,
     "limitDown": 33.3,
@@ -39,7 +39,7 @@
     "floatShares": 860652101,
     "totalCap": 31805444342.149998,
     "floatCap": 31542899501.649998,
-    "time": 1793240073000,
+    "time": 1793240106000,
     "code": "sh600298"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 36.65,
         "high": 37.14,
         "low": 36.52,
-        "volume": 14009
+        "volume": 14055
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 36.65,
         "high": 37.14,
         "low": 36.52,
-        "volume": 14009
+        "volume": 14055
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 36.65,
         "high": 38,
         "low": 36.52,
-        "volume": 186940
+        "volume": 186986
       }
     ]
   },

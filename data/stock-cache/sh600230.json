@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600230",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "沧州大化",
-    "price": 11.76,
+    "price": 11.77,
     "prevClose": 11.91,
-    "change": -0.15,
-    "todayChange": -1.26,
+    "change": -0.14,
+    "todayChange": -1.18,
     "open": 11.93,
     "high": 11.93,
     "low": 11.75,
     "avg": 11.81,
-    "volume": 16804,
-    "amount": 19844121,
+    "volume": 16825,
+    "amount": 19868836,
     "turnover": 0.41,
     "volumeRatio": 1.24,
     "amplitude": 1.51,
     "limitUp": 13.1,
     "limitDown": 10.72,
-    "pe": 24.16,
-    "peStatic": 157.78,
-    "peTtm": 44.99,
-    "pb": 1.18,
+    "pe": 24.18,
+    "peStatic": 157.92,
+    "peTtm": 45.03,
+    "pb": 1.19,
     "roe": 2.45,
     "grossMargin": 14.2333749864,
     "netMargin": 5.127331401299999,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 413961015,
     "floatShares": 413961015,
-    "totalCap": 4868181536.4,
-    "floatCap": 4868181536.4,
-    "time": 1793240067000,
+    "totalCap": 4872321146.55,
+    "floatCap": 4872321146.55,
+    "time": 1793240103000,
     "code": "sh600230"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 11.93,
-        "close": 11.76,
+        "close": 11.77,
         "high": 11.93,
         "low": 11.75,
-        "volume": 16803
+        "volume": 16825
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 11.93,
-        "close": 11.76,
+        "close": 11.77,
         "high": 11.93,
         "low": 11.75,
-        "volume": 16803
+        "volume": 16825
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 11.92,
-        "close": 11.76,
+        "close": 11.77,
         "high": 12.05,
         "low": 11.68,
-        "volume": 195867
+        "volume": 195888
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 13.15,
-        "close": 11.76,
+        "close": 11.77,
         "high": 14.08,
         "low": 11.22,
-        "volume": 1497545
+        "volume": 1497566
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601600",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中国铝业",
     "price": 8.41,
@@ -12,10 +12,10 @@
     "high": 8.56,
     "low": 8.4,
     "avg": 8.48,
-    "volume": 470790,
-    "amount": 399165501,
+    "volume": 478432,
+    "amount": 405594613,
     "turnover": 0.36,
-    "volumeRatio": 1.59,
+    "volumeRatio": 1.58,
     "amplitude": 1.88,
     "limitUp": 9.38,
     "limitDown": 7.68,
@@ -39,7 +39,7 @@
     "floatShares": 13203339905,
     "totalCap": 144271521062.27,
     "floatCap": 111040088601.05,
-    "time": 1793240065000,
+    "time": 1793240101000,
     "code": "sh601600"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 8.56,
-        "close": 8.41,
+        "close": 8.42,
         "high": 8.56,
         "low": 8.4,
-        "volume": 470790
+        "volume": 478366
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 8.56,
-        "close": 8.41,
+        "close": 8.42,
         "high": 8.56,
         "low": 8.4,
-        "volume": 470790
+        "volume": 478366
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 8.41,
         "high": 8.9,
         "low": 8.4,
-        "volume": 4938924
+        "volume": 4946566
       }
     ]
   },
@@ -7528,10 +7528,10 @@
       {
         "time": "2026-10-29",
         "open": 8.614,
-        "close": 8.41,
+        "close": 8.42,
         "high": 8.9,
         "low": 8.204,
-        "volume": 21149395
+        "volume": 21156971
       }
     ]
   },

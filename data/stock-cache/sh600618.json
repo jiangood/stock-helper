@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600618",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "氯碱化工",
-    "price": 8.81,
+    "price": 8.82,
     "prevClose": 9,
-    "change": -0.19,
-    "todayChange": -2.11,
+    "change": -0.18,
+    "todayChange": -2,
     "open": 8.93,
     "high": 9,
     "low": 8.77,
     "avg": 8.86,
-    "volume": 22608,
-    "amount": 20041064,
+    "volume": 22696,
+    "amount": 20118610,
     "turnover": 0.3,
-    "volumeRatio": 2.46,
+    "volumeRatio": 2.41,
     "amplitude": 2.56,
     "limitUp": 9.9,
     "limitDown": 8.1,
-    "pe": 17.03,
-    "peStatic": 11.81,
-    "peTtm": 14.58,
+    "pe": 17.05,
+    "peStatic": 11.82,
+    "peTtm": 14.6,
     "pb": 1.07,
     "roe": 4.75,
     "grossMargin": 14.5003654188,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 1156399976,
     "floatShares": 749839976,
-    "totalCap": 10187883788.560001,
-    "floatCap": 6606090188.56,
-    "time": 1793240071000,
+    "totalCap": 10199447788.32,
+    "floatCap": 6613588588.320001,
+    "time": 1793240107000,
     "code": "sh600618"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 8.93,
-        "close": 8.81,
+        "close": 8.82,
         "high": 9,
         "low": 8.77,
-        "volume": 22608
+        "volume": 22688
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 8.93,
-        "close": 8.81,
+        "close": 8.82,
         "high": 9,
         "low": 8.77,
-        "volume": 22608
+        "volume": 22688
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 9.33,
-        "close": 8.81,
+        "close": 8.82,
         "high": 9.48,
         "low": 8.77,
-        "volume": 172513
+        "volume": 172593
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 9.66,
-        "close": 8.81,
+        "close": 8.82,
         "high": 10.04,
         "low": 8.77,
-        "volume": 705117
+        "volume": 705205
       }
     ]
   },

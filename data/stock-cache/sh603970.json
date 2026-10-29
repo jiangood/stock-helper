@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh603970",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中农立华",
-    "price": 9.88,
+    "price": 9.87,
     "prevClose": 10.09,
-    "change": -0.21,
-    "todayChange": -2.08,
+    "change": -0.22,
+    "todayChange": -2.18,
     "open": 10.04,
     "high": 10.07,
     "low": 9.79,
     "avg": 9.87,
-    "volume": 13424,
-    "amount": 13251048,
+    "volume": 13448,
+    "amount": 13274744,
     "turnover": 0.5,
     "volumeRatio": 2.52,
     "amplitude": 2.78,
     "limitUp": 11.1,
     "limitDown": 9.08,
-    "pe": 15.42,
-    "peStatic": 15.39,
-    "peTtm": 17.65,
+    "pe": 15.4,
+    "peStatic": 15.38,
+    "peTtm": 17.63,
     "pb": 1.66,
     "roe": 8.06,
     "grossMargin": 5.6253109693,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 268800134,
     "floatShares": 268800134,
-    "totalCap": 2655745323.92,
-    "floatCap": 2655745323.92,
-    "time": 1793240074000,
+    "totalCap": 2653057322.58,
+    "floatCap": 2653057322.58,
+    "time": 1793240107000,
     "code": "sh603970"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.04,
-        "close": 9.88,
+        "close": 9.87,
         "high": 10.07,
         "low": 9.79,
-        "volume": 13424
+        "volume": 13448
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.04,
-        "close": 9.88,
+        "close": 9.87,
         "high": 10.07,
         "low": 9.79,
-        "volume": 13424
+        "volume": 13448
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 10.33,
-        "close": 9.88,
+        "close": 9.87,
         "high": 10.46,
         "low": 9.79,
-        "volume": 86857
+        "volume": 86881
       }
     ]
   },
@@ -6547,7 +6547,7 @@
         "close": 9.87,
         "high": 12.5,
         "low": 9.79,
-        "volume": 781866
+        "volume": 781893
       }
     ]
   },

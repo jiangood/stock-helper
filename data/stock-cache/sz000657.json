@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000657",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中钨高新",
-    "price": 38.65,
+    "price": 38.6,
     "prevClose": 39.69,
-    "change": -1.04,
-    "todayChange": -2.62,
+    "change": -1.09,
+    "todayChange": -2.75,
     "open": 39.7,
     "high": 40.58,
     "low": 38.48,
-    "avg": 39.41,
-    "volume": 176388,
-    "amount": 695073455.15,
-    "turnover": 1.21,
-    "volumeRatio": 2.36,
+    "avg": 39.4,
+    "volume": 176805,
+    "amount": 696683977.15,
+    "turnover": 1.22,
+    "volumeRatio": 2.32,
     "amplitude": 5.29,
     "limitUp": 43.66,
     "limitDown": 35.72,
-    "pe": 22.17,
-    "peStatic": 68.77,
-    "peTtm": 26.28,
-    "pb": 7.18,
+    "pe": 22.14,
+    "peStatic": 68.68,
+    "peTtm": 26.25,
+    "pb": 7.17,
     "roe": 26.37,
     "grossMargin": 31.0105874629,
     "netMargin": 13.4113254126,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 2278584780,
     "floatShares": 1453452007,
-    "totalCap": 88067301747,
-    "floatCap": 56175920070.549995,
-    "time": 1793240073000,
+    "totalCap": 87953372508,
+    "floatCap": 56103247470.200005,
+    "time": 1793240106000,
     "code": "sz000657"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 39.7,
-        "close": 38.65,
+        "close": 38.6,
         "high": 40.58,
         "low": 38.48,
-        "volume": 176388
+        "volume": 176805
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 39.7,
-        "close": 38.65,
+        "close": 38.6,
         "high": 40.58,
         "low": 38.48,
-        "volume": 176388
+        "volume": 176805
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 42.1,
-        "close": 38.65,
+        "close": 38.6,
         "high": 42.28,
         "low": 38.48,
-        "volume": 1254317
+        "volume": 1254861
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 52.75,
-        "close": 38.65,
+        "close": 38.6,
         "high": 53.74,
         "low": 38.48,
-        "volume": 6182889
+        "volume": 6183433
       }
     ]
   },

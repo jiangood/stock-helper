@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000738",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "航发控制",
-    "price": 17.89,
+    "price": 17.87,
     "prevClose": 17.8,
-    "change": 0.09,
-    "todayChange": 0.51,
+    "change": 0.07,
+    "todayChange": 0.39,
     "open": 17.69,
     "high": 17.97,
     "low": 17.53,
     "avg": 17.73,
-    "volume": 41662,
-    "amount": 73881015,
+    "volume": 41839,
+    "amount": 74197369,
     "turnover": 0.32,
-    "volumeRatio": 1.54,
+    "volumeRatio": 1.51,
     "amplitude": 2.47,
     "limitUp": 19.58,
     "limitDown": 16.02,
-    "pe": 75.38,
-    "peStatic": 70.36,
-    "peTtm": 140.41,
-    "pb": 1.87,
+    "pe": 75.3,
+    "peStatic": 70.28,
+    "peTtm": 140.25,
+    "pb": 1.86,
     "roe": 1.87,
     "grossMargin": 22.7435356725,
     "netMargin": 6.1506474308,
@@ -37,9 +37,9 @@
     "board": "BK1231",
     "totalShares": 1315184001,
     "floatShares": 1315184001,
-    "totalCap": 23528641777.89,
-    "floatCap": 23528641777.89,
-    "time": 1793240073000,
+    "totalCap": 23502338097.870003,
+    "floatCap": 23502338097.870003,
+    "time": 1793240106000,
     "code": "sz000738"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 17.69,
-        "close": 17.89,
+        "close": 17.87,
         "high": 17.97,
         "low": 17.53,
-        "volume": 41662
+        "volume": 41839
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 17.69,
-        "close": 17.89,
+        "close": 17.87,
         "high": 17.97,
         "low": 17.53,
-        "volume": 41662
+        "volume": 41839
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 18.95,
-        "close": 17.89,
+        "close": 17.87,
         "high": 19.28,
         "low": 17.36,
-        "volume": 517686
+        "volume": 517863
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 18.8,
-        "close": 17.89,
+        "close": 17.87,
         "high": 19.36,
         "low": 17.36,
-        "volume": 2226031
+        "volume": 2226208
       }
     ]
   },

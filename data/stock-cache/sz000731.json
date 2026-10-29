@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000731",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "四川美丰",
-    "price": 6.75,
+    "price": 6.74,
     "prevClose": 6.89,
-    "change": -0.14,
-    "todayChange": -2.03,
+    "change": -0.15,
+    "todayChange": -2.18,
     "open": 6.92,
     "high": 6.92,
     "low": 6.72,
     "avg": 6.79,
-    "volume": 20311,
-    "amount": 13788904,
-    "turnover": 0.37,
-    "volumeRatio": 1.24,
+    "volume": 20702,
+    "amount": 14052529,
+    "turnover": 0.38,
+    "volumeRatio": 1.26,
     "amplitude": 2.9,
     "limitUp": 7.58,
     "limitDown": 6.2,
-    "pe": -20.73,
-    "peStatic": -30.39,
-    "peTtm": -14.9,
-    "pb": 1,
+    "pe": -20.7,
+    "peStatic": -30.34,
+    "peTtm": -14.88,
+    "pb": 0.99,
     "roe": -3.54,
     "grossMargin": 7.037620349,
     "netMargin": -4.3828278635,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 548825900,
     "floatShares": 548825900,
-    "totalCap": 3704574825,
-    "floatCap": 3704574825,
-    "time": 1793240061000,
+    "totalCap": 3699086566,
+    "floatCap": 3699086566,
+    "time": 1793240097000,
     "code": "sz000731"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 6.75,
         "high": 6.92,
         "low": 6.72,
-        "volume": 20311
+        "volume": 20402
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 6.75,
         "high": 6.92,
         "low": 6.72,
-        "volume": 20297
+        "volume": 20402
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 7.21,
-        "close": 6.75,
+        "close": 6.74,
         "high": 7.37,
         "low": 6.72,
-        "volume": 258208
+        "volume": 258599
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 7.98,
-        "close": 6.75,
+        "close": 6.74,
         "high": 8.3,
         "low": 6.72,
-        "volume": 1757090
+        "volume": 1757495
       }
     ]
   },

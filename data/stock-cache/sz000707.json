@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000707",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "双环科技",
     "price": 4.25,
@@ -39,7 +39,7 @@
     "floatShares": 550703589,
     "totalCap": 2485048070.25,
     "floatCap": 2340490253.25,
-    "time": 1793240055000,
+    "time": 1793240097000,
     "code": "sz000707"
   },
   "dailyAdjusted": {

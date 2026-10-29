@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh603227",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "雪峰科技",
     "price": 6.72,
@@ -12,8 +12,8 @@
     "high": 6.82,
     "low": 6.71,
     "avg": 6.74,
-    "volume": 16386,
-    "amount": 11037445,
+    "volume": 16392,
+    "amount": 11041477,
     "turnover": 0.15,
     "volumeRatio": 1.53,
     "amplitude": 1.62,
@@ -39,7 +39,7 @@
     "floatShares": 1071692689,
     "totalCap": 7201774870.08,
     "floatCap": 7201774870.08,
-    "time": 1793240063000,
+    "time": 1793240096000,
     "code": "sh603227"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 6.72,
         "high": 6.82,
         "low": 6.71,
-        "volume": 16385
+        "volume": 16392
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 6.72,
         "high": 6.82,
         "low": 6.71,
-        "volume": 16385
+        "volume": 16392
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 6.72,
         "high": 6.89,
         "low": 6.71,
-        "volume": 156806
+        "volume": 156813
       }
     ]
   },
@@ -6779,7 +6779,7 @@
         "close": 6.72,
         "high": 7.64,
         "low": 6.53,
-        "volume": 1066022
+        "volume": 1066029
       }
     ]
   },

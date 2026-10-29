@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600301",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "华锡有色",
     "price": 43.79,
@@ -12,10 +12,10 @@
     "high": 44.44,
     "low": 43.72,
     "avg": 44.11,
-    "volume": 20686,
-    "amount": 91256130,
-    "turnover": 0.75,
-    "volumeRatio": 1.6,
+    "volume": 20949,
+    "amount": 92407872,
+    "turnover": 0.76,
+    "volumeRatio": 1.59,
     "amplitude": 1.63,
     "limitUp": 48.55,
     "limitDown": 39.73,
@@ -39,7 +39,7 @@
     "floatShares": 275335681,
     "totalCap": 27700129905.41,
     "floatCap": 12056949470.99,
-    "time": 1793240069000,
+    "time": 1793240105000,
     "code": "sh600301"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 44.13,
-        "close": 43.79,
+        "close": 43.8,
         "high": 44.44,
         "low": 43.72,
-        "volume": 20686
+        "volume": 20895
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 44.13,
-        "close": 43.79,
+        "close": 43.8,
         "high": 44.44,
         "low": 43.72,
-        "volume": 20686
+        "volume": 20895
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 45.68,
-        "close": 43.79,
+        "close": 43.8,
         "high": 46.65,
         "low": 43.72,
-        "volume": 207128
+        "volume": 207337
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 49.35,
-        "close": 43.79,
+        "close": 43.8,
         "high": 49.55,
         "low": 43.72,
-        "volume": 1202134
+        "volume": 1202343
       }
     ]
   },

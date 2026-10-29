@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002556",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "辉隆股份",
     "price": 4.26,
@@ -12,10 +12,10 @@
     "high": 4.31,
     "low": 4.24,
     "avg": 4.26,
-    "volume": 47225,
-    "amount": 20133626,
-    "turnover": 0.51,
-    "volumeRatio": 1.6,
+    "volume": 49729,
+    "amount": 21200340,
+    "turnover": 0.53,
+    "volumeRatio": 1.65,
     "amplitude": 1.63,
     "limitUp": 4.73,
     "limitDown": 3.87,
@@ -39,7 +39,7 @@
     "floatShares": 934041003,
     "totalCap": 3982848029.52,
     "floatCap": 3979014672.7799997,
-    "time": 1793240073000,
+    "time": 1793240106000,
     "code": "sz002556"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 4.26,
         "high": 4.31,
         "low": 4.24,
-        "volume": 47225
+        "volume": 49729
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 4.26,
         "high": 4.31,
         "low": 4.24,
-        "volume": 47225
+        "volume": 49729
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 4.26,
         "high": 4.82,
         "low": 4.24,
-        "volume": 639295
+        "volume": 641799
       }
     ]
   },
@@ -7187,7 +7187,7 @@
         "close": 4.26,
         "high": 5.34,
         "low": 4.24,
-        "volume": 1915281
+        "volume": 1917785
       }
     ]
   },

@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600456",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "宝钛股份",
-    "price": 23.56,
+    "price": 23.57,
     "prevClose": 23.61,
-    "change": -0.05,
-    "todayChange": -0.21,
+    "change": -0.04,
+    "todayChange": -0.17,
     "open": 23.57,
     "high": 23.58,
     "low": 23.36,
     "avg": 23.47,
-    "volume": 8753,
-    "amount": 20539721,
+    "volume": 8814,
+    "amount": 20683448,
     "turnover": 0.18,
-    "volumeRatio": 1.54,
+    "volumeRatio": 1.51,
     "amplitude": 0.93,
     "limitUp": 25.97,
     "limitDown": 21.25,
-    "pe": 38.64,
-    "peStatic": 28.08,
-    "peTtm": 33,
+    "pe": 38.65,
+    "peStatic": 28.09,
+    "peTtm": 33.01,
     "pb": 1.57,
     "roe": 2.01,
     "grossMargin": 18.6908218128,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 477777539,
     "floatShares": 477777539,
-    "totalCap": 11256438818.84,
-    "floatCap": 11256438818.84,
-    "time": 1793240067000,
+    "totalCap": 11261216594.23,
+    "floatCap": 11261216594.23,
+    "time": 1793240103000,
     "code": "sh600456"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 23.57,
-        "close": 23.56,
+        "close": 23.57,
         "high": 23.58,
         "low": 23.36,
-        "volume": 8753
+        "volume": 8814
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 23.57,
-        "close": 23.56,
+        "close": 23.57,
         "high": 23.58,
         "low": 23.36,
-        "volume": 8753
+        "volume": 8814
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 24.3,
-        "close": 23.56,
+        "close": 23.57,
         "high": 24.55,
         "low": 23.36,
-        "volume": 87734
+        "volume": 87795
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 24.57,
-        "close": 23.56,
+        "close": 23.57,
         "high": 25,
         "low": 23.36,
-        "volume": 489407
+        "volume": 489468
       }
     ]
   },

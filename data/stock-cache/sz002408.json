@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002408",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "齐翔腾达",
     "price": 4.36,
@@ -12,8 +12,8 @@
     "high": 4.43,
     "low": 4.35,
     "avg": 4.39,
-    "volume": 72077,
-    "amount": 31610813.9,
+    "volume": 72321,
+    "amount": 31717139.9,
     "turnover": 0.26,
     "volumeRatio": 1.2,
     "amplitude": 1.81,
@@ -39,7 +39,7 @@
     "floatShares": 2751751309,
     "totalCap": 12397828806.12,
     "floatCap": 11997635707.240002,
-    "time": 1793240058000,
+    "time": 1793240094000,
     "code": "sz002408"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 4.36,
         "high": 4.43,
         "low": 4.35,
-        "volume": 72077
+        "volume": 72321
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 4.36,
         "high": 4.43,
         "low": 4.35,
-        "volume": 72077
+        "volume": 72321
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 4.36,
         "high": 4.61,
         "low": 4.35,
-        "volume": 1263212
+        "volume": 1263456
       }
     ]
   },
@@ -7227,7 +7227,7 @@
         "close": 4.36,
         "high": 5.4,
         "low": 4.35,
-        "volume": 3552529
+        "volume": 3552773
       }
     ]
   },

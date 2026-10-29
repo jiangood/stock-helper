@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh601118",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "海南橡胶",
-    "price": 5.19,
+    "price": 5.21,
     "prevClose": 5.58,
-    "change": -0.39,
-    "todayChange": -6.99,
+    "change": -0.37,
+    "todayChange": -6.63,
     "open": 5.4,
     "high": 5.42,
     "low": 5.14,
     "avg": 5.23,
-    "volume": 625533,
-    "amount": 327324081,
-    "turnover": 1.46,
-    "volumeRatio": 2.75,
+    "volume": 627248,
+    "amount": 328215923,
+    "turnover": 1.47,
+    "volumeRatio": 2.76,
     "amplitude": 5.02,
     "limitUp": 6.14,
     "limitDown": 5.02,
-    "pe": -78.7,
-    "peStatic": -215.57,
-    "peTtm": -562.05,
-    "pb": 2.37,
+    "pe": -79,
+    "peStatic": -216.4,
+    "peTtm": -564.21,
+    "pb": 2.38,
     "roe": -2.14,
     "grossMargin": 3.3147357861,
     "netMargin": -1.55416206,
@@ -37,9 +37,9 @@
     "board": "BK1261",
     "totalShares": 4279427797,
     "floatShares": 4279427797,
-    "totalCap": 22210230266.43,
-    "floatCap": 22210230266.43,
-    "time": 1793240059000,
+    "totalCap": 22295818822.37,
+    "floatCap": 22295818822.37,
+    "time": 1793240094000,
     "code": "sh601118"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 5.4,
-        "close": 5.19,
+        "close": 5.21,
         "high": 5.42,
         "low": 5.14,
-        "volume": 625533
+        "volume": 627213
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 5.4,
-        "close": 5.19,
+        "close": 5.21,
         "high": 5.42,
         "low": 5.14,
-        "volume": 625533
+        "volume": 627248
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 6.26,
-        "close": 5.19,
+        "close": 5.21,
         "high": 6.3,
         "low": 5.14,
-        "volume": 3686963
+        "volume": 3688678
       }
     ]
   },
@@ -7160,10 +7160,10 @@
       {
         "time": "2026-10-29",
         "open": 6.5,
-        "close": 5.19,
+        "close": 5.21,
         "high": 7.88,
         "low": 5.14,
-        "volume": 28008725
+        "volume": 28010440
       }
     ]
   },

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh603977",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "国泰集团",
     "price": 9.75,
@@ -12,10 +12,10 @@
     "high": 9.79,
     "low": 9.66,
     "avg": 9.71,
-    "volume": 13345,
-    "amount": 12955698,
-    "turnover": 0.21,
-    "volumeRatio": 1.2,
+    "volume": 13588,
+    "amount": 13192527,
+    "turnover": 0.22,
+    "volumeRatio": 1.22,
     "amplitude": 1.33,
     "limitUp": 10.75,
     "limitDown": 8.79,
@@ -39,7 +39,7 @@
     "floatShares": 621241828,
     "totalCap": 6057107823,
     "floatCap": 6057107823,
-    "time": 1793240060000,
+    "time": 1793240096000,
     "code": "sh603977"
   },
   "dailyAdjusted": {
@@ -2053,7 +2053,7 @@
         "close": 9.75,
         "high": 9.79,
         "low": 9.66,
-        "volume": 13345
+        "volume": 13579
       }
     ]
   },
@@ -4068,7 +4068,7 @@
         "close": 9.75,
         "high": 9.79,
         "low": 9.66,
-        "volume": 13345
+        "volume": 13579
       }
     ]
   },
@@ -5675,7 +5675,7 @@
         "close": 9.75,
         "high": 10.19,
         "low": 9.53,
-        "volume": 184266
+        "volume": 184500
       }
     ]
   },
@@ -6619,7 +6619,7 @@
         "close": 9.75,
         "high": 10.7,
         "low": 9.53,
-        "volume": 789697
+        "volume": 789931
       }
     ]
   },

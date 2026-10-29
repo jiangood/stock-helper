@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh603639",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "海利尔",
-    "price": 9.82,
+    "price": 9.8,
     "prevClose": 10.08,
-    "change": -0.26,
-    "todayChange": -2.58,
+    "change": -0.28,
+    "todayChange": -2.78,
     "open": 10.1,
     "high": 10.15,
     "low": 9.8,
     "avg": 9.89,
-    "volume": 7817,
-    "amount": 7730012,
+    "volume": 7829,
+    "amount": 7741772,
     "turnover": 0.23,
     "volumeRatio": 3.16,
     "amplitude": 3.47,
     "limitUp": 11.09,
     "limitDown": 9.07,
-    "pe": 13.83,
-    "peStatic": 18.87,
-    "peTtm": 32.83,
+    "pe": 13.81,
+    "peStatic": 18.83,
+    "peTtm": 32.76,
     "pb": 0.96,
     "roe": 3.55,
     "grossMargin": 25.7170376506,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 349648236,
     "floatShares": 339878336,
-    "totalCap": 3433545677.52,
-    "floatCap": 3337605259.52,
-    "time": 1793240060000,
+    "totalCap": 3426552712.8,
+    "floatCap": 3330807692.8,
+    "time": 1793240096000,
     "code": "sh603639"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 10.1,
-        "close": 9.82,
+        "close": 9.8,
         "high": 10.15,
         "low": 9.8,
-        "volume": 7817
+        "volume": 7829
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 10.1,
-        "close": 9.82,
+        "close": 9.8,
         "high": 10.15,
         "low": 9.8,
-        "volume": 7817
+        "volume": 7829
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 10.26,
-        "close": 9.82,
+        "close": 9.8,
         "high": 10.33,
         "low": 9.8,
-        "volume": 42572
+        "volume": 42584
       }
     ]
   },
@@ -6624,10 +6624,10 @@
       {
         "time": "2026-10-29",
         "open": 10.38,
-        "close": 9.82,
+        "close": 9.8,
         "high": 10.59,
         "low": 9.8,
-        "volume": 180667
+        "volume": 180679
       }
     ]
   },

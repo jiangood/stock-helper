@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz300034",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "钢研高纳",
-    "price": 13.64,
+    "price": 13.63,
     "prevClose": 13.72,
-    "change": -0.08,
-    "todayChange": -0.58,
+    "change": -0.09,
+    "todayChange": -0.66,
     "open": 13.6,
     "high": 13.68,
     "low": 13.43,
     "avg": 13.53,
-    "volume": 43873,
-    "amount": 59376331.54,
-    "turnover": 0.57,
-    "volumeRatio": 2.17,
+    "volume": 44392,
+    "amount": 60084028.54,
+    "turnover": 0.58,
+    "volumeRatio": 2.2,
     "amplitude": 1.82,
     "limitUp": 16.46,
     "limitDown": 10.98,
-    "pe": 69.55,
-    "peStatic": 124.31,
-    "peTtm": 135.69,
+    "pe": 69.5,
+    "peStatic": 124.22,
+    "peTtm": 135.59,
     "pb": 2.8,
     "roe": 3.04,
     "grossMargin": 20.438409394,
@@ -37,9 +37,9 @@
     "board": "BK1231",
     "totalShares": 796961563,
     "floatShares": 767055977,
-    "totalCap": 10870555719.32,
-    "floatCap": 10462643526.28,
-    "time": 1793240058000,
+    "totalCap": 10862586103.69,
+    "floatCap": 10454972966.51,
+    "time": 1793240094000,
     "code": "sz300034"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 13.6,
-        "close": 13.64,
+        "close": 13.63,
         "high": 13.68,
         "low": 13.43,
-        "volume": 43873
+        "volume": 44392
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 13.6,
-        "close": 13.64,
+        "close": 13.63,
         "high": 13.68,
         "low": 13.43,
-        "volume": 43873
+        "volume": 44392
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 14.9,
-        "close": 13.64,
+        "close": 13.63,
         "high": 15.18,
         "low": 13.28,
-        "volume": 406864
+        "volume": 407383
       }
     ]
   },
@@ -7280,10 +7280,10 @@
       {
         "time": "2026-10-29",
         "open": 15.31,
-        "close": 13.64,
+        "close": 13.63,
         "high": 15.63,
         "low": 13.28,
-        "volume": 1482970
+        "volume": 1483489
       }
     ]
   },

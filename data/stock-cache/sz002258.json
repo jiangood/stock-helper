@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz002258",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "利尔化学",
-    "price": 13.79,
+    "price": 13.78,
     "prevClose": 13.82,
-    "change": -0.03,
-    "todayChange": -0.22,
+    "change": -0.04,
+    "todayChange": -0.29,
     "open": 13.68,
     "high": 13.92,
     "low": 13.68,
     "avg": 13.83,
-    "volume": 35767,
-    "amount": 49455787.25,
+    "volume": 36011,
+    "amount": 49792021.25,
     "turnover": 0.45,
-    "volumeRatio": 1.24,
+    "volumeRatio": 1.25,
     "amplitude": 1.74,
     "limitUp": 15.2,
     "limitDown": 12.44,
-    "pe": 23.91,
-    "peStatic": 23.06,
-    "peTtm": 24.88,
+    "pe": 23.9,
+    "peStatic": 23.04,
+    "peTtm": 24.86,
     "pb": 1.37,
     "roe": 4.34,
     "grossMargin": 18.7931037971,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 800437228,
     "floatShares": 799080895,
-    "totalCap": 11038029374.119999,
-    "floatCap": 11019325542.05,
-    "time": 1793240067000,
+    "totalCap": 11030025001.84,
+    "floatCap": 11011334733.1,
+    "time": 1793240103000,
     "code": "sz002258"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 13.68,
-        "close": 13.79,
+        "close": 13.78,
         "high": 13.92,
         "low": 13.68,
-        "volume": 35767
+        "volume": 36011
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 13.68,
-        "close": 13.79,
+        "close": 13.78,
         "high": 13.92,
         "low": 13.68,
-        "volume": 35767
+        "volume": 36011
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 14.32,
-        "close": 13.79,
+        "close": 13.78,
         "high": 14.37,
         "low": 13.28,
-        "volume": 461818
+        "volume": 462062
       }
     ]
   },
@@ -7440,10 +7440,10 @@
       {
         "time": "2026-10-29",
         "open": 13.89,
-        "close": 13.79,
+        "close": 13.78,
         "high": 15.1,
         "low": 13.28,
-        "volume": 2253112
+        "volume": 2253356
       }
     ]
   },

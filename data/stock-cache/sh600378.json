@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600378",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "昊华科技",
-    "price": 33.28,
+    "price": 33.26,
     "prevClose": 34.65,
-    "change": -1.37,
-    "todayChange": -3.95,
+    "change": -1.39,
+    "todayChange": -4.01,
     "open": 34.33,
     "high": 34.52,
     "low": 33.25,
-    "avg": 33.8,
-    "volume": 77725,
-    "amount": 262676213,
-    "turnover": 0.72,
-    "volumeRatio": 1.86,
+    "avg": 33.79,
+    "volume": 78104,
+    "amount": 263937070,
+    "turnover": 0.73,
+    "volumeRatio": 1.83,
     "amplitude": 3.67,
     "limitUp": 38.12,
     "limitDown": 31.19,
-    "pe": 23.83,
-    "peStatic": 29.72,
-    "peTtm": 25.24,
+    "pe": 23.81,
+    "peStatic": 29.7,
+    "peTtm": 25.23,
     "pb": 2.3,
     "roe": 4.84,
     "grossMargin": 24.5308067031,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 1289999620,
     "floatShares": 1072565363,
-    "totalCap": 42931187353.6,
-    "floatCap": 35694975280.64,
-    "time": 1793240067000,
+    "totalCap": 42905387361.2,
+    "floatCap": 35673523973.38,
+    "time": 1793240100000,
     "code": "sh600378"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 34.33,
-        "close": 33.27,
+        "close": 33.26,
         "high": 34.52,
         "low": 33.25,
-        "volume": 77712
+        "volume": 78104
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 34.33,
-        "close": 33.27,
+        "close": 33.26,
         "high": 34.52,
         "low": 33.25,
-        "volume": 77712
+        "volume": 78094
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 35.8,
-        "close": 33.27,
+        "close": 33.26,
         "high": 35.9,
         "low": 33.25,
-        "volume": 689026
+        "volume": 689418
       }
     ]
   },

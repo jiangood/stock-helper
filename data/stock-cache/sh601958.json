@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601958",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "金钼股份",
     "price": 16.25,
@@ -10,13 +10,13 @@
     "todayChange": -3.45,
     "open": 16.87,
     "high": 16.87,
-    "low": 16.24,
+    "low": 16.23,
     "avg": 16.46,
-    "volume": 111506,
-    "amount": 183553381,
+    "volume": 112277,
+    "amount": 184805981,
     "turnover": 0.35,
-    "volumeRatio": 2.85,
-    "amplitude": 3.74,
+    "volumeRatio": 2.81,
+    "amplitude": 3.8,
     "limitUp": 18.51,
     "limitDown": 15.15,
     "pe": 13.14,
@@ -39,7 +39,7 @@
     "floatShares": 3226604400,
     "totalCap": 52432321500,
     "floatCap": 52432321500,
-    "time": 1793240068000,
+    "time": 1793240104000,
     "code": "sh601958"
   },
   "dailyAdjusted": {
@@ -2052,8 +2052,8 @@
         "open": 16.87,
         "close": 16.25,
         "high": 16.87,
-        "low": 16.24,
-        "volume": 111506
+        "low": 16.23,
+        "volume": 112277
       }
     ]
   },
@@ -4067,8 +4067,8 @@
         "open": 16.87,
         "close": 16.25,
         "high": 16.87,
-        "low": 16.24,
-        "volume": 111506
+        "low": 16.23,
+        "volume": 112247
       }
     ]
   },
@@ -5674,8 +5674,8 @@
         "open": 17.25,
         "close": 16.25,
         "high": 17.48,
-        "low": 16.24,
-        "volume": 689432
+        "low": 16.23,
+        "volume": 690173
       }
     ]
   },
@@ -7466,8 +7466,8 @@
         "open": 19.26,
         "close": 16.25,
         "high": 19.5,
-        "low": 16.24,
-        "volume": 3275059
+        "low": 16.23,
+        "volume": 3275800
       }
     ]
   },

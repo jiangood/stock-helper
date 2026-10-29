@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600111",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "北方稀土",
-    "price": 34.98,
+    "price": 34.97,
     "prevClose": 35.51,
-    "change": -0.53,
-    "todayChange": -1.49,
+    "change": -0.54,
+    "todayChange": -1.52,
     "open": 35.73,
     "high": 35.73,
     "low": 34.84,
     "avg": 35.04,
-    "volume": 91558,
-    "amount": 320804971,
+    "volume": 91942,
+    "amount": 322146970,
     "turnover": 0.25,
-    "volumeRatio": 1.24,
+    "volumeRatio": 1.22,
     "amplitude": 2.51,
     "limitUp": 39.06,
     "limitDown": 31.96,
-    "pe": 26.01,
-    "peStatic": 56.17,
-    "peTtm": 29.03,
-    "pb": 4.55,
+    "pe": 26,
+    "peStatic": 56.15,
+    "peTtm": 29.02,
+    "pb": 4.54,
     "roe": 13.9,
     "grossMargin": 15.7333117426,
     "netMargin": 10.5810626521,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 3615065842,
     "floatShares": 3615065842,
-    "totalCap": 126455003153.15999,
-    "floatCap": 126455003153.15999,
-    "time": 1793240071000,
+    "totalCap": 126418852494.73999,
+    "floatCap": 126418852494.73999,
+    "time": 1793240104000,
     "code": "sh600111"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 35.73,
-        "close": 34.98,
+        "close": 34.97,
         "high": 35.73,
         "low": 34.84,
-        "volume": 91558
+        "volume": 91942
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 35.73,
-        "close": 34.94,
+        "close": 34.97,
         "high": 35.73,
         "low": 34.84,
-        "volume": 90457
+        "volume": 91942
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 36.52,
-        "close": 34.94,
+        "close": 34.97,
         "high": 37.2,
         "low": 34.84,
-        "volume": 1072435
+        "volume": 1073920
       }
     ]
   },

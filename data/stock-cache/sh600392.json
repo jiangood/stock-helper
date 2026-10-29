@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600392",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "盛和资源",
-    "price": 15.36,
+    "price": 15.34,
     "prevClose": 15.76,
-    "change": -0.4,
-    "todayChange": -2.54,
+    "change": -0.42,
+    "todayChange": -2.66,
     "open": 15.74,
     "high": 15.74,
     "low": 15.31,
     "avg": 15.47,
-    "volume": 90833,
-    "amount": 140554409,
+    "volume": 91328,
+    "amount": 141314282,
     "turnover": 0.52,
-    "volumeRatio": 1.61,
+    "volumeRatio": 1.59,
     "amplitude": 2.73,
     "limitUp": 17.34,
     "limitDown": 14.18,
-    "pe": 15.18,
-    "peStatic": 32.09,
-    "peTtm": 19.96,
+    "pe": 15.16,
+    "peStatic": 32.05,
+    "peTtm": 19.94,
     "pb": 2.06,
     "roe": 6.8,
     "grossMargin": 12.6425008214,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 1752826570,
     "floatShares": 1752826570,
-    "totalCap": 26923416115.2,
-    "floatCap": 26923416115.2,
-    "time": 1793240072000,
+    "totalCap": 26888359583.8,
+    "floatCap": 26888359583.8,
+    "time": 1793240105000,
     "code": "sh600392"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 15.74,
-        "close": 15.36,
+        "close": 15.34,
         "high": 15.74,
         "low": 15.31,
-        "volume": 90830
+        "volume": 91328
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 15.74,
-        "close": 15.36,
+        "close": 15.34,
         "high": 15.74,
         "low": 15.31,
-        "volume": 90830
+        "volume": 91328
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 16.37,
-        "close": 15.36,
+        "close": 15.34,
         "high": 16.48,
         "low": 15.31,
-        "volume": 829344
+        "volume": 829842
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 20.16,
-        "close": 15.36,
+        "close": 15.34,
         "high": 20.26,
         "low": 15.24,
-        "volume": 5685556
+        "volume": 5686051
       }
     ]
   },

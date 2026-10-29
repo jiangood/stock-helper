@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sz301058",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "中粮科工",
-    "price": 7.91,
+    "price": 7.92,
     "prevClose": 8.06,
-    "change": -0.15,
-    "todayChange": -1.86,
+    "change": -0.14,
+    "todayChange": -1.74,
     "open": 7.99,
     "high": 8.05,
     "low": 7.86,
     "avg": 7.91,
-    "volume": 29385,
-    "amount": 23235348.12,
+    "volume": 29402,
+    "amount": 23248798.12,
     "turnover": 0.57,
     "volumeRatio": 3.35,
     "amplitude": 2.36,
     "limitUp": 9.67,
     "limitDown": 6.45,
-    "pe": 25.31,
-    "peStatic": 17.67,
-    "peTtm": 17.38,
+    "pe": 25.34,
+    "peStatic": 17.7,
+    "peTtm": 17.4,
     "pb": 1.75,
     "roe": 5.24,
     "grossMargin": 22.8852762717,
@@ -37,9 +37,9 @@
     "board": "BK0726",
     "totalShares": 520803005,
     "floatShares": 512274245,
-    "totalCap": 4119551769.55,
-    "floatCap": 4052089277.9500003,
-    "time": 1793240061000,
+    "totalCap": 4124759799.6,
+    "floatCap": 4057212020.4,
+    "time": 1793240097000,
     "code": "sz301058"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 7.99,
-        "close": 7.91,
+        "close": 7.92,
         "high": 8.05,
         "low": 7.86,
-        "volume": 29385
+        "volume": 29402
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 7.99,
-        "close": 7.91,
+        "close": 7.92,
         "high": 8.05,
         "low": 7.86,
-        "volume": 29385
+        "volume": 29402
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 8.18,
-        "close": 7.91,
+        "close": 7.92,
         "high": 8.31,
         "low": 7.86,
-        "volume": 147456
+        "volume": 147473
       }
     ]
   },
@@ -6176,10 +6176,10 @@
       {
         "time": "2026-10-29",
         "open": 8.55,
-        "close": 7.91,
+        "close": 7.92,
         "high": 9,
         "low": 7.86,
-        "volume": 905576
+        "volume": 905593
       }
     ]
   },

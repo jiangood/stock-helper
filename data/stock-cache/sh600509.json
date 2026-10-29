@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh600509",
-  "updatedAt": "2026-10-29T02:14:19.774Z",
+  "updatedAt": "2026-10-29T02:14:55.103Z",
   "detail": {
     "name": "天富能源",
-    "price": 6.42,
+    "price": 6.41,
     "prevClose": 6.53,
-    "change": -0.11,
-    "todayChange": -1.68,
+    "change": -0.12,
+    "todayChange": -1.84,
     "open": 6.51,
     "high": 6.55,
     "low": 6.4,
     "avg": 6.45,
-    "volume": 52315,
-    "amount": 33761850,
+    "volume": 52464,
+    "amount": 33857363,
     "turnover": 0.38,
-    "volumeRatio": 2.29,
+    "volumeRatio": 2.25,
     "amplitude": 2.3,
     "limitUp": 7.18,
     "limitDown": 5.88,
-    "pe": 17.38,
-    "peStatic": 38.35,
-    "peTtm": 37.31,
+    "pe": 17.36,
+    "peStatic": 38.29,
+    "peTtm": 37.25,
     "pb": 1.1,
     "roe": 4.89,
     "grossMargin": 23.4046973676,
@@ -37,9 +37,9 @@
     "board": "BK0428",
     "totalShares": 1374397407,
     "floatShares": 1374397407,
-    "totalCap": 8823631352.94,
-    "floatCap": 8823631352.94,
-    "time": 1793240061000,
+    "totalCap": 8809887378.87,
+    "floatCap": 8809887378.87,
+    "time": 1793240100000,
     "code": "sh600509"
   },
   "dailyAdjusted": {
@@ -2050,10 +2050,10 @@
       {
         "time": "2026-10-29",
         "open": 6.51,
-        "close": 6.42,
+        "close": 6.41,
         "high": 6.55,
         "low": 6.4,
-        "volume": 52315
+        "volume": 52464
       }
     ]
   },
@@ -4065,10 +4065,10 @@
       {
         "time": "2026-10-29",
         "open": 6.51,
-        "close": 6.42,
+        "close": 6.41,
         "high": 6.55,
         "low": 6.4,
-        "volume": 52315
+        "volume": 52464
       }
     ]
   },
@@ -5672,10 +5672,10 @@
       {
         "time": "2026-10-29",
         "open": 6.63,
-        "close": 6.42,
+        "close": 6.41,
         "high": 6.72,
         "low": 6.4,
-        "volume": 361827
+        "volume": 361976
       }
     ]
   },
@@ -7600,10 +7600,10 @@
       {
         "time": "2026-10-29",
         "open": 7.11,
-        "close": 6.42,
+        "close": 6.41,
         "high": 7.37,
         "low": 6.4,
-        "volume": 2239500
+        "volume": 2239649
       }
     ]
   },

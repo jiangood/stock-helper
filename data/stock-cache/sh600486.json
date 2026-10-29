@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600486",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "扬农化工",
     "price": 54.47,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 68.21,
-        "close": 68.8,
-        "high": 70.63,
-        "low": 68.05,
-        "volume": 28651
-      },
       {
         "time": "2025-10-20",
         "open": 69.33,

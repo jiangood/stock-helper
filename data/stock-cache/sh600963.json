@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600963",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "岳阳林纸",
     "price": 3.89,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 4.56,
-        "close": 4.52,
-        "high": 4.59,
-        "low": 4.51,
-        "volume": 174584
-      },
       {
         "time": "2025-10-20",
         "open": 4.55,

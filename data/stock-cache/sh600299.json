@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600299",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "安迪苏",
     "price": 7.42,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 9.47,
-        "close": 9.35,
-        "high": 9.51,
-        "low": 9.33,
-        "volume": 54791
-      },
       {
         "time": "2025-10-20",
         "open": 9.4,

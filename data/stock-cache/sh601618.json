@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601618",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "中国中冶",
     "price": 2.47,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 3.83,
-        "close": 3.71,
-        "high": 3.83,
-        "low": 3.7,
-        "volume": 1995127
-      },
       {
         "time": "2025-10-20",
         "open": 3.72,

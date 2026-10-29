@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz300527",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "中船应急",
     "price": 7.13,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-16",
-        "open": 8.19,
-        "close": 8.13,
-        "high": 8.23,
-        "low": 8.11,
-        "volume": 113781
-      },
       {
         "time": "2025-10-17",
         "open": 8.13,

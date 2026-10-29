@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000819",
-  "updatedAt": "2026-10-29T08:24:51.605Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "岳阳兴长",
     "price": 10.54,
@@ -21,8 +21,8 @@
     "limitDown": 9.72,
     "pe": 137.94,
     "peStatic": -74.09,
-    "peTtm": -460.74,
-    "pb": 1.84,
+    "peTtm": 5480.27,
+    "pb": 1.83,
     "roe": 1.01,
     "grossMargin": 15.429633851,
     "netMargin": 0.9130394962999999,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 18.08,
-        "close": 17.75,
-        "high": 18.3,
-        "low": 17.7,
-        "volume": 106033
-      },
       {
         "time": "2025-10-20",
         "open": 18.44,

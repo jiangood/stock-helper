@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh603227",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "雪峰科技",
     "price": 6.73,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 9.41,
-        "close": 9.26,
-        "high": 9.54,
-        "low": 9.25,
-        "volume": 217253
-      },
       {
         "time": "2025-10-20",
         "open": 9.31,

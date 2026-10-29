@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600378",
-  "updatedAt": "2026-10-29T08:24:51.605Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "昊华科技",
     "price": 32.77,
@@ -21,8 +21,8 @@
     "limitDown": 31.19,
     "pe": 23.21,
     "peStatic": 29.27,
-    "peTtm": 24.85,
-    "pb": 2.26,
+    "peTtm": 26.78,
+    "pb": 2.21,
     "roe": 7.3,
     "grossMargin": 24.6950610321,
     "netMargin": 10.589700006400001,

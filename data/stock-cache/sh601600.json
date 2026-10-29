@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601600",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "中国铝业",
     "price": 8.43,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 8.72,
-        "close": 8.47,
-        "high": 8.86,
-        "low": 8.45,
-        "volume": 2798476
-      },
       {
         "time": "2025-10-20",
         "open": 8.51,

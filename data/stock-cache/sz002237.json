@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002237",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "恒邦股份",
     "price": 11.11,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 15.14,
-        "close": 14.78,
-        "high": 15.35,
-        "low": 14.72,
-        "volume": 500549
-      },
       {
         "time": "2025-10-20",
         "open": 13.99,

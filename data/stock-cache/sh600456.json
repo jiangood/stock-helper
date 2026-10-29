@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600456",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "宝钛股份",
     "price": 23.76,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 32.3,
-        "close": 31.34,
-        "high": 32.78,
-        "low": 31.24,
-        "volume": 83450
-      },
       {
         "time": "2025-10-20",
         "open": 31.6,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600618",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "氯碱化工",
     "price": 8.83,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 11.25,
-        "close": 11.09,
-        "high": 11.47,
-        "low": 11.05,
-        "volume": 161944
-      },
       {
         "time": "2025-10-20",
         "open": 11.2,

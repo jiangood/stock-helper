@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh601061",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "中信金属",
     "price": 9.49,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 10.82,
-        "close": 10.28,
-        "high": 10.82,
-        "low": 10.25,
-        "volume": 294413
-      },
       {
         "time": "2025-10-20",
         "open": 10.35,

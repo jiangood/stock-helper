@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000830",
-  "updatedAt": "2026-10-29T08:24:51.605Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "鲁西化工",
     "price": 11.16,
@@ -21,8 +21,8 @@
     "limitDown": 10.05,
     "pe": 14.15,
     "peStatic": 23.44,
-    "peTtm": 19.01,
-    "pb": 1.1,
+    "peTtm": 21.05,
+    "pb": 1.09,
     "roe": 5.81,
     "grossMargin": 13.7086837644,
     "netMargin": 4.9957567663,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 12.87,
-        "close": 12.81,
-        "high": 13.09,
-        "low": 12.73,
-        "volume": 192417
-      },
       {
         "time": "2025-10-20",
         "open": 12.89,

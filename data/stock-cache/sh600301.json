@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600301",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "华锡有色",
     "price": 43.19,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-10",
-        "open": 33.97,
-        "close": 31.87,
-        "high": 33.97,
-        "low": 31.84,
-        "volume": 220760
-      },
       {
         "time": "2025-10-13",
         "open": 30.24,

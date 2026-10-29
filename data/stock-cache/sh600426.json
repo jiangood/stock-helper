@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600426",
-  "updatedAt": "2026-10-29T08:24:51.605Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "华鲁恒升",
     "price": 19.48,
@@ -21,7 +21,7 @@
     "limitDown": 17.52,
     "pe": 12.67,
     "peStatic": 16.16,
-    "peTtm": 13.07,
+    "peTtm": 13.03,
     "pb": 1.53,
     "roe": 9.21,
     "grossMargin": 21.8549696462,

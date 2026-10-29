@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002057",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "中钢天源",
     "price": 7.39,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 11.18,
-        "close": 10.8,
-        "high": 11.36,
-        "low": 10.76,
-        "volume": 306116
-      },
       {
         "time": "2025-10-20",
         "open": 10.88,

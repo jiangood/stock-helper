@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000960",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "锡业股份",
     "price": 23.64,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 23.26,
-        "close": 22.16,
-        "high": 23.52,
-        "low": 22.06,
-        "volume": 409812
-      },
       {
         "time": "2025-10-20",
         "open": 22.17,

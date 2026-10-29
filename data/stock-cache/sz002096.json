@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz002096",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "易普力",
     "price": 9,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 13.25,
-        "close": 13.11,
-        "high": 13.47,
-        "low": 13.08,
-        "volume": 72192
-      },
       {
         "time": "2025-10-20",
         "open": 13.14,

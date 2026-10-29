@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600282",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "南钢股份",
     "price": 4.25,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 5.26,
-        "close": 5.17,
-        "high": 5.31,
-        "low": 5.14,
-        "volume": 355586
-      },
       {
         "time": "2025-10-20",
         "open": 5.16,

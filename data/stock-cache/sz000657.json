@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sz000657",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "中钨高新",
     "price": 38.01,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 16.87,
-        "close": 16.32,
-        "high": 17.06,
-        "low": 16.3,
-        "volume": 585899
-      },
       {
         "time": "2025-10-20",
         "open": 16.48,

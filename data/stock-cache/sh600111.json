@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600111",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:35:44.921Z",
   "detail": {
     "name": "北方稀土",
     "price": 35.29,
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 53.16,
-        "close": 53,
-        "high": 54.9,
-        "low": 52.63,
-        "volume": 1749069
-      },
       {
         "time": "2025-10-20",
         "open": 52.02,

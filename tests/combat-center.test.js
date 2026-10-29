@@ -18,7 +18,9 @@ async function runCombat(price) {
     Math,
     Promise,
     setTimeout,
-    clearTimeout
+    clearTimeout,
+    setInterval: () => 1,
+    clearInterval: () => {}
   };
   context.window = context;
   context.StockHoldings = { load: async () => ({ holdings: [{ code: 'sz000001', quantity: 100, cost: 9 }] }) };

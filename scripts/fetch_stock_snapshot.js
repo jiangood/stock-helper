@@ -124,14 +124,24 @@ async function main() {
       const d = new Date(n > 1e12 ? n : n * 1000);
       return Number.isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
     }).filter(Boolean).sort().pop() || previousQuotes.marketDate || null;
+  const chinaDate = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date());
+  const marketDateIsCurrent = !!marketDate && marketDate === chinaDate;
   const quotePayload = {
     schemaVersion: 1,
     updatedAt,
     marketDate,
     source: 'Eastmoney/Tencent via GitHub Actions',
-    status: coverage >= MIN_QUOTE_COVERAGE ? 'ok' : 'stale',
+    status: coverage >= MIN_QUOTE_COVERAGE && marketDateIsCurrent ? 'ok' : 'stale',
     quotes
   };
+  if (coverage >= MIN_QUOTE_COVERAGE && !marketDateIsCurrent) {
+    const changed = writeIfChanged(QUOTES_FILE, quotePayload, true);
+    console.log(changed ? 'Marked quote snapshot stale.' : 'No new China market date; quote snapshot unchanged.');
+    console.log('Skipping detail and K-line collection because the provider has not published a quote for today in China.');
+    return;
+  }
   fs.mkdirSync(CACHE_DIR, { recursive: true });
   const results = await mapLimit(codes, MAX_CONCURRENCY, async code => {
     const file = path.join(CACHE_DIR, code + '.json');

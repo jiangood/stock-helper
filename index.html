@@ -145,7 +145,7 @@
   .health-item .flag { margin-left: 0; flex: 0 0 auto; margin-top: 1px; }
 
   body { padding-bottom: 74px; }
-  .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
+  .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
   .bottom-tab { border:0; background:transparent; color:var(--bs-secondary-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:48px; font-size:10px; border-radius:8px; }
   .bottom-tab .tab-icon { width:20px; height:20px; display:block; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
   .bottom-tab.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
@@ -337,19 +337,9 @@
   </div>
 </main>
 
-<main id="holdings-pane" data-pane="holdings" class="app-pane container-fluid px-3 py-3 d-none">
-  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
-    <div><div class="panel-title">我的持仓</div><div class="panel-subtitle">按持仓成本与当前行情统计市值、浮动盈亏；数据只读，修改请维护公开 JSON。</div></div>
-    <a class="btn btn-sm btn-outline-secondary" href="https://github.com/jiangood/stock-helper/edit/master/data/holdings.json" target="_blank" rel="noopener noreferrer">管理持仓数据</a>
-  </div>
-  <div id="holdings-summary" class="row g-2 mb-3"><div class="col-12"><div class="empty-state">正在读取持仓…</div></div></div>
-  <div id="holdings-list" class="insight-grid mb-3"></div>
-  <div class="panel-subtitle mt-2">提示：行情缺失时不估算市值或盈亏；持仓成本和股数以录入数据为准，不会自动连接券商账户。</div>
-</main>
-
 <main id="combat-pane" data-pane="combat" class="app-pane container-fluid px-3 py-3 d-none">
   <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
-    <div><div class="panel-title">交易作战台</div><div class="panel-subtitle">持仓 + 股票池统一汇总。展示触发条件与理由，由你决定是否执行；不会自动下单。</div></div>
+    <div><div class="panel-title">交易作战台</div><div class="panel-subtitle">汇总股票池标的的交易条件与理由，由你决定是否执行；不会自动下单。</div></div>
     <button id="combat-refresh" class="btn btn-sm btn-outline-primary" type="button">⟳ 重新计算</button>
   </div>
     <div id="combat-summary" class="row g-2 mb-3">
@@ -424,7 +414,6 @@
 
 <nav class="bottom-tabs" aria-label="主导航">
   <button class="bottom-tab active" type="button" data-target="stocks"><svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg><span>自选</span></button>
-  <button class="bottom-tab" type="button" data-target="holdings"><svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>持仓</span></button>
   <button class="bottom-tab" type="button" data-target="combat"><svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 6 6m4 4 6 6M5 3l4 1-5 5-1-4 2-2ZM19 3l-6 6m-2 2-6 6M21 17l-1 4-5-5 4-1 2 2Z"/><path d="m9 13 2 2m2-6 2 2"/></svg><span>作战</span></button>
   <button class="bottom-tab" type="button" data-target="market"><svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 9 11l4 3 7-8"/><path d="M14 6h6v6"/></svg><span>行情</span></button>
 </nav>
@@ -442,12 +431,10 @@
 <script src="static-quotes.js"></script>
 <script src="pinyin.js"></script>
 <script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
-<script src="holdings-data.js"></script>
 <script src="indicators.js"></script>
 <script src="trade-signals.js"></script>
 <script src="combat-center.js?v=20261029-0300-riskpanel-cachefix"></script>
 <script src="business.js"></script>
-<script src="risk-center.js"></script>
 <script src="global-assets.js"></script>
 <script src="stock-dashboard.js"></script>
 

@@ -27,14 +27,14 @@ python -m http.server 8089
 | `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、纪律全过判定、入场/重仓区、连续涨停、月 K 分位、体检与简报 |
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
-| `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K、分钟 K、分时） |
+| `quotes.js` | 行情 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
 | `risk-center.js` | 持仓风险概览：自动计算市值、浮动盈亏、组合内仓位、前 3 大持仓集中度和股票池止盈情景；不要求手工维护止损价、账户总资产或风险预算 |
 | `business.js` `data/business-data.json` | 行情页合并指数行情、股票池温度、板块强弱、持仓盈亏、交易观察、全球资产及商品现货/期货；阅读页提供投资书单和项目理论资料 |
 | `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行、资产趋势对比和各资产近一个月迷你趋势图 |
 | `scripts/fetch_global_assets.py` | 从 Yahoo Finance 公开图表接口抓取全球资产报价，抓取失败时保留最近有效值并标记缓存状态 |
-| `.github/workflows/global-assets.yml` | 每 30 分钟尝试刷新全球资产行情，支持手动触发 |
+| `.github/workflows/global-assets.yml` | 每日尝试刷新全球资产行情；数据未变化时不更新文件，支持手动触发 |
 | `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
-| `.github/workflows/business-data.yml` | 工作日定时刷新商品数据（北京时间白天/晚间多个时段），也支持手动触发 GitHub Actions |
+| `.github/workflows/business-data.yml` | 工作日每日刷新一次商品数据，数据未变化时不更新文件，也支持手动触发 GitHub Actions |
 
 ## 生意 / 商品数据
 
@@ -47,7 +47,7 @@ python -m http.server 8089
 
 ## 全球资产
 
-底部「全球资产」页展示黄金、BTC、ETH、日经 225、纳斯达克 100、标普 500 和 VIX 恐慌指数。页面增加按日涨跌幅排序的排行卡、各资产近一个月迷你趋势，以及近一周 / 近一个月归一化趋势对比（各序列起点设为 100，便于比较相对变化而非绝对价格）。抓取脚本为各资产保存近一个月日线历史；历史点不足时明确提示，不补造数据。VIX 上升通常表示期权市场隐含的预期波动增强，不是市场涨跌方向预测。行情通过 GitHub Actions 约每 30 分钟抓取并缓存，实际调度可能延迟；这是公开行情参考，不是逐笔实时行情。各市场币种和交易时段不同，报价失败时不生成模拟价格，页面会显示最近有效报价及更新时间。
+底部「全球资产」页展示黄金、BTC、ETH、日经 225、纳斯达克 100、标普 500 和 VIX 恐慌指数。页面增加按日涨跌幅排序的排行卡、各资产近一个月迷你趋势，以及近一周 / 近一个月归一化趋势对比（各序列起点设为 100，便于比较相对变化而非绝对价格）。抓取脚本为各资产保存近一个月日线历史；历史点不足时明确提示，不补造数据。VIX 上升通常表示期权市场隐含的预期波动增强，不是市场涨跌方向预测。行情通过 GitHub Actions 每日抓取并缓存，实际调度可能延迟；这是公开行情参考，不是逐笔实时行情。各市场币种和交易时段不同，报价失败时不生成模拟价格，页面会显示最近有效报价及更新时间。
 
 ## 鳄鱼纪律
 
@@ -86,10 +86,8 @@ const data = await q.fetch(['sz002408', 'sh600519']);
 // 单只详情（含估值、52 周高低）
 await q.fetchDetail('sz002408');
 
-// K 线、分钟 K 与分时
+// 日 / 周 / 月 K 线
 await q.fetchKline('sz002408', { period: 'day', count: 250, adjust: 'qfq' });
-await q.fetchMinuteKline('sz002408', { period: '15', count: 320 });   // 约 20 个交易日
-await q.fetchTrends('sz002408');
 
 StockQuotes.marketSession();   // 'open' | 'pre' | 'lunch' | 'closed' | 'holiday'
 StockQuotes.isTrading();       // 是否处于需要刷新行情的时段

@@ -371,12 +371,12 @@
   }
   function bindRiskBudgetActions() {
     var panel = $('combat-risk-budget');
+    if (panel) Object.keys(state.riskSettings).forEach(function (key) {
+      var field = panel.querySelector('[data-risk-setting="' + key + '"]');
+      if (field && state.riskSettings[key] !== undefined && state.riskSettings[key] !== null && root.document.activeElement !== field) field.value = state.riskSettings[key];
+    });
     if (panel && !panel.dataset.riskBound) {
       panel.dataset.riskBound = '1';
-      Object.keys(state.riskSettings).forEach(function (key) {
-        var field = panel.querySelector('[data-risk-setting="' + key + '"]');
-        if (field && state.riskSettings[key] !== undefined && state.riskSettings[key] !== null) field.value = state.riskSettings[key];
-      });
       panel.addEventListener('change', function (event) {
         var field = event.target;
         if (!field || !field.getAttribute) return;

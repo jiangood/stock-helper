@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T08:16:00.248Z",
+  "updatedAt": "2026-10-29T08:24:51.605Z",
   "marketDate": "2026-10-29",
   "totalMax": 32,
   "weights": {
@@ -45,12 +45,12 @@
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 124,
-        "boxHeight": 0.519,
+        "capYi": 123,
+        "boxHeight": 0.52,
         "months": 6,
-        "position": 0.221,
+        "position": 0.225,
         "pAll": 36.8,
-        "p52": 0,
+        "p52": 1.1,
         "volRatio": 1.99
       }
     },
@@ -66,12 +66,12 @@
       "complete": true,
       "band": "good",
       "metrics": {
-        "capYi": 49,
+        "capYi": 48,
         "boxHeight": 1.492,
         "months": 35,
-        "position": 0.038,
-        "pAll": 3.2,
-        "p52": 4.7,
+        "position": 0.041,
+        "pAll": 4.8,
+        "p52": 3,
         "volRatio": 2.1
       }
     },
@@ -87,12 +87,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 105,
+        "capYi": 107,
         "boxHeight": 0.453,
         "months": 34,
-        "position": 0.714,
-        "pAll": 72.3,
-        "p52": 69.9,
+        "position": 0.773,
+        "pAll": 78.7,
+        "p52": 75.1,
         "volRatio": 1.03
       }
     },
@@ -100,20 +100,20 @@
       "items": {
         "cap": 6.4,
         "consolidation": 4,
-        "bottom": 7.6,
+        "bottom": 7.8,
         "volume": 6.3
       },
-      "points": 19.3,
+      "points": 19.5,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 222,
+        "capYi": 218,
         "boxHeight": 0.883,
         "months": 8,
-        "position": 0.291,
-        "pAll": 38.4,
-        "p52": 15.2,
+        "position": 0.266,
+        "pAll": 35.7,
+        "p52": 12.9,
         "volRatio": 2.12
       }
     },
@@ -121,7 +121,7 @@
       "items": {
         "cap": 6.5,
         "consolidation": 4,
-        "bottom": 6.9,
+        "bottom": 6.8,
         "volume": 1.5
       },
       "points": 15.8,
@@ -129,12 +129,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 108,
-        "boxHeight": 0.784,
+        "capYi": 109,
+        "boxHeight": 0.779,
         "months": 8,
-        "position": 0.376,
-        "pAll": 61,
-        "p52": 2.5,
+        "position": 0.382,
+        "pAll": 61.5,
+        "p52": 3.2,
         "volRatio": 0.95
       }
     },
@@ -142,10 +142,10 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 6.6,
+        "bottom": 6.5,
         "volume": 3.3
       },
-      "points": 19.5,
+      "points": 19.4,
       "max": 32,
       "complete": true,
       "band": "mid",
@@ -153,9 +153,9 @@
         "capYi": 61,
         "boxHeight": 1.013,
         "months": 7,
-        "position": 0.406,
-        "pAll": 65.8,
-        "p52": 2.7,
+        "position": 0.411,
+        "pAll": 66.7,
+        "p52": 2.8,
         "volRatio": 1.38
       }
     },
@@ -174,9 +174,9 @@
         "capYi": 37,
         "boxHeight": 0.641,
         "months": 34,
-        "position": 0.116,
+        "position": 0.113,
         "pAll": 9.2,
-        "p52": 15.4,
+        "p52": 14.5,
         "volRatio": 0.81
       }
     },
@@ -205,10 +205,10 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 7.2,
+        "bottom": 7.5,
         "volume": 2.2
       },
-      "points": 19.4,
+      "points": 19.7,
       "max": 32,
       "complete": true,
       "band": "mid",
@@ -216,9 +216,9 @@
         "capYi": 22,
         "boxHeight": 0.705,
         "months": 6,
-        "position": 0.335,
-        "pAll": 53.4,
-        "p52": 3.7,
+        "position": 0.305,
+        "pAll": 50.9,
+        "p52": 0,
         "volRatio": 1.13
       }
     },
@@ -226,20 +226,20 @@
       "items": {
         "cap": 10,
         "consolidation": 5,
-        "bottom": 8.5,
+        "bottom": 8.6,
         "volume": 2.3
       },
-      "points": 21.6,
+      "points": 21.7,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 25,
-        "boxHeight": 0.839,
+        "capYi": 24,
+        "boxHeight": 0.856,
         "months": 25,
-        "position": 0.182,
-        "pAll": 26.7,
-        "p52": 5.5,
+        "position": 0.17,
+        "pAll": 26.3,
+        "p52": 3.1,
         "volRatio": 1.16
       }
     },
@@ -247,20 +247,20 @@
       "items": {
         "cap": 6.5,
         "consolidation": 4,
-        "bottom": 8.8,
+        "bottom": 8.9,
         "volume": 9
       },
-      "points": 22.1,
+      "points": 22.2,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 151,
+        "capYi": 149,
         "boxHeight": 1.244,
         "months": 4,
-        "position": 0.145,
-        "pAll": 19.2,
-        "p52": 7.5,
+        "position": 0.131,
+        "pAll": 17.5,
+        "p52": 6.4,
         "volRatio": 5.62
       }
     },
@@ -268,20 +268,20 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 5.7,
+        "bottom": 5.9,
         "volume": 3.7
       },
-      "points": 18.9,
+      "points": 19.2,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 37,
+        "capYi": 36,
         "boxHeight": 0.56,
         "months": 1,
-        "position": 0.51,
-        "pAll": 54.2,
-        "p52": 46.1,
+        "position": 0.483,
+        "pAll": 52.1,
+        "p52": 42.5,
         "volRatio": 1.5
       }
     },
@@ -289,20 +289,20 @@
       "items": {
         "cap": 5.3,
         "consolidation": 4,
-        "bottom": 8.3,
+        "bottom": 8.4,
         "volume": 0.8
       },
-      "points": 15.8,
+      "points": 15.9,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 513,
+        "capYi": 511,
         "boxHeight": 0.578,
         "months": 13,
-        "position": 0.202,
+        "position": 0.199,
         "pAll": 30,
-        "p52": 5.4,
+        "p52": 4.7,
         "volRatio": 0.8
       }
     },
@@ -310,7 +310,7 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 7.4,
+        "bottom": 7.3,
         "volume": 1.7
       },
       "points": 19.2,
@@ -321,9 +321,9 @@
         "capYi": 72,
         "boxHeight": 0.738,
         "months": 7,
-        "position": 0.319,
-        "pAll": 50.4,
-        "p52": 4.2,
+        "position": 0.331,
+        "pAll": 51.8,
+        "p52": 4.9,
         "volRatio": 1.01
       }
     },
@@ -331,7 +331,7 @@
       "items": {
         "cap": 10,
         "consolidation": 5.4,
-        "bottom": 9.6,
+        "bottom": 9.5,
         "volume": 0.4
       },
       "points": 21.7,
@@ -342,9 +342,9 @@
         "capYi": 41,
         "boxHeight": 0.622,
         "months": 20,
-        "position": 0.05,
-        "pAll": 3.2,
-        "p52": 7.7,
+        "position": 0.057,
+        "pAll": 4.8,
+        "p52": 7.1,
         "volRatio": 0.7
       }
     },
@@ -352,20 +352,20 @@
       "items": {
         "cap": 6.5,
         "consolidation": 4,
-        "bottom": 5.3,
+        "bottom": 5.4,
         "volume": 6.9
       },
-      "points": 17.7,
+      "points": 17.8,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 135,
+        "capYi": 132,
         "boxHeight": 1.408,
         "months": 4,
-        "position": 0.551,
-        "pAll": 87.9,
-        "p52": 5.8,
+        "position": 0.536,
+        "pAll": 87.5,
+        "p52": 2.7,
         "volRatio": 2.26
       }
     },
@@ -384,9 +384,9 @@
         "capYi": 159,
         "boxHeight": 1.346,
         "months": 9,
-        "position": 0.396,
-        "pAll": 65.8,
-        "p52": 0.4,
+        "position": 0.393,
+        "pAll": 65.3,
+        "p52": 0.2,
         "volRatio": 1.43
       }
     },
@@ -394,20 +394,20 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 6.3,
+        "bottom": 6.6,
         "volume": 2.2
       },
-      "points": 18.5,
+      "points": 18.8,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 32,
+        "capYi": 31,
         "boxHeight": 0.86,
         "months": 8,
-        "position": 0.442,
-        "pAll": 60.4,
-        "p52": 19.9,
+        "position": 0.408,
+        "pAll": 57.1,
+        "p52": 16.4,
         "volRatio": 1.12
       }
     },
@@ -415,20 +415,20 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 8,
+        "bottom": 8.1,
         "volume": 2.5
       },
-      "points": 20.3,
+      "points": 20.4,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 79,
-        "boxHeight": 0.801,
+        "capYi": 78,
+        "boxHeight": 0.835,
         "months": 8,
-        "position": 0.242,
-        "pAll": 40.4,
-        "p52": 0,
+        "position": 0.237,
+        "pAll": 39.2,
+        "p52": 0.6,
         "volRatio": 1.21
       }
     },
@@ -439,38 +439,38 @@
         "bottom": 7.6,
         "volume": 2.7
       },
-      "points": 21,
+      "points": 20.9,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 67,
+        "capYi": 68,
         "boxHeight": 1.062,
         "months": 35,
-        "position": 0.285,
-        "pAll": 31.3,
-        "p52": 24.3,
+        "position": 0.296,
+        "pAll": 32.1,
+        "p52": 25.9,
         "volRatio": 1.24
       }
     },
     "sh600348": {
       "items": {
-        "cap": 6,
+        "cap": 5.9,
         "consolidation": 4,
-        "bottom": 5.3,
+        "bottom": 5.1,
         "volume": 1.6
       },
-      "points": 14.1,
+      "points": 13.9,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 304,
+        "capYi": 305,
         "boxHeight": 0.739,
         "months": 6,
-        "position": 0.549,
-        "pAll": 66,
-        "p52": 38.3,
+        "position": 0.567,
+        "pAll": 68.1,
+        "p52": 39.6,
         "volRatio": 0.98
       }
     },
@@ -478,7 +478,7 @@
       "items": {
         "cap": 10,
         "consolidation": 6.9,
-        "bottom": 9.3,
+        "bottom": 9.4,
         "volume": 1.2
       },
       "points": 23.3,
@@ -489,9 +489,9 @@
         "capYi": 34,
         "boxHeight": 0.574,
         "months": 35,
-        "position": 0.087,
-        "pAll": 11,
-        "p52": 5.3,
+        "position": 0.081,
+        "pAll": 10.2,
+        "p52": 4.9,
         "volRatio": 0.88
       }
     },
@@ -502,17 +502,17 @@
         "bottom": 9.1,
         "volume": 9
       },
-      "points": 22.2,
+      "points": 22.3,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 231,
+        "capYi": 229,
         "boxHeight": 0.861,
         "months": 6,
-        "position": 0.115,
-        "pAll": 19.2,
-        "p52": 0.1,
+        "position": 0.111,
+        "pAll": 18.3,
+        "p52": 0.2,
         "volRatio": 3.68
       }
     },
@@ -531,9 +531,9 @@
         "capYi": 93,
         "boxHeight": 1.017,
         "months": 8,
-        "position": 0.371,
+        "position": 0.369,
         "pAll": 51.1,
-        "p52": 16.2,
+        "p52": 15.8,
         "volRatio": 1.36
       }
     },
@@ -541,20 +541,20 @@
       "items": {
         "cap": 6,
         "consolidation": 4,
-        "bottom": 4.6,
+        "bottom": 4.4,
         "volume": 2.1
       },
-      "points": 13.8,
+      "points": 13.6,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 284,
+        "capYi": 289,
         "boxHeight": 0.495,
         "months": 8,
-        "position": 0.622,
-        "pAll": 73.8,
-        "p52": 44.9,
+        "position": 0.646,
+        "pAll": 75.8,
+        "p52": 47.8,
         "volRatio": 1.09
       }
     },
@@ -570,12 +570,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 1444,
+        "capYi": 1446,
         "boxHeight": 1.918,
         "months": 9,
-        "position": 0.503,
+        "position": 0.504,
         "pAll": 75.3,
-        "p52": 12.8,
+        "p52": 12.9,
         "volRatio": 1.43
       }
     },
@@ -595,8 +595,8 @@
         "boxHeight": 0.974,
         "months": 5,
         "position": 0.25,
-        "pAll": 41.7,
-        "p52": 0,
+        "pAll": 41.3,
+        "p52": 0.6,
         "volRatio": 1.27
       }
     },
@@ -612,12 +612,12 @@
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 428,
+        "capYi": 423,
         "boxHeight": 1.676,
         "months": 4,
-        "position": 0.414,
+        "position": 0.412,
         "pAll": 63.8,
-        "p52": 7.8,
+        "p52": 7.1,
         "volRatio": 12.17
       }
     },
@@ -633,12 +633,12 @@
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 242,
+        "capYi": 241,
         "boxHeight": 0.824,
         "months": 8,
-        "position": 0.172,
+        "position": 0.17,
         "pAll": 28.3,
-        "p52": 0.5,
+        "p52": 0,
         "volRatio": 1.29
       }
     },
@@ -646,20 +646,20 @@
       "items": {
         "cap": 5.4,
         "consolidation": 4,
-        "bottom": 6.5,
+        "bottom": 6.3,
         "volume": 0.9
       },
-      "points": 14.3,
+      "points": 14.2,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 467,
+        "capYi": 465,
         "boxHeight": 1.497,
         "months": 8,
-        "position": 0.419,
-        "pAll": 69.8,
-        "p52": 0.1,
+        "position": 0.434,
+        "pAll": 72.1,
+        "p52": 0.2,
         "volRatio": 0.82
       }
     },
@@ -678,9 +678,9 @@
         "capYi": 66,
         "boxHeight": 0.957,
         "months": 8,
-        "position": 0.326,
+        "position": 0.323,
         "pAll": 45.7,
-        "p52": 13,
+        "p52": 12.3,
         "volRatio": 0.81
       }
     },
@@ -691,25 +691,25 @@
         "bottom": 6.9,
         "volume": 4.5
       },
-      "points": 20.5,
+      "points": 20.6,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 49,
+        "capYi": 48,
         "boxHeight": 1.578,
         "months": 8,
-        "position": 0.371,
+        "position": 0.366,
         "pAll": 59.6,
-        "p52": 3.3,
+        "p52": 2.1,
         "volRatio": 1.69
       }
     },
     "sh600282": {
       "items": {
-        "cap": 6.2,
+        "cap": 6.1,
         "consolidation": 4,
-        "bottom": 7,
+        "bottom": 6.9,
         "volume": 1.9
       },
       "points": 15.9,
@@ -717,12 +717,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 260,
+        "capYi": 262,
         "boxHeight": 0.952,
         "months": 8,
-        "position": 0.36,
+        "position": 0.367,
         "pAll": 55.3,
-        "p52": 7,
+        "p52": 8.8,
         "volRatio": 1.05
       }
     },
@@ -730,20 +730,20 @@
       "items": {
         "cap": 6.5,
         "consolidation": 4,
-        "bottom": 4.5,
+        "bottom": 4.3,
         "volume": 5.4
       },
-      "points": 16.1,
+      "points": 15.9,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 110,
+        "capYi": 111,
         "boxHeight": 1.691,
         "months": 9,
-        "position": 0.633,
-        "pAll": 82.3,
-        "p52": 34.8,
+        "position": 0.648,
+        "pAll": 83.2,
+        "p52": 37.2,
         "volRatio": 1.89
       }
     },
@@ -751,41 +751,41 @@
       "items": {
         "cap": 6.4,
         "consolidation": 4,
-        "bottom": 7.5,
+        "bottom": 7.3,
         "volume": 4.2
+      },
+      "points": 17.9,
+      "max": 32,
+      "complete": true,
+      "band": "high",
+      "metrics": {
+        "capYi": 213,
+        "boxHeight": 1.208,
+        "months": 9,
+        "position": 0.319,
+        "pAll": 51.1,
+        "p52": 3.3,
+        "volRatio": 1.6
+      }
+    },
+    "sz002430": {
+      "items": {
+        "cap": 6.2,
+        "consolidation": 4,
+        "bottom": 5,
+        "volume": 8.2
       },
       "points": 18,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 210,
-        "boxHeight": 1.208,
-        "months": 9,
-        "position": 0.302,
-        "pAll": 48.9,
-        "p52": 2.1,
-        "volRatio": 1.6
-      }
-    },
-    "sz002430": {
-      "items": {
-        "cap": 6.3,
-        "consolidation": 4,
-        "bottom": 5.3,
-        "volume": 8.2
-      },
-      "points": 18.3,
-      "max": 32,
-      "complete": true,
-      "band": "mid",
-      "metrics": {
-        "capYi": 242,
+        "capYi": 248,
         "boxHeight": 0.86,
         "months": 8,
-        "position": 0.55,
-        "pAll": 76.1,
-        "p52": 23.3,
+        "position": 0.581,
+        "pAll": 78.2,
+        "p52": 27.9,
         "volRatio": 2.56
       }
     },
@@ -793,20 +793,20 @@
       "items": {
         "cap": 6.4,
         "consolidation": 4,
-        "bottom": 8.5,
+        "bottom": 7.9,
         "volume": 7
       },
-      "points": 20.6,
+      "points": 20,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 211,
+        "capYi": 220,
         "boxHeight": 0.64,
         "months": 8,
-        "position": 0.181,
-        "pAll": 23.4,
-        "p52": 10.2,
+        "position": 0.254,
+        "pAll": 31.9,
+        "p52": 15.6,
         "volRatio": 2.28
       }
     },
@@ -817,17 +817,17 @@
         "bottom": 4.7,
         "volume": 8
       },
-      "points": 16.9,
+      "points": 16.8,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 523,
+        "capYi": 522,
         "boxHeight": 2.503,
         "months": 4,
-        "position": 0.607,
-        "pAll": 89.7,
-        "p52": 17.2,
+        "position": 0.609,
+        "pAll": 90.1,
+        "p52": 17,
         "volRatio": 2.52
       }
     },
@@ -843,12 +843,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 390,
+        "capYi": 389,
         "boxHeight": 2.78,
         "months": 8,
-        "position": 0.55,
-        "pAll": 85.4,
-        "p52": 9.4,
+        "position": 0.551,
+        "pAll": 85.8,
+        "p52": 9.1,
         "volRatio": 2.17
       }
     },
@@ -864,12 +864,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 206,
+        "capYi": 204,
         "boxHeight": 8.693,
         "months": 4,
         "position": 0.658,
-        "pAll": 96.3,
-        "p52": 20,
+        "pAll": 96.7,
+        "p52": 19.6,
         "volRatio": 1.57
       }
     },
@@ -877,20 +877,20 @@
       "items": {
         "cap": 5.2,
         "consolidation": 4,
-        "bottom": 7.6,
+        "bottom": 7.4,
         "volume": 7.6
       },
-      "points": 19.2,
+      "points": 18.9,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 529,
+        "capYi": 536,
         "boxHeight": 0.974,
         "months": 8,
-        "position": 0.287,
-        "pAll": 40.4,
-        "p52": 11.2,
+        "position": 0.319,
+        "pAll": 44.7,
+        "p52": 12.8,
         "volRatio": 2.41
       }
     },
@@ -901,7 +901,7 @@
         "bottom": 5.4,
         "volume": 9
       },
-      "points": 21.8,
+      "points": 21.9,
       "max": 32,
       "complete": true,
       "band": "mid",
@@ -909,9 +909,9 @@
         "capYi": 36,
         "boxHeight": 1.163,
         "months": 6,
-        "position": 0.538,
+        "position": 0.535,
         "pAll": 79.2,
-        "p52": 15.8,
+        "p52": 15.1,
         "volRatio": 4.54
       }
     },
@@ -919,7 +919,7 @@
       "items": {
         "cap": 6.5,
         "consolidation": 4,
-        "bottom": 7.1,
+        "bottom": 7,
         "volume": 1.1
       },
       "points": 15.8,
@@ -927,12 +927,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 112,
+        "capYi": 114,
         "boxHeight": 0.903,
         "months": 8,
-        "position": 0.348,
-        "pAll": 57.5,
-        "p52": 0.6,
+        "position": 0.357,
+        "pAll": 58.3,
+        "p52": 1.8,
         "volRatio": 0.86
       }
     },
@@ -948,12 +948,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 192,
+        "capYi": 191,
         "boxHeight": 3.455,
         "months": 4,
-        "position": 0.611,
-        "pAll": 90.8,
-        "p52": 16.5,
+        "position": 0.612,
+        "pAll": 91.3,
+        "p52": 16,
         "volRatio": 2.45
       }
     },
@@ -961,20 +961,20 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 8.2,
+        "bottom": 8.3,
         "volume": 0
       },
-      "points": 18.9,
+      "points": 19,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 73,
+        "capYi": 72,
         "boxHeight": 0.935,
         "months": 15,
-        "position": 0.224,
+        "position": 0.212,
         "pAll": 16.3,
-        "p52": 31.5,
+        "p52": 28.5,
         "volRatio": 0.34
       }
     },
@@ -990,12 +990,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 277,
+        "capYi": 273,
         "boxHeight": 4.911,
         "months": 8,
-        "position": 0.718,
-        "pAll": 96.3,
-        "p52": 35,
+        "position": 0.716,
+        "pAll": 96.7,
+        "p52": 33.9,
         "volRatio": 1.38
       }
     },
@@ -1003,20 +1003,20 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 9.8,
+        "bottom": 9.7,
         "volume": 0.2
       },
-      "points": 20.6,
+      "points": 20.4,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 61,
-        "boxHeight": 0.768,
+        "capYi": 60,
+        "boxHeight": 0.782,
         "months": 14,
-        "position": 0.021,
-        "pAll": 0,
-        "p52": 5.2,
+        "position": 0.043,
+        "pAll": 4.2,
+        "p52": 4.4,
         "volRatio": 0.64
       }
     },
@@ -1032,12 +1032,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 549,
+        "capYi": 544,
         "boxHeight": 5.315,
         "months": 4,
-        "position": 0.593,
-        "pAll": 95,
-        "p52": 5.9,
+        "position": 0.594,
+        "pAll": 95.4,
+        "p52": 5.4,
         "volRatio": 2.48
       }
     },
@@ -1053,12 +1053,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 269,
+        "capYi": 267,
         "boxHeight": 3.478,
         "months": 8,
-        "position": 0.507,
-        "pAll": 84.2,
-        "p52": 0.5,
+        "position": 0.508,
+        "pAll": 84.6,
+        "p52": 0.1,
         "volRatio": 1.67
       }
     },
@@ -1066,20 +1066,20 @@
       "items": {
         "cap": 4.1,
         "consolidation": 4,
-        "bottom": 6.6,
+        "bottom": 6.4,
         "volume": 2.8
       },
-      "points": 14.5,
+      "points": 14.3,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 1262,
+        "capYi": 1276,
         "boxHeight": 2.739,
         "months": 8,
-        "position": 0.409,
-        "pAll": 66,
-        "p52": 3.2,
+        "position": 0.427,
+        "pAll": 68.1,
+        "p52": 4.5,
         "volRatio": 1.28
       }
     },
@@ -1087,20 +1087,20 @@
       "items": {
         "cap": 6.2,
         "consolidation": 4,
-        "bottom": 4.9,
+        "bottom": 5,
         "volume": 5
       },
-      "points": 16,
+      "points": 16.1,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 251,
+        "capYi": 247,
         "boxHeight": 1.613,
         "months": 9,
-        "position": 0.59,
+        "position": 0.583,
         "pAll": 84.2,
-        "p52": 21.1,
+        "p52": 19.6,
         "volRatio": 1.8
       }
     },
@@ -1119,9 +1119,9 @@
         "capYi": 56,
         "boxHeight": 1.075,
         "months": 4,
-        "position": 0.163,
+        "position": 0.157,
         "pAll": 25.5,
-        "p52": 2.3,
+        "p52": 0.8,
         "volRatio": 1.43
       }
     },
@@ -1137,12 +1137,12 @@
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 137,
+        "capYi": 136,
         "boxHeight": 0.376,
         "months": 35,
         "position": 0.04,
-        "pAll": 1.4,
-        "p52": 8,
+        "pAll": 2.7,
+        "p52": 6,
         "volRatio": 1.35
       }
     },
@@ -1153,17 +1153,17 @@
         "bottom": 6.7,
         "volume": 3
       },
-      "points": 16.5,
+      "points": 16.4,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 235,
+        "capYi": 236,
         "boxHeight": 0.882,
         "months": 8,
-        "position": 0.388,
-        "pAll": 57.5,
-        "p52": 10.8,
+        "position": 0.393,
+        "pAll": 57.9,
+        "p52": 11.5,
         "volRatio": 1.31
       }
     },
@@ -1179,12 +1179,12 @@
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 103,
+        "capYi": 102,
         "boxHeight": 1.139,
         "months": 8,
-        "position": 0.065,
-        "pAll": 6.8,
-        "p52": 6,
+        "position": 0.06,
+        "pAll": 6.4,
+        "p52": 5.3,
         "volRatio": 1.9
       }
     },
@@ -1200,12 +1200,12 @@
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 879,
+        "capYi": 866,
         "boxHeight": 12.244,
         "months": 4,
         "position": 0.656,
-        "pAll": 95.8,
-        "p52": 20.3,
+        "pAll": 96.3,
+        "p52": 19.7,
         "volRatio": 2.23
       }
     },
@@ -1221,11 +1221,11 @@
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 40,
+        "capYi": 39,
         "boxHeight": 0.729,
         "months": 8,
-        "position": 0.135,
-        "pAll": 22.3,
+        "position": 0.132,
+        "pAll": 21.8,
         "p52": 0.3,
         "volRatio": 0.83
       }
@@ -1234,20 +1234,20 @@
       "items": {
         "cap": 5.9,
         "consolidation": 4,
-        "bottom": 6,
+        "bottom": 6.4,
         "volume": 3.2
       },
-      "points": 15.6,
+      "points": 16,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 318,
+        "capYi": 312,
         "boxHeight": 0.619,
         "months": 8,
-        "position": 0.472,
-        "pAll": 59.6,
-        "p52": 28.5,
+        "position": 0.424,
+        "pAll": 55.3,
+        "p52": 23,
         "volRatio": 1.36
       }
     },
@@ -1255,20 +1255,20 @@
       "items": {
         "cap": 10,
         "consolidation": 5,
-        "bottom": 8.3,
+        "bottom": 8.4,
         "volume": 1.6
       },
-      "points": 20.9,
+      "points": 21,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 27,
+        "capYi": 26,
         "boxHeight": 0.898,
         "months": 29,
-        "position": 0.212,
-        "pAll": 30.6,
-        "p52": 7.3,
+        "position": 0.197,
+        "pAll": 29.6,
+        "p52": 4.7,
         "volRatio": 0.99
       }
     },
@@ -1279,7 +1279,7 @@
         "bottom": 6.8,
         "volume": 1.4
       },
-      "points": 15.8,
+      "points": 15.7,
       "max": 32,
       "complete": true,
       "band": "high",
@@ -1287,9 +1287,9 @@
         "capYi": 102,
         "boxHeight": 1.369,
         "months": 9,
-        "position": 0.379,
-        "pAll": 62.9,
-        "p52": 0.3,
+        "position": 0.388,
+        "pAll": 64.2,
+        "p52": 0.7,
         "volRatio": 0.93
       }
     },
@@ -1297,10 +1297,10 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 7.4,
+        "bottom": 7.3,
         "volume": 1.9
       },
-      "points": 19.4,
+      "points": 19.3,
       "max": 32,
       "complete": true,
       "band": "mid",
@@ -1308,9 +1308,9 @@
         "capYi": 57,
         "boxHeight": 0.455,
         "months": 8,
-        "position": 0.309,
-        "pAll": 45.3,
-        "p52": 9.3,
+        "position": 0.323,
+        "pAll": 46,
+        "p52": 11.8,
         "volRatio": 1.04
       }
     },
@@ -1318,20 +1318,20 @@
       "items": {
         "cap": 10,
         "consolidation": 4,
-        "bottom": 7.7,
+        "bottom": 7.9,
         "volume": 0.5
       },
-      "points": 18.8,
+      "points": 19,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 51,
+        "capYi": 50,
         "boxHeight": 1.06,
         "months": 8,
-        "position": 0.276,
-        "pAll": 39.2,
-        "p52": 10.2,
+        "position": 0.254,
+        "pAll": 36.7,
+        "p52": 8.5,
         "volRatio": 0.71
       }
     },
@@ -1339,7 +1339,7 @@
       "items": {
         "cap": 6.1,
         "consolidation": 4,
-        "bottom": 7,
+        "bottom": 6.9,
         "volume": 9
       },
       "points": 20.1,
@@ -1347,12 +1347,12 @@
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 279,
+        "capYi": 276,
         "boxHeight": 2.49,
         "months": 4,
-        "position": 0.36,
-        "pAll": 49.1,
-        "p52": 16.5,
+        "position": 0.369,
+        "pAll": 50.9,
+        "p52": 15.9,
         "volRatio": 3.28
       }
     },
@@ -1371,9 +1371,9 @@
         "capYi": 111,
         "boxHeight": 0.833,
         "months": 8,
-        "position": 0.209,
+        "position": 0.211,
         "pAll": 34,
-        "p52": 1.2,
+        "p52": 1.7,
         "volRatio": 1.54
       }
     },
@@ -1384,38 +1384,38 @@
         "bottom": 8.3,
         "volume": 1.6
       },
-      "points": 20.9,
+      "points": 21,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
-        "capYi": 62,
+        "capYi": 61,
         "boxHeight": 0.995,
         "months": 34,
-        "position": 0.209,
+        "position": 0.203,
         "pAll": 27.5,
-        "p52": 11,
+        "p52": 9.5,
         "volRatio": 0.99
       }
     },
     "sz000819": {
       "items": {
         "cap": 10,
-        "consolidation": 5.5,
+        "consolidation": 5.3,
         "bottom": 8.2,
         "volume": 1.9
       },
-      "points": 21.5,
+      "points": 21.3,
       "max": 32,
       "complete": true,
       "band": "mid",
       "metrics": {
         "capYi": 39,
-        "boxHeight": 0.734,
+        "boxHeight": 0.766,
         "months": 35,
-        "position": 0.224,
+        "position": 0.217,
         "pAll": 35.8,
-        "p52": 2.2,
+        "p52": 0.5,
         "volRatio": 1.04
       }
     },
@@ -1426,17 +1426,17 @@
         "bottom": 7.8,
         "volume": 1.7
       },
-      "points": 16.9,
+      "points": 16.8,
       "max": 32,
       "complete": true,
       "band": "high",
       "metrics": {
-        "capYi": 111,
+        "capYi": 112,
         "boxHeight": 0.685,
         "months": 8,
-        "position": 0.267,
-        "pAll": 37,
-        "p52": 11.2,
+        "position": 0.271,
+        "pAll": 37.4,
+        "p52": 11.7,
         "volRatio": 1.02
       }
     }

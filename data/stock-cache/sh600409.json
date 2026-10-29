@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "code": "sh600409",
-  "updatedAt": "2026-10-29T08:14:55.373Z",
+  "updatedAt": "2026-10-29T08:24:51.605Z",
   "detail": {
     "name": "三友化工",
     "price": 5.39,
@@ -21,9 +21,9 @@
     "limitDown": 4.98,
     "pe": 30.57,
     "peStatic": 124.28,
-    "peTtm": 60.43,
+    "peTtm": 47.11,
     "pb": 0.79,
-    "roe": 0,
+    "roe": 1.95,
     "grossMargin": 12.821876504,
     "netMargin": 1.5621040968,
     "revenue": 15041900113.26,

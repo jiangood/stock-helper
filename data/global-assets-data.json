@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-29T02:02:42.207138Z",
+  "updatedAt": "2026-10-29T02:03:16.418294Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,11 +7,11 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4070.7,
+      "price": 4071.9,
       "prevClose": 4168.4,
-      "change": -97.7,
-      "changePct": -2.343825,
-      "quoteTime": "2026-10-29T01:52:30Z",
+      "change": -96.5,
+      "changePct": -2.315037,
+      "quoteTime": "2026-10-29T01:53:11Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF",
       "history": [
@@ -101,7 +101,7 @@
         },
         {
           "date": "2026-10-29",
-          "close": 4070.7
+          "close": 4071.8999
         }
       ]
     },
@@ -110,11 +110,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 80035.19,
+      "price": 80060.83,
       "prevClose": 83622.43,
-      "change": -3587.24,
-      "changePct": -4.289806,
-      "quoteTime": "2026-10-29T02:02:36Z",
+      "change": -3561.6,
+      "changePct": -4.259144,
+      "quoteTime": "2026-10-29T02:03:11Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD",
       "history": [
@@ -204,7 +204,7 @@
         },
         {
           "date": "2026-10-29",
-          "close": 80035.1875
+          "close": 80060.8281
         }
       ]
     },
@@ -213,11 +213,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2313.9,
+      "price": 2314.32,
       "prevClose": 2676.7222,
-      "change": -362.8222,
-      "changePct": -13.55472,
-      "quoteTime": "2026-10-29T02:02:35Z",
+      "change": -362.4022,
+      "changePct": -13.539029,
+      "quoteTime": "2026-10-29T02:03:08Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD",
       "history": [
@@ -307,7 +307,7 @@
         },
         {
           "date": "2026-10-29",
-          "close": 2313.8999
+          "close": 2314.3201
         }
       ]
     },
@@ -316,11 +316,11 @@
       "name": "日经 225",
       "currency": "JPY",
       "status": "已更新",
-      "price": 64029.24,
+      "price": 63954.57,
       "prevClose": 65481.27,
-      "change": -1452.03,
-      "changePct": -2.217474,
-      "quoteTime": "2026-10-29T01:47:40Z",
+      "change": -1526.7,
+      "changePct": -2.331506,
+      "quoteTime": "2026-10-29T01:48:15Z",
       "sourceSymbol": "^N225",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EN225",
       "history": [
@@ -410,7 +410,7 @@
         },
         {
           "date": "2026-10-29",
-          "close": 64029.2383
+          "close": 63954.5703
         }
       ]
     },
@@ -728,11 +728,11 @@
       "name": "美元兑人民币",
       "currency": "CNY",
       "status": "已更新",
-      "price": 6.6619,
+      "price": 6.6622,
       "prevClose": 6.7103,
-      "change": -0.0484,
-      "changePct": -0.721279,
-      "quoteTime": "2026-10-29T02:02:24Z",
+      "change": -0.0481,
+      "changePct": -0.716808,
+      "quoteTime": "2026-10-29T02:03:02Z",
       "sourceSymbol": "CNY=X",
       "sourceUrl": "https://finance.yahoo.com/quote/CNY%3DX",
       "history": [
@@ -822,7 +822,7 @@
         },
         {
           "date": "2026-10-29",
-          "close": 6.6619
+          "close": 6.6622
         }
       ]
     }

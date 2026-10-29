@@ -24,7 +24,6 @@ async function runCombat(price) {
   context.StockHoldings = { load: async () => ({ holdings: [{ code: 'sz000001', quantity: 100, cost: 9 }] }) };
   context.Croc = { buyEligibility: () => ({ eligible: true }) };
   context.StockTradeSignals = {
-    evaluateT: () => ({ status: '观望', kind: 'watch', reasons: [], dataReady: true }),
     evaluateAdd: () => {
       addCalls++;
       return { status: '建议补仓', kind: 'add-ready', score: 3, reasons: [] };
@@ -33,8 +32,6 @@ async function runCombat(price) {
   context.document = { getElementById: () => null, addEventListener: () => {} };
   vm.runInNewContext(fs.readFileSync(require.resolve('../combat-center.js'), 'utf8'), context);
   const client = {
-    fetchMinuteKline: async () => ({ bars: [] }),
-    fetchTrends: async () => ({ points: [] }),
     fetchKline: async () => ({ bars: Array(30).fill({ close: 10, high: 11, low: 9, volume: 100 }) })
   };
   context.StockCombat.init(

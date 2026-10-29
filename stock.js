@@ -46,8 +46,6 @@
   let series = {};
   const klineCache = {};
 
-  let quoteTimer = null;
-  let chartTimer = null;
 
   /* ────────────────────────── 格式化 ────────────────────────── */
 
@@ -162,15 +160,6 @@
       }
       location.href = 'stock.html?code=' + v;
     });
-  }
-
-  function tickSession() {
-    if (StockQuotes.isTrading() && !quoteTimer) {
-      scheduleRefresh();
-    } else if (!StockQuotes.isTrading() && quoteTimer) {
-      stopRefresh();
-      loadQuote(false);   // 收取当日最后一次行情
-    }
   }
 
   /* ────────────────────────── 数据加载 ────────────────────────── */
@@ -1106,7 +1095,6 @@
     chartTab = tab;
     Array.from($('chart-tabs').children).forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     loadChart(tab, false).catch(() => {});
-    scheduleChartRefresh();
   }
 
   async function loadChart(tab, force) {
@@ -1216,39 +1204,6 @@
     }
   }
 
-  /* ────────────────────────── 刷新调度 ────────────────────────── */
-
-  function scheduleRefresh() {
-    stopRefresh();
-    if (!StockQuotes.isTrading()) return;
-
-    quoteTimer = setInterval(() => {
-      if (!StockQuotes.isTrading()) return;
-      loadQuote(true);
-    }, StockQuotes.REFRESH_INTERVAL);
-
-    scheduleChartRefresh();
-  }
-
-  function scheduleChartRefresh() {
-    clearInterval(chartTimer);
-    chartTimer = null;
-    if (!StockQuotes.isTrading()) return;
-
-    const ms = StockQuotes.REFRESH_INTERVAL;
-    chartTimer = setInterval(() => {
-      if (!StockQuotes.isTrading()) return;
-      loadChart(chartTab, true).catch(() => {});
-    }, ms);
-  }
-
-  function stopRefresh() {
-    clearInterval(quoteTimer);
-    clearInterval(chartTimer);
-    quoteTimer = null;
-    chartTimer = null;
-  }
-
   /* ────────────────────────── 状态 / 提示 ────────────────────────── */
 
   function showState(title, desc, mode) {
@@ -1296,8 +1251,6 @@
     initTheme();
     bindUI();
 
-    setInterval(tickSession, 10000);
-
     if (!CODE) {
       $('stock-name').textContent = '股票详情';
       $('stock-code').classList.add('d-none');
@@ -1323,6 +1276,5 @@
     loadCalc();
 
     await refreshAll(false);
-    scheduleRefresh();
   })();
 })();

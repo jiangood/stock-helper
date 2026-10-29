@@ -47,7 +47,7 @@
     var quoteFresh = Number.isFinite(ts) && Date.now() - ts <= 5 * 86400000 && Date.now() - ts >= -5 * 60000;
     checks.push((quoteFresh ? '✓' : '！') + ' 行情时间' + (quoteFresh ? '有效' : '待核对'));
     var date = String(stock && stock.updDate || '');
-    var age = date && /^\\d{4}-\\d{2}-\\d{2}$/.test(date) ? Math.floor((Date.now() - new Date(date + 'T00:00:00Z').getTime()) / 86400000) : null;
+    var age = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? Math.floor((Date.now() - new Date(date + 'T00:00:00Z').getTime()) / 86400000) : null;
     var planFresh = age !== null && age >= 0 && age <= 180;
     checks.push((planFresh ? '✓' : '！') + ' 计划复核' + (planFresh ? '未过期' : '需复核'));
     var disciplineOk = primary && primary.kind !== 'risk' && primary.kind !== 'data';

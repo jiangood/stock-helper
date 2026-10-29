@@ -441,57 +441,6 @@ function showToast(msg, type) {
 }
 
 // ============================================================
-// 股票池体检
-// ============================================================
-function openHealth() {
-  const h = Croc.health(STOCKS, priceData);
-  const order = { error: 0, warn: 1, risk: 2 };
-  const issues = h.issues.slice().sort((a, b) => order[a.level] - order[b.level]);
-
-  const label = { error: ['错误', 'flag-danger'], warn: ['提示', 'flag-warn'], risk: ['风险', 'flag-danger'] };
-
-  const head = `<div class="d-flex flex-wrap gap-2 align-items-center mb-2" style="font-size:12px">
-    <span class="text-body-secondary">${STOCKS.length} 只标的</span>
-    <span class="flag flag-danger" style="margin-left:0">错误 ${h.errors}</span>
-    <span class="flag flag-warn" style="margin-left:0">提示 ${h.warnings}</span>
-    <span class="flag flag-danger" style="margin-left:0">风险 ${h.risks}</span>
-  </div>`;
-
-  const body = issues.length
-    ? `<div class="health-list">${issues.map(i => {
-        const [text, cls] = label[i.level] || label.warn;
-        const name = i.code
-          ? `<a class="text-body text-decoration-none" href="stock.html?code=${encodeURIComponent(i.code)}">${esc(i.name)}</a>`
-          : esc(i.name);
-        return `<div class="health-item">
-          <span class="flag ${cls}">${text}</span>
-          <div class="min-w-0">
-            <div class="fw-semibold" style="font-size:12px">${name}
-              ${i.code ? `<span class="text-body-tertiary fw-normal font-monospace">${esc(i.code)}</span>` : ''}
-            </div>
-            <div class="text-body-secondary" style="font-size:11px">${esc(i.text)}</div>
-          </div>
-        </div>`;
-      }).join('')}</div>`
-    : '<div class="alert alert-success py-2 px-3 small mb-2">未发现结构化问题。</div>';
-
-  $('health-body').innerHTML = head + body
-    + '<div class="text-body-secondary mt-2" style="font-size:10.5px">'
-    + '自动检查：代码/重复、买点区间、止盈顺序、ST、TTM 亏损。国资背景、主营集中、护城河需人工核对。'
-    + '</div>';
-
-  const dlg = $('health-dialog');
-  if (typeof dlg.showModal === 'function') dlg.showModal();
-  else dlg.setAttribute('open', '');
-}
-
-function closeHealth() {
-  const dlg = $('health-dialog');
-  if (typeof dlg.close === 'function') dlg.close();
-  else dlg.removeAttribute('open');
-}
-
-// ============================================================
 // 筛选
 // ============================================================
 function applyFilter() {
@@ -528,13 +477,6 @@ function applyFilter() {
 // ============================================================
 // 启动
 // ============================================================
-(function bindHealthDialog() {
-  const dlg = $('health-dialog');
-  if (!dlg) return;
-  dlg.addEventListener('click', e => {
-    if (e.target === dlg) closeHealth();
-  });
-})();
 
 // 页面导航由 index.html / combat.html / market.html 的独立 URL 负责，不再在单页内切换 tabs。
 

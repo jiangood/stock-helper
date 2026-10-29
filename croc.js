@@ -10,7 +10,7 @@
  *   · 连续涨停（卖其疯狂）识别
  *   · 月 K 历史分位
  *   · 股票池筛选（ST / 亏损 / PE / 市值 / 破净）与「纪律全过」判定
- *   · 股票池数据体检、每日简报
+ *   · 每日简报
  *
  * 浏览器：window.Croc；Node：module.exports
  * ---------------------------------------------------------------------------
@@ -216,86 +216,6 @@
 
   const yi = v => isNum(v) ? v / 1e8 : null;
 
-  /**
-   * 股票池数据体检
-   * @param {Array} stocks
-   * @param {Object<string, object>} [quotes]
-   * @returns {{issues:Array, errors:number, warnings:number, risks:number}}
-   */
-  function health(stocks, quotes) {
-    const list = Array.isArray(stocks) ? stocks : [];
-    const map = quotes || {};
-    const issues = [];
-    const seen = new Set();
-
-    const push = (level, stock, text) => issues.push({
-      level,
-      name: (stock && stock.name) || '未命名',
-      code: (stock && stock.code) || '',
-      text
-    });
-
-    for (const s of list) {
-      if (!s || !s.name) { push('error', s, '缺少名称'); continue; }
-      const code = String(s.code || '').toLowerCase();
-      if (!/^(sh|sz)\d{6}$/.test(code)) {
-        push('error', s, '代码格式应为 sh/sz + 6 位数字');
-      } else if (seen.has(code)) {
-        push('error', s, '代码重复');
-      } else {
-        seen.add(code);
-      }
-
-      if (num(s.entry) === null && num(s.heavy) === null) {
-        push('warn', s, '入场价与重仓价都未设置');
-      }
-      if (num(s.entry) !== null && num(s.heavy) !== null && s.heavy > s.entry) {
-        push('warn', s, `重仓价 ${s.heavy} 高于入场价 ${s.entry}，区间可能写反`);
-      }
-
-      // updDate 代表计划价格最近一次人工复核日期，不是行情时间戳。
-      const updDate = String(s.updDate || '').trim();
-      if (!updDate) {
-        push('warn', s, '缺少计划更新时间，入场/重仓/止盈价需人工复核');
-      } else if (!/^\d{4}-\d{2}-\d{2}$/.test(updDate)) {
-        push('warn', s, `计划更新时间格式无效：${updDate}`);
-      } else {
-        const parts = updDate.split('-').map(Number);
-        const reviewedAt = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
-        const validDate = reviewedAt.getUTCFullYear() === parts[0]
-          && reviewedAt.getUTCMonth() === parts[1] - 1
-          && reviewedAt.getUTCDate() === parts[2];
-        if (!validDate) {
-          push('warn', s, `计划更新时间不是有效日期：${updDate}`);
-        } else {
-          const ageDays = Math.floor((Date.now() - reviewedAt.getTime()) / 86400000);
-          if (ageDays < 0) {
-            push('warn', s, `计划更新时间在未来：${updDate}`);
-          } else if (ageDays > 180) {
-            push('warn', s, `计划价格已 ${ageDays} 天未复核（最近：${updDate}）`);
-          }
-        }
-      }
-      if (num(s.entry) !== null && num(s.tp1) !== null && s.tp1 <= s.entry) {
-        push('warn', s, `止盈1 ${s.tp1} 不高于入场价 ${s.entry}`);
-      }
-      if (num(s.tp1) !== null && num(s.tp2) !== null && s.tp2 < s.tp1) {
-        push('warn', s, `止盈2 ${s.tp2} 低于止盈1 ${s.tp1}`);
-      }
-
-      const e = evaluate(s, map[code]);
-      if (e.st) push('risk', s, 'ST 风险警示股（铁律：不买 ST）');
-      if (e.loss) push('risk', s, 'TTM 亏损（铁律：不买亏损股）');
-    }
-
-    return {
-      issues,
-      errors: issues.filter(x => x.level === 'error').length,
-      warnings: issues.filter(x => x.level === 'warn').length,
-      risks: issues.filter(x => x.level === 'risk').length
-    };
-  }
-
   function pad(n) { return String(n).padStart(2, '0'); }
 
   function today(now) {
@@ -383,7 +303,6 @@
     limitUpInfo,
     percentile,
     yi,
-    health,
     brief
   };
 });

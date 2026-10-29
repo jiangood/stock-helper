@@ -123,27 +123,12 @@
   .flag-danger { color: var(--up); border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.08); }
   [data-bs-theme="dark"] .flag-warn { color: #fbbf24; }
 
-  /* 体检弹窗 */
-  .health-dialog {
-    width: min(560px, 92vw); max-height: 82vh; padding: 0; border: 0; border-radius: 10px;
-    color: var(--bs-body-color); background: var(--bs-body-bg);
-    box-shadow: 0 18px 50px rgba(0,0,0,.28);
-  }
-  .health-dialog::backdrop { background: rgba(15,23,42,.42); }
-  .health-list { max-height: 58vh; overflow: auto; }
   .brief-text {
     margin: 0; max-height: 62vh; overflow: auto;
     white-space: pre-wrap; word-break: break-word;
     font-family: inherit; font-size: 12px; line-height: 1.7;
     color: var(--bs-body-color);
   }
-  .health-item {
-    display: flex; align-items: flex-start; gap: .5rem;
-    padding: .45rem .1rem; border-bottom: 1px solid var(--bs-border-color);
-  }
-  .health-item:last-child { border-bottom: 0; }
-  .health-item .flag { margin-left: 0; flex: 0 0 auto; margin-top: 1px; }
-
   .app-pane { min-height:calc(100vh - 105px); }
   body:not([data-page="stocks"]) #stock-toolbar { display:none !important; }
   body[data-page="stocks"] #combat-pane, body[data-page="stocks"] #market-pane,
@@ -313,10 +298,6 @@
       <span><span class="legend-pip" style="background:var(--up)"></span> 高于入场</span>
       <span><span class="legend-pip" style="background:var(--down)"></span> 低于入场</span>
     </div>
-
-    <div class="ms-auto ms-xl-0 d-flex align-items-center gap-1">
-      <button class="btn btn-sm btn-outline-secondary px-2 py-0" onclick="openHealth()" title="股票池体检" aria-label="股票池体检">🩺<span class="d-none d-lg-inline ms-1">体检</span></button>
-    </div>
   </div>
 </div>
 
@@ -423,14 +404,6 @@
 
 
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
-
-<dialog id="health-dialog" class="health-dialog" aria-labelledby="health-title">
-  <div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom">
-    <strong id="health-title" style="font-size:13px">股票池体检</strong>
-    <button type="button" class="btn-close ms-auto" style="font-size:10px" onclick="closeHealth()" aria-label="关闭"></button>
-  </div>
-  <div class="px-3 pt-2 pb-3" id="health-body"></div>
-</dialog>
 
 <script src="croc.js"></script>
 <script src="static-quotes.js"></script>

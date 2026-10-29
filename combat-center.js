@@ -51,7 +51,7 @@
       ['风险拦截', counts.risk, '硬性纪律优先'],
       ['数据不足', counts.data, '不生成确定信号']
     ].map(function (x) { return '<div class="col-6 col-xl-3"><div class="insight-card h-100"><div class="mini-label">' + x[0] + '</div><div class="combat-metric">' + x[1] + '</div><div class="mini-label">' + x[2] + '</div></div></div>'; }).join('');
-    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只（持仓 + 股票池去重） · 做T条件 ' + counts.t + ' · 补仓观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
+    meta.textContent = (state.error ? '读取失败：' + state.error + ' · ' : '') + '覆盖 ' + rows.length + ' 只（持仓 + 股票池去重） · 做T条件 ' + counts.t + ' · 买入/补仓观察 ' + counts.add + ' · ' + (state.lastRun ? '计算于 ' + new Date(state.lastRun).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '等待计算');
     var filtered = rows.filter(function (r) {
       if (state.filter === 't') return r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell');
       if (state.filter === 'add') return r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch');
@@ -67,10 +67,11 @@
     list.innerHTML = filtered.map(function (r) {
       var s = r.stock, p = r.quote && Number(r.quote.price) > 0 ? Number(r.quote.price) : null;
       var h = r.holding, held = !!h, qty = h ? Number(h.quantity) : 0;
+      var actionName = held ? '补仓' : '买入';
       var badges = '<span class="combat-badge ' + statusClass(r.primary.kind) + '">' + esc(r.primary.status) + '</span>';
       if (r.t && (r.t.kind === 't-buy' || r.t.kind === 't-sell')) badges += '<span class="combat-badge ' + statusClass(r.t.kind) + '">' + esc(r.t.status) + '</span>';
       if (r.add && (r.add.kind === 'add-ready' || r.add.kind === 'add-watch')) badges += '<span class="combat-badge ' + statusClass(r.add.kind) + '">' + esc(r.add.status) + ' ' + r.add.score + '/' + (r.add.scoreMax || 3) + '</span>';
-      var reasons = (r.primary.reasons || []).concat(r.t && Array.isArray(r.t.reasons) ? r.t.reasons.slice(0, 2).map(function (x) { return '做T：' + x; }) : [], r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return '补仓：' + x; }) : []);
+      var reasons = (r.primary.reasons || []).concat(r.t && Array.isArray(r.t.reasons) ? r.t.reasons.slice(0, 2).map(function (x) { return '做T：' + x; }) : [], r.add && Array.isArray(r.add.reasons) ? r.add.reasons.slice(0, 2).map(function (x) { return actionName + '：' + x; }) : []);
       if (!reasons.length) reasons = ['价格未到计划区，暂不触发操作条件'];
       var plan = [s.heavy ? '重仓 ' + money(s.heavy) : null, s.entry ? '入场 ' + money(s.entry) : null, s.tp1 ? '止盈1 ' + money(s.tp1) : null].filter(Boolean).join(' · ');
       var pnl = held && p !== null ? (p - Number(h.cost)) * qty : null;
@@ -135,10 +136,11 @@
       // Only calculate/show add signals after price reaches the configured entry/heavy plan level.
       // Holdings can still receive T signals above the buy zone, but must not be recommended for adding.
       if (inBuyZone) {
-        add = root.StockTradeSignals.evaluateAdd(price, stock, bars);
+        // Same five-factor scoring for new entries and existing holdings; only the action label differs.
+        add = root.StockTradeSignals.evaluateAdd(price, Object.assign({}, stock, { inHolding: !!holding }), bars);
       }
       if (!eligible.eligible && (inBuyZone || (add && add.kind === 'add-ready'))) {
-        primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许补仓'] };
+        primary = { status: '风险拦截', kind: 'risk', reasons: [eligible.reason || '未通过买入纪律门槛', '价格到计划区不代表允许买入/补仓'] };
       } else if (t && (t.kind === 't-buy' || t.kind === 't-sell')) {
         primary = { status: t.status, kind: t.kind, reasons: t.reasons };
       } else if (add && (add.kind === 'add-ready' || add.kind === 'add-watch')) {

@@ -131,7 +131,7 @@
   .health-item .flag { margin-left: 0; flex: 0 0 auto; margin-top: 1px; }
 
   body { padding-bottom: 74px; }
-  .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
+  .bottom-tabs { position:fixed; inset:auto 0 0; z-index:1040; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); padding:.35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background:var(--bs-body-bg); border-top:1px solid var(--bs-border-color); box-shadow:0 -4px 16px rgba(15,23,42,.06); }
   .bottom-tab { border:0; background:transparent; color:var(--bs-secondary-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:48px; font-size:10px; border-radius:8px; }
   .bottom-tab .tab-icon { font-size:18px; line-height:1.15; }
   .bottom-tab.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
@@ -154,6 +154,22 @@
   .business-price-chart a { color:var(--bs-secondary-color); }
 
   .empty-state { padding:24px 12px; text-align:center; color:var(--bs-secondary-color); border:1px dashed var(--bs-border-color); border-radius:12px; }
+  .combat-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+  .combat-toolbar .btn.active { background:var(--bs-primary); border-color:var(--bs-primary); color:#fff; }
+  .combat-metric { font-size:24px; font-weight:750; letter-spacing:-.5px; }
+  .combat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:10px; }
+  .combat-card { min-width:0; }
+  .combat-name { color:var(--bs-body-color); text-decoration:none; font-weight:750; font-size:14px; }
+  .combat-name:hover { color:var(--bs-primary); text-decoration:underline; }
+  .combat-price { font-size:20px; font-weight:750; font-variant-numeric:tabular-nums; }
+  .combat-badge { display:inline-flex; align-items:center; border-radius:999px; padding:3px 8px; font-size:10px; font-weight:700; border:1px solid transparent; }
+  .combat-good { color:#15803d; background:rgba(22,163,74,.09); border-color:rgba(22,163,74,.28); }
+  .combat-warn { color:#a16207; background:rgba(245,158,11,.10); border-color:rgba(245,158,11,.32); }
+  .combat-risk { color:#b91c1c; background:rgba(220,38,38,.09); border-color:rgba(220,38,38,.28); }
+  .combat-data { color:var(--bs-secondary-color); background:var(--bs-tertiary-bg); border-color:var(--bs-border-color); }
+  .combat-neutral { color:var(--bs-secondary-color); background:var(--bs-tertiary-bg); border-color:var(--bs-border-color); }
+  .combat-reasons { font-size:12px; line-height:1.65; overflow-wrap:anywhere; }
+  .combat-plan { color:var(--bs-secondary-color); font-size:10.5px; border-top:1px solid var(--bs-border-color); padding-top:7px; }
   .business-form { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .business-form .wide { grid-column:1 / -1; }
   @media (max-width:575.98px) { .business-form { grid-template-columns:1fr; } .business-form .wide { grid-column:auto; } }
@@ -302,6 +318,31 @@
   <div class="panel-subtitle mt-2">提示：行情缺失时不估算市值或盈亏；持仓成本和股数以录入数据为准，不会自动连接券商账户。</div>
 </main>
 
+<main id="combat-pane" data-pane="combat" class="app-pane container-fluid px-3 py-3 d-none">
+  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
+    <div><div class="panel-title">交易作战台</div><div class="panel-subtitle">持仓 + 股票池统一汇总。展示触发条件与理由，由你决定是否执行；不会自动下单。</div></div>
+    <button id="combat-refresh" class="btn btn-sm btn-outline-primary" type="button">⟳ 重新计算</button>
+  </div>
+  <div id="combat-summary" class="row g-2 mb-3">
+    <div class="col-12"><div class="empty-state">正在准备作战数据…</div></div>
+  </div>
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+    <div class="combat-toolbar" aria-label="作战信号筛选">
+      <button id="combat-filter-all" data-combat-filter class="btn btn-sm btn-outline-secondary active" type="button">全部</button>
+      <button id="combat-filter-t" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">做T</button>
+      <button id="combat-filter-add" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">补仓</button>
+      <button id="combat-filter-watch" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">观望</button>
+      <button id="combat-filter-risk" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">风险拦截</button>
+      <button id="combat-filter-data" data-combat-filter class="btn btn-sm btn-outline-secondary" type="button">数据不足</button>
+    </div>
+    <div id="combat-meta" class="panel-subtitle">等待计算</div>
+  </div>
+  <div id="combat-list" class="combat-grid">
+    <div class="empty-state">进入此页后按需加载分钟K和日K，减少不必要的行情请求。</div>
+  </div>
+  <div class="panel-subtitle mt-3">纪律说明：计划价触发不等于买入信号；补仓需通过 ST / 亏损等硬性门槛，并结合支撑、资金确认和趋势过滤。筹码分布为日K估算。做T仅对持仓股计算，实际可卖数量仍需核对券商可用余额及 A 股 T+1 规则。所有信号均为辅助参考，不构成投资建议。</div>
+</main>
+
 <main id="opportunity-pane" data-pane="opportunity" class="app-pane container-fluid px-3 py-3 d-none">
   <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
     <div><div class="panel-title">大鱼池 · 每日简报</div><div class="panel-subtitle">大盘指数、股票池温度、板块强弱、持仓盈亏与交易计划集中查看。</div></div>
@@ -352,6 +393,7 @@
   <button class="bottom-tab active" type="button" data-target="stocks"><span class="tab-icon">☆</span><span>自选</span></button>
   <button class="bottom-tab" type="button" data-target="holdings"><span class="tab-icon">▤</span><span>持仓</span></button>
   <button class="bottom-tab" type="button" data-target="opportunity"><span class="tab-icon">▤</span><span>简报</span></button>
+  <button class="bottom-tab" type="button" data-target="combat"><span class="tab-icon">⚔</span><span>作战</span></button>
   <button class="bottom-tab" type="button" data-target="market"><span class="tab-icon">↗</span><span>行情</span></button>
 </nav>
 <div class="position-fixed bottom-0 start-50 translate-middle-x mb-3 d-none" id="toast" style="z-index:1080"></div>
@@ -369,6 +411,9 @@
 <script src="pinyin.js"></script>
 <script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
 <script src="holdings-data.js"></script>
+<script src="indicators.js"></script>
+<script src="trade-signals.js"></script>
+<script src="combat-center.js"></script>
 <script src="business.js"></script>
 <script src="risk-center.js"></script>
 <script src="global-assets.js"></script>

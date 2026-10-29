@@ -32,10 +32,6 @@
  *   //   totalCap, floatCap, change, todayChange, time }
  *   await quotes.fetchKline('sz002408', { period: 'day', count: 240, adjust: 'qfq' });
  *   // { code, period, adjust, bars: [{ time:'2026-10-28', open, close, high, low, volume }] }
- *   await quotes.fetchMinuteKline('sz002408', { period: '15', count: 320 });
- *   // { code, period, bars: [{ time:'2026-10-28 14:45', open, close, high, low, volume }] }
- *   await quotes.fetchTrends('sz002408');
- *   // { code, name, preClose, points: [{ time:'2026-10-28 09:31', price, avg, volume }] }
  *
  * 交易时段
  *   StockQuotes.marketSession()   // 'holiday' | 'closed' | 'pre' | 'open' | 'lunch'
@@ -362,75 +358,6 @@
     }).filter(b => b.open !== null && b.close !== null);
   }
 
-  /** 腾讯 mkline JSON -> 分钟 K 数组（时间, 开, 收, 高, 低, 量） */
-  function parseTencentMinute(json, code, period) {
-    const d = json && json.data && json.data[code];
-    if (!d) return [];
-    const rows = d['m' + period];
-    if (!Array.isArray(rows)) return [];
-    return rows.map(r => ({
-      time: minuteTime(r[0]),
-      open: num(r[1]),
-      close: num(r[2]),
-      high: num(r[3]),
-      low: num(r[4]),
-      volume: num(r[5])
-    })).filter(b => b.open !== null && b.close !== null && b.high !== null && b.low !== null);
-  }
-
-  /** 东方财富分钟 K JSON -> 分钟 K 数组（时间已含时分） */
-  function parseEastmoneyMinute(json) {
-    const k = json && json.data && json.data.klines;
-    if (!Array.isArray(k)) return [];
-    return k.map(line => {
-      const f = String(line).split(',');
-      return {
-        time: minuteTime(f[0]),
-        open: num(f[1]),
-        close: num(f[2]),
-        high: num(f[3]),
-        low: num(f[4]),
-        volume: num(f[5])
-      };
-    }).filter(b => b.open !== null && b.close !== null && b.high !== null && b.low !== null);
-  }
-
-  /** 东方财富 trends2 JSON -> 分时点（时间, 开, 收, 高, 低, 量, 额, 均价） */
-  function parseEastmoneyTrends(json) {
-    const d = json && json.data;
-    if (!d || !Array.isArray(d.trends)) return null;
-    const points = d.trends.map(line => {
-      const f = String(line).split(',');
-      return {
-        time: f[0],
-        price: num(f[2]),
-        avg: num(f[7]),
-        volume: num(f[5]),
-        amount: num(f[6])
-      };
-    }).filter(p => p.price !== null && p.price > 0);
-    return { name: d.name || null, preClose: num(d.preClose), points };
-  }
-
-  /** 腾讯 m1 JSON -> 分时点（无均价） */
-  function parseTencentTrends(json, code) {
-    const d = json && json.data && json.data[code];
-    if (!d || !Array.isArray(d.m1)) return null;
-    const qt = d.qt && d.qt[code];
-    const preClose = num(d.prec) != null ? num(d.prec) : (Array.isArray(qt) ? num(qt[4]) : null);
-    const points = d.m1.map(r => {
-      const t = String(r[0]);
-      return {
-        time: `${t.slice(0, 4)}-${t.slice(4, 6)}-${t.slice(6, 8)} ${t.slice(8, 10)}:${t.slice(10, 12)}`,
-        price: num(r[2]),
-        avg: null,
-        volume: num(r[5]),
-        amount: null
-      };
-    }).filter(p => p.price !== null && p.price > 0);
-    return { name: Array.isArray(qt) ? qt[1] || null : null, preClose, points };
-  }
-
   /* ────────────────────────── 交易时段 ────────────────────────── */
 
   /**
@@ -534,53 +461,6 @@
                    + `&end=20500101&lmt=${opts.count}&_=${Date.now()}`;
         const json = await requestJSON(HOSTS.eastmoneyHistory, path, ctx);
         return parseEastmoneyKline(json);
-      }
-    }
-  };
-
-  /* 分钟 K：腾讯 mkline 主源（约 20 个交易日），东财 klt 降级 */
-  const MINUTE_PERIODS = { '5': 5, '15': 15, '30': 30, '60': 60 };
-  const MINUTE_KLT = { 5: 5, 15: 15, 30: 30, 60: 60 };
-
-  const MINUTE_PROVIDERS = {
-    tencent: {
-      id: 'tencent',
-      async fetch(code, opts, ctx) {
-        const path = `/appstock/app/kline/mkline?param=${code},m${opts.period},,${opts.count}&_=${Date.now()}`;
-        const json = await requestJSON(HOSTS.tencentApp, path, ctx);
-        return parseTencentMinute(json, code, opts.period);
-      }
-    },
-    eastmoney: {
-      id: 'eastmoney',
-      async fetch(code, opts, ctx) {
-        const path = `/api/qt/stock/kline/get?secid=${toSecId(code)}&fields1=f1,f2,f3,f4,f5,f6`
-                   + `&fields2=f51,f52,f53,f54,f55,f56,f57`
-                   + `&klt=${MINUTE_KLT[opts.period]}&fqt=1`
-                   + `&end=20500101&lmt=${opts.count}&_=${Date.now()}`;
-        const json = await requestJSON(HOSTS.eastmoneyHistory, path, ctx);
-        return parseEastmoneyMinute(json);
-      }
-    }
-  };
-
-  const TRENDS_PROVIDERS = {    eastmoney: {
-      id: 'eastmoney',
-      async fetch(code, opts, ctx) {
-        const path = `/api/qt/stock/trends2/get?secid=${toSecId(code)}`
-                   + `&fields1=f1,f2,f3,f4,f5,f6,f7,f8&fields2=f51,f52,f53,f54,f55,f56,f57,f58`
-                   + `&iscr=0&ndays=${opts.days}&_=${Date.now()}`;
-        const json = await requestJSON(HOSTS.eastmoneyHistory, path, ctx);
-        return parseEastmoneyTrends(json);
-      }
-    },
-    tencent: {
-      id: 'tencent',
-      async fetch(code, opts, ctx) {
-        const limit = Math.min(800, 240 * opts.days);
-        const path = `/appstock/app/kline/mkline?param=${code},m1,,${limit}&_=${Date.now()}`;
-        const json = await requestJSON(HOSTS.tencentApp, path, ctx);
-        return parseTencentTrends(json, code);
       }
     }
   };
@@ -803,91 +683,6 @@
       throw err;
     }
 
-    /**
-     * 分钟 K（腾讯 mkline 主源，东方财富 klt 降级；腾讯约 20 个交易日）
-     * @param {string} code
-     * @param {{period?:'5'|'15'|'30'|'60'|5|15|30|60, count?:number,
-     *          force?:boolean, signal?:AbortSignal}} [opts]
-     * @returns {Promise<{code:string, period:string,
-     *   bars:Array<{time:string, open:number, close:number, high:number, low:number, volume:number|null}>}>}
-     */
-    async fetchMinuteKline(code, opts) {
-      const c = normalizeCode(code);
-      if (!c) throw new QuoteError('无效的股票代码: ' + code, 'PARSE');
-
-      const o = opts || {};
-      const period = MINUTE_PERIODS[String(o.period)] ? String(o.period) : '15';
-      const count = Math.min(800, Math.max(10, o.count | 0 || 320));
-
-      const key = `minute:${c}:${period}:${count}`;
-      const cached = this._readCache(key, o.force);
-      if (cached) return cached;
-
-      const ctx = this._context(o);
-      const spec = { period, count };
-      let lastErr = null;
-
-      for (const id of ['tencent', 'eastmoney']) {
-        const provider = MINUTE_PROVIDERS[id];
-        if (!this._available('minute:' + id)) continue;
-        try {
-          const bars = await provider.fetch(c, spec, ctx);
-          if (bars && bars.length) return this._cacheResult(key, { code: c, period, bars });
-        } catch (e) {
-          if (e && e.code === 'ABORTED') throw e;
-          this.stats.failures++;
-          lastErr = e;
-          this._markDown('minute:' + id);
-        }
-      }
-
-      const err = lastErr || new QuoteError('分钟 K 线数据不可用', 'UNAVAILABLE');
-      this._notifyError(err);
-      throw err;
-    }
-
-    /**
-     * 分时（东方财富 trends2 主源，含均价；腾讯 m1 降级）
-     * @param {string} code
-     * @param {{days?:number, force?:boolean, signal?:AbortSignal}} [opts]
-     * @returns {Promise<{code:string, name:string|null, preClose:number|null,
-     *   points:Array<{time:string, price:number, avg:number|null, volume:number|null}>}>}
-     */
-    async fetchTrends(code, opts) {
-      const c = normalizeCode(code);
-      if (!c) throw new QuoteError('无效的股票代码: ' + code, 'PARSE');
-
-      const o = opts || {};
-      const days = Math.min(5, Math.max(1, o.days | 0 || 1));
-
-      const key = `trends:${c}:${days}`;
-      const cached = this._readCache(key, o.force);
-      if (cached) return cached;
-
-      const ctx = this._context(o);
-      let lastErr = null;
-
-      for (const id of ['eastmoney', 'tencent']) {
-        const provider = TRENDS_PROVIDERS[id];
-        if (!this._available('trends:' + id)) continue;
-        try {
-          const data = await provider.fetch(c, { days }, ctx);
-          if (data && data.points.length) {
-            return this._cacheResult(key, Object.assign({ code: c }, data));
-          }
-        } catch (e) {
-          if (e && e.code === 'ABORTED') throw e;
-          this.stats.failures++;
-          lastErr = e;
-          this._markDown('trends:' + id);
-        }
-      }
-
-      const err = lastErr || new QuoteError('分时数据不可用', 'UNAVAILABLE');
-      this._notifyError(err);
-      throw err;
-    }
-
     /* 内部工具 */
 
     _context(o) {
@@ -1022,8 +817,6 @@
     fetchOne: (code, opts) => defaultClient.fetchOne(code, opts),
     fetchDetail: (code, opts) => defaultClient.fetchDetail(code, opts),
     fetchKline: (code, opts) => defaultClient.fetchKline(code, opts),
-    fetchMinuteKline: (code, opts) => defaultClient.fetchMinuteKline(code, opts),
-    fetchTrends: (code, opts) => defaultClient.fetchTrends(code, opts),
     clearCache: () => defaultClient.clearCache(),
     get lastError() { return defaultClient.lastError; },
     get stats() { return defaultClient.stats; }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T02:04:14+00:00",
+  "updatedAt": "2026-10-29T15:20:25+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -334,11 +334,16 @@
           "date": "2026-10-28",
           "spot": 1061.43,
           "futures": 979.0
+        },
+        {
+          "date": "2026-10-29",
+          "spot": 1060.0,
+          "futures": 978.0
         }
       ],
-      "latest": 1061.43,
-      "latestDate": "2026-10-28",
-      "latestSpot": 1061.43,
+      "latest": 1060.0,
+      "latestDate": "2026-10-29",
+      "latestSpot": 1060.0,
       "latestFutures": 979.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
@@ -665,11 +670,16 @@
             "date": "2026-10-28",
             "value": 3675.0,
             "change": 248.0
+          },
+          {
+            "date": "2026-10-29",
+            "value": 3675.0,
+            "change": 0.0
           }
         ],
         "latest": 3675.0,
-        "latestDate": "2026-10-28",
-        "change": 248.0,
+        "latestDate": "2026-10-29",
+        "change": 0.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -684,7 +694,7 @@
       "drivers": "重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨成本。",
       "status": "ok",
       "futuresDate": "2026-10-29",
-      "futuresTime": "10:04:09"
+      "futuresTime": "23:00:00"
     },
     "urea": {
       "id": "urea",
@@ -1016,12 +1026,17 @@
           "date": "2026-10-28",
           "spot": 1735.0,
           "futures": 1694.0
+        },
+        {
+          "date": "2026-10-29",
+          "spot": 1740.0,
+          "futures": 1716.0
         }
       ],
-      "latest": 1735.0,
-      "latestDate": "2026-10-28",
-      "latestSpot": 1735.0,
-      "latestFutures": 1700.0,
+      "latest": 1740.0,
+      "latestDate": "2026-10-29",
+      "latestSpot": 1740.0,
+      "latestFutures": 1716.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -1029,13 +1044,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-20",
-            "value": 6512.0
-          },
-          {
             "date": "2026-07-21",
-            "value": 6194.0,
-            "change": -318.0
+            "value": 6194.0
           },
           {
             "date": "2026-07-22",
@@ -1356,11 +1366,16 @@
             "date": "2026-10-27",
             "value": 5115.0,
             "change": -721.0
+          },
+          {
+            "date": "2026-10-29",
+            "value": 500.0,
+            "change": 500.0
           }
         ],
-        "latest": 5115.0,
-        "latestDate": "2026-10-27",
-        "change": -721.0,
+        "latest": 500.0,
+        "latestDate": "2026-10-29",
+        "change": 500.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -1373,7 +1388,7 @@
       "drivers": "看农业需求季节性、出口政策、日产量、企业库存和煤气成本。",
       "status": "ok",
       "futuresDate": "2026-10-29",
-      "futuresTime": "10:04:08",
+      "futuresTime": "15:00:00",
       "industryLinks": {
         "label": "数据源列示产业链企业",
         "productName": "尿素",
@@ -1722,12 +1737,17 @@
           "date": "2026-10-28",
           "spot": 4000.0,
           "futures": 3464.0
+        },
+        {
+          "date": "2026-10-29",
+          "spot": 3953.33,
+          "futures": 3413.0
         }
       ],
-      "latest": 4000.0,
-      "latestDate": "2026-10-28",
-      "latestSpot": 4000.0,
-      "latestFutures": 3464.0,
+      "latest": 3953.33,
+      "latestDate": "2026-10-29",
+      "latestSpot": 3953.33,
+      "latestFutures": 3413.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -1735,13 +1755,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-20",
-            "value": 6595.0
-          },
-          {
             "date": "2026-07-21",
-            "value": 5878.0,
-            "change": -717.0
+            "value": 5878.0
           },
           {
             "date": "2026-07-22",
@@ -2067,11 +2082,16 @@
             "date": "2026-10-28",
             "value": 5699.0,
             "change": -41.0
+          },
+          {
+            "date": "2026-10-29",
+            "value": 5630.0,
+            "change": -69.0
           }
         ],
-        "latest": 5699.0,
-        "latestDate": "2026-10-28",
-        "change": -41.0,
+        "latest": 5630.0,
+        "latestDate": "2026-10-29",
+        "change": -69.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -2473,12 +2493,17 @@
           "date": "2026-10-28",
           "spot": 23896.7,
           "futures": 23540.0
+        },
+        {
+          "date": "2026-10-29",
+          "spot": 23771.7,
+          "futures": 23310.0
         }
       ],
-      "latest": 23896.7,
-      "latestDate": "2026-10-28",
-      "latestSpot": 23896.7,
-      "latestFutures": 23540.0,
+      "latest": 23771.7,
+      "latestDate": "2026-10-29",
+      "latestSpot": 23771.7,
+      "latestFutures": 23310.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -2486,13 +2511,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-20",
-            "value": 374049.0
-          },
-          {
             "date": "2026-07-21",
-            "value": 369690.0,
-            "change": -4359.0
+            "value": 369690.0
           },
           {
             "date": "2026-07-22",
@@ -2818,11 +2838,16 @@
             "date": "2026-10-28",
             "value": 61888.0,
             "change": -1543.0
+          },
+          {
+            "date": "2026-10-29",
+            "value": 60195.0,
+            "change": -1693.0
           }
         ],
-        "latest": 61888.0,
-        "latestDate": "2026-10-28",
-        "change": -1543.0,
+        "latest": 60195.0,
+        "latestDate": "2026-10-29",
+        "change": -1693.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -3231,12 +3256,17 @@
           "date": "2026-10-28",
           "spot": 19225.0,
           "futures": 19570.0
+        },
+        {
+          "date": "2026-10-29",
+          "spot": 18775.0,
+          "futures": 19155.0
         }
       ],
-      "latest": 19225.0,
-      "latestDate": "2026-10-28",
-      "latestSpot": 19225.0,
-      "latestFutures": 19570.0,
+      "latest": 18775.0,
+      "latestDate": "2026-10-29",
+      "latestSpot": 18775.0,
+      "latestFutures": 19155.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -3244,13 +3274,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-20",
-            "value": 149440.0
-          },
-          {
             "date": "2026-07-21",
-            "value": 149370.0,
-            "change": -70.0
+            "value": 149370.0
           },
           {
             "date": "2026-07-22",
@@ -3576,11 +3601,16 @@
             "date": "2026-10-28",
             "value": 145180.0,
             "change": -1340.0
+          },
+          {
+            "date": "2026-10-29",
+            "value": 144410.0,
+            "change": -770.0
           }
         ],
-        "latest": 145180.0,
-        "latestDate": "2026-10-28",
-        "change": -1340.0,
+        "latest": 144410.0,
+        "latestDate": "2026-10-29",
+        "change": -770.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },

@@ -147,6 +147,15 @@ def main() -> int:
     if errors:
         payload["error"] = True
         payload["errors"] = errors
+    # Keep the previous snapshot timestamp when data and status are unchanged.
+    comparable = dict(payload)
+    comparable.pop("updatedAt", None)
+    previous_comparable = dict(previous_payload) if isinstance(previous_payload, dict) else {}
+    previous_comparable.pop("updatedAt", None)
+    if previous_comparable and comparable == previous_comparable:
+        print("No global asset data changes; preserving the previous snapshot.")
+        return 0
+
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Updated {sum(1 for item in results if item.get('status') == '已更新')}/{len(results)} global assets.")
     if errors:

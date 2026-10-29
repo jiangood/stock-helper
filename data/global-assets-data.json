@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T23:15:26.292525Z",
+  "updatedAt": "2026-10-29T02:02:42.207138Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -7,18 +7,14 @@
       "name": "黄金",
       "currency": "USD",
       "status": "已更新",
-      "price": 4065.6,
+      "price": 4070.7,
       "prevClose": 4168.4,
-      "change": -102.8,
-      "changePct": -2.466174,
-      "quoteTime": "2026-10-28T23:05:23Z",
+      "change": -97.7,
+      "changePct": -2.343825,
+      "quoteTime": "2026-10-29T01:52:30Z",
       "sourceSymbol": "GC=F",
       "sourceUrl": "https://finance.yahoo.com/quote/GC%3DF",
       "history": [
-        {
-          "date": "2026-09-29",
-          "close": 4179.7002
-        },
         {
           "date": "2026-09-30",
           "close": 4186.7002
@@ -101,7 +97,11 @@
         },
         {
           "date": "2026-10-28",
-          "close": 4065.6001
+          "close": 4051.6001
+        },
+        {
+          "date": "2026-10-29",
+          "close": 4070.7
         }
       ]
     },
@@ -110,11 +110,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 81232.78,
-      "prevClose": 83502.61,
-      "change": -2269.83,
-      "changePct": -2.718274,
-      "quoteTime": "2026-10-28T23:15:22Z",
+      "price": 80035.19,
+      "prevClose": 83622.43,
+      "change": -3587.24,
+      "changePct": -4.289806,
+      "quoteTime": "2026-10-29T02:02:36Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD",
       "history": [
@@ -203,8 +203,8 @@
           "close": 80805.0781
         },
         {
-          "date": "2026-10-28",
-          "close": 81232.7812
+          "date": "2026-10-29",
+          "close": 80035.1875
         }
       ]
     },
@@ -213,11 +213,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2358.59,
-      "prevClose": 2688.6687,
-      "change": -330.0787,
-      "changePct": -12.276659,
-      "quoteTime": "2026-10-28T23:15:22Z",
+      "price": 2313.9,
+      "prevClose": 2676.7222,
+      "change": -362.8222,
+      "changePct": -13.55472,
+      "quoteTime": "2026-10-29T02:02:35Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD",
       "history": [
@@ -306,8 +306,8 @@
           "close": 2347.73
         },
         {
-          "date": "2026-10-28",
-          "close": 2358.5901
+          "date": "2026-10-29",
+          "close": 2313.8999
         }
       ]
     },
@@ -316,18 +316,14 @@
       "name": "日经 225",
       "currency": "JPY",
       "status": "已更新",
-      "price": 63954.19,
-      "prevClose": 65877.62,
-      "change": -1923.43,
-      "changePct": -2.919702,
-      "quoteTime": "2026-10-28T06:45:03Z",
+      "price": 64029.24,
+      "prevClose": 65481.27,
+      "change": -1452.03,
+      "changePct": -2.217474,
+      "quoteTime": "2026-10-29T01:47:40Z",
       "sourceSymbol": "^N225",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EN225",
       "history": [
-        {
-          "date": "2026-09-28",
-          "close": 65877.6172
-        },
         {
           "date": "2026-09-29",
           "close": 65481.2695
@@ -407,6 +403,14 @@
         {
           "date": "2026-10-27",
           "close": 63268.3711
+        },
+        {
+          "date": "2026-10-28",
+          "close": 63954.1914
+        },
+        {
+          "date": "2026-10-29",
+          "close": 64029.2383
         }
       ]
     },
@@ -724,18 +728,14 @@
       "name": "美元兑人民币",
       "currency": "CNY",
       "status": "已更新",
-      "price": 6.6549,
-      "prevClose": 6.7128,
-      "change": -0.0579,
-      "changePct": -0.862531,
-      "quoteTime": "2026-10-28T22:48:30Z",
+      "price": 6.6619,
+      "prevClose": 6.7103,
+      "change": -0.0484,
+      "changePct": -0.721279,
+      "quoteTime": "2026-10-29T02:02:24Z",
       "sourceSymbol": "CNY=X",
       "sourceUrl": "https://finance.yahoo.com/quote/CNY%3DX",
       "history": [
-        {
-          "date": "2026-09-28",
-          "close": 6.7103
-        },
         {
           "date": "2026-09-29",
           "close": 6.703
@@ -818,7 +818,11 @@
         },
         {
           "date": "2026-10-28",
-          "close": 6.6549
+          "close": 6.668
+        },
+        {
+          "date": "2026-10-29",
+          "close": 6.6619
         }
       ]
     }

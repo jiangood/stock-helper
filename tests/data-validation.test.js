@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
-  validateStocks, validateQuotes, validateBars, validateFundamentals
+  validateStocks, validateQuotes, validateBars, validateFundamentals, validateAll
 } = require('../scripts/validate_stock_data');
 
 const stocks = [
@@ -46,4 +46,11 @@ test('fundamentals retain explicit nulls but reject unknown classifications and 
   assert.equal(validateFundamentals(payload, new Set(['sh600000', 'sz000001'])), 2);
   assert.throws(() => validateFundamentals({ stocks: { sh600000: { ownerType: 'unknown' } } }), /ownerType/);
   assert.throws(() => validateFundamentals({ stocks: { sh600000: { annual: [{ date: '2025-06-30' }] } } }), /annual date/);
+});
+
+test('committed project data passes the production data contract', () => {
+  const result = validateAll();
+  assert.ok(result.stocks > 0);
+  assert.ok(result.quotes.coverage >= 0.7);
+  assert.ok(result.caches.cacheFiles >= Math.ceil(result.stocks * 0.7));
 });

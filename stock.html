@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>股票详情</title>
-<link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#2563eb">
 <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -424,12 +423,16 @@
 <script src="https://registry.npmmirror.com/lightweight-charts/4.2.3/files/dist/lightweight-charts.standalone.production.js"></script>
 <script src="stock.js"></script>
 <script>
+// Remove legacy PWA service workers and their caches for this site.
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('./sw.js').catch(function (error) {
-      console.warn('Service worker registration failed:', error);
-    });
-  });
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    return Promise.all(registrations.map(function (registration) { return registration.unregister(); }));
+  }).catch(function () {});
+}
+if ('caches' in window) {
+  caches.keys().then(function (keys) {
+    return Promise.all(keys.filter(function (key) { return key.startsWith('stock-helper-'); }).map(function (key) { return caches.delete(key); }));
+  }).catch(function () {});
 }
 </script>
 

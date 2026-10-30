@@ -58,7 +58,7 @@ test('cache manifest and health snapshots validate versions, hashes and counters
     recordCount: 2,
     status: 'healthy'
   };
-  const manifest = { schemaVersion: 1, caches: {
+  const manifest = { schemaVersion: 1, builderVersion: 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', caches: {
     'market-quotes': entry, 'combat-kline': entry,
     'research-scores': entry, 'sector-monthly': entry
   } };

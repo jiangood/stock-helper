@@ -402,7 +402,7 @@ function statusHtml(e, stock, quote) {
   } else if (e.zone === 'above') {
     zoneLabel = '<span class="flag flag-pending" title="当前价格高于计划入场价">高于入场</span>';
   }
-  return zoneLabel + flagHtml(e, stock, quote);
+  return zoneLabel + (e.st || e.loss ? '' : flagHtml(e, stock, quote));
 }
 
 function flagHtml(e, stock, quote) {

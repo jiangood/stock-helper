@@ -52,43 +52,12 @@
     <button class="btn btn-sm btn-outline-secondary icon-btn" id="refresh-btn" type="button" onclick="refreshQuotes()" aria-label="重新读取行情缓存" title="重新读取行情缓存"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path></svg></button>
     <button class="btn btn-sm btn-outline-secondary icon-btn" id="theme-btn" type="button" onclick="toggleTheme()" aria-label="切换主题" aria-pressed="false" title="切换主题"><svg class="theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button>
   </nav>
-  <div id="stock-toolbar" class="toolbar bg-body border-bottom px-2 px-sm-3 py-1 d-flex flex-nowrap align-items-center gap-2">
-    <div class="input-group input-group-sm flex-nowrap" style="max-width:210px;min-width:0">
+  <div id="stock-toolbar" class="toolbar bg-body border-bottom px-2 px-sm-3 py-1">
+    <div class="input-group input-group-sm" style="max-width:320px;min-width:0">
       <span class="input-group-text px-2" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span>
-      <input type="search" class="form-control" id="search-input" aria-label="搜索股票：名称 / 代码 / 别名 / 拼音" placeholder="名称 / 代码 / 别名 / 拼音" oninput="applyFilter()" style="min-width:0">
-    </div>
-
-    <select class="form-select form-select-sm w-auto flex-shrink-0" id="group-filter" onchange="applyFilter()" title="按分组筛选" aria-label="按分组筛选">
-      <option value="">全部分组</option>
-    </select>
-
-    <select class="form-select form-select-sm w-auto flex-shrink-0" id="status-filter" onchange="applyFilter()" title="按鳄鱼纪律筛选" aria-label="按鳄鱼纪律筛选">
-      <option value="">全部状态</option>
-      <option value="heavy">重仓区</option>
-      <option value="near">接近重仓</option>
-      <option value="entry">入场区</option>
-      <option value="pb">破净</option>
-      <option value="pb80">八折</option>
-      <option value="small">小市值</option>
-      <option value="screen">纪律全过</option>
-      <option value="screenbuy">全过 + 买点</option>
-      <option value="score-good">评分优（研 ≥80 / 算 ≥75）</option>
-      <option value="score-low">评分低（研 &lt;70 / 算 &lt;56）</option>
-      <option value="score-report">有研报评分</option>
-      <option value="score-report80">研报 ≥80</option>
-      <option value="risk">风险</option>
-    </select>
-
-    <span class="text-body-secondary text-nowrap" aria-live="polite" aria-atomic="true"><span id="stock-count" class="fw-semibold text-body">0</span> 只</span>
-
-    <div class="ms-auto d-none d-xl-flex align-items-center gap-3 text-body-secondary">
-      <span id="board-summary" class="text-nowrap"></span>
-      <span class="vr opacity-25"></span>
-      <span><span class="legend-pip" style="background:var(--up)"></span> 高于入场</span>
-      <span><span class="legend-pip" style="background:var(--down)"></span> 低于入场</span>
+      <input type="search" class="form-control" id="search-input" aria-label="搜索股票：名称 / 代码 / 别名 / 拼音 / 分组" placeholder="搜索名称 / 代码 / 别名 / 拼音 / 分组" oninput="applyFilter()" style="min-width:0">
     </div>
   </div>
-</div>
 
 <main id="stocks-pane" tabindex="-1" data-pane="stocks" class="app-pane container-fluid px-2 px-sm-3 py-1">
   <h1 class="visually-hidden">自选股票</h1>
@@ -99,10 +68,11 @@
   <div class="table-scroll-wrap">
   <div class="table-scroll" tabindex="0" role="region" aria-label="自选股票表，可横向滚动查看全部 18 列">
     <table class="table table-sm table-hover align-middle mb-0 stock-table" id="main-table">
-      <caption class="visually-hidden">自选股票列表：名称、价格、重仓、入场、昨日、止盈1、止盈2、年初价、市值、市盈率、市净率、股息率、纪律、机器评分、研报评分、研报日期、分组、别名</caption>
+      <caption class="visually-hidden">自选股票列表：名称、分组、价格、重仓、入场、昨日、止盈1、止盈2、年初价、市值、市盈率、市净率、股息率、纪律、机器评分、研报评分、研报日期、别名</caption>
       <thead>
         <tr>
           <th scope="col" id="th-name" aria-sort="none"><button type="button" class="th-sort" data-sort="name">名称<span class="sort-icon" aria-hidden="true"></span></button></th>
+          <th scope="col" id="th-group" aria-sort="none"><button type="button" class="th-sort" data-sort="group">分组<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-price" aria-sort="none"><button type="button" class="th-sort" data-sort="price">价格<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-heavy" aria-sort="none"><button type="button" class="th-sort" data-sort="heavy">重仓<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-entry" aria-sort="none"><button type="button" class="th-sort" data-sort="entry">入场<span class="sort-icon" aria-hidden="true"></span></button></th>
@@ -118,7 +88,6 @@
           <th scope="col" id="th-researchMachine" aria-sort="none"><button type="button" class="th-sort" data-sort="researchMachine">机器评分<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-researchReport" aria-sort="none"><button type="button" class="th-sort" data-sort="researchReport">研报评分<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-researchDate" aria-sort="none"><button type="button" class="th-sort" data-sort="researchDate">研报日期<span class="sort-icon" aria-hidden="true"></span></button></th>
-          <th scope="col" id="th-group" aria-sort="none"><button type="button" class="th-sort" data-sort="group">分组<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-alias" aria-sort="none"><button type="button" class="th-sort" data-sort="alias">别名<span class="sort-icon" aria-hidden="true"></span></button></th>
         </tr>
       </thead>
@@ -133,7 +102,7 @@
 <script src="croc.js"></script>
 <script src="static-quotes.js"></script>
 <script src="pinyin.js"></script>
-<script src="stock-dashboard.js?v=2d691bc-cachefix"></script>
+<script src="stock-dashboard.js?v=homepage-status-toolbar-20261030"></script>
 
 <script src="password-gate.js"></script>
 

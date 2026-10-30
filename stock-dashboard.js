@@ -67,7 +67,6 @@ async function loadStocks() {
     showToast('股票数据加载失败：' + e.message);
   }
   buildSearchKeys();
-  buildGroupOptions();
   applyFilter();
 }
 
@@ -121,16 +120,6 @@ function buildSearchKeys() {
   });
 }
 
-function buildGroupOptions() {
-  const sel = $('group-filter');
-  if (!sel) return;
-  const groups = Array.from(new Set(STOCKS.map(s => s.group).filter(Boolean)))
-    .sort((a, b) => a.localeCompare(b, 'zh'));
-  const current = sel.value;
-  sel.innerHTML = '<option value="">全部分组</option>'
-    + groups.map(g => `<option value="${esc(g)}">${esc(g)}</option>`).join('');
-  sel.value = groups.includes(current) ? current : '';
-}
 
 // ============================================================
 // 排序
@@ -221,9 +210,6 @@ function buildTable() {
     setEmptyState(false);
     tbody.innerHTML = view.map(s => `<tr class="${rowClass(s)}">${buildRow(s)}</tr>`).join('');
   }
-  const count = $('stock-count');
-  if (count) count.textContent = view.length === STOCKS.length ? view.length : `${view.length}/${STOCKS.length}`;
-  updateSummary();
   updateScrollHint();
 }
 
@@ -248,11 +234,7 @@ function setEmptyState(show, message) {
 /** 清空搜索与筛选，恢复完整列表 */
 function resetFilters() {
   const search = $('search-input');
-  const group = $('group-filter');
-  const status = $('status-filter');
   if (search) search.value = '';
-  if (group) group.value = '';
-  if (status) status.value = '';
   applyFilter();
   if (search) search.focus();
 }
@@ -383,11 +365,12 @@ function buildRow(stock) {
     ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
     : '<span class="text-body-tertiary">—</span>';
   const nameHtml = stock.code
-    ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}" title="查看 ${esc(stock.name)} 详情">${esc(stock.name)}</a>${flagHtml(e, stock, pd)}`
+    ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}" title="查看 ${esc(stock.name)} 详情">${esc(stock.name)}</a>${statusHtml(e, stock, pd)}`
     : `<span class="stock-name">${esc(stock.name)}</span>${flagHtml(e, stock, pd)}`;
 
   return `
     <td>${nameHtml}</td>
+    <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${priceHtml}</td>
     <td>${heavyHtml}${heavyDiff}</td>
     <td>${entryHtml}${entryDiff}</td>
@@ -401,8 +384,25 @@ function buildRow(stock) {
     <td>${fmtPct(pd && pd.divYield)}</td>
     <td>${screenHtml(stock, pd, e)}</td>
     <td>${researchMachineHtml(stock)}</td>\n    <td>${researchReportHtml(stock)}</td>\n    <td>${researchDateHtml(stock)}</td>
-    <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${aliasHtml}</td>`;
+}
+
+function statusHtml(e, stock, quote) {
+  let zoneLabel = '';
+  if (e.st) zoneLabel = '<span class="flag flag-danger" title="ST 风险警示股：铁律不买 ST">ST</span>';
+  else if (e.loss) zoneLabel = '<span class="flag flag-warn" title="TTM 亏损：铁律不买亏损股">亏</span>';
+  else if (!quote || e.price === null || e.price <= 0 || e.zone === 'unknown') {
+    zoneLabel = '<span class="flag flag-pending" title="行情或计划价格数据不足，无法判断交易区间">待确认</span>';
+  } else if (e.zone === 'heavy') {
+    zoneLabel = '<span class="flag flag-zone" title="当前价格已进入重仓价格区间；仍须通过买入纪律">重仓区</span>';
+  } else if (Croc.matchStatus(stock, quote, 'near')) {
+    zoneLabel = '<span class="flag flag-zone" title="当前价格高于重仓价且距离不超过 3%">接近重仓</span>';
+  } else if (e.zone === 'entry') {
+    zoneLabel = '<span class="flag flag-zone" title="当前价格已进入计划入场区间；不代表自动满足买入条件">入场区</span>';
+  } else if (e.zone === 'above') {
+    zoneLabel = '<span class="flag flag-pending" title="当前价格高于计划入场价">高于入场</span>';
+  }
+  return zoneLabel + (e.st || e.loss ? '' : flagHtml(e, stock, quote));
 }
 
 function flagHtml(e, stock, quote) {
@@ -713,17 +713,11 @@ function matchStatusFilter(stock, status) {
 
 function applyFilter() {
   const searchEl = $('search-input');
-  const groupEl = $('group-filter');
-  const statusEl = $('status-filter');
   const q = ((searchEl && searchEl.value) || '').trim().toLowerCase();
-  const key = q.replace(/\s+/g, '');
+  const key = q.replace(/\\s+/g, '');
   const lettersOnly = /^[a-z]+$/.test(key);
-  const group = (groupEl && groupEl.value) || '';
-  const status = (statusEl && statusEl.value) || '';
 
   filteredStocks = STOCKS.filter(s => {
-    if (group && s.group !== group) return false;
-    if (status && !matchStatusFilter(s, status)) return false;
     if (!q) return true;
     return s.name.toLowerCase().includes(q)
         || (s.code && s.code.toLowerCase().includes(q))

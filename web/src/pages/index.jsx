@@ -1,8 +1,8 @@
 import React from 'react';
 import {Badge, Button, Empty, Input, Select, Space, Table, Tag, Tooltip, Typography} from 'antd';
 import {ReloadOutlined, SearchOutlined} from '@ant-design/icons';
-import {HttpClient, Page, PageUtils} from '@jiangood/open-admin';
-import {fmt, fmtCap, fmtPct, isNum, num, pctText, scoreTone, statusOptions, tone} from '../lib/format';
+import {HttpClient, Page} from '@jiangood/open-admin';
+import {fmt, fmtCap, fmtPct, isNum, num, openStock, pctText, scoreTone, statusOptions, tone} from '../lib/format';
 
 const {Text} = Typography;
 
@@ -175,7 +175,7 @@ export default class WatchlistPage extends React.Component {
                 title: '名称', dataIndex: 'name', fixed: 'left', width: 150,
                 sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || ''), 'zh'),
                 render: (_, row) => <Space size={4}>
-                    <a className="sh-link" onClick={() => PageUtils.open(`/stock/${row.code}`, row.name)}>{row.name}</a>
+                    <a className="sh-link" onClick={() => openStock(row.code, row.name)}>{row.name}</a>
                     {(row.flags || []).map(flag => <Tag key={flag} color={flag === 'ST' ? 'red' : flag === '亏' ? 'orange' : flag === '八折' ? 'green' : 'blue'}>{flag}</Tag>)}
                 </Space>,
             },

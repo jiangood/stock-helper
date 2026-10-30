@@ -1,8 +1,8 @@
 import React from 'react';
 import {Alert, Button, Empty, Space, Table, Tag, Tooltip, Typography} from 'antd';
 import {ReloadOutlined} from '@ant-design/icons';
-import {HttpClient, Page, PageUtils, history} from '@jiangood/open-admin';
-import {fmt, fmtPct, isNum, num, tone} from '../lib/format';
+import {HttpClient, Page} from '@jiangood/open-admin';
+import {fmt, fmtPct, isNum, num, openStock, tone} from '../lib/format';
 
 const {Text} = Typography;
 
@@ -196,7 +196,7 @@ export default class CombatPage extends React.Component {
         {
             title: '名称', dataIndex: 'name', width: 150, fixed: 'left',
             sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || ''), 'zh'),
-            render: (_, row) => <a className="sh-link" onClick={() => PageUtils.open(`/stock/${row.stock?.code}`, row.name)}>{row.name}</a>,
+            render: (_, row) => <a className="sh-link" onClick={() => openStock(row.stock?.code, row.name)}>{row.name}</a>,
         },
         {
             title: '现价', dataIndex: 'price', width: 100, align: 'right',

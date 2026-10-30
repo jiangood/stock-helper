@@ -1,10 +1,10 @@
 import React from 'react';
 import {Alert, Button, Card, Empty, Space, Tag, Typography} from 'antd';
 import {ReloadOutlined} from '@ant-design/icons';
-import {HttpClient, Page, PageUtils, history} from '@jiangood/open-admin';
+import {HttpClient, Page} from '@jiangood/open-admin';
 import Echart from '../components/Echart';
 import Sparkline from '../components/Sparkline';
-import {fmt, fmtPct, isNum, num, tone} from '../lib/format';
+import {fmt, fmtPct, isNum, num, openStock, tone} from '../lib/format';
 
 const {Text} = Typography;
 
@@ -56,7 +56,7 @@ function SectorCard({sector}) {
         <div className="sh-mini" style={{marginTop: 8}}>月线领先 · 近 12 个月</div>
         <div>
             {(sector.leaders || []).length ? sector.leaders.map(item => <a key={item.code} className="sh-link"
-                    style={{marginRight: 10}} onClick={() => PageUtils.open(`/stock/${item.code}`, item.name)}>
+                    style={{marginRight: 10}} onClick={() => openStock(item.code, item.name)}>
                 {item.name} <span className={tone(item.change)}>{fmtPct(item.change)}</span>
             </a>) : <span className="sh-mini">暂无有效月线涨跌幅</span>}
         </div>

@@ -69,8 +69,12 @@ export const fmtDuration = ms => {
 
 export const monthlyLabel = time => String(time || '').slice(0, 7);
 
-export const statusOptions = [
-    {value: '', label: '全部状态'},
+export const openStock = (code, name) => {
+    const label = name ? `?_label=${encodeURIComponent(name)}` : '';
+    window.location.hash = `/stock/${code}${label}`;
+};
+
+export const statusOptions = [    {value: '', label: '全部状态'},
     {value: 'heavy', label: '重仓区'},
     {value: 'near', label: '接近重仓'},
     {value: 'entry', label: '入场区'},

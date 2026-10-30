@@ -99,6 +99,6 @@ test('首页脚本使用版本化 URL，避免浏览器继续执行旧缓存', (
 test('研报评分 null 不参与数值渲染和筛选', () => {
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
   assert.match(dashboard, /if \\(!report \\|\\| report\\.score == null \\|\\| !Number\\.isFinite\\(report\\.score\\)\\)/);
-  assert.doesNotMatch(dashboard, /isFinite\\(report\\.score\\)/);
+  assert.doesNotMatch(dashboard, /(^|[^.])isFinite\\(report\\.score\\)/m);
   assert.doesNotMatch(dashboard, /Number\\.Number\\.isFinite/);
 });

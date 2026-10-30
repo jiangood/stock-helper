@@ -54,10 +54,12 @@ test('首页机器评分、研报评分和研报日期为独立可排序列', ()
 
 test('首页机器评分遇到 null 缺失值时不崩溃且不伪造零分', () => {
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
-  const machineHtml = dashboard.match(/function researchMachineHtml\\(stock\\) \\{[\\s\\S]*?\\n\\}/);
-  const formatScore = dashboard.match(/function fmtScore\\(value\\) \\{[\\s\\S]*?\\n\\}/);
-  assert.ok(machineHtml, '未找到机器评分渲染函数');
-  assert.ok(formatScore, '未找到评分项格式化函数');
+  const machineStart = dashboard.indexOf('function researchMachineHtml(stock) {');
+  const machineEnd = dashboard.indexOf('\\nfunction researchReportHtml', machineStart);
+  const formatStart = dashboard.indexOf('function fmtScore(value) {');
+  const formatEnd = dashboard.indexOf('\\n\\n/** 市值', formatStart);
+  assert.ok(machineStart >= 0 && machineEnd > machineStart, '未找到机器评分渲染函数');
+  assert.ok(formatStart >= 0 && formatEnd > formatStart, '未找到评分项格式化函数');
 
   const context = {
     researchScores: {},
@@ -65,14 +67,17 @@ test('首页机器评分遇到 null 缺失值时不崩溃且不伪造零分', ()
     esc: value => String(value).replace(/[&<>"]/g, ''),
     Number
   };
-  vm.runInNewContext(machineHtml[0] + '\\n' + formatScore[0], context);
+  vm.runInNewContext(
+    dashboard.slice(machineStart, machineEnd) + String.fromCharCode(10)
+      + dashboard.slice(formatStart, formatEnd),
+    context
+  );
 
   context.researchScores.nullPercent = {
     points: 38.2, max: 56, percent: null, items: { focus: null }
   };
-  assert.match(
-    context.researchMachineHtml({ code: 'nullPercent' }),
-    /—/,
+  assert.ok(
+    context.researchMachineHtml({ code: 'nullPercent' }).includes('—'),
     '百分制分数为 null 时应显示缺失标记，不得调用 toFixed'
   );
 

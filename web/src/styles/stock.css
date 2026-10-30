@@ -1,0 +1,291 @@
+:root {
+    --sh-up: #cf1322;
+    --sh-down: #389e0d;
+    --sh-flat: rgba(0, 0, 0, 0.45);
+}
+
+.sh-up {
+    color: var(--sh-up) !important;
+}
+
+.sh-down {
+    color: var(--sh-down) !important;
+}
+
+.sh-flat {
+    color: var(--sh-flat) !important;
+}
+
+.sh-good {
+    color: #389e0d !important;
+    font-weight: 600;
+}
+
+.sh-mid {
+    color: #d48806 !important;
+    font-weight: 600;
+}
+
+.sh-bad {
+    color: #cf1322 !important;
+    font-weight: 600;
+}
+
+.sh-sub {
+    display: block;
+    font-size: 11px;
+    line-height: 14px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.sh-price {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+.sh-spark {
+    width: 100%;
+    height: 40px;
+    display: block;
+}
+
+.sh-spark-empty {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.sh-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.sh-mini {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.sh-row-buy > td {
+    background: rgba(56, 158, 13, 0.06) !important;
+}
+
+.sh-row-above > td {
+    background: rgba(207, 19, 34, 0.04) !important;
+}
+
+.sh-nowrap {
+    white-space: nowrap;
+}
+
+.sh-combat-detail {
+    padding: 4px 8px 12px;
+}
+
+.sh-section {
+    margin-top: 12px;
+}
+
+.sh-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.sh-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.04);
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.sh-indicator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.sh-indicator {
+    border: 1px solid rgba(5, 5, 5, 0.06);
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sh-indicator strong {
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+}
+
+.sh-index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.sh-sector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+}
+
+.sh-business-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 12px;
+}
+
+.sh-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.sh-stat {
+    border: 1px solid rgba(5, 5, 5, 0.06);
+    border-radius: 8px;
+    padding: 8px 10px;
+}
+
+.sh-stat-label {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.sh-stat-value {
+    font-size: 15px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    word-break: break-all;
+}
+
+.sh-ruler {
+    position: relative;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, rgba(56, 158, 13, 0.25), rgba(22, 119, 255, 0.2), rgba(250, 173, 20, 0.2));
+    margin: 18px 8px 26px;
+}
+
+.sh-ruler-tick {
+    position: absolute;
+    top: -4px;
+    width: 2px;
+    height: 18px;
+    border-radius: 1px;
+    transform: translateX(-1px);
+}
+
+.sh-ruler-current {
+    position: absolute;
+    top: -8px;
+    width: 3px;
+    height: 26px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 2px;
+    transform: translateX(-1.5px);
+}
+
+.sh-ruler-label {
+    position: absolute;
+    top: 22px;
+    transform: translateX(-50%);
+    font-size: 11px;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.sh-check-row {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(5, 5, 5, 0.06);
+}
+
+.sh-check-tone {
+    width: 18px;
+    flex: 0 0 18px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.sh-check-tone.ok {
+    color: #389e0d;
+}
+
+.sh-check-tone.bad {
+    color: #cf1322;
+}
+
+.sh-check-tone.warn {
+    color: #d48806;
+}
+
+.sh-check-tone.neutral {
+    color: rgba(0, 0, 0, 0.35);
+}
+
+.sh-check-value {
+    font-weight: 600;
+}
+
+.sh-check-note {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.sh-empty {
+    padding: 28px 12px;
+    text-align: center;
+}
+
+.sh-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sh-quote-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.sh-quote-price {
+    font-size: 34px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.sh-quote-change {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sh-paragraph {
+    margin: 6px 0;
+    line-height: 1.65;
+}
+
+.sh-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.sh-link:hover {
+    color: #1677ff;
+    text-decoration: underline;
+}

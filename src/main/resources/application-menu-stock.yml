@@ -1,0 +1,63 @@
+## 股票助手菜单。框架预设菜单在 open-admin 的 application-menu.yml，这里只追加业务菜单。
+menus:
+  stock:
+    name: 股票助手
+    icon: FundOutlined
+    seq: 10
+
+  stock-watch:
+    pid: stock
+    name: 自选看板
+    path: /
+    icon: StarOutlined
+    perms:
+      - {name: 读取, code: stock:read}
+
+  stock-combat:
+    pid: stock
+    name: 交易作战
+    path: /combat
+    icon: ThunderboltOutlined
+    perms:
+      - {name: 读取, code: combat:read}
+
+  stock-market:
+    pid: stock
+    name: 行情概览
+    path: /market
+    icon: LineChartOutlined
+    perms:
+      - {name: 读取, code: market:read}
+
+  stock-global-assets:
+    pid: stock
+    name: 全球资产
+    path: /global-assets
+    icon: GlobalOutlined
+    perms:
+      - {name: 读取, code: global-assets:read}
+
+  stock-data:
+    name: 数据管理
+    icon: DatabaseOutlined
+    seq: 20
+
+  stock-plan:
+    pid: stock-data
+    name: 股票池与计划
+    path: /stock-plan
+    icon: UnorderedListOutlined
+    perms:
+      - {name: 读取, code: stock:read}
+      - {name: 创建, code: stock:create}
+      - {name: 编辑, code: stock:update}
+      - {name: 删除, code: stock:delete}
+
+  stock-sync:
+    pid: stock-data
+    name: 数据同步
+    path: /sync
+    icon: SyncOutlined
+    perms:
+      - {name: 读取, code: sync:read}
+      - {name: 执行, code: sync:run}

@@ -1,42 +1,36 @@
-name: Node tests
+name: tests
 
 on:
   push:
-    branches: [master, main]
+    branches: ['**']
   pull_request:
-    branches: [master, main]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
-  test:
+  backend:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          node-version: 22
-      - name: Build derived page read models for validation
-        run: |
-          node scripts/build_sector_monthly.js
-          node scripts/build_research_scores.js
-          node scripts/build_combat_kline.js
-          node scripts/build_stock_detail_cache.js
-      - name: Check cache builder syntax
-        run: node --check scripts/build_cache_manifest.js
-      - name: Build static cache manifest and health snapshot
-        run: node scripts/build_cache_manifest.js
-      - name: Run indicator and syntax tests
-        run: node --test tests/*.test.js
-      - name: Set up Python
-        uses: actions/setup-python@v5
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Maven test
+        run: mvn -B test
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          python-version: "3.11"
-      - name: Run business data tests
-        run: python -m unittest discover -s tests -p 'test_*.py'
-      - name: Validate committed stock data
-        run: node scripts/validate_stock_data.js
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build

@@ -114,3 +114,15 @@ test('首页取消分组和状态下拉筛选，分组列紧跟股票名称', ()
   assert.match(dashboard, /function applyFilter\\(\\)[\\s\\S]*?search-input/);
   assert.doesNotMatch(dashboard, /\$\\('(?:group-filter|status-filter)'\\)/);
 });
+
+
+test('首页工具栏仅保留搜索框，分组列紧跟股票名称', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
+  const toolbar = html.slice(html.indexOf('id="stock-toolbar"'), html.indexOf('</div>\\n</div>', html.indexOf('id="stock-toolbar"')));
+  assert.match(toolbar, /id="search-input"/);
+  assert.doesNotMatch(toolbar, /stock-count|board-summary|group-filter|status-filter|<select/);
+  assert.match(html, /id="th-name"[\\s\\S]*?id="th-group"[\\s\\S]*?id="th-price"/);
+  assert.match(dashboard, /<td>\\$\\{stock\\.group/);
+  assert.doesNotMatch(dashboard, /\\$\\('(?:group-filter|status-filter)'\\)/);
+});

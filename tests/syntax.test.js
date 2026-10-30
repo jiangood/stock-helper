@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 
 test('应用 JavaScript 文件均可通过语法解析', () => {
-  for (const file of ['croc.js', 'research-score.js', 'quotes.js', 'static-quotes.js', 'scripts/fetch_stock_snapshot.js', 'scripts/build_sector_monthly.js', 'scripts/build_research_scores.js', 'pinyin.js', 'indicators.js', 'stock.js', 'business.js']) {
+  for (const file of ['croc.js', 'research-score.js', 'quotes.js', 'static-quotes.js', 'scripts/fetch_stock_snapshot.js', 'scripts/build_sector_monthly.js', 'scripts/build_research_scores.js', 'pinyin.js', 'indicators.js', 'stock.js', 'business.js', 'stock-dashboard.js']) {
     const source = fs.readFileSync(path.join(root, file), 'utf8');
     assert.doesNotThrow(() => new vm.Script(source, { filename: file }), file + ' 语法错误');
   }
@@ -49,4 +49,43 @@ test('首页机器评分、研报评分和研报日期为独立可排序列', ()
   assert.match(dashboard, /function researchReportHtml/);
   assert.match(dashboard, /function researchDateHtml/);
   assert.doesNotMatch(html, /data-sort="research"/);
+});
+
+
+test('首页机器评分遇到 null 缺失值时不崩溃且不伪造零分', () => {
+  const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
+  const machineStart = dashboard.indexOf('function researchMachineHtml(stock) {');
+  const machineEnd = dashboard.indexOf('function researchReportHtml', machineStart);
+  const formatStart = dashboard.indexOf('function fmtScore(value) {');
+  const formatEnd = dashboard.indexOf('/** 市值', formatStart);
+  assert.ok(machineStart >= 0 && machineEnd > machineStart, '未找到机器评分渲染函数');
+  assert.ok(formatStart >= 0 && formatEnd > formatStart, '未找到评分项格式化函数');
+
+  const context = {
+    researchScores: {},
+    RESEARCH: { totalMax: 32, bands: [] },
+    esc: value => String(value).replace(/[&<>"]/g, ''),
+    Number
+  };
+  vm.runInNewContext(
+    dashboard.slice(machineStart, machineEnd) + String.fromCharCode(10)
+      + dashboard.slice(formatStart, formatEnd),
+    context
+  );
+
+  context.researchScores.nullPercent = {
+    points: 38.2, max: 56, percent: null, items: { focus: null }
+  };
+  assert.ok(
+    context.researchMachineHtml({ code: 'nullPercent' }).includes('—'),
+    '百分制分数为 null 时应显示缺失标记，不得调用 toFixed'
+  );
+
+  context.researchScores.partial = {
+    points: 38.2, max: 56, percent: 68.2, band: 'mid',
+    items: { owner: 10, focus: null, profit: 8.5, cap: 6.1, consolidation: 4, bottom: 5.7, volume: 4.4 }
+  };
+  const html = context.researchMachineHtml({ code: 'partial' });
+  assert.ok(html.includes('68.2'), '有效百分制分数应正常显示');
+  assert.ok(html.includes('主营 —/9'), '缺失的单项评分应显示 —，不能被格式化成 0.0');
 });

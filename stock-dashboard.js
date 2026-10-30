@@ -150,7 +150,7 @@ function getSortValue(stock, col) {
     case 'screen':   return pd ? Croc.screen(stock, pd).passed : null;
     case 'researchMachine': {
       const score = researchScores[stock.code];
-      return score && isFinite(score.percent) ? score.percent : null;
+      return score && Number.isFinite(score.percent) ? score.percent : null;
     }
     case 'researchReport': {
       const report = REPORT_SCORES[stock.code];
@@ -321,7 +321,7 @@ function updateSummary() {
       if (report.score >= 80) c.score++;
     } else {
       const score = researchScores[s.code];
-      if (score && isFinite(score.percent) && score.percent >= 75) c.score++;
+      if (score && Number.isFinite(score.percent) && score.percent >= 75) c.score++;
     }
   });
   el.innerHTML = `重仓 <b class="text-body">${c.heavy}</b> · 破净 <b class="text-body">${c.pb}</b>`
@@ -452,8 +452,8 @@ function reportBandLabel(score) {
 /** 机器评分独立展示，按 32 分制折算百分制，缺失时不伪造分数。 */
 function researchMachineHtml(stock) {
   const score = researchScores[stock.code];
-  if (!score || !isFinite(score.points) || !isFinite(score.percent)) return '<span class="text-body-tertiary">—</span>';
-  const max = isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
+  if (!score || !Number.isFinite(score.points) || !Number.isFinite(score.percent)) return '<span class="text-body-tertiary">—</span>';
+  const max = Number.isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
   const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
   const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
   const items = score.items || {};
@@ -487,7 +487,7 @@ function researchDateHtml(stock) {
 }
 
 function fmtScore(value) {
-  return isFinite(value) ? Number(value).toFixed(1) : '—';
+  return value != null && Number.isFinite(value) ? value.toFixed(1) : '—';
 }
 
 /** 市值：元 -> 亿 / 万亿 */

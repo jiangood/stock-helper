@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T01:04:24.987Z",
+  "builderVersion": "5b5062c1466c4197efb1e551b5f31f0066d2ad65c661777e3836c0d9ed32da44",
+  "generatedAt": "2026-10-30T01:10:03.906Z",
   "marketDate": "2026-10-29",
   "caches": {
     "market-quotes": {
@@ -12,7 +13,7 @@
       "recordCount": 70,
       "bytes": 22447,
       "dataVersion": "c301c76f83e8d2720c3be5e5f183e848131b0359ee60ade136c66650d84733cf",
-      "sourceVersion": "21c0762c23d25b206ca6b84dc9fa5122d1d366a33a7f98fac758c943394f2124",
+      "sourceVersion": "d3beaddfa00549a9ef6e7e1f2e9adc98d0660234f85c8f29ff3e14f3af4bc44d",
       "freshness": "fresh",
       "status": "healthy"
     },
@@ -25,7 +26,7 @@
       "recordCount": 67,
       "bytes": 709677,
       "dataVersion": "5e7c578d6e082de38cbc9d72194304c4e71be2cefb707fe4bea199fb20178a69",
-      "sourceVersion": "b728dca52ffc6c24725e7ac499e347292039ce0a8b9aded43fd5280c8ceab84b",
+      "sourceVersion": "9f4875bfdb820970e5a942037aff78e1a6a68c9fb38ec72bd8fdc35bfe80303c",
       "freshness": "fresh",
       "status": "healthy"
     },
@@ -38,7 +39,7 @@
       "recordCount": 67,
       "bytes": 50102,
       "dataVersion": "3470076e0976addcad1f2b6a20298a0715f7b89ceff954f97dacaa128e435dc5",
-      "sourceVersion": "7ec23da2e7ab52961657b51cdc3ed5d27a27e58c9a7845ca082065c42ebed36a",
+      "sourceVersion": "60e0eb8a9804f83d481cb4f07cd04174d2dcb82db6fd08426f2354cca8377448",
       "freshness": "fresh",
       "status": "healthy"
     },
@@ -51,7 +52,7 @@
       "recordCount": 67,
       "bytes": 13333,
       "dataVersion": "9300cd2ff7a02dcc53cb715ae1b870028df34ce4c0a2bd3364e95c31822b6dae",
-      "sourceVersion": "ded1b25af32634c6172b7e60d38e8be1214164ba13c6193a34bbd9c74624f5ee",
+      "sourceVersion": "11b176d5d9c013f44dc4a21791a095d7d2a7911a81c50905094a39ce15641473",
       "freshness": "fresh",
       "status": "healthy"
     }

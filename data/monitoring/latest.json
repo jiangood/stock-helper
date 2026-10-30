@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "status": "healthy",
-  "generatedAt": "2026-10-30T01:04:24.987Z",
-  "manifestGeneratedAt": "2026-10-30T01:04:24.987Z",
+  "generatedAt": "2026-10-30T01:10:03.906Z",
+  "manifestGeneratedAt": "2026-10-30T01:10:03.906Z",
   "marketDate": "2026-10-29",
-  "durationMs": 58,
+  "durationMs": 906,
   "cacheCount": 4,
   "healthyCount": 4,
   "staleCount": 0,
   "unknownCount": 0,
-  "reusedCount": 3,
-  "contentReuseRate": 75,
+  "reusedCount": 4,
+  "contentReuseRate": 100,
   "totalBytes": 795559,
   "caches": [
     {

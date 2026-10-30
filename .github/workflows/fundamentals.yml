@@ -35,7 +35,7 @@ jobs:
       - name: Fetch fundamentals
         run: python scripts/fetch_fundamentals.py
       - name: Validate fundamentals data
-        run: node scripts/validate_stock_data.js --fundamentals-only
+        run: node scripts/validate_stock_data.js --fundamentals-only --skip-cache-manifest
       - name: Commit changed fundamentals
         run: |
           if [ -z "$(git status --porcelain -- data/fundamentals.json)" ]; then

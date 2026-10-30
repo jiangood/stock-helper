@@ -206,7 +206,7 @@ function validateAll(options) {
   }
   const manifestFile = path.join(DATA, 'cache', 'manifest.json');
   const healthFile = path.join(DATA, 'monitoring', 'latest.json');
-  if (fs.existsSync(manifestFile)) {
+  if (!opts.skipCacheManifest && fs.existsSync(manifestFile)) {
     result.cacheManifest = validateCacheManifest(readJson(manifestFile));
     if (!fs.existsSync(healthFile)) fail('data/monitoring/latest.json is missing');
     validateCacheHealth(readJson(healthFile));
@@ -216,7 +216,8 @@ function validateAll(options) {
 
 if (require.main === module) {
   try {
-    const result = validateAll({ fundamentalsOnly: process.argv.includes('--fundamentals-only') });
+    const args = process.argv.slice(2);
+    const result = validateAll({ fundamentalsOnly: args.includes('--fundamentals-only'), skipCacheManifest: args.includes('--skip-cache-manifest') });
     console.log('Stock data validation passed: ' + JSON.stringify(result));
   } catch (error) {
     console.error('Stock data validation failed: ' + error.message);

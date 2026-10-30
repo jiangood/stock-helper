@@ -73,3 +73,5 @@ GitHub Pages 无法托管数据库进程或安全写入 API。将 SQLite 二进�
 - 内容复用率指缓存文件内容指纹未变化的比例，不是 CDN HIT/MISS。GitHub Pages 不暴露浏览器级 CDN 命中日志；若需全站请求成功率或真实 CDN 命中率，需后续接入遥测/CDN 日志服务。
 - 浏览器仍对每次业务数据请求使用 cache: 'no-store'，不引入 IndexedDB、localStorage、Cache API 或内存响应缓存。
 - 构建校验失败会阻止缓存发布；上一次已提交的 manifest 与健康快照保持不变。GitHub Actions 失败记录及 Job Summary 用于追踪失败原因。
+
+- 行情/基本面采集工作流使用 `--skip-cache-manifest` 只校验本次权威数据，避免与独立缓存发布工作流并行时读到旧 manifest；统一缓存发布工作流仍执行完整校验，测试工作流也执行完整校验。

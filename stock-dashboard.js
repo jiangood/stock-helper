@@ -372,9 +372,9 @@ function buildRow(stock) {
     <td>${nameHtml}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${priceHtml}</td>
-    <td>${heavyHtml}${heavyDiff}</td>
-    <td>${entryHtml}${entryDiff}</td>
     <td>${prevChgHtml}</td>
+    <td>${entryHtml}${entryDiff}</td>
+    <td>${heavyHtml}${heavyDiff}</td>
     <td>${tp1Html}</td>
     <td>${tp2Html}</td>
     <td class="text-body-secondary">${stock.yearInit != null ? Number(stock.yearInit).toFixed(2) : '<span class="text-body-tertiary">—</span>'}</td>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8fafc">
+  <title>系统健康 · 大鱼池</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f6f8;color:#18212b}
+    *{box-sizing:border-box}body{margin:0;padding:24px;max-width:980px;margin-inline:auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+    h1{font-size:22px;margin:0}a{color:inherit}small,.muted{color:#687586}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{background:#fff;border:1px solid #dce2e8;border-radius:12px;padding:16px}
+    .metric{font-size:26px;font-weight:700;margin-top:5px}.list{display:grid;gap:12px;margin-top:14px}
+    .cache{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+    .cache small{display:block;margin-top:3px}.status{font-size:12px;border-radius:20px;padding:4px 9px;background:#e8edf2}
+    .healthy{background:#dcfce7;color:#166534}.stale{background:#fee2e2;color:#991b1b}.unknown,.degraded{background:#fef3c7;color:#92400e}
+    .notice{margin-top:16px;font-size:13px;line-height:1.6}
+    @media(max-width:600px){body{padding:16px}.grid{grid-template-columns:1fr}.metric{font-size:23px}}
+    @media(prefers-color-scheme:dark){:root{background:#101820;color:#e7edf4}.card{background:#18232d;border-color:#344351}.muted,small{color:#aab7c4}.status{background:#344351;color:#e7edf4}.healthy{background:#14532d;color:#dcfce7}.stale{background:#7f1d1d;color:#fee2e2}.unknown,.degraded{background:#78350f;color:#fef3c7}}
+  </style>
+</head>
+<body>
+  <header>
+    <div><h1>系统健康</h1><small>大鱼池 · 静态缓存监控</small></div>
+    <a href="./">返回首页</a>
+  </header>
+  <section class="grid" aria-live="polite">
+    <article class="card"><div class="muted">缓存健康</div><div class="metric" id="healthy">读取中</div></article>
+    <article class="card"><div class="muted">最近构建耗时</div><div class="metric" id="duration">—</div></article>
+    <article class="card"><div class="muted">内容复用率</div><div class="metric" id="reuse">—</div></article>
+    <article class="card"><div class="muted">缓存总大小</div><div class="metric" id="bytes">—</div></article>
+  </section>
+  <section class="card list">
+    <strong>缓存明细</strong>
+    <div id="cache-list" class="muted">正在读取缓存清单…</div>
+  </section>
+  <p class="notice muted" id="updated">—</p>
+  <p class="notice muted">内容复用率表示缓存文件内容未变化的比例，不等同于 CDN HIT/MISS。GitHub Pages 不提供浏览器级 CDN 命中日志。页面读取失败会明确显示，不会回退到浏览器旧数据。</p>
+  <script src="cache-health.js"></script>
+</body>
+</html>

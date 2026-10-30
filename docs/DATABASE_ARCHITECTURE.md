@@ -58,3 +58,18 @@ GitHub Pages 无法托管数据库进程或安全写入 API。将 SQLite 二进�
 - 作战页只请求一次该读模型，不再对 60+ 只股票逐一请求完整个股文件；缺失数据仍显示「数据不足」，不生成买入/卖出信号。
 - 读模型由行情采集 Actions 在原始行情更新后重建，并纳入数据完整性校验；它是可重建的派生视图，不是新的权威数据源。
 - 此优化不增加浏览器持久缓存、IndexedDB、localStorage 行情缓存或内存响应缓存；数据仍通过单次 `no-store` 请求读取。
+
+
+## 静态缓存层（GitHub Actions）
+
+- 权威数据仍保留在现有 data/*.json 与 data/stock-cache/；缓存层不替代、不反向覆盖权威数据。
+- scripts/build_cache_manifest.js 为现有页面读模型生成 data/cache/manifest.json，当前登记行情快照、作战 K 线、机器评分和板块月线四类数据。
+- Manifest 为每个数据集记录路径、数据/源指纹（SHA-256）、生成时间、行情日期、记录数、文件大小、新鲜度和健康状态。
+- data/monitoring/latest.json 记录最近一次有意义的缓存发布构建耗时、健康数量、内容复用率和文件总体积。数据未变化时保留已有监控快照，避免仅因时间戳变化产生 Git 提交。
+- GitHub Actions 的运行记录和 Job Summary 是每次构建（包括失败）的审计历史；仓库内 latest.json 代表最近一次发布缓存的成功构建，不冒充每次尝试记录。
+- 行情和基本面采集完成后由 .github/workflows/build-static-cache.yml 统一重建页面读模型与 manifest；该工作流是派生缓存的专用发布者，遇到 master 并发变化时从最新 master 重新构建后再重试。
+- 基本面更新后会重新生成机器评分，避免评分继续等待下一次行情工作流才刷新。
+- health.html 展示缓存健康、最近发布构建耗时、内容复用率、缓存大小和数据日期。
+- 内容复用率指缓存文件内容指纹未变化的比例，不是 CDN HIT/MISS。GitHub Pages 不暴露浏览器级 CDN 命中日志；若需全站请求成功率或真实 CDN 命中率，需后续接入遥测/CDN 日志服务。
+- 浏览器仍对每次业务数据请求使用 cache: 'no-store'，不引入 IndexedDB、localStorage、Cache API 或内存响应缓存。
+- 构建校验失败会阻止缓存发布；上一次已提交的 manifest 与健康快照保持不变。GitHub Actions 失败记录及 Job Summary 用于追踪失败原因。

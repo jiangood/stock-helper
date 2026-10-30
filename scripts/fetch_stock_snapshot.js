@@ -245,14 +245,18 @@ async function main() {
   const indexChanged = writeIfChanged(INDEX_FILE, indexPayload, true);
   console.log(indexChanged ? 'Updated data/index-cache.json' : 'Index history unchanged; kept previous snapshot.');
 
-  // 板块月线强弱用的小文件：只保留每只股票的各周期月线涨跌幅，页面无需再读个股缓存。
-  sectorMonthly.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
+  // Derived page read models are normally built by the dedicated static-cache workflow.
+  // Keep the default enabled for local/manual runs; source collection Actions set SKIP_DERIVED=1.
+  if (process.env.SKIP_DERIVED !== '1') {
+    // Sector summary: monthly returns only; the page never downloads every stock cache.
+    sectorMonthly.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
 
-  // 研报评分（32 分制）：同样只为页面准备小文件，首页不再逐只拉个股缓存。
-  researchScores.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
+    // Machine scores: precomputed summary for the home and detail pages.
+    researchScores.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
 
-  // 作战页专用读模型：一次读取全股票池最近 120 根前复权日 K，避免逐只下载完整缓存文件。
-  combatKline.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
+    // Combat page: latest 120 adjusted daily bars for the whole stock pool.
+    combatKline.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
+  }
 }
 
 main().catch(error => {

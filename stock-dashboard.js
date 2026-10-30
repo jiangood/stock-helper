@@ -371,7 +371,6 @@ function buildRow(stock) {
   return `
     <td>${nameHtml}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
-    <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${priceHtml}</td>
     <td>${heavyHtml}${heavyDiff}</td>
     <td>${entryHtml}${entryDiff}</td>

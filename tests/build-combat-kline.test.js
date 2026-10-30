@@ -36,6 +36,29 @@ test('combat read model contains only latest 120 adjusted daily bars for stock p
   }
 });
 
+
+test('buildFile uses the latest quote market date when no date is passed explicitly', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'combat-kline-date-'));
+  const cacheDir = path.join(dir, 'cache');
+  const file = path.join(dir, 'combat-kline.json');
+  fs.mkdirSync(cacheDir);
+  fs.writeFileSync(path.join(cacheDir, 'sh600000.json'), JSON.stringify({
+    dailyAdjusted: { bars: makeBars(5) }
+  }));
+  try {
+    const result = buildFile({
+      stocks: [{ code: 'sh600000' }],
+      cacheDir,
+      file,
+      quotes: { marketDate: '2026-10-29' },
+      updatedAt: '2026-10-30T08:00:00Z'
+    });
+    assert.equal(result.payload.marketDate, '2026-10-29');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test('empty rebuild preserves prior combat snapshot and refuses empty first publication', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'combat-kline-empty-'));
   const cacheDir = path.join(dir, 'cache');

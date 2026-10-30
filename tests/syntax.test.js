@@ -89,3 +89,16 @@ test('首页机器评分遇到 null 缺失值时不崩溃且不伪造零分', ()
   assert.ok(html.includes('68.2'), '有效百分制分数应正常显示');
   assert.ok(html.includes('主营 —/9'), '缺失的单项评分应显示 —，不能被格式化成 0.0');
 });
+
+
+test('首页脚本使用版本化 URL，避免浏览器继续执行旧缓存', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.ok(html.includes('stock-dashboard.js?v='), '首页 dashboard 脚本必须带版本参数');
+});
+
+test('研报评分 null 不参与数值渲染和筛选', () => {
+  const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
+  assert.ok(dashboard.includes('report.score == null || !Number.isFinite(report.score)'), '研报评分必须排除 null');
+  assert.equal(/(^|[^.])isFinite\(report\.score\)/m.test(dashboard), false);
+  assert.equal(dashboard.includes('Number.Number.isFinite'), false);
+});

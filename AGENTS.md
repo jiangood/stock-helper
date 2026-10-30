@@ -60,6 +60,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - `Pinyin.initials(str)` 首字母、`Pinyin.full(str)` 全拼、`Pinyin.syllable(char)` 单字读音
   - 字表覆盖 GB2312 一二级汉字 6763 字主读音，离线生成、无外部依赖；ü 记作 v（`lv`），检索同时兼容 `lu`
 - `static-quotes.js` — 浏览器端静态行情适配器，每次直接读取同源 JSON，使用 `cache: 'no-store'`；不使用 IndexedDB、localStorage、内存缓存或后台刷新队列；不直接回源外部行情接口
+- `scripts/build_stock_detail_cache.js` — 从权威个股缓存生成详情页紧凑 bundles 和同组估值索引；详情 bundles 仅保留 250 日K、200 周K、240 月K，原始历史文件不删除；覆盖率低于 70% 禁止发布。
 - `scripts/build_cache_manifest.js` / `data/cache/manifest.json` / `data/monitoring/latest.json` — GitHub Actions 统一登记静态读模型，记录 SHA-256 指纹、数据日期、记录数、文件大小、新鲜度、构建耗时和内容复用率；`health.html` 展示监控状态；内容复用率不是 CDN HIT/MISS。
 - 行情和基本面采集完成后由 `.github/workflows/build-static-cache.yml` 统一重建页面读模型与 manifest；派生缓存由该专用工作流发布，遇到 master 并发变化时从最新 master 重新构建后重试；基本面变化后必须重新生成机器评分。
 - `quotes.js` — GitHub Actions 采集端使用的行情 SDK，不由网页直接加载

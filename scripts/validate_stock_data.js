@@ -158,12 +158,61 @@ function validateFundamentals(payload, stockCodes) {
   return Object.keys(payload.stocks).length;
 }
 
+function validateStockDetailCaches(index, stockCodes) {
+  if (!isObject(index) || index.schemaVersion !== 1 || !isObject(index.details)) {
+    fail('data/cache/stock-details.json must contain schemaVersion 1 and details object');
+  }
+  let indexCount = 0;
+  Object.entries(index.details).forEach(([code, detail]) => {
+    if (!stockCodes.has(code) || !isObject(detail)) fail('invalid stock detail index record: ' + code);
+    if (detail.code !== code) fail('stock detail index code mismatch: ' + code);
+    if (typeof detail.name !== 'string' || !detail.name.trim()) fail('stock detail index ' + code + ' has invalid name');
+    if (!(typeof detail.price === 'number' && Number.isFinite(detail.price) && detail.price > 0)) {
+      fail('stock detail index ' + code + ' has invalid price');
+    }
+    ['peTtm', 'pb'].forEach(key => {
+      if (!finiteOrNull(detail[key])) fail('stock detail index ' + code + '.' + key + ' must be finite or null');
+    });
+    indexCount += 1;
+  });
+  const minimum = Math.ceil(stockCodes.size * 0.7);
+  if (indexCount < minimum) fail('stock detail index coverage below 70%: ' + indexCount + '/' + stockCodes.size);
+
+  const directory = path.join(DATA, 'cache', 'stocks');
+  let bundleCount = 0;
+  let bars = 0;
+  for (const code of stockCodes) {
+    const file = path.join(directory, code + '.json');
+    if (!fs.existsSync(file)) continue;
+    const payload = readJson(file);
+    if (!isObject(payload) || payload.schemaVersion !== 1 || payload.cacheType !== 'stock-detail' ||
+        payload.code !== code || !isObject(payload.data) || !isObject(payload.data.detail)) {
+      fail('invalid stock detail cache bundle: ' + code);
+    }
+    if (payload.marketDate !== index.marketDate) fail('stock detail cache marketDate mismatch: ' + code);
+    if (!(typeof payload.data.detail.price === 'number' && Number.isFinite(payload.data.detail.price) && payload.data.detail.price > 0)) {
+      fail('stock detail cache ' + code + ' has invalid detail.price');
+    }
+    const limits = { dailyAdjusted: 250, dailyRaw: 250, weeklyAdjusted: 200, monthlyAdjusted: 240 };
+    Object.entries(limits).forEach(([key, limit]) => {
+      const series = payload.data[key];
+      if (!isObject(series) || !Array.isArray(series.bars) || series.bars.length > limit) {
+        fail('stock detail cache ' + code + '.' + key + '.bars is invalid or exceeds ' + limit);
+      }
+      bars += validateBars(series.bars, 'cache/stocks/' + code + '.json ' + key + '.bars');
+    });
+    bundleCount += 1;
+  }
+  if (bundleCount < minimum) fail('stock detail bundle coverage below 70%: ' + bundleCount + '/' + stockCodes.size);
+  return { indexCount, bundleCount, bars };
+}
+
 function validateCacheManifest(manifest) {
   if (!isObject(manifest) || manifest.schemaVersion !== 1 || !isObject(manifest.caches)) {
     fail('data/cache/manifest.json must contain schemaVersion 1 and caches object');
   }
   if (!/^[a-f0-9]{64}$/.test(manifest.builderVersion || '')) fail('cache manifest has invalid builderVersion');
-  ['market-quotes', 'combat-kline', 'research-scores', 'sector-monthly'].forEach(id => {
+  ['market-quotes', 'combat-kline', 'research-scores', 'sector-monthly', 'stock-details-index', 'stock-detail-bundles'].forEach(id => {
     const item = manifest.caches[id];
     if (!isObject(item)) fail('cache manifest missing entry: ' + id);
     if (typeof item.path !== 'string' || !item.path.startsWith('data/')) fail('cache manifest ' + id + ' has invalid path');
@@ -199,6 +248,9 @@ function validateAll(options) {
     result.quotes = validateQuotes(readJson(path.join(DATA, 'stock-quotes.json')), codes);
     result.caches = validateStockCaches(codes);
     result.combat = validateCombatSnapshot(readJson(path.join(DATA, 'combat-kline.json')), codes);
+    if (!opts.skipDetailCaches && fs.existsSync(path.join(DATA, 'cache', 'stock-details.json'))) {
+      result.detailCaches = validateStockDetailCaches(readJson(path.join(DATA, 'cache', 'stock-details.json')), codes);
+    }
   }
   const fundamentalsFile = path.join(DATA, 'fundamentals.json');
   if (fs.existsSync(fundamentalsFile)) {
@@ -217,7 +269,7 @@ function validateAll(options) {
 if (require.main === module) {
   try {
     const args = process.argv.slice(2);
-    const result = validateAll({ fundamentalsOnly: args.includes('--fundamentals-only'), skipCacheManifest: args.includes('--skip-cache-manifest') });
+    const result = validateAll({ fundamentalsOnly: args.includes('--fundamentals-only'), skipCacheManifest: args.includes('--skip-cache-manifest'), skipDetailCaches: args.includes('--skip-detail-caches') });
     console.log('Stock data validation passed: ' + JSON.stringify(result));
   } catch (error) {
     console.error('Stock data validation failed: ' + error.message);
@@ -225,4 +277,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateCombatSnapshot, validateFundamentals, validateCacheManifest, validateCacheHealth, validateAll };
+module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateCombatSnapshot, validateFundamentals, validateCacheManifest, validateCacheHealth, validateStockDetailCaches, validateAll };

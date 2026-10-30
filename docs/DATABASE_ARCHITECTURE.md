@@ -63,7 +63,7 @@ GitHub Pages 无法托管数据库进程或安全写入 API。将 SQLite 二进�
 ## 静态缓存层（GitHub Actions）
 
 - 权威数据仍保留在现有 data/*.json 与 data/stock-cache/；缓存层不替代、不反向覆盖权威数据。
-- scripts/build_cache_manifest.js 为现有页面读模型生成 data/cache/manifest.json，当前登记行情快照、作战 K 线、机器评分和板块月线四类数据。
+- scripts/build_cache_manifest.js 为现有页面读模型生成 data/cache/manifest.json，当前登记行情快照、作战 K 线、机器评分、板块月线、详情索引和详情 bundles 六类数据。
 - Manifest 为每个数据集记录路径、数据/源指纹（SHA-256）、生成时间、行情日期、记录数、文件大小、新鲜度和健康状态。
 - data/monitoring/latest.json 记录最近一次有意义的缓存发布构建耗时、健康数量、内容复用率和文件总体积。数据未变化时保留已有监控快照，避免仅因时间戳变化产生 Git 提交。
 - GitHub Actions 的运行记录和 Job Summary 是每次构建（包括失败）的审计历史；仓库内 latest.json 代表最近一次发布缓存的成功构建（只有缓存内容、源版本或构建器版本变化时更新），不冒充每次尝试记录；耗时是该次完整派生缓存构建的耗时。

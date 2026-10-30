@@ -158,6 +158,37 @@ function validateFundamentals(payload, stockCodes) {
   return Object.keys(payload.stocks).length;
 }
 
+function validateCacheManifest(manifest) {
+  if (!isObject(manifest) || manifest.schemaVersion !== 1 || !isObject(manifest.caches)) {
+    fail('data/cache/manifest.json must contain schemaVersion 1 and caches object');
+  }
+  ['market-quotes', 'combat-kline', 'research-scores', 'sector-monthly'].forEach(id => {
+    const item = manifest.caches[id];
+    if (!isObject(item)) fail('cache manifest missing entry: ' + id);
+    if (typeof item.path !== 'string' || !item.path.startsWith('data/')) fail('cache manifest ' + id + ' has invalid path');
+    if (!/^[a-f0-9]{64}$/.test(item.dataVersion || '')) fail('cache manifest ' + id + ' has invalid dataVersion');
+    if (!/^[a-f0-9]{64}$/.test(item.sourceVersion || '')) fail('cache manifest ' + id + ' has invalid sourceVersion');
+    if (!Number.isInteger(item.bytes) || item.bytes < 0) fail('cache manifest ' + id + ' has invalid bytes');
+    if (!Number.isInteger(item.recordCount) || item.recordCount < 0) fail('cache manifest ' + id + ' has invalid recordCount');
+    if (!['healthy', 'stale', 'unknown'].includes(item.status)) fail('cache manifest ' + id + ' has invalid status');
+  });
+  return Object.keys(manifest.caches).length;
+}
+
+function validateCacheHealth(health) {
+  if (!isObject(health) || health.schemaVersion !== 1) fail('data/monitoring/latest.json schemaVersion must be 1');
+  if (!['healthy', 'stale', 'degraded'].includes(health.status)) fail('cache health has invalid status');
+  ['cacheCount', 'healthyCount', 'staleCount', 'unknownCount', 'durationMs', 'totalBytes'].forEach(key => {
+    if (!(typeof health[key] === 'number' && Number.isFinite(health[key]) && health[key] >= 0)) {
+      fail('cache health ' + key + ' must be a non-negative finite number');
+    }
+  });
+  if (health.healthyCount + health.staleCount + health.unknownCount !== health.cacheCount) {
+    fail('cache health counts do not add up');
+  }
+  return true;
+}
+
 function validateAll(options) {
   const opts = options || {};
   const stocks = readJson(path.join(DATA, 'stocks.json'));
@@ -172,6 +203,13 @@ function validateAll(options) {
   if (fs.existsSync(fundamentalsFile)) {
     result.fundamentals = validateFundamentals(readJson(fundamentalsFile), codes);
   }
+  const manifestFile = path.join(DATA, 'cache', 'manifest.json');
+  const healthFile = path.join(DATA, 'monitoring', 'latest.json');
+  if (fs.existsSync(manifestFile)) {
+    result.cacheManifest = validateCacheManifest(readJson(manifestFile));
+    if (!fs.existsSync(healthFile)) fail('data/monitoring/latest.json is missing');
+    validateCacheHealth(readJson(healthFile));
+  }
   return result;
 }
 
@@ -185,4 +223,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateCombatSnapshot, validateFundamentals, validateAll };
+module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateCombatSnapshot, validateFundamentals, validateCacheManifest, validateCacheHealth, validateAll };

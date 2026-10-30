@@ -6,6 +6,7 @@
 - **作战页面：** [交易作战台](https://jiangood.github.io/stock-helper/combat.html)
 - **行情页面：** [市场行情](https://jiangood.github.io/stock-helper/market.html)
 - **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
+- **系统健康：** [静态缓存监控](https://jiangood.github.io/stock-helper/health.html)
 
 自选、作战、行情现为独立页面，通过顶部导航跳转，不再使用底部 tabs。自选页支持股票池监控、搜索、分组和纪律筛选；作战页展示交易条件与理由；行情页汇总指数、股票池温度、板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
 
@@ -34,6 +35,7 @@ python -m http.server 8089
 | `scripts/calibrate_research_score.js` | 用 17 份带评分卡明细的研报回归校准评分阈值（只读本地缓存，不联网） |
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
+| `scripts/build_cache_manifest.js` `data/cache/manifest.json` `data/monitoring/latest.json` `health.html` | GitHub Actions 生成的静态缓存清单、健康快照和系统健康页；记录指纹、数据日期、覆盖数量、文件大小、构建耗时与内容复用率（非 CDN 命中率） |
 | `static-quotes.js` | 浏览器端静态行情适配器；每次直接读取同源 JSON，禁用 HTTP 缓存，不使用 IndexedDB、localStorage 或内存数据缓存，不直接访问行情供应商 |
 | `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、禁止前端数据缓存的约定，以及静态部署下 SQL 数据库的适用边界 |
 | `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |

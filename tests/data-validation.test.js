@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
-  validateStocks, validateQuotes, validateBars, validateCombatSnapshot, validateFundamentals, validateAll
+  validateStocks, validateQuotes, validateBars, validateCombatSnapshot, validateFundamentals, validateCacheManifest, validateCacheHealth, validateAll
 } = require('../scripts/validate_stock_data');
 
 const stocks = [
@@ -46,6 +46,32 @@ test('fundamentals retain explicit nulls but reject unknown classifications and 
   assert.equal(validateFundamentals(payload, new Set(['sh600000', 'sz000001'])), 2);
   assert.throws(() => validateFundamentals({ stocks: { sh600000: { ownerType: 'unknown' } } }), /ownerType/);
   assert.throws(() => validateFundamentals({ stocks: { sh600000: { annual: [{ date: '2025-06-30' }] } } }), /annual date/);
+});
+
+
+test('cache manifest and health snapshots validate versions, hashes and counters', () => {
+  const entry = {
+    path: 'data/combat-kline.json',
+    dataVersion: 'a'.repeat(64),
+    sourceVersion: 'b'.repeat(64),
+    bytes: 100,
+    recordCount: 2,
+    status: 'healthy'
+  };
+  const manifest = { schemaVersion: 1, caches: {
+    'market-quotes': entry, 'combat-kline': entry,
+    'research-scores': entry, 'sector-monthly': entry
+  } };
+  assert.equal(validateCacheManifest(manifest), 4);
+  assert.throws(() => validateCacheManifest({ ...manifest, caches: { ...manifest.caches, 'combat-kline': { ...entry, dataVersion: 'bad' } } }), /dataVersion/);
+  assert.equal(validateCacheHealth({
+    schemaVersion: 1, status: 'healthy', cacheCount: 4, healthyCount: 4,
+    staleCount: 0, unknownCount: 0, durationMs: 1200, totalBytes: 400
+  }), true);
+  assert.throws(() => validateCacheHealth({
+    schemaVersion: 1, status: 'healthy', cacheCount: 4, healthyCount: 3,
+    staleCount: 0, unknownCount: 0, durationMs: 1200, totalBytes: 400
+  }), /do not add up/);
 });
 
 test('committed project data passes the production data contract', () => {

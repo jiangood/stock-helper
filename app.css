@@ -77,7 +77,15 @@
   .stock-table tbody td:nth-child(2) { text-align: center; }
   .stock-table thead th:nth-child(3) { text-align: right; }
   .stock-table thead th:first-child,
-  .stock-table tbody td:first-child { min-width: 168px; }
+  .stock-table tbody td:first-child {
+    width: 144px; min-width: 144px; max-width: 144px;
+  }
+  .stock-table tbody td:first-child { overflow: hidden; }
+  .stock-table .stock-name {
+    display: inline-block; max-width: 4em;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    vertical-align: bottom;
+  }
   .stock-table thead th:nth-child(2),
   .stock-table tbody td:nth-child(2) { min-width: 72px; }
   .stock-table tbody td {

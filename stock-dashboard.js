@@ -154,7 +154,7 @@ function getSortValue(stock, col) {
     }
     case 'researchReport': {
       const report = REPORT_SCORES[stock.code];
-      return report && report.score != null && Number.Number.isFinite(report.score) ? report.score : null;
+      return report && report.score != null && Number.isFinite(report.score) ? report.score : null;
     }
     case 'researchDate': {
       const report = REPORT_SCORES[stock.code];
@@ -471,7 +471,7 @@ function researchMachineHtml(stock) {
 /** 研报原始总分独立展示，不回退为机器评分。 */
 function researchReportHtml(stock) {
   const report = REPORT_SCORES[stock.code];
-  if (!report || report.score == null || !Number.Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
+  if (!report || report.score == null || !Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
   return `<span class="score score-${tone}" title="${esc(tip)}">${report.score.toFixed(1)}</span>`;

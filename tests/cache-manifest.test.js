@@ -53,6 +53,25 @@ test('builds manifest metadata, record counts and freshness', () => {
   } finally { fs.rmSync(env.root, { recursive: true, force: true }); }
 });
 
+
+test('uses the pipeline start timestamp when measuring the complete cache build', () => {
+  const env = fixture();
+  const previous = process.env.CACHE_BUILD_STARTED_AT;
+  process.env.CACHE_BUILD_STARTED_AT = '2026-10-30T07:59:00.000Z';
+  try {
+    const result = buildManifest({
+      dataDir: env.data,
+      completedAt: '2026-10-30T08:00:00.000Z',
+      writeSummary: false
+    });
+    assert.equal(result.health.durationMs, 60000);
+  } finally {
+    if (previous === undefined) delete process.env.CACHE_BUILD_STARTED_AT;
+    else process.env.CACHE_BUILD_STARTED_AT = previous;
+    fs.rmSync(env.root, { recursive: true, force: true });
+  }
+});
+
 test('unchanged cache content is reused without rewriting manifest', () => {
   const env = fixture();
   try {

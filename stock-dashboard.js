@@ -154,7 +154,7 @@ function getSortValue(stock, col) {
     }
     case 'researchReport': {
       const report = REPORT_SCORES[stock.code];
-      return report && report.score != null && Number.isFinite(report.score) ? report.score : null;
+      return report && report.score != null && Number.Number.isFinite(report.score) ? report.score : null;
     }
     case 'researchDate': {
       const report = REPORT_SCORES[stock.code];
@@ -317,7 +317,7 @@ function updateSummary() {
     if (e.st || e.loss) c.risk++;
     if (Croc.screen(s, priceData[s.code]).allPass) c.pass++;
     const report = REPORT_SCORES[s.code];
-    if (report && isFinite(report.score)) {
+    if (report && Number.isFinite(report.score)) {
       if (report.score >= 80) c.score++;
     } else {
       const score = researchScores[s.code];
@@ -471,7 +471,7 @@ function researchMachineHtml(stock) {
 /** 研报原始总分独立展示，不回退为机器评分。 */
 function researchReportHtml(stock) {
   const report = REPORT_SCORES[stock.code];
-  if (!report || report.score == null || !Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
+  if (!report || report.score == null || !Number.Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
   return `<span class="score score-${tone}" title="${esc(tip)}">${report.score.toFixed(1)}</span>`;
@@ -694,17 +694,17 @@ function matchStatusFilter(stock, status) {
   if (status === 'score-report') return !!REPORT_SCORES[stock.code];
   if (status === 'score-report80') {
     const report = REPORT_SCORES[stock.code];
-    return !!report && isFinite(report.score) && report.score >= 80;
+    return !!report && Number.isFinite(report.score) && report.score >= 80;
   }
   if (status === 'score-low') {
     const report = REPORT_SCORES[stock.code];
-    if (report && isFinite(report.score)) return report.score < 70;
+    if (report && Number.isFinite(report.score)) return report.score < 70;
   }
   const score = researchScores[stock.code];
   const percent = score && score.percent != null && Number.isFinite(score.percent) ? score.percent : null;
   if (status === 'score-good') {
     const report = REPORT_SCORES[stock.code];
-    if (report && isFinite(report.score)) return report.score >= 80;
+    if (report && Number.isFinite(report.score)) return report.score >= 80;
     return percent !== null && percent >= 75;
   }
   if (status === 'score-low') return percent !== null && percent < 56;

@@ -39,6 +39,7 @@ python -m http.server 8089
 | `scripts/build_cache_manifest.js` `data/cache/manifest.json` `data/monitoring/latest.json` `health.html` | GitHub Actions 生成的静态缓存清单、健康快照和系统健康页；记录指纹、数据日期、覆盖数量、文件大小、构建耗时与内容复用率（非 CDN 命中率） |
 | `static-quotes.js` | 浏览器端静态行情适配器；每次直接读取同源 JSON，禁用 HTTP 缓存，不使用 IndexedDB、localStorage 或内存数据缓存，不直接访问行情供应商 |
 | `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、禁止前端数据缓存的约定，以及静态部署下 SQL 数据库的适用边界 |
+| `docs/DEVELOPMENT_GUIDE.md` | 开发环境、本地预览、测试命令、GitHub Actions、AI 协作与代码修改交付流程 |
 | `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
 | `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
 | `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |

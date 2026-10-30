@@ -465,7 +465,7 @@ function researchMachineHtml(stock) {
     `放量 ${fmtScore(items.volume)}/6`
   ].join(' · ');
   const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议`;
-  return `<span class="score score-${tone}" title="${esc(tip)}">${score.percent.toFixed(1)}</span>`;
+  return `<span class="score score-${tone}" title="${esc(tip)}">${percent.toFixed(1)}</span>`;
 }
 
 /** 研报原始总分独立展示，不回退为机器评分。 */

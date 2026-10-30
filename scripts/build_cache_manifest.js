@@ -63,13 +63,13 @@ function buildManifest(options) {
   const quotes = readJson(path.join(dataDir, 'stock-quotes.json'));
   const marketDate = quotes.marketDate || null;
   const definitions = [
-    { id: 'market-quotes', type: 'market-snapshot', file: 'stock-quotes.json', sources: ['stock-quotes.json'],
+    { id: 'market-quotes', type: 'market-snapshot', file: 'stock-quotes.json', sources: ['stock-quotes.json', '../scripts/fetch_stock_snapshot.js'],
       count: p => Object.keys(p.quotes || {}).length, freshness: p => p.status === 'ok' ? 'fresh' : 'stale' },
-    { id: 'combat-kline', type: 'page-read-model', file: 'combat-kline.json', sources: ['stocks.json', 'stock-cache'],
+    { id: 'combat-kline', type: 'page-read-model', file: 'combat-kline.json', sources: ['stocks.json', 'stock-cache', '../scripts/build_combat_kline.js'],
       count: p => Object.keys(p.stocks || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' },
-    { id: 'research-scores', type: 'page-read-model', file: 'research-scores.json', sources: ['stocks.json', 'fundamentals.json', 'stock-cache', '../research-score.js'],
+    { id: 'research-scores', type: 'page-read-model', file: 'research-scores.json', sources: ['stocks.json', 'fundamentals.json', 'stock-cache', '../research-score.js', '../scripts/build_research_scores.js'],
       count: p => Object.keys(p.scores || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' },
-    { id: 'sector-monthly', type: 'page-read-model', file: 'sector-monthly.json', sources: ['stocks.json', 'stock-quotes.json', 'stock-cache'],
+    { id: 'sector-monthly', type: 'page-read-model', file: 'sector-monthly.json', sources: ['stocks.json', 'stock-quotes.json', 'stock-cache', '../scripts/build_sector_monthly.js'],
       count: p => Object.keys(p.stocks || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' }
   ];
   const caches = {};
@@ -93,7 +93,8 @@ function buildManifest(options) {
   });
   const changed = !previous || JSON.stringify(previous.caches) !== JSON.stringify(caches);
   const generatedAt = changed ? (opts.now || new Date().toISOString()) : previous.generatedAt;
-  const manifest = { schemaVersion: 1, generatedAt, marketDate, caches };
+  const builderVersion = sha256(fs.readFileSync(__filename));
+  const manifest = { schemaVersion: 1, builderVersion, generatedAt, marketDate, caches };
   const completedAt = opts.completedAt || new Date().toISOString();
   const durationMs = Number.isFinite(opts.durationMs) ? opts.durationMs :
     Math.max(0, Date.parse(completedAt) - Date.parse(startedAt));

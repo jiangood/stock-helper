@@ -42,6 +42,7 @@ test('builds manifest metadata, record counts and freshness', () => {
     const result = buildManifest({ dataDir: env.data, now: '2026-10-30T08:00:00Z',
       startedAt: '2026-10-30T07:59:00Z', completedAt: '2026-10-30T08:00:00Z', writeSummary: false });
     assert.equal(result.manifest.schemaVersion, 1);
+    assert.match(result.manifest.builderVersion, /^[a-f0-9]{64}$/);
     assert.equal(Object.keys(result.manifest.caches).length, 4);
     assert.equal(result.manifest.caches['combat-kline'].recordCount, 1);
     assert.equal(result.manifest.caches['combat-kline'].freshness, 'fresh');

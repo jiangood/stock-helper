@@ -162,6 +162,7 @@ function validateCacheManifest(manifest) {
   if (!isObject(manifest) || manifest.schemaVersion !== 1 || !isObject(manifest.caches)) {
     fail('data/cache/manifest.json must contain schemaVersion 1 and caches object');
   }
+  if (!/^[a-f0-9]{64}$/.test(manifest.builderVersion || '')) fail('cache manifest has invalid builderVersion');
   ['market-quotes', 'combat-kline', 'research-scores', 'sector-monthly'].forEach(id => {
     const item = manifest.caches[id];
     if (!isObject(item)) fail('cache manifest missing entry: ' + id);

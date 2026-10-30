@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T01:02:23.668Z",
+  "generatedAt": "2026-10-30T01:04:24.987Z",
   "marketDate": "2026-10-29",
   "caches": {
     "market-quotes": {
@@ -19,15 +19,15 @@
     "combat-kline": {
       "cacheType": "page-read-model",
       "path": "data/combat-kline.json",
-      "generatedAt": "2026-10-30T01:01:07.555Z",
+      "generatedAt": "2026-10-30T01:04:24.842Z",
       "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
       "marketDate": "2026-10-29",
       "recordCount": 67,
-      "bytes": 709669,
-      "dataVersion": "a90b09992789a7bce76de914ea906cb896e5f329f4b7f0343c6f07c1a0dae4f8",
+      "bytes": 709677,
+      "dataVersion": "5e7c578d6e082de38cbc9d72194304c4e71be2cefb707fe4bea199fb20178a69",
       "sourceVersion": "b728dca52ffc6c24725e7ac499e347292039ce0a8b9aded43fd5280c8ceab84b",
-      "freshness": "unknown",
-      "status": "unknown"
+      "freshness": "fresh",
+      "status": "healthy"
     },
     "research-scores": {
       "cacheType": "page-read-model",

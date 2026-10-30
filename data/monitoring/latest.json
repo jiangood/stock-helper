@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "status": "degraded",
-  "generatedAt": "2026-10-30T01:02:23.668Z",
-  "manifestGeneratedAt": "2026-10-30T01:02:23.668Z",
+  "status": "healthy",
+  "generatedAt": "2026-10-30T01:04:24.987Z",
+  "manifestGeneratedAt": "2026-10-30T01:04:24.987Z",
   "marketDate": "2026-10-29",
-  "durationMs": 57,
+  "durationMs": 58,
   "cacheCount": 4,
-  "healthyCount": 3,
+  "healthyCount": 4,
   "staleCount": 0,
-  "unknownCount": 1,
-  "reusedCount": 4,
-  "contentReuseRate": 100,
-  "totalBytes": 795551,
+  "unknownCount": 0,
+  "reusedCount": 3,
+  "contentReuseRate": 75,
+  "totalBytes": 795559,
   "caches": [
     {
       "id": "market-quotes",
@@ -22,10 +22,10 @@
     },
     {
       "id": "combat-kline",
-      "status": "unknown",
-      "freshness": "unknown",
+      "status": "healthy",
+      "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 709669
+      "bytes": 709677
     },
     {
       "id": "research-scores",

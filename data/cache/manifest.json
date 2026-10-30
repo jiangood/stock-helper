@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T01:01:07.672Z",
+  "marketDate": "2026-10-29",
+  "caches": {
+    "market-quotes": {
+      "cacheType": "market-snapshot",
+      "path": "data/stock-quotes.json",
+      "generatedAt": "2026-10-29T14:28:59.492Z",
+      "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
+      "marketDate": "2026-10-29",
+      "recordCount": 70,
+      "bytes": 22447,
+      "dataVersion": "c301c76f83e8d2720c3be5e5f183e848131b0359ee60ade136c66650d84733cf",
+      "sourceVersion": "21c0762c23d25b206ca6b84dc9fa5122d1d366a33a7f98fac758c943394f2124",
+      "freshness": "fresh",
+      "status": "healthy"
+    },
+    "combat-kline": {
+      "cacheType": "page-read-model",
+      "path": "data/combat-kline.json",
+      "generatedAt": "2026-10-30T01:01:07.555Z",
+      "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
+      "marketDate": "2026-10-29",
+      "recordCount": 67,
+      "bytes": 709669,
+      "dataVersion": "a90b09992789a7bce76de914ea906cb896e5f329f4b7f0343c6f07c1a0dae4f8",
+      "sourceVersion": "b728dca52ffc6c24725e7ac499e347292039ce0a8b9aded43fd5280c8ceab84b",
+      "freshness": "unknown",
+      "status": "unknown"
+    },
+    "research-scores": {
+      "cacheType": "page-read-model",
+      "path": "data/research-scores.json",
+      "generatedAt": "2026-10-29T09:57:50.755Z",
+      "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
+      "marketDate": "2026-10-29",
+      "recordCount": 67,
+      "bytes": 50102,
+      "dataVersion": "3470076e0976addcad1f2b6a20298a0715f7b89ceff954f97dacaa128e435dc5",
+      "sourceVersion": "1867f7cfc98853a514c911906845fcf032dae170ac526ad0b9c30bd7836058f9",
+      "freshness": "fresh",
+      "status": "healthy"
+    },
+    "sector-monthly": {
+      "cacheType": "page-read-model",
+      "path": "data/sector-monthly.json",
+      "generatedAt": "2026-10-29T08:14:55.373Z",
+      "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
+      "marketDate": "2026-10-29",
+      "recordCount": 67,
+      "bytes": 13333,
+      "dataVersion": "9300cd2ff7a02dcc53cb715ae1b870028df34ce4c0a2bd3364e95c31822b6dae",
+      "sourceVersion": "ded1b25af32634c6172b7e60d38e8be1214164ba13c6193a34bbd9c74624f5ee",
+      "freshness": "fresh",
+      "status": "healthy"
+    }
+  }
+}

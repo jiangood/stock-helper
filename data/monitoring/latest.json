@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "status": "degraded",
+  "generatedAt": "2026-10-30T01:01:07.672Z",
+  "manifestGeneratedAt": "2026-10-30T01:01:07.672Z",
+  "marketDate": "2026-10-29",
+  "durationMs": 47,
+  "cacheCount": 4,
+  "healthyCount": 3,
+  "staleCount": 0,
+  "unknownCount": 1,
+  "reusedCount": 0,
+  "contentReuseRate": 0,
+  "totalBytes": 795551,
+  "caches": [
+    {
+      "id": "market-quotes",
+      "status": "healthy",
+      "freshness": "fresh",
+      "recordCount": 70,
+      "bytes": 22447
+    },
+    {
+      "id": "combat-kline",
+      "status": "unknown",
+      "freshness": "unknown",
+      "recordCount": 67,
+      "bytes": 709669
+    },
+    {
+      "id": "research-scores",
+      "status": "healthy",
+      "freshness": "fresh",
+      "recordCount": 67,
+      "bytes": 50102
+    },
+    {
+      "id": "sector-monthly",
+      "status": "healthy",
+      "freshness": "fresh",
+      "recordCount": 67,
+      "bytes": 13333
+    }
+  ]
+}

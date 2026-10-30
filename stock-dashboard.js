@@ -154,7 +154,7 @@ function getSortValue(stock, col) {
     }
     case 'researchReport': {
       const report = REPORT_SCORES[stock.code];
-      return report && isFinite(report.score) ? report.score : null;
+      return report && report.score != null && Number.isFinite(report.score) ? report.score : null;
     }
     case 'researchDate': {
       const report = REPORT_SCORES[stock.code];
@@ -452,7 +452,8 @@ function reportBandLabel(score) {
 /** 机器评分独立展示，按 32 分制折算百分制，缺失时不伪造分数。 */
 function researchMachineHtml(stock) {
   const score = researchScores[stock.code];
-  if (!score || !Number.isFinite(score.points) || !Number.isFinite(score.percent)) return '<span class="text-body-tertiary">—</span>';
+  const percent = score && score.percent;
+  if (!score || score.points == null || percent == null || !Number.isFinite(score.points) || !Number.isFinite(percent)) return '<span class="text-body-tertiary">—</span>';
   const max = Number.isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
   const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
   const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
@@ -463,14 +464,14 @@ function researchMachineHtml(stock) {
     `盘整 ${fmtScore(items.consolidation)}/9`, `月线 ${fmtScore(items.bottom)}/9`,
     `放量 ${fmtScore(items.volume)}/6`
   ].join(' · ');
-  const tip = `机器复算 ${score.percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议`;
+  const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议`;
   return `<span class="score score-${tone}" title="${esc(tip)}">${score.percent.toFixed(1)}</span>`;
 }
 
 /** 研报原始总分独立展示，不回退为机器评分。 */
 function researchReportHtml(stock) {
   const report = REPORT_SCORES[stock.code];
-  if (!report || !isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
+  if (!report || report.score == null || !Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
   return `<span class="score score-${tone}" title="${esc(tip)}">${report.score.toFixed(1)}</span>`;
@@ -700,7 +701,7 @@ function matchStatusFilter(stock, status) {
     if (report && isFinite(report.score)) return report.score < 70;
   }
   const score = researchScores[stock.code];
-  const percent = score && isFinite(score.percent) ? score.percent : null;
+  const percent = score && score.percent != null && Number.isFinite(score.percent) ? score.percent : null;
   if (status === 'score-good') {
     const report = REPORT_SCORES[stock.code];
     if (report && isFinite(report.score)) return report.score >= 80;

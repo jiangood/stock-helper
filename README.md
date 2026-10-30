@@ -1,166 +1,130 @@
-# 股票助手 Stock Helper
+# 股票助手（stock-helper）
 
-## 访问地址
+基于 [open-admin](https://github.com/jiangood/open-admin) 的股票池跟踪与交易纪律后台。仓库已从纯静态站点改造为 **Spring Boot + React + H2** 的单体应用，历史静态页面保留在 `legacy/` 作为迁移参考。
 
-- **自选页面：** [股票助手首页](https://jiangood.github.io/stock-helper/)
-- **作战页面：** [交易作战台](https://jiangood.github.io/stock-helper/combat.html)
-- **行情页面：** [市场行情](https://jiangood.github.io/stock-helper/market.html)
-- **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
-- **系统健康：** [静态缓存监控](https://jiangood.github.io/stock-helper/health.html)
+## 功能
 
-自选、作战、行情现为独立页面，通过顶部导航跳转，不再使用底部 tabs。自选页支持股票池监控、搜索、分组和纪律筛选；作战页展示交易条件与理由；行情页汇总指数、股票池温度、板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
+- **自选看板**：股票池 18 列（名称 / 价格 / 重仓 / 入场 / 昨日 / 止盈 / 年初价 / 市值 / PE / PB / 股息率 / 纪律 / 机器评分 / 研报评分 / 研报日期 / 分组 / 别名），支持名称、代码、别名、分组、拼音首字母与全拼搜索，分组与状态筛选、全列排序。
+- **交易作战**：买入观察与止盈跟踪双向信号。现价低于计划入场价才计算四项评分（超跌深度 / RSI / MFI / 动能）；止盈按近 60 日最低收盘 ×1.2 启动、启动后最高收盘 ×0.95 离场，触发后冷却 60 个交易日；风险拦截与数据不足单独标注。
+- **行情概览**：指数行情与近 12 个月月线、股票池涨跌温度、板块月线强弱、全球资产、产业链商品与成本原料。
+- **全球资产**：8 类资产报价、涨跌排行、近 1 周 / 1 月归一化趋势对比。
+- **个股详情**：行情卡、日 / 月 K（ECharts）、估值与财务、52 周与月 K 历史分位、跟踪计划刻度、补仓三项检查、鳄鱼纪律、研报评分、资源股估值计算器。
+- **数据管理**：股票池与计划 CRUD、手动 / 定时数据同步、运行记录。
+- **权限**：由 open-admin 提供用户、角色、菜单、字典、Quartz 调度、系统配置、操作日志等能力。
 
-## 本地预览
+## 技术栈
+
+| 层级 | 技术 |
+| --- | --- |
+| 后端 | Java 21、Spring Boot 4.1、open-admin 3.1.11、JPA、Spring Security |
+| 数据库 | H2 文件模式（默认，零外部依赖） |
+| 前端 | React 19、Ant Design 6、Vite 8、ECharts 5 |
+| 采集 | Java `HttpClient` 定时任务（东方财富 / 腾讯 / 生意社 / Yahoo Finance） |
+
+## 快速开始
+
+环境要求：JDK 21+、Maven 3.9+、Node.js 18+。
 
 ```bash
-python -m http.server 8089
+# 后端（默认 http://localhost:8080/stock）
+mvn spring-boot:run
+
+# 前端（默认 http://localhost:3000，代理 /stock/admin 到后端）
+cd web
+npm install
+npm run dev
 ```
 
-打开 http://localhost:8089/
+默认账号：`admin` / `Open@1234`。
 
-## 文件说明
+首次启动会自动建表，并从 `data/` 目录导入历史 JSON（股票池、行情、K 线、基本面、研报评分、全球资产、产业链商品）。导入是幂等的：H2 中已有股票数据时不会重复导入。
 
-| 文件 | 说明 |
+## H2 数据库
+
+- 默认文件：`./data/db/stock-helper.mv.db`
+- 覆盖路径：`-Ddb_path=D:/stock-helper-db` 或设置同名 JVM 参数
+- 重置数据库：停止应用后删除 `data/db/`，下次启动会重新导入 `data/` 下的种子 JSON
+- H2 控制台默认未开启；如需排查可临时在 `application.yml` 配置 `spring.h2.console.enabled=true`
+
+## 数据采集
+
+| 数据 | 来源 | 默认时间（Asia/Shanghai） |
+| --- | --- | --- |
+| 股票池行情 / 详情 / 日周月 K | 东方财富 push2、腾讯财经 | 工作日 15:30 |
+| 基本面（实控人 / 主营 / 扣非） | 东方财富 F10 | 每周一 09:10 |
+| 全球资产 | Yahoo Finance chart | 每日 06:40 |
+| 产业链商品 | 生意社 100ppi、东方财富现货与股票 / 期货库存 | 每日 07:20 / 12:20 / 17:20 / 22:20 |
+
+- 采集失败时保留上一次有效数据，不以 0 或模拟值填充；首次行情覆盖率低于 80% 时拒绝发布。
+- 行情写入后会自动重建机器评分与板块月线汇总。
+- 采集任务通过 open-admin 的 Quartz 调度（`StockSyncJob` + `@JobDescription`），首次启动自动注册到「系统管理 → 定时任务」，可在线调整 cron、启停和查看执行记录。
+- 也可在「数据管理 → 数据同步」手动触发，并查看最近运行记录；默认 cron 在 `src/main/resources/application.yml` 的 `stock.sync` 下调整（仅对尚未注册的同名任务生效）。
+
+## 目录结构
+
+```
+src/main/java/com/jiangood/stockhelper/
+├── config/          启动配置、定时任务
+├── controller/      REST 接口（admin/...）
+├── domain/          JPA 实体
+├── repository/      Spring Data 仓储
+├── service/         页面读模型、评分重建、采集编排
+├── indicator/       量价指标、鳄鱼纪律、研报评分、交易信号（纯函数，可单测）
+├── sync/            行情采集客户端
+└── support/         代码、拼音、JSON 工具
+
+src/main/resources/
+├── application.yml
+├── application-menu-stock.yml   菜单与权限
+└── seed/                        （预留；默认读取仓库根目录 data/）
+
+web/src/pages/       React 页面（约定式路由）
+web/src/components/  图表与走势组件
+web/src/lib/         格式化工具
+data/                历史种子 JSON（H2 首次启动导入）
+legacy/              改造前的静态站点（不再发布）
+```
+
+## 主要接口
+
+| 接口 | 说明 |
 | --- | --- |
-| `index.html` | 自选页面：股票池监控看板（Bootstrap 5），支持搜索（含拼音）、分组、纪律筛选、市值/PE/PB/股息率、破净/八折/ST 旗标与纪律列 |
-| `combat.html` | 独立交易作战台页面，展示交易条件、技术指标、风险与失效条件 |
-| `market.html` | 独立行情页面：指数、股票池温度、板块月线强弱、全球资产与产业链商品行情 |
-| `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
-| `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
-| `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、纪律全过判定、入场/重仓区、连续涨停、月 K 分位与简报 |
-| `research-score.js` | 研报评分工具：复算研报评分卡里可自动化的 7 项（国资背景 / 扣非增长 / 主营集中 / 市值 / 盘整 / 月线位置 / 底部放量），合计 65 分后折算百分制 |
-| `data/research-scores.json` `scripts/build_research_scores.js` | 个股评分与中间指标；首页与详情页只读这个小文件，不逐只拉个股缓存 |
-| `data/fundamentals.json` `scripts/fetch_fundamentals.py` | 实控人 / 主营构成 / 扣非净利年报，供评分使用；每周由 Actions 刷新，失败时保留上一次有效值 |
-| `scripts/validate_stock_data.js` | Actions 发布前校验股票主数据、行情覆盖率、K 线 OHLC、基本面结构，防止异常数据进入主分支 |
-| `scripts/calibrate_research_score.js` | 用 17 份带评分卡明细的研报回归校准评分阈值（只读本地缓存，不联网） |
-| `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
-| `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
-| `scripts/build_stock_detail_cache.js` `data/cache/stocks/` `data/cache/stock-details.json` | 个股详情页紧凑缓存与同组估值索引；详情页单次读取 bundle，减少完整历史文件重复下载 |
-| `scripts/build_cache_manifest.js` `data/cache/manifest.json` `data/monitoring/latest.json` `health.html` | GitHub Actions 生成的静态缓存清单、健康快照和系统健康页；记录指纹、数据日期、覆盖数量、文件大小、构建耗时与内容复用率（非 CDN 命中率） |
-| `static-quotes.js` | 浏览器端静态行情适配器；每次直接读取同源 JSON，禁用 HTTP 缓存，不使用 IndexedDB、localStorage 或内存数据缓存，不直接访问行情供应商 |
-| `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、禁止前端数据缓存的约定，以及静态部署下 SQL 数据库的适用边界 |
-| `docs/DEVELOPMENT_GUIDE.md` | 开发环境、本地预览、测试命令、GitHub Actions、AI 协作与代码修改交付流程 |
-| `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
-| `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
-| `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
-| `data/combat-kline.json` `scripts/build_combat_kline.js` | 作战页专用读模型：每只股票只保留最近 120 根前复权日 K；作战页一次请求全股票池，不逐只下载完整 K 线文件 |
-| `business.js` `data/business-data.json` | 行情页渲染指数行情、股票池温度、板块月线强弱、全球资产及商品现货/期货 |
-| `data/sector-monthly.json` `scripts/build_sector_monthly.js` | 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅，行情页只读这个小文件 |
-| `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行、资产趋势对比和各资产近一个月迷你趋势图 |
-| `scripts/fetch_global_assets.py` | 从 Yahoo Finance 公开图表接口抓取全球资产报价，抓取失败时保留最近有效值并标记缓存状态 |
-| `.github/workflows/global-assets.yml` | 每日尝试刷新全球资产行情；数据未变化时不更新文件，支持手动触发 |
-| `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
-| `.github/workflows/business-data.yml` | 工作日每日刷新一次商品数据，数据未变化时不更新文件，也支持手动触发 GitHub Actions |
+| `GET /stock/admin/dashboard/list` | 自选看板行数据 + 汇总 + 分组 |
+| `GET /stock/admin/stock-detail/info?code=` | 个股详情聚合 |
+| `GET /stock/admin/stock-detail/kline?code=&period=&adjust=&count=` | K 线 |
+| `GET /stock/admin/combat/list` | 交易作战信号 |
+| `GET /stock/admin/market/overview` | 指数 / 温度 / 板块 / 全球资产 / 产业链 |
+| `GET /stock/admin/global-assets/list` | 全球资产 |
+| `GET/POST /stock/admin/stock/*` | 股票池 CRUD |
+| `GET /stock/admin/sync/status`、`POST /stock/admin/sync/run?type=` | 同步状态与手动触发 |
 
-## 生意 / 商品数据
+除登录接口外均需要 open-admin 会话与对应权限码（`stock:read`、`combat:read`、`market:read`、`global-assets:read`、`stock:create/update/delete`、`sync:read/run`）。
 
-行情页的「生意与产业链」区域不要求用户手工录入价格。GitHub Actions 工作日定时运行 `scripts/fetch_business_data.py`，更新 `data/business-data.json`，首页自动读取最新缓存。主要数据源包括生意社现货/期货基差数据、东方财富现货与股票数据，以及新浪财经商品期货行情；卡片会区分现货与期货口径并显示数据日期/来源。
+## 测试与构建
 
-- 自动抓取是定时更新，不是逐笔实时行情；期货连续报价只作市场参考，不等同于现货成交价。
-- 如果某个品种没有可靠匹配到公开数据源，会显示「等待可靠数据源」，不会生成虚构价格。
-- 商品涨价不必然让关联上市公司受益，仍要结合公司实际业务占比、成本、库存、供需和盈利质量判断。
-- 自动抓取任务与运行状态可在 [GitHub Actions](https://github.com/jiangood/stock-helper/actions/workflows/business-data.yml) 查看。
-
-## 全球资产
-
-行情页中的全球市场区域展示黄金、BTC、ETH、日经 225、纳斯达克 100、标普 500 和 VIX 恐慌指数。页面增加按日涨跌幅排序的排行卡、各资产近一个月迷你趋势，以及近一周 / 近一个月归一化趋势对比（各序列起点设为 100，便于比较相对变化而非绝对价格）。抓取脚本为各资产保存近一个月日线历史；历史点不足时明确提示，不补造数据。VIX 上升通常表示期权市场隐含的预期波动增强，不是市场涨跌方向预测。行情通过 GitHub Actions 每日抓取并缓存，实际调度可能延迟；这是公开行情参考，不是逐笔实时行情。各市场币种和交易时段不同，报价失败时不生成模拟价格，页面会显示最近有效报价及更新时间。
-
-## 鳄鱼纪律
-
-`croc.js` 把资料里可量化的规则做成页面共用工具：
-
-- **净资产八折**：PB ≤ 0.8 标记「八折」，PB < 1 标记「破净」
-- **200 亿市值**：总市值 ≤ 200 亿才算通过「纪律」项，超过则扣一项
-- **30 倍估值锚**：PE(TTM) 在 0–30 之间才算通过，> 30 或亏损均未过
-- **不买 ST / 亏损**：首页旗标与纪律列标记
-- **入场区 / 重仓区**：现价 ≤ 重仓价 / 入场价
-- **卖其疯狂**：日 K 连续涨停 ≥ 3 或涨停打开时提示清仓纪律
-- **历史分位**：月 K（最多 240 根）价格分位，辅助判断长周期位置
-- **纪律全过**：非 ST、非亏损、PE ≤ 30、市值 ≤ 200 亿、PB < 1 五项自动筛选，首页「纪律」列显示通过数（全过 / 4/5 / 3/5…），可按「纪律全过」「全过 + 买点」筛选
-
-独立「行情」页面整合指数行情、股票池涨跌温度、按分组统计的板块月线强弱（主导指标为近 12 个月）、全球资产及产业链商品行情；原机会雷达与首页简报按钮已移除，买入信号统一在作战页查看。
-
-详情页「鳄鱼纪律」提供纪律检查与连板风险提示；「资源股现价估值」按 `(P−C)×Q×折扣×PE` 粗算合理市值，参数只保存在本机。
-
-> 本机浏览器保存资源股估值参数 `croc-valuation:<code>`。
-
-## 研报评分
-
-评分列分两种情况，页面上用标签区分：
-
-**① 有研报总分的股票 → 直接展示研报原始分（标「研」）**
-
-`data/research-reports.json` 手工摘录《资料/个股研报》里 10 项百分制评分卡的**原始总分**（当前 29 只），不做二次计算，并记录来源文件名与报告日期。悬停可看来源、报告日期与距今月数；报告超过 12 个月标「研·旧」，提示可能已过时。中国中冶另存了 2026-03-15 的自制版 83.0 分作为对照。
-
-分档沿用研报口径：>90 绝佳买入机会 · 80–90 稀有买入机会 · 70–80 合理买入机会 · <70 等待区间。
-
-**② 没有研报分的股票 → 机器复算（标「算」）**
-
-`research-score.js` 复算 10 项里能靠公开数据算出来的 7 项（覆盖 65/100 权重）：
-
-| 项 | 权重 | 口径 | 数据源 |
-| --- | --- | --- | --- |
-| 国资背景 | 10 | 央企 10 / 省级国资 9.5 / 地市国资 7.5 / 其他 5.5 | 东财 F10 实际控制人 |
-| 扣非净利增长 | 14 | 最近两个年报扣非同比：连续 >100% 满分，亏损或大幅下滑给低分 | 东财 F10 扣非净利 |
-| 主营集中 | 9 | 单一品类主营收入占比 × 10 + 1.5，夹在 2–10 分 | 东财 F10 主营构成 |
-| 总市值 < 200 亿 | 8 | ≤100 亿 10 分，100–200 亿 6.5 分，200 亿以上按对数衰减到 3 分 | 行情 `totalCap` |
-| 股价盘整 2–3 年 | 9 | 近 36 个月收盘箱体：高度 ≤20% 且高点距今 ≥24 个月得高分 | 月 K |
-| 股价位于月线底部 | 9 | 全历史收盘分位 0.6 + 52 周位置 0.4，位置越低分越高 | 月 K + 52 周高低 |
-| 底部成交量放大 | 6 | 近 6 个月月均量 ÷ 之前 36 个月月均量，量比 0.6 起算、3.0 满分 | 月 K 成交量 |
-
-合计 65 分，折算成百分制显示：≥75 位置优秀 · 56–75 位置中性 · <56 位置偏高。基本面三项来自 `data/fundamentals.json`（每周由 Actions 刷新），价格位置四项来自 `data/research-scores.json`（每天收盘后重算）。
-
-未覆盖的 3 项（独一无二 14 分、产品持续涨价 13 分、盈利模式 8 分，共 35 分权重）需要人工判断，所以机器分仍低于研报总分。
-
-**两者不能直接比高低**：机器分只覆盖 65/100 的权重，天然比研报总分低。用 18 份带明细的研报校准（`node scripts/calibrate_research_score.js`，K 线与扣非都截断到发布日复算）：
-
-- 同口径对比（机器 4 项 vs 研报第 7–10 项折算分）：平均 59.3 vs 62.4，MAE 9.2，秩相关 0.62
-- 对比研报总分：平均 59.3 vs 70.1，MAE 11.4，秩相关 0.24
-
-详情页「评分」卡片同时给出研报分（含来源与日期）和机器 4 项明细（含箱体高度、高点距今年数、历史分位、量比），可以看「研报之后价格位置发生了什么变化」。结果不构成投资建议。
-
-## 补仓（日线）
-
-详情页补仓面板为纯前端计算，数据缺失时降级展示，不阻塞主流程：① 到支撑（POC / 价值区下沿 / 重仓价 ≤3%）② 资金确认（MFI 底背离，或 MFI<20 后回升上穿）③ 趋势过滤（现价 > MA20，或 OBV 20 日不创新低）。3/3 才提示分批买入，2/3 小仓试探。
-
-筹码分布按日 K 成交量均匀摊到价格区间，是**近似**值；所有结论仅辅助参考，不构成投资建议。
-
-拼音搜索示例：`tk` / `tksw` / `tiankang` / `kangsheng` 都能命中「天康生物」，`qitian` 命中别名「齐天大圣」。
-
-## 行情数据策略
-
-- 页面只读取 GitHub Pages 同源静态 JSON；东方财富/腾讯行情接口只由 GitHub Actions 采集脚本调用。
-- A 股缓存工作日北京时间收盘后更新；日线每日检查，周线每周检查，月线随最新行情日检查（保证当月月 K 不滞后）。全球资产每日检查，商品数据工作日每日检查。
-- 采集失败或数据质量不合格时保留上一次有效数据；数据没有实质变化时不更新时间、不产生新的数据提交。
-- 页面每次直接请求同源静态 JSON（`cache: 'no-store'`），不保留浏览器旧数据；网络不可用时明确显示读取失败；池外股票代码不再从浏览器实时回源。
-- 这套设计提供延迟的收盘行情，不是实时行情；GitHub Actions 的定时任务可能延迟。
-
-## 采集端行情 SDK
-
-`quotes.js` 只由 GitHub Actions 采集脚本调用。网页使用 `static-quotes.js`，每次直接读取同源静态 JSON，不使用浏览器缓存或前端数据库，也不直接访问东方财富或腾讯行情接口。
-
-```js
-const q = new StockQuotes.Client({ timeout: 8000, cacheTTL: 1000 });
-const data = await q.fetch(['sz002408', 'sh600519']);
-// { sz002408: { code, name, price, prevClose, change, todayChange, divYield, time } }
-
-// 单只详情（含估值、52 周高低）
-await q.fetchDetail('sz002408');
-
-// 日 / 周 / 月 K 线
-await q.fetchKline('sz002408', { period: 'day', count: 250, adjust: 'qfq' });
-
-StockQuotes.marketSession();   // 'open' | 'pre' | 'lunch' | 'closed' | 'holiday'
-StockQuotes.isTrading();       // 是否处于需要刷新行情的时段
+```bash
+mvn test                 # 指标 / 纪律 / 评分 / 信号单元测试
+mvn clean package        # 后端可执行 jar
+cd web && npm run build  # 前端静态资源（web/dist）
 ```
 
+## 部署
 
-## 生意选项卡数据口径
+```bash
+mvn clean package
+java -jar target/stock-helper-1.0.0-SNAPSHOT.jar
+```
 
-- 商品价格：展示自动抓取的现货/期货参考价与可用历史趋势。
-- 供需辅助指标：尝试抓取交易所期货仓单库存；它不等同于全行业厂家库存、港口库存或社会库存，页面会明确标注口径。
-- 产业链辅助信息：自动展示数据源列示的生产商、下游用户名称；这类名单不代表股票持股关系，也不保证构成直接供销关系。
-- 原料成本观察：自动抓取氧化铝、合成氨、硫酸、钛精矿、动力煤的公开市场参考价与可用历史趋势。它们仅是成本方向代理指标，不等于企业实际采购成本、单位成本或毛利；缺失时明确显示待获取。
-- 简易供需观察：结合商品参考价格与期货仓单短期变化，显示方向性提示。该提示是规则化观察线索，不是统计模型或交易信号；仓单不等于全行业库存，需与厂家/港口库存、开工率和需求交叉验证。
-- 同日历史基差：在现货与期货参考价具有同一日期时，展示现货减期货的基差与基差率；不会拿不同日期的现货和实时期货拼算基差。
-- 未获取到可靠数据时会显示缺失状态，不用人工填值或估算值补齐。
+- 后端默认端口 8080、context-path `/stock`，可用 `SERVER_PORT` 覆盖。
+- 前端 `web/dist` 可交由 Nginx 托管，并把 `/stock/admin`、`/stock/file` 反向代理到后端；也可继续用 `npm run dev` 本地开发。
+- Docker 部署可参考 open-admin 官方示例；H2 数据与上传文件建议挂载到持久化目录。
+
+## 迁移说明
+
+- 本项目不再部署为 GitHub Pages 静态站点；原 `index.html`、`combat.html`、`market.html`、`stock.html` 及浏览器脚本已移动到 `legacy/`。
+- 原 Node/Python 采集与派生脚本仅作历史参考，不再由 GitHub Actions 运行；采集逻辑已迁移到 Java 定时任务。
+- 评分、纪律、交易信号口径保持与旧版一致；新增逻辑请先补单元测试，不要在不改测试的情况下调整阈值。
+
+## 免责声明
+
+所有行情、评分、纪律与交易信号仅用于个人记录与辅助判断，不构成投资建议。第三方数据源可能延迟或不可用，页面会明确展示数据日期与状态。

@@ -1,0 +1,8 @@
+# 覆盖 application-lib.yml 的本地路径默认值（导入顺序靠后，优先级更高）。
+sys:
+  file:
+    upload-path: ./data/upload
+
+logging:
+  file:
+    path: ./logs

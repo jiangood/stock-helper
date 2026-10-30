@@ -58,26 +58,6 @@
       <input type="search" class="form-control" id="search-input" aria-label="搜索股票：名称 / 代码 / 别名 / 拼音" placeholder="名称 / 代码 / 别名 / 拼音" oninput="applyFilter()" style="min-width:0">
     </div>
 
-    <select class="form-select form-select-sm w-auto flex-shrink-0" id="group-filter" onchange="applyFilter()" title="按分组筛选" aria-label="按分组筛选">
-      <option value="">全部分组</option>
-    </select>
-
-    <select class="form-select form-select-sm w-auto flex-shrink-0" id="status-filter" onchange="applyFilter()" title="按鳄鱼纪律筛选" aria-label="按鳄鱼纪律筛选">
-      <option value="">全部状态</option>
-      <option value="heavy">重仓区</option>
-      <option value="near">接近重仓</option>
-      <option value="entry">入场区</option>
-      <option value="pb">破净</option>
-      <option value="pb80">八折</option>
-      <option value="small">小市值</option>
-      <option value="screen">纪律全过</option>
-      <option value="screenbuy">全过 + 买点</option>
-      <option value="score-good">评分优（研 ≥80 / 算 ≥75）</option>
-      <option value="score-low">评分低（研 &lt;70 / 算 &lt;56）</option>
-      <option value="score-report">有研报评分</option>
-      <option value="score-report80">研报 ≥80</option>
-      <option value="risk">风险</option>
-    </select>
 
     <span class="text-body-secondary text-nowrap" aria-live="polite" aria-atomic="true"><span id="stock-count" class="fw-semibold text-body">0</span> 只</span>
 
@@ -99,7 +79,7 @@
   <div class="table-scroll-wrap">
   <div class="table-scroll" tabindex="0" role="region" aria-label="自选股票表，可横向滚动查看全部 18 列">
     <table class="table table-sm table-hover align-middle mb-0 stock-table" id="main-table">
-      <caption class="visually-hidden">自选股票列表：名称、价格、重仓、入场、昨日、止盈1、止盈2、年初价、市值、市盈率、市净率、股息率、纪律、机器评分、研报评分、研报日期、分组、别名</caption>
+      <caption class="visually-hidden">自选股票列表：名称、分组、价格、重仓、入场、昨日、止盈1、止盈2、年初价、市值、市盈率、市净率、股息率、纪律、机器评分、研报评分、研报日期、分组、别名</caption>
       <thead>
         <tr>
           <th scope="col" id="th-name" aria-sort="none"><button type="button" class="th-sort" data-sort="name">名称<span class="sort-icon" aria-hidden="true"></span></button></th>

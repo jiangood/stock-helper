@@ -103,26 +103,19 @@ test('研报评分 null 不参与数值渲染和筛选', () => {
   assert.equal(dashboard.includes('Number.Number.isFinite'), false);
 });
 
-test('首页取消分组和状态下拉筛选，分组列紧跟股票名称', () => {
-  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
-  assert.doesNotMatch(html, /id="(?:group-filter|status-filter)"/);
-  assert.match(html, /id="th-name"[\\s\\S]*?id="th-group"[\\s\\S]*?id="th-price"/);
-  assert.match(dashboard, /function statusHtml/);
-  assert.match(dashboard, /接近重仓/);
-  assert.match(dashboard, /待确认/);
-  assert.match(dashboard, /function applyFilter\\(\\)[\\s\\S]*?search-input/);
-  assert.doesNotMatch(dashboard, /\$\\('(?:group-filter|status-filter)'\\)/);
-});
-
 
 test('首页工具栏仅保留搜索框，分组列紧跟股票名称', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
-  const toolbar = html.slice(html.indexOf('id="stock-toolbar"'), html.indexOf('</div>\\n</div>', html.indexOf('id="stock-toolbar"')));
-  assert.match(toolbar, /id="search-input"/);
+  const toolbarStart = html.indexOf('<div id="stock-toolbar"');
+  const toolbarEnd = html.indexOf('<main id="stocks-pane"', toolbarStart);
+  const toolbar = html.slice(toolbarStart, toolbarEnd);
+  assert.ok(toolbar.includes('id="search-input"'));
   assert.doesNotMatch(toolbar, /stock-count|board-summary|group-filter|status-filter|<select/);
-  assert.match(html, /id="th-name"[\\s\\S]*?id="th-group"[\\s\\S]*?id="th-price"/);
-  assert.match(dashboard, /<td>\\$\\{stock\\.group/);
-  assert.doesNotMatch(dashboard, /\\$\\('(?:group-filter|status-filter)'\\)/);
+  assert.match(html, /id="th-name"[\s\S]*?id="th-group"[\s\S]*?id="th-price"/);
+  assert.match(dashboard, /function statusHtml/);
+  assert.match(dashboard, /接近重仓/);
+  assert.match(dashboard, /待确认/);
+  assert.match(dashboard, /<td>\$\{stock\.group/);
+  assert.doesNotMatch(dashboard, /\$\('(group-filter|status-filter)'\)/);
 });

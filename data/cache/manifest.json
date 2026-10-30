@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "builderVersion": "5b5062c1466c4197efb1e551b5f31f0066d2ad65c661777e3836c0d9ed32da44",
-  "generatedAt": "2026-10-30T01:13:28.384Z",
+  "builderVersion": "3d517f7c7dcd54585afdd0def0a76b155826759b450d5a020d86950b7133e9d7",
+  "generatedAt": "2026-10-30T01:23:10.602Z",
   "marketDate": "2026-10-29",
   "caches": {
     "market-quotes": {
@@ -53,6 +53,32 @@
       "bytes": 13333,
       "dataVersion": "9300cd2ff7a02dcc53cb715ae1b870028df34ce4c0a2bd3364e95c31822b6dae",
       "sourceVersion": "11b176d5d9c013f44dc4a21791a095d7d2a7911a81c50905094a39ce15641473",
+      "freshness": "fresh",
+      "status": "healthy"
+    },
+    "stock-details-index": {
+      "cacheType": "page-read-model",
+      "path": "data/cache/stock-details.json",
+      "generatedAt": "2026-10-30T01:23:09.883Z",
+      "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
+      "marketDate": "2026-10-29",
+      "recordCount": 67,
+      "bytes": 6226,
+      "dataVersion": "196d0f7fa70cc47354bb7ce354b6f2bf01481e8d00416d8eaee25ee5aec269ed",
+      "sourceVersion": "7998bc2a41c2520ff55dbbb4f3ec6215b06108b99bedcc9c979abc096c49b904",
+      "freshness": "fresh",
+      "status": "healthy"
+    },
+    "stock-detail-bundles": {
+      "cacheType": "page-read-model",
+      "path": "data/cache/stocks/",
+      "generatedAt": "2026-10-30T01:23:09.883Z",
+      "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
+      "marketDate": "2026-10-29",
+      "recordCount": 67,
+      "bytes": 5182259,
+      "dataVersion": "cb89f0db089b60b3dde2834f6609d35d446e775eef5623f42827a84bd40f655b",
+      "sourceVersion": "7998bc2a41c2520ff55dbbb4f3ec6215b06108b99bedcc9c979abc096c49b904",
       "freshness": "fresh",
       "status": "healthy"
     }

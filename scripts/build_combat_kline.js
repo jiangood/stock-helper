@@ -58,8 +58,10 @@ function writePayload(file, payload) {
 function buildFile(options) {
   const opts = options || {};
   const stocks = opts.stocks || readJson(path.join(DATA, 'stocks.json'), []);
+  const quotes = opts.quotes || readJson(opts.quotesFile || path.join(DATA, 'stock-quotes.json'), {});
+  const buildOptions = Object.assign({}, opts, { marketDate: opts.marketDate || quotes.marketDate || null });
   const file = opts.file || OUTPUT;
-  const payload = buildPayload(stocks, opts);
+  const payload = buildPayload(stocks, buildOptions);
   if (!Object.keys(payload.stocks).length) {
     const previous = readJson(file, null);
     if (previous && previous.stocks && Object.keys(previous.stocks).length) {

@@ -58,7 +58,7 @@ function buildManifest(options) {
   const monitorDir = opts.monitoringDir || path.join(dataDir, 'monitoring');
   const manifestFile = opts.manifestFile || path.join(dataDir, 'cache', 'manifest.json');
   const healthFile = opts.healthFile || path.join(monitorDir, 'latest.json');
-  const startedAt = opts.startedAt || new Date().toISOString();
+  const startedAt = opts.startedAt || process.env.CACHE_BUILD_STARTED_AT || new Date().toISOString();
   const previous = fs.existsSync(manifestFile) ? readJson(manifestFile) : null;
   const quotes = readJson(path.join(dataDir, 'stock-quotes.json'));
   const marketDate = quotes.marketDate || null;

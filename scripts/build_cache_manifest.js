@@ -52,6 +52,22 @@ function fileMetadata(relativePath, dataDir) {
   const payload = JSON.parse(raw.toString('utf8'));
   return { payload, bytes: raw.length, dataVersion: sha256(raw), generatedAt: payload.generatedAt || payload.updatedAt || null };
 }
+function directoryMetadata(relativePath, indexPath, dataDir) {
+  const base = dataDir || DATA;
+  const files = listFiles(path.join(base, relativePath));
+  if (!files.length) throw new Error('No cache bundle files found: ' + relativePath);
+  const records = files.map(file => ({
+    path: path.relative(base, file).split(path.sep).join('/'),
+    sha256: sha256(fs.readFileSync(file))
+  }));
+  const payload = readJson(path.join(base, indexPath));
+  return {
+    payload,
+    bytes: files.reduce((sum, file) => sum + fs.statSync(file).size, 0),
+    dataVersion: sha256(JSON.stringify(records)),
+    generatedAt: payload.updatedAt || null
+  };
+}
 function buildManifest(options) {
   const opts = options || {};
   const dataDir = opts.dataDir || DATA;
@@ -70,12 +86,16 @@ function buildManifest(options) {
     { id: 'research-scores', type: 'page-read-model', file: 'research-scores.json', sources: ['stocks.json', 'fundamentals.json', 'stock-cache', '../research-score.js', '../scripts/build_research_scores.js'],
       count: p => Object.keys(p.scores || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' },
     { id: 'sector-monthly', type: 'page-read-model', file: 'sector-monthly.json', sources: ['stocks.json', 'stock-quotes.json', 'stock-cache', '../scripts/build_sector_monthly.js'],
-      count: p => Object.keys(p.stocks || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' }
+      count: p => Object.keys(p.stocks || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' },
+    { id: 'stock-details-index', type: 'page-read-model', file: 'cache/stock-details.json', sources: ['stocks.json', 'stock-cache', 'stock-quotes.json', '../scripts/build_stock_detail_cache.js'],
+      count: p => Object.keys(p.details || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' },
+    { id: 'stock-detail-bundles', type: 'page-read-model', file: 'cache/stocks', directory: true, indexFile: 'cache/stock-details.json', sources: ['stocks.json', 'stock-cache', 'stock-quotes.json', '../scripts/build_stock_detail_cache.js'],
+      count: p => Object.keys(p.details || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' }
   ];
   const caches = {};
   let totalBytes = 0, reusedCount = 0, staleCount = 0, unknownCount = 0;
   definitions.forEach(def => {
-    const meta = fileMetadata(def.file, dataDir);
+    const meta = def.directory ? directoryMetadata(def.file, def.indexFile, dataDir) : fileMetadata(def.file, dataDir);
     const sourceVersion = sourceFingerprint(def.sources, dataDir);
     const freshness = def.freshness(meta.payload);
     const status = freshness === 'stale' ? 'stale' : (freshness === 'unknown' ? 'unknown' : 'healthy');
@@ -85,7 +105,7 @@ function buildManifest(options) {
     if (status === 'unknown') unknownCount += 1;
     totalBytes += meta.bytes;
     caches[def.id] = {
-      cacheType: def.type, path: 'data/' + def.file,
+      cacheType: def.type, path: 'data/' + def.file + (def.directory ? '/' : ''),
       generatedAt: meta.generatedAt, quoteSnapshotUpdatedAt: quotes.updatedAt || null,
       marketDate: meta.payload.marketDate || marketDate, recordCount: def.count(meta.payload),
       bytes: meta.bytes, dataVersion: meta.dataVersion, sourceVersion, freshness, status

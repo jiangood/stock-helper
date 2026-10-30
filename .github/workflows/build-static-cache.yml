@@ -12,6 +12,7 @@ on:
     branches: [master, main]
     paths:
       - "scripts/build_combat_kline.js"
+      - "scripts/build_stock_detail_cache.js"
       - "scripts/build_research_scores.js"
       - "scripts/build_sector_monthly.js"
       - "scripts/build_cache_manifest.js"
@@ -49,18 +50,19 @@ jobs:
             git reset --hard origin/master
             export CACHE_BUILD_STARTED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
+            node scripts/build_stock_detail_cache.js
             node scripts/build_sector_monthly.js
             node scripts/build_research_scores.js
             node scripts/build_combat_kline.js
             node scripts/build_cache_manifest.js
             node scripts/validate_stock_data.js
 
-            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/combat-kline.json data/cache/manifest.json data/monitoring/latest.json)" ]; then
+            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/combat-kline.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json)" ]; then
               echo "Static page caches are already current."
               exit 0
             fi
 
-            git add data/sector-monthly.json data/research-scores.json data/combat-kline.json data/cache/manifest.json data/monitoring/latest.json
+            git add data/sector-monthly.json data/research-scores.json data/combat-kline.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json
             git commit -m "Build static page caches"
             if git push origin HEAD:master; then
               exit 0

@@ -51,6 +51,27 @@
     catch (error) { throw new Error(code + ' 不在当前静态数据范围内或数据暂不可用。为避免浏览器直接访问外部行情接口，未进行实时回源。'); }
   }
 
+  async function loadStockBundle(code) {
+    try {
+      const payload = await loadJson('data/cache/stocks/' + code + '.json');
+      if (!payload || payload.schemaVersion !== 1 || payload.cacheType !== 'stock-detail' ||
+          payload.code !== code || !payload.data || typeof payload.data !== 'object') {
+        throw new Error('个股详情缓存结构无效');
+      }
+      return Object.assign({ code, marketDate: payload.marketDate || null }, payload.data);
+    } catch (error) {
+      const cache = await loadStockCache(code);
+      return {
+        code,
+        detail: cache.detail || null,
+        dailyAdjusted: cache.dailyAdjusted || { bars: [] },
+        dailyRaw: cache.dailyRaw || { bars: [] },
+        weeklyAdjusted: cache.weeklyAdjusted || { bars: [] },
+        monthlyAdjusted: cache.monthlyAdjusted || { bars: [] }
+      };
+    }
+  }
+
   class Client {
     constructor(options) { this.options = options || {}; }
     async fetch(codes, options) {
@@ -66,11 +87,27 @@
       const result = await this.fetch([code]);
       return result[normalizeCode(code)] || null;
     }
+    async fetchStockBundle(code) {
+      const normalized = normalizeCode(code);
+      if (!normalized) throw new Error('无效的股票代码');
+      return loadStockBundle(normalized);
+    }
+    async fetchDetails(codes) {
+      const payload = await loadJson('data/cache/stock-details.json');
+      if (!payload || payload.schemaVersion !== 1 || !payload.details || typeof payload.details !== 'object') {
+        throw new Error('同组估值索引格式无效');
+      }
+      const result = {};
+      (codes || []).map(normalizeCode).filter(Boolean).forEach(code => {
+        if (payload.details[code]) result[code] = payload.details[code];
+      });
+      return result;
+    }
     async fetchDetail(code, options) {
       const normalized = normalizeCode(code);
       if (!normalized) throw new Error('无效的股票代码');
-      const cache = await loadStockCache(normalized);
-      if (cache.detail && Number(cache.detail.price) > 0) return cache.detail;
+      const bundle = await loadStockBundle(normalized);
+      if (bundle.detail && Number(bundle.detail.price) > 0) return bundle.detail;
       const quote = await this.fetch([normalized], options).catch(() => ({}));
       if (quote[normalized]) return quote[normalized];
       throw new Error('静态数据中没有该股票的有效详情数据。');
@@ -96,7 +133,7 @@
           bars = cached && Array.isArray(cached.bars) ? cached.bars : [];
         }
       } else {
-        const cache = await loadStockCache(normalized);
+        const cache = await loadStockBundle(normalized);
         if (period === 'day') {
           const value = adjust === 'none' ? cache.dailyRaw : cache.dailyAdjusted;
           bars = value && Array.isArray(value.bars) ? value.bars : [];

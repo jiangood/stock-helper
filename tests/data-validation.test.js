@@ -60,9 +60,10 @@ test('cache manifest and health snapshots validate versions, hashes and counters
   };
   const manifest = { schemaVersion: 1, builderVersion: 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', caches: {
     'market-quotes': entry, 'combat-kline': entry,
-    'research-scores': entry, 'sector-monthly': entry
+    'research-scores': entry, 'sector-monthly': entry,
+    'stock-details-index': entry, 'stock-detail-bundles': entry
   } };
-  assert.equal(validateCacheManifest(manifest), 4);
+  assert.equal(validateCacheManifest(manifest), 6);
   assert.throws(() => validateCacheManifest({ ...manifest, caches: { ...manifest.caches, 'combat-kline': { ...entry, dataVersion: 'bad' } } }), /dataVersion/);
   assert.equal(validateCacheHealth({
     schemaVersion: 1, status: 'healthy', cacheCount: 4, healthyCount: 4,

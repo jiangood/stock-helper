@@ -85,6 +85,45 @@ test('static adapter reads quote, detail, daily/weekly/monthly and index data fr
   assert.deepEqual(harness.getStorageAccesses(), { storageReads: 0, storageWrites: 0, indexedDbReads: 0 });
 });
 
+
+test('detail bundle and peer valuation index are read as compact same-origin files', async () => {
+  const requested = [];
+  const files = {
+    'data/cache/stocks/sz002408.json': {
+      schemaVersion: 1, cacheType: 'stock-detail', code: 'sz002408', marketDate: '2026-10-29',
+      data: {
+        detail: { code: 'sz002408', name: '齐翔腾达', price: 4.36 },
+        dailyAdjusted: { bars }, dailyRaw: { bars },
+        weeklyAdjusted: { bars }, monthlyAdjusted: { bars }
+      }
+    },
+    'data/cache/stock-details.json': {
+      schemaVersion: 1, details: {
+        sz002408: { code: 'sz002408', name: '齐翔腾达', price: 4.36, peTtm: 12, pb: 1.1 },
+        sh600000: { code: 'sh600000', name: '浦发银行', price: 10, peTtm: 5, pb: 0.5 }
+      }
+    }
+  };
+  const harness = makeHarness(async (url, options) => {
+    requested.push({ url: String(url), cache: options && options.cache });
+    const key = Object.keys(files).find(item => String(url).endsWith('/' + item));
+    if (!key) throw new Error('Unexpected URL: ' + url);
+    return { ok: true, status: 200, json: async () => files[key] };
+  });
+  const client = new harness.api.Client();
+  const bundle = await client.fetchStockBundle('sz002408');
+  assert.equal(bundle.detail.name, '齐翔腾达');
+  assert.equal(bundle.dailyAdjusted.bars.length, 12);
+  assert.equal((await client.fetchDetail('sz002408')).name, '齐翔腾达');
+  assert.equal((await client.fetchKline('sz002408', { period: 'day', count: 10 })).bars.length, 10);
+  const peers = await client.fetchDetails(['sh600000', 'sz002408']);
+  assert.equal(peers.sh600000.peTtm, 5);
+  assert.equal(peers.sz002408.pb, 1.1);
+  assert.equal(requested.length, 4);
+  assert.ok(requested.every(item => item.cache === 'no-store'));
+  assert.deepEqual(harness.getStorageAccesses(), { storageReads: 0, storageWrites: 0, indexedDbReads: 0 });
+});
+
 test('every data request goes to network again and failed reads do not use stale browser cache', async () => {
   let calls = 0;
   let fail = false;

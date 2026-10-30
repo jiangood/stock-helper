@@ -237,11 +237,25 @@
 
   async function loadQuote(force) {
     try {
-      const d = await quotes.fetchDetail(CODE, { force: !!force });
+      const bundle = await quotes.fetchStockBundle(CODE);
+      const d = bundle.detail && Number(bundle.detail.price) > 0
+        ? bundle.detail : await quotes.fetchOne(CODE);
+      if (!d) throw new Error('静态数据中没有该股票的有效详情数据。');
       DETAIL = d;
+      const toKline = (period, adjust, series) => series && Array.isArray(series.bars) && series.bars.length
+        ? { code: CODE, period, adjust, bars: series.bars } : null;
+      klineCache.day = toKline('day', 'qfq', bundle.dailyAdjusted);
+      klineCache.dayRaw = toKline('day', 'none', bundle.dailyRaw);
+      klineCache.week = toKline('week', 'qfq', bundle.weeklyAdjusted);
+      klineCache.month = toKline('month', 'qfq', bundle.monthlyAdjusted);
+      DAY_FAILED = !klineCache.day;
+      HISTORY = klineCache.month;
+      historyAt = HISTORY ? Date.now() : 0;
+      if (klineCache.day) apply52WeekFallback(klineCache.day.bars);
       $('state-box').classList.add('d-none');
       $('content').classList.remove('d-none');
       renderAll();
+      if (HISTORY) renderHistoryRange();
       loadPeers();
       warmupDaily();
       warmupHistory();
@@ -265,7 +279,7 @@
     if (!ok) return;
     if (manual) {
     }
-    loadChart(chartTab, manual).catch(() => {});
+    loadChart(chartTab, false).catch(() => {});
     if (manual) showToast('已重新读取静态行情缓存', 'success');
   }
 
@@ -465,9 +479,16 @@
       return;
     }
 
-    // 限并发，避免同组十几只一次性打满接口
-    const results = await mapLimit(codes, 4, c => quotes.fetchDetail(c));
-    const details = results.filter(Boolean);
+    let details = [];
+    try {
+      // 统一读取轻量估值索引，避免为同组估值下载多份完整个股历史文件。
+      const peerMap = await quotes.fetchDetails(codes);
+      details = Object.values(peerMap || {});
+    } catch (error) {
+      // 兼容缓存索引尚未发布的旧版本。
+      const results = await mapLimit(codes, 4, c => quotes.fetchDetail(c).catch(() => null));
+      details = results.filter(Boolean);
+    }
 
     if (!details.length) {
       $('peer-summary').textContent = '同组行情暂不可用';

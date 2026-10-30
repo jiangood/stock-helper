@@ -210,9 +210,6 @@ function buildTable() {
     setEmptyState(false);
     tbody.innerHTML = view.map(s => `<tr class="${rowClass(s)}">${buildRow(s)}</tr>`).join('');
   }
-  const count = $('stock-count');
-  if (count) count.textContent = view.length === STOCKS.length ? view.length : `${view.length}/${STOCKS.length}`;
-  updateSummary();
   updateScrollHint();
 }
 
@@ -237,11 +234,7 @@ function setEmptyState(show, message) {
 /** 清空搜索与筛选，恢复完整列表 */
 function resetFilters() {
   const search = $('search-input');
-  const group = $('group-filter');
-  const status = $('status-filter');
   if (search) search.value = '';
-  if (group) group.value = '';
-  if (status) status.value = '';
   applyFilter();
   if (search) search.focus();
 }
@@ -377,6 +370,7 @@ function buildRow(stock) {
 
   return `
     <td>${nameHtml}</td>
+    <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${priceHtml}</td>
     <td>${heavyHtml}${heavyDiff}</td>

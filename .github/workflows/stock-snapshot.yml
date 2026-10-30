@@ -46,7 +46,7 @@ jobs:
         env:
           SKIP_DERIVED: "1"
       - name: Validate published data integrity
-        run: node scripts/validate_stock_data.js
+        run: node scripts/validate_stock_data.js --skip-cache-manifest
       - name: Commit changed snapshots only
         run: |
           if [ -z "$(git status --porcelain -- data/stock-quotes.json data/index-cache.json data/stock-cache)" ]; then

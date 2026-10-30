@@ -81,6 +81,6 @@ test('首页机器评分遇到 null 缺失值时不崩溃且不伪造零分', ()
     items: { owner: 10, focus: null, profit: 8.5, cap: 6.1, consolidation: 4, bottom: 5.7, volume: 4.4 }
   };
   const html = context.researchMachineHtml({ code: 'partial' });
-  assert.match(html, /68\\.2/);
-  assert.match(html, /主营 —\\/9/, '缺失的单项评分应显示 —，不能被格式化成 0.0');
+  assert.ok(html.includes('68.2'), '有效百分制分数应正常显示');
+  assert.ok(html.includes('主营 —/9'), '缺失的单项评分应显示 —，不能被格式化成 0.0');
 });

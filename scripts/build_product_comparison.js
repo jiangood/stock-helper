@@ -154,7 +154,7 @@ function buildCommodityCards(productItems) {
       const isCostInput = (meta.costItemIds || []).includes(itemId);
       const disclosedProduct = companyProducts
         .filter((product) => product.stockCode === stock.code && product.marketItemId === itemId &&
-          product.ratioBasis === 'product' && Number.isFinite(Number(product.revenueRatio)))
+          product.ratioBasis === 'product' && product.revenueRatio !== null && product.revenueRatio !== undefined && Number.isFinite(Number(product.revenueRatio)))
         .sort((a, b) => String(b.reportDate || '').localeCompare(String(a.reportDate || '')))[0];
       const mappedItemCount = [meta.marketItemId].concat(meta.additionalMarketItemIds || [], meta.costItemIds || []).filter(Boolean).length;
       const fallbackRatio = mappedItemCount === 1 && fundamental.mainRatio !== null &&

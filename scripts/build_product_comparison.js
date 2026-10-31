@@ -16,6 +16,7 @@ function validPoint(point) {
     Number.isFinite(Number(point.value)) && Number(point.value) > 0;
 }
 function monthKey(date) { return String(date).slice(0, 7); }
+const MONTHLY_BAR_LIMIT = 200;
 function monthlyLast(points) {
   const byMonth = new Map();
   (Array.isArray(points) ? points : []).forEach((point) => {
@@ -24,7 +25,7 @@ function monthlyLast(points) {
     const old = byMonth.get(month);
     if (!old || point.date > old.date) byMonth.set(month, { month, date: point.date, value: Number(point.value) });
   });
-  return Array.from(byMonth.values()).sort((a, b) => a.month.localeCompare(b.month));
+  return Array.from(byMonth.values()).sort((a, b) => a.month.localeCompare(b.month)).slice(-MONTHLY_BAR_LIMIT);
 }
 function stockMonthly(code) {
   const file = path.join(ROOT, 'data', 'stock-cache', code + '.json');
@@ -132,7 +133,7 @@ function buildCommodityCards(productItems) {
     const availableStocks = stocksWithHistory.filter((stock) => stock.history.length);
     const commonMonths = productPoints.map((point) => point.month).filter((month) =>
       availableStocks.every((stock) => stock.history.some((point) => point.month === month))
-    ).sort();
+    ).sort().slice(-MONTHLY_BAR_LIMIT);
     const productMap = new Map(productPoints.map((point) => [point.month, point]));
     const firstMonth = commonMonths[0];
     const productBase = firstMonth ? productMap.get(firstMonth).value : null;

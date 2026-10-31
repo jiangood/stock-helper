@@ -19,6 +19,16 @@ class BusinessDataTests(unittest.TestCase):
         self.assertNotIn("spot", series[-1])
         self.assertEqual(series[-1]["futures"], 104)
 
+    def test_major_metal_and_chemical_commodities_are_tracked(self):
+        products = {item["id"]: item for item in fetcher.PRODUCTS}
+        expected = {
+            "gold": "AU", "silver": "AG", "copper": "CU", "iron-ore": "I",
+            "tin": "SN", "zinc": "ZN", "sugar": "SR", "pvc": "V",
+            "caustic-soda": "SH", "alumina": "AO",
+        }
+        for item_id, symbol in expected.items():
+            self.assertEqual(products[item_id]["symbol"], symbol)
+
     def test_feed_cost_commodities_are_tracked_for_tiankang(self):
         products = {item["id"]: item for item in fetcher.PRODUCTS}
         self.assertEqual(products["corn"]["symbol"], "C")

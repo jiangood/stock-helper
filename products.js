@@ -24,7 +24,7 @@ function comparisonRow(name,type,ratio,unit,series,change,href){
  var stats=priceStats(series);
  var ratioText=type==='商品'?'—':(ratio==null||!Number.isFinite(Number(ratio))?'暂无数据':(Number(ratio)*100).toFixed(1)+'%');
  var nameHtml=href?'<a class="commodity-stock-name text-body text-decoration-none" href="'+esc(href)+'">'+esc(name)+'</a>':'<strong>'+esc(name)+'</strong>';
- var prices=stats?[stats.low,stats.high,stats.first,stats.current]:[];
+ var prices=stats?[stats.low,stats.high,stats.current]:[];
  var shown=prices.map(function(value){return priceScale(value,unit).value;});
  var unitLabel=stats?priceScale(stats.current,unit).unit:(unit||'—');
  return '<tr><td>'+nameHtml+'</td><td>'+type+'</td><td>'+ratioText+'</td><td>'+esc(unitLabel)+'</td><td>'+(shown[0]||'—')+'</td><td>'+(shown[1]||'—')+'</td><td>'+(shown[2]||'—')+'</td><td>'+(shown[3]||'—')+'</td><td class="'+tone(change)+'">'+pct(change)+'</td></tr>';
@@ -34,7 +34,7 @@ function comparisonTableHtml(card){
  rows+=(card.stocks||[]).map(function(stock){
   return comparisonRow(stock.name,'股票',stock.mainRatio,'元/股',stock.values,stock.changePct,'stock.html?code='+encodeURIComponent(stock.code));
  }).join('');
- return '<div class="commodity-table-wrap" tabindex="0" role="region" aria-label="'+esc(displayProductName(card.name))+'价格汇总表，可横向滚动查看全部列"><table class="commodity-comparison" aria-label="'+esc(displayProductName(card.name))+'及关联股票价格与主营占比汇总"><thead><tr><th>名称</th><th>类型</th><th>主营占比</th><th>单位</th><th>最低价</th><th>最高价</th><th>期初价</th><th>当前价</th><th>区间涨跌</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ return '<div class="commodity-table-wrap" tabindex="0" role="region" aria-label="'+esc(displayProductName(card.name))+'价格汇总表，可横向滚动查看全部列"><table class="commodity-comparison" aria-label="'+esc(displayProductName(card.name))+'及关联股票价格与主营占比汇总"><thead><tr><th>名称</th><th>类型</th><th>主营占比</th><th>单位</th><th>最低价</th><th>最高价</th><th>当前价</th><th>区间涨跌</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}

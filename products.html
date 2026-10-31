@@ -139,7 +139,10 @@ function render(){
  if(!list.length){node.innerHTML='<div class="product-empty">没有符合条件的商品</div>';return;}
  node.innerHTML=list.map(function(card,index){
   var comparisonTable=comparisonTableHtml(card);
-  var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+'及关联股票归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
+  var hasProductChart=Array.isArray(card.productSeries)&&card.productSeries.length>=2;
+  var hasStockChart=(card.stocks||[]).some(function(stock){return Array.isArray(stock.values)&&stock.values.length>=2;});
+  var hasChart=hasProductChart||hasStockChart;
+  var chart=hasChart?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+(hasProductChart?'及关联股票':'关联股票')+'归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品价格和关联股票均暂无足够的历史月份，暂不绘图。</div>';
   return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+' · '+(card.months&&card.months.length?card.months.length+' 根月线':'月线数量 —')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
@@ -158,9 +161,12 @@ function render(){
  });
  list.forEach(function(card,index){
   var node=$('commodity-chart-'+index);
-  if(!node||!window.echarts||!Array.isArray(card.productSeries)||card.productSeries.length<2)return;
+  var hasProductChart=Array.isArray(card.productSeries)&&card.productSeries.length>=2;
+  var hasStockChart=(card.stocks||[]).some(function(stock){return Array.isArray(stock.values)&&stock.values.length>=2;});
+  if(!node||!window.echarts||(!hasProductChart&&!hasStockChart))return;
   var chart=window.echarts.init(node);charts.push(chart);
-  var series=[{name:displayProductName(card.name),type:'line',smooth:false,showSymbol:false,lineStyle:{width:2.5},data:card.productSeries.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:card.unit||'商品价格'};})}];
+  var series=[];
+  if(hasProductChart)series.push({name:displayProductName(card.name),type:'line',smooth:false,showSymbol:false,lineStyle:{width:2.5},data:card.productSeries.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:card.unit||'商品价格'};})});
   (card.stocks||[]).forEach(function(stock){
    if(!Array.isArray(stock.values)||stock.values.length<2)return;
    series.push({name:stock.name,type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:stock.values.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:'元/股'};} )});

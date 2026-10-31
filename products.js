@@ -14,7 +14,7 @@ function priceStats(series){
 }
 function comparisonRow(name,type,ratio,unit,series,change,href){
  var stats=priceStats(series);
- var ratioText=ratio==null||!Number.isFinite(Number(ratio))?'暂无数据':(Number(ratio)*100).toFixed(1)+'%';
+ var ratioText=type==='商品'?'—':(ratio==null||!Number.isFinite(Number(ratio))?'暂无数据':(Number(ratio)*100).toFixed(1)+'%');
  var nameHtml=href?'<a class="commodity-stock-name text-body text-decoration-none" href="'+esc(href)+'">'+esc(name)+'</a>':'<strong>'+esc(name)+'</strong>';
  return '<tr><td>'+nameHtml+'</td><td>'+type+'</td><td>'+ratioText+'</td><td>'+esc(unit||'—')+'</td><td>'+(stats?money(stats.low):'—')+'</td><td>'+(stats?money(stats.high):'—')+'</td><td>'+(stats?money(stats.first):'—')+'</td><td>'+(stats?money(stats.current):'—')+'</td><td class="'+tone(change)+'">'+pct(change)+'</td></tr>';
 }

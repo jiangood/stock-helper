@@ -10,6 +10,7 @@ on:
     paths:
       - "scripts/fetch_business_data.py"
       - "scripts/build_company_products.py"
+      - "scripts/build_product_comparison.js"
       - "data/business-data.json"
       - ".github/workflows/business-data.yml"
 

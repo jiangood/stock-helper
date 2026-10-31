@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-var cards=[],charts=[];
+var cards=[],charts=[],chartObservers=[];
 function $(id){return document.getElementById(id);}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)>0?'+':'')+Number(value).toFixed(2)+'%';}
@@ -8,7 +8,7 @@ function money(value){return value==null||!Number.isFinite(Number(value))?'—':
 function normalizedPosition(value,min,max){var n=Number(value);if(!Number.isFinite(n))return null;if(!(max>min))return 0;return Math.max(0,Math.min(1,(n-min)/(max-min)));}
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}
-function destroyCharts(){charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
+function destroyCharts(){chartObservers.forEach(function(observer){try{observer.disconnect();}catch(e){}});chartObservers=[];charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
 function render(){
  destroyCharts();
  var list=cards,node=$('product-cards');
@@ -52,6 +52,13 @@ function render(){
    yAxis:{type:'value',scale:true,axisLabel:{show:false},axisTick:{show:false},axisLine:{show:false},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
    series:series
   });
+  // 按容器真实尺寸校准；手机旋屏、地址栏和卡片宽度变化均触发重排。
+  chart.resize();
+  if(typeof ResizeObserver==='function'){
+   var observer=new ResizeObserver(function(){try{chart.resize();}catch(e){}});
+   observer.observe(node);
+   chartObservers.push(observer);
+  }
  });
 }
 function load(){

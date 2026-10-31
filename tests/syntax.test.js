@@ -132,3 +132,14 @@ test('首页月线盈亏颜色以入场价为唯一基准：盈利红、亏损�
   assert.match(renderer, /monthly-trend-neutral/);
   assert.doesNotMatch(renderer, /stock\.tp1|takeProfit|monthly-trend-above-target/);
 });
+
+
+test('商品页手机端趋势图横向铺满且按容器尺寸自适应', () => {
+  const html = fs.readFileSync(path.join(root, 'products.html'), 'utf8');
+  const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
+  assert.ok(html.includes('#product-cards{margin-left:-16px;margin-right:-16px'));
+  assert.ok(html.includes('.product-chart{height:230px;width:calc(100% + 16px);margin-left:-8px;margin-right:-8px'));
+  assert.ok(products.includes("new ResizeObserver(function(){try{chart.resize();}catch(e){}})"));
+  assert.ok(products.includes('observer.observe(node)'));
+  assert.ok(products.includes('observer.disconnect()'));
+});

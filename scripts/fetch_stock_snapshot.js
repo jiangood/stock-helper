@@ -13,8 +13,6 @@ const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
 const CACHE_DIR = path.join(DATA, 'stock-cache');
 const QUOTES_FILE = path.join(DATA, 'stock-quotes.json');
-const INDEX_FILE = path.join(DATA, 'index-cache.json');
-const INDEX_CODES = ['sh000001', 'sz399001', 'sz399006'];
 const MIN_QUOTE_COVERAGE = 0.8;
 const MAX_CONCURRENCY = 4;
 
@@ -93,7 +91,7 @@ async function main() {
   const codes = Array.from(new Set([
     ...stocks.map(item => quoteCode(item && item.code)).filter(Boolean)
   ]));
-  const allCodes = Array.from(new Set([...codes, ...INDEX_CODES]));
+  const allCodes = codes;
   const client = new StockQuotes.Client({
     timeout: 12000,
     retries: 1,
@@ -102,12 +100,12 @@ async function main() {
   });
 
   const previousQuotes = readJson(QUOTES_FILE, { quotes: {} });
-  console.log('Fetching snapshot for ' + codes.length + ' stock codes and ' + INDEX_CODES.length + ' indices.');
+  console.log('Fetching snapshot for ' + codes.length + ' stock codes.');
   let freshQuotes = {};
   try { freshQuotes = await client.fetch(allCodes, { force: true }); }
   catch (error) { console.error('Bulk quote fetch failed:', error.message); }
 
-  const quotes = { ...(previousQuotes.quotes || {}) };
+  const quotes = Object.fromEntries(codes.filter(code => previousQuotes.quotes && previousQuotes.quotes[code]).map(code => [code, previousQuotes.quotes[code]]));
   Object.assign(quotes, freshQuotes);
   const freshStockCount = codes.filter(code => freshQuotes[code] && Number(freshQuotes[code].price) > 0).length;
   const coverage = freshStockCount / Math.max(codes.length, 1);
@@ -227,21 +225,6 @@ async function main() {
 
   const quoteChanged = writeIfChanged(QUOTES_FILE, quotePayload, true);
   console.log(quoteChanged ? 'Updated data/stock-quotes.json' : 'Quotes unchanged; kept previous snapshot.');
-
-  const previousIndex = readJson(INDEX_FILE, { monthly: {} });
-  const monthly = { ...(previousIndex.monthly || {}) };
-  await mapLimit(INDEX_CODES, 2, async code => {
-    if (monthly[code] && monthly[code].fetchedFor === chinaDate) return;
-    try {
-      const value = await client.fetchKline(code, { period: 'month', count: 24, adjust: 'none', force: true });
-      if (validBars(value, 6)) monthly[code] = { ...value, fetchedFor: chinaDate };
-    } catch (error) {
-      console.warn(code + ': index monthly history unavailable; keeping cache (' + error.message + ')');
-    }
-  });
-  const indexPayload = { schemaVersion: 1, updatedAt, monthly };
-  const indexChanged = writeIfChanged(INDEX_FILE, indexPayload, true);
-  console.log(indexChanged ? 'Updated data/index-cache.json' : 'Index history unchanged; kept previous snapshot.');
 
   // Derived page read models are normally built by the dedicated static-cache workflow.
   // Keep the default enabled for local/manual runs; source collection Actions set SKIP_DERIVED=1.

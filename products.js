@@ -7,20 +7,13 @@ function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(N
 function priceScale(value,unit){
  var n=Number(value),base=String(unit||'');
  if(value==null||!Number.isFinite(n))return {value:'—',unit:base||'—'};
- var scale=1,suffix='';
- if(Math.abs(n)>=10000){scale=10000;suffix='万';}
- else if(Math.abs(n)>=1000){scale=1000;suffix='千';}
- return {value:(n/scale).toFixed(2).replace(/\\.?0+$/,''),unit:suffix?base.replace(/^元/,'元') .replace(/^元/,'') : base};
+ var scale=1,scaledUnit=base;
+ if(Math.abs(n)>=10000){scale=10000;scaledUnit=base.replace(/^元/,'万元');}
+ else if(Math.abs(n)>=1000){scale=1000;scaledUnit=base.replace(/^元/,'千元');}
+ var formatted=(n/scale).toFixed(2).replace(/\\.?0+$/,'');
+ return {value:formatted,unit:scaledUnit};
 }
-function money(value,unit){
- var display=priceScale(value,unit);
- return display.value;
-}
-function displayUnit(unit,value){
- var display=priceScale(value,unit);
- if(display.unit===String(unit||''))return display.unit;
- return display.unit;
-}
+function money(value,unit){return priceScale(value,unit).value;}
 function normalizedPosition(value,min,max){var n=Number(value);if(!Number.isFinite(n))return null;if(!(max>min))return 0;return Math.max(0,Math.min(1,(n-min)/(max-min)));}
 function priceStats(series){
  var points=(Array.isArray(series)?series:[]).filter(function(point){return point&&point.price!=null&&Number.isFinite(Number(point.price));});
@@ -32,7 +25,10 @@ function comparisonRow(name,type,ratio,unit,series,change,href){
  var stats=priceStats(series);
  var ratioText=type==='商品'?'—':(ratio==null||!Number.isFinite(Number(ratio))?'暂无数据':(Number(ratio)*100).toFixed(1)+'%');
  var nameHtml=href?'<a class="commodity-stock-name text-body text-decoration-none" href="'+esc(href)+'">'+esc(name)+'</a>':'<strong>'+esc(name)+'</strong>';
- var rowUnit=unit||'—';\n var priceUnit=function(value){var scaled=priceScale(value,unit);return scaled.value==='—'?rowUnit:(Math.abs(Number(value))>=10000?rowUnit.replace(/^元/,'万元'):Math.abs(Number(value))>=1000?rowUnit.replace(/^元/,'千元'):rowUnit);};\n var displayPrices=stats?[stats.low,stats.high,stats.first,stats.current].map(function(value){return money(value,unit);}):['—','—','—','—'];\n var unitLabel=stats?priceUnit(stats.current):rowUnit;\n return '<tr><td>'+nameHtml+'</td><td>'+type+'</td><td>'+ratioText+'</td><td>'+esc(unitLabel)+'</td><td>'+displayPrices[0]+'</td><td>'+displayPrices[1]+'</td><td>'+displayPrices[2]+'</td><td>'+displayPrices[3]+'</td><td class="'+tone(change)+'">'+pct(change)+'</td></tr>';
+ var prices=stats?[stats.low,stats.high,stats.first,stats.current]:[];
+ var shown=prices.map(function(value){return priceScale(value,unit).value;});
+ var unitLabel=stats?priceScale(stats.current,unit).unit:(unit||'—');
+ return '<tr><td>'+nameHtml+'</td><td>'+type+'</td><td>'+ratioText+'</td><td>'+esc(unitLabel)+'</td><td>'+(shown[0]||'—')+'</td><td>'+(shown[1]||'—')+'</td><td>'+(shown[2]||'—')+'</td><td>'+(shown[3]||'—')+'</td><td class="'+tone(change)+'">'+pct(change)+'</td></tr>';
 }
 function comparisonTableHtml(card){
  var rows=comparisonRow(displayProductName(card.name),'商品',null,card.unit,card.productSeries,card.productChange,'');

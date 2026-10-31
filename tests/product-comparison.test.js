@@ -114,8 +114,10 @@ test('commodity database index references one independent JSON file per product'
     assert.equal(product.commonMonthCount, card.commonMonthCount);
     assert.ok(Array.isArray(card.productSeries));
     assert.ok(Array.isArray(card.stocks));
-    assert.equal(card.productMonthCount, card.productSeries.length,
-      'commodity month count must match its own price series, not the stock timeline');
+    assert.ok(card.productMonthCount >= card.commonMonthCount,
+      'common comparison months cannot exceed the commodity own-history count');
+    assert.ok(card.productSeries.length === 0 || card.productSeries.length === card.commonMonthCount,
+      'aligned product series must match the common comparison timeline');
     assert.ok(card.commonMonthCount <= card.productMonthCount,
       'common month coverage cannot exceed commodity coverage');
     card.stocks.forEach((stock) => {

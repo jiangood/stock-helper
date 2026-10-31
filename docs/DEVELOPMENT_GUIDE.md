@@ -153,4 +153,4 @@ node scripts/validate_stock_data.js
 
 前端重构按 [SPA 重构与文件命名迁移清单](SPA_MIGRATION_PLAN.md) 执行。采用原生 ES Modules + Hash Router，每个页面一个 `*.page.js` 主模块，公共 UI 放入 `src/components/`，数据访问放入 `src/services/`，纯计算工具和业务规则分别放入 `src/utils/`、`src/rules/`。
 
-迁移必须渐进进行：先建立路由与公共组件，再逐页迁移；旧 HTML/JS 在调用方迁移且测试通过前不得删除。当前已提交 Hash Router、应用生命周期骨架，以及导航、主题、Toast、加载组件，但尚未接入现有页面，也未切换首页入口。不得因 SPA 改造改变行情数据 `cache: 'no-store'`、不持久化业务数据、评分/纪律口径、数据采集脚本或 Actions 发布流程。
+迁移必须渐进进行：先建立路由与公共组件，再逐页迁移；旧 HTML/JS 在调用方迁移且测试通过前不得删除。当前已提交 Hash Router、应用生命周期骨架，以及导航、主题、密码门禁、Toast、加载组件和缓存健康数据服务；健康监控页已新增独立 ES Module，但尚未切换首页入口。不得因 SPA 改造改变行情数据 `cache: 'no-store'`、不持久化业务数据、评分/纪律口径、数据采集脚本或 Actions 发布流程。

@@ -845,7 +845,7 @@
         axisLine: { show: false },
         axisTick: { show: false },
         splitLine: { lineStyle: { color: t.border, opacity: 0.55 } },
-        axisLabel: { color: t.text, fontSize: 10, formatter: v => Number(v).toFixed(2) }
+        axisLabel: { color: t.text, fontSize: 10, formatter: v => Number(v).toFixed(0) }
       },
       dataZoom: [
         {

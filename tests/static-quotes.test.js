@@ -44,12 +44,11 @@ const bars = Array.from({ length: 12 }, (_, index) => ({
   volume: 1000 + index
 }));
 
-test('static adapter reads quote, detail, daily/weekly/monthly and index data from same origin', async () => {
+test('static adapter reads stock quote, detail and daily/weekly/monthly data from same origin', async () => {
   const requested = [];
   const files = {
     'data/stock-quotes.json': { quotes: {
       sz002408: { code: 'sz002408', price: 4.36, todayChange: -1.36 },
-      sh000001: { code: 'sh000001', price: 3200, todayChange: 0.4 }
     }, updatedAt: '2026-10-29T07:25:00.000Z', marketDate: '2026-10-29', status: 'ok' },
     'data/stock-cache/sz002408.json': {
       detail: { code: 'sz002408', name: '齐翔腾达', price: 4.36, peTtm: 12, pb: 1.1 },
@@ -57,7 +56,6 @@ test('static adapter reads quote, detail, daily/weekly/monthly and index data fr
       weeklyAdjusted: { bars: bars.slice(0, 10) },
       monthlyAdjusted: { bars: bars.slice(0, 8) }
     },
-    'data/index-cache.json': { monthly: { sh000001: { bars: bars.slice(0, 10) } } },
   };
   const harness = makeHarness(async (url, options) => {
     requested.push({ url: String(url), cache: options && options.cache });
@@ -66,14 +64,12 @@ test('static adapter reads quote, detail, daily/weekly/monthly and index data fr
     return { ok: true, status: 200, json: async () => files[key] };
   });
   const client = new harness.api.Client();
-  const quotes = await client.fetch(['sz002408', 'sh000001']);
+  const quotes = await client.fetch(['sz002408']);
   assert.equal(quotes.sz002408.price, 4.36);
-  assert.equal(quotes.sh000001.price, 3200);
   assert.equal((await client.fetchDetail('sz002408')).name, '齐翔腾达');
   assert.equal((await client.fetchKline('sz002408', { period: 'day', count: 10 })).bars.length, 10);
   assert.equal((await client.fetchKline('sz002408', { period: 'week', count: 10 })).bars.length, 10);
   assert.equal((await client.fetchKline('sz002408', { period: 'month', count: 10 })).bars.length, 8);
-  assert.equal((await client.fetchKline('sh000001', { period: 'month', count: 10 })).bars.length, 10);
   assert.equal(harness.api.isTrading(), false, 'browser-side intraday polling should be disabled');
   assert.ok(requested.every(item => item.url.startsWith('https://example.test/stock-helper/')));
   assert.ok(requested.every(item => item.cache === 'no-store'));

@@ -60,6 +60,13 @@ PRODUCTS = [
     {"id": "diesel", "name": "柴油", "unit": "元/吨", "symbol": None, "aliases": ["柴油", "0#柴油"], "stocks": ["泰山石油"], "chain": "原油 → 炼化 → 柴油批零", "drivers": "柴油牌号、地区和批零口径需区分；原油期货不作为柴油售价替代。"},
     {"id": "printing-paper", "name": "印刷用纸", "unit": "元/吨", "symbol": None, "aliases": ["印刷用纸", "文化纸", "双胶纸"], "stocks": ["岳阳林纸"], "chain": "商品浆 → 文化纸 → 印刷出版", "drivers": "纸种、克重与地区报价差异较大，暂无统一连续期货序列。"},
     {"id": "packaging-paper", "name": "包装用纸", "unit": "元/吨", "symbol": None, "aliases": ["包装用纸", "箱板纸", "瓦楞纸"], "stocks": ["岳阳林纸"], "chain": "废纸/木浆 → 包装纸 → 纸箱包装", "drivers": "纸种、克重及再生纤维比例不同，暂无统一连续期货序列。"},
+    {"id": "titanium-products", "name": "钛产品", "unit": "元/吨", "symbol": None, "aliases": ["钛产品"], "stocks": ["钒钛股份"], "chain": "钛钒磁铁矿 → 钛精矿、钛渣等钛产品", "drivers": "需按钛精矿、钛渣等产品形态区分，不以钛白粉或钛材报价替代。"},
+    {"id": "cathode-materials", "name": "锂电正极材料", "unit": "元/吨", "symbol": None, "aliases": ["正极材料"], "stocks": ["振华新材"], "chain": "锂盐、镍钴锰/磷铁原料 → 正极材料 → 锂电池", "drivers": "不同化学体系和型号价格差异大，未核实具体产品结构前不匹配碳酸锂或单一正极材料报价。"},
+    {"id": "cast-superalloy", "name": "铸造高温合金", "unit": "元/吨", "symbol": None, "aliases": ["铸造合金制品"], "stocks": ["钢研高纳"], "chain": "镍、钴、铬等合金原料 → 铸造高温合金 → 航空发动机及燃气轮机", "drivers": "牌号、工艺和应用等级差异显著，暂无统一可比公开连续报价。"},
+    {"id": "wrought-superalloy", "name": "变形高温合金", "unit": "元/吨", "symbol": None, "aliases": ["变形合金制品"], "stocks": ["钢研高纳"], "chain": "镍基/钴基合金 → 锻造、轧制高温合金 → 航空发动机及燃气轮机", "drivers": "合金牌号、规格和加工状态不同，暂无统一可比公开连续报价。"},
+    {"id": "steel", "name": "钢材", "unit": "元/吨", "symbol": None, "aliases": ["钢材", "钢材销售"], "stocks": ["南钢股份"], "chain": "铁矿石、焦煤、焦炭 → 钢铁冶炼 → 板材、长材及特钢", "drivers": "钢材品种跨度大，未以单一螺纹钢或热卷期货代替公司综合钢材销售价格。"},
+    {"id": "compound-fertilizer", "name": "复合肥", "unit": "元/吨", "symbol": None, "aliases": ["复合肥", "复合肥料"], "stocks": ["四川美丰"], "chain": "氮磷钾原料 → 复合肥 → 农业种植", "drivers": "配方、养分含量和区域差异较大，需按主流配方口径核实报价。"},
+    {"id": "tungsten-products", "name": "钨产品", "unit": "元/吨", "symbol": None, "aliases": ["钨产品", "钨精矿", "仲钨酸铵", "APT"], "stocks": ["中钨高新"], "chain": "钨矿 → 钨精矿、APT、钨粉、硬质合金", "drivers": "钨产品跨多个加工环节，不同环节价格不可混用，暂无统一连续期货序列。"},
 ]
 
 def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:
@@ -514,8 +521,11 @@ def fetch_data() -> dict[str, Any]:
         "molybdenum": ["有色"], "tantalum-niobium": ["有色"], "titanium-material": ["有色"], "vanadium": ["钢铁", "有色"],
         "carbon-fiber": ["化工"], "viscose-staple-fiber": ["纺织"], "methionine": ["农副", "化工"],
         "gasoline": ["能源"], "diesel": ["能源"], "printing-paper": ["造纸"], "packaging-paper": ["造纸"],
+        "titanium-products": ["有色"], "cathode-materials": ["化工"],
+        "cast-superalloy": ["有色", "钢铁"], "wrought-superalloy": ["有色", "钢铁"],
+        "steel": ["钢铁"], "compound-fertilizer": ["化工", "农副"], "tungsten-products": ["有色"],
     }
-    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog", "tdi", "polycarbonate", "phosphate-iron", "molybdenum", "tantalum-niobium", "titanium-material", "vanadium", "carbon-fiber", "viscose-staple-fiber", "methionine", "gasoline", "diesel", "printing-paper", "packaging-paper"}
+    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog", "tdi", "polycarbonate", "phosphate-iron", "molybdenum", "tantalum-niobium", "titanium-material", "vanadium", "carbon-fiber", "viscose-staple-fiber", "methionine", "gasoline", "diesel", "printing-paper", "packaging-paper", "titanium-products", "cathode-materials", "cast-superalloy", "wrought-superalloy", "steel", "compound-fertilizer", "tungsten-products"}
     categories = list(dict.fromkeys(
         category for values in industry_categories.values() for category in values
     ))

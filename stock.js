@@ -203,7 +203,7 @@
       };
     }
     renderResearchScore();
-    if (DETAIL) 
+
   }
 
   /** 读取 Actions 预计算的 32 分制评分；缺失时卡片显示「暂无」 */
@@ -220,7 +220,7 @@
       RESEARCH_SCORE = null;
     }
     renderResearchScore();
-    if (DETAIL) 
+
   }
 
   async function loadQuote(force) {
@@ -276,9 +276,7 @@
     renderHeader();
     renderQuote(DETAIL);
     renderValuation(DETAIL);
-
     renderResearchScore();
-    
     updateCalc();
   }
 
@@ -504,11 +502,7 @@
 
   /** 预取日 K，并在详情源缺少 52 周高低时用日 K 补算（同时加速「日K」标签切换） */
   async function warmupDaily() {
-    if (klineCache.day) {
-      
-      
-      return;
-    }
+    if (klineCache.day) return;
     try {
       // 趋势/均线使用前复权 K；涨停幅度和涨停价必须使用未复权 K。
       const [adjusted, raw] = await Promise.allSettled([
@@ -535,8 +529,6 @@
       HISTORY = res;
       historyAt = Date.now();
       renderHistoryRange();
-      
-      
     } catch (e) {
       /* 月 K 失败不影响主流程 */
       HISTORY = { bars: [] };

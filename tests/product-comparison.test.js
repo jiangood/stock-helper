@@ -104,7 +104,7 @@ test('commodity database index references one independent JSON file per product'
   database.products.forEach((product) => {
     assert.ok(!ids.has(product.id), 'product ids must be unique');
     ids.add(product.id);
-    assert.match(product.file, /^products\\/[a-z0-9-]+\\.json$/);
+    assert.match(product.file, /^products\/[a-z0-9-]+\.json$/);
     const card = JSON.parse(fs.readFileSync(path.join(databaseDir, product.file), 'utf8'));
     assert.equal(card.id, product.id);
     assert.ok(Array.isArray(card.months));

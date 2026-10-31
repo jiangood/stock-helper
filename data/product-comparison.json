@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-31T15:08:41.000Z",
-  "marketDate": "2026-10-31T15:08:41+00:00",
+  "generatedAt": "2026-10-31T15:33:47.000Z",
+  "marketDate": "2026-10-31T15:33:47+00:00",
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 15,
@@ -8243,7 +8243,7 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 17180,
+      "latestPrice": 13900,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [
@@ -9475,7 +9475,7 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 16066.67,
+      "latestPrice": 14333.33,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [
@@ -14361,7 +14361,7 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 13980,
+      "latestPrice": 12800,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [
@@ -44400,12 +44400,12 @@
     },
     {
       "id": "coal",
-      "name": "动力煤",
+      "name": "炼焦煤",
       "unit": "元/吨",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 842.75,
+      "latestPrice": 1441.25,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [

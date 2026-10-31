@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T15:20:25+00:00",
+  "updatedAt": "2026-10-31T06:11:36+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -339,12 +339,17 @@
           "date": "2026-10-29",
           "spot": 1060.0,
           "futures": 978.0
+        },
+        {
+          "date": "2026-10-30",
+          "spot": 1060.0,
+          "futures": 966.0
         }
       ],
       "latest": 1060.0,
-      "latestDate": "2026-10-29",
+      "latestDate": "2026-10-30",
       "latestSpot": 1060.0,
-      "latestFutures": 979.0,
+      "latestFutures": 972.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -353,8 +358,7 @@
         "series": [
           {
             "date": "2026-07-22",
-            "value": 1560.0,
-            "change": 1560.0
+            "value": 1560.0
           },
           {
             "date": "2026-07-23",
@@ -675,11 +679,16 @@
             "date": "2026-10-29",
             "value": 3675.0,
             "change": 0.0
+          },
+          {
+            "date": "2026-10-30",
+            "value": 3427.0,
+            "change": -248.0
           }
         ],
-        "latest": 3675.0,
-        "latestDate": "2026-10-29",
-        "change": 0.0,
+        "latest": 3427.0,
+        "latestDate": "2026-10-30",
+        "change": -248.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -693,7 +702,7 @@
       "chain": "玻璃、光伏玻璃、日用玻璃、硅酸钠",
       "drivers": "重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨成本。",
       "status": "ok",
-      "futuresDate": "2026-10-29",
+      "futuresDate": "2026-10-30",
       "futuresTime": "23:00:00"
     },
     "urea": {
@@ -1031,12 +1040,17 @@
           "date": "2026-10-29",
           "spot": 1740.0,
           "futures": 1716.0
+        },
+        {
+          "date": "2026-10-30",
+          "spot": 1745.0,
+          "futures": 1736.0
         }
       ],
-      "latest": 1740.0,
-      "latestDate": "2026-10-29",
-      "latestSpot": 1740.0,
-      "latestFutures": 1716.0,
+      "latest": 1745.0,
+      "latestDate": "2026-10-30",
+      "latestSpot": 1745.0,
+      "latestFutures": 1736.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -1044,13 +1058,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-21",
-            "value": 6194.0
-          },
-          {
             "date": "2026-07-22",
-            "value": 6084.0,
-            "change": -110.0
+            "value": 6084.0
           },
           {
             "date": "2026-07-23",
@@ -1371,11 +1380,16 @@
             "date": "2026-10-29",
             "value": 500.0,
             "change": 500.0
+          },
+          {
+            "date": "2026-10-30",
+            "value": 500.0,
+            "change": 0.0
           }
         ],
         "latest": 500.0,
-        "latestDate": "2026-10-29",
-        "change": 500.0,
+        "latestDate": "2026-10-30",
+        "change": 0.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -1387,20 +1401,20 @@
       "chain": "煤头/气头生产 → 农业与工业需求",
       "drivers": "看农业需求季节性、出口政策、日产量、企业库存和煤气成本。",
       "status": "ok",
-      "futuresDate": "2026-10-29",
+      "futuresDate": "2026-10-30",
       "futuresTime": "15:00:00",
       "industryLinks": {
         "label": "数据源列示产业链企业",
         "productName": "尿素",
         "producers": [
-          "华锦股份",
-          "湖北宜化",
           "博源化工",
-          "四川美丰",
-          "泸天化",
+          "华鲁恒升",
           "河化股份",
+          "华锦股份",
           "华昌化工",
-          "辉隆股份"
+          "兰花科创",
+          "赤天化",
+          "湖北宜化"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -1742,12 +1756,17 @@
           "date": "2026-10-29",
           "spot": 3953.33,
           "futures": 3413.0
+        },
+        {
+          "date": "2026-10-30",
+          "spot": 3905.0,
+          "futures": 3480.0
         }
       ],
-      "latest": 3953.33,
-      "latestDate": "2026-10-29",
-      "latestSpot": 3953.33,
-      "latestFutures": 3413.0,
+      "latest": 3905.0,
+      "latestDate": "2026-10-30",
+      "latestSpot": 3905.0,
+      "latestFutures": 3480.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -1755,13 +1774,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-21",
-            "value": 5878.0
-          },
-          {
             "date": "2026-07-22",
-            "value": 5878.0,
-            "change": 0.0
+            "value": 5878.0
           },
           {
             "date": "2026-07-23",
@@ -2087,11 +2101,16 @@
             "date": "2026-10-29",
             "value": 5630.0,
             "change": -69.0
+          },
+          {
+            "date": "2026-10-30",
+            "value": 5630.0,
+            "change": 0.0
           }
         ],
         "latest": 5630.0,
-        "latestDate": "2026-10-29",
-        "change": -69.0,
+        "latestDate": "2026-10-30",
+        "change": 0.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -2107,14 +2126,14 @@
         "label": "数据源列示产业链企业",
         "productName": "甲醇",
         "producers": [
+          "湖北宜化",
+          "鲁西化工",
+          "泸天化",
+          "诚志股份",
           "兴化股份",
-          "博源化工",
           "华昌化工",
-          "岳阳兴长",
-          "柳化股份",
-          "兰花科创",
-          "山西焦化",
-          "泸天化"
+          "兖矿能源",
+          "赤天化"
         ],
         "downstreamUsers": [
           "联泓新科"
@@ -2129,13 +2148,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 13900.0,
-      "latestDate": "2026-10-29",
-      "latestSpot": 13900.0,
+      "latest": 17180.0,
+      "latestDate": "2026-10-31",
+      "latestSpot": 17180.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 3.12,
+      "changePct": 25.04,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -2498,12 +2517,17 @@
           "date": "2026-10-29",
           "spot": 23771.7,
           "futures": 23310.0
+        },
+        {
+          "date": "2026-10-30",
+          "spot": 23771.7,
+          "futures": 23395.0
         }
       ],
       "latest": 23771.7,
-      "latestDate": "2026-10-29",
+      "latestDate": "2026-10-30",
       "latestSpot": 23771.7,
-      "latestFutures": 23310.0,
+      "latestFutures": 23395.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -2511,13 +2535,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-21",
-            "value": 369690.0
-          },
-          {
             "date": "2026-07-22",
-            "value": 365596.0,
-            "change": -4094.0
+            "value": 365596.0
           },
           {
             "date": "2026-07-23",
@@ -2843,11 +2862,16 @@
             "date": "2026-10-29",
             "value": 60195.0,
             "change": -1693.0
+          },
+          {
+            "date": "2026-10-30",
+            "value": 58516.0,
+            "change": -1679.0
           }
         ],
-        "latest": 60195.0,
-        "latestDate": "2026-10-29",
-        "change": -1693.0,
+        "latest": 58516.0,
+        "latestDate": "2026-10-30",
+        "change": -1679.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -2863,24 +2887,23 @@
         "label": "数据源列示产业链企业",
         "productName": "铝",
         "producers": [
-          "中国铝业",
+          "焦作万方",
           "云铝股份",
           "神火股份",
-          "焦作万方",
+          "电投能源",
+          "天山铝业",
           "中孚实业",
-          "中国宏桥",
-          "金瑞矿业",
-          "电投能源"
+          "中国铝业"
         ],
         "downstreamUsers": [
-          "明泰铝业",
-          "南山铝业",
-          "闽发铝业",
+          "兴发铝业",
+          "万邦德",
           "常铝股份",
-          "上海能源",
+          "罗普斯金",
           "宏创控股",
-          "中国忠旺",
-          "利源精制"
+          "利源精制",
+          "亚太科技",
+          "闽发铝业"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -2888,17 +2911,17 @@
     },
     "coal": {
       "id": "coal",
-      "name": "炼焦煤",
+      "name": "动力煤",
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 1441.25,
-      "latestDate": "2026-10-29",
-      "latestSpot": 1441.25,
+      "latest": 842.75,
+      "latestDate": "2026-10-31",
+      "latestSpot": 842.75,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 1.59,
+      "changePct": 19.12,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -2910,16 +2933,16 @@
       "status": "latest-only",
       "industryLinks": {
         "label": "数据源列示产业链企业",
-        "productName": "炼焦煤",
+        "productName": "动力煤",
         "producers": [
+          "甘肃能化",
+          "神火股份",
           "冀中能源",
-          "山西焦煤",
+          "电投能源",
+          "郑州煤电",
           "兰花科创",
           "兖矿能源",
-          "盘江股份",
-          "江钨装备",
-          "淮北矿业",
-          "开滦股份"
+          "华阳股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -3261,12 +3284,17 @@
           "date": "2026-10-29",
           "spot": 18775.0,
           "futures": 19155.0
+        },
+        {
+          "date": "2026-10-30",
+          "spot": 18783.3,
+          "futures": 19170.0
         }
       ],
-      "latest": 18775.0,
-      "latestDate": "2026-10-29",
-      "latestSpot": 18775.0,
-      "latestFutures": 19155.0,
+      "latest": 18783.3,
+      "latestDate": "2026-10-30",
+      "latestSpot": 18783.3,
+      "latestFutures": 19170.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -3274,13 +3302,8 @@
         "label": "期货仓单库存（非全行业库存）",
         "series": [
           {
-            "date": "2026-07-21",
-            "value": 149370.0
-          },
-          {
             "date": "2026-07-22",
-            "value": 149370.0,
-            "change": 0.0
+            "value": 149370.0
           },
           {
             "date": "2026-07-23",
@@ -3606,11 +3629,16 @@
             "date": "2026-10-29",
             "value": 144410.0,
             "change": -770.0
+          },
+          {
+            "date": "2026-10-30",
+            "value": 143340.0,
+            "change": -1070.0
           }
         ],
-        "latest": 144410.0,
-        "latestDate": "2026-10-29",
-        "change": -770.0,
+        "latest": 143340.0,
+        "latestDate": "2026-10-30",
+        "change": -1070.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -3675,8 +3703,8 @@
       ],
       "role": "化工原料参考价",
       "series": [],
-      "latest": 2366.67,
-      "latestDate": "2026-10-29",
+      "latest": 2240.0,
+      "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "latest-only"
@@ -3690,8 +3718,8 @@
       ],
       "role": "硫酸法钛白粉成本参考",
       "series": [],
-      "latest": 917.5,
-      "latestDate": "2026-10-29",
+      "latest": 1862.5,
+      "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "latest-only"
@@ -3722,8 +3750,8 @@
       ],
       "role": "煤化工能源成本参考；煤种/地区口径需核对",
       "series": [],
-      "latest": 710.0,
-      "latestDate": "2026-10-29",
+      "latest": 842.75,
+      "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "latest-only"

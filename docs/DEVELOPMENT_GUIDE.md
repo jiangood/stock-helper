@@ -154,4 +154,4 @@ node scripts/validate_stock_data.js
 
 前端重构按 [SPA 重构与文件命名迁移清单](SPA_MIGRATION_PLAN.md) 执行。采用原生 ES Modules + Hash Router，每个页面一个 `*.page.js` 主模块，公共 UI 放入 `src/components/`，数据访问放入 `src/services/`，纯计算工具和业务规则分别放入 `src/utils/`、`src/rules/`。
 
-迁移必须渐进进行：先建立路由与公共组件，再逐页迁移；旧 HTML/JS 在调用方迁移且测试通过前不得删除。当前 `index.html` 已切换为 SPA 壳，Hash Router、统一导航、主题切换和页面生命周期已接入；健康监控页使用原生 ES Module，其余四个页面由独立页面模块通过 iframe 兼容桥接旧业务脚本，旧 `.html` 入口已跳转至 Hash 路由。桥接是迁移过渡层，不代表这些页面已完成原生模块化。不得因 SPA 改造改变行情数据 `cache: 'no-store'`、不持久化业务数据、评分/纪律口径、数据采集脚本或 Actions 发布流程。
+迁移必须渐进进行：先建立路由与公共组件，再逐页迁移；旧 HTML/JS 在调用方迁移且测试通过前不得删除。当前 `index.html` 已切换为 SPA 壳，Hash Router、统一导航、主题切换和页面生命周期已接入；健康监控和商品页使用原生 ES Module；自选、行情和个股详情由独立页面模块通过 iframe 兼容桥接旧业务脚本，旧 `.html` 入口已跳转至 Hash 路由。桥接是迁移过渡层，不代表这些页面已完成原生模块化。不得因 SPA 改造改变行情数据 `cache: 'no-store'`、不持久化业务数据、评分/纪律口径、数据采集脚本或 Actions 发布流程。

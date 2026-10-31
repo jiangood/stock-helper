@@ -264,8 +264,6 @@
     if (manual) spinRefresh();
     const ok = await loadQuote(manual);
     if (!ok) return;
-    if (manual) {
-    }
     loadChart(chartTab, false).catch(() => {});
     if (manual) showToast('已重新读取静态行情缓存', 'success');
   }

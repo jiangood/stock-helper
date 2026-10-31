@@ -84,8 +84,8 @@ docs/
 | 当前文件 | 目标位置 | 处理方式 |
 | --- | --- | --- |
 | `stock-dashboard.js` | `src/pages/stocks.page.js` | 拆分页面编排与公共逻辑；不整文件机械搬迁 |
-| `business.js` | `src/pages/market.page.js` + `src/services/market.service.js` | 页面渲染与行情数据读取分离 |
-| `global-assets.js` | `src/pages/market.page.js` + `src/services/market.service.js` | 全球资产卡片渲染归页面，数据获取归服务 |
+| `business.js` | `src/pages/market.page.js` + `src/services/market.service.js` | 页面渲染与行情数据读取分离；市场数据服务已建立，页面仍待原生迁移 |
+| `global-assets.js` | `src/pages/market.page.js` + `src/services/market.service.js` | 全球资产卡片渲染归页面，数据获取归服务；数据读取服务已建立，页面仍待原生迁移 |
 | `products.js` | `src/pages/products.page.js` + `src/services/products.service.js` | 商品卡片、图表编排与数据读取分离 |
 | `stock.js` | `src/pages/stock-detail.page.js` + 对应 services/utils/rules | 个股详情渲染与计算拆分 |
 | `cache-health.js` | `src/pages/health.page.js` + `src/services/cache-health.service.js` | 健康页渲染与监控数据读取分离 |
@@ -148,7 +148,7 @@ docs/
 1. **阶段一：盘点与规范（已完成）**：建立本清单，明确文件映射、命名规范和不变边界。
 2. **阶段二：SPA 外壳（已完成）**：`index.html` 已切换为唯一壳，Hash Router、统一导航、主题切换、页面生命周期和旧 URL 跳转已接入。
 3. **阶段三：公共基础设施（基础模块已完成）**：导航、主题、密码门禁、Toast、加载状态和缓存健康服务已独立成模块。
-4. **阶段四：逐页迁移（进行中）**：健康页与商品页已原生模块化；自选、行情和个股详情当前通过兼容桥接运行。下一步迁移自选 → 行情 → 个股详情，并做新旧结果对照。
+4. **阶段四：逐页迁移（进行中）**：健康页与商品页已原生模块化；自选、行情和个股详情当前通过兼容桥接运行。行情数据服务 `src/services/market.service.js` 已建立并有独立测试，负责以 `no-store` 读取并校验板块日线、全球资产和商品供需缓存；行情页渲染尚未切换。下一步按完整业务覆盖迁移行情页，再迁移自选与个股详情，并做新旧结果对照。
 5. **阶段五：清理兼容层**：只有在旧 URL 全部兼容且测试覆盖后，才考虑删除重复页面模板和旧脚本。
 6. **阶段六：完整验收**：运行 JS/Python 测试、数据校验、语法检查，并检查 GitHub Actions。
 

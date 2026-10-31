@@ -59,12 +59,12 @@ jobs:
             node scripts/build_cache_manifest.js
             node scripts/validate_stock_data.js
 
-            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/commodity-db/index.json)" ]; then
+            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/commodity-db/)" ]; then
               echo "Static page caches are already current."
               exit 0
             fi
 
-            git add data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/commodity-db/index.json
+            git add data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/commodity-db/
             git commit -m "Build static page caches"
             if git push origin HEAD:master; then
               exit 0

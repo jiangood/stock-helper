@@ -415,12 +415,31 @@ function monthlyTrendHtml(stock) {
     const y = 29 - (value - min) / span * 25;
     return x.toFixed(1) + ',' + y.toFixed(1);
   }).join(' ');
+
+  // 月线颜色按当前价相对交易计划价位判断，而非按月线首尾涨跌判断。
+  const quote = priceData[stock.code];
+  const currentPrice = quote && Number.isFinite(quote.price) ? quote.price : null;
+  const entry = Number(stock.entry);
+  const takeProfit = Number(stock.tp1);
+  let tone = 'monthly-trend-neutral';
+  let status = '当前价处于入场价与止盈价之间或价位数据不完整';
+  if (currentPrice !== null && Number.isFinite(entry) && currentPrice < entry) {
+    tone = 'monthly-trend-below-entry';
+    status = '当前价低于入场价';
+  } else if (currentPrice !== null && Number.isFinite(takeProfit) && currentPrice > takeProfit) {
+    tone = 'monthly-trend-above-target';
+    status = '当前价高于第一止盈价';
+  }
+
   const first = values[0];
   const last = values[values.length - 1];
-  const tone = last >= first ? 'monthly-trend-up' : 'monthly-trend-down';
   const firstTime = bars[0] && bars[0].time || '';
   const lastTime = bars[bars.length - 1] && bars[bars.length - 1].time || '';
-  const title = '复权月收盘价 · ' + firstTime + ' 至 ' + lastTime + ' · ' + first.toFixed(2) + ' → ' + last.toFixed(2);
+  const quoteText = currentPrice === null ? '当前价缺失' : '当前价 ' + currentPrice.toFixed(2);
+  const entryText = Number.isFinite(entry) ? '入场价 ' + entry.toFixed(2) : '入场价缺失';
+  const targetText = Number.isFinite(takeProfit) ? '第一止盈价 ' + takeProfit.toFixed(2) : '第一止盈价缺失';
+  const title = status + ' · ' + quoteText + ' · ' + entryText + ' · ' + targetText
+    + ' · 复权月收盘价 ' + firstTime + ' 至 ' + lastTime + ' · ' + first.toFixed(2) + ' → ' + last.toFixed(2);
   return '<svg class="monthly-trend-svg ' + tone + '" viewBox="0 0 112 32" role="img" aria-label="' + esc(title) + '" title="' + esc(title) + '"><polyline points="' + points + '"></polyline></svg>';
 }
 

@@ -23,6 +23,11 @@ test('网页行情入口只使用同源静态缓存适配器', () => {
   assert.doesNotMatch(adapter, /push2(?:delay|his)?\.eastmoney\.com|qt\.gtimg\.cn|ifzq\.gtimg\.cn/, '浏览器静态适配器不应包含外部行情源');
 });
 
+test('首页名称首列宽度保持紧凑', () => {
+  const css = fs.readFileSync(path.join(root, 'app.css'), 'utf8');
+  assert.match(css, /\.stock-table thead th:first-child,[\s\S]*?width: 112px; min-width: 112px; max-width: 112px;/);
+});
+
 test('首页内嵌 JavaScript 均可通过语法解析', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]

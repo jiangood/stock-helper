@@ -30,6 +30,7 @@ jobs:
         run: |
           node --check scripts/build_cache_manifest.js
           node --check scripts/build_product_comparison.js
+          node --check products.js
       - name: Build static cache manifest and health snapshot
         run: node scripts/build_cache_manifest.js
       - name: Run indicator and syntax tests

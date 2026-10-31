@@ -90,7 +90,7 @@
   .stock-table thead th:nth-child(3) { text-align: right; }
   .stock-table thead th:first-child,
   .stock-table tbody td:first-child {
-    width: 101px; min-width: 101px; max-width: 101px;
+    width: 95px; min-width: 95px; max-width: 95px;
   }
   .stock-table tbody td:first-child { overflow: hidden; }
   .stock-table .stock-name {

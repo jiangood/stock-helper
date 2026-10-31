@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-31T13:42:37+00:00",
+  "updatedAt": "2026-10-31T13:45:32+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -5764,13 +5764,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 13900.0,
+      "latest": 13740.0,
       "latestDate": "2026-10-31",
-      "latestSpot": 13900.0,
+      "latestSpot": 13740.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 3.12,
+      "changePct": 1.93,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -10784,6 +10784,46 @@
       "chain": "正丁烷氧化 → 顺酐 → 不饱和聚酯树脂、BDO、THF等",
       "drivers": "关注正丁烷成本、装置开工、厂家库存、下游不饱和聚酯树脂需求及出口。",
       "status": "pending"
+    },
+    "live-hog": {
+      "id": "live-hog",
+      "name": "生猪",
+      "unit": "元/公斤",
+      "symbol": null,
+      "series": [],
+      "latest": 12.82,
+      "latestDate": "2026-10-31",
+      "latestSpot": 12.82,
+      "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
+      "changePct": -6.97,
+      "inventory": null,
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "stocks": [
+        "天康生物"
+      ],
+      "chain": "玉米/豆粕等饲料 → 生猪养殖 → 屠宰及猪肉消费",
+      "drivers": "关注能繁母猪存栏、仔猪价格、出栏体重、养殖成本、猪粮比、屠宰开工和冻品库存。",
+      "status": "latest-only",
+      "industryLinks": {
+        "label": "数据源列示产业链企业",
+        "productName": "生猪",
+        "producers": [
+          "基京智农",
+          "正虹科技",
+          "罗牛山",
+          "顺鑫农业",
+          "新希望",
+          "双汇发展",
+          "东瑞股份",
+          "天康生物"
+        ],
+        "downstreamUsers": [],
+        "source": "东方财富现货与股票数据（经 AKShare 获取）",
+        "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
+      }
     }
   },
   "fetchErrors": [],

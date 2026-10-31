@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-31T13:42:37.000Z",
-  "marketDate": "2026-10-31T13:42:37+00:00",
+  "generatedAt": "2026-10-31T13:45:32.000Z",
+  "marketDate": "2026-10-31T13:45:32+00:00",
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 4,
@@ -7886,13 +7886,398 @@
       "note": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。 天然橡胶价格是核心产品价格代理，仍需结合加工、贸易业务占比。"
     },
     {
+      "id": "live-hog",
+      "name": "生猪",
+      "unit": "元/公斤",
+      "source": "期货主力连续",
+      "sourceNote": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "latestPrice": 9510,
+      "latestDate": "2026-10-30",
+      "productChange": -36.73,
+      "months": [
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12",
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
+      "productSeries": [
+        {
+          "month": "2024-03",
+          "index": 100,
+          "price": 15030
+        },
+        {
+          "month": "2024-04",
+          "index": 115.4,
+          "price": 17345
+        },
+        {
+          "month": "2024-05",
+          "index": 119.53,
+          "price": 17965
+        },
+        {
+          "month": "2024-06",
+          "index": 117.23,
+          "price": 17620
+        },
+        {
+          "month": "2024-07",
+          "index": 124.25,
+          "price": 18675
+        },
+        {
+          "month": "2024-08",
+          "index": 121.46,
+          "price": 18255
+        },
+        {
+          "month": "2024-09",
+          "index": 113.51,
+          "price": 17060
+        },
+        {
+          "month": "2024-10",
+          "index": 100.96,
+          "price": 15175
+        },
+        {
+          "month": "2024-11",
+          "index": 100.3,
+          "price": 15075
+        },
+        {
+          "month": "2024-12",
+          "index": 85.16,
+          "price": 12800
+        },
+        {
+          "month": "2025-01",
+          "index": 86.76,
+          "price": 13040
+        },
+        {
+          "month": "2025-02",
+          "index": 86.06,
+          "price": 12935
+        },
+        {
+          "month": "2025-03",
+          "index": 88.12,
+          "price": 13245
+        },
+        {
+          "month": "2025-04",
+          "index": 92.55,
+          "price": 13910
+        },
+        {
+          "month": "2025-05",
+          "index": 90.52,
+          "price": 13605
+        },
+        {
+          "month": "2025-06",
+          "index": 92.28,
+          "price": 13870
+        },
+        {
+          "month": "2025-07",
+          "index": 93.65,
+          "price": 14075
+        },
+        {
+          "month": "2025-08",
+          "index": 90.19,
+          "price": 13555
+        },
+        {
+          "month": "2025-09",
+          "index": 85.33,
+          "price": 12825
+        },
+        {
+          "month": "2025-10",
+          "index": 78.61,
+          "price": 11815
+        },
+        {
+          "month": "2025-11",
+          "index": 74.85,
+          "price": 11250
+        },
+        {
+          "month": "2025-12",
+          "index": 78.48,
+          "price": 11795
+        },
+        {
+          "month": "2026-01",
+          "index": 77.51,
+          "price": 11650
+        },
+        {
+          "month": "2026-02",
+          "index": 76.41,
+          "price": 11485
+        },
+        {
+          "month": "2026-03",
+          "index": 65,
+          "price": 9770
+        },
+        {
+          "month": "2026-04",
+          "index": 75.52,
+          "price": 11350
+        },
+        {
+          "month": "2026-05",
+          "index": 80.34,
+          "price": 12075
+        },
+        {
+          "month": "2026-06",
+          "index": 81.8,
+          "price": 12295
+        },
+        {
+          "month": "2026-07",
+          "index": 71.06,
+          "price": 10680
+        },
+        {
+          "month": "2026-08",
+          "index": 79.54,
+          "price": 11955
+        },
+        {
+          "month": "2026-09",
+          "index": 71.06,
+          "price": 10680
+        },
+        {
+          "month": "2026-10",
+          "index": 63.27,
+          "price": 9510
+        }
+      ],
+      "stocks": [
+        {
+          "code": "sz002100",
+          "name": "天康生物",
+          "group": "农业",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.3238,
+          "source": "月K",
+          "latestDate": "2026-10",
+          "latestClose": 7.57,
+          "changePct": 2.97,
+          "values": [
+            {
+              "month": "2024-03",
+              "index": 100,
+              "price": 7.352
+            },
+            {
+              "month": "2024-04",
+              "index": 94.56,
+              "price": 6.952
+            },
+            {
+              "month": "2024-05",
+              "index": 106.53,
+              "price": 7.832
+            },
+            {
+              "month": "2024-06",
+              "index": 90.21,
+              "price": 6.632
+            },
+            {
+              "month": "2024-07",
+              "index": 89.8,
+              "price": 6.602
+            },
+            {
+              "month": "2024-08",
+              "index": 84.49,
+              "price": 6.212
+            },
+            {
+              "month": "2024-09",
+              "index": 93.47,
+              "price": 6.872
+            },
+            {
+              "month": "2024-10",
+              "index": 88.03,
+              "price": 6.472
+            },
+            {
+              "month": "2024-11",
+              "index": 87.21,
+              "price": 6.412
+            },
+            {
+              "month": "2024-12",
+              "index": 85.04,
+              "price": 6.252
+            },
+            {
+              "month": "2025-01",
+              "index": 81.64,
+              "price": 6.002
+            },
+            {
+              "month": "2025-02",
+              "index": 79.46,
+              "price": 5.842
+            },
+            {
+              "month": "2025-03",
+              "index": 80.14,
+              "price": 5.892
+            },
+            {
+              "month": "2025-04",
+              "index": 82.32,
+              "price": 6.052
+            },
+            {
+              "month": "2025-05",
+              "index": 84.22,
+              "price": 6.192
+            },
+            {
+              "month": "2025-06",
+              "index": 83.13,
+              "price": 6.112
+            },
+            {
+              "month": "2025-07",
+              "index": 85.85,
+              "price": 6.312
+            },
+            {
+              "month": "2025-08",
+              "index": 89.12,
+              "price": 6.552
+            },
+            {
+              "month": "2025-09",
+              "index": 99.18,
+              "price": 7.292
+            },
+            {
+              "month": "2025-10",
+              "index": 99.32,
+              "price": 7.302
+            },
+            {
+              "month": "2025-11",
+              "index": 97.69,
+              "price": 7.182
+            },
+            {
+              "month": "2025-12",
+              "index": 99.18,
+              "price": 7.292
+            },
+            {
+              "month": "2026-01",
+              "index": 97.69,
+              "price": 7.182
+            },
+            {
+              "month": "2026-02",
+              "index": 96.74,
+              "price": 7.112
+            },
+            {
+              "month": "2026-03",
+              "index": 97.96,
+              "price": 7.202
+            },
+            {
+              "month": "2026-04",
+              "index": 107.07,
+              "price": 7.872
+            },
+            {
+              "month": "2026-05",
+              "index": 88.71,
+              "price": 6.522
+            },
+            {
+              "month": "2026-06",
+              "index": 85.83,
+              "price": 6.31
+            },
+            {
+              "month": "2026-07",
+              "index": 99.02,
+              "price": 7.28
+            },
+            {
+              "month": "2026-08",
+              "index": 106.77,
+              "price": 7.85
+            },
+            {
+              "month": "2026-09",
+              "index": 107.05,
+              "price": 7.87
+            },
+            {
+              "month": "2026-10",
+              "index": 102.97,
+              "price": 7.57
+            }
+          ]
+        }
+      ],
+      "status": "ready",
+      "note": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。 天康生物生猪养殖业务对应生猪价格；玉米、豆粕属于饲料成本，应作为独立成本指标观察，不与生猪售价混为一条序列。"
+    },
+    {
       "id": "tio2",
       "name": "钛白粉",
       "unit": "元/吨",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 13900,
+      "latestPrice": 13740,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [
@@ -10814,12 +11199,12 @@
       "mainBasis": "product",
       "fundamentalDate": "2026-06-30",
       "marketItemId": "live-hog",
-      "productUnit": null,
+      "productUnit": "元/公斤",
       "role": "producer",
       "roleLabel": "产品端",
       "note": "天康生物生猪养殖业务对应生猪价格；玉米、豆粕属于饲料成本，应作为独立成本指标观察，不与生猪售价混为一条序列。",
-      "productSource": null,
-      "productSourceUrl": null,
+      "productSource": "东方财富现货与股票数据（经 AKShare 获取）",
+      "productSourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "productDate": null,
       "stockDate": "2026-10",
       "stockSeriesSource": "月K",
@@ -10827,7 +11212,7 @@
       "stockChange": null,
       "divergence": "数据不足",
       "series": [],
-      "status": "product-series-pending"
+      "status": "insufficient-history"
     },
     {
       "code": "sh601118",

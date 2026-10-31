@@ -48,9 +48,9 @@ test('builds compact bundles and the peer valuation index', () => {
     const index = JSON.parse(fs.readFileSync(path.join(env.dataDir, 'cache/stock-details.json'), 'utf8'));
     assert.equal(index.details.sz000001.peTtm, 5);
     assert.equal(index.details.sz000001.pb, 0.5);
-    assert.equal(index.monthlyTrends.sh600000.length, 18);
-    assert.deepEqual(index.monthlyTrends.sh600000[0], { time: '2026-01-17', close: 11 });
-    assert.equal(index.monthlyTrends.sz000001.length, 18);
+    assert.equal(index.monthlyTrends.sh600000.length, 200);
+    assert.deepEqual(index.monthlyTrends.sh600000[0], { time: '2026-01-05', close: 11 });
+    assert.equal(index.monthlyTrends.sz000001.length, 200);
   } finally { fs.rmSync(env.root, { recursive: true, force: true }); }
 });
 

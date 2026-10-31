@@ -1,5 +1,9 @@
 (function () {
   'use strict';
+  const gateStyle = document.createElement('style');
+  gateStyle.textContent = '#password-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px;background:#f3f6fb;color:#172033;font-family:system-ui,sans-serif}#password-gate[data-auth-state="checking"]::before{content:"正在检查登录状态…";display:inline-flex;padding:18px 22px;border-radius:12px;background:#fff;color:#475569;font-size:14px;box-shadow:0 8px 30px rgba(15,23,42,.1)}#password-gate[data-auth-state="checking"]::after{content:"";position:absolute;width:16px;height:16px;border:2px solid #cbd5e1;border-top-color:#2563eb;border-radius:50%;animation:gate-spin .75s linear infinite;margin-left:-188px}@keyframes gate-spin{to{transform:rotate(360deg)}}#password-gate[data-auth-state="checking"] .gate-card{display:none}#password-gate[data-auth-state="unlocked"]{display:none}#password-gate .gate-card{width:100%;max-width:360px;padding:28px;border-radius:16px;background:#fff;box-shadow:0 12px 40px rgba(15,23,42,.12)}#password-gate h1{font-size:21px;margin:0 0 8px;font-weight:700}#password-gate p{color:#64748b;font-size:13px;margin:0 0 20px}#password-gate input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;margin-bottom:12px;font-size:16px}#password-gate button{width:100%;padding:12px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:600;cursor:pointer}#password-gate .gate-remember{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:#475569;font-size:13px}#password-gate .gate-remember input{width:16px;height:16px;margin:0}#password-gate .gate-error{display:none;margin-top:12px;color:#dc2626;font-size:13px}';
+  document.head.appendChild(gateStyle);
+
   let gate = document.getElementById('password-gate');
 
   // 所有页面共用门禁；没有静态门禁标记的页面在 DOM 就绪后自动挂载。

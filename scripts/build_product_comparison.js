@@ -145,6 +145,7 @@ function buildCommodityCards(productItems) {
     const stocksWithHistory = related.map(({ stock, meta }) => {
       const history = stockMonthly(stock.code);
       const fundamental = fundamentals.stocks && fundamentals.stocks[stock.code] || {};
+      const role = (meta.costItemIds || []).includes(itemId) ? 'consumer' : (meta.role || 'unknown');
       return {
         code: stock.code, name: stock.name, group: stock.group || '',
         role: meta.role || 'unknown',

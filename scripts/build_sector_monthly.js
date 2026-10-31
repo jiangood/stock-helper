@@ -59,51 +59,21 @@ function seriesFromDailyBars(bars) {
   return Array.from(byMonth.keys()).sort().map(month => ({ month, close: byMonth.get(month) }));
 }
 
-/**
- * Monthly returns relative to the last point in the series.
- * m1 is month-to-date when the last bar belongs to the current market month.
- * Missing base months return null instead of 0 so the page can flag thin data.
- */
-function monthlyReturns(series) {
-  const points = Array.isArray(series) ? series.filter(point =>
-    point && monthKey(point.month) && Number(point.close) > 0) : [];
+/** Daily returns over trading-session windows, based on the latest close. */
+function dailyReturns(bars) {
+  const points = (Array.isArray(bars) ? bars : []).filter(bar =>
+    bar && /^\\d{4}-\\d{2}-\\d{2}$/.test(String(bar.time || '')) && Number(bar.close) > 0
+  ).slice().sort((a, b) => String(a.time).localeCompare(String(b.time))).slice(-200);
   if (points.length < 2) return null;
-  const last = points[points.length - 1];
-  const byMonth = new Map(points.map(point => [point.month, point.close]));
-  const pct = monthsBack => {
-    const base = byMonth.get(shiftMonth(last.month, -monthsBack));
-    if (!(Number(base) > 0)) return null;
-    return round((last.close / Number(base) - 1) * 100);
-  };
-  return {
-    month: last.month,
-    close: round(last.close),
-    m1: pct(1),
-    m3: pct(3),
-    m6: pct(6),
-    m12: pct(12),
-    months: points.length
-  };
+  const last = Number(points[points.length - 1].close);
+  const pct = sessions => points.length > sessions ? round((last / Number(points[points.length - 1 - sessions].close) - 1) * 100) : null;
+  return { date: points[points.length - 1].time, close: round(last), d1:pct(1), d5:pct(5), d20:pct(20), d60:pct(60), d120:pct(120), d200:pct(200), bars:points.length };
 }
-
-/**
- * Pick the cleanest month series for one cached stock:
- * monthly bars when they already reach the market month, otherwise daily bars
- * aggregated by month (mixing both series would break the adjustment baseline).
- */
-function stockMonthly(cache, marketMonth) {
+function stockDaily(cache) {
   if (!cache || typeof cache !== 'object') return null;
-  const monthly = seriesFromMonthlyBars(cache.monthlyAdjusted && cache.monthlyAdjusted.bars);
-  const latestMonthly = monthly.length ? monthly[monthly.length - 1].month : null;
-  if (latestMonthly && marketMonth && latestMonthly >= marketMonth) {
-    const values = monthlyReturns(monthly);
-    return values ? Object.assign({ source: 'monthly' }, values) : null;
-  }
-  const daily = seriesFromDailyBars(cache.dailyAdjusted && cache.dailyAdjusted.bars);
-  const values = monthlyReturns(daily);
-  return values ? Object.assign({ source: 'daily' }, values) : null;
+  const values = dailyReturns(cache.dailyAdjusted && cache.dailyAdjusted.bars);
+  return values ? Object.assign({source:'daily'}, values) : null;
 }
-
 /**
  * Build the payload for every stock that has at least two months of closes.
  * readCache is injectable so tests do not need the real cache directory.
@@ -122,7 +92,7 @@ function buildPayload(options) {
   stocks.forEach(stock => {
     const code = String(stock && stock.code || '').trim().toLowerCase();
     if (!/^(sh|sz)\d{6}$/.test(code)) return;
-    const values = stockMonthly(readCache(code), marketMonth);
+    const values = stockDaily(readCache(code));
     if (values) results[code] = values;
   });
   return {
@@ -168,13 +138,13 @@ function buildFile(options) {
   if (!Object.keys(payload.stocks).length) {
     const previous = readJson(file, null);
     if (previous && previous.stocks && Object.keys(previous.stocks).length) {
-      console.warn('No monthly returns were produced; preserving the last valid sector snapshot.');
+      console.warn('No daily returns were produced; preserving the last valid sector snapshot.');
       return { payload: previous, changed: false, skipped: true };
     }
-    throw new Error('No monthly returns were produced; refusing to publish an empty sector snapshot.');
+    throw new Error('No daily returns were produced; refusing to publish an empty sector snapshot.');
   }
   const changed = writePayload(file, payload);
-  console.log('Sector monthly: ' + Object.keys(payload.stocks).length + '/' + stocks.length +
+  console.log('Sector daily: ' + Object.keys(payload.stocks).length + '/' + stocks.length +
     ' stocks with monthly returns; ' + (changed ? 'updated' : 'unchanged') + ' ' + path.relative(ROOT, file) + '.');
   return { payload, changed, skipped: false };
 }
@@ -190,8 +160,8 @@ module.exports = {
   shiftMonth,
   seriesFromMonthlyBars,
   seriesFromDailyBars,
-  monthlyReturns,
-  stockMonthly,
+  dailyReturns,
+  stockDaily,
   buildPayload,
   buildFile,
   writePayload

@@ -11,7 +11,7 @@ function productSummaryHtml(series,unit){
  if(!points.length)return '';
  var prices=points.map(function(point){return Number(point.price);});
  var high=Math.max.apply(null,prices),low=Math.min.apply(null,prices);
- return '<div class="product-summary" aria-label="商品价格统计"><span>最低 '+money(low)+'</span><span>最高 '+money(high)+'</span><span>期初 '+money(prices[0])+'</span><span>当前 '+money(prices[prices.length-1])+'</span><span>'+esc(unit||'')+'</span></div>';
+ return '<div class="product-summary-wrap"><table class="product-summary" aria-label="商品价格对比"><thead><tr><th>最低</th><th>最高</th><th>期初</th><th>当前</th></tr></thead><tbody><tr><td>'+money(low)+'</td><td>'+money(high)+'</td><td>'+money(prices[0])+'</td><td>'+money(prices[prices.length-1])+'</td></tr></tbody></table><span class="product-summary-unit">'+esc(unit||'')+'</span></div>';
 }
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}

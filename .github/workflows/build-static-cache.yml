@@ -65,7 +65,7 @@ jobs:
               exit 0
             fi
 
-            git add data/sector-monthly.json data/research-scores.json data/combat-kline.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json
+            git add data/sector-monthly.json data/research-scores.json data/combat-kline.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/product-comparison.json
             git commit -m "Build static page caches"
             if git push origin HEAD:master; then
               exit 0

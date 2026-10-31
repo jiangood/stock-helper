@@ -3,12 +3,11 @@
 ## 访问地址
 
 - **自选页面：** [股票助手首页](https://jiangood.github.io/stock-helper/)
-- **行情页面：** [市场行情](https://jiangood.github.io/stock-helper/market.html)
 - **商品：** [商品与关联股票月线](https://jiangood.github.io/stock-helper/products.html)
 - **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
 - **系统健康：** [静态缓存监控](https://jiangood.github.io/stock-helper/health.html)
 
-自选、行情与商品为独立页面，通过顶部导航跳转。自选页支持股票池监控、搜索、分组和纪律筛选；行情页汇总板块日线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
+自选与商品页面通过顶部导航跳转。自选页支持股票池监控、搜索、分组和纪律筛选；商品页展示主营产品与关联股票月线对比。个股详情页可查看行情、K 线、估值与交易辅助面板。原独立行情页面已移除。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
 
 ## 本地预览
 

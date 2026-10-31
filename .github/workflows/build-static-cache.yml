@@ -16,6 +16,7 @@ on:
       - "scripts/build_sector_monthly.js"
       - "scripts/build_product_comparison.js"
       - "data/stock-products.json"
+      - "data/commodity-db/**"
       - "scripts/build_cache_manifest.js"
       - "scripts/validate_stock_data.js"
       - "research-score.js"
@@ -58,7 +59,7 @@ jobs:
             node scripts/build_cache_manifest.js
             node scripts/validate_stock_data.js
 
-            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/product-comparison.json)" ]; then
+            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/commodity-db/index.json data/product-comparison.json)" ]; then
               echo "Static page caches are already current."
               exit 0
             fi

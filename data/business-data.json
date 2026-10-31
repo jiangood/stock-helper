@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-31T08:22:21+00:00",
+  "updatedAt": "2026-10-31T11:41:14+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -815,9 +815,9 @@
       "latest": 1060.0,
       "latestDate": "2026-10-30",
       "latestSpot": 1060.0,
-      "latestFutures": 966.0,
-      "futuresSource": "生意社主力合约参考价（历史数据）",
-      "futuresSourceUrl": "https://www.100ppi.com/",
+      "latestFutures": 972.0,
+      "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
+      "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
       "inventory": {
         "label": "期货仓单库存（非全行业库存）",
@@ -1167,7 +1167,9 @@
       ],
       "chain": "玻璃、光伏玻璃、日用玻璃、硅酸钠",
       "drivers": "重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨成本。",
-      "status": "ok"
+      "status": "ok",
+      "futuresDate": "2026-10-30",
+      "futuresTime": "23:00:00"
     },
     "urea": {
       "id": "urea",
@@ -2337,14 +2339,14 @@
         "label": "数据源列示产业链企业",
         "productName": "尿素",
         "producers": [
-          "华锦股份",
-          "湖北宜化",
           "博源化工",
-          "四川美丰",
-          "泸天化",
+          "华鲁恒升",
           "河化股份",
+          "华锦股份",
           "华昌化工",
-          "辉隆股份"
+          "兰花科创",
+          "赤天化",
+          "湖北宜化"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -3522,14 +3524,14 @@
         "label": "数据源列示产业链企业",
         "productName": "甲醇",
         "producers": [
+          "湖北宜化",
+          "鲁西化工",
+          "泸天化",
+          "诚志股份",
           "兴化股份",
-          "博源化工",
           "华昌化工",
-          "岳阳兴长",
-          "柳化股份",
-          "兰花科创",
-          "山西焦化",
-          "泸天化"
+          "兖矿能源",
+          "赤天化"
         ],
         "downstreamUsers": [
           "联泓新科"
@@ -3544,13 +3546,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 13740.0,
+      "latest": 17180.0,
       "latestDate": "2026-10-31",
-      "latestSpot": 13740.0,
+      "latestSpot": 17180.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 1.93,
+      "changePct": 25.04,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -4749,24 +4751,23 @@
         "label": "数据源列示产业链企业",
         "productName": "铝",
         "producers": [
-          "中国铝业",
+          "焦作万方",
           "云铝股份",
           "神火股份",
-          "焦作万方",
+          "电投能源",
+          "天山铝业",
           "中孚实业",
-          "中国宏桥",
-          "金瑞矿业",
-          "电投能源"
+          "中国铝业"
         ],
         "downstreamUsers": [
-          "明泰铝业",
-          "南山铝业",
-          "闽发铝业",
+          "兴发铝业",
+          "万邦德",
           "常铝股份",
-          "上海能源",
+          "罗普斯金",
           "宏创控股",
-          "中国忠旺",
-          "利源精制"
+          "利源精制",
+          "亚太科技",
+          "闽发铝业"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -4774,17 +4775,17 @@
     },
     "coal": {
       "id": "coal",
-      "name": "炼焦煤",
+      "name": "动力煤",
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 1441.25,
+      "latest": 842.75,
       "latestDate": "2026-10-31",
-      "latestSpot": 1441.25,
+      "latestSpot": 842.75,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 1.59,
+      "changePct": 19.12,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -4796,16 +4797,16 @@
       "status": "latest-only",
       "industryLinks": {
         "label": "数据源列示产业链企业",
-        "productName": "炼焦煤",
+        "productName": "动力煤",
         "producers": [
+          "甘肃能化",
+          "神火股份",
           "冀中能源",
-          "山西焦煤",
+          "电投能源",
+          "郑州煤电",
           "兰花科创",
           "兖矿能源",
-          "盘江股份",
-          "江钨装备",
-          "淮北矿业",
-          "开滦股份"
+          "华阳股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -6005,9 +6006,7 @@
       "status": "pending"
     }
   },
-  "fetchErrors": [
-    "futures_zh_realtime/SA: HTTPSConnectionPool(host='vip.stock.finance.sina.com.cn', port=443): Read timed out. (read timeout=1"
-  ],
+  "fetchErrors": [],
   "costInputs": {
     "alumina": {
       "id": "alumina",
@@ -6034,7 +6033,7 @@
       ],
       "role": "化工原料参考价",
       "series": [],
-      "latest": 2366.67,
+      "latest": 2240.0,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -6049,7 +6048,7 @@
       ],
       "role": "硫酸法钛白粉成本参考",
       "series": [],
-      "latest": 917.5,
+      "latest": 1862.5,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -6081,7 +6080,7 @@
       ],
       "role": "煤化工能源成本参考；煤种/地区口径需核对",
       "series": [],
-      "latest": 710.0,
+      "latest": 842.75,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",

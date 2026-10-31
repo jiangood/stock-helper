@@ -135,10 +135,10 @@
   /* 扩展点击区，不改变行高 */
   .stock-name::after { content: ''; position: absolute; inset: -9px -4px; }
   .stock-name:hover { color: var(--bs-primary) !important; text-decoration: underline; }
-  .tag-alias {
-    font-size: 10.5px; max-width: 120px; display: inline-block;
+  .stock-alias {
+    font-size: 11px; max-width: 120px; display: inline-block;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    vertical-align: bottom;
+    vertical-align: bottom; color: var(--bs-secondary-color);
   }
 
   /* 数值旁的小号涨跌幅 */
@@ -274,7 +274,7 @@
     .badge-tp { font-size: 10px; }
     .diff { font-size: 10px; margin-left: .2rem; }
     .unit { font-size: 9.5px; }
-    .tag-alias { font-size: 10px; max-width: 96px; }
+    .stock-alias { font-size: 10px; max-width: 96px; }
     .flag { font-size: 9.5px; padding: 0 .18rem; margin-left: .18rem; }
     .main-nav-link { min-height: 34px; padding: .2rem .5rem; }
     .toolbar .input-group { max-width: 100% !important; }

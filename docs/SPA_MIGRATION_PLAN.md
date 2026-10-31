@@ -1,6 +1,6 @@
 # SPA 重构与文件命名迁移清单
 
-> 状态：第三阶段基础模块已提交，第四阶段开始（健康页已完成首个 ES Module 迁移；首页入口尚未切换）
+> 状态：SPA 入口已切换，第四阶段进行中（健康页原生模块化；其余页面已通过隔离桥接接入，待逐页原生迁移）
 > 基线分支：`master`  
 > 原则：先建立可验证的迁移边界；本阶段不移动、不重命名、不删除任何运行时代码。
 
@@ -19,13 +19,13 @@
 
 | 现有入口 | 现有主脚本/关联脚本 | 目标路由 | 目标页面主模块 |
 | --- | --- | --- | --- |
-| `index.html` | `stock-dashboard.js`、`password-gate.js`、`croc.js`、`static-quotes.js`、`pinyin.js` | `#/stocks` | `src/pages/stocks.page.js` |
-| `market.html` | `business.js`、`global-assets.js`、`stock-dashboard.js`、`password-gate.js` | `#/market` | `src/pages/market.page.js` |
-| `products.html` | `products.js`、`password-gate.js` | `#/products` | `src/pages/products.page.js` |
-| `stock.html?code=...` | `stock.js`、`indicators.js`、`static-quotes.js`、`croc.js`、`research-score.js` | `#/stock/:code` | `src/pages/stock-detail.page.js` |
+| `legacy-stocks.html`（旧入口 `index.html`） | `stock-dashboard.js`、`password-gate.js`、`croc.js`、`static-quotes.js`、`pinyin.js` | `#/stocks` | `src/pages/stocks.page.js`（当前桥接旧页） |
+| `legacy-market.html`（旧入口 `market.html`） | `business.js`、`global-assets.js`、`stock-dashboard.js`、`password-gate.js` | `#/market` | `src/pages/market.page.js`（当前桥接旧页） |
+| `legacy-products.html`（旧入口 `products.html`） | `products.js`、`password-gate.js` | `#/products` | `src/pages/products.page.js`（当前桥接旧页） |
+| `legacy-stock.html?code=...`（旧入口 `stock.html?code=...`） | `stock.js`、`indicators.js`、`static-quotes.js`、`croc.js`、`research-score.js` | `#/stock/:code` | `src/pages/stock-detail.page.js`（当前桥接旧页） |
 | `health.html` | `cache-health.js` | `#/health` | `src/pages/health.page.js` |
 
-盘点确认当前页面是独立 HTML，顶部导航通过普通链接跳转；页面脚本仍有经典脚本全局依赖和内联事件处理。迁移时应逐步移除这些隐式依赖，不能直接把旧脚本标签替换成 `type="module"` 后就视为完成。
+当前 `index.html` 已是唯一 SPA 壳，页面通过 `src/main.js` 和 Hash Router 调度。健康页已使用原生 ES Module；自选、行情、商品、个股详情由各自页面模块在同源 iframe 中加载 `legacy-*.html`，隔离旧脚本的全局变量与事件监听。此桥接保障现有业务可用，但仍需逐页替换成原生 DOM/组件/服务模块。
 
 ## 3. 目标目录结构
 
@@ -145,10 +145,10 @@ docs/
 
 ## 7. 实施顺序与验收
 
-1. **阶段一：盘点与规范（当前）**：建立本清单，明确文件映射、命名规范和不变边界。
-2. **阶段二：SPA 外壳**：新增 `src/app.js`、`src/router.js`、基础页面容器和路由测试；旧页面暂时保留。
-3. **阶段三：公共基础设施**：迁移主题、导航、密码门、Toast、加载状态和数据服务。
-4. **阶段四：逐页迁移**：自选 → 行情 → 商品 → 个股详情 → 健康监控；每页迁移后做新旧结果对照。
+1. **阶段一：盘点与规范（已完成）**：建立本清单，明确文件映射、命名规范和不变边界。
+2. **阶段二：SPA 外壳（已完成）**：`index.html` 已切换为唯一壳，Hash Router、统一导航、主题切换、页面生命周期和旧 URL 跳转已接入。
+3. **阶段三：公共基础设施（基础模块已完成）**：导航、主题、密码门禁、Toast、加载状态和缓存健康服务已独立成模块。
+4. **阶段四：逐页迁移（进行中）**：健康页已原生模块化；其余页面当前通过兼容桥接运行。下一步按自选 → 行情 → 商品 → 个股详情替换旧页面内部实现，并做新旧结果对照。
 5. **阶段五：清理兼容层**：只有在旧 URL 全部兼容且测试覆盖后，才考虑删除重复页面模板和旧脚本。
 6. **阶段六：完整验收**：运行 JS/Python 测试、数据校验、语法检查，并检查 GitHub Actions。
 
@@ -160,12 +160,12 @@ docs/
 - 行情请求是否继续禁用缓存；不得把业务数据写入 localStorage、IndexedDB、Cache API 或内存 Map。
 - 评分、纪律、复权口径、数据时间和缺失值处理与重构前一致。
 
-## 8. 本阶段明确不做的事情
+## 8. 当前迁移边界
 
-- 不创建 SPA 代码骨架，不切换任何页面入口。
-- 不重命名或删除现有 JS/CSS/HTML 文件。
-- 不修改股票评分、交易纪律、数据采集和数据文件。
+- 当前已切换唯一 SPA 入口，但旧页面业务仍由 `legacy-*.html` 桥接运行。
+- 不重命名或删除旧 JS/CSS/HTML 文件，直到对应页面完成原生迁移及新旧结果对照。
+- 不修改股票评分、交易纪律、行情数据来源、复权口径、数据采集和数据文件。
 - 不引入框架、构建器或 npm 依赖。
-- 不把本阶段的盘点文档提交描述成 SPA 已经完成。
+- 旧 URL 通过跳转进入 SPA；旧模板只允许由对应 `*.page.js` 桥接加载。
 
-第三阶段的公共模块已建立，第四阶段已完成健康监控页的首个模块化迁移；尚未切换首页入口，也未对旧 URL 执行重定向。旧页面仍保持原样运行。所有旧文件只有在调用关系已迁移并通过测试后才可清理。
+所有旧文件只有在调用方迁移且测试通过后才可清理。

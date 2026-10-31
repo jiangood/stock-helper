@@ -23,7 +23,7 @@ function comparisonTableHtml(card){
  rows+=(card.stocks||[]).map(function(stock){
   return comparisonRow(stock.name,'股票',stock.mainRatio,'元/股',stock.values,stock.changePct,'stock.html?code='+encodeURIComponent(stock.code));
  }).join('');
- return '<div class="commodity-table-wrap"><table class="commodity-comparison" aria-label="'+esc(displayProductName(card.name))+'及关联股票价格与主营占比汇总"><thead><tr><th>名称</th><th>类型</th><th>主营占比</th><th>单位</th><th>最低价</th><th>最高价</th><th>期初价</th><th>当前价</th><th>区间涨跌</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ return '<div class="commodity-table-wrap" tabindex="0" role="region" aria-label="'+esc(displayProductName(card.name))+'价格汇总表，可横向滚动查看全部列"><table class="commodity-comparison" aria-label="'+esc(displayProductName(card.name))+'及关联股票价格与主营占比汇总"><thead><tr><th>名称</th><th>类型</th><th>主营占比</th><th>单位</th><th>最低价</th><th>最高价</th><th>期初价</th><th>当前价</th><th>区间涨跌</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}
@@ -38,6 +38,20 @@ function render(){
   var badge=card.status==='ready'?'数据齐全':'部分数据缺失';
   return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice)+' <small>'+esc(card.unit||'')+'</small></div></div><div><div class="product-metric-label">共同月线区间（最多 200 根）</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 根月线':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+'<div class="commodity-stocks-title">商品及关联股票价格汇总</div>'+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
+ Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
+  function updateScrollHint(){
+   var max=wrap.scrollWidth-wrap.clientWidth;
+   wrap.classList.toggle('can-scroll-right',max>2&&wrap.scrollLeft<max-2);
+   wrap.classList.toggle('can-scroll-left',wrap.scrollLeft>2);
+  }
+  wrap.addEventListener('scroll',updateScrollHint,{passive:true});
+  if(typeof ResizeObserver==='function'){
+   var tableObserver=new ResizeObserver(updateScrollHint);
+   tableObserver.observe(wrap);
+   chartObservers.push(tableObserver);
+  }
+  updateScrollHint();
+ });
  list.forEach(function(card,index){
   var node=$('commodity-chart-'+index);
   if(!node||!window.echarts||!Array.isArray(card.productSeries)||card.productSeries.length<2)return;

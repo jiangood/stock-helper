@@ -53,22 +53,22 @@ ALIASES = {
     "soda-ash": ("纯碱", "联碱"),
     "urea": ("尿素",),
     "methanol": ("甲醇",),
-    "aluminium": ("电解铝", "铝锭", "铝产品"),
+    "aluminium": ("电解铝", "原铝", "铝锭", "铝产品"),
     "rubber": ("天然橡胶", "橡胶产品"),
-    "tin": ("锡", "锡锭"),
-    "sugar": ("白砂糖", "食糖", "白糖"),
+    "tin": ("锡", "锡锭", "锡材", "锡产品"),
+    "sugar": ("白砂糖", "食糖", "白糖", "食糖类商品"),
     "live-hog": ("生猪",),
     "corn": ("玉米",),
     "soybean-meal": ("豆粕",),
     "pvc": ("PVC", "聚氯乙烯"),
-    "caustic-soda": ("烧碱", "片碱"),
-    "zinc": ("锌锭", "精炼锌"),
-    "copper": ("电解铜", "阴极铜"),
-    "lead": ("铅锭", "精炼铅"),
+    "caustic-soda": ("烧碱", "片碱", "离子膜烧碱"),
+    "zinc": ("锌", "锌锭", "锌产品", "锌精矿", "精炼锌"),
+    "copper": ("铜", "铜产品", "铜锭", "铜精矿", "电解铜", "阴极铜"),
+    "lead": ("铅", "铅锭", "铅产品", "精炼铅"),
     "nickel": ("电解镍", "镍板"),
     "gold": ("黄金",),
-    "silver": ("白银",),
-    "iron-ore": ("铁矿石",),
+    "silver": ("白银", "银锭", "银产品"),
+    "iron-ore": ("铁矿石", "磁铁矿"),
     "coking-coal": ("焦煤", "炼焦煤"),
     "rebar": ("螺纹钢",),
     "industrial-silicon": ("工业硅",),
@@ -114,8 +114,11 @@ def infer_market_item(product_name: str) -> str | None:
     if any(separator in name for separator in ("/", "、", "及", "与", "和", "，", ",")):
         return None
     for item_id, aliases in ALIASES.items():
-        if any(alias.lower() in name.lower() for alias in aliases):
-            return item_id
+        if item_id == "urea" and "车用" in name:
+            continue
+        for alias in aliases:
+            if alias.lower() in name.lower() and (len(alias) > 1 or name == alias):
+                return item_id
     return None
 
 

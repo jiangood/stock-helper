@@ -185,7 +185,8 @@ function buildCommodityCards(productItems) {
           price: point ? Number(point.value.toFixed(4)) : null
         };
       }) : [];
-      const first = values[0], last = values[values.length - 1];
+      const validValues = values.filter((point) => point.price !== null);
+      const first = validValues[0], last = validValues[validValues.length - 1];
       return {
         code: stock.code, name: stock.name, group: stock.group, role: stock.role,
         roleLabel: stock.roleLabel, mainRatio: stock.mainRatio, source: stock.source,

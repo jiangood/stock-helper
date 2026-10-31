@@ -36,6 +36,25 @@
 .product-status.sync{color:var(--bs-success);border-color:var(--bs-success-border-subtle)}
 .product-empty{height:190px;display:grid;place-items:center;text-align:center;color:var(--bs-secondary-color);font-size:12px;padding:16px}
 .product-positive{color:var(--bs-success)}.product-negative{color:var(--bs-danger)}
+.db-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.db-toolbar select{max-width:180px}
+.db-table-wrap{overflow:auto;border:1px solid var(--bs-border-color);border-radius:10px;background:var(--bs-body-bg)}
+.db-table{width:100%;min-width:1050px;border-collapse:collapse;font-size:12px}
+.db-table th,.db-table td{padding:9px 10px;border-bottom:1px solid var(--bs-border-color);vertical-align:middle}
+.db-table th{position:sticky;top:0;background:var(--bs-tertiary-bg);white-space:nowrap;z-index:1;font-weight:650}
+.db-table tbody tr:last-child td{border-bottom:0}
+.db-stock{font-weight:700;white-space:nowrap}.db-code,.db-meta{font-size:10px;color:var(--bs-secondary-color)}
+.db-product{font-weight:650;min-width:170px}.db-ratio{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.db-chart{width:190px;height:42px;display:block}.db-price{font-variant-numeric:tabular-nums;white-space:nowrap}
+.db-status{font-size:10px;border:1px solid var(--bs-border-color);border-radius:99px;padding:2px 7px;white-space:nowrap}
+.db-status.ok{color:var(--bs-success);border-color:var(--bs-success)}
+.db-status.pending{color:var(--bs-secondary-color)}
+.db-months{display:grid;grid-template-columns:repeat(6,minmax(95px,1fr));gap:4px;padding:10px 0;min-width:650px}
+.db-month{display:flex;justify-content:space-between;gap:8px;padding:4px 6px;background:var(--bs-tertiary-bg);border-radius:4px;font-size:10px;font-variant-numeric:tabular-nums}
+.db-month span:first-child{color:var(--bs-secondary-color)}
+.db-empty{padding:35px;text-align:center;color:var(--bs-secondary-color)}
+.db-footnote{font-size:11px;color:var(--bs-secondary-color);line-height:1.7}
+@media(max-width:600px){.db-chart{width:145px}.db-months{grid-template-columns:repeat(3,minmax(90px,1fr));min-width:300px}}
 @media(max-width:575px){.product-chart{height:170px}.product-card{padding:12px}}
 </style>
 </head>
@@ -54,13 +73,13 @@
   <nav class="bg-body border-bottom px-2 px-sm-3 py-2 d-flex align-items-center gap-2" aria-label="主导航">
     <a class="d-flex align-items-center gap-2 text-body text-decoration-none me-auto text-nowrap" href="index.html"><span class="logo" aria-hidden="true">股</span><strong class="d-none d-sm-inline" style="font-size:14px">股票助手</strong></a>
     <a class="main-nav-link" href="index.html">自选</a>
-    <a class="main-nav-link" href="market.html">行情</a><a class="main-nav-link active" href="products.html" aria-current="page">商品对比</a><a class="main-nav-link" href="product-database.html">主营产品表</a>
+    <a class="main-nav-link" href="market.html">行情</a><a class="main-nav-link active" href="products.html" aria-current="page">商品对比</a>
     <button class="btn btn-sm btn-outline-secondary icon-btn" id="theme-btn" type="button" aria-label="切换主题" title="切换主题">◐</button>
   </nav>
 </div>
 <main id="products-pane" class="container-fluid px-3 py-3" tabindex="-1">
   <div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
-    <div><h1 class="panel-title page-title mb-1">商品价格 · 股票走势</h1><div class="panel-subtitle">股票池主营产品价格与股价月线对比，统一以首个共同月份 = 100</div></div>
+    <div><h1 class="panel-title page-title mb-1">商品与主营产品</h1><div class="panel-subtitle">统一查看商品价格与股价月线、主营产品收入占比及近 5 年月度价格</div></div>
     <div id="product-updated" class="panel-subtitle">正在读取静态数据…</div>
   </div>
   <div class="product-toolbar">
@@ -72,6 +91,23 @@
   </div>
   <div id="product-cards" class="product-grid" aria-live="polite"><div class="product-empty">正在加载商品与股票月线数据…</div></div>
   <p class="product-note mt-3">说明：图表展示商品价格与股票收盘价的标准化走势，不是商品与公司估值的直接因果关系。商品价格对生产商可能是收入端，对下游企业可能是成本端；多产品公司还受销量、成本、库存、合同定价、产能利用率等因素影响。月线本月可能未收盘，历史数据不足或映射未核实的股票会明确标注，不使用估算值补齐。仅供研究参考，不构成投资建议。</p>
+  <section class="mt-4" aria-labelledby="company-products-title">
+    <div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
+      <div><h2 id="company-products-title" class="panel-title mb-1">主营产品与月度价格明细</h2><div class="panel-subtitle">按股票拆分主营产品、收入占比、报告期及最多 60 个月价格；上方搜索框同时筛选本区数据</div></div>
+      <div id="db-updated" class="panel-subtitle">正在读取主营产品数据…</div>
+    </div>
+    <div class="db-toolbar">
+      <select id="db-filter" class="form-select form-select-sm" aria-label="筛选主营产品价格状态"><option value="all">全部产品</option><option value="available">有月度价格</option><option value="unavailable">价格待补充</option></select>
+      <span id="db-count" class="panel-subtitle"></span>
+    </div>
+    <div class="db-table-wrap">
+      <table class="db-table">
+        <thead><tr><th>股票</th><th>主营产品</th><th>主营收入占比</th><th>报告期</th><th>最新月价</th><th>近 5 年月度价格走势</th><th>数据</th></tr></thead>
+        <tbody id="db-rows"><tr><td colspan="7" class="db-empty">正在加载主营产品数据…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="db-footnote mt-3">数据口径：主营产品及占比来自上市公司定期报告披露的东方财富 F10 主营构成，优先采用产品分类；报告期和来源随数据更新。月度价格按每月最后一个有效交易日收盘价聚合，最多保留 60 个月。当前已接入的部分品种使用期货主力连续价格作为行业价格代理，非公司实际销售均价，连续合约换月可能产生价差。未接入可靠价格源的产品显示待补充，不以相近商品、插值或估算值填充。价格只作产业景气观察，不构成投资建议。</p>
+  </section>
 </main>
 <script src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>
 <script src="password-gate.js"></script>

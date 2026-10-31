@@ -39,6 +39,10 @@ class CompanyProductDatabaseTests(unittest.TestCase):
         self.assertIsNone(row["marketItemId"])
         self.assertEqual(row["priceStatus"], "unavailable")
 
+    def test_month_end_is_included_as_completed_month(self):
+        self.assertEqual(MODULE.latest_completed_month(date(2026, 10, 31)), "2026-10")
+        self.assertEqual(MODULE.latest_completed_month(date(2026, 10, 30)), "2026-09")
+
     def test_monthly_last_uses_last_valid_close_per_month(self):
         rows = [
             {"date": "2025-01-03", "close": 100},
@@ -75,7 +79,8 @@ class CompanyProductDatabaseTests(unittest.TestCase):
                 "products": [{
                     "stockCode": "sh600000",
                     "productName": "甲醇",
-                    "monthlyPrices": old_series,
+                    "marketItemId": "methanol",
+                    "priceSeries": old_series,
                     "priceUnit": "元/吨",
                     "priceSource": "历史来源",
                 }]
@@ -88,6 +93,7 @@ class CompanyProductDatabaseTests(unittest.TestCase):
         self.assertEqual(methanol["priceSeries"], old_series)
         self.assertEqual(methanol["priceStatus"], "available")
         self.assertEqual(result["stockCount"], 1)
+        self.assertEqual(result["pricedCount"], 1)
 
 
 if __name__ == "__main__":

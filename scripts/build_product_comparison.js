@@ -151,12 +151,22 @@ function buildCommodityCards(productItems) {
     const stocksWithHistory = related.map(({ stock, meta }) => {
       const history = stockMonthly(stock.code);
       const fundamental = fundamentals.stocks && fundamentals.stocks[stock.code] || {};
-      const role = (meta.costItemIds || []).includes(itemId) ? 'consumer' : (meta.role || 'unknown');
+      const isCostInput = (meta.costItemIds || []).includes(itemId);
+      const disclosedProduct = companyProducts
+        .filter((product) => product.stockCode === stock.code && product.marketItemId === itemId &&
+          product.ratioBasis === 'product' && Number.isFinite(Number(product.revenueRatio)))
+        .sort((a, b) => String(b.reportDate || '').localeCompare(String(a.reportDate || '')))[0];
+      const mappedItemCount = [meta.marketItemId].concat(meta.additionalMarketItemIds || [], meta.costItemIds || []).filter(Boolean).length;
+      const fallbackRatio = mappedItemCount === 1 && fundamental.mainRatio !== null &&
+        fundamental.mainRatio !== undefined && Number.isFinite(Number(fundamental.mainRatio))
+        ? Number(fundamental.mainRatio) : null;
+      const itemMainRatio = isCostInput ? null : disclosedProduct
+        ? Number(disclosedProduct.revenueRatio) : fallbackRatio;
       return {
         code: stock.code, name: stock.name, group: stock.group || '',
-        role: (meta.costItemIds || []).includes(itemId) ? 'consumer' : (meta.role || 'unknown'),
-        roleLabel: (meta.costItemIds || []).includes(itemId) ? '成本端' : meta.role === 'producer' ? '产品端' : meta.role === 'consumer' ? '成本端' : meta.role === 'mixed' ? '多因素' : '待核实',
-        mainRatio: fundamental.mainRatio !== null && fundamental.mainRatio !== undefined && Number.isFinite(Number(fundamental.mainRatio)) ? Number(fundamental.mainRatio) : null,
+        role: isCostInput ? 'consumer' : (meta.role || 'unknown'),
+        roleLabel: isCostInput ? '成本端' : meta.role === 'producer' ? '产品端' : meta.role === 'consumer' ? '成本端' : meta.role === 'mixed' ? '多因素' : '待核实',
+        mainRatio: itemMainRatio,
         source: history.length ? history[history.length - 1].source : null,
         history
       };

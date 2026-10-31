@@ -170,6 +170,40 @@ def normalize_daily_frame(frame: Any) -> dict[str, list[dict[str, Any]]]:
         result.setdefault(symbol, []).append({"date": day, "spot": spot, "futures": futures})
     return {key: clean_series(value) for key, value in result.items()}
 
+def normalize_monthly_klines(frame: Any) -> list[dict[str, Any]]:
+    """Aggregate continuous-futures daily OHLC into true monthly candlesticks."""
+    if frame is None or getattr(frame, "empty", True):
+        return []
+    daily: list[dict[str, Any]] = []
+    for _, row in frame.iterrows():
+        day = date_text(row.get("日期", row.get("date")))
+        if not day:
+            continue
+        values = {
+            "open": finite_number(row.get("开盘价", row.get("open"))),
+            "high": finite_number(row.get("最高价", row.get("high"))),
+            "low": finite_number(row.get("最低价", row.get("low"))),
+            "close": finite_number(row.get("收盘价", row.get("close"))),
+        }
+        if any(value is None for value in values.values()):
+            continue
+        daily.append({"date": day, **values})
+    daily.sort(key=lambda point: point["date"])
+    by_month: dict[str, list[dict[str, Any]]] = {}
+    for point in daily:
+        by_month.setdefault(point["date"][:7], []).append(point)
+    result: list[dict[str, Any]] = []
+    for month, points in sorted(by_month.items()):
+        result.append({
+            "date": month,
+            "open": points[0]["open"],
+            "high": max(point["high"] for point in points),
+            "low": min(point["low"] for point in points),
+            "close": points[-1]["close"],
+        })
+    return result[-180:]
+
+
 def normalize_sys_frame(frame: Any, today: date | None = None) -> list[dict[str, Any]]:
     """Normalize Business Society's compact MM-DD chart dates into a chronological series."""
     if frame is None or getattr(frame, "empty", True):
@@ -326,6 +360,42 @@ def fetch_data() -> dict[str, Any]:
             errors.append("futures_spot_price_previous: " + str(exc)[:120])
 
     payload = build_payload(daily_by_symbol)
+
+    # Long-range monthly candlesticks come from the provider's main-continuous
+    # futures series, kept separate from the spot/basis series above.
+    continuous_symbols = {
+        "soda-ash": "SA0", "urea": "UR0", "methanol": "MA0",
+        "aluminium": "AL0", "rubber": "RU0",
+    }
+    old_items_for_monthly = existing_payload.get("items", {}) if isinstance(existing_payload.get("items"), dict) else {}
+    for product_id, symbol in continuous_symbols.items():
+        try:
+            frame = call_with_timeout(
+                35, ak.futures_main_sina,
+                symbol=symbol,
+                start_date="20100101",
+                end_date=(end_day + timedelta(days=1)).strftime("%Y%m%d"),
+            )
+            monthly_klines = normalize_monthly_klines(frame)
+            if monthly_klines:
+                payload["items"][product_id]["monthlyKlines"] = {
+                    "label": "主力连续合约月K线",
+                    "series": monthly_klines,
+                    "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
+                    "sourceUrl": "https://finance.sina.com.cn/futuremarket/",
+                    "period": "monthly",
+                    "priceType": "main-continuous-futures",
+                }
+                fresh_data = True
+            else:
+                prior = old_items_for_monthly.get(product_id, {})
+                if isinstance(prior, dict) and isinstance(prior.get("monthlyKlines"), dict):
+                    payload["items"][product_id]["monthlyKlines"] = prior["monthlyKlines"]
+        except Exception as exc:
+            errors.append("futures_main_sina/" + symbol + ": " + str(exc)[:120])
+            prior = old_items_for_monthly.get(product_id, {})
+            if isinstance(prior, dict) and isinstance(prior.get("monthlyKlines"), dict):
+                payload["items"][product_id]["monthlyKlines"] = prior["monthlyKlines"]
 
     # Exchange warehouse receipts provide a useful, narrow supply-side signal.
     # They are NOT the same as total producer, port, or social inventory.

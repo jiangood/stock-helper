@@ -83,7 +83,7 @@ class BusinessDataTests(unittest.TestCase):
         mapping = json.loads((Path(__file__).resolve().parents[1] / "data" / "stock-products.json").read_text(encoding="utf-8"))["byCode"]
         expected = {
             "sh600230": {"tdi", "polycarbonate"},
-            "sz000629": {"titanium-material", "vanadium"},
+            "sz000629": {"titanium-products", "vanadium"},
             "sh600963": {"pulp", "printing-paper", "packaging-paper"},
             "sh600819": {"float-glass"},
             "sh688295": {"carbon-fiber"},

@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh603977",
-  "updatedAt": "2026-10-29T09:54:34.311Z",
+  "updatedAt": "2026-10-31T08:19:07.677Z",
   "detail": {
     "name": "国泰集团",
-    "price": 9.75,
-    "prevClose": 9.77,
-    "change": -0.02,
-    "todayChange": -0.2,
-    "open": 9.78,
-    "high": 9.9,
-    "low": 9.66,
-    "avg": 9.76,
-    "volume": 45623,
-    "amount": 44519136,
-    "turnover": 0.73,
-    "volumeRatio": 0.77,
-    "amplitude": 2.46,
-    "limitUp": 10.75,
-    "limitDown": 8.79,
-    "pe": 29.82,
-    "peStatic": 24.01,
-    "peTtm": 28.23,
-    "pb": 1.73,
+    "price": 9.41,
+    "prevClose": 9.75,
+    "change": -0.34,
+    "todayChange": -3.49,
+    "open": 9.67,
+    "high": 9.87,
+    "low": 9.4,
+    "avg": 9.65,
+    "volume": 71612,
+    "amount": 69117433,
+    "turnover": 1.15,
+    "volumeRatio": 1.17,
+    "amplitude": 4.82,
+    "limitUp": 10.73,
+    "limitDown": 8.78,
+    "pe": 28.78,
+    "peStatic": 23.18,
+    "peTtm": 27.24,
+    "pb": 1.67,
     "roe": 4.4,
     "grossMargin": 30.114417416,
     "netMargin": 8.1079428253,
@@ -32,14 +32,14 @@
     "profitYoY": -19.80688765647,
     "navPerShare": 5.6255478,
     "high52": 17.43,
-    "low52": 9.53,
+    "low52": 9.4,
     "listedAt": 20161111,
     "board": "BK0538",
     "totalShares": 621241828,
     "floatShares": 621241828,
-    "totalCap": 6057107823,
-    "floatCap": 6057107823,
-    "time": 1793261504000,
+    "totalCap": 5845885601.4800005,
+    "floatCap": 5845885601.4800005,
+    "time": 1793347916000,
     "code": "sh603977"
   },
   "dailyAdjusted": {
@@ -47,22 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 12.65,
-        "close": 12.24,
-        "high": 12.9,
-        "low": 12.21,
-        "volume": 137607
-      },
-      {
-        "time": "2025-10-20",
-        "open": 12.24,
-        "close": 12.16,
-        "high": 12.44,
-        "low": 12.08,
-        "volume": 101726
-      },
       {
         "time": "2025-10-21",
         "open": 12.16,
@@ -2054,6 +2038,14 @@
         "high": 9.9,
         "low": 9.66,
         "volume": 45623
+      },
+      {
+        "time": "2026-10-30",
+        "open": 9.67,
+        "close": 9.41,
+        "high": 9.87,
+        "low": 9.4,
+        "volume": 71612
       }
     ]
   },
@@ -2062,14 +2054,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-20",
-        "open": 12.37,
-        "close": 12.29,
-        "high": 12.57,
-        "low": 12.21,
-        "volume": 101726
-      },
       {
         "time": "2025-10-21",
         "open": 12.29,
@@ -4061,6 +4045,14 @@
         "high": 9.9,
         "low": 9.66,
         "volume": 45623
+      },
+      {
+        "time": "2026-10-30",
+        "open": 9.67,
+        "close": 9.41,
+        "high": 9.87,
+        "low": 9.4,
+        "volume": 71612
       }
     ]
   },
@@ -6606,14 +6598,14 @@
         "volume": 1249155
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 10.56,
-        "close": 9.75,
+        "close": 9.41,
         "high": 10.7,
-        "low": 9.53,
-        "volume": 821975
+        "low": 9.4,
+        "volume": 893587
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10-29"
+  "monthlyFetchedFor": "2026-10-31"
 }

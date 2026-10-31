@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000738",
-  "updatedAt": "2026-10-29T09:54:34.311Z",
+  "updatedAt": "2026-10-31T08:19:07.677Z",
   "detail": {
     "name": "航发控制",
-    "price": 17.94,
-    "prevClose": 17.8,
-    "change": 0.14,
-    "todayChange": 0.79,
-    "open": 17.69,
-    "high": 18.15,
-    "low": 17.53,
-    "avg": 17.9,
-    "volume": 136062,
-    "amount": 243590772.4,
-    "turnover": 1.03,
-    "volumeRatio": 0.94,
-    "amplitude": 3.48,
-    "limitUp": 19.58,
-    "limitDown": 16.02,
-    "pe": 75.59,
-    "peStatic": 70.55,
-    "peTtm": 140.8,
-    "pb": 1.87,
+    "price": 17.23,
+    "prevClose": 17.94,
+    "change": -0.71,
+    "todayChange": -3.96,
+    "open": 17.79,
+    "high": 17.92,
+    "low": 17.2,
+    "avg": 17.54,
+    "volume": 138685,
+    "amount": 243226503.92,
+    "turnover": 1.05,
+    "volumeRatio": 0.91,
+    "amplitude": 4.01,
+    "limitUp": 19.73,
+    "limitDown": 16.15,
+    "pe": 72.6,
+    "peStatic": 67.76,
+    "peTtm": 135.23,
+    "pb": 1.8,
     "roe": 1.87,
     "grossMargin": 22.7435356725,
     "netMargin": 6.1506474308,
@@ -37,9 +37,9 @@
     "board": "BK1231",
     "totalShares": 1315184001,
     "floatShares": 1315184001,
-    "totalCap": 23594400977.940002,
-    "floatCap": 23594400977.940002,
-    "time": 1793259279000,
+    "totalCap": 22660620337.23,
+    "floatCap": 22660620337.23,
+    "time": 1793345679000,
     "code": "sz000738"
   },
   "dailyAdjusted": {
@@ -47,22 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-17",
-        "open": 19.733,
-        "close": 19.363,
-        "high": 19.913,
-        "low": 19.273,
-        "volume": 85671
-      },
-      {
-        "time": "2025-10-20",
-        "open": 19.513,
-        "close": 19.293,
-        "high": 19.583,
-        "low": 19.173,
-        "volume": 62170
-      },
       {
         "time": "2025-10-21",
         "open": 19.363,
@@ -2054,6 +2038,14 @@
         "high": 18.15,
         "low": 17.53,
         "volume": 136062
+      },
+      {
+        "time": "2026-10-30",
+        "open": 17.79,
+        "close": 17.23,
+        "high": 17.92,
+        "low": 17.2,
+        "volume": 138685
       }
     ]
   },
@@ -2062,14 +2054,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-20",
-        "open": 19.59,
-        "close": 19.37,
-        "high": 19.66,
-        "low": 19.25,
-        "volume": 62170
-      },
       {
         "time": "2025-10-21",
         "open": 19.44,
@@ -4061,6 +4045,14 @@
         "high": 18.15,
         "low": 17.53,
         "volume": 136062
+      },
+      {
+        "time": "2026-10-30",
+        "open": 17.79,
+        "close": 17.23,
+        "high": 17.92,
+        "low": 17.2,
+        "volume": 138685
       }
     ]
   },
@@ -7590,14 +7582,14 @@
         "volume": 2974207
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 18.8,
-        "close": 17.94,
+        "close": 17.23,
         "high": 19.36,
-        "low": 17.36,
-        "volume": 2320431
+        "low": 17.2,
+        "volume": 2459116
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10-29"
+  "monthlyFetchedFor": "2026-10-31"
 }

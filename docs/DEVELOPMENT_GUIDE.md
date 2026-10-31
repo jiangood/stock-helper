@@ -17,7 +17,8 @@
 
 | 路径 | 用途 |
 | --- | --- |
-| `index.html` | 自选股票池页面 |
+| `index.html` | SPA 唯一 HTML 壳与 Hash 路由入口 |
+| `legacy-stocks.html`、`legacy-market.html`、`legacy-products.html`、`legacy-stock.html` | 迁移期间隔离运行的旧页面模板，禁止在原生迁移验收前删除 |
 | `market.html`、`business.js` | 行情与产业链数据展示 |
 | `products.html`、`products.js` | 以商品为中心的关联股票月线对比卡片 |
 | `data/business-data.json`、`data/stock-products.json` | 商品报价及商品-上市公司关联关系 |
@@ -153,4 +154,4 @@ node scripts/validate_stock_data.js
 
 前端重构按 [SPA 重构与文件命名迁移清单](SPA_MIGRATION_PLAN.md) 执行。采用原生 ES Modules + Hash Router，每个页面一个 `*.page.js` 主模块，公共 UI 放入 `src/components/`，数据访问放入 `src/services/`，纯计算工具和业务规则分别放入 `src/utils/`、`src/rules/`。
 
-迁移必须渐进进行：先建立路由与公共组件，再逐页迁移；旧 HTML/JS 在调用方迁移且测试通过前不得删除。当前已提交 Hash Router、应用生命周期骨架，以及导航、主题、密码门禁、Toast、加载组件和缓存健康数据服务；健康监控页已新增独立 ES Module，但尚未切换首页入口。不得因 SPA 改造改变行情数据 `cache: 'no-store'`、不持久化业务数据、评分/纪律口径、数据采集脚本或 Actions 发布流程。
+迁移必须渐进进行：先建立路由与公共组件，再逐页迁移；旧 HTML/JS 在调用方迁移且测试通过前不得删除。当前 `index.html` 已切换为 SPA 壳，Hash Router、统一导航、主题切换和页面生命周期已接入；健康监控页使用原生 ES Module，其余四个页面由独立页面模块通过 iframe 兼容桥接旧业务脚本，旧 `.html` 入口已跳转至 Hash 路由。桥接是迁移过渡层，不代表这些页面已完成原生模块化。不得因 SPA 改造改变行情数据 `cache: 'no-store'`、不持久化业务数据、评分/纪律口径、数据采集脚本或 Actions 发布流程。

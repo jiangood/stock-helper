@@ -419,8 +419,8 @@ function monthlyTrendHtml(stock) {
   // 月线颜色按当前价相对交易计划价位判断，而非按月线首尾涨跌判断。
   const quote = priceData[stock.code];
   const currentPrice = quote && Number.isFinite(quote.price) ? quote.price : null;
-  const entry = Number(stock.entry);
-  const takeProfit = Number(stock.tp1);
+  const entry = stock.entry == null || stock.entry === '' ? NaN : Number(stock.entry);
+  const takeProfit = stock.tp1 == null || stock.tp1 === '' ? NaN : Number(stock.tp1);
   let tone = 'monthly-trend-neutral';
   let status = '当前价处于入场价与止盈价之间或价位数据不完整';
   if (currentPrice !== null && Number.isFinite(entry) && currentPrice < entry) {

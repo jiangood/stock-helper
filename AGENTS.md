@@ -19,7 +19,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 顶部只保留标题 + 刷新/主题按钮：不显示时钟、休市/交易中、收盘等常识性提示
   - 名称列只显示名称，不显示股票代码；别名单独一列，放在分组之后
   - 点击名称进入个股详情页（`stock.html?code=...`），东方财富外链放在详情页
-  - 纪律增强：工具栏「全部状态」筛选（重仓/接近重仓/入场/破净/八折/小市值/纪律全过/全过+买点/评分优/评分低/有研报评分/研报 ≥80/风险）；名称后显示 ST / 亏 / 八折 / 破净小旗标；「纪律」列显示 5 项自动筛选（非ST/非亏损/PE≤30/市值≤200亿/PB<1）的通过数，全过显示绿色「全过」，4/5 显示黄色；采用独立多页面导航：`index.html` 为自选、`combat.html` 为作战、`market.html` 为行情，顶部导航通过链接切页，不使用底部 tabs；行情页展示板块月线强弱、全球资产与产业链商品行情；不再包含机会与交易观察；首页不再提供简报按钮
+  - 纪律增强：工具栏「全部状态」筛选（重仓/接近重仓/入场/破净/八折/小市值/纪律全过/全过+买点/评分优/评分低/有研报评分/研报 ≥80/风险）；名称后显示 ST / 亏 / 八折 / 破净小旗标；「纪律」列显示 5 项自动筛选（非ST/非亏损/PE≤30/市值≤200亿/PB<1）的通过数，全过显示绿色「全过」，4/5 显示黄色；采用独立多页面导航：`index.html` 为自选、`combat.html` 为作战、`market.html` 为行情，顶部导航通过链接切页，不使用底部 tabs；行情页展示板块月线强弱、全球资产与产业链商品行情；不再包含机会与交易观察；首页不再提供简报按钮；顶部导航增加独立商品页面
   - 「机器评分」「研报评分」「研报日期」为三个独立列，分别支持排序；机器评分显示 32 分制折算百分制分数，研报评分只显示研报原始总分，研报日期显示发布日期并在超过 12 个月时标「旧」，缺数据时显示 `—`；研报评分悬停显示来源与报告日期，机器评分悬停显示 7 项可复算指标明细
 - `business.js` — 行情页渲染层（`window.StockBusiness`）：板块月线强弱、全球资产与产业链商品区域
   - 板块月线强弱读取 `data/sector-monthly.json`，按近 12 个月月线涨跌幅等权平均排序；卡片另列近 1/3/6 个月平均涨跌、涨跌家数与到计划价区家数，领先个股按近 12 个月涨幅排序
@@ -61,7 +61,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
   - 字表覆盖 GB2312 一二级汉字 6763 字主读音，离线生成、无外部依赖；ü 记作 v（`lv`），检索同时兼容 `lu`
 - `static-quotes.js` — 浏览器端静态行情适配器，每次直接读取同源 JSON，使用 `cache: 'no-store'`；不使用 IndexedDB、localStorage、内存缓存或后台刷新队列；不直接回源外部行情接口
 - `scripts/build_stock_detail_cache.js` — 从权威个股缓存生成详情页紧凑 bundles 和同组估值索引；详情 bundles 仅保留 250 日K、200 周K、240 月K，原始历史文件不删除；覆盖率低于 70% 禁止发布。
-- `scripts/build_cache_manifest.js` / `data/cache/manifest.json` / `data/monitoring/latest.json` — GitHub Actions 统一登记静态读模型，记录 SHA-256 指纹、数据日期、记录数、文件大小、新鲜度、构建耗时和内容复用率；`health.html` 展示监控状态；内容复用率不是 CDN HIT/MISS。
+- `scripts/build_product_comparison.js` / `data/stock-products.json` / `data/product-comparison.json` — 股票主营产品与股价月线对比静态读模型，价格序列按共同月份归一化，未核实映射与缺失历史必须显示待补充\n- `scripts/build_cache_manifest.js` / `data/cache/manifest.json` / `data/monitoring/latest.json` — GitHub Actions 统一登记静态读模型，记录 SHA-256 指纹、数据日期、记录数、文件大小、新鲜度、构建耗时和内容复用率；`health.html` 展示监控状态；内容复用率不是 CDN HIT/MISS。
 - 行情和基本面采集完成后由 `.github/workflows/build-static-cache.yml` 统一重建页面读模型与 manifest；派生缓存由该专用工作流发布，遇到 master 并发变化时从最新 master 重新构建后重试；基本面变化后必须重新生成机器评分。
 - `quotes.js` — GitHub Actions 采集端使用的行情 SDK，不由网页直接加载
   - 数据源：东方财富与腾讯财经，多源自动降级；仅由 Actions 采集脚本调用

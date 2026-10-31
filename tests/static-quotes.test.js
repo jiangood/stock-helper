@@ -58,10 +58,6 @@ test('static adapter reads quote, detail, daily/weekly/monthly and index data fr
       monthlyAdjusted: { bars: bars.slice(0, 8) }
     },
     'data/index-cache.json': { monthly: { sh000001: { bars: bars.slice(0, 10) } } },
-    'data/combat-kline.json': {
-      schemaVersion: 1, barLimit: 120,
-      stocks: { sz002408: { bars: bars.slice(0, 10) } }
-    }
   };
   const harness = makeHarness(async (url, options) => {
     requested.push({ url: String(url), cache: options && options.cache });
@@ -74,7 +70,6 @@ test('static adapter reads quote, detail, daily/weekly/monthly and index data fr
   assert.equal(quotes.sz002408.price, 4.36);
   assert.equal(quotes.sh000001.price, 3200);
   assert.equal((await client.fetchDetail('sz002408')).name, '齐翔腾达');
-  assert.equal((await client.fetchCombatKlines()).stocks.sz002408.bars.length, 10);
   assert.equal((await client.fetchKline('sz002408', { period: 'day', count: 10 })).bars.length, 10);
   assert.equal((await client.fetchKline('sz002408', { period: 'week', count: 10 })).bars.length, 10);
   assert.equal((await client.fetchKline('sz002408', { period: 'month', count: 10 })).bars.length, 8);

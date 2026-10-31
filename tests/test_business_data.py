@@ -229,5 +229,47 @@ class BusinessDataTests(unittest.TestCase):
         self.assertEqual(fetcher.finite_number("123.4"), 123.4)
 
 
+    def test_clean_series_preserves_published_quote_ranges_and_market_metadata(self):
+        series = fetcher.clean_series([{
+            "date": "2026-10-28", "spot": 24950, "low": 24700, "high": 25200,
+            "region": "山东", "spec": "饲料级固体蛋氨酸",
+            "markets": {"广东": {"low": 24800, "high": 25300, "spot": 25050}},
+            "sourceUrl": "https://www.caaa.cn/example.html",
+        }])
+        self.assertEqual(series[0]["low"], 24700)
+        self.assertEqual(series[0]["high"], 25200)
+        self.assertEqual(series[0]["region"], "山东")
+        self.assertEqual(series[0]["markets"]["广东"]["spot"], 25050)
+
+    def test_parse_caaa_methionine_report_extracts_regional_ranges(self):
+        html = """
+        <html><body>
+        <h2>氨基酸收盘价格表</h2><table>
+        <tr><td>市场</td><td>类别</td><td>收盘价格</td></tr>
+        <tr><td>山东</td><td>固体蛋氨酸</td><td>24700—25200</td></tr>
+        <tr><td>河南</td><td>固体蛋氨酸</td><td>24700—25200</td></tr>
+        <tr><td>河北</td><td>赖氨酸</td><td>3950—4050</td></tr>
+        <tr><td>广东</td><td>固体蛋氨酸</td><td>24800—25300</td></tr>
+        </table><p>价格条件：含税、现款、送到</p></body></html>
+        """
+        point = fetcher.parse_methionine_report(
+            html, "https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html"
+        )
+        self.assertEqual(point["date"], "2026-10-28")
+        self.assertEqual(point["spot"], 24950)
+        self.assertEqual(point["low"], 24700)
+        self.assertEqual(point["high"], 25200)
+        self.assertEqual(point["markets"]["河南"]["spot"], 24950)
+        self.assertNotIn("河北", point["markets"])
+        self.assertEqual(point["markets"]["广东"]["high"], 25300)
+        self.assertEqual(point["region"], "山东")
+
+    def test_parse_caaa_report_rejects_missing_shandong_solid_methionine(self):
+        html = "<table><tr><td>山东</td><td>赖氨酸</td><td>4000—4100</td></tr></table>"
+        self.assertIsNone(fetcher.parse_methionine_report(
+            html, "https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html"
+        ))
+
+
 if __name__ == "__main__":
     unittest.main()

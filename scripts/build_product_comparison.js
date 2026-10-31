@@ -232,7 +232,22 @@ function buildCommodityCards(productItems) {
         .filter(Boolean).join(' ')
     };
   }).sort((a, b) => {
-    // Put cards with usable market history first; among them, prefer broader coverage.
+    // 商品列表先按关联公司的行业周期观察顺序排列：化工优先；
+    // 同一行业优先级内，再按历史数据覆盖度排序，避免把覆盖度误当成周期位置。
+    const cyclePriority = (card) => {
+      const priorities = {
+        '化工': 0, '农药': 1, '农业': 2, '有色': 3, '稀土钨': 4,
+        '贵金属': 5, '钢铁': 6, '能源': 7, '新材料': 8, '轻工': 9,
+        '食品': 10, '动保': 11, '民爆': 12, '装备': 13, '军工': 14
+      };
+      const groups = (card.stocks || []).map((stock) => stock.group).filter(Boolean);
+      return groups.length
+        ? Math.min(...groups.map((group) => Object.prototype.hasOwnProperty.call(priorities, group) ? priorities[group] : 99))
+        : 99;
+    };
+    const leftPriority = cyclePriority(a), rightPriority = cyclePriority(b);
+    if (leftPriority !== rightPriority) return leftPriority - rightPriority;
+    // 同行业内保留原有排序：可用历史序列更多、覆盖月份更广的排前面。
     const coverage = (card) => {
       const series = [card.productSeries].concat((card.stocks || []).map((stock) => stock.values || []));
       const available = series.filter((points) => Array.isArray(points) && points.length >= 2);

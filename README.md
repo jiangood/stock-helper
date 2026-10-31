@@ -29,7 +29,7 @@ python -m http.server 8089
 | `products.html` `products.js` | 商品页面：股票池逐股展示主营产品价格与股价标准化月线对比，前端只读 Actions 生成的 `data/product-comparison.json` |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
-| `data/stock-products.json` `scripts/build_product_comparison.js` `data/product-comparison.json` | 股票主营产品映射与商品/股价月线比较读模型；按共同月份归一化为 100，缺数据时明确显示待补充 |
+| `data/stock-products.json` `scripts/build_product_comparison.js` `data/product-comparison.json` | 股票主营产品映射与商品/股价月线比较读模型；主营产品名优先取基本面数据，行情映射人工核实；按共同月份归一化为 100，缺数据时明确显示待补充 |
 | `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、纪律全过判定、入场/重仓区、连续涨停、月 K 分位与简报 |
 | `research-score.js` | 研报评分工具：复算研报评分卡里可自动化的 7 项（国资背景 / 扣非增长 / 主营集中 / 市值 / 盘整 / 月线位置 / 底部放量），合计 65 分后折算百分制 |
 | `data/research-scores.json` `scripts/build_research_scores.js` | 个股评分与中间指标；首页与详情页只读这个小文件，不逐只拉个股缓存 |

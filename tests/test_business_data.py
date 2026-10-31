@@ -107,6 +107,25 @@ class BusinessDataTests(unittest.TestCase):
             self.assertIsNone(payload["items"][item_id]["latest"])
             self.assertEqual(payload["items"][item_id]["status"], "pending")
 
+    def test_other_material_primary_segments_are_not_left_unmapped(self):
+        mapping = json.loads((Path(__file__).resolve().parents[1] / "data" / "stock-products.json").read_text(encoding="utf-8"))["byCode"]
+        expected = {
+            "sh688750": {"titanium-material"},
+            "sh600298": {"yeast"},
+            "sh600378": {"fluorine-materials"},
+            "sh600459": {"precious-metal-recycling", "precious-metal-precursors"},
+            "sh603977": {"industrial-explosives"},
+            "sz002783": {"industrial-explosives", "compound-fertilizer"},
+        }
+        for code, expected_ids in expected.items():
+            meta = mapping[code]
+            actual_ids = {meta.get("marketItemId"), *meta.get("additionalMarketItemIds", [])}
+            self.assertTrue(expected_ids.issubset(actual_ids), (code, actual_ids))
+        products = {item["id"]: item for item in fetcher.PRODUCTS}
+        for item_id in ("yeast", "fluorine-materials", "precious-metal-recycling", "precious-metal-precursors", "industrial-explosives"):
+            self.assertIn(item_id, products)
+            self.assertIsNone(products[item_id]["symbol"])
+
     def test_build_payload_does_not_fabricate_missing_quotes(self):
         payload = fetcher.build_payload({
             "SA": [

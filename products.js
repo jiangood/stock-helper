@@ -46,7 +46,8 @@ function render(){
  node.innerHTML=list.map(function(card,index){
   var comparisonTable=comparisonTableHtml(card);
   var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+'及关联股票归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
-  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+' · '+(card.months&&card.months.length?card.months.length+' 根月线':'月线数量 —')+'</div></div><div class="commodity-head-info"><div class="commodity-latest-price">最新参考价 '+money(card.latestPrice,card.unit)+' '+esc(card.unit||'')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
+  var monthCount=card.months&&card.months.length?card.months.length+' 根月线':'';
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div>'+(monthCount?'<div class="product-meta">'+monthCount+'</div>':'')+'</div><div class="commodity-head-info"><div class="commodity-latest-price">最新参考价 '+money(card.latestPrice,card.unit)+' '+esc(card.unit||'')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
   function updateScrollHint(){
@@ -84,7 +85,6 @@ function render(){
    yAxis:{type:'value',scale:true,axisLabel:{show:false},axisTick:{show:false},axisLine:{show:false},splitLine:{show:false}},
    series:series
   });
-  // 按容器真实尺寸校准；手机旋屏、地址栏和卡片宽度变化均触发重排。
   chart.resize();
   if(typeof ResizeObserver==='function'){
    var observer=new ResizeObserver(function(){try{chart.resize();}catch(e){}});
@@ -122,7 +122,6 @@ function initThemeButton(){
   document.documentElement.setAttribute('data-bs-theme',next);
   try{localStorage.setItem('stock-theme',next);}catch(e){}
   sync();
-  // 重建图表以同步当前主题下的文字与网格配色。
   render();
  });
 }

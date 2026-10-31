@@ -8,7 +8,7 @@
 - **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/#/stock/sz002408)
 - **系统健康：** [静态缓存监控](https://jiangood.github.io/stock-helper/#/health)
 
-自选、行情、商品、个股详情与系统健康统一运行在 Hash 路由 SPA 中，通过顶部导航切换。旧 `.html` 地址保留兼容跳转；当前自选/行情/商品/个股详情页面仍通过隔离的旧页面桥接运行，后续逐页替换为原生模块。自选页支持股票池监控、搜索、分组和纪律筛选；行情页汇总板块日线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
+自选、行情、商品、个股详情与系统健康统一运行在 Hash 路由 SPA 中，通过顶部导航切换。旧 `.html` 地址保留兼容跳转；系统健康与商品页面已使用原生 ES Module，自选、行情和个股详情仍通过隔离的旧页面桥接运行，后续逐页替换。自选页支持股票池监控、搜索、分组和纪律筛选；行情页汇总板块日线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
 
 ## 前端架构与 SPA 重构
 
@@ -27,9 +27,10 @@ python -m http.server 8089
 | 文件 | 说明 |
 | --- | --- |
 | `index.html` | SPA 唯一 HTML 壳：Hash 路由、统一导航与主题；自选页业务暂由 `legacy-stocks.html` 桥接 |
-| `legacy-stocks.html` `legacy-market.html` `legacy-products.html` `legacy-stock.html` | 迁移期间保留的旧页面模板，由各自 SPA 页面模块隔离加载；完成原生迁移并通过对照测试后再删除 |
+| `legacy-stocks.html` `legacy-market.html` `legacy-stock.html` | 迁移期间保留的旧页面模板，由各自 SPA 页面模块隔离加载；完成原生迁移并通过对照测试后再删除 |
+| `legacy-products.html` | 商品页面旧版回滚模板；当前商品页已原生模块化，待对照验收后再清理 |
 | `src/pages/*.page.js` | SPA 页面入口：自选、行情、商品、个股详情和系统健康 |
-| `products.html` `products.js` | 商品页面：每个商品一张卡片，同图展示商品实际价格与关联股票复权价格月线（双纵轴） |
+| `src/pages/products.page.js` `src/services/products.service.js` | 原生商品页面：每个商品一张卡片，同图展示商品实际价格与关联股票复权价格月线（归一化指数） |
 | `data/company-products.json` `scripts/build_company_products.py` | 商品历史价格候选序列：提供部分品种最多 200 根月线的行业价格代理，供商品月线构建器按商品名称匹配 |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |

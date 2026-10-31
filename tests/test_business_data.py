@@ -241,6 +241,17 @@ class BusinessDataTests(unittest.TestCase):
         self.assertEqual(series[0]["region"], "山东")
         self.assertEqual(series[0]["markets"]["广东"]["spot"], 25050)
 
+    def test_caaa_report_date_parses_compact_and_legacy_paths(self):
+        self.assertEqual(
+            fetcher.caaa_report_date("https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html"),
+            "2026-10-28",
+        )
+        self.assertEqual(
+            fetcher.caaa_report_date("https://www.caaa.cn/html/fw/market/slyl/2026/10/28/26342.html"),
+            "2026-10-28",
+        )
+        self.assertIsNone(fetcher.caaa_report_date("https://www.caaa.cn/report/invalid.html"))
+
     def test_parse_caaa_methionine_report_extracts_regional_ranges(self):
         html = """
         <html><body>

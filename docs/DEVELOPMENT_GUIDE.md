@@ -18,14 +18,13 @@
 | 路径 | 用途 |
 | --- | --- |
 | `index.html` | 自选股票池页面 |
-| `combat.html`、`combat-center.js` | 交易作战台及决策展示 |
 | `market.html`、`business.js` | 行情与产业链数据展示 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
 | `data/research-reports.json` | 研报原始评分及来源信息 |
 | `data/fundamentals.json` | 基本面快照 |
 | `data/stock-quotes.json`、`data/stock-cache/` | 行情与个股历史数据 |
-| `data/research-scores.json`、`data/sector-monthly.json`、`data/combat-kline.json` | 页面使用的派生读模型 |
+| `data/research-scores.json`、`data/sector-monthly.json` | 页面使用的派生读模型 |
 | `data/cache/`、`data/monitoring/` | 静态缓存清单、详情缓存及监控快照 |
 | `scripts/` | 数据采集、派生数据构建及校验脚本 |
 | `tests/` | JavaScript 与 Python 自动化测试 |
@@ -53,7 +52,6 @@ python -m http.server 8089
 # 构建页面派生读模型
 node scripts/build_sector_monthly.js
 node scripts/build_research_scores.js
-node scripts/build_combat_kline.js
 node scripts/build_stock_detail_cache.js
 
 # 检查缓存构建脚本语法并构建缓存清单
@@ -82,7 +80,7 @@ node scripts/validate_stock_data.js
 - `tests.yml`：构建派生读模型、构建缓存 manifest、运行 JS/Python 测试并校验数据。
 - `stock-snapshot.yml`：采集股票行情与 K 线。
 - `fundamentals.yml`：刷新基本面快照。
-- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、作战 K 线、manifest 和健康快照，并校验后发布。
+- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、manifest 和健康快照，并校验后发布。
 - `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据。
 
 重要原则：
@@ -124,7 +122,7 @@ node scripts/validate_stock_data.js
 
 以下变更必须格外谨慎，并检查所有共享调用方：
 
-- 鳄鱼纪律、买入/卖出信号、风险拦截、止盈与离场判断。
+- 鳄鱼纪律与个股详情中的辅助判断规则。
 - 研报原始评分、机器评分权重、阈值、数据日期及评分版本。
 - 股票主数据、基本面字段、行情与 K 线复权口径。
 - Actions 的数据发布、并发控制、失败保留和权限配置。

@@ -743,7 +743,7 @@ function applyFilter() {
 // 启动
 // ============================================================
 
-// 页面导航由 index.html / combat.html / market.html 的独立 URL 负责，不再在单页内切换 tabs。
+// 页面导航由 index.html / market.html 的独立 URL 负责，不再在单页内切换 tabs。
 
 function setPageLoading(message, done) {
   const el = $('page-loading');
@@ -794,10 +794,6 @@ function setPageLoading(message, done) {
     }))
   });
   if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
-  if (page === 'combat' && window.StockCombat) {
-    window.StockCombat.init(STOCKS, priceData, quotes);
-    window.StockCombat.onTab('combat');
-  }
   if (page === 'market') {
     if (window.StockBusiness) window.StockBusiness.onTab('market');
     if (window.StockGlobalAssets) window.StockGlobalAssets.onTab('market');

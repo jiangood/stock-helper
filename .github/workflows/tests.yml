@@ -24,7 +24,6 @@ jobs:
         run: |
           node scripts/build_sector_monthly.js
           node scripts/build_research_scores.js
-          node scripts/build_combat_kline.js
           node scripts/build_stock_detail_cache.js
       - name: Check cache builder syntax
         run: node --check scripts/build_cache_manifest.js

@@ -17,19 +17,6 @@
       "freshness": "fresh",
       "status": "healthy"
     },
-    "combat-kline": {
-      "cacheType": "page-read-model",
-      "path": "data/combat-kline.json",
-      "generatedAt": "2026-10-30T01:04:24.842Z",
-      "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
-      "marketDate": "2026-10-29",
-      "recordCount": 67,
-      "bytes": 709677,
-      "dataVersion": "5e7c578d6e082de38cbc9d72194304c4e71be2cefb707fe4bea199fb20178a69",
-      "sourceVersion": "9f4875bfdb820970e5a942037aff78e1a6a68c9fb38ec72bd8fdc35bfe80303c",
-      "freshness": "fresh",
-      "status": "healthy"
-    },
     "research-scores": {
       "cacheType": "page-read-model",
       "path": "data/research-scores.json",

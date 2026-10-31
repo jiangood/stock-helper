@@ -576,8 +576,8 @@ function buildRow(stock) {
     <td>${nameHtml}</td>
     <td class="monthly-trend-cell">${monthlyTrend}</td>
     <td>${priceHtml}</td>
-    <td class="stacked-cell">${entryHtml}${entryDiff}</td>
-    <td class="stacked-cell">${heavyHtml}${heavyDiff}</td>
+    <td class="stacked-cell">${entryHtml}${entryDiff ? `<br>${entryDiff}` : ""}</td>
+    <td class="stacked-cell">${heavyHtml}${heavyDiff ? `<br>${heavyDiff}` : ""}</td>
     <td class="stacked-cell">${tp1Html}</td>
     <td class="stacked-cell">${tp2Html}</td>
     <td>${fmtCap(pd && pd.totalCap)}</td>

@@ -20,9 +20,10 @@
 | `index.html` | 自选股票池页面 |
 | `combat.html`、`combat-center.js` | 交易作战台及决策展示 |
 | `market.html`、`business.js` | 行情与产业链数据展示 |
+| `products.html`、`products.js` | 股票主营产品价格与股价月线对比 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
-| `data/research-reports.json` | 研报原始评分及来源信息 |
+| `data/stock-products.json`、`data/product-comparison.json` | 主营产品映射与 Actions 生成的商品/股价比较读模型 |\n| `data/research-reports.json` | 研报原始评分及来源信息 |
 | `data/fundamentals.json` | 基本面快照 |
 | `data/stock-quotes.json`、`data/stock-cache/` | 行情与个股历史数据 |
 | `data/research-scores.json`、`data/sector-monthly.json`、`data/combat-kline.json` | 页面使用的派生读模型 |

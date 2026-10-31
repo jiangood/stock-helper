@@ -24,7 +24,7 @@ python -m http.server 8089
 | --- | --- |
 | `index.html` | 自选页面：股票池监控看板（Bootstrap 5），支持搜索（含拼音）、分组、纪律筛选、市值/PE/PB/股息率、破净/八折/ST 旗标与纪律列 |
 | `market.html` | 独立行情页面：板块月线强弱、全球资产与产业链商品行情 |
-| `products.html` `products.js` | 商品对比统一页面：包含股票商品价格与股价标准化月线、主营产品收入占比及近 5 年月度价格明细 |
+| `products.html` `products.js` | 商品对比统一页面：每个商品一张卡片，同图展示商品价格与关联股票的标准化月线 |
 | `data/company-products.json` `scripts/build_company_products.py` | 主营产品数据源：按股票保存主营产品、收入占比、报告期及近 5 年月度价格，供商品对比页统一展示 |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |

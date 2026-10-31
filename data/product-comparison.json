@@ -5831,88 +5831,1236 @@
       "note": "天然橡胶价格是核心产品价格代理，仍需结合加工、贸易业务占比。",
       "productSource": "生意社现货/期货基差数据（经 AKShare 获取）",
       "productSourceUrl": "https://www.100ppi.com/",
-      "productDate": "2026-10-30",
+      "productDate": "2026-10",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": 22.43,
-      "stockChange": -13.16,
-      "divergence": "方向背离",
+      "productChange": -22.69,
+      "stockChange": -34.67,
+      "divergence": "走势大致同步",
       "series": [
         {
-          "month": "2025-12",
+          "month": "2011-11",
           "productIndex": 100,
           "stockIndex": 100,
-          "productPrice": 15341.67,
+          "productPrice": 24795,
+          "stockClose": 7.776
+        },
+        {
+          "month": "2011-12",
+          "productIndex": 97.44,
+          "stockIndex": 84.7,
+          "productPrice": 24160,
+          "stockClose": 6.586
+        },
+        {
+          "month": "2012-01",
+          "productIndex": 111.6,
+          "stockIndex": 92.28,
+          "productPrice": 27670,
+          "stockClose": 7.176
+        },
+        {
+          "month": "2012-02",
+          "productIndex": 118.69,
+          "stockIndex": 101.29,
+          "productPrice": 29430,
+          "stockClose": 7.876
+        },
+        {
+          "month": "2012-03",
+          "productIndex": 112.85,
+          "stockIndex": 83.54,
+          "productPrice": 27980,
+          "stockClose": 6.496
+        },
+        {
+          "month": "2012-04",
+          "productIndex": 109.74,
+          "stockIndex": 96.78,
+          "productPrice": 27210,
+          "stockClose": 7.526
+        },
+        {
+          "month": "2012-05",
+          "productIndex": 96.69,
+          "stockIndex": 88.81,
+          "productPrice": 23975,
+          "stockClose": 6.906
+        },
+        {
+          "month": "2012-06",
+          "productIndex": 93,
+          "stockIndex": 85.6,
+          "productPrice": 23060,
+          "stockClose": 6.656
+        },
+        {
+          "month": "2012-07",
+          "productIndex": 90.52,
+          "stockIndex": 77.11,
+          "productPrice": 22445,
+          "stockClose": 5.996
+        },
+        {
+          "month": "2012-08",
+          "productIndex": 86.67,
+          "stockIndex": 74.92,
+          "productPrice": 21490,
+          "stockClose": 5.826
+        },
+        {
+          "month": "2012-09",
+          "productIndex": 100.83,
+          "stockIndex": 75.31,
+          "productPrice": 25000,
+          "stockClose": 5.856
+        },
+        {
+          "month": "2012-10",
+          "productIndex": 99.94,
+          "stockIndex": 69.26,
+          "productPrice": 24780,
+          "stockClose": 5.386
+        },
+        {
+          "month": "2012-11",
+          "productIndex": 96.57,
+          "stockIndex": 59.1,
+          "productPrice": 23945,
+          "stockClose": 4.596
+        },
+        {
+          "month": "2012-12",
+          "productIndex": 106.92,
+          "stockIndex": 71.32,
+          "productPrice": 26510,
+          "stockClose": 5.546
+        },
+        {
+          "month": "2013-01",
+          "productIndex": 106.01,
+          "stockIndex": 80.2,
+          "productPrice": 26285,
+          "stockClose": 6.236
+        },
+        {
+          "month": "2013-02",
+          "productIndex": 99.66,
+          "stockIndex": 74.02,
+          "productPrice": 24710,
+          "stockClose": 5.756
+        },
+        {
+          "month": "2013-03",
+          "productIndex": 89.39,
+          "stockIndex": 69.78,
+          "productPrice": 22165,
+          "stockClose": 5.426
+        },
+        {
+          "month": "2013-04",
+          "productIndex": 76.95,
+          "stockIndex": 63.86,
+          "productPrice": 19080,
+          "stockClose": 4.966
+        },
+        {
+          "month": "2013-05",
+          "productIndex": 75.58,
+          "stockIndex": 70.29,
+          "productPrice": 18740,
+          "stockClose": 5.466
+        },
+        {
+          "month": "2013-06",
+          "productIndex": 71.53,
+          "stockIndex": 52.16,
+          "productPrice": 17735,
+          "stockClose": 4.056
+        },
+        {
+          "month": "2013-07",
+          "productIndex": 72.25,
+          "stockIndex": 52.16,
+          "productPrice": 17915,
+          "stockClose": 4.056
+        },
+        {
+          "month": "2013-08",
+          "productIndex": 80.66,
+          "stockIndex": 59.62,
+          "productPrice": 20000,
+          "stockClose": 4.636
+        },
+        {
+          "month": "2013-09",
+          "productIndex": 80.98,
+          "stockIndex": 100.13,
+          "productPrice": 20080,
+          "stockClose": 7.786
+        },
+        {
+          "month": "2013-10",
+          "productIndex": 77.98,
+          "stockIndex": 111.06,
+          "productPrice": 19335,
+          "stockClose": 8.636
+        },
+        {
+          "month": "2013-11",
+          "productIndex": 79.43,
+          "stockIndex": 111.96,
+          "productPrice": 19695,
+          "stockClose": 8.706
+        },
+        {
+          "month": "2013-12",
+          "productIndex": 73.16,
+          "stockIndex": 94.47,
+          "productPrice": 18140,
+          "stockClose": 7.346
+        },
+        {
+          "month": "2014-01",
+          "productIndex": 62.43,
+          "stockIndex": 89.2,
+          "productPrice": 15480,
+          "stockClose": 6.936
+        },
+        {
+          "month": "2014-02",
+          "productIndex": 60.42,
+          "stockIndex": 94.6,
+          "productPrice": 14980,
+          "stockClose": 7.356
+        },
+        {
+          "month": "2014-03",
+          "productIndex": 63.5,
+          "stockIndex": 85.34,
+          "productPrice": 15745,
+          "stockClose": 6.636
+        },
+        {
+          "month": "2014-04",
+          "productIndex": 57.83,
+          "stockIndex": 72.22,
+          "productPrice": 14340,
+          "stockClose": 5.616
+        },
+        {
+          "month": "2014-05",
+          "productIndex": 56.97,
+          "stockIndex": 72.87,
+          "productPrice": 14125,
+          "stockClose": 5.666
+        },
+        {
+          "month": "2014-06",
+          "productIndex": 60.03,
+          "stockIndex": 77.88,
+          "productPrice": 14885,
+          "stockClose": 6.056
+        },
+        {
+          "month": "2014-07",
+          "productIndex": 63.7,
+          "stockIndex": 83.15,
+          "productPrice": 15795,
+          "stockClose": 6.466
+        },
+        {
+          "month": "2014-08",
+          "productIndex": 58.44,
+          "stockIndex": 85.21,
+          "productPrice": 14490,
+          "stockClose": 6.626
+        },
+        {
+          "month": "2014-09",
+          "productIndex": 49.28,
+          "stockIndex": 106.82,
+          "productPrice": 12220,
+          "stockClose": 8.306
+        },
+        {
+          "month": "2014-10",
+          "productIndex": 53.68,
+          "stockIndex": 101.29,
+          "productPrice": 13310,
+          "stockClose": 7.876
+        },
+        {
+          "month": "2014-11",
+          "productIndex": 51.34,
+          "stockIndex": 117.36,
+          "productPrice": 12730,
+          "stockClose": 9.126
+        },
+        {
+          "month": "2014-12",
+          "productIndex": 54.81,
+          "stockIndex": 111.32,
+          "productPrice": 13590,
+          "stockClose": 8.656
+        },
+        {
+          "month": "2015-01",
+          "productIndex": 51.93,
+          "stockIndex": 116.72,
+          "productPrice": 12875,
+          "stockClose": 9.076
+        },
+        {
+          "month": "2015-02",
+          "productIndex": 54.2,
+          "stockIndex": 111.45,
+          "productPrice": 13440,
+          "stockClose": 8.666
+        },
+        {
+          "month": "2015-03",
+          "productIndex": 50.57,
+          "stockIndex": 127.13,
+          "productPrice": 12540,
+          "stockClose": 9.886
+        },
+        {
+          "month": "2015-04",
+          "productIndex": 58.36,
+          "stockIndex": 150.8,
+          "productPrice": 14470,
+          "stockClose": 11.726
+        },
+        {
+          "month": "2015-05",
+          "productIndex": 60.54,
+          "stockIndex": 152.34,
+          "productPrice": 15010,
+          "stockClose": 11.846
+        },
+        {
+          "month": "2015-06",
+          "productIndex": 51.62,
+          "stockIndex": 124.97,
+          "productPrice": 12800,
+          "stockClose": 9.718
+        },
+        {
+          "month": "2015-07",
+          "productIndex": 50.9,
+          "stockIndex": 100.28,
+          "productPrice": 12620,
+          "stockClose": 7.798
+        },
+        {
+          "month": "2015-08",
+          "productIndex": 46.1,
+          "stockIndex": 95.14,
+          "productPrice": 11430,
+          "stockClose": 7.398
+        },
+        {
+          "month": "2015-09",
+          "productIndex": 45.49,
+          "stockIndex": 94.24,
+          "productPrice": 11280,
+          "stockClose": 7.328
+        },
+        {
+          "month": "2015-10",
+          "productIndex": 43.6,
+          "stockIndex": 94.11,
+          "productPrice": 10810,
+          "stockClose": 7.318
+        },
+        {
+          "month": "2015-11",
+          "productIndex": 39.85,
+          "stockIndex": 92.95,
+          "productPrice": 9880,
+          "stockClose": 7.228
+        },
+        {
+          "month": "2015-12",
+          "productIndex": 42.51,
+          "stockIndex": 96.42,
+          "productPrice": 10540,
+          "stockClose": 7.498
+        },
+        {
+          "month": "2016-01",
+          "productIndex": 41.18,
+          "stockIndex": 64.27,
+          "productPrice": 10210,
+          "stockClose": 4.998
+        },
+        {
+          "month": "2016-02",
+          "productIndex": 41.46,
+          "stockIndex": 61.06,
+          "productPrice": 10280,
+          "stockClose": 4.748
+        },
+        {
+          "month": "2016-03",
+          "productIndex": 45.86,
+          "stockIndex": 76.23,
+          "productPrice": 11370,
+          "stockClose": 5.928
+        },
+        {
+          "month": "2016-04",
+          "productIndex": 51.44,
+          "stockIndex": 76.88,
+          "productPrice": 12755,
+          "stockClose": 5.978
+        },
+        {
+          "month": "2016-05",
+          "productIndex": 42.17,
+          "stockIndex": 70.32,
+          "productPrice": 10455,
+          "stockClose": 5.468
+        },
+        {
+          "month": "2016-06",
+          "productIndex": 46.08,
+          "stockIndex": 71.09,
+          "productPrice": 11425,
+          "stockClose": 5.528
+        },
+        {
+          "month": "2016-07",
+          "productIndex": 43.74,
+          "stockIndex": 73.92,
+          "productPrice": 10845,
+          "stockClose": 5.748
+        },
+        {
+          "month": "2016-08",
+          "productIndex": 48.62,
+          "stockIndex": 77.52,
+          "productPrice": 12055,
+          "stockClose": 6.028
+        },
+        {
+          "month": "2016-09",
+          "productIndex": 53.46,
+          "stockIndex": 75.08,
+          "productPrice": 13255,
+          "stockClose": 5.838
+        },
+        {
+          "month": "2016-10",
+          "productIndex": 57.37,
+          "stockIndex": 80.48,
+          "productPrice": 14225,
+          "stockClose": 6.258
+        },
+        {
+          "month": "2016-11",
+          "productIndex": 71.69,
+          "stockIndex": 92.95,
+          "productPrice": 17775,
+          "stockClose": 7.228
+        },
+        {
+          "month": "2016-12",
+          "productIndex": 74.01,
+          "stockIndex": 88.71,
+          "productPrice": 18350,
+          "stockClose": 6.898
+        },
+        {
+          "month": "2017-01",
+          "productIndex": 86.61,
+          "stockIndex": 97.58,
+          "productPrice": 21475,
+          "stockClose": 7.588
+        },
+        {
+          "month": "2017-02",
+          "productIndex": 74.57,
+          "stockIndex": 93.21,
+          "productPrice": 18490,
+          "stockClose": 7.248
+        },
+        {
+          "month": "2017-03",
+          "productIndex": 65.88,
+          "stockIndex": 87.94,
+          "productPrice": 16335,
+          "stockClose": 6.838
+        },
+        {
+          "month": "2017-04",
+          "productIndex": 59.53,
+          "stockIndex": 73.02,
+          "productPrice": 14760,
+          "stockClose": 5.678
+        },
+        {
+          "month": "2017-05",
+          "productIndex": 50.45,
+          "stockIndex": 67.36,
+          "productPrice": 12510,
+          "stockClose": 5.238
+        },
+        {
+          "month": "2017-06",
+          "productIndex": 53.78,
+          "stockIndex": 72.25,
+          "productPrice": 13335,
+          "stockClose": 5.618
+        },
+        {
+          "month": "2017-07",
+          "productIndex": 50.59,
+          "stockIndex": 79.84,
+          "productPrice": 12545,
+          "stockClose": 6.208
+        },
+        {
+          "month": "2017-08",
+          "productIndex": 66.73,
+          "stockIndex": 84.34,
+          "productPrice": 16545,
+          "stockClose": 6.558
+        },
+        {
+          "month": "2017-09",
+          "productIndex": 54.43,
+          "stockIndex": 81.89,
+          "productPrice": 13495,
+          "stockClose": 6.368
+        },
+        {
+          "month": "2017-10",
+          "productIndex": 53.48,
+          "stockIndex": 78.94,
+          "productPrice": 13260,
+          "stockClose": 6.138
+        },
+        {
+          "month": "2017-11",
+          "productIndex": 56.12,
+          "stockIndex": 71.73,
+          "productPrice": 13915,
+          "stockClose": 5.578
+        },
+        {
+          "month": "2017-12",
+          "productIndex": 56.89,
+          "stockIndex": 70.58,
+          "productPrice": 14105,
+          "stockClose": 5.488
+        },
+        {
+          "month": "2018-01",
+          "productIndex": 52.91,
+          "stockIndex": 74.43,
+          "productPrice": 13120,
+          "stockClose": 5.788
+        },
+        {
+          "month": "2018-02",
+          "productIndex": 52.55,
+          "stockIndex": 74.31,
+          "productPrice": 13030,
+          "stockClose": 5.778
+        },
+        {
+          "month": "2018-03",
+          "productIndex": 46.94,
+          "stockIndex": 79.19,
+          "productPrice": 11640,
+          "stockClose": 6.158
+        },
+        {
+          "month": "2018-04",
+          "productIndex": 45.53,
+          "stockIndex": 68.9,
+          "productPrice": 11290,
+          "stockClose": 5.358
+        },
+        {
+          "month": "2018-05",
+          "productIndex": 47.07,
+          "stockIndex": 84.34,
+          "productPrice": 11670,
+          "stockClose": 6.558
+        },
+        {
+          "month": "2018-11",
+          "productIndex": 45.15,
+          "stockIndex": 62.35,
+          "productPrice": 11195,
+          "stockClose": 4.848
+        },
+        {
+          "month": "2018-12",
+          "productIndex": 45.59,
+          "stockIndex": 56.94,
+          "productPrice": 11305,
+          "stockClose": 4.428
+        },
+        {
+          "month": "2019-01",
+          "productIndex": 45.69,
+          "stockIndex": 56.82,
+          "productPrice": 11330,
+          "stockClose": 4.418
+        },
+        {
+          "month": "2019-02",
+          "productIndex": 50.41,
+          "stockIndex": 67.49,
+          "productPrice": 12500,
+          "stockClose": 5.248
+        },
+        {
+          "month": "2019-03",
+          "productIndex": 46.64,
+          "stockIndex": 70.83,
+          "productPrice": 11565,
+          "stockClose": 5.508
+        },
+        {
+          "month": "2019-04",
+          "productIndex": 47.07,
+          "stockIndex": 65.95,
+          "productPrice": 11670,
+          "stockClose": 5.128
+        },
+        {
+          "month": "2019-05",
+          "productIndex": 49.41,
+          "stockIndex": 65.56,
+          "productPrice": 12250,
+          "stockClose": 5.098
+        },
+        {
+          "month": "2019-06",
+          "productIndex": 45.8,
+          "stockIndex": 65.57,
+          "productPrice": 11355,
+          "stockClose": 5.099
+        },
+        {
+          "month": "2019-07",
+          "productIndex": 43.32,
+          "stockIndex": 63.9,
+          "productPrice": 10740,
+          "stockClose": 4.969
+        },
+        {
+          "month": "2019-08",
+          "productIndex": 47.65,
+          "stockIndex": 58.11,
+          "productPrice": 11815,
+          "stockClose": 4.519
+        },
+        {
+          "month": "2019-09",
+          "productIndex": 46.26,
+          "stockIndex": 57.09,
+          "productPrice": 11470,
+          "stockClose": 4.439
+        },
+        {
+          "month": "2019-10",
+          "productIndex": 48.46,
+          "stockIndex": 58.37,
+          "productPrice": 12015,
+          "stockClose": 4.539
+        },
+        {
+          "month": "2019-11",
+          "productIndex": 49.93,
+          "stockIndex": 58.37,
+          "productPrice": 12380,
+          "stockClose": 4.539
+        },
+        {
+          "month": "2019-12",
+          "productIndex": 52.27,
+          "stockIndex": 62.62,
+          "productPrice": 12960,
+          "stockClose": 4.869
+        },
+        {
+          "month": "2020-01",
+          "productIndex": 48.74,
+          "stockIndex": 60.82,
+          "productPrice": 12085,
+          "stockClose": 4.729
+        },
+        {
+          "month": "2020-02",
+          "productIndex": 42.55,
+          "stockIndex": 53.23,
+          "productPrice": 10550,
+          "stockClose": 4.139
+        },
+        {
+          "month": "2020-03",
+          "productIndex": 39.04,
+          "stockIndex": 68.02,
+          "productPrice": 9680,
+          "stockClose": 5.289
+        },
+        {
+          "month": "2020-04",
+          "productIndex": 40.19,
+          "stockIndex": 64.29,
+          "productPrice": 9965,
+          "stockClose": 4.999
+        },
+        {
+          "month": "2020-05",
+          "productIndex": 41,
+          "stockIndex": 71.49,
+          "productPrice": 10165,
+          "stockClose": 5.559
+        },
+        {
+          "month": "2020-06",
+          "productIndex": 41.06,
+          "stockIndex": 61.88,
+          "productPrice": 10180,
+          "stockClose": 4.812
+        },
+        {
+          "month": "2020-07",
+          "productIndex": 43.72,
+          "stockIndex": 68.31,
+          "productPrice": 10840,
+          "stockClose": 5.312
+        },
+        {
+          "month": "2020-08",
+          "productIndex": 51.66,
+          "stockIndex": 68.96,
+          "productPrice": 12810,
+          "stockClose": 5.362
+        },
+        {
+          "month": "2020-09",
+          "productIndex": 49.81,
+          "stockIndex": 63.43,
+          "productPrice": 12350,
+          "stockClose": 4.932
+        },
+        {
+          "month": "2020-10",
+          "productIndex": 63.24,
+          "stockIndex": 67.03,
+          "productPrice": 15680,
+          "stockClose": 5.212
+        },
+        {
+          "month": "2020-11",
+          "productIndex": 61.1,
+          "stockIndex": 67.03,
+          "productPrice": 15150,
+          "stockClose": 5.212
+        },
+        {
+          "month": "2020-12",
+          "productIndex": 56.06,
+          "stockIndex": 61.37,
+          "productPrice": 13900,
+          "stockClose": 4.772
+        },
+        {
+          "month": "2021-01",
+          "productIndex": 58.1,
+          "stockIndex": 69.47,
+          "productPrice": 14405,
+          "stockClose": 5.402
+        },
+        {
+          "month": "2021-02",
+          "productIndex": 64.49,
+          "stockIndex": 69.86,
+          "productPrice": 15990,
+          "stockClose": 5.432
+        },
+        {
+          "month": "2021-03",
+          "productIndex": 55.23,
+          "stockIndex": 69.21,
+          "productPrice": 13695,
+          "stockClose": 5.382
+        },
+        {
+          "month": "2021-04",
+          "productIndex": 56.02,
+          "stockIndex": 65.87,
+          "productPrice": 13890,
+          "stockClose": 5.122
+        },
+        {
+          "month": "2021-05",
+          "productIndex": 54.04,
+          "stockIndex": 69.47,
+          "productPrice": 13400,
+          "stockClose": 5.402
+        },
+        {
+          "month": "2021-06",
+          "productIndex": 51.62,
+          "stockIndex": 64.92,
+          "productPrice": 12800,
+          "stockClose": 5.048
+        },
+        {
+          "month": "2021-07",
+          "productIndex": 54.12,
+          "stockIndex": 60.42,
+          "productPrice": 13420,
+          "stockClose": 4.698
+        },
+        {
+          "month": "2021-08",
+          "productIndex": 55.84,
+          "stockIndex": 62.47,
+          "productPrice": 13845,
+          "stockClose": 4.858
+        },
+        {
+          "month": "2021-09",
+          "productIndex": 57.23,
+          "stockIndex": 64.4,
+          "productPrice": 14190,
+          "stockClose": 5.008
+        },
+        {
+          "month": "2021-10",
+          "productIndex": 60.01,
+          "stockIndex": 66.85,
+          "productPrice": 14880,
+          "stockClose": 5.198
+        },
+        {
+          "month": "2021-11",
+          "productIndex": 60.23,
+          "stockIndex": 67.49,
+          "productPrice": 14935,
+          "stockClose": 5.248
+        },
+        {
+          "month": "2021-12",
+          "productIndex": 59.91,
+          "stockIndex": 67.36,
+          "productPrice": 14855,
+          "stockClose": 5.238
+        },
+        {
+          "month": "2022-01",
+          "productIndex": 57.07,
+          "stockIndex": 61.57,
+          "productPrice": 14150,
+          "stockClose": 4.788
+        },
+        {
+          "month": "2022-02",
+          "productIndex": 55.94,
+          "stockIndex": 63.89,
+          "productPrice": 13870,
+          "stockClose": 4.968
+        },
+        {
+          "month": "2022-03",
+          "productIndex": 55.27,
+          "stockIndex": 61.83,
+          "productPrice": 13705,
+          "stockClose": 4.808
+        },
+        {
+          "month": "2022-04",
+          "productIndex": 52.09,
+          "stockIndex": 56.82,
+          "productPrice": 12915,
+          "stockClose": 4.418
+        },
+        {
+          "month": "2022-05",
+          "productIndex": 53.36,
+          "stockIndex": 59.9,
+          "productPrice": 13230,
+          "stockClose": 4.658
+        },
+        {
+          "month": "2022-06",
+          "productIndex": 51.93,
+          "stockIndex": 61.06,
+          "productPrice": 12875,
+          "stockClose": 4.748
+        },
+        {
+          "month": "2022-07",
+          "productIndex": 49.32,
+          "stockIndex": 57.33,
+          "productPrice": 12230,
+          "stockClose": 4.458
+        },
+        {
+          "month": "2022-08",
+          "productIndex": 50.68,
+          "stockIndex": 57.2,
+          "productPrice": 12565,
+          "stockClose": 4.448
+        },
+        {
+          "month": "2022-09",
+          "productIndex": 52.97,
+          "stockIndex": 54.5,
+          "productPrice": 13135,
+          "stockClose": 4.238
+        },
+        {
+          "month": "2022-10",
+          "productIndex": 47.39,
+          "stockIndex": 51.54,
+          "productPrice": 11750,
+          "stockClose": 4.008
+        },
+        {
+          "month": "2022-11",
+          "productIndex": 51.46,
+          "stockIndex": 56.43,
+          "productPrice": 12760,
+          "stockClose": 4.388
+        },
+        {
+          "month": "2022-12",
+          "productIndex": 51.2,
+          "stockIndex": 55.92,
+          "productPrice": 12695,
+          "stockClose": 4.348
+        },
+        {
+          "month": "2023-01",
+          "productIndex": 53.32,
+          "stockIndex": 58.49,
+          "productPrice": 13220,
+          "stockClose": 4.548
+        },
+        {
+          "month": "2023-02",
+          "productIndex": 50.21,
+          "stockIndex": 58.87,
+          "productPrice": 12450,
+          "stockClose": 4.578
+        },
+        {
+          "month": "2023-03",
+          "productIndex": 48.11,
+          "stockIndex": 59.77,
+          "productPrice": 11930,
+          "stockClose": 4.648
+        },
+        {
+          "month": "2023-04",
+          "productIndex": 47.47,
+          "stockIndex": 59.52,
+          "productPrice": 11770,
+          "stockClose": 4.628
+        },
+        {
+          "month": "2023-05",
+          "productIndex": 47.71,
+          "stockIndex": 57.46,
+          "productPrice": 11830,
+          "stockClose": 4.468
+        },
+        {
+          "month": "2023-06",
+          "productIndex": 48.72,
+          "stockIndex": 57.2,
+          "productPrice": 12080,
+          "stockClose": 4.448
+        },
+        {
+          "month": "2023-07",
+          "productIndex": 49.61,
+          "stockIndex": 60.16,
+          "productPrice": 12300,
+          "stockClose": 4.678
+        },
+        {
+          "month": "2023-08",
+          "productIndex": 53.76,
+          "stockIndex": 57.84,
+          "productPrice": 13330,
+          "stockClose": 4.498
+        },
+        {
+          "month": "2023-09",
+          "productIndex": 56.18,
+          "stockIndex": 58.36,
+          "productPrice": 13930,
+          "stockClose": 4.538
+        },
+        {
+          "month": "2023-10",
+          "productIndex": 57.17,
+          "stockIndex": 57.2,
+          "productPrice": 14175,
+          "stockClose": 4.448
+        },
+        {
+          "month": "2023-11",
+          "productIndex": 54.93,
+          "stockIndex": 55.66,
+          "productPrice": 13620,
+          "stockClose": 4.328
+        },
+        {
+          "month": "2023-12",
+          "productIndex": 57.15,
+          "stockIndex": 54.12,
+          "productPrice": 14170,
+          "stockClose": 4.208
+        },
+        {
+          "month": "2024-01",
+          "productIndex": 54.55,
+          "stockIndex": 52.44,
+          "productPrice": 13525,
+          "stockClose": 4.078
+        },
+        {
+          "month": "2024-02",
+          "productIndex": 56.3,
+          "stockIndex": 57.07,
+          "productPrice": 13960,
+          "stockClose": 4.438
+        },
+        {
+          "month": "2024-03",
+          "productIndex": 59.14,
+          "stockIndex": 65.05,
+          "productPrice": 14665,
+          "stockClose": 5.058
+        },
+        {
+          "month": "2024-04",
+          "productIndex": 56.64,
+          "stockIndex": 59.13,
+          "productPrice": 14045,
+          "stockClose": 4.598
+        },
+        {
+          "month": "2024-05",
+          "productIndex": 61.91,
+          "stockIndex": 64.92,
+          "productPrice": 15350,
+          "stockClose": 5.048
+        },
+        {
+          "month": "2024-06",
+          "productIndex": 60.31,
+          "stockIndex": 58.1,
+          "productPrice": 14955,
+          "stockClose": 4.518
+        },
+        {
+          "month": "2024-07",
+          "productIndex": 57.67,
+          "stockIndex": 56.19,
+          "productPrice": 14300,
+          "stockClose": 4.369
+        },
+        {
+          "month": "2024-08",
+          "productIndex": 67.11,
+          "stockIndex": 61.33,
+          "productPrice": 16640,
+          "stockClose": 4.769
+        },
+        {
+          "month": "2024-09",
+          "productIndex": 79.23,
+          "stockIndex": 75.99,
+          "productPrice": 19645,
+          "stockClose": 5.909
+        },
+        {
+          "month": "2024-10",
+          "productIndex": 71.93,
+          "stockIndex": 75.48,
+          "productPrice": 17835,
+          "stockClose": 5.869
+        },
+        {
+          "month": "2024-11",
+          "productIndex": 73.64,
+          "stockIndex": 73.55,
+          "productPrice": 18260,
+          "stockClose": 5.719
+        },
+        {
+          "month": "2024-12",
+          "productIndex": 71.87,
+          "stockIndex": 69.43,
+          "productPrice": 17820,
+          "stockClose": 5.399
+        },
+        {
+          "month": "2025-01",
+          "productIndex": 70.38,
+          "stockIndex": 66.35,
+          "productPrice": 17450,
+          "stockClose": 5.159
+        },
+        {
+          "month": "2025-02",
+          "productIndex": 71.43,
+          "stockIndex": 66.09,
+          "productPrice": 17710,
+          "stockClose": 5.139
+        },
+        {
+          "month": "2025-03",
+          "productIndex": 66.79,
+          "stockIndex": 64.16,
+          "productPrice": 16560,
+          "stockClose": 4.989
+        },
+        {
+          "month": "2025-04",
+          "productIndex": 58.7,
+          "stockIndex": 57.73,
+          "productPrice": 14555,
+          "stockClose": 4.489
+        },
+        {
+          "month": "2025-05",
+          "productIndex": 54.06,
+          "stockIndex": 58.5,
+          "productPrice": 13405,
+          "stockClose": 4.549
+        },
+        {
+          "month": "2025-06",
+          "productIndex": 56.4,
+          "stockIndex": 60.56,
+          "productPrice": 13985,
+          "stockClose": 4.709
+        },
+        {
+          "month": "2025-07",
+          "productIndex": 58.72,
+          "stockIndex": 63.14,
+          "productPrice": 14560,
+          "stockClose": 4.91
+        },
+        {
+          "month": "2025-08",
+          "productIndex": 63.96,
+          "stockIndex": 67,
+          "productPrice": 15860,
+          "stockClose": 5.21
+        },
+        {
+          "month": "2025-09",
+          "productIndex": 60.62,
+          "stockIndex": 69.44,
+          "productPrice": 15030,
+          "stockClose": 5.4
+        },
+        {
+          "month": "2025-10",
+          "productIndex": 60.84,
+          "stockIndex": 72.53,
+          "productPrice": 15085,
+          "stockClose": 5.64
+        },
+        {
+          "month": "2025-11",
+          "productIndex": 62.15,
+          "stockIndex": 78.32,
+          "productPrice": 15410,
+          "stockClose": 6.09
+        },
+        {
+          "month": "2025-12",
+          "productIndex": 62.94,
+          "stockIndex": 75.23,
+          "productPrice": 15605,
           "stockClose": 5.85
         },
         {
           "month": "2026-01",
-          "productIndex": 106.08,
-          "stockIndex": 125.47,
-          "productPrice": 16275,
+          "productIndex": 65.98,
+          "stockIndex": 94.39,
+          "productPrice": 16360,
           "stockClose": 7.34
         },
         {
           "month": "2026-02",
-          "productIndex": 110.27,
-          "stockIndex": 131.28,
-          "productPrice": 16916.67,
+          "productIndex": 69.19,
+          "stockIndex": 98.77,
+          "productPrice": 17155,
           "stockClose": 7.68
         },
         {
           "month": "2026-03",
-          "productIndex": 106.52,
-          "stockIndex": 107.52,
-          "productPrice": 16341.67,
+          "productIndex": 66.14,
+          "stockIndex": 80.89,
+          "productPrice": 16400,
           "stockClose": 6.29
         },
         {
           "month": "2026-04",
-          "productIndex": 113.47,
-          "stockIndex": 122.91,
-          "productPrice": 17408.33,
+          "productIndex": 70.94,
+          "stockIndex": 92.46,
+          "productPrice": 17590,
           "stockClose": 7.19
         },
         {
           "month": "2026-05",
-          "productIndex": 115.75,
-          "stockIndex": 109.06,
-          "productPrice": 17758.33,
+          "productIndex": 71.99,
+          "stockIndex": 82.05,
+          "productPrice": 17850,
           "stockClose": 6.38
         },
         {
           "month": "2026-06",
-          "productIndex": 109.67,
-          "stockIndex": 84.1,
-          "productPrice": 16825,
+          "productIndex": 67.55,
+          "stockIndex": 63.27,
+          "productPrice": 16750,
           "stockClose": 4.92
         },
         {
           "month": "2026-07",
-          "productIndex": 107.44,
-          "stockIndex": 84.96,
-          "productPrice": 16483.33,
+          "productIndex": 66.04,
+          "stockIndex": 63.91,
+          "productPrice": 16375,
           "stockClose": 4.97
         },
         {
           "month": "2026-08",
-          "productIndex": 117.54,
-          "stockIndex": 110.94,
-          "productPrice": 18033.33,
+          "productIndex": 76.49,
+          "stockIndex": 83.46,
+          "productPrice": 18965,
           "stockClose": 6.49
         },
         {
           "month": "2026-09",
-          "productIndex": 124.5,
-          "stockIndex": 108.89,
-          "productPrice": 19100,
+          "productIndex": 81.04,
+          "stockIndex": 81.92,
+          "productPrice": 20095,
           "stockClose": 6.37
         },
         {
           "month": "2026-10",
-          "productIndex": 122.43,
-          "stockIndex": 86.84,
-          "productPrice": 18783.3,
+          "productIndex": 77.31,
+          "stockIndex": 65.33,
+          "productPrice": 19170,
           "stockClose": 5.08
         }
       ],
@@ -6053,88 +7201,592 @@
       "note": "公司产品结构与产能利用率会影响价格传导；甲醇未纳入本轮可比序列。",
       "productSource": "生意社现货/期货基差数据（经 AKShare 获取）",
       "productSourceUrl": "https://www.100ppi.com/",
-      "productDate": "2026-10-30",
+      "productDate": "2026-10",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": -13.52,
-      "stockChange": -32.56,
-      "divergence": "涨跌幅差异较大",
+      "productChange": -40.85,
+      "stockChange": 47.88,
+      "divergence": "方向背离",
       "series": [
         {
-          "month": "2025-12",
+          "month": "2019-12",
           "productIndex": 100,
           "stockIndex": 100,
-          "productPrice": 1225.71,
+          "productPrice": 1633,
+          "stockClose": 2.759
+        },
+        {
+          "month": "2020-01",
+          "productIndex": 98.9,
+          "stockIndex": 103.62,
+          "productPrice": 1615,
+          "stockClose": 2.859
+        },
+        {
+          "month": "2020-02",
+          "productIndex": 95.84,
+          "stockIndex": 86.59,
+          "productPrice": 1565,
+          "stockClose": 2.389
+        },
+        {
+          "month": "2020-03",
+          "productIndex": 83.59,
+          "stockIndex": 92.75,
+          "productPrice": 1365,
+          "stockClose": 2.559
+        },
+        {
+          "month": "2020-04",
+          "productIndex": 88.61,
+          "stockIndex": 86.23,
+          "productPrice": 1447,
+          "stockClose": 2.379
+        },
+        {
+          "month": "2020-05",
+          "productIndex": 90.39,
+          "stockIndex": 81.52,
+          "productPrice": 1476,
+          "stockClose": 2.249
+        },
+        {
+          "month": "2020-06",
+          "productIndex": 85.3,
+          "stockIndex": 76.08,
+          "productPrice": 1393,
+          "stockClose": 2.099
+        },
+        {
+          "month": "2020-07",
+          "productIndex": 81.26,
+          "stockIndex": 78.98,
+          "productPrice": 1327,
+          "stockClose": 2.179
+        },
+        {
+          "month": "2020-08",
+          "productIndex": 106.67,
+          "stockIndex": 86.95,
+          "productPrice": 1742,
+          "stockClose": 2.399
+        },
+        {
+          "month": "2020-09",
+          "productIndex": 105.14,
+          "stockIndex": 82.96,
+          "productPrice": 1717,
+          "stockClose": 2.289
+        },
+        {
+          "month": "2020-10",
+          "productIndex": 96.02,
+          "stockIndex": 78.25,
+          "productPrice": 1568,
+          "stockClose": 2.159
+        },
+        {
+          "month": "2020-11",
+          "productIndex": 90.45,
+          "stockIndex": 76.8,
+          "productPrice": 1477,
+          "stockClose": 2.119
+        },
+        {
+          "month": "2020-12",
+          "productIndex": 98.65,
+          "stockIndex": 70.64,
+          "productPrice": 1611,
+          "stockClose": 1.949
+        },
+        {
+          "month": "2021-01",
+          "productIndex": 99.08,
+          "stockIndex": 60.13,
+          "productPrice": 1618,
+          "stockClose": 1.659
+        },
+        {
+          "month": "2021-02",
+          "productIndex": 112.43,
+          "stockIndex": 76.44,
+          "productPrice": 1836,
+          "stockClose": 2.109
+        },
+        {
+          "month": "2021-03",
+          "productIndex": 114.82,
+          "stockIndex": 74.99,
+          "productPrice": 1875,
+          "stockClose": 2.069
+        },
+        {
+          "month": "2021-04",
+          "productIndex": 127.8,
+          "stockIndex": 84.78,
+          "productPrice": 2087,
+          "stockClose": 2.339
+        },
+        {
+          "month": "2021-05",
+          "productIndex": 133.56,
+          "stockIndex": 82.6,
+          "productPrice": 2181,
+          "stockClose": 2.279
+        },
+        {
+          "month": "2021-06",
+          "productIndex": 136.68,
+          "stockIndex": 137.33,
+          "productPrice": 2232,
+          "stockClose": 3.789
+        },
+        {
+          "month": "2021-07",
+          "productIndex": 160.81,
+          "stockIndex": 177.93,
+          "productPrice": 2626,
+          "stockClose": 4.909
+        },
+        {
+          "month": "2021-08",
+          "productIndex": 164.67,
+          "stockIndex": 267.45,
+          "productPrice": 2689,
+          "stockClose": 7.379
+        },
+        {
+          "month": "2021-09",
+          "productIndex": 215.06,
+          "stockIndex": 317.83,
+          "productPrice": 3512,
+          "stockClose": 8.769
+        },
+        {
+          "month": "2021-10",
+          "productIndex": 171.52,
+          "stockIndex": 267.45,
+          "productPrice": 2801,
+          "stockClose": 7.379
+        },
+        {
+          "month": "2021-11",
+          "productIndex": 148.01,
+          "stockIndex": 246.43,
+          "productPrice": 2417,
+          "stockClose": 6.799
+        },
+        {
+          "month": "2021-12",
+          "productIndex": 133.68,
+          "stockIndex": 254.4,
+          "productPrice": 2183,
+          "stockClose": 7.019
+        },
+        {
+          "month": "2022-01",
+          "productIndex": 176.36,
+          "stockIndex": 278.33,
+          "productPrice": 2880,
+          "stockClose": 7.679
+        },
+        {
+          "month": "2022-02",
+          "productIndex": 158.79,
+          "stockIndex": 340.67,
+          "productPrice": 2593,
+          "stockClose": 9.399
+        },
+        {
+          "month": "2022-03",
+          "productIndex": 184.57,
+          "stockIndex": 396.12,
+          "productPrice": 3014,
+          "stockClose": 10.929
+        },
+        {
+          "month": "2022-04",
+          "productIndex": 183.96,
+          "stockIndex": 390.32,
+          "productPrice": 3004,
+          "stockClose": 10.769
+        },
+        {
+          "month": "2022-05",
+          "productIndex": 188.49,
+          "stockIndex": 543.64,
+          "productPrice": 3078,
+          "stockClose": 14.999
+        },
+        {
+          "month": "2022-06",
+          "productIndex": 175.26,
+          "stockIndex": 604.17,
+          "productPrice": 2862,
+          "stockClose": 16.669
+        },
+        {
+          "month": "2022-07",
+          "productIndex": 160.69,
+          "stockIndex": 433.82,
+          "productPrice": 2624,
+          "stockClose": 11.969
+        },
+        {
+          "month": "2022-08",
+          "productIndex": 144.95,
+          "stockIndex": 378.36,
+          "productPrice": 2367,
+          "stockClose": 10.439
+        },
+        {
+          "month": "2022-09",
+          "productIndex": 155.36,
+          "stockIndex": 311.67,
+          "productPrice": 2537,
+          "stockClose": 8.599
+        },
+        {
+          "month": "2022-10",
+          "productIndex": 141.27,
+          "stockIndex": 310.58,
+          "productPrice": 2307,
+          "stockClose": 8.569
+        },
+        {
+          "month": "2022-11",
+          "productIndex": 165.16,
+          "stockIndex": 354.08,
+          "productPrice": 2697,
+          "stockClose": 9.769
+        },
+        {
+          "month": "2022-12",
+          "productIndex": 167.79,
+          "stockIndex": 329.79,
+          "productPrice": 2740,
+          "stockClose": 9.099
+        },
+        {
+          "month": "2023-01",
+          "productIndex": 182.91,
+          "stockIndex": 374.37,
+          "productPrice": 2987,
+          "stockClose": 10.329
+        },
+        {
+          "month": "2023-02",
+          "productIndex": 179.36,
+          "stockIndex": 366.04,
+          "productPrice": 2929,
+          "stockClose": 10.099
+        },
+        {
+          "month": "2023-03",
+          "productIndex": 150.83,
+          "stockIndex": 323.63,
+          "productPrice": 2463,
+          "stockClose": 8.929
+        },
+        {
+          "month": "2023-04",
+          "productIndex": 128.23,
+          "stockIndex": 312.76,
+          "productPrice": 2094,
+          "stockClose": 8.629
+        },
+        {
+          "month": "2023-05",
+          "productIndex": 99.02,
+          "stockIndex": 279.41,
+          "productPrice": 1617,
+          "stockClose": 7.709
+        },
+        {
+          "month": "2023-06",
+          "productIndex": 103.37,
+          "stockIndex": 296.45,
+          "productPrice": 1688,
+          "stockClose": 8.179
+        },
+        {
+          "month": "2023-07",
+          "productIndex": 127.68,
+          "stockIndex": 310.95,
+          "productPrice": 2085,
+          "stockClose": 8.579
+        },
+        {
+          "month": "2023-08",
+          "productIndex": 115.43,
+          "stockIndex": 281.95,
+          "productPrice": 1885,
+          "stockClose": 7.779
+        },
+        {
+          "month": "2023-09",
+          "productIndex": 106.55,
+          "stockIndex": 272.89,
+          "productPrice": 1740,
+          "stockClose": 7.529
+        },
+        {
+          "month": "2023-10",
+          "productIndex": 105.88,
+          "stockIndex": 259.12,
+          "productPrice": 1729,
+          "stockClose": 7.149
+        },
+        {
+          "month": "2023-11",
+          "productIndex": 149.54,
+          "stockIndex": 278.33,
+          "productPrice": 2442,
+          "stockClose": 7.679
+        },
+        {
+          "month": "2023-12",
+          "productIndex": 125.17,
+          "stockIndex": 278.33,
+          "productPrice": 2044,
+          "stockClose": 7.679
+        },
+        {
+          "month": "2024-01",
+          "productIndex": 118.92,
+          "stockIndex": 233.74,
+          "productPrice": 1942,
+          "stockClose": 6.449
+        },
+        {
+          "month": "2024-02",
+          "productIndex": 109,
+          "stockIndex": 235.19,
+          "productPrice": 1780,
+          "stockClose": 6.489
+        },
+        {
+          "month": "2024-03",
+          "productIndex": 109.55,
+          "stockIndex": 241.36,
+          "productPrice": 1789,
+          "stockClose": 6.659
+        },
+        {
+          "month": "2024-04",
+          "productIndex": 133.25,
+          "stockIndex": 265.28,
+          "productPrice": 2176,
+          "stockClose": 7.319
+        },
+        {
+          "month": "2024-05",
+          "productIndex": 141.15,
+          "stockIndex": 270.35,
+          "productPrice": 2305,
+          "stockClose": 7.459
+        },
+        {
+          "month": "2024-06",
+          "productIndex": 128.17,
+          "stockIndex": 241.36,
+          "productPrice": 2093,
+          "stockClose": 6.659
+        },
+        {
+          "month": "2024-07",
+          "productIndex": 108.33,
+          "stockIndex": 233.74,
+          "productPrice": 1769,
+          "stockClose": 6.449
+        },
+        {
+          "month": "2024-08",
+          "productIndex": 97.73,
+          "stockIndex": 236.28,
+          "productPrice": 1596,
+          "stockClose": 6.519
+        },
+        {
+          "month": "2024-09",
+          "productIndex": 104.04,
+          "stockIndex": 281.23,
+          "productPrice": 1699,
+          "stockClose": 7.759
+        },
+        {
+          "month": "2024-10",
+          "productIndex": 96.45,
+          "stockIndex": 272.53,
+          "productPrice": 1575,
+          "stockClose": 7.519
+        },
+        {
+          "month": "2024-11",
+          "productIndex": 90.51,
+          "stockIndex": 277.96,
+          "productPrice": 1478,
+          "stockClose": 7.669
+        },
+        {
+          "month": "2024-12",
+          "productIndex": 87.75,
+          "stockIndex": 260.93,
+          "productPrice": 1433,
+          "stockClose": 7.199
+        },
+        {
+          "month": "2025-01",
+          "productIndex": 90.69,
+          "stockIndex": 247.88,
+          "productPrice": 1481,
+          "stockClose": 6.839
+        },
+        {
+          "month": "2025-02",
+          "productIndex": 96.08,
+          "stockIndex": 248.97,
+          "productPrice": 1569,
+          "stockClose": 6.869
+        },
+        {
+          "month": "2025-03",
+          "productIndex": 84.08,
+          "stockIndex": 247.88,
+          "productPrice": 1373,
+          "stockClose": 6.839
+        },
+        {
+          "month": "2025-04",
+          "productIndex": 82.79,
+          "stockIndex": 213.81,
+          "productPrice": 1352,
+          "stockClose": 5.899
+        },
+        {
+          "month": "2025-05",
+          "productIndex": 73.42,
+          "stockIndex": 219.97,
+          "productPrice": 1199,
+          "stockClose": 6.069
+        },
+        {
+          "month": "2025-06",
+          "productIndex": 72.32,
+          "stockIndex": 229.79,
+          "productPrice": 1181,
+          "stockClose": 6.34
+        },
+        {
+          "month": "2025-07",
+          "productIndex": 76.36,
+          "stockIndex": 238.49,
+          "productPrice": 1247,
+          "stockClose": 6.58
+        },
+        {
+          "month": "2025-08",
+          "productIndex": 79.36,
+          "stockIndex": 232.69,
+          "productPrice": 1296,
+          "stockClose": 6.42
+        },
+        {
+          "month": "2025-09",
+          "productIndex": 76.85,
+          "stockIndex": 229.43,
+          "productPrice": 1255,
+          "stockClose": 6.33
+        },
+        {
+          "month": "2025-10",
+          "productIndex": 75.02,
+          "stockIndex": 232.33,
+          "productPrice": 1225,
+          "stockClose": 6.41
+        },
+        {
+          "month": "2025-11",
+          "productIndex": 72.08,
+          "stockIndex": 233.78,
+          "productPrice": 1177,
+          "stockClose": 6.45
+        },
+        {
+          "month": "2025-12",
+          "productIndex": 74.04,
+          "stockIndex": 219.28,
+          "productPrice": 1209,
           "stockClose": 6.05
         },
         {
           "month": "2026-01",
-          "productIndex": 98.14,
-          "stockIndex": 109.92,
-          "productPrice": 1202.86,
+          "productIndex": 73.73,
+          "stockIndex": 241.03,
+          "productPrice": 1204,
           "stockClose": 6.65
         },
         {
           "month": "2026-02",
-          "productIndex": 98.14,
-          "stockIndex": 111.9,
-          "productPrice": 1202.86,
+          "productIndex": 73.12,
+          "stockIndex": 245.38,
+          "productPrice": 1194,
           "stockClose": 6.77
         },
         {
           "month": "2026-03",
-          "productIndex": 101.69,
-          "stockIndex": 99.34,
-          "productPrice": 1246.43,
+          "productIndex": 72.08,
+          "stockIndex": 217.83,
+          "productPrice": 1177,
           "stockClose": 6.01
         },
         {
           "month": "2026-04",
-          "productIndex": 101.11,
-          "stockIndex": 98.35,
-          "productPrice": 1239.29,
+          "productIndex": 75.87,
+          "stockIndex": 215.66,
+          "productPrice": 1239,
           "stockClose": 5.95
         },
         {
           "month": "2026-05",
-          "productIndex": 100.12,
-          "stockIndex": 79.83,
-          "productPrice": 1227.14,
+          "productIndex": 74.4,
+          "stockIndex": 175.06,
+          "productPrice": 1215,
           "stockClose": 4.83
         },
         {
           "month": "2026-06",
-          "productIndex": 97.2,
-          "stockIndex": 69.75,
-          "productPrice": 1191.43,
+          "productIndex": 66.5,
+          "stockIndex": 152.95,
+          "productPrice": 1086,
           "stockClose": 4.22
         },
         {
           "month": "2026-07",
-          "productIndex": 90.09,
-          "stockIndex": 73.22,
-          "productPrice": 1104.29,
+          "productIndex": 57.26,
+          "stockIndex": 160.57,
+          "productPrice": 935,
           "stockClose": 4.43
         },
         {
           "month": "2026-08",
-          "productIndex": 88.69,
-          "stockIndex": 77.85,
-          "productPrice": 1087.14,
+          "productIndex": 64.97,
+          "stockIndex": 170.71,
+          "productPrice": 1061,
           "stockClose": 4.71
         },
         {
           "month": "2026-09",
-          "productIndex": 87.76,
-          "stockIndex": 76.36,
-          "productPrice": 1075.71,
+          "productIndex": 61.6,
+          "stockIndex": 167.45,
+          "productPrice": 1006,
           "stockClose": 4.62
         },
         {
           "month": "2026-10",
-          "productIndex": 86.48,
-          "stockIndex": 67.44,
-          "productPrice": 1060,
+          "productIndex": 59.15,
+          "stockIndex": 147.88,
+          "productPrice": 966,
           "stockClose": 4.08
         }
       ],
@@ -6347,88 +7999,592 @@
       "note": "纯碱只是主营产品之一，其他化工产品价格未纳入本轮序列。",
       "productSource": "生意社现货/期货基差数据（经 AKShare 获取）",
       "productSourceUrl": "https://www.100ppi.com/",
-      "productDate": "2026-10-30",
+      "productDate": "2026-10",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": -13.52,
-      "stockChange": -36.46,
-      "divergence": "涨跌幅差异较大",
+      "productChange": -40.85,
+      "stockChange": 8.28,
+      "divergence": "方向背离",
       "series": [
         {
-          "month": "2025-12",
+          "month": "2019-12",
           "productIndex": 100,
           "stockIndex": 100,
-          "productPrice": 1225.71,
+          "productPrice": 1633,
+          "stockClose": 4.821
+        },
+        {
+          "month": "2020-01",
+          "productIndex": 98.9,
+          "stockIndex": 102.07,
+          "productPrice": 1615,
+          "stockClose": 4.921
+        },
+        {
+          "month": "2020-02",
+          "productIndex": 95.84,
+          "stockIndex": 104.79,
+          "productPrice": 1565,
+          "stockClose": 5.052
+        },
+        {
+          "month": "2020-03",
+          "productIndex": 83.59,
+          "stockIndex": 97.61,
+          "productPrice": 1365,
+          "stockClose": 4.706
+        },
+        {
+          "month": "2020-04",
+          "productIndex": 88.61,
+          "stockIndex": 87.89,
+          "productPrice": 1447,
+          "stockClose": 4.237
+        },
+        {
+          "month": "2020-05",
+          "productIndex": 90.39,
+          "stockIndex": 83.41,
+          "productPrice": 1476,
+          "stockClose": 4.021
+        },
+        {
+          "month": "2020-06",
+          "productIndex": 85.3,
+          "stockIndex": 83.41,
+          "productPrice": 1393,
+          "stockClose": 4.021
+        },
+        {
+          "month": "2020-07",
+          "productIndex": 81.26,
+          "stockIndex": 101.6,
+          "productPrice": 1327,
+          "stockClose": 4.898
+        },
+        {
+          "month": "2020-08",
+          "productIndex": 106.67,
+          "stockIndex": 101.12,
+          "productPrice": 1742,
+          "stockClose": 4.875
+        },
+        {
+          "month": "2020-09",
+          "productIndex": 105.14,
+          "stockIndex": 88.03,
+          "productPrice": 1717,
+          "stockClose": 4.244
+        },
+        {
+          "month": "2020-10",
+          "productIndex": 96.02,
+          "stockIndex": 72.25,
+          "productPrice": 1568,
+          "stockClose": 3.483
+        },
+        {
+          "month": "2020-11",
+          "productIndex": 90.45,
+          "stockIndex": 82.62,
+          "productPrice": 1477,
+          "stockClose": 3.983
+        },
+        {
+          "month": "2020-12",
+          "productIndex": 98.65,
+          "stockIndex": 78.64,
+          "productPrice": 1611,
+          "stockClose": 3.791
+        },
+        {
+          "month": "2021-01",
+          "productIndex": 99.08,
+          "stockIndex": 80.21,
+          "productPrice": 1618,
+          "stockClose": 3.867
+        },
+        {
+          "month": "2021-02",
+          "productIndex": 112.43,
+          "stockIndex": 99.85,
+          "productPrice": 1836,
+          "stockClose": 4.814
+        },
+        {
+          "month": "2021-03",
+          "productIndex": 114.82,
+          "stockIndex": 100.17,
+          "productPrice": 1875,
+          "stockClose": 4.829
+        },
+        {
+          "month": "2021-04",
+          "productIndex": 127.8,
+          "stockIndex": 109.42,
+          "productPrice": 2087,
+          "stockClose": 5.275
+        },
+        {
+          "month": "2021-05",
+          "productIndex": 133.56,
+          "stockIndex": 173.08,
+          "productPrice": 2181,
+          "stockClose": 8.344
+        },
+        {
+          "month": "2021-06",
+          "productIndex": 136.68,
+          "stockIndex": 198.78,
+          "productPrice": 2232,
+          "stockClose": 9.583
+        },
+        {
+          "month": "2021-07",
+          "productIndex": 160.81,
+          "stockIndex": 221.9,
+          "productPrice": 2626,
+          "stockClose": 10.698
+        },
+        {
+          "month": "2021-08",
+          "productIndex": 164.67,
+          "stockIndex": 336.47,
+          "productPrice": 2689,
+          "stockClose": 16.221
+        },
+        {
+          "month": "2021-09",
+          "productIndex": 215.06,
+          "stockIndex": 333.13,
+          "productPrice": 3512,
+          "stockClose": 16.06
+        },
+        {
+          "month": "2021-10",
+          "productIndex": 171.52,
+          "stockIndex": 279.98,
+          "productPrice": 2801,
+          "stockClose": 13.498
+        },
+        {
+          "month": "2021-11",
+          "productIndex": 148.01,
+          "stockIndex": 255.9,
+          "productPrice": 2417,
+          "stockClose": 12.337
+        },
+        {
+          "month": "2021-12",
+          "productIndex": 133.68,
+          "stockIndex": 237.71,
+          "productPrice": 2183,
+          "stockClose": 11.46
+        },
+        {
+          "month": "2022-01",
+          "productIndex": 176.36,
+          "stockIndex": 213.77,
+          "productPrice": 2880,
+          "stockClose": 10.306
+        },
+        {
+          "month": "2022-02",
+          "productIndex": 158.79,
+          "stockIndex": 249.68,
+          "productPrice": 2593,
+          "stockClose": 12.037
+        },
+        {
+          "month": "2022-03",
+          "productIndex": 184.57,
+          "stockIndex": 240.74,
+          "productPrice": 3014,
+          "stockClose": 11.606
+        },
+        {
+          "month": "2022-04",
+          "productIndex": 183.96,
+          "stockIndex": 261.32,
+          "productPrice": 3004,
+          "stockClose": 12.598
+        },
+        {
+          "month": "2022-05",
+          "productIndex": 188.49,
+          "stockIndex": 320.83,
+          "productPrice": 3078,
+          "stockClose": 15.467
+        },
+        {
+          "month": "2022-06",
+          "productIndex": 175.26,
+          "stockIndex": 359.14,
+          "productPrice": 2862,
+          "stockClose": 17.314
+        },
+        {
+          "month": "2022-07",
+          "productIndex": 160.69,
+          "stockIndex": 307.43,
+          "productPrice": 2624,
+          "stockClose": 14.821
+        },
+        {
+          "month": "2022-08",
+          "productIndex": 144.95,
+          "stockIndex": 268.35,
+          "productPrice": 2367,
+          "stockClose": 12.937
+        },
+        {
+          "month": "2022-09",
+          "productIndex": 155.36,
+          "stockIndex": 223.34,
+          "productPrice": 2537,
+          "stockClose": 10.767
+        },
+        {
+          "month": "2022-10",
+          "productIndex": 141.27,
+          "stockIndex": 199.9,
+          "productPrice": 2307,
+          "stockClose": 9.637
+        },
+        {
+          "month": "2022-11",
+          "productIndex": 165.16,
+          "stockIndex": 245.53,
+          "productPrice": 2697,
+          "stockClose": 11.837
+        },
+        {
+          "month": "2022-12",
+          "productIndex": 167.79,
+          "stockIndex": 217.76,
+          "productPrice": 2740,
+          "stockClose": 10.498
+        },
+        {
+          "month": "2023-01",
+          "productIndex": 182.91,
+          "stockIndex": 237.71,
+          "productPrice": 2987,
+          "stockClose": 11.46
+        },
+        {
+          "month": "2023-02",
+          "productIndex": 179.36,
+          "stockIndex": 229.25,
+          "productPrice": 2929,
+          "stockClose": 11.052
+        },
+        {
+          "month": "2023-03",
+          "productIndex": 150.83,
+          "stockIndex": 218.4,
+          "productPrice": 2463,
+          "stockClose": 10.529
+        },
+        {
+          "month": "2023-04",
+          "productIndex": 128.23,
+          "stockIndex": 206.74,
+          "productPrice": 2094,
+          "stockClose": 9.967
+        },
+        {
+          "month": "2023-05",
+          "productIndex": 99.02,
+          "stockIndex": 172.45,
+          "productPrice": 1617,
+          "stockClose": 8.314
+        },
+        {
+          "month": "2023-06",
+          "productIndex": 103.37,
+          "stockIndex": 177.93,
+          "productPrice": 1688,
+          "stockClose": 8.578
+        },
+        {
+          "month": "2023-07",
+          "productIndex": 127.68,
+          "stockIndex": 188.51,
+          "productPrice": 2085,
+          "stockClose": 9.088
+        },
+        {
+          "month": "2023-08",
+          "productIndex": 115.43,
+          "stockIndex": 175.44,
+          "productPrice": 1885,
+          "stockClose": 8.458
+        },
+        {
+          "month": "2023-09",
+          "productIndex": 106.55,
+          "stockIndex": 168.8,
+          "productPrice": 1740,
+          "stockClose": 8.138
+        },
+        {
+          "month": "2023-10",
+          "productIndex": 105.88,
+          "stockIndex": 156.98,
+          "productPrice": 1729,
+          "stockClose": 7.568
+        },
+        {
+          "month": "2023-11",
+          "productIndex": 149.54,
+          "stockIndex": 153.87,
+          "productPrice": 2442,
+          "stockClose": 7.418
+        },
+        {
+          "month": "2023-12",
+          "productIndex": 125.17,
+          "stockIndex": 153.45,
+          "productPrice": 2044,
+          "stockClose": 7.398
+        },
+        {
+          "month": "2024-01",
+          "productIndex": 118.92,
+          "stockIndex": 141.63,
+          "productPrice": 1942,
+          "stockClose": 6.828
+        },
+        {
+          "month": "2024-02",
+          "productIndex": 109,
+          "stockIndex": 152.42,
+          "productPrice": 1780,
+          "stockClose": 7.348
+        },
+        {
+          "month": "2024-03",
+          "productIndex": 109.55,
+          "stockIndex": 147.44,
+          "productPrice": 1789,
+          "stockClose": 7.108
+        },
+        {
+          "month": "2024-04",
+          "productIndex": 133.25,
+          "stockIndex": 152.83,
+          "productPrice": 2176,
+          "stockClose": 7.368
+        },
+        {
+          "month": "2024-05",
+          "productIndex": 141.15,
+          "stockIndex": 152.29,
+          "productPrice": 2305,
+          "stockClose": 7.342
+        },
+        {
+          "month": "2024-06",
+          "productIndex": 128.17,
+          "stockIndex": 139.22,
+          "productPrice": 2093,
+          "stockClose": 6.712
+        },
+        {
+          "month": "2024-07",
+          "productIndex": 108.33,
+          "stockIndex": 152.71,
+          "productPrice": 1769,
+          "stockClose": 7.362
+        },
+        {
+          "month": "2024-08",
+          "productIndex": 97.73,
+          "stockIndex": 148.97,
+          "productPrice": 1596,
+          "stockClose": 7.182
+        },
+        {
+          "month": "2024-09",
+          "productIndex": 104.04,
+          "stockIndex": 177.39,
+          "productPrice": 1699,
+          "stockClose": 8.552
+        },
+        {
+          "month": "2024-10",
+          "productIndex": 96.45,
+          "stockIndex": 172.2,
+          "productPrice": 1575,
+          "stockClose": 8.302
+        },
+        {
+          "month": "2024-11",
+          "productIndex": 90.51,
+          "stockIndex": 168.68,
+          "productPrice": 1478,
+          "stockClose": 8.132
+        },
+        {
+          "month": "2024-12",
+          "productIndex": 87.75,
+          "stockIndex": 160.17,
+          "productPrice": 1433,
+          "stockClose": 7.722
+        },
+        {
+          "month": "2025-01",
+          "productIndex": 90.69,
+          "stockIndex": 152.91,
+          "productPrice": 1481,
+          "stockClose": 7.372
+        },
+        {
+          "month": "2025-02",
+          "productIndex": 96.08,
+          "stockIndex": 153.12,
+          "productPrice": 1569,
+          "stockClose": 7.382
+        },
+        {
+          "month": "2025-03",
+          "productIndex": 84.08,
+          "stockIndex": 149.8,
+          "productPrice": 1373,
+          "stockClose": 7.222
+        },
+        {
+          "month": "2025-04",
+          "productIndex": 82.79,
+          "stockIndex": 142.34,
+          "productPrice": 1352,
+          "stockClose": 6.862
+        },
+        {
+          "month": "2025-05",
+          "productIndex": 73.42,
+          "stockIndex": 146.34,
+          "productPrice": 1199,
+          "stockClose": 7.055
+        },
+        {
+          "month": "2025-06",
+          "productIndex": 72.32,
+          "stockIndex": 158.16,
+          "productPrice": 1181,
+          "stockClose": 7.625
+        },
+        {
+          "month": "2025-07",
+          "productIndex": 76.36,
+          "stockIndex": 162.31,
+          "productPrice": 1247,
+          "stockClose": 7.825
+        },
+        {
+          "month": "2025-08",
+          "productIndex": 79.36,
+          "stockIndex": 168.53,
+          "productPrice": 1296,
+          "stockClose": 8.125
+        },
+        {
+          "month": "2025-09",
+          "productIndex": 76.85,
+          "stockIndex": 160.65,
+          "productPrice": 1255,
+          "stockClose": 7.745
+        },
+        {
+          "month": "2025-10",
+          "productIndex": 75.02,
+          "stockIndex": 163.97,
+          "productPrice": 1225,
+          "stockClose": 7.905
+        },
+        {
+          "month": "2025-11",
+          "productIndex": 72.08,
+          "stockIndex": 173.72,
+          "productPrice": 1177,
+          "stockClose": 8.375
+        },
+        {
+          "month": "2025-12",
+          "productIndex": 74.04,
+          "stockIndex": 170.4,
+          "productPrice": 1209,
           "stockClose": 8.215
         },
         {
           "month": "2026-01",
-          "productIndex": 98.14,
-          "stockIndex": 112.05,
-          "productPrice": 1202.86,
+          "productIndex": 73.73,
+          "stockIndex": 190.94,
+          "productPrice": 1204,
           "stockClose": 9.205
         },
         {
           "month": "2026-02",
-          "productIndex": 98.14,
-          "stockIndex": 118.38,
-          "productPrice": 1202.86,
+          "productIndex": 73.12,
+          "stockIndex": 201.72,
+          "productPrice": 1194,
           "stockClose": 9.725
         },
         {
           "month": "2026-03",
-          "productIndex": 101.69,
-          "stockIndex": 105.23,
-          "productPrice": 1246.43,
+          "productIndex": 72.08,
+          "stockIndex": 179.32,
+          "productPrice": 1177,
           "stockClose": 8.645
         },
         {
           "month": "2026-04",
-          "productIndex": 101.11,
-          "stockIndex": 98.3,
-          "productPrice": 1239.29,
+          "productIndex": 75.87,
+          "stockIndex": 167.5,
+          "productPrice": 1239,
           "stockClose": 8.075
         },
         {
           "month": "2026-05",
-          "productIndex": 100.12,
-          "stockIndex": 82.11,
-          "productPrice": 1227.14,
+          "productIndex": 74.4,
+          "stockIndex": 139.91,
+          "productPrice": 1215,
           "stockClose": 6.745
         },
         {
           "month": "2026-06",
-          "productIndex": 97.2,
-          "stockIndex": 73.04,
-          "productPrice": 1191.43,
+          "productIndex": 66.5,
+          "stockIndex": 124.46,
+          "productPrice": 1086,
           "stockClose": 6
         },
         {
           "month": "2026-07",
-          "productIndex": 90.09,
-          "stockIndex": 77.91,
-          "productPrice": 1104.29,
+          "productIndex": 57.26,
+          "stockIndex": 132.75,
+          "productPrice": 935,
           "stockClose": 6.4
         },
         {
           "month": "2026-08",
-          "productIndex": 88.69,
-          "stockIndex": 78.15,
-          "productPrice": 1087.14,
+          "productIndex": 64.97,
+          "stockIndex": 133.17,
+          "productPrice": 1061,
           "stockClose": 6.42
         },
         {
           "month": "2026-09",
-          "productIndex": 87.76,
-          "stockIndex": 69.14,
-          "productPrice": 1075.71,
+          "productIndex": 61.6,
+          "stockIndex": 117.82,
+          "productPrice": 1006,
           "stockClose": 5.68
         },
         {
           "month": "2026-10",
-          "productIndex": 86.48,
-          "stockIndex": 63.54,
-          "productPrice": 1060,
+          "productIndex": 59.15,
+          "stockIndex": 108.28,
+          "productPrice": 966,
           "stockClose": 5.22
         }
       ],
@@ -6593,88 +8749,1243 @@
       "note": "铝价是产品端代理，需同时观察氧化铝、电力成本及氧化铝业务贡献。",
       "productSource": "生意社现货/期货基差数据（经 AKShare 获取）",
       "productSourceUrl": "https://www.100ppi.com/",
-      "productDate": "2026-10-30",
+      "productDate": "2026-10",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": 5.78,
-      "stockChange": -27.52,
-      "divergence": "方向背离",
+      "productChange": 47.74,
+      "stockChange": 26.31,
+      "divergence": "涨跌幅差异较大",
       "series": [
         {
-          "month": "2025-12",
+          "month": "2011-11",
           "productIndex": 100,
           "stockIndex": 100,
-          "productPrice": 22473.33,
+          "productPrice": 15835,
+          "stockClose": 6.769
+        },
+        {
+          "month": "2011-12",
+          "productIndex": 100.06,
+          "stockIndex": 81.39,
+          "productPrice": 15845,
+          "stockClose": 5.509
+        },
+        {
+          "month": "2012-01",
+          "productIndex": 103.5,
+          "stockIndex": 91.87,
+          "productPrice": 16390,
+          "stockClose": 6.219
+        },
+        {
+          "month": "2012-02",
+          "productIndex": 102.62,
+          "stockIndex": 97.49,
+          "productPrice": 16250,
+          "stockClose": 6.599
+        },
+        {
+          "month": "2012-03",
+          "productIndex": 102.15,
+          "stockIndex": 83.6,
+          "productPrice": 16175,
+          "stockClose": 5.659
+        },
+        {
+          "month": "2012-04",
+          "productIndex": 102.27,
+          "stockIndex": 91.14,
+          "productPrice": 16195,
+          "stockClose": 6.169
+        },
+        {
+          "month": "2012-05",
+          "productIndex": 100.82,
+          "stockIndex": 88.03,
+          "productPrice": 15965,
+          "stockClose": 5.959
+        },
+        {
+          "month": "2012-06",
+          "productIndex": 97.19,
+          "stockIndex": 77.69,
+          "productPrice": 15390,
+          "stockClose": 5.259
+        },
+        {
+          "month": "2012-07",
+          "productIndex": 97.57,
+          "stockIndex": 72.52,
+          "productPrice": 15450,
+          "stockClose": 4.909
+        },
+        {
+          "month": "2012-08",
+          "productIndex": 97.03,
+          "stockIndex": 62.77,
+          "productPrice": 15365,
+          "stockClose": 4.249
+        },
+        {
+          "month": "2012-09",
+          "productIndex": 99.53,
+          "stockIndex": 60.11,
+          "productPrice": 15760,
+          "stockClose": 4.069
+        },
+        {
+          "month": "2012-10",
+          "productIndex": 96.75,
+          "stockIndex": 58.04,
+          "productPrice": 15320,
+          "stockClose": 3.929
+        },
+        {
+          "month": "2012-11",
+          "productIndex": 97.32,
+          "stockIndex": 54.35,
+          "productPrice": 15410,
+          "stockClose": 3.679
+        },
+        {
+          "month": "2012-12",
+          "productIndex": 97.03,
+          "stockIndex": 62.33,
+          "productPrice": 15365,
+          "stockClose": 4.219
+        },
+        {
+          "month": "2013-01",
+          "productIndex": 96.31,
+          "stockIndex": 62.92,
+          "productPrice": 15250,
+          "stockClose": 4.259
+        },
+        {
+          "month": "2013-02",
+          "productIndex": 93.43,
+          "stockIndex": 58.93,
+          "productPrice": 14795,
+          "stockClose": 3.989
+        },
+        {
+          "month": "2013-03",
+          "productIndex": 92.26,
+          "stockIndex": 47.41,
+          "productPrice": 14610,
+          "stockClose": 3.209
+        },
+        {
+          "month": "2013-04",
+          "productIndex": 92.39,
+          "stockIndex": 45.34,
+          "productPrice": 14630,
+          "stockClose": 3.069
+        },
+        {
+          "month": "2013-05",
+          "productIndex": 93.65,
+          "stockIndex": 47.26,
+          "productPrice": 14830,
+          "stockClose": 3.199
+        },
+        {
+          "month": "2013-06",
+          "productIndex": 89.77,
+          "stockIndex": 33.08,
+          "productPrice": 14215,
+          "stockClose": 2.239
+        },
+        {
+          "month": "2013-07",
+          "productIndex": 89.49,
+          "stockIndex": 32.34,
+          "productPrice": 14170,
+          "stockClose": 2.189
+        },
+        {
+          "month": "2013-08",
+          "productIndex": 90.02,
+          "stockIndex": 35.59,
+          "productPrice": 14255,
+          "stockClose": 2.409
+        },
+        {
+          "month": "2013-09",
+          "productIndex": 90.4,
+          "stockIndex": 51.54,
+          "productPrice": 14315,
+          "stockClose": 3.489
+        },
+        {
+          "month": "2013-10",
+          "productIndex": 90.94,
+          "stockIndex": 48.29,
+          "productPrice": 14400,
+          "stockClose": 3.269
+        },
+        {
+          "month": "2013-11",
+          "productIndex": 88.44,
+          "stockIndex": 45.49,
+          "productPrice": 14005,
+          "stockClose": 3.079
+        },
+        {
+          "month": "2013-12",
+          "productIndex": 88.35,
+          "stockIndex": 36.77,
+          "productPrice": 13990,
+          "stockClose": 2.489
+        },
+        {
+          "month": "2014-01",
+          "productIndex": 85.76,
+          "stockIndex": 34.26,
+          "productPrice": 13580,
+          "stockClose": 2.319
+        },
+        {
+          "month": "2014-02",
+          "productIndex": 84.12,
+          "stockIndex": 33.96,
+          "productPrice": 13320,
+          "stockClose": 2.299
+        },
+        {
+          "month": "2014-03",
+          "productIndex": 82.51,
+          "stockIndex": 36.62,
+          "productPrice": 13065,
+          "stockClose": 2.479
+        },
+        {
+          "month": "2014-04",
+          "productIndex": 84.18,
+          "stockIndex": 32.78,
+          "productPrice": 13330,
+          "stockClose": 2.219
+        },
+        {
+          "month": "2014-05",
+          "productIndex": 85.44,
+          "stockIndex": 31.16,
+          "productPrice": 13530,
+          "stockClose": 2.109
+        },
+        {
+          "month": "2014-06",
+          "productIndex": 85.1,
+          "stockIndex": 31.45,
+          "productPrice": 13475,
+          "stockClose": 2.129
+        },
+        {
+          "month": "2014-07",
+          "productIndex": 89.33,
+          "stockIndex": 40.61,
+          "productPrice": 14145,
+          "stockClose": 2.749
+        },
+        {
+          "month": "2014-08",
+          "productIndex": 91.6,
+          "stockIndex": 39.73,
+          "productPrice": 14505,
+          "stockClose": 2.689
+        },
+        {
+          "month": "2014-09",
+          "productIndex": 88.51,
+          "stockIndex": 43.86,
+          "productPrice": 14015,
+          "stockClose": 2.969
+        },
+        {
+          "month": "2014-10",
+          "productIndex": 88.41,
+          "stockIndex": 43.42,
+          "productPrice": 14000,
+          "stockClose": 2.939
+        },
+        {
+          "month": "2014-11",
+          "productIndex": 86.93,
+          "stockIndex": 50.81,
+          "productPrice": 13765,
+          "stockClose": 3.439
+        },
+        {
+          "month": "2014-12",
+          "productIndex": 82.48,
+          "stockIndex": 78.87,
+          "productPrice": 13060,
+          "stockClose": 5.339
+        },
+        {
+          "month": "2015-01",
+          "productIndex": 80.9,
+          "stockIndex": 68.24,
+          "productPrice": 12810,
+          "stockClose": 4.619
+        },
+        {
+          "month": "2015-02",
+          "productIndex": 81.88,
+          "stockIndex": 66.46,
+          "productPrice": 12965,
+          "stockClose": 4.499
+        },
+        {
+          "month": "2015-03",
+          "productIndex": 84.43,
+          "stockIndex": 79.76,
+          "productPrice": 13370,
+          "stockClose": 5.399
+        },
+        {
+          "month": "2015-04",
+          "productIndex": 84.28,
+          "stockIndex": 126.89,
+          "productPrice": 13345,
+          "stockClose": 8.589
+        },
+        {
+          "month": "2015-05",
+          "productIndex": 83.52,
+          "stockIndex": 117.28,
+          "productPrice": 13225,
+          "stockClose": 7.939
+        },
+        {
+          "month": "2015-06",
+          "productIndex": 79.73,
+          "stockIndex": 124.38,
+          "productPrice": 12625,
+          "stockClose": 8.419
+        },
+        {
+          "month": "2015-07",
+          "productIndex": 77.39,
+          "stockIndex": 78.87,
+          "productPrice": 12255,
+          "stockClose": 5.339
+        },
+        {
+          "month": "2015-08",
+          "productIndex": 75.09,
+          "stockIndex": 65.73,
+          "productPrice": 11890,
+          "stockClose": 4.449
+        },
+        {
+          "month": "2015-09",
+          "productIndex": 73.76,
+          "stockIndex": 55.53,
+          "productPrice": 11680,
+          "stockClose": 3.759
+        },
+        {
+          "month": "2015-10",
+          "productIndex": 65.36,
+          "stockIndex": 62.48,
+          "productPrice": 10350,
+          "stockClose": 4.229
+        },
+        {
+          "month": "2015-11",
+          "productIndex": 63.47,
+          "stockIndex": 60.26,
+          "productPrice": 10050,
+          "stockClose": 4.079
+        },
+        {
+          "month": "2015-12",
+          "productIndex": 68.33,
+          "stockIndex": 59.96,
+          "productPrice": 10820,
+          "stockClose": 4.059
+        },
+        {
+          "month": "2016-01",
+          "productIndex": 67.92,
+          "stockIndex": 42.09,
+          "productPrice": 10755,
+          "stockClose": 2.849
+        },
+        {
+          "month": "2016-02",
+          "productIndex": 71.36,
+          "stockIndex": 53.02,
+          "productPrice": 11300,
+          "stockClose": 3.589
+        },
+        {
+          "month": "2016-03",
+          "productIndex": 74.2,
+          "stockIndex": 51.4,
+          "productPrice": 11750,
+          "stockClose": 3.479
+        },
+        {
+          "month": "2016-04",
+          "productIndex": 80.08,
+          "stockIndex": 48.74,
+          "productPrice": 12680,
+          "stockClose": 3.299
+        },
+        {
+          "month": "2016-05",
+          "productIndex": 77.42,
+          "stockIndex": 47.26,
+          "productPrice": 12260,
+          "stockClose": 3.199
+        },
+        {
+          "month": "2016-06",
+          "productIndex": 79.13,
+          "stockIndex": 42.24,
+          "productPrice": 12530,
+          "stockClose": 2.859
+        },
+        {
+          "month": "2016-07",
+          "productIndex": 77.42,
+          "stockIndex": 43.42,
+          "productPrice": 12260,
+          "stockClose": 2.939
+        },
+        {
+          "month": "2016-08",
+          "productIndex": 77.14,
+          "stockIndex": 44.45,
+          "productPrice": 12215,
+          "stockClose": 3.009
+        },
+        {
+          "month": "2016-09",
+          "productIndex": 77.49,
+          "stockIndex": 41.79,
+          "productPrice": 12270,
+          "stockClose": 2.829
+        },
+        {
+          "month": "2016-10",
+          "productIndex": 89.04,
+          "stockIndex": 45.34,
+          "productPrice": 14100,
+          "stockClose": 3.069
+        },
+        {
+          "month": "2016-11",
+          "productIndex": 83.01,
+          "stockIndex": 55.38,
+          "productPrice": 13145,
+          "stockClose": 3.749
+        },
+        {
+          "month": "2016-12",
+          "productIndex": 80.8,
+          "stockIndex": 48.88,
+          "productPrice": 12795,
+          "stockClose": 3.309
+        },
+        {
+          "month": "2017-01",
+          "productIndex": 87.37,
+          "stockIndex": 62.33,
+          "productPrice": 13835,
+          "stockClose": 4.219
+        },
+        {
+          "month": "2017-02",
+          "productIndex": 86.96,
+          "stockIndex": 59.52,
+          "productPrice": 13770,
+          "stockClose": 4.029
+        },
+        {
+          "month": "2017-03",
+          "productIndex": 88.38,
+          "stockIndex": 55.24,
+          "productPrice": 13995,
+          "stockClose": 3.739
+        },
+        {
+          "month": "2017-04",
+          "productIndex": 88.51,
+          "stockIndex": 58.19,
+          "productPrice": 14015,
+          "stockClose": 3.939
+        },
+        {
+          "month": "2017-05",
+          "productIndex": 86.61,
+          "stockIndex": 49.03,
+          "productPrice": 13715,
+          "stockClose": 3.319
+        },
+        {
+          "month": "2017-06",
+          "productIndex": 88.06,
+          "stockIndex": 53.32,
+          "productPrice": 13945,
+          "stockClose": 3.609
+        },
+        {
+          "month": "2017-07",
+          "productIndex": 91.85,
+          "stockIndex": 74.89,
+          "productPrice": 14545,
+          "stockClose": 5.069
+        },
+        {
+          "month": "2017-08",
+          "productIndex": 104.58,
+          "stockIndex": 104.88,
+          "productPrice": 16560,
+          "stockClose": 7.099
+        },
+        {
+          "month": "2017-09",
+          "productIndex": 103.85,
+          "stockIndex": 106.06,
+          "productPrice": 16445,
+          "stockClose": 7.179
+        },
+        {
+          "month": "2018-02",
+          "productIndex": 90.46,
+          "stockIndex": 73.7,
+          "productPrice": 14325,
+          "stockClose": 4.989
+        },
+        {
+          "month": "2018-03",
+          "productIndex": 86.96,
+          "stockIndex": 56.42,
+          "productPrice": 13770,
+          "stockClose": 3.819
+        },
+        {
+          "month": "2018-04",
+          "productIndex": 91.95,
+          "stockIndex": 55.83,
+          "productPrice": 14560,
+          "stockClose": 3.779
+        },
+        {
+          "month": "2018-05",
+          "productIndex": 92.14,
+          "stockIndex": 48.15,
+          "productPrice": 14590,
+          "stockClose": 3.259
+        },
+        {
+          "month": "2018-06",
+          "productIndex": 89.45,
+          "stockIndex": 43.27,
+          "productPrice": 14165,
+          "stockClose": 2.929
+        },
+        {
+          "month": "2018-07",
+          "productIndex": 91.82,
+          "stockIndex": 43.71,
+          "productPrice": 14540,
+          "stockClose": 2.959
+        },
+        {
+          "month": "2018-08",
+          "productIndex": 94.03,
+          "stockIndex": 46.23,
+          "productPrice": 14890,
+          "stockClose": 3.129
+        },
+        {
+          "month": "2018-09",
+          "productIndex": 90.37,
+          "stockIndex": 46.08,
+          "productPrice": 14310,
+          "stockClose": 3.119
+        },
+        {
+          "month": "2018-10",
+          "productIndex": 88.16,
+          "stockIndex": 42.68,
+          "productPrice": 13960,
+          "stockClose": 2.889
+        },
+        {
+          "month": "2018-11",
+          "productIndex": 85.6,
+          "stockIndex": 40.32,
+          "productPrice": 13555,
+          "stockClose": 2.729
+        },
+        {
+          "month": "2018-12",
+          "productIndex": 85.82,
+          "stockIndex": 38.99,
+          "productPrice": 13590,
+          "stockClose": 2.639
+        },
+        {
+          "month": "2019-01",
+          "productIndex": 85.32,
+          "stockIndex": 38.69,
+          "productPrice": 13510,
+          "stockClose": 2.619
+        },
+        {
+          "month": "2019-02",
+          "productIndex": 86.39,
+          "stockIndex": 49.48,
+          "productPrice": 13680,
+          "stockClose": 3.349
+        },
+        {
+          "month": "2019-03",
+          "productIndex": 86.64,
+          "stockIndex": 48.44,
+          "productPrice": 13720,
+          "stockClose": 3.279
+        },
+        {
+          "month": "2019-04",
+          "productIndex": 89.52,
+          "stockIndex": 48.15,
+          "productPrice": 14175,
+          "stockClose": 3.259
+        },
+        {
+          "month": "2019-05",
+          "productIndex": 89.39,
+          "stockIndex": 45.93,
+          "productPrice": 14155,
+          "stockClose": 3.109
+        },
+        {
+          "month": "2019-06",
+          "productIndex": 87.34,
+          "stockIndex": 44.45,
+          "productPrice": 13830,
+          "stockClose": 3.009
+        },
+        {
+          "month": "2019-07",
+          "productIndex": 87.75,
+          "stockIndex": 41.94,
+          "productPrice": 13895,
+          "stockClose": 2.839
+        },
+        {
+          "month": "2019-08",
+          "productIndex": 90.05,
+          "stockIndex": 39.73,
+          "productPrice": 14260,
+          "stockClose": 2.689
+        },
+        {
+          "month": "2019-09",
+          "productIndex": 88.51,
+          "stockIndex": 38.54,
+          "productPrice": 14015,
+          "stockClose": 2.609
+        },
+        {
+          "month": "2019-10",
+          "productIndex": 87.4,
+          "stockIndex": 36.62,
+          "productPrice": 13840,
+          "stockClose": 2.479
+        },
+        {
+          "month": "2019-11",
+          "productIndex": 87.69,
+          "stockIndex": 35,
+          "productPrice": 13885,
+          "stockClose": 2.369
+        },
+        {
+          "month": "2019-12",
+          "productIndex": 89.11,
+          "stockIndex": 38.84,
+          "productPrice": 14110,
+          "stockClose": 2.629
+        },
+        {
+          "month": "2020-01",
+          "productIndex": 89.04,
+          "stockIndex": 35.29,
+          "productPrice": 14100,
+          "stockClose": 2.389
+        },
+        {
+          "month": "2020-02",
+          "productIndex": 82.79,
+          "stockIndex": 31.75,
+          "productPrice": 13110,
+          "stockClose": 2.149
+        },
+        {
+          "month": "2020-03",
+          "productIndex": 73.19,
+          "stockIndex": 29.09,
+          "productPrice": 11590,
+          "stockClose": 1.969
+        },
+        {
+          "month": "2020-04",
+          "productIndex": 79.95,
+          "stockIndex": 28.65,
+          "productPrice": 12660,
+          "stockClose": 1.939
+        },
+        {
+          "month": "2020-05",
+          "productIndex": 83.45,
+          "stockIndex": 27.91,
+          "productPrice": 13215,
+          "stockClose": 1.889
+        },
+        {
+          "month": "2020-06",
+          "productIndex": 87.34,
+          "stockIndex": 27.32,
+          "productPrice": 13830,
+          "stockClose": 1.849
+        },
+        {
+          "month": "2020-07",
+          "productIndex": 92.74,
+          "stockIndex": 35.15,
+          "productPrice": 14685,
+          "stockClose": 2.379
+        },
+        {
+          "month": "2020-08",
+          "productIndex": 91.82,
+          "stockIndex": 33.22,
+          "productPrice": 14540,
+          "stockClose": 2.249
+        },
+        {
+          "month": "2020-09",
+          "productIndex": 89.33,
+          "stockIndex": 29.53,
+          "productPrice": 14145,
+          "stockClose": 1.999
+        },
+        {
+          "month": "2020-10",
+          "productIndex": 90.75,
+          "stockIndex": 28.94,
+          "productPrice": 14370,
+          "stockClose": 1.959
+        },
+        {
+          "month": "2020-11",
+          "productIndex": 104.1,
+          "stockIndex": 47.56,
+          "productPrice": 16485,
+          "stockClose": 3.219
+        },
+        {
+          "month": "2020-12",
+          "productIndex": 97.63,
+          "stockIndex": 40.17,
+          "productPrice": 15460,
+          "stockClose": 2.719
+        },
+        {
+          "month": "2021-01",
+          "productIndex": 94.76,
+          "stockIndex": 33.82,
+          "productPrice": 15005,
+          "stockClose": 2.289
+        },
+        {
+          "month": "2021-02",
+          "productIndex": 110.29,
+          "stockIndex": 49.33,
+          "productPrice": 17465,
+          "stockClose": 3.339
+        },
+        {
+          "month": "2021-03",
+          "productIndex": 108.34,
+          "stockIndex": 42.24,
+          "productPrice": 17155,
+          "stockClose": 2.859
+        },
+        {
+          "month": "2021-04",
+          "productIndex": 119.92,
+          "stockIndex": 52.13,
+          "productPrice": 18990,
+          "stockClose": 3.529
+        },
+        {
+          "month": "2021-05",
+          "productIndex": 118.88,
+          "stockIndex": 63.81,
+          "productPrice": 18825,
+          "stockClose": 4.319
+        },
+        {
+          "month": "2021-06",
+          "productIndex": 118.72,
+          "stockIndex": 64.84,
+          "productPrice": 18800,
+          "stockClose": 4.389
+        },
+        {
+          "month": "2021-07",
+          "productIndex": 126.84,
+          "stockIndex": 74.74,
+          "productPrice": 20085,
+          "stockClose": 5.059
+        },
+        {
+          "month": "2021-08",
+          "productIndex": 135.05,
+          "stockIndex": 101.77,
+          "productPrice": 21385,
+          "stockClose": 6.889
+        },
+        {
+          "month": "2021-09",
+          "productIndex": 142.5,
+          "stockIndex": 101.03,
+          "productPrice": 22565,
+          "stockClose": 6.839
+        },
+        {
+          "month": "2021-10",
+          "productIndex": 125.48,
+          "stockIndex": 77.25,
+          "productPrice": 19870,
+          "stockClose": 5.229
+        },
+        {
+          "month": "2021-11",
+          "productIndex": 119.39,
+          "stockIndex": 63.36,
+          "productPrice": 18905,
+          "stockClose": 4.289
+        },
+        {
+          "month": "2021-12",
+          "productIndex": 128.7,
+          "stockIndex": 76.51,
+          "productPrice": 20380,
+          "stockClose": 5.179
+        },
+        {
+          "month": "2022-01",
+          "productIndex": 138.62,
+          "stockIndex": 64.25,
+          "productPrice": 21950,
+          "stockClose": 4.349
+        },
+        {
+          "month": "2022-02",
+          "productIndex": 144.33,
+          "stockIndex": 82.27,
+          "productPrice": 22855,
+          "stockClose": 5.569
+        },
+        {
+          "month": "2022-03",
+          "productIndex": 143.54,
+          "stockIndex": 72.52,
+          "productPrice": 22730,
+          "stockClose": 4.909
+        },
+        {
+          "month": "2022-04",
+          "productIndex": 131.92,
+          "stockIndex": 56.86,
+          "productPrice": 20890,
+          "stockClose": 3.849
+        },
+        {
+          "month": "2022-05",
+          "productIndex": 131.32,
+          "stockIndex": 62.62,
+          "productPrice": 20795,
+          "stockClose": 4.239
+        },
+        {
+          "month": "2022-06",
+          "productIndex": 120.37,
+          "stockIndex": 56.71,
+          "productPrice": 19060,
+          "stockClose": 3.839
+        },
+        {
+          "month": "2022-07",
+          "productIndex": 118.41,
+          "stockIndex": 55.53,
+          "productPrice": 18750,
+          "stockClose": 3.759
+        },
+        {
+          "month": "2022-08",
+          "productIndex": 116.26,
+          "stockIndex": 53.64,
+          "productPrice": 18410,
+          "stockClose": 3.631
+        },
+        {
+          "month": "2022-09",
+          "productIndex": 115.38,
+          "stockIndex": 48.03,
+          "productPrice": 18270,
+          "stockClose": 3.251
+        },
+        {
+          "month": "2022-10",
+          "productIndex": 110.74,
+          "stockIndex": 44.04,
+          "productPrice": 17535,
+          "stockClose": 2.981
+        },
+        {
+          "month": "2022-11",
+          "productIndex": 118.69,
+          "stockIndex": 53.05,
+          "productPrice": 18795,
+          "stockClose": 3.591
+        },
+        {
+          "month": "2022-12",
+          "productIndex": 118.09,
+          "stockIndex": 53.05,
+          "productPrice": 18700,
+          "stockClose": 3.591
+        },
+        {
+          "month": "2023-01",
+          "productIndex": 119.51,
+          "stockIndex": 65.16,
+          "productPrice": 18925,
+          "stockClose": 4.411
+        },
+        {
+          "month": "2023-02",
+          "productIndex": 116.58,
+          "stockIndex": 68.71,
+          "productPrice": 18460,
+          "stockClose": 4.651
+        },
+        {
+          "month": "2023-03",
+          "productIndex": 118.19,
+          "stockIndex": 68.56,
+          "productPrice": 18715,
+          "stockClose": 4.641
+        },
+        {
+          "month": "2023-04",
+          "productIndex": 116.64,
+          "stockIndex": 81.42,
+          "productPrice": 18470,
+          "stockClose": 5.511
+        },
+        {
+          "month": "2023-05",
+          "productIndex": 113.77,
+          "stockIndex": 66.94,
+          "productPrice": 18015,
+          "stockClose": 4.531
+        },
+        {
+          "month": "2023-06",
+          "productIndex": 113.74,
+          "stockIndex": 68.12,
+          "productPrice": 18010,
+          "stockClose": 4.611
+        },
+        {
+          "month": "2023-07",
+          "productIndex": 116.07,
+          "stockIndex": 81.12,
+          "productPrice": 18380,
+          "stockClose": 5.491
+        },
+        {
+          "month": "2023-08",
+          "productIndex": 119.86,
+          "stockIndex": 75,
+          "productPrice": 18980,
+          "stockClose": 5.077
+        },
+        {
+          "month": "2023-09",
+          "productIndex": 122.8,
+          "stockIndex": 80.32,
+          "productPrice": 19445,
+          "stockClose": 5.437
+        },
+        {
+          "month": "2023-10",
+          "productIndex": 121.35,
+          "stockIndex": 79.14,
+          "productPrice": 19215,
+          "stockClose": 5.357
+        },
+        {
+          "month": "2023-11",
+          "productIndex": 117.46,
+          "stockIndex": 69.39,
+          "productPrice": 18600,
+          "stockClose": 4.697
+        },
+        {
+          "month": "2023-12",
+          "productIndex": 123.18,
+          "stockIndex": 70.87,
+          "productPrice": 19505,
+          "stockClose": 4.797
+        },
+        {
+          "month": "2024-01",
+          "productIndex": 120.05,
+          "stockIndex": 71.61,
+          "productPrice": 19010,
+          "stockClose": 4.847
+        },
+        {
+          "month": "2024-02",
+          "productIndex": 119.51,
+          "stockIndex": 76.92,
+          "productPrice": 18925,
+          "stockClose": 5.207
+        },
+        {
+          "month": "2024-03",
+          "productIndex": 124.47,
+          "stockIndex": 96.87,
+          "productPrice": 19710,
+          "stockClose": 6.557
+        },
+        {
+          "month": "2024-04",
+          "productIndex": 129.93,
+          "stockIndex": 97.16,
+          "productPrice": 20575,
+          "stockClose": 6.577
+        },
+        {
+          "month": "2024-05",
+          "productIndex": 136,
+          "stockIndex": 108.54,
+          "productPrice": 21535,
+          "stockClose": 7.347
+        },
+        {
+          "month": "2024-06",
+          "productIndex": 128.32,
+          "stockIndex": 100.27,
+          "productPrice": 20320,
+          "stockClose": 6.787
+        },
+        {
+          "month": "2024-07",
+          "productIndex": 120.84,
+          "stockIndex": 90.66,
+          "productPrice": 19135,
+          "stockClose": 6.137
+        },
+        {
+          "month": "2024-08",
+          "productIndex": 125.36,
+          "stockIndex": 89.63,
+          "productPrice": 19850,
+          "stockClose": 6.067
+        },
+        {
+          "month": "2024-09",
+          "productIndex": 129.21,
+          "stockIndex": 120.21,
+          "productPrice": 20460,
+          "stockClose": 8.137
+        },
+        {
+          "month": "2024-10",
+          "productIndex": 130.79,
+          "stockIndex": 101.45,
+          "productPrice": 20710,
+          "stockClose": 6.867
+        },
+        {
+          "month": "2024-11",
+          "productIndex": 128.77,
+          "stockIndex": 99.82,
+          "productPrice": 20390,
+          "stockClose": 6.757
+        },
+        {
+          "month": "2024-12",
+          "productIndex": 124.91,
+          "stockIndex": 98.52,
+          "productPrice": 19780,
+          "stockClose": 6.669
+        },
+        {
+          "month": "2025-01",
+          "productIndex": 127.82,
+          "stockIndex": 104.58,
+          "productPrice": 20240,
+          "stockClose": 7.079
+        },
+        {
+          "month": "2025-02",
+          "productIndex": 130.34,
+          "stockIndex": 95.57,
+          "productPrice": 20640,
+          "stockClose": 6.469
+        },
+        {
+          "month": "2025-03",
+          "productIndex": 129.33,
+          "stockIndex": 100.15,
+          "productPrice": 20480,
+          "stockClose": 6.779
+        },
+        {
+          "month": "2025-04",
+          "productIndex": 125.73,
+          "stockIndex": 84.49,
+          "productPrice": 19910,
+          "stockClose": 5.719
+        },
+        {
+          "month": "2025-05",
+          "productIndex": 126.74,
+          "stockIndex": 86.56,
+          "productPrice": 20070,
+          "stockClose": 5.859
+        },
+        {
+          "month": "2025-06",
+          "productIndex": 129.97,
+          "stockIndex": 93.94,
+          "productPrice": 20580,
+          "stockClose": 6.359
+        },
+        {
+          "month": "2025-07",
+          "productIndex": 129.52,
+          "stockIndex": 99.7,
+          "productPrice": 20510,
+          "stockClose": 6.749
+        },
+        {
+          "month": "2025-08",
+          "productIndex": 130.98,
+          "stockIndex": 107.61,
+          "productPrice": 20740,
+          "stockClose": 7.284
+        },
+        {
+          "month": "2025-09",
+          "productIndex": 130.6,
+          "stockIndex": 113.67,
+          "productPrice": 20680,
+          "stockClose": 7.694
+        },
+        {
+          "month": "2025-10",
+          "productIndex": 134.51,
+          "stockIndex": 141.34,
+          "productPrice": 21300,
+          "stockClose": 9.567
+        },
+        {
+          "month": "2025-11",
+          "productIndex": 136.47,
+          "stockIndex": 149.02,
+          "productPrice": 21610,
+          "stockClose": 10.087
+        },
+        {
+          "month": "2025-12",
+          "productIndex": 144.77,
+          "stockIndex": 174.28,
+          "productPrice": 22925,
           "stockClose": 11.797
         },
         {
           "month": "2026-01",
-          "productIndex": 109.76,
-          "stockIndex": 116.19,
-          "productPrice": 24666.67,
+          "productIndex": 155.1,
+          "stockIndex": 202.5,
+          "productPrice": 24560,
           "stockClose": 13.707
         },
         {
           "month": "2026-02",
-          "productIndex": 104.15,
-          "stockIndex": 112.72,
-          "productPrice": 23406.67,
+          "productIndex": 150.52,
+          "stockIndex": 196.44,
+          "productPrice": 23835,
           "stockClose": 13.297
         },
         {
           "month": "2026-03",
-          "productIndex": 109.56,
-          "stockIndex": 93.05,
-          "productPrice": 24621.67,
+          "productIndex": 157.09,
+          "stockIndex": 162.17,
+          "productPrice": 24875,
           "stockClose": 10.977
         },
         {
           "month": "2026-04",
-          "productIndex": 108.59,
-          "stockIndex": 95.17,
-          "productPrice": 24403.33,
+          "productIndex": 154.28,
+          "stockIndex": 165.86,
+          "productPrice": 24430,
           "stockClose": 11.227
         },
         {
           "month": "2026-05",
-          "productIndex": 107.79,
-          "stockIndex": 93.22,
-          "productPrice": 24223.33,
+          "productIndex": 153.27,
+          "stockIndex": 162.46,
+          "productPrice": 24270,
           "stockClose": 10.997
         },
         {
           "month": "2026-06",
-          "productIndex": 100.21,
-          "stockIndex": 66.09,
-          "productPrice": 22520,
+          "productIndex": 142.5,
+          "stockIndex": 115.19,
+          "productPrice": 22565,
           "stockClose": 7.797
         },
         {
           "month": "2026-07",
-          "productIndex": 105.21,
-          "stockIndex": 77.54,
-          "productPrice": 23643.33,
+          "productIndex": 149.23,
+          "stockIndex": 135.13,
+          "productPrice": 23630,
           "stockClose": 9.147
         },
         {
           "month": "2026-08",
-          "productIndex": 106.73,
-          "stockIndex": 80.48,
-          "productPrice": 23986.67,
+          "productIndex": 152.04,
+          "stockIndex": 140.26,
+          "productPrice": 24075,
           "stockClose": 9.494
         },
         {
           "month": "2026-09",
-          "productIndex": 107,
-          "stockIndex": 73.36,
-          "productPrice": 24046.67,
+          "productIndex": 150.49,
+          "stockIndex": 127.85,
+          "productPrice": 23830,
           "stockClose": 8.654
         },
         {
           "month": "2026-10",
-          "productIndex": 105.78,
-          "stockIndex": 72.48,
-          "productPrice": 23771.7,
+          "productIndex": 147.74,
+          "stockIndex": 126.31,
+          "productPrice": 23395,
           "stockClose": 8.55
         }
       ],

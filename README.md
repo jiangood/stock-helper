@@ -32,7 +32,7 @@ python -m http.server 8089
 | `src/pages/*.page.js` | SPA 页面入口：自选、行情、商品、个股详情和系统健康 |
 | `src/pages/products.page.js` `src/services/products.service.js` | 原生商品页面：每个商品一张卡片，同图展示商品实际价格与关联股票复权价格月线（归一化指数） |
 | `data/company-products.json` `scripts/build_company_products.py` | 商品历史价格候选序列：提供部分品种最多 200 根月线的行业价格代理，供商品月线构建器按商品名称匹配 |
-| `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
+| `legacy-stock.html` `stock.js` | 迁移期间的个股详情旧页面模板（由 `src/pages/stock-detail.page.js` 桥接）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
 | `data/stock-products.json` `scripts/build_product_comparison.js` `data/product-comparison.json` | 主营产品与商品报价映射、Actions 生成的商品/股价月线比较读模型；主营产品名称优先读取基本面数据，未接入可靠报价时明确显示待补充 |
 | `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、纪律全过判定、入场/重仓区、连续涨停、月 K 分位与简报 |
@@ -44,7 +44,7 @@ python -m http.server 8089
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
 | `scripts/build_stock_detail_cache.js` `data/cache/stocks/` `data/cache/stock-details.json` | 个股详情页紧凑缓存与同组估值索引；详情页单次读取 bundle，减少完整历史文件重复下载 |
-| `scripts/build_cache_manifest.js` `data/cache/manifest.json` `data/monitoring/latest.json` `health.html` | GitHub Actions 生成的静态缓存清单、健康快照和系统健康页；记录指纹、数据日期、覆盖数量、文件大小、构建耗时与内容复用率（非 CDN 命中率） |
+| `scripts/build_cache_manifest.js` `data/cache/manifest.json` `data/monitoring/latest.json` `src/pages/health.page.js` | GitHub Actions 生成的静态缓存清单、健康快照和系统健康页；记录指纹、数据日期、覆盖数量、文件大小、构建耗时与内容复用率（非 CDN 命中率） |
 | `static-quotes.js` | 浏览器端静态行情适配器；每次直接读取同源 JSON，禁用 HTTP 缓存，不使用 IndexedDB、localStorage 或内存数据缓存，不直接访问行情供应商 |
 | `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、禁止前端数据缓存的约定，以及静态部署下 SQL 数据库的适用边界 |
 | `docs/DEVELOPMENT_GUIDE.md` | 开发环境、本地预览、测试命令、GitHub Actions、AI 协作与代码修改交付流程 |

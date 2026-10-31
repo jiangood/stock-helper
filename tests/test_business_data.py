@@ -5,6 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import fetch_business_data as fetcher
+import build_company_products as company_builder
 
 
 class BusinessDataTests(unittest.TestCase):
@@ -125,6 +126,26 @@ class BusinessDataTests(unittest.TestCase):
         for item_id in ("yeast", "fluorine-materials", "precious-metal-recycling", "precious-metal-precursors", "industrial-explosives"):
             self.assertIn(item_id, products)
             self.assertIsNone(products[item_id]["symbol"])
+
+    def test_disclosed_product_segments_map_to_their_own_market_items(self):
+        cases = {
+            "甲苯二异氰酸酯(TDI)": "tdi",
+            "聚碳酸酯(PC)": "polycarbonate",
+            "钽铌及其合金制品": "tantalum-niobium",
+            "钛及钛合金产品": "titanium-material",
+            "钛产品": "titanium-products",
+            "钼矿产品开采、冶炼及深加工": "molybdenum",
+            "商品浆": "pulp",
+            "印刷用纸": "printing-paper",
+            "包装用纸": "packaging-paper",
+            "复合肥": "compound-fertilizer",
+            "酵母及相关行业": "yeast",
+            "贵金属前驱体材料": "precious-metal-precursors",
+            "贵金属再生资源产品": "precious-metal-recycling",
+        }
+        for product_name, item_id in cases.items():
+            self.assertEqual(company_builder.infer_market_item(product_name), item_id)
+        self.assertIsNone(company_builder.infer_market_item("锡/锑/锌综合产品"))
 
     def test_build_payload_does_not_fabricate_missing_quotes(self):
         payload = fetcher.build_payload({

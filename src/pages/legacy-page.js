@@ -27,7 +27,7 @@ export function mountLegacyPage({ root, src, title, window: windowLike = window 
     try { frameDocument = frame.contentDocument; } catch (error) { return; }
     if (!frameDocument) return;
 
-    const legacyNavigation = frameDocument.querySelector('.sticky-top');
+    const legacyNavigation = frameDocument.querySelector('.sticky-top nav');
     if (legacyNavigation) legacyNavigation.style.display = 'none';
     const skipLink = frameDocument.querySelector('.skip-link');
     if (skipLink) skipLink.style.display = 'none';

@@ -820,46 +820,11 @@
     const t = chartTokens();
     const dates = bars.map(b => b.time);
     const candle = bars.map(b => [b.open, b.close, b.low, b.high]);
-    const volume = bars.map(b => ({
-      value: b.volume || 0,
-      itemStyle: { color: rgba(b.close >= b.open ? t.up : t.down, 0.35) }
-    }));
-
     return {
       animation: false,
       backgroundColor: 'transparent',
       textStyle: { color: t.text, fontSize: 11, fontFamily: 'inherit' },
-      grid: [
-        { left: 24, right: 54, top: 10, height: '62%' },
-        { left: 24, right: 54, top: '74%', bottom: 24 }
-      ],
-      axisPointer: {
-        link: [{ xAxisIndex: 'all' }],
-        label: { backgroundColor: t.primary, fontSize: 10 }
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: { type: 'cross', crossStyle: { color: t.border } },
-        backgroundColor: t.bg,
-        borderColor: t.border,
-        borderWidth: 1,
-        padding: [6, 8],
-        textStyle: { color: t.text, fontSize: 11 },
-        formatter: params => {
-          const list = Array.isArray(params) ? params : [params];
-          const hit = list.find(p => p.seriesType === 'candlestick');
-          if (!hit) return '';
-          const bar = bars[hit.dataIndex];
-          const prev = hit.dataIndex > 0 ? bars[hit.dataIndex - 1].close : null;
-          const chg = prev ? (bar.close / prev - 1) * 100 : null;
-          const tone = bar.close >= bar.open ? t.up : t.down;
-          return `<div style="font-weight:600;margin-bottom:3px">${esc(bar.time)}</div>`
-            + `<div>开 ${fmtNum(bar.open)} · 高 ${fmtNum(bar.high)}</div>`
-            + `<div>低 ${fmtNum(bar.low)} · 收 <b style="color:${tone}">${fmtNum(bar.close)}</b></div>`
-            + (chg == null ? '' : `<div>较前收 <span style="color:${chg >= 0 ? t.up : t.down}">${fmtPct(chg)}</span></div>`)
-            + `<div>量 ${fmtAmount(bar.volume)}</div>`;
-        }
-      },
+      grid: { left: 24, right: 54, top: 10, bottom: 28 },
       xAxis: [
         {
           type: 'category',
@@ -872,41 +837,20 @@
             color: t.text, fontSize: 10, hideOverlap: true,
             formatter: v => axisLabelOf(v, period)
           }
-        },
-        {
-          type: 'category',
-          gridIndex: 1,
-          data: dates,
-          boundaryGap: true,
-          axisLine: { lineStyle: { color: t.border } },
-          axisTick: { show: false },
-          axisLabel: { show: false },
-          splitLine: { show: false }
         }
       ],
-      yAxis: [
-        {
-          scale: true,
-          position: 'right',
-          axisLine: { show: false },
-          axisTick: { show: false },
-          splitLine: { lineStyle: { color: t.border, opacity: 0.55 } },
-          axisLabel: { color: t.text, fontSize: 10, formatter: v => Number(v).toFixed(2) }
-        },
-        {
-          gridIndex: 1,
-          scale: true,
-          splitNumber: 2,
-          axisLine: { show: false },
-          axisTick: { show: false },
-          axisLabel: { show: false },
-          splitLine: { show: false }
-        }
-      ],
+      yAxis: {
+        scale: true,
+        position: 'right',
+        axisLine: { show: false },
+        axisTick: { show: false },
+        splitLine: { lineStyle: { color: t.border, opacity: 0.55 } },
+        axisLabel: { color: t.text, fontSize: 10, formatter: v => Number(v).toFixed(2) }
+      },
       dataZoom: [
         {
           type: 'inside',
-          xAxisIndex: [0, 1],
+          xAxisIndex: 0,
           // 滚轮留给页面滚动，Ctrl/⌘ + 滚轮缩放；拖拽平移、双指缩放照常。
           zoomOnMouseWheel: 'ctrl',
           moveOnMouseMove: true,
@@ -925,13 +869,6 @@
             borderColor: t.up,
             borderColor0: t.down
           }
-        },
-        {
-          type: 'bar',
-          xAxisIndex: 1,
-          yAxisIndex: 1,
-          data: volume,
-          barMaxWidth: 10
         }
       ]
     };

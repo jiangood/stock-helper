@@ -381,7 +381,7 @@
             axisTick: { show: false },
             axisLabel: {
               color: textColor, fontSize: 9, hideOverlap: true,
-              formatter: function (value) { return String(value).slice(5); }
+              formatter: function (value) { return /^\\d{4}-\\d{2}$/.test(String(value)) ? String(value) : String(value).slice(5); }
             },
             splitLine: { show: false }
           },

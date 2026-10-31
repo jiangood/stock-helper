@@ -83,8 +83,8 @@ node scripts/validate_stock_data.js
 - `tests.yml`：构建派生读模型、构建缓存 manifest、运行 JS/Python 测试并校验数据。
 - `stock-snapshot.yml`：采集股票行情与 K 线。
 - `fundamentals.yml`：刷新基本面快照。
-- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、作战 K 线、manifest 和健康快照，并校验后发布。
-- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据。
+- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、商品/股价对比、作战 K 线、manifest 和健康快照，并校验后发布。
+- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据；商品工作流同时重建股票主营产品与股价月线比较。
 
 重要原则：
 1. 采集失败或校验失败时保留最后一份有效数据，不发布不合格数据。

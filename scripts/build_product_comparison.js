@@ -89,7 +89,7 @@ function commodityMonthly(item) {
     if (points.length >= 2) return {
       points,
       source: selected.priceKind || selected.priceSource || item.source || null,
-      note: selected.priceNote || null
+      note: item.id === 'live-hog' ? [selected.priceNote, '生猪期货原始报价为元/吨，展示时已换算为元/公斤（÷1000）。'].filter(Boolean).join(' ') : (selected.priceNote || null)
     };
   }
   return { points: productMonthly(item), source: item.source || null, note: null };

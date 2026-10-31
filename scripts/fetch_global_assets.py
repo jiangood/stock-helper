@@ -21,7 +21,7 @@ ASSETS = [
     {"id": "nikkei225", "name": "日经 225", "symbols": ["^N225"], "currency": "指数点", "unit": "海外指数"},
     {"id": "nasdaq100", "name": "纳斯达克 100", "symbols": ["^NDX"], "currency": "指数点", "unit": "海外指数"},
     {"id": "sp500", "name": "标普 500", "symbols": ["^GSPC"], "currency": "指数点", "unit": "海外指数"},
-    {"id": "vix", "name": "VIX 恐慌指数", "symbols": ["^VIX"], "currency": "指数点", "unit": "波动率指标", "range": "1mo"},
+    {"id": "vix", "name": "VIX 恐慌指数", "symbols": ["^VIX"], "currency": "指数点", "unit": "波动率指标", "range": "5y"},
     {"id": "usdcny", "name": "美元兑人民币", "symbols": ["CNY=X"], "currency": "CNY/USD", "unit": "外汇", "range": "1mo"},
 ]
 
@@ -34,7 +34,8 @@ def finite(value: Any) -> float | None:
 
 def fetch_symbol(symbol: str, period: str = "5d") -> dict[str, Any]:
     encoded = urllib.parse.quote(symbol, safe="")
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}?range={period}&interval=1d"
+    interval = "1mo" if period == "5y" else "1d"
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}?range={period}&interval={interval}"
     request = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (compatible; StockHelper/1.0; +https://jiangood.github.io/stock-helper/)",
         "Accept": "application/json",
@@ -75,7 +76,7 @@ def fetch_symbol(symbol: str, period: str = "5d") -> dict[str, Any]:
     timestamp = meta.get("regularMarketTime") or last_timestamp
     quote_time = datetime.fromtimestamp(timestamp, timezone.utc).isoformat().replace("+00:00", "Z") if timestamp else None
     history = []
-    if period == "1mo":
+    if period == "5y":
         for stamp, close_value in zip(timestamps, closes):
             close = finite(close_value)
             if close is not None:
@@ -83,7 +84,7 @@ def fetch_symbol(symbol: str, period: str = "5d") -> dict[str, Any]:
                     "date": datetime.fromtimestamp(stamp, timezone.utc).date().isoformat(),
                     "close": round(close, 4),
                 })
-        history = history[-22:]
+        history = history[-60:]
     quote = {
         "sourceSymbol": symbol,
         "price": round(price, 8),

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-31T15:00:42+00:00",
+  "updatedAt": "2026-10-31T15:03:17+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -3547,14 +3547,14 @@
         "label": "数据源列示产业链企业",
         "productName": "尿素",
         "producers": [
-          "博源化工",
-          "华鲁恒升",
-          "河化股份",
           "华锦股份",
+          "湖北宜化",
+          "博源化工",
+          "四川美丰",
+          "泸天化",
+          "河化股份",
           "华昌化工",
-          "兰花科创",
-          "赤天化",
-          "湖北宜化"
+          "辉隆股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -5742,14 +5742,14 @@
         "label": "数据源列示产业链企业",
         "productName": "甲醇",
         "producers": [
-          "湖北宜化",
-          "鲁西化工",
-          "泸天化",
-          "诚志股份",
           "兴化股份",
+          "博源化工",
           "华昌化工",
-          "兖矿能源",
-          "赤天化"
+          "岳阳兴长",
+          "柳化股份",
+          "兰花科创",
+          "山西焦化",
+          "泸天化"
         ],
         "downstreamUsers": [
           "联泓新科"
@@ -5764,13 +5764,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 17180.0,
+      "latest": 13740.0,
       "latestDate": "2026-10-31",
-      "latestSpot": 17180.0,
+      "latestSpot": 13740.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 25.04,
+      "changePct": 1.93,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -8238,23 +8238,24 @@
         "label": "数据源列示产业链企业",
         "productName": "铝",
         "producers": [
-          "焦作万方",
+          "中国铝业",
           "云铝股份",
           "神火股份",
-          "电投能源",
-          "天山铝业",
+          "焦作万方",
           "中孚实业",
-          "中国铝业"
+          "中国宏桥",
+          "金瑞矿业",
+          "电投能源"
         ],
         "downstreamUsers": [
-          "兴发铝业",
-          "万邦德",
+          "明泰铝业",
+          "南山铝业",
+          "闽发铝业",
           "常铝股份",
-          "罗普斯金",
+          "上海能源",
           "宏创控股",
-          "利源精制",
-          "亚太科技",
-          "闽发铝业"
+          "中国忠旺",
+          "利源精制"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -8262,17 +8263,17 @@
     },
     "coal": {
       "id": "coal",
-      "name": "动力煤",
+      "name": "炼焦煤",
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 842.75,
+      "latest": 1441.25,
       "latestDate": "2026-10-31",
-      "latestSpot": 842.75,
+      "latestSpot": 1441.25,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 19.12,
+      "changePct": 1.59,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -8284,16 +8285,16 @@
       "status": "latest-only",
       "industryLinks": {
         "label": "数据源列示产业链企业",
-        "productName": "动力煤",
+        "productName": "炼焦煤",
         "producers": [
-          "甘肃能化",
-          "神火股份",
           "冀中能源",
-          "电投能源",
-          "郑州煤电",
+          "山西焦煤",
           "兰花科创",
           "兖矿能源",
-          "华阳股份"
+          "盘江股份",
+          "江钨装备",
+          "淮北矿业",
+          "开滦股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -10790,13 +10791,13 @@
       "unit": "元/公斤",
       "symbol": null,
       "series": [],
-      "latest": 9.62,
+      "latest": 12.82,
       "latestDate": "2026-10-31",
-      "latestSpot": 9.62,
+      "latestSpot": 12.82,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": -21.66,
+      "changePct": -6.97,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -10810,7 +10811,7 @@
         "label": "数据源列示产业链企业",
         "productName": "生猪",
         "producers": [
-          "京基智农",
+          "基京智农",
           "正虹科技",
           "罗牛山",
           "顺鑫农业",
@@ -12121,23 +12122,23 @@
         "label": "数据源列示产业链企业",
         "productName": "玉米",
         "producers": [
-          "北大荒",
-          "登海种业",
-          "敦煌种业",
           "国投丰乐",
           "隆平高科",
+          "登海种业",
+          "大北农",
           "荃银高科",
-          "万向德农",
-          "大北农"
+          "神农种业",
+          "农发种业",
+          "敦煌种业"
         ],
         "downstreamUsers": [
+          "西王食品",
           "中粮科技",
-          "ST西王",
-          "保龄宝",
-          "中国淀粉",
-          "梅花生物",
           "天康生物",
-          "仙坛股份"
+          "保龄宝",
+          "仙坛股份",
+          "中国淀粉",
+          "梅花生物"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -13442,15 +13443,13 @@
         "producers": [
           "京粮控股",
           "金龙鱼",
-          "嘉华股份"
+          "北大荒"
         ],
         "downstreamUsers": [
-          "大北农",
-          "天康生物",
-          "金新农",
           "新希望",
-          "禾丰股份",
-          "海大集团"
+          "天康生物",
+          "大北农",
+          "金新农"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -14752,18 +14751,19 @@
         "label": "数据源列示产业链企业",
         "productName": "黄金",
         "producers": [
-          "中金黄金",
-          "湖南黄金",
-          "湖南白银",
-          "赤峰黄金",
-          "豫光金铅",
           "铜陵有色",
-          "盛屯矿业",
-          "西部矿业"
+          "湖南黄金",
+          "恒邦股份",
+          "湖南白银",
+          "中金黄金",
+          "豫光金铅",
+          "山东黄金",
+          "盛屯矿业"
         ],
         "downstreamUsers": [
-          "金一文化",
-          "明牌珠宝"
+          "生意宝",
+          "明牌珠宝",
+          "金一文化"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -16024,13 +16024,13 @@
         "productName": "白银",
         "producers": [
           "兴业银锡",
-          "盛达资源",
-          "铜陵有色",
           "锡业股份",
           "恒邦股份",
           "湖南白银",
-          "江西铜业",
-          "鹏欣资源"
+          "鹏欣资源",
+          "豫光金铅",
+          "山东黄金",
+          "盛屯矿业"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -17340,7 +17340,7 @@
           "国城矿业",
           "北方铜业",
           "中色股份",
-          "云南铜业"
+          "西藏矿业"
         ],
         "downstreamUsers": [
           "楚江新材",
@@ -19501,17 +19501,18 @@
         "label": "数据源列示产业链企业",
         "productName": "锡",
         "producers": [
-          "兴业银锡",
-          "西藏矿业",
           "锡业股份",
+          "兴业银锡",
+          "华锡有色",
+          "西部矿业",
+          "章源钨业",
+          "西藏矿业",
           "飞南资源",
-          "华锡有色"
+          "新疆众和"
         ],
         "downstreamUsers": [
-          "格林美",
-          "章源钨业",
           "新星新材",
-          "盛屯矿业"
+          "格林美"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -20812,14 +20813,14 @@
         "label": "数据源列示产业链企业",
         "productName": "锌",
         "producers": [
-          "中金岭南",
-          "兴业银锡",
-          "盛达资源",
           "国城矿业",
-          "锌业股份",
-          "中色股份",
-          "智慧农业",
-          "锡业股份"
+          "盛达资源",
+          "兴业银锡",
+          "金钼股份",
+          "宏达股份",
+          "紫金矿业",
+          "中金岭南",
+          "中色股份"
         ],
         "downstreamUsers": [
           "新威凌"
@@ -22125,8 +22126,9 @@
         "producers": [
           "粤桂股份",
           "冠农股份",
+          "甘化科工",
           "华资实业",
-          "*ST广糖",
+          "广农糖业",
           "中粮糖业"
         ],
         "downstreamUsers": [],
@@ -23738,7 +23740,9 @@
           "中泰化学",
           "天原股份"
         ],
-        "downstreamUsers": [],
+        "downstreamUsers": [
+          "博汇纸业"
+        ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
       }
@@ -25990,13 +25994,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 16066.67,
+      "latest": 14333.33,
       "latestDate": "2026-10-31",
-      "latestSpot": 16066.67,
+      "latestSpot": 14333.33,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 9.55,
+      "changePct": -2.49,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -26011,7 +26015,8 @@
         "productName": "TDI",
         "producers": [
           "沧州大化",
-          "万华化学"
+          "万华化学",
+          "航锦科技"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -26186,13 +26191,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 13980.0,
+      "latest": 12800.0,
       "latestDate": "2026-10-31",
-      "latestSpot": 13980.0,
+      "latestSpot": 12800.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 8.37,
+      "changePct": -1.84,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -26206,12 +26211,14 @@
         "label": "数据源列示产业链企业",
         "productName": "粘胶短纤",
         "producers": [
-          "三友化工",
+          "吉林化纤",
+          "*ST美谷",
+          "恒天海龙",
           "新乡化纤",
+          "华孚色纺",
           "中泰化学",
-          "*ST京化",
-          "ST海龙",
-          "吉林化纤"
+          "澳洋健康",
+          "三友化工"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -26493,6 +26500,122 @@
       "chain": "钨矿 → 钨精矿、APT、钨粉、硬质合金",
       "drivers": "钨产品跨多个加工环节，不同环节价格不可混用，暂无统一连续期货序列。",
       "status": "pending"
+    },
+    "yeast": {
+      "id": "yeast",
+      "name": "酵母产品",
+      "unit": "元/吨",
+      "symbol": null,
+      "series": [],
+      "latest": null,
+      "latestDate": null,
+      "latestSpot": null,
+      "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
+      "changePct": null,
+      "inventory": null,
+      "source": null,
+      "sourceUrl": "https://www.100ppi.com/",
+      "stocks": [
+        "安琪酵母"
+      ],
+      "chain": "糖蜜等碳源 → 酵母发酵 → 食品、饲料及生物技术应用",
+      "drivers": "食品级、饲料级及不同酵母产品规格差异较大，暂无统一连续期货报价。",
+      "status": "pending"
+    },
+    "fluorine-materials": {
+      "id": "fluorine-materials",
+      "name": "高端氟材料",
+      "unit": "元/吨",
+      "symbol": null,
+      "series": [],
+      "latest": null,
+      "latestDate": null,
+      "latestSpot": null,
+      "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
+      "changePct": null,
+      "inventory": null,
+      "source": null,
+      "sourceUrl": "https://www.100ppi.com/",
+      "stocks": [
+        "昊华科技"
+      ],
+      "chain": "萤石、氢氟酸 → 含氟单体/聚合物及精细化学品",
+      "drivers": "氟聚合物、制冷剂及精细氟化学品口径不同，不以萤石价格代表终端产品售价。",
+      "status": "pending"
+    },
+    "precious-metal-recycling": {
+      "id": "precious-metal-recycling",
+      "name": "贵金属再生资源产品",
+      "unit": "元/吨",
+      "symbol": null,
+      "series": [],
+      "latest": null,
+      "latestDate": null,
+      "latestSpot": null,
+      "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
+      "changePct": null,
+      "inventory": null,
+      "source": null,
+      "sourceUrl": "https://www.100ppi.com/",
+      "stocks": [
+        "贵研铂业"
+      ],
+      "chain": "含贵金属废料 → 回收精炼 → 铂、钯、铑、金、银等产品",
+      "drivers": "具体金属元素和回收产品形态不同，不能以单一黄金价格代表。",
+      "status": "pending"
+    },
+    "precious-metal-precursors": {
+      "id": "precious-metal-precursors",
+      "name": "贵金属前驱体材料",
+      "unit": "元/吨",
+      "symbol": null,
+      "series": [],
+      "latest": null,
+      "latestDate": null,
+      "latestSpot": null,
+      "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
+      "changePct": null,
+      "inventory": null,
+      "source": null,
+      "sourceUrl": "https://www.100ppi.com/",
+      "stocks": [
+        "贵研铂业"
+      ],
+      "chain": "贵金属原料 → 前驱体/化合物 → 催化及材料应用",
+      "drivers": "金属元素、纯度和化合物规格差异大，暂无统一连续报价。",
+      "status": "pending"
+    },
+    "industrial-explosives": {
+      "id": "industrial-explosives",
+      "name": "工业炸药",
+      "unit": "元/吨",
+      "symbol": null,
+      "series": [],
+      "latest": null,
+      "latestDate": null,
+      "latestSpot": null,
+      "latestFutures": null,
+      "futuresSource": null,
+      "futuresSourceUrl": null,
+      "changePct": null,
+      "inventory": null,
+      "source": null,
+      "sourceUrl": "https://www.100ppi.com/",
+      "stocks": [
+        "国泰集团",
+        "凯龙股份"
+      ],
+      "chain": "硝酸铵等原料 → 民用工业炸药 → 矿山及工程爆破",
+      "drivers": "产品受许可、运输和区域供需约束，公开报价口径不统一；爆破工程服务不作为商品价格。",
+      "status": "pending"
     }
   },
   "fetchErrors": [
@@ -26524,7 +26647,7 @@
       ],
       "role": "化工原料参考价",
       "series": [],
-      "latest": 2240.0,
+      "latest": 2366.67,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -26539,7 +26662,7 @@
       ],
       "role": "硫酸法钛白粉成本参考",
       "series": [],
-      "latest": 1862.5,
+      "latest": 917.5,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -26571,7 +26694,7 @@
       ],
       "role": "煤化工能源成本参考；煤种/地区口径需核对",
       "series": [],
-      "latest": 842.75,
+      "latest": 710.0,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",

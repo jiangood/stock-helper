@@ -1,12 +1,14 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-31T08:12:04Z",
+  "updatedAt": "2026-10-31T15:04:20Z",
   "source": "Eastmoney F10主营构成 + AKShare公开商品历史行情",
   "priceWindowMonths": 200,
   "stockCount": 67,
   "productCount": 329,
   "pricedCount": 35,
-  "fetchErrors": {},
+  "fetchErrors": {
+    "nickel": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=10)"
+  },
   "products": [
     {
       "stockCode": "sz002408",

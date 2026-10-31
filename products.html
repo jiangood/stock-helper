@@ -69,11 +69,11 @@
 </div>
 <main id="products-pane" class="container-fluid px-3 py-3" tabindex="-1">
   <div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
-    <div><h1 class="panel-title page-title mb-1">商品</h1><div class="panel-subtitle">以商品为中心，在同一张卡片中展示商品实际价格与关联股票复权价格</div></div>
+    <div><h1 class="panel-title page-title mb-1">商品</h1><div class="panel-subtitle">商品与关联股票统一以起点=100比较走势，悬停查看各自真实价格</div></div>
     <div id="product-updated" class="panel-subtitle">正在读取静态数据…</div>
   </div>
   <div id="product-cards" class="product-grid" aria-live="polite"><div class="product-empty">正在加载商品数据…</div></div>
-  <p class="product-note mt-3">图表统一月份横轴，商品实际价格使用左侧纵轴，关联股票复权月收盘价（元/股）使用右侧纵轴；两侧分别按各自价格量级缩放，不再将价格标准化为 100。商品月价按当月最后一个有效报价聚合，股票使用复权月 K 收盘价；当月数据可能尚未收盘。数据不足时保留卡片并明确提示，不插值、不估算。商品价格不是上市公司实际销售均价，关联股票也可能受其他产品、成本、库存、产能利用率和市场估值影响；仅供研究参考，不构成投资建议。</p>
+  <p class="product-note mt-3">图表统一月份横轴，各商品及关联股票分别以各自首个有效月份价格=100进行归一化，便于比较区间涨跌幅；悬停任一月份可查看该序列对应的真实价格、单位及归一化指数。商品月价按当月最后一个有效报价聚合，股票使用复权月 K 收盘价；当月数据可能尚未收盘。数据不足时保留卡片并明确提示，不插值、不估算。商品价格不是上市公司实际销售均价，关联股票也可能受其他产品、成本、库存、产能利用率和市场估值影响；仅供研究参考，不构成投资建议。</p>
 </main>
 <script src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>
 <script src="password-gate.js"></script>

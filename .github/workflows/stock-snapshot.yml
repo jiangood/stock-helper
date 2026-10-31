@@ -9,6 +9,8 @@ on:
     branches: [master, main]
     paths:
       - "scripts/fetch_stock_snapshot.js"
+      - "scripts/monthly_kline.js"
+      - "tests/monthly-kline.test.js"
       - "scripts/validate_stock_data.js"
       - "research-score.js"
       - "quotes.js"
@@ -37,6 +39,8 @@ jobs:
         run: |
           node --check quotes.js
           node --check scripts/fetch_stock_snapshot.js
+          node --check scripts/monthly_kline.js
+          node --test tests/monthly-kline.test.js
           node --check scripts/build_research_scores.js
           node --check scripts/build_cache_manifest.js
           node --check research-score.js

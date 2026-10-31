@@ -123,7 +123,7 @@
     btn.setAttribute('aria-pressed', String(dark));
     const label = dark ? '切换到浅色主题' : '切换到深色主题';
     btn.setAttribute('aria-label', label);
-    btn.title = label;
+
   }
 
   function initTheme() {

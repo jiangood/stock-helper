@@ -6,6 +6,15 @@ function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,funct
 function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)>0?'+':'')+Number(value).toFixed(2)+'%';}
 function money(value){return value==null||!Number.isFinite(Number(value))?'—':Number(value).toLocaleString('zh-CN',{maximumFractionDigits:2});}
 function normalizedPosition(value,min,max){var n=Number(value);if(!Number.isFinite(n))return null;if(!(max>min))return 0;return Math.max(0,Math.min(1,(n-min)/(max-min)));}
+function keyPriceMarks(values,months,unit){
+ var points=(Array.isArray(values)?values:[]).filter(function(point){return point&&point.price!=null&&Number.isFinite(Number(point.price))&&point.index!=null&&Number.isFinite(Number(point.index));});
+ if(!points.length)return [];
+ var first=points[0],last=points[points.length-1];
+ var high=points.reduce(function(best,point){return Number(point.price)>Number(best.price)?point:best;},points[0]);
+ var low=points.reduce(function(best,point){return Number(point.price)<Number(best.price)?point:best;},points[0]);
+ function marker(point,name,position,color){var monthIndex=(months||[]).indexOf(point.month);if(monthIndex<0)return null;return {name:name,coord:[monthIndex,Number(point.index)],actualPrice:Number(point.price),actualUnit:unit,label:{show:true,position:position,color:'#fff',fontSize:9,fontWeight:600,backgroundColor:color,borderRadius:3,padding:[3,4]}};}
+ return [marker(low,'最低', 'bottom','#16845b'),marker(high,'最高','top','#c45b32'),marker(first,'期初','left','#64748b'),marker(last,'当前','right','#2563eb')].filter(Boolean);
+}
 function productSummaryHtml(series,unit){
  var points=(Array.isArray(series)?series:[]).filter(function(point){return point&&point.price!=null&&Number.isFinite(Number(point.price));});
  if(!points.length)return '';
@@ -33,10 +42,10 @@ function render(){
   var node=$('commodity-chart-'+index);
   if(!node||!window.echarts||!Array.isArray(card.productSeries)||card.productSeries.length<2)return;
   var chart=window.echarts.init(node);charts.push(chart);
-  var series=[{name:displayProductName(card.name)+'（商品）',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2.5},data:card.productSeries.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:card.unit||'商品价格'};})}];
+  var series=[{name:displayProductName(card.name)+'（商品）',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2.5},markPoint:{symbol:'circle',symbolSize:7,data:keyPriceMarks(card.productSeries,card.months,card.unit||'商品价格'),label:{show:true,formatter:function(param){return param.data.name+' '+money(param.data.actualPrice);}}},data:card.productSeries.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:card.unit||'商品价格'};})}];
   (card.stocks||[]).forEach(function(stock){
    if(!Array.isArray(stock.values)||stock.values.length<2)return;
-   series.push({name:stock.name,type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:stock.values.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:'元/股'};} )});
+   series.push({name:stock.name,type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},markPoint:{symbol:'circle',symbolSize:7,data:keyPriceMarks(stock.values,card.months,'元/股'),label:{show:true,formatter:function(param){return param.data.name+' '+money(param.data.actualPrice);}}},data:stock.values.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:'元/股'};} )});
   });
   var compactLegend=window.matchMedia&&window.matchMedia('(max-width:575px)').matches;
   chart.setOption({

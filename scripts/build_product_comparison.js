@@ -171,7 +171,23 @@ function buildCommodityCards(productItems) {
       status: ready ? 'ready' : 'pending',
       note: [productHistory.note].concat(related.map(({ meta }) => meta.note).filter(Boolean)).filter(Boolean).join(' ')
     };
-  }).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+  }).sort((a, b) => {
+    // Put cards with usable market history first; among them, prefer broader coverage.
+    const coverage = (card) => {
+      const series = [card.productSeries].concat((card.stocks || []).map((stock) => stock.values || []));
+      const available = series.filter((points) => Array.isArray(points) && points.length >= 2);
+      return {
+        seriesCount: available.length,
+        pointCount: available.reduce((total, points) => total + points.length, 0),
+        hasLatestQuote: card.latestPrice !== null && card.latestPrice !== undefined
+      };
+    };
+    const left = coverage(a), right = coverage(b);
+    if (left.seriesCount !== right.seriesCount) return right.seriesCount - left.seriesCount;
+    if (left.pointCount !== right.pointCount) return right.pointCount - left.pointCount;
+    if (left.hasLatestQuote !== right.hasLatestQuote) return Number(right.hasLatestQuote) - Number(left.hasLatestQuote);
+    return a.name.localeCompare(b.name, 'zh-CN');
+  });
 }
 function build() {
   const productItems = business.items || {};

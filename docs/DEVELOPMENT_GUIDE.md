@@ -19,12 +19,12 @@
 | --- | --- |
 | `index.html` | 自选股票池页面 |
 | `market.html`、`business.js` | 行情与产业链数据展示 |
-| `products.html`、`products.js` | 商品价格与股价月线对比、主营产品及 60 个月价格明细统一页面 |
-| `data/company-products.json` | 商品对比页读取的主营产品、收入占比及 60 个月价格数据 |
+| `products.html`、`products.js` | 以商品为中心的关联股票月线对比卡片 |
+| `data/business-data.json`、`data/stock-products.json` | 商品报价及商品-上市公司关联关系 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
-| `data/stock-products.json`、`data/product-comparison.json` | 商品报价映射与商品/股价比较读模型 |
-| `scripts/build_company_products.py` | 从 F10 主营分部和可用期货历史构建主营产品表 |
+| `data/product-comparison.json` | Actions 生成的商品及关联股票标准化月线读模型（`commodityCards`） |
+
 | `data/research-reports.json` | 研报原始评分及来源信息 |
 | `data/fundamentals.json` | 基本面快照 |
 | `data/stock-quotes.json`、`data/stock-cache/` | 行情与个股历史数据 |
@@ -85,8 +85,8 @@ node scripts/validate_stock_data.js
 - `tests.yml`：构建派生读模型、构建缓存 manifest、运行 JS/Python 测试并校验数据。
 - `stock-snapshot.yml`：采集股票行情与 K 线。
 - `fundamentals.yml`：刷新基本面快照。
-- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、商品/股价对比、manifest 和健康快照，并校验后发布。
-- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据；商品工作流同时重建股票主营产品与股价月线比较。
+- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、商品及关联股票月线对比、manifest 和健康快照，并校验后发布。
+- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据；商品工作流同时重建商品及关联股票月线比较。
 
 重要原则：
 1. 采集失败或校验失败时保留最后一份有效数据，不发布不合格数据。
@@ -101,14 +101,13 @@ node scripts/validate_stock_data.js
 
 1. 读取最新 master 的 README、相关 docs、目标文件、调用方、测试及工作流。
 2. 检查当前 master 提交和目标文件版本，确认没有覆盖并发变更。
-3. 从最新 master 创建独立工作分支；不要未经明确要求直接向 master 写入。
-4. 按最小范围修改，复用已有模块、数据结构和样式约定。
+3. 默认直接在仓库主分支（当前为 `master`）修改；不创建功能分支，不创建 PR。
+4. 按最小范围修改，复用已有模块、数据结构和样式约定；写入前重新确认目标文件 SHA，避免覆盖并发提交。
 5. 检查引用、空值、异常处理、异步 Promise、DOM 节点、事件绑定、移动端布局和缓存版本。
 6. 为关键逻辑增加或更新测试；运行与修改范围相关的测试，并尽可能运行完整 CI。
 7. 检查 diff，确认没有意外改动数据文件、评分口径、交易规则或生成缓存。
-8. 创建 PR，说明动机、修改文件、行为变化、风险及验证结果。
-9. 在验证和权限允许时按项目约定合并；若 master 已前进或出现冲突，基于最新 master 重新整理，不强行覆盖。
-10. 合并后核对 master 文件、PR 状态和对应 Actions。工作流仍在运行时应标记为进行中，不能提前报告成功。
+8. 直接提交到主分支；如果主分支保护或权限阻止提交，不得绕过安全规则，应说明原因并继续完成可安全执行的工作。
+9. 提交后核对主分支最新提交、修改文件和对应 Actions。工作流仍在运行时应标记为进行中，不能提前报告成功。
 
 ## 6. AI 协作与工具使用规则
 
@@ -116,7 +115,7 @@ node scripts/validate_stock_data.js
 
 - 收到“执行”“开始”“按推荐来”“继续”等明确推进指令时，结合上下文直接开展工作，不重复询问已经明确的信息。
 - 先检查当前会话可用的 GitHub 工具及授权，再决定可执行范围。不得因为不能访问用户本地电脑，就推断不能读写 GitHub 仓库。
-- 优先使用 GitHub 工具读取文件、列出目录、创建分支、创建或更新文件、创建 PR、合并 PR 和检查 Actions。
+- 优先使用 GitHub 工具读取文件、列出目录、更新文件、直接提交主分支和检查 Actions。
 - 不要只输出代码片段或教程来替代用户要求的仓库修改。
 - 工具调用失败后，记录具体失败环节，检查参数、分支、文件 SHA、权限和替代工具；能继续的步骤继续完成。
 - 不得声称已修改、提交、创建 PR、合并或测试通过，除非有对应工具结果或 CI 记录证明。

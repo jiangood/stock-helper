@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "status": "healthy",
-  "generatedAt": "2026-10-31T08:10:33.867Z",
-  "manifestGeneratedAt": "2026-10-31T08:10:33.867Z",
+  "generatedAt": "2026-10-31T08:11:20.199Z",
+  "manifestGeneratedAt": "2026-10-31T08:11:20.199Z",
   "marketDate": "2026-10-29",
-  "durationMs": 1867,
+  "durationMs": 1199,
   "cacheCount": 5,
   "healthyCount": 5,
   "staleCount": 0,
   "unknownCount": 0,
-  "reusedCount": 5,
-  "contentReuseRate": 100,
-  "totalBytes": 5610097,
+  "reusedCount": 4,
+  "contentReuseRate": 80,
+  "totalBytes": 5612866,
   "caches": [
     {
       "id": "market-quotes",
@@ -32,7 +32,7 @@
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 13333
+      "bytes": 16102
     },
     {
       "id": "stock-details-index",

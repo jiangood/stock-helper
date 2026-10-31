@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "builderVersion": "490125efd2f7038de1eb2cf6b8711c2ca69059d5cfc1ce9dac1c0f47acfceb1c",
-  "generatedAt": "2026-10-31T08:10:33.867Z",
+  "generatedAt": "2026-10-31T08:11:20.199Z",
   "marketDate": "2026-10-29",
   "caches": {
     "market-quotes": {
@@ -33,13 +33,13 @@
     "sector-monthly": {
       "cacheType": "page-read-model",
       "path": "data/sector-monthly.json",
-      "generatedAt": "2026-10-29T08:14:55.373Z",
+      "generatedAt": "2026-10-31T08:11:19.763Z",
       "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
       "marketDate": "2026-10-29",
       "recordCount": 67,
-      "bytes": 13333,
-      "dataVersion": "9300cd2ff7a02dcc53cb715ae1b870028df34ce4c0a2bd3364e95c31822b6dae",
-      "sourceVersion": "a50d4f1ee648eb2f9bf04dd7f20dd4351d6fd7ca709ca9fd5c361d53af8d6e32",
+      "bytes": 16102,
+      "dataVersion": "09e9c5aa365c770cfc8386f177162b95605e39b9ccb2015bf4dfe991443b8541",
+      "sourceVersion": "39a3853f031586393474d85a24059f133c192d8de36327982744ef90d77ffbfc",
       "freshness": "fresh",
       "status": "healthy"
     },

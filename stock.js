@@ -153,12 +153,6 @@
         showToast('请输入 6 位代码，如 002408');
         return;
       }
-      try {
-        if (window.parent !== window) {
-          window.parent.location.hash = '/stock/' + encodeURIComponent(v);
-          return;
-        }
-      } catch (error) {}
       location.href = 'stock.html?code=' + v;
     });
   }

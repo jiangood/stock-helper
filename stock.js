@@ -315,9 +315,7 @@
 
     // 只看中期：不展示今开/最高/最低/均价/涨停/跌停/量比/振幅等日内指标
     $('stats').innerHTML = [
-      ['昨收', fmtNum(d.prevClose)],
-      ['成交额', fmtAmount(d.amount)],
-      ['换手率', fmtPctPlain(d.turnover)]
+      ['昨收', fmtNum(d.prevClose)]
     ].map(([k, v]) => statItem(k, v)).join('');
   }
 

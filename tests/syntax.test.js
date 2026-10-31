@@ -43,13 +43,12 @@ test('首页内嵌 JavaScript 均可通过语法解析', () => {
 });
 
 
-test('首页不展示已移除的年初价、纪律和机器评分列', () => {
+test('首页不展示已移除的年初价、纪律、机器评分和独立研报日期列', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  for (const key of ['yearInit', 'screen', 'researchMachine']) {
+  for (const key of ['yearInit', 'screen', 'researchMachine', 'researchDate']) {
     assert.doesNotMatch(html, new RegExp('data-sort="' + key + '"'), key + ' 不应再有表头');
   }
   assert.match(html, /data-sort="researchReport"/);
-  assert.match(html, /data-sort="researchDate"/);
 });
 
 

@@ -47,11 +47,13 @@ function updateHtmlContent(html, htmlPath, rootDir) {
     if (!resolved) return whole;
 
     const hash = fingerprint(resolved.assetPath);
-    const url = new URL(rawUrl, 'https://fingerprint.invalid/');
-    if (url.searchParams.get('v') === hash) return whole;
+    const parts = rawUrl.match(/^([^?#]*)(\\?[^#]*)?(#.*)?$/);
+    const params = new URLSearchParams(parts[2] ? parts[2].slice(1) : '');
+    if (params.get('v') === hash) return whole;
 
-    url.searchParams.set('v', hash);
-    const nextUrl = url.pathname.slice(1) + url.search + url.hash;
+    params.set('v', hash);
+    const query = params.toString();
+    const nextUrl = parts[1] + (query ? '?' + query : '') + (parts[3] || '');
     updated += 1;
     return attr + '=' + quote + nextUrl + quote;
   });

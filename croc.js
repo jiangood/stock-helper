@@ -89,7 +89,7 @@
       pbUnder1: pb !== null && pb > 0 && pb < 1,
       pbGolden: pb !== null && pb > 0 && pb <= PB_GOLDEN,
       // PB × 10 即净资产折数：PB 0.49 对应 4.9 折。
-      pbFold: pb !== null && pb > 0 ? pb * 10 : null,
+      pbFold: pb !== null && pb > 0 ? Math.round(pb * 100) / 10 : null,
       smallCap: cap !== null && cap > 0 && cap <= SMALL_CAP,
       navGolden: nav !== null && nav > 0 ? nav * PB_GOLDEN : null,
       toEntry: price !== null && entry !== null && entry > 0 ? (price / entry - 1) * 100 : null,

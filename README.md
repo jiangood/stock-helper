@@ -44,9 +44,9 @@ python -m http.server 8089
 | `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
 | `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
 | `data/combat-kline.json` `scripts/build_combat_kline.js` | 作战页专用读模型：每只股票只保留最近 120 根前复权日 K；作战页一次请求全股票池，不逐只下载完整 K 线文件 |
-| `business.js` `data/business-data.json` | 行情页渲染指数行情、股票池温度、板块月线强弱、全球资产及商品现货/期货 |
+| `business.js` `data/business-data.json` | 行情页渲染板块月线强弱、全球资产及商品现货/期货 |
 | `data/sector-monthly.json` `scripts/build_sector_monthly.js` | 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅，行情页只读这个小文件 |
-| `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行、资产趋势对比和各资产近一个月迷你趋势图 |
+| `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行和各资产近一个月迷你趋势图 |
 | `scripts/fetch_global_assets.py` | 从 Yahoo Finance 公开图表接口抓取全球资产报价，抓取失败时保留最近有效值并标记缓存状态 |
 | `.github/workflows/global-assets.yml` | 每日尝试刷新全球资产行情；数据未变化时不更新文件，支持手动触发 |
 | `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
@@ -78,7 +78,7 @@ python -m http.server 8089
 - **历史分位**：月 K（最多 240 根）价格分位，辅助判断长周期位置
 - **纪律全过**：非 ST、非亏损、PE ≤ 30、市值 ≤ 200 亿、PB < 1 五项自动筛选，首页「纪律」列显示通过数（全过 / 4/5 / 3/5…），可按「纪律全过」「全过 + 买点」筛选
 
-独立「行情」页面整合指数行情、股票池涨跌温度、按分组统计的板块月线强弱（主导指标为近 12 个月）、全球资产及产业链商品行情；原机会雷达与首页简报按钮已移除，买入信号统一在作战页查看。
+独立「行情」页面整合按分组统计的板块月线强弱（主导指标为近 12 个月）、全球资产及产业链商品行情；原机会雷达与首页简报按钮已移除，买入信号统一在作战页查看。
 
 详情页「鳄鱼纪律」提供纪律检查与连板风险提示；「资源股现价估值」按 `(P−C)×Q×折扣×PE` 粗算合理市值，参数只保存在本机。
 

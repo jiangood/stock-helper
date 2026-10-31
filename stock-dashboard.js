@@ -354,8 +354,8 @@ function buildRow(stock) {
   let priceClass = '';
 
   if (price != null && price > 0) {
-    const prev = pd.prevClose;
-    priceClass = prev == null ? '' : price > prev ? 'text-up' : price < prev ? 'text-down' : '';
+    const entry = stock.entry == null || stock.entry === '' ? NaN : Number(stock.entry);
+    priceClass = !Number.isFinite(entry) || entry <= 0 ? '' : price > entry ? 'text-up' : price < entry ? 'text-down' : '';
     priceHtml = `<span class="price-cell ${priceClass}">${price.toFixed(2)}</span>`;
 
     if (stock.entry) entryDiff = diffHtml((price - stock.entry) / stock.entry * 100);

@@ -37,7 +37,7 @@ function render(){
     var month=params[0].axisValue;
     return '<strong>'+esc(month)+'</strong><br>'+params.map(function(item){
      var point=item.data||{},actual=point.actualPrice;
-     return esc(item.marker||'')+esc(item.seriesName)+'：'+(actual==null?'暂无真实价格':money(actual)+' '+esc(point.actualUnit||''))+' <span style="color:#888">（指数 '+money(item.value)+'）</span>';
+     return (item.marker||'')+esc(item.seriesName)+'：'+(actual==null?'暂无真实价格':Number(actual).toLocaleString('zh-CN',{maximumFractionDigits:point.actualUnit==='元/股'?3:2})+' '+esc(point.actualUnit||''))+' <span style="color:#888">（指数 '+money(item.value)+'）</span>';
     }).join('<br>');
    }},
    xAxis:{type:'category',data:card.months||[],boundaryGap:false,axisLabel:{fontSize:10,hideOverlap:true}},

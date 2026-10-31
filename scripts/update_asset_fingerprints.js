@@ -47,7 +47,7 @@ function updateHtmlContent(html, htmlPath, rootDir) {
     if (!resolved) return whole;
 
     const hash = fingerprint(resolved.assetPath);
-    const parts = rawUrl.match(/^([^?#]*)(\\?[^#]*)?(#.*)?$/);
+    const parts = rawUrl.match(/^([^?#]*)(\?[^#]*)?(#.*)?$/);
     const params = new URLSearchParams(parts[2] ? parts[2].slice(1) : '');
     if (params.get('v') === hash) return whole;
 

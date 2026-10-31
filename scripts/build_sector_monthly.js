@@ -62,7 +62,7 @@ function seriesFromDailyBars(bars) {
 /** Daily returns over trading-session windows, based on the latest close. */
 function dailyReturns(bars) {
   const points = (Array.isArray(bars) ? bars : []).filter(bar =>
-    bar && /^\d{4}-\\d{2}-\\d{2}$/.test(String(bar.time || '')) && Number(bar.close) > 0
+    bar && /^\d{4}-\d{2}-\d{2}$/.test(String(bar.time || '')) && Number(bar.close) > 0
   ).slice().sort((a, b) => String(a.time).localeCompare(String(b.time))).slice(-201);
   if (points.length < 2) return null;
   const last = Number(points[points.length - 1].close);

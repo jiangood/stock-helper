@@ -73,9 +73,11 @@
     background-color: var(--bs-body-bg);
     box-shadow: inset -1px 0 0 var(--bs-border-color);
   }
-  /* 首页文字信息列居中：名称、分组、别名；数值列保持原有右对齐。 */
+  /* 首页名称列左对齐；分组、别名居中，数值列保持原有右对齐。 */
   .stock-table thead th:first-child,
-  .stock-table tbody td:first-child,
+  .stock-table tbody td:first-child {
+    text-align: left;
+  }
   .stock-table thead th:nth-child(14),
   .stock-table tbody td:nth-child(14),
   .stock-table thead th:nth-child(15),

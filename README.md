@@ -26,7 +26,7 @@ python -m http.server 8089
 | `data/company-products.json` `scripts/build_company_products.py` | 商品历史价格候选序列：提供部分品种最多 200 根月线的行业价格代理，供商品月线构建器按商品名称匹配 |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
-| `data/stock-products.json` `scripts/build_product_comparison.js` `data/commodity-db/index.json` | 商品-上市公司映射与 Actions 生成的独立商品页面数据库；页面直接读取 `commodity-db/index.json`，不再保留重复的商品比较读模型 |
+| `data/stock-products.json` `scripts/build_product_comparison.js` `data/commodity-db/index.json` `data/commodity-db/products/` | 商品-上市公司映射与 Actions 生成的商品数据库；索引只存摘要，每个商品的完整月线独立存放，页面按索引读取对应文件 |
 | `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、纪律全过判定、入场/重仓区、连续涨停、月 K 分位与简报 |
 | `research-score.js` | 研报评分工具：复算研报评分卡里可自动化的 7 项（国资背景 / 扣非增长 / 主营集中 / 市值 / 盘整 / 月线位置 / 底部放量），合计 65 分后折算百分制 |
 | `data/research-scores.json` `scripts/build_research_scores.js` | 个股评分与中间指标；首页与详情页只读这个小文件，不逐只拉个股缓存 |
@@ -60,7 +60,7 @@ python -m http.server 8089
 
 图表下方使用统一汇总表展示商品与关联股票的最低价、最高价、期初价、当前价、区间涨跌、主营占比及各自单位；商品行的主营占比显示为横线，股票占比缺失时显示“暂无数据”。表格在窄屏下支持横向滚动。
 
-图表仅作趋势观察，不代表利润传导或因果关系。商品价格不等于上市公司实际销售均价，关联公司还受其他产品、销量、成本、库存、合同定价、产能利用率等因素影响。商品工作流与静态缓存工作流都会重建独立商品数据库，前端只读取同源静态 JSON。
+图表仅作趋势观察，不代表利润传导或因果关系。商品价格不等于上市公司实际销售均价，关联公司还受其他产品、销量、成本、库存、合同定价、产能利用率等因素影响。商品工作流与静态缓存工作流都会重建独立商品数据库：`data/commodity-db/index.json` 只保存商品索引和摘要，完整数据分别存放在 `data/commodity-db/products/<商品ID>.json`；前端先读索引，再逐商品读取同源静态 JSON。构建器会清理索引中已不存在的旧商品文件。
 
 ## 生意 / 商品数据
 

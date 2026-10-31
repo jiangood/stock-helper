@@ -24,10 +24,13 @@
       "note": "公司产品结构与产能利用率会影响价格传导；甲醇未纳入本轮可比序列。"
     },
     "sz000731": {
-      "productName": "尿素",
+      "productName": "尿素 / 复合肥",
       "marketItemId": "urea",
+      "additionalMarketItemIds": [
+        "compound-fertilizer"
+      ],
       "role": "producer",
-      "note": "尿素约21.5%主营收入，天然气供应不以商品现货价格代替。"
+      "note": "尿素约21.5%、复合肥约25.1%主营收入，分别观察；天然气供应不作为商品成品售价替代。"
     },
     "sh600328": {
       "productName": "纯碱",
@@ -122,9 +125,9 @@
     },
     "sz000657": {
       "productName": "钨产品",
-      "marketItemId": null,
+      "marketItemId": "tungsten-products",
       "role": "producer",
-      "note": "钨精矿、APT等价格序列尚未接入。"
+      "note": "硬质合金及钨产品为主营业务；钨精矿、APT、钨粉及硬质合金牌号差异大，暂无统一可比连续报价。"
     },
     "sh600618": {
       "productName": "烧碱 / PVC",
@@ -207,12 +210,12 @@
     },
     "sz000629": {
       "productName": "钛产品 / 钒产品",
-      "marketItemId": "titanium-material",
+      "marketItemId": "titanium-products",
       "additionalMarketItemIds": [
         "vanadium"
       ],
       "role": "producer",
-      "note": "钛产品约43.7%、钒产品约40.0%主营收入；分别建立钛材与钒产品观察，不以钛白粉替代钛材。"
+      "note": "钛产品约43.7%、钒产品约40.0%主营收入；钛产品与宝钛股份的钛材不是同一产品层级，分别观察。"
     },
     "sz000962": {
       "productName": "钽铌产品",
@@ -250,6 +253,27 @@
       ],
       "role": "mixed",
       "note": "印刷用纸约49.4%、商品浆约21.1%、包装用纸约17.8%主营收入；纸浆期货仅作商品浆价格代理，不代表成品纸售价。"
+    },
+    "sh688707": {
+      "productName": "正极材料",
+      "marketItemId": "cathode-materials",
+      "role": "producer",
+      "note": "正极材料约93.7%主营收入；正极材料体系与型号不同，暂无统一可比的连续市场报价。"
+    },
+    "sz300034": {
+      "productName": "铸造高温合金 / 变形高温合金",
+      "marketItemId": "cast-superalloy",
+      "additionalMarketItemIds": [
+        "wrought-superalloy"
+      ],
+      "role": "producer",
+      "note": "铸造合金制品约59.6%、变形合金制品约27.8%主营收入；不同合金牌号和加工形态不可混用报价。"
+    },
+    "sh600282": {
+      "productName": "钢材",
+      "marketItemId": "steel",
+      "role": "producer",
+      "note": "钢材销售约60.5%主营收入；公司产品结构多元，未用单一螺纹钢或热卷期货冒充综合钢材售价。"
     }
   }
 }

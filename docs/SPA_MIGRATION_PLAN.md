@@ -23,7 +23,7 @@
 | `legacy-market.html`（旧入口 `market.html`） | `business.js`、`global-assets.js`、`stock-dashboard.js`、`password-gate.js` | `#/market` | `src/pages/market.page.js`（当前桥接旧页） |
 | `src/pages/products.page.js` | `src/services/products.service.js`、ECharts | `#/products` | `src/pages/products.page.js`（已原生模块化；旧模板保留回滚） |
 | `legacy-stock.html?code=...`（旧入口 `stock.html?code=...`） | `stock.js`、`indicators.js`、`static-quotes.js`、`croc.js`、`research-score.js` | `#/stock/:code` | `src/pages/stock-detail.page.js`（当前桥接旧页） |
-| `health.html` | `cache-health.js` | `#/health` | `src/pages/health.page.js` |
+| `src/pages/health.page.js` | `src/services/cache-health.service.js` | `#/health` | `src/pages/health.page.js`（已原生模块化；`health.html` 兼容跳转） |
 
 当前 `index.html` 已是唯一 SPA 壳，页面通过 `src/main.js` 和 Hash Router 调度。健康页与商品页已使用原生 ES Module；自选、行情、个股详情由各自页面模块在同源 iframe 中加载 `legacy-*.html`，隔离旧脚本的全局变量与事件监听。商品页数据服务使用 `cache: 'no-store'`，图表卸载时释放 ECharts 实例。桥接页面仍需逐页替换成原生 DOM/组件/服务模块。
 

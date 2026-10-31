@@ -34,6 +34,7 @@ python -m http.server 8089
 | `scripts/validate_stock_data.js` | Actions 发布前校验股票主数据、行情覆盖率、K 线 OHLC、基本面结构，防止异常数据进入主分支 |
 | `scripts/calibrate_research_score.js` | 用 17 份带评分卡明细的研报回归校准评分阈值（只读本地缓存，不联网） |
 | `indicators.js` | 量价指标纯函数：MFI、OBV、A/D、MA、枢轴点、背离、筹码分布（POC/价值区）、量比 |
+| `scripts/update_asset_fingerprints.js` `.github/workflows/asset-fingerprints.yml` | GitHub Actions 按本地 CSS/JS 内容 SHA-256 自动更新 HTML 的 `?v=` 指纹，CDN 与业务 JSON 不参与 |
 | `pinyin.js` | 搜索拼音索引：GB2312 6763 字主读音，支持首字母与全拼，无外部依赖 |
 | `scripts/build_stock_detail_cache.js` `data/cache/stocks/` `data/cache/stock-details.json` | 个股详情页紧凑缓存与同组估值索引；详情页单次读取 bundle，减少完整历史文件重复下载 |
 | `scripts/build_cache_manifest.js` `data/cache/manifest.json` `data/monitoring/latest.json` `health.html` | GitHub Actions 生成的静态缓存清单、健康快照和系统健康页；记录指纹、数据日期、覆盖数量、文件大小、构建耗时与内容复用率（非 CDN 命中率） |

@@ -8,6 +8,7 @@ const stocks = readJson('data/stocks.json');
 const mapping = readJson('data/stock-products.json').byCode || {};
 const business = readJson('data/business-data.json');
 const fundamentals = readJson('data/fundamentals.json');
+const companyProducts = readJson('data/company-products.json').products || [];
 const outputPath = path.join(ROOT, 'data/product-comparison.json');
 
 function validPoint(point) {
@@ -47,6 +48,26 @@ function productMonthly(item) {
     value: Number(point.spot) > 0 ? Number(point.spot) : Number(point.futures)
   }));
   return monthlyLast(points);
+}
+function commodityMonthly(item) {
+  if (!item) return { points: [], source: null, note: null };
+  const candidates = companyProducts.filter((product) =>
+    String(product.productName || '').trim() === String(item.name || '').trim() &&
+    Array.isArray(product.priceSeries) && product.priceSeries.length >= 2
+  ).sort((a, b) => b.priceSeries.length - a.priceSeries.length);
+  if (candidates.length) {
+    const selected = candidates[0];
+    const points = monthlyLast(selected.priceSeries.map((point) => ({
+      date: point.date || (point.month ? point.month + '-01' : ''),
+      value: Number(point.price)
+    })));
+    if (points.length >= 2) return {
+      points,
+      source: selected.priceKind || selected.priceSource || item.source || null,
+      note: selected.priceNote || null
+    };
+  }
+  return { points: productMonthly(item), source: item.source || null, note: null };
 }
 function normalizedComparison(productPoints, stockPoints) {
   const p = new Map(productPoints.map((point) => [point.month, point]));
@@ -94,9 +115,8 @@ function buildCommodityCards(productItems) {
     const market = productItems[itemId] || null;
     const marketMeta = related[0] && related[0].meta || {};
     const productName = market && market.name || marketMeta.productName || itemId;
-    const rawProduct = market && Array.isArray(market.series) ? market.series : [];
-    const metric = rawProduct.some((point) => Number(point.spot) > 0) ? 'spot' : 'futures';
-    const productPoints = monthlyLast(rawProduct.map((point) => ({ date: point.date, value: Number(point[metric]) })));
+    const productHistory = commodityMonthly(market);
+    const productPoints = productHistory.points;
     const stocksWithHistory = related.map(({ stock, meta }) => {
       const history = stockMonthly(stock.code);
       const fundamental = fundamentals.stocks && fundamentals.stocks[stock.code] || {};
@@ -143,13 +163,13 @@ function buildCommodityCards(productItems) {
     const ready = commonMonths.length >= 2 && stocksWithHistory.every((stock) => stock.history.length > 0);
     return {
       id: itemId, name: productName, unit: market && market.unit || '',
-      source: market && market.source || null, sourceUrl: market && market.sourceUrl || null,
+      source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: market && market.sourceUrl || null,
       latestPrice: latestProduct ? latestProduct.value : null,
       latestDate: latestProduct ? latestProduct.date : market && market.latestDate || null,
       productChange: productSeries.length >= 2 ? pct(productSeries[0].price, productSeries[productSeries.length - 1].price) : null,
       months: commonMonths, productSeries, stocks: stockSeries,
       status: ready ? 'ready' : 'pending',
-      note: related.map(({ meta }) => meta.note).filter(Boolean).join(' ')
+      note: [productHistory.note].concat(related.map(({ meta }) => meta.note).filter(Boolean)).filter(Boolean).join(' ')
     };
   }).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
 }

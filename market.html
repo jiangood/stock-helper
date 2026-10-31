@@ -27,11 +27,8 @@
 
 <style>
   .market-extra-section { border-top: 1px solid var(--bs-border-color); padding-top: 10px; }
-  .market-extra-summary { display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; list-style:none; font-size:14px; font-weight:700; padding:5px 2px; }
-  .market-extra-summary::-webkit-details-marker { display:none; }
-  .market-extra-summary::after { content:"＋"; color:var(--bs-secondary-color); font-size:18px; font-weight:400; }
-  .market-extra-section[open] > .market-extra-summary::after { content:"−"; }
-  @media (max-width:575.98px) { .market-extra-summary { min-height:42px; } }
+  .market-extra-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:14px; font-weight:700; padding:5px 2px 10px; }
+  @media (max-width:575.98px) { .market-extra-heading { min-height:42px; } }
 </style>
 </head>
 <body class="bg-body-tertiary" data-page="market">
@@ -71,8 +68,8 @@
   <h2 class="panel-title mb-2">板块强弱 <span class="panel-subtitle fw-normal">近 12 个月月线表现</span></h2><div id="sector-monthly-note" class="visually-hidden">按月线收盘价计算板块内等权平均涨跌幅，主导指标为近 12 个月；本月数据可能尚未收盘。</div><div id="sector-hotspots" class="insight-grid mb-4"></div>
 </section>
 
-  <details class="market-extra-section mb-3">
-    <summary class="market-extra-summary"><span id="global-market-heading">全球市场</span><span class="panel-subtitle">全球资产月线 · 最新报价</span></summary>
+  <section class="market-extra-section mb-3">
+    <div class="market-extra-heading"><span id="global-market-heading">全球市场</span><span class="panel-subtitle">全球资产月线 · 最新报价</span></div>
     <section class="pt-3 mb-3">
     <div class="insight-card mb-3">
       <div class="fw-semibold">行情更新时间</div>
@@ -83,9 +80,9 @@
     </div>
     <div class="panel-subtitle mt-3">趋势图优先使用近 5 年月线收盘价；卡片最新报价与日涨跌仍按最近可用行情显示。行情由定时任务缓存，非逐笔实时；缺少有效报价时不会用模拟值补齐。</div>
   </section>
-  </details>
-  <details class="market-extra-section mb-3">
-    <summary class="market-extra-summary"><span id="business-heading">产业链与成本</span><span class="panel-subtitle">商品月线 · 原料月末价</span></summary>
+  </section>
+  <section class="market-extra-section mb-3">
+    <div class="market-extra-heading"><span id="business-heading">产业链与成本</span><span class="panel-subtitle">商品月线 · 原料月末价</span></div>
   <section class="pt-3">
     <div class="insight-card mb-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
       <div><div class="fw-semibold">自动行情状态</div><div id="business-data-status" class="panel-subtitle">正在读取最新商品数据…</div></div>
@@ -96,7 +93,7 @@
     <div id="business-cost-inputs" class="insight-grid"></div>
     <div class="panel-subtitle mt-3">结合库存、开工率、产能与下游需求综合判断；产业链关联不代表公司一定受益。</div>
   </section>
-  </details>
+  </section>
 </main>
 
 

@@ -19,6 +19,17 @@ class BusinessDataTests(unittest.TestCase):
         self.assertNotIn("spot", series[-1])
         self.assertEqual(series[-1]["futures"], 104)
 
+    def test_live_hog_is_tracked_and_mapped_to_tiankang_biology(self):
+        product = next(item for item in fetcher.PRODUCTS if item["id"] == "live-hog")
+        self.assertEqual(product["name"], "生猪")
+        self.assertIn("生猪", product["aliases"])
+        self.assertIn("天康生物", product["stocks"])
+        self.assertIn("live-hog", fetcher.PRODUCTS[-1]["id"])
+        payload = fetcher.build_payload({})
+        self.assertEqual(payload["items"]["live-hog"]["name"], "生猪")
+        self.assertIsNone(payload["items"]["live-hog"]["latest"])
+        self.assertEqual(payload["items"]["live-hog"]["status"], "pending")
+
     def test_maleic_anhydride_is_tracked_as_a_separate_commodity(self):
         product = next(item for item in fetcher.PRODUCTS if item["id"] == "maleic-anhydride")
         self.assertEqual(product["name"], "顺酐")

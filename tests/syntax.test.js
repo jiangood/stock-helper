@@ -177,6 +177,7 @@ test('商品页关联股票也显示最高、最低、期初和当前价格', ()
 test('商品趋势图不显示重叠的价格关键点标注', () => {
   const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
   assert.doesNotMatch(products, /keyPriceMarks|markPoint/);
-  assert.match(products, /productSummaryHtml\\(card\\.productSeries,card\\.unit\\)/);
-  assert.match(products, /productSummaryHtml\\(stock\\.values,'元\\/股'\\)/);
+  assert.ok(products.includes('productSummaryHtml(card.productSeries,card.unit)'));
+  assert.ok(products.includes('<table class="product-summary"'));
+  assert.ok(products.includes('productSummaryHtml(stock.values,\'元/股\')'));
 });

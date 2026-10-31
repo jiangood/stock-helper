@@ -79,6 +79,34 @@ ALIASES = {
     "tio2": ("钛白粉",),
     "rare-earth": ("氧化镨钕", "稀土"),
     "coal": ("煤炭", "动力煤", "无烟煤"),
+    "float-glass": ("浮法玻璃",),
+    "pulp": ("商品浆", "纸浆"),
+    "tdi": ("TDI", "甲苯二异氰酸酯"),
+    "polycarbonate": ("聚碳酸酯", "PC"),
+    "phosphate-iron": ("磷酸铁",),
+    "molybdenum": ("钼矿产品开采、冶炼及深加工", "钼矿产品"),
+    "tantalum-niobium": ("钽铌及其合金制品", "钽铌产品"),
+    "titanium-material": ("钛材", "钛及钛合金产品"),
+    "titanium-products": ("钛产品",),
+    "vanadium": ("钒产品",),
+    "carbon-fiber": ("碳纤维",),
+    "viscose-staple-fiber": ("粘胶短纤维", "粘胶短纤"),
+    "methionine": ("蛋氨酸",),
+    "gasoline": ("汽油",),
+    "diesel": ("柴油",),
+    "printing-paper": ("印刷用纸",),
+    "packaging-paper": ("包装用纸",),
+    "cathode-materials": ("正极材料",),
+    "cast-superalloy": ("铸造合金制品",),
+    "wrought-superalloy": ("变形合金制品",),
+    "steel": ("钢材销售", "钢材"),
+    "compound-fertilizer": ("复合肥", "复混(合)肥料"),
+    "tungsten-products": ("硬质合金及钨产品", "钨产品"),
+    "yeast": ("酵母及相关行业", "酵母"),
+    "fluorine-materials": ("高端氟材料",),
+    "precious-metal-recycling": ("贵金属再生资源产品",),
+    "precious-metal-precursors": ("贵金属前驱体材料",),
+    "industrial-explosives": ("工业包装炸药", "工业炸药"),
 }
 
 
@@ -111,6 +139,13 @@ def normalize_ratio(value: Any) -> float | None:
 
 def infer_market_item(product_name: str) -> str | None:
     name = str(product_name or "").replace(" ", "")
+    # Exact segment labels are safe even when their wording contains "及"
+    # (e.g. "钽铌及其合金制品"). Only reject compound labels after exact matching.
+    for item_id, aliases in ALIASES.items():
+        if name in aliases:
+            if item_id == "urea" and "车用" in name:
+                continue
+            return item_id
     # Combined segment labels (e.g. "锡/锑/锌") must not be mapped to one
     # component's quote series because that would misstate the segment price.
     if any(separator in name for separator in ("/", "、", "及", "与", "和", "，", ",")):

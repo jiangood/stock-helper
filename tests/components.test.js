@@ -85,3 +85,49 @@ test('Toast 使用 textContent，加载状态同步 aria-busy', async () => {
   setLoading(loading, false);
   assert.equal(loading.hidden, true);
 });
+
+
+test('密码门禁支持校验注入、焦点限制和会话记忆', async () => {
+  const { mountPasswordGate } = await loadModule('src/components/password-gate.component.js');
+  class GateElement extends FakeElement {
+    constructor(tag = 'div') { super(tag); this.style = {}; this.value = ''; this.checked = false; this.inert = false; }
+    hasAttribute(name) { return Object.prototype.hasOwnProperty.call(this.attributes, name); }
+    removeAttribute(name) { delete this.attributes[name]; }
+    focus() { this.focused = true; }
+    select() { this.selected = true; }
+    querySelectorAll() { return [first, last]; }
+  }
+  const background = new GateElement('main');
+  const gate = new GateElement('div');
+  const form = new GateElement('form');
+  const input = new GateElement('input');
+  const remember = new GateElement('input');
+  const error = new GateElement('div');
+  const first = new GateElement('input');
+  const last = new GateElement('button');
+  remember.checked = false;
+  const body = { children: [background, gate], style: {} };
+  const local = new Map();
+  const session = new Map();
+  const store = map => ({ getItem(key) { return map.get(key) || null; }, setItem(key, value) { map.set(key, value); }, removeItem(key) { map.delete(key); } });
+  const documentLike = { body, activeElement: first, defaultView: {} };
+  const cleanup = mountPasswordGate({
+    gate, form, input, remember, error, document: documentLike,
+    storage: store(local), session: store(session),
+    verifyPassword: value => value === 'valid'
+  });
+  assert.equal(background.hasAttribute('inert'), true);
+  assert.equal(body.style.overflow, 'hidden');
+  input.value = 'wrong';
+  form.listeners.submit({ preventDefault() {} });
+  assert.equal(error.style.display, 'block');
+  assert.equal(input.getAttribute('aria-invalid'), 'true');
+  input.value = 'valid';
+  form.listeners.submit({ preventDefault() {} });
+  assert.equal(gate.style.display, 'none');
+  assert.equal(session.get('stock-helper-unlocked'), '1');
+  assert.equal(background.hasAttribute('inert'), false);
+  assert.equal(body.style.overflow, '');
+  cleanup();
+  assert.equal(gate.listeners.keydown, undefined);
+});

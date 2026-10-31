@@ -143,7 +143,7 @@ function render(){
   var hasStockChart=(card.stocks||[]).some(function(stock){return Array.isArray(stock.values)&&stock.values.length>=2;});
   var hasChart=hasProductChart||hasStockChart;
   var chart=hasChart?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+(hasProductChart?'及关联股票':'关联股票')+'归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品价格和关联股票均暂无足够的历史月份，暂不绘图。</div>';
-  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+' · '+(card.months&&card.months.length?card.months.length+' 根月线':'月线数量 —')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">(card.months&&card.months.length?card.months.length+' 根月线':'月线数量 —')+' · 数据起止 '+esc(card.productStartDate||'—')+' 至 '+esc(card.productEndDate||'—')+' · 来源 '+esc(card.source||'—')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
   function updateScrollHint(){

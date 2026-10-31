@@ -19,6 +19,10 @@ class CompanyProductDatabaseTests(unittest.TestCase):
     def test_combined_product_names_are_not_mapped_to_one_commodity(self):
         self.assertIsNone(MODULE.infer_market_item("锡/锑/锌"))
         self.assertIsNone(MODULE.infer_market_item("PVC、烧碱"))
+        self.assertIsNone(MODULE.infer_market_item("铅锑精矿"))
+        self.assertIsNone(MODULE.infer_market_item("车用尿素"))
+        self.assertEqual(MODULE.infer_market_item("铅"), "lead")
+        self.assertEqual(MODULE.infer_market_item("锌产品"), "zinc")
 
     def test_unrelated_segment_does_not_inherit_manual_commodity_mapping(self):
         result = MODULE.build(

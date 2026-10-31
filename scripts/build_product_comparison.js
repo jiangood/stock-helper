@@ -131,7 +131,7 @@ function latestSourceTimestamp() {
 function buildCommodityCards(productItems) {
   const grouped = new Map();
   Object.entries(mapping).forEach(([code, meta]) => {
-    if (!meta || !meta.marketItemId) return;
+    if (!meta || (!meta.marketItemId && !meta.costItemIds)) return;
     if (!grouped.has(meta.marketItemId)) grouped.set(meta.marketItemId, []);
     const stock = stocks.find((item) => item.code === code);
     if (stock) grouped.get(meta.marketItemId).push({ stock, meta });

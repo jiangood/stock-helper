@@ -63,6 +63,44 @@ function validBars(result, min = 10) {
     result.bars.every(bar => bar && Number(bar.open) > 0 && Number(bar.close) > 0 &&
       Number(bar.high) > 0 && Number(bar.low) > 0));
 }
+async function fetchMonthlyAdjusted(client, code, chinaDate) {
+  try {
+    const value = await client.fetchKline(code, { period: 'month', count: 240, adjust: 'qfq', force: true });
+    // IPOs may have fewer than six months of valid history; one real monthly bar is enough.
+    if (validBars(value, 1)) {
+      return { monthlyAdjusted: value, monthlyFetchedFor: chinaDate };
+    }
+  } catch (error) {
+    console.warn(code + ': native monthly K-line unavailable (' + error.message + ')');
+  }
+
+  // Fallback: aggregate provider-supplied forward-adjusted daily bars, never interpolated prices.
+  try {
+    const dailyHistory = await client.fetchKline(code, {
+      // SDK/provider cap: 1000 daily bars (roughly four years of trading history).
+      period: 'day', count: 1000, adjust: 'qfq', force: true
+    });
+    if (validBars(dailyHistory, 1)) {
+      const bars = aggregateDailyToMonthly(dailyHistory.bars, 240);
+      if (bars.length) {
+        return {
+          monthlyAdjusted: {
+            code,
+            period: 'month',
+            adjust: 'qfq',
+            bars,
+            source: 'aggregated-adjusted-daily'
+          },
+          monthlyFetchedFor: chinaDate
+        };
+      }
+    }
+  } catch (error) {
+    console.warn(code + ': adjusted daily history fallback unavailable (' + error.message + ')');
+  }
+  return null;
+}
+
 function quoteCode(code) { return StockQuotes.normalizeCode(code); }
 function isoWeekKey(date = new Date()) {
   const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
@@ -75,7 +113,7 @@ function isoWeekKey(date = new Date()) {
 async function main() {
   // Scheduled and code-push runs must not publish intraday snapshots.
   // Manual workflow_dispatch is an explicit operator override for backfills.
-  if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch') {
+  if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch' && process.env.GITHUB_EVENT_NAME !== 'push') {
     const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', {
       timeZone: 'Asia/Shanghai', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
     }).formatToParts(new Date()).map(part => [part.type, part.value]));
@@ -138,9 +176,39 @@ async function main() {
   if (coverage >= MIN_QUOTE_COVERAGE && !marketDateIsCurrent) {
     const changed = writeIfChanged(QUOTES_FILE, quotePayload, true);
     console.log(changed ? 'Marked quote snapshot stale.' : 'No new China market date; quote snapshot unchanged.');
-    // 行情日未推进时缓存不变，但仍刷新板块月线汇总，确保文件存在且与缓存一致。
+
+    // A code push may occur on weekends or before market close. Repair only missing monthly
+    // histories in that case; do not refresh every stock's daily/detail snapshot with stale quotes.
+    const missingMonthlyCodes = codes.filter(code => {
+      const cached = readJson(path.join(CACHE_DIR, code + '.json'), {});
+      return !(cached.monthlyAdjusted && Array.isArray(cached.monthlyAdjusted.bars) &&
+        cached.monthlyAdjusted.bars.length > 0);
+    });
+    if (missingMonthlyCodes.length) {
+      const repaired = await mapLimit(missingMonthlyCodes, MAX_CONCURRENCY, async code => {
+        const file = path.join(CACHE_DIR, code + '.json');
+        const previous = readJson(file, {});
+        const result = await fetchMonthlyAdjusted(client, code, chinaDate);
+        if (!result) return { code, hasMonthly: false };
+        const payload = Object.assign({}, previous, {
+          schemaVersion: previous.schemaVersion || 1,
+          code,
+          updatedAt,
+          monthlyAdjusted: result.monthlyAdjusted,
+          monthlyFetchedFor: result.monthlyFetchedFor
+        });
+        const saved = writeIfChanged(file, payload, true);
+        return { code, hasMonthly: true, changed: saved };
+      });
+      const monthlyReady = repaired.filter(item => item && item.hasMonthly).length;
+      console.log('Missing-monthly backfill: ' + monthlyReady + '/' + missingMonthlyCodes.length +
+        ' repaired; ' + repaired.filter(item => item && item.changed).length + ' cache files changed.');
+    } else {
+      console.log('Monthly K-line backfill: no missing stock histories.');
+    }
+
     sectorMonthly.buildFile({ stocks, marketDate, updatedAt, cacheDir: CACHE_DIR });
-    console.log('Skipping detail and K-line collection because the provider has not published a quote for today in China.');
+    console.log('Skipping detail and daily K-line refresh because the provider has not published a quote for today in China.');
     return;
   }
   fs.mkdirSync(CACHE_DIR, { recursive: true });
@@ -191,45 +259,11 @@ async function main() {
     // 月线也要跟着最新行情日刷新，否则当月那根月 K 整月停留在月初，板块月线强弱会滞后。
     if (!monthlyAdjusted || !Array.isArray(monthlyAdjusted.bars) || monthlyAdjusted.bars.length === 0 ||
         monthlyFetchedFor !== chinaDate) {
-      let nativeMonthlyOk = false;
-      try {
-        const value = await client.fetchKline(code, { period: 'month', count: 240, adjust: 'qfq', force: true });
-        // IPOs may have fewer than six months of valid history; one real monthly bar is enough.
-        if (validBars(value, 1)) {
-          monthlyAdjusted = value;
-          monthlyFetchedFor = chinaDate;
-          nativeMonthlyOk = true;
-        }
-      } catch (error) {
-        console.warn(code + ': native monthly K-line unavailable (' + error.message + ')');
-      }
-
-      // Fallback: fetch sufficient adjusted daily history and aggregate it into real calendar-month OHLCV.
-      // Do not synthesize prices; every monthly value comes from provider-supplied qfq daily bars.
-      if (!nativeMonthlyOk) {
-        try {
-          const dailyHistory = await client.fetchKline(code, {
-            // SDK/provider cap: 1000 daily bars (roughly four years of trading history).
-            period: 'day', count: 1000, adjust: 'qfq', force: true
-          });
-          if (validBars(dailyHistory, 1)) {
-            const bars = aggregateDailyToMonthly(dailyHistory.bars, 240);
-            if (bars.length) {
-              monthlyAdjusted = {
-                code,
-                period: 'month',
-                adjust: 'qfq',
-                bars,
-                source: 'aggregated-adjusted-daily'
-              };
-              monthlyFetchedFor = chinaDate;
-            }
-          }
-        } catch (error) {
-          console.warn(code + ': adjusted daily history fallback unavailable (' + error.message + ')');
-        }
-      }
-      if (!monthlyAdjusted || !Array.isArray(monthlyAdjusted.bars) || monthlyAdjusted.bars.length === 0) {
+      const result = await fetchMonthlyAdjusted(client, code, chinaDate);
+      if (result) {
+        monthlyAdjusted = result.monthlyAdjusted;
+        monthlyFetchedFor = result.monthlyFetchedFor;
+      } else {
         console.warn(code + ': monthly K-line still missing; retaining last-known-good cache.');
       }
     }

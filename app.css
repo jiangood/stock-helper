@@ -110,9 +110,8 @@
   .stock-table tbody td.monthly-trend-cell { min-width: 132px; padding-left: .35rem; padding-right: .35rem; }
   .monthly-trend-svg { display: block; width: 112px; height: 32px; margin: 0 auto; overflow: visible; }
   .monthly-trend-svg polyline { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-  .monthly-trend-profit { color: var(--up); }
-  .monthly-trend-loss { color: var(--down); }
-  .monthly-trend-neutral { color: var(--bs-tertiary-color); }
+  /* 首页所有股票月线统一使用上涨红色，不随区间涨跌改变颜色。 */
+  .monthly-trend-profit, .monthly-trend-loss, .monthly-trend-neutral { color: var(--up); }
   .monthly-trend-empty { color: var(--bs-tertiary-color); font-size: 12px; }
   .price-cell { font-size: 15px; font-weight: 700; letter-spacing: -.3px; }
 

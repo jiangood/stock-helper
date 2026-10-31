@@ -5,11 +5,10 @@
 - **自选页面：** [股票助手首页](https://jiangood.github.io/stock-helper/)
 - **行情页面：** [市场行情](https://jiangood.github.io/stock-helper/market.html)
 - **商品对比：** [主营产品价格与股价月线对比](https://jiangood.github.io/stock-helper/products.html)
-- **主营产品表：** [主营产品、收入占比与近五年月度价格](https://jiangood.github.io/stock-helper/product-database.html)
 - **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
 - **系统健康：** [静态缓存监控](https://jiangood.github.io/stock-helper/health.html)
 
-自选、行情、商品对比与主营产品表为独立页面，通过顶部导航跳转。自选页支持股票池监控、搜索、分组和纪律筛选；行情页汇总板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
+自选、行情与商品对比为独立页面，通过顶部导航跳转。自选页支持股票池监控、搜索、分组和纪律筛选；行情页汇总板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
 
 ## 本地预览
 
@@ -25,8 +24,8 @@ python -m http.server 8089
 | --- | --- |
 | `index.html` | 自选页面：股票池监控看板（Bootstrap 5），支持搜索（含拼音）、分组、纪律筛选、市值/PE/PB/股息率、破净/八折/ST 旗标与纪律列 |
 | `market.html` | 独立行情页面：板块月线强弱、全球资产与产业链商品行情 |
-| `products.html` `products.js` | 商品对比页面：股票池每只股票一张卡片，展示主营产品价格与股价标准化月线对比 |
-| `product-database.html` `product-database.js` `data/company-products.json` `scripts/build_company_products.py` | 主营产品数据库：按股票拆分主营产品、收入占比、报告期及近 5 年月度价格；价格缺少可靠来源时明确标记待补充 |
+| `products.html` `products.js` | 商品对比统一页面：包含股票商品价格与股价标准化月线、主营产品收入占比及近 5 年月度价格明细 |
+| `data/company-products.json` `scripts/build_company_products.py` | 主营产品数据源：按股票保存主营产品、收入占比、报告期及近 5 年月度价格，供商品对比页统一展示 |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
 | `data/stock-products.json` `scripts/build_product_comparison.js` `data/product-comparison.json` | 主营产品与商品报价映射、Actions 生成的商品/股价月线比较读模型；主营产品名称优先读取基本面数据，未接入可靠报价时明确显示待补充 |

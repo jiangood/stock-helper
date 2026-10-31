@@ -317,9 +317,10 @@ function build() {
     };
   });
   const commodityCards = buildCommodityCards(productItems);
+  const generatedAt = latestSourceTimestamp();
   const payload = {
     schemaVersion: 2,
-    generatedAt: latestSourceTimestamp(),
+    generatedAt,
     marketDate: business.updatedAt || null,
     stockCount: cards.length,
     mappedCount: cards.filter((card) => card.productName !== '主营产品映射待核实').length,
@@ -328,12 +329,20 @@ function build() {
     commodityCards,
     cards
   };
-  const serialized = JSON.stringify(payload, null, 2) + '\n';
+  // The commodity page gets a dedicated, compact database. Stock-only analysis
+  // cards remain in the legacy model only until all readers have migrated.
+  const commodityDatabase = {
+    schemaVersion: 1,
+    generatedAt,
+    marketDate: business.updatedAt || null,
+    productCount: commodityCards.length,
+    commodityCards
+  };
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, serialized);
-  // Keep the previous read model in sync during the one-release migration window.
-  fs.writeFileSync(legacyOutputPath, serialized);
-  console.log('Built product comparison:', payload.comparableCount + '/' + payload.stockCount, 'stock cards;', payload.commodityCards.length, 'commodity cards.');
+  fs.writeFileSync(outputPath, JSON.stringify(commodityDatabase, null, 2) + '\n');
+  // Temporary compatibility output; removed after the frontend migration is verified.
+  fs.writeFileSync(legacyOutputPath, JSON.stringify(payload, null, 2) + '\n');
+  console.log('Built commodity database:', commodityDatabase.productCount, 'products;', payload.comparableCount + '/' + payload.stockCount, 'stock cards.');
   return payload;
 }
 if (require.main === module) build();

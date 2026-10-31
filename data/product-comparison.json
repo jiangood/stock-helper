@@ -1383,6 +1383,2252 @@
       "note": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。 公司产品结构与产能利用率会影响价格传导；甲醇未纳入本轮可比序列。 纯碱只是主营产品之一，其他化工产品价格未纳入本轮序列。"
     },
     {
+      "id": "rare-earth",
+      "name": "稀土（氧化镨钕）",
+      "unit": "元/吨",
+      "source": null,
+      "sourceNote": null,
+      "sourceUrl": "https://www.100ppi.com/",
+      "latestPrice": null,
+      "latestDate": null,
+      "productChange": null,
+      "months": [
+        "2009-06",
+        "2009-07",
+        "2009-08",
+        "2009-09",
+        "2009-10",
+        "2009-11",
+        "2009-12",
+        "2010-01",
+        "2010-02",
+        "2010-03",
+        "2010-04",
+        "2010-05",
+        "2010-06",
+        "2010-07",
+        "2010-08",
+        "2010-09",
+        "2010-10",
+        "2010-11",
+        "2010-12",
+        "2011-01",
+        "2011-02",
+        "2011-03",
+        "2011-04",
+        "2011-05",
+        "2011-06",
+        "2011-07",
+        "2011-08",
+        "2011-09",
+        "2011-10",
+        "2011-11",
+        "2011-12",
+        "2012-01",
+        "2012-08",
+        "2012-09",
+        "2012-10",
+        "2012-11",
+        "2012-12",
+        "2013-01",
+        "2013-02",
+        "2013-03",
+        "2013-04",
+        "2013-05",
+        "2013-06",
+        "2013-07",
+        "2013-08",
+        "2013-09",
+        "2013-10",
+        "2013-11",
+        "2013-12",
+        "2014-01",
+        "2014-02",
+        "2014-03",
+        "2014-04",
+        "2014-05",
+        "2014-06",
+        "2014-07",
+        "2014-08",
+        "2014-09",
+        "2014-10",
+        "2014-11",
+        "2014-12",
+        "2015-01",
+        "2015-02",
+        "2015-03",
+        "2015-04",
+        "2015-05",
+        "2015-06",
+        "2015-07",
+        "2015-11",
+        "2015-12",
+        "2016-01",
+        "2016-02",
+        "2016-03",
+        "2016-04",
+        "2016-05",
+        "2016-06",
+        "2016-07",
+        "2016-08",
+        "2016-09",
+        "2016-10",
+        "2016-11",
+        "2016-12",
+        "2017-01",
+        "2017-02",
+        "2017-03",
+        "2017-04",
+        "2017-05",
+        "2017-06",
+        "2017-07",
+        "2017-08",
+        "2017-09",
+        "2017-10",
+        "2017-11",
+        "2017-12",
+        "2018-01",
+        "2018-02",
+        "2018-03",
+        "2018-04",
+        "2018-05",
+        "2018-06",
+        "2018-07",
+        "2018-08",
+        "2018-09",
+        "2018-10",
+        "2018-11",
+        "2018-12",
+        "2019-01",
+        "2019-02",
+        "2019-03",
+        "2019-04",
+        "2019-05",
+        "2019-06",
+        "2019-07",
+        "2019-08",
+        "2019-09",
+        "2019-10",
+        "2019-11",
+        "2019-12",
+        "2020-01",
+        "2020-02",
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12",
+        "2022-01",
+        "2022-02",
+        "2022-03",
+        "2022-04",
+        "2022-05",
+        "2022-06",
+        "2022-07",
+        "2022-08",
+        "2022-09",
+        "2022-10",
+        "2022-11",
+        "2022-12",
+        "2023-01",
+        "2023-02",
+        "2023-03",
+        "2023-04",
+        "2023-05",
+        "2023-06",
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2023-12",
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12",
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
+      "productSeries": [],
+      "stocks": [
+        {
+          "code": "sh600111",
+          "name": "北方稀土",
+          "group": "稀土钨",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 1.7337,
+          "source": "月K",
+          "latestDate": "2026-10",
+          "latestClose": 34.21,
+          "changePct": null,
+          "values": [
+            {
+              "month": "2009-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2009-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2009-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2009-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2009-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2009-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2009-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2010-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2011-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2012-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2012-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2012-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2012-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2012-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2012-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2013-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2014-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2015-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2016-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2017-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2018-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2019-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2020-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2021-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2022-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-03",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-04",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-05",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-06",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-07",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-08",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-09",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-10",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-11",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2023-12",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2024-01",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2024-02",
+              "index": null,
+              "price": null
+            },
+            {
+              "month": "2024-03",
+              "index": 100,
+              "price": 19.135
+            },
+            {
+              "month": "2024-04",
+              "index": 99.63,
+              "price": 19.065
+            },
+            {
+              "month": "2024-05",
+              "index": 97.54,
+              "price": 18.665
+            },
+            {
+              "month": "2024-06",
+              "index": 89.03,
+              "price": 17.035
+            },
+            {
+              "month": "2024-07",
+              "index": 90.49,
+              "price": 17.315
+            },
+            {
+              "month": "2024-08",
+              "index": 87.04,
+              "price": 16.655
+            },
+            {
+              "month": "2024-09",
+              "index": 106.95,
+              "price": 20.465
+            },
+            {
+              "month": "2024-10",
+              "index": 111.29,
+              "price": 21.295
+            },
+            {
+              "month": "2024-11",
+              "index": 118.55,
+              "price": 22.685
+            },
+            {
+              "month": "2024-12",
+              "index": 110.03,
+              "price": 21.055
+            },
+            {
+              "month": "2025-01",
+              "index": 109.15,
+              "price": 20.885
+            },
+            {
+              "month": "2025-02",
+              "index": 116.04,
+              "price": 22.205
+            },
+            {
+              "month": "2025-03",
+              "index": 117.56,
+              "price": 22.495
+            },
+            {
+              "month": "2025-04",
+              "index": 120.85,
+              "price": 23.125
+            },
+            {
+              "month": "2025-05",
+              "index": 120.75,
+              "price": 23.105
+            },
+            {
+              "month": "2025-06",
+              "index": 129.45,
+              "price": 24.77
+            },
+            {
+              "month": "2025-07",
+              "index": 195.3,
+              "price": 37.37
+            },
+            {
+              "month": "2025-08",
+              "index": 296.21,
+              "price": 56.68
+            },
+            {
+              "month": "2025-09",
+              "index": 251.74,
+              "price": 48.17
+            },
+            {
+              "month": "2025-10",
+              "index": 264.85,
+              "price": 50.68
+            },
+            {
+              "month": "2025-11",
+              "index": 234.49,
+              "price": 44.87
+            },
+            {
+              "month": "2025-12",
+              "index": 240.34,
+              "price": 45.99
+            },
+            {
+              "month": "2026-01",
+              "index": 268.93,
+              "price": 51.46
+            },
+            {
+              "month": "2026-02",
+              "index": 325.42,
+              "price": 62.27
+            },
+            {
+              "month": "2026-03",
+              "index": 248.5,
+              "price": 47.55
+            },
+            {
+              "month": "2026-04",
+              "index": 276.51,
+              "price": 52.91
+            },
+            {
+              "month": "2026-05",
+              "index": 253.41,
+              "price": 48.49
+            },
+            {
+              "month": "2026-06",
+              "index": 251.11,
+              "price": 48.05
+            },
+            {
+              "month": "2026-07",
+              "index": 207.47,
+              "price": 39.7
+            },
+            {
+              "month": "2026-08",
+              "index": 212.28,
+              "price": 40.62
+            },
+            {
+              "month": "2026-09",
+              "index": 184.48,
+              "price": 35.3
+            },
+            {
+              "month": "2026-10",
+              "index": 178.78,
+              "price": 34.21
+            }
+          ]
+        },
+        {
+          "code": "sh600392",
+          "name": "盛和资源",
+          "group": "稀土钨",
+          "role": "mixed",
+          "roleLabel": "多因素",
+          "mainRatio": null,
+          "source": "月K",
+          "latestDate": "2026-10-30",
+          "latestClose": 14.64,
+          "changePct": 139.65,
+          "values": [
+            {
+              "month": "2009-06",
+              "index": 100,
+              "price": 6.109
+            },
+            {
+              "month": "2009-07",
+              "index": 108.02,
+              "price": 6.599
+            },
+            {
+              "month": "2009-08",
+              "index": 116.07,
+              "price": 7.091
+            },
+            {
+              "month": "2009-09",
+              "index": 76.13,
+              "price": 4.651
+            },
+            {
+              "month": "2009-10",
+              "index": 94.22,
+              "price": 5.756
+            },
+            {
+              "month": "2009-11",
+              "index": 121.97,
+              "price": 7.451
+            },
+            {
+              "month": "2009-12",
+              "index": 115.47,
+              "price": 7.054
+            },
+            {
+              "month": "2010-01",
+              "index": 105.84,
+              "price": 6.466
+            },
+            {
+              "month": "2010-02",
+              "index": 103.18,
+              "price": 6.303
+            },
+            {
+              "month": "2010-03",
+              "index": 103.63,
+              "price": 6.331
+            },
+            {
+              "month": "2010-04",
+              "index": 92.55,
+              "price": 5.654
+            },
+            {
+              "month": "2010-05",
+              "index": 91,
+              "price": 5.559
+            },
+            {
+              "month": "2010-06",
+              "index": 70.44,
+              "price": 4.303
+            },
+            {
+              "month": "2010-07",
+              "index": 83.03,
+              "price": 5.072
+            },
+            {
+              "month": "2010-08",
+              "index": 94.16,
+              "price": 5.752
+            },
+            {
+              "month": "2010-09",
+              "index": 99.85,
+              "price": 6.1
+            },
+            {
+              "month": "2010-10",
+              "index": 115.32,
+              "price": 7.045
+            },
+            {
+              "month": "2010-11",
+              "index": 120.2,
+              "price": 7.343
+            },
+            {
+              "month": "2010-12",
+              "index": 123.13,
+              "price": 7.522
+            },
+            {
+              "month": "2011-01",
+              "index": 100.87,
+              "price": 6.162
+            },
+            {
+              "month": "2011-02",
+              "index": 102.98,
+              "price": 6.291
+            },
+            {
+              "month": "2011-03",
+              "index": 109.07,
+              "price": 6.663
+            },
+            {
+              "month": "2011-04",
+              "index": 106.96,
+              "price": 6.534
+            },
+            {
+              "month": "2011-05",
+              "index": 106.35,
+              "price": 6.497
+            },
+            {
+              "month": "2011-06",
+              "index": 108.22,
+              "price": 6.611
+            },
+            {
+              "month": "2011-07",
+              "index": 118.14,
+              "price": 7.217
+            },
+            {
+              "month": "2011-08",
+              "index": 112.2,
+              "price": 6.854
+            },
+            {
+              "month": "2011-09",
+              "index": 84.89,
+              "price": 5.186
+            },
+            {
+              "month": "2011-10",
+              "index": 78.39,
+              "price": 4.789
+            },
+            {
+              "month": "2011-11",
+              "index": 65.9,
+              "price": 4.026
+            },
+            {
+              "month": "2011-12",
+              "index": 36.44,
+              "price": 2.226
+            },
+            {
+              "month": "2012-01",
+              "index": 34.74,
+              "price": 2.122
+            },
+            {
+              "month": "2012-08",
+              "index": 56.49,
+              "price": 3.451
+            },
+            {
+              "month": "2012-09",
+              "index": 59.21,
+              "price": 3.617
+            },
+            {
+              "month": "2012-10",
+              "index": 48.27,
+              "price": 2.949
+            },
+            {
+              "month": "2012-11",
+              "index": 36.29,
+              "price": 2.217
+            },
+            {
+              "month": "2012-12",
+              "index": 68.23,
+              "price": 4.168
+            },
+            {
+              "month": "2013-01",
+              "index": 108.27,
+              "price": 6.614
+            },
+            {
+              "month": "2013-02",
+              "index": 98.74,
+              "price": 6.032
+            },
+            {
+              "month": "2013-03",
+              "index": 88.07,
+              "price": 5.38
+            },
+            {
+              "month": "2013-04",
+              "index": 96.94,
+              "price": 5.922
+            },
+            {
+              "month": "2013-05",
+              "index": 76.84,
+              "price": 4.694
+            },
+            {
+              "month": "2013-06",
+              "index": 53.92,
+              "price": 3.294
+            },
+            {
+              "month": "2013-07",
+              "index": 104.44,
+              "price": 6.38
+            },
+            {
+              "month": "2013-08",
+              "index": 95.17,
+              "price": 5.814
+            },
+            {
+              "month": "2013-09",
+              "index": 84.99,
+              "price": 5.192
+            },
+            {
+              "month": "2013-10",
+              "index": 83.53,
+              "price": 5.103
+            },
+            {
+              "month": "2013-11",
+              "index": 102.47,
+              "price": 6.26
+            },
+            {
+              "month": "2013-12",
+              "index": 84.29,
+              "price": 5.149
+            },
+            {
+              "month": "2014-01",
+              "index": 79.26,
+              "price": 4.842
+            },
+            {
+              "month": "2014-02",
+              "index": 94.37,
+              "price": 5.765
+            },
+            {
+              "month": "2014-03",
+              "index": 77.3,
+              "price": 4.722
+            },
+            {
+              "month": "2014-04",
+              "index": 64.9,
+              "price": 3.965
+            },
+            {
+              "month": "2014-05",
+              "index": 70.04,
+              "price": 4.279
+            },
+            {
+              "month": "2014-06",
+              "index": 75.82,
+              "price": 4.632
+            },
+            {
+              "month": "2014-07",
+              "index": 93.76,
+              "price": 5.728
+            },
+            {
+              "month": "2014-08",
+              "index": 87.31,
+              "price": 5.334
+            },
+            {
+              "month": "2014-09",
+              "index": 84.65,
+              "price": 5.171
+            },
+            {
+              "month": "2014-10",
+              "index": 85.81,
+              "price": 5.242
+            },
+            {
+              "month": "2014-11",
+              "index": 90.34,
+              "price": 5.519
+            },
+            {
+              "month": "2014-12",
+              "index": 125.05,
+              "price": 7.639
+            },
+            {
+              "month": "2015-01",
+              "index": 140.71,
+              "price": 8.596
+            },
+            {
+              "month": "2015-02",
+              "index": 137.98,
+              "price": 8.429
+            },
+            {
+              "month": "2015-03",
+              "index": 148.06,
+              "price": 9.045
+            },
+            {
+              "month": "2015-04",
+              "index": 155.41,
+              "price": 9.494
+            },
+            {
+              "month": "2015-05",
+              "index": 170.98,
+              "price": 10.445
+            },
+            {
+              "month": "2015-06",
+              "index": 113.75,
+              "price": 6.949
+            },
+            {
+              "month": "2015-07",
+              "index": 121.72,
+              "price": 7.436
+            },
+            {
+              "month": "2015-11",
+              "index": 170.99,
+              "price": 10.446
+            },
+            {
+              "month": "2015-12",
+              "index": 141.28,
+              "price": 8.631
+            },
+            {
+              "month": "2016-01",
+              "index": 96.33,
+              "price": 5.885
+            },
+            {
+              "month": "2016-02",
+              "index": 98.97,
+              "price": 6.046
+            },
+            {
+              "month": "2016-03",
+              "index": 118.24,
+              "price": 7.223
+            },
+            {
+              "month": "2016-04",
+              "index": 158.65,
+              "price": 9.692
+            },
+            {
+              "month": "2016-05",
+              "index": 229.17,
+              "price": 14
+            },
+            {
+              "month": "2016-06",
+              "index": 192.54,
+              "price": 11.762
+            },
+            {
+              "month": "2016-07",
+              "index": 159.04,
+              "price": 9.716
+            },
+            {
+              "month": "2016-08",
+              "index": 187.12,
+              "price": 11.431
+            },
+            {
+              "month": "2016-09",
+              "index": 165.71,
+              "price": 10.123
+            },
+            {
+              "month": "2016-10",
+              "index": 164.2,
+              "price": 10.031
+            },
+            {
+              "month": "2016-11",
+              "index": 165.84,
+              "price": 10.131
+            },
+            {
+              "month": "2016-12",
+              "index": 154.13,
+              "price": 9.416
+            },
+            {
+              "month": "2017-01",
+              "index": 131.33,
+              "price": 8.023
+            },
+            {
+              "month": "2017-02",
+              "index": 147.96,
+              "price": 9.039
+            },
+            {
+              "month": "2017-03",
+              "index": 148.34,
+              "price": 9.062
+            },
+            {
+              "month": "2017-04",
+              "index": 136.37,
+              "price": 8.331
+            },
+            {
+              "month": "2017-05",
+              "index": 137.88,
+              "price": 8.423
+            },
+            {
+              "month": "2017-06",
+              "index": 152.37,
+              "price": 9.308
+            },
+            {
+              "month": "2017-07",
+              "index": 241.14,
+              "price": 14.731
+            },
+            {
+              "month": "2017-08",
+              "index": 294.27,
+              "price": 17.977
+            },
+            {
+              "month": "2017-09",
+              "index": 246.05,
+              "price": 15.031
+            },
+            {
+              "month": "2017-10",
+              "index": 235.72,
+              "price": 14.4
+            },
+            {
+              "month": "2017-11",
+              "index": 201.34,
+              "price": 12.3
+            },
+            {
+              "month": "2017-12",
+              "index": 225.77,
+              "price": 13.792
+            },
+            {
+              "month": "2018-01",
+              "index": 187.25,
+              "price": 11.439
+            },
+            {
+              "month": "2018-02",
+              "index": 194.29,
+              "price": 11.869
+            },
+            {
+              "month": "2018-03",
+              "index": 200.21,
+              "price": 12.231
+            },
+            {
+              "month": "2018-04",
+              "index": 184.35,
+              "price": 11.262
+            },
+            {
+              "month": "2018-05",
+              "index": 176.04,
+              "price": 10.754
+            },
+            {
+              "month": "2018-06",
+              "index": 190.9,
+              "price": 11.662
+            },
+            {
+              "month": "2018-07",
+              "index": 164.02,
+              "price": 10.02
+            },
+            {
+              "month": "2018-08",
+              "index": 149.12,
+              "price": 9.11
+            },
+            {
+              "month": "2018-09",
+              "index": 144.7,
+              "price": 8.84
+            },
+            {
+              "month": "2018-10",
+              "index": 150.6,
+              "price": 9.2
+            },
+            {
+              "month": "2018-11",
+              "index": 141.59,
+              "price": 8.65
+            },
+            {
+              "month": "2018-12",
+              "index": 127.84,
+              "price": 7.81
+            },
+            {
+              "month": "2019-01",
+              "index": 123.92,
+              "price": 7.57
+            },
+            {
+              "month": "2019-02",
+              "index": 154.2,
+              "price": 9.42
+            },
+            {
+              "month": "2019-03",
+              "index": 180.06,
+              "price": 11
+            },
+            {
+              "month": "2019-04",
+              "index": 152.89,
+              "price": 9.34
+            },
+            {
+              "month": "2019-05",
+              "index": 189.23,
+              "price": 11.56
+            },
+            {
+              "month": "2019-06",
+              "index": 168.44,
+              "price": 10.29
+            },
+            {
+              "month": "2019-07",
+              "index": 146.51,
+              "price": 8.95
+            },
+            {
+              "month": "2019-08",
+              "index": 145.2,
+              "price": 8.87
+            },
+            {
+              "month": "2019-09",
+              "index": 136.68,
+              "price": 8.35
+            },
+            {
+              "month": "2019-10",
+              "index": 122.93,
+              "price": 7.51
+            },
+            {
+              "month": "2019-11",
+              "index": 120.64,
+              "price": 7.37
+            },
+            {
+              "month": "2019-12",
+              "index": 135.87,
+              "price": 8.3
+            },
+            {
+              "month": "2020-01",
+              "index": 119.99,
+              "price": 7.33
+            },
+            {
+              "month": "2020-02",
+              "index": 103.13,
+              "price": 6.3
+            },
+            {
+              "month": "2020-03",
+              "index": 100.51,
+              "price": 6.14
+            },
+            {
+              "month": "2020-04",
+              "index": 99.36,
+              "price": 6.07
+            },
+            {
+              "month": "2020-05",
+              "index": 116.06,
+              "price": 7.09
+            },
+            {
+              "month": "2020-06",
+              "index": 102.8,
+              "price": 6.28
+            },
+            {
+              "month": "2020-07",
+              "index": 126.86,
+              "price": 7.75
+            },
+            {
+              "month": "2020-08",
+              "index": 112.95,
+              "price": 6.9
+            },
+            {
+              "month": "2020-09",
+              "index": 100.34,
+              "price": 6.13
+            },
+            {
+              "month": "2020-10",
+              "index": 95.11,
+              "price": 5.81
+            },
+            {
+              "month": "2020-11",
+              "index": 132.26,
+              "price": 8.08
+            },
+            {
+              "month": "2020-12",
+              "index": 132.92,
+              "price": 8.12
+            },
+            {
+              "month": "2021-01",
+              "index": 251.1,
+              "price": 15.34
+            },
+            {
+              "month": "2021-02",
+              "index": 347.52,
+              "price": 21.23
+            },
+            {
+              "month": "2021-03",
+              "index": 272.71,
+              "price": 16.66
+            },
+            {
+              "month": "2021-04",
+              "index": 258.14,
+              "price": 15.77
+            },
+            {
+              "month": "2021-05",
+              "index": 273.86,
+              "price": 16.73
+            },
+            {
+              "month": "2021-06",
+              "index": 271.57,
+              "price": 16.59
+            },
+            {
+              "month": "2021-07",
+              "index": 392.7,
+              "price": 23.99
+            },
+            {
+              "month": "2021-08",
+              "index": 446.39,
+              "price": 27.27
+            },
+            {
+              "month": "2021-09",
+              "index": 317.24,
+              "price": 19.38
+            },
+            {
+              "month": "2021-10",
+              "index": 319.2,
+              "price": 19.5
+            },
+            {
+              "month": "2021-11",
+              "index": 353.74,
+              "price": 21.61
+            },
+            {
+              "month": "2021-12",
+              "index": 309.38,
+              "price": 18.9
+            },
+            {
+              "month": "2022-01",
+              "index": 255.52,
+              "price": 15.61
+            },
+            {
+              "month": "2022-02",
+              "index": 309.38,
+              "price": 18.9
+            },
+            {
+              "month": "2022-03",
+              "index": 266,
+              "price": 16.25
+            },
+            {
+              "month": "2022-04",
+              "index": 246.03,
+              "price": 15.03
+            },
+            {
+              "month": "2022-05",
+              "index": 277.46,
+              "price": 16.95
+            },
+            {
+              "month": "2022-06",
+              "index": 359.8,
+              "price": 21.98
+            },
+            {
+              "month": "2022-07",
+              "index": 329.51,
+              "price": 20.13
+            },
+            {
+              "month": "2022-08",
+              "index": 273.37,
+              "price": 16.7
+            },
+            {
+              "month": "2022-09",
+              "index": 237.68,
+              "price": 14.52
+            },
+            {
+              "month": "2022-10",
+              "index": 208.54,
+              "price": 12.74
+            },
+            {
+              "month": "2022-11",
+              "index": 228.35,
+              "price": 13.95
+            },
+            {
+              "month": "2022-12",
+              "index": 219.02,
+              "price": 13.38
+            },
+            {
+              "month": "2023-01",
+              "index": 258.47,
+              "price": 15.79
+            },
+            {
+              "month": "2023-02",
+              "index": 252.09,
+              "price": 15.4
+            },
+            {
+              "month": "2023-03",
+              "index": 221.48,
+              "price": 13.53
+            },
+            {
+              "month": "2023-04",
+              "index": 215.26,
+              "price": 13.15
+            },
+            {
+              "month": "2023-05",
+              "index": 199.05,
+              "price": 12.16
+            },
+            {
+              "month": "2023-06",
+              "index": 200.52,
+              "price": 12.25
+            },
+            {
+              "month": "2023-07",
+              "index": 198.07,
+              "price": 12.1
+            },
+            {
+              "month": "2023-08",
+              "index": 172.53,
+              "price": 10.54
+            },
+            {
+              "month": "2023-09",
+              "index": 169.42,
+              "price": 10.35
+            },
+            {
+              "month": "2023-10",
+              "index": 166.48,
+              "price": 10.17
+            },
+            {
+              "month": "2023-11",
+              "index": 160.91,
+              "price": 9.83
+            },
+            {
+              "month": "2023-12",
+              "index": 158.13,
+              "price": 9.66
+            },
+            {
+              "month": "2024-01",
+              "index": 126.37,
+              "price": 7.72
+            },
+            {
+              "month": "2024-02",
+              "index": 139.47,
+              "price": 8.52
+            },
+            {
+              "month": "2024-03",
+              "index": 150.43,
+              "price": 9.19
+            },
+            {
+              "month": "2024-04",
+              "index": 152.4,
+              "price": 9.31
+            },
+            {
+              "month": "2024-05",
+              "index": 148.31,
+              "price": 9.06
+            },
+            {
+              "month": "2024-06",
+              "index": 132.59,
+              "price": 8.1
+            },
+            {
+              "month": "2024-07",
+              "index": 127.68,
+              "price": 7.8
+            },
+            {
+              "month": "2024-08",
+              "index": 121.62,
+              "price": 7.43
+            },
+            {
+              "month": "2024-09",
+              "index": 156.82,
+              "price": 9.58
+            },
+            {
+              "month": "2024-10",
+              "index": 177.61,
+              "price": 10.85
+            },
+            {
+              "month": "2024-11",
+              "index": 180.39,
+              "price": 11.02
+            },
+            {
+              "month": "2024-12",
+              "index": 160.91,
+              "price": 9.83
+            },
+            {
+              "month": "2025-01",
+              "index": 167.13,
+              "price": 10.21
+            },
+            {
+              "month": "2025-02",
+              "index": 170.9,
+              "price": 10.44
+            },
+            {
+              "month": "2025-03",
+              "index": 171.22,
+              "price": 10.46
+            },
+            {
+              "month": "2025-04",
+              "index": 165.82,
+              "price": 10.13
+            },
+            {
+              "month": "2025-05",
+              "index": 182.35,
+              "price": 11.14
+            },
+            {
+              "month": "2025-06",
+              "index": 208.22,
+              "price": 12.72
+            },
+            {
+              "month": "2025-07",
+              "index": 350.47,
+              "price": 21.41
+            },
+            {
+              "month": "2025-08",
+              "index": 439.52,
+              "price": 26.85
+            },
+            {
+              "month": "2025-09",
+              "index": 371.58,
+              "price": 22.7
+            },
+            {
+              "month": "2025-10",
+              "index": 374.69,
+              "price": 22.89
+            },
+            {
+              "month": "2025-11",
+              "index": 334.75,
+              "price": 20.45
+            },
+            {
+              "month": "2025-12",
+              "index": 347.52,
+              "price": 21.23
+            },
+            {
+              "month": "2026-01",
+              "index": 437.55,
+              "price": 26.73
+            },
+            {
+              "month": "2026-02",
+              "index": 544.61,
+              "price": 33.27
+            },
+            {
+              "month": "2026-03",
+              "index": 361.76,
+              "price": 22.1
+            },
+            {
+              "month": "2026-04",
+              "index": 421.18,
+              "price": 25.73
+            },
+            {
+              "month": "2026-05",
+              "index": 353.41,
+              "price": 21.59
+            },
+            {
+              "month": "2026-06",
+              "index": 482.4,
+              "price": 29.47
+            },
+            {
+              "month": "2026-07",
+              "index": 338.84,
+              "price": 20.7
+            },
+            {
+              "month": "2026-08",
+              "index": 380.75,
+              "price": 23.26
+            },
+            {
+              "month": "2026-09",
+              "index": 330.17,
+              "price": 20.17
+            },
+            {
+              "month": "2026-10",
+              "index": 239.65,
+              "price": 14.64
+            }
+          ]
+        }
+      ],
+      "status": "stock-only",
+      "note": "氧化镨钕是稀土价格代理，不等于公司全部产品实现售价。 业务涉及稀土资源与分离加工，产品结构、原料来源会影响价格弹性。 商品历史月线尚未接入；图表仅展示关联股票前复权月K，各股票分别以自身首月归一化为100，不代表商品与股票价格比较。"
+    },
+    {
       "id": "aluminium",
       "name": "电解铝",
       "unit": "元/吨",
@@ -5640,36 +7886,6 @@
       "note": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。 天然橡胶价格是核心产品价格代理，仍需结合加工、贸易业务占比。"
     },
     {
-      "id": "coal",
-      "name": "动力煤",
-      "unit": "元/吨",
-      "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "sourceNote": null,
-      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 842.75,
-      "latestDate": "2026-10-31",
-      "productChange": null,
-      "months": [],
-      "productSeries": [],
-      "stocks": [
-        {
-          "code": "sh600348",
-          "name": "华阳股份",
-          "group": "能源",
-          "role": "producer",
-          "roleLabel": "产品端",
-          "mainRatio": 0.8604,
-          "source": "月K",
-          "latestDate": "2026-10",
-          "latestClose": 8.73,
-          "changePct": null,
-          "values": []
-        }
-      ],
-      "status": "pending",
-      "note": "需区分动力煤与无烟煤/化工用煤，当前煤价序列仅作方向参考。"
-    },
-    {
       "id": "tio2",
       "name": "钛白粉",
       "unit": "元/吨",
@@ -5679,7 +7895,208 @@
       "latestPrice": 17180,
       "latestDate": "2026-10-31",
       "productChange": null,
-      "months": [],
+      "months": [
+        "2010-03",
+        "2010-04",
+        "2010-05",
+        "2010-06",
+        "2010-07",
+        "2010-08",
+        "2010-09",
+        "2010-10",
+        "2010-11",
+        "2010-12",
+        "2011-01",
+        "2011-02",
+        "2011-03",
+        "2011-04",
+        "2011-05",
+        "2011-06",
+        "2011-07",
+        "2011-08",
+        "2011-09",
+        "2011-10",
+        "2011-11",
+        "2011-12",
+        "2012-01",
+        "2012-02",
+        "2012-03",
+        "2012-04",
+        "2012-05",
+        "2012-06",
+        "2012-07",
+        "2012-08",
+        "2012-09",
+        "2012-10",
+        "2012-11",
+        "2012-12",
+        "2013-01",
+        "2013-02",
+        "2013-03",
+        "2013-04",
+        "2013-05",
+        "2013-06",
+        "2013-07",
+        "2013-08",
+        "2013-09",
+        "2013-10",
+        "2013-11",
+        "2013-12",
+        "2014-01",
+        "2014-02",
+        "2014-03",
+        "2014-04",
+        "2014-05",
+        "2014-06",
+        "2014-07",
+        "2014-08",
+        "2014-09",
+        "2014-10",
+        "2014-11",
+        "2014-12",
+        "2015-01",
+        "2015-02",
+        "2015-03",
+        "2015-04",
+        "2015-05",
+        "2015-06",
+        "2015-07",
+        "2015-08",
+        "2015-09",
+        "2015-10",
+        "2015-11",
+        "2015-12",
+        "2016-01",
+        "2016-02",
+        "2016-03",
+        "2016-04",
+        "2016-05",
+        "2016-06",
+        "2016-07",
+        "2016-08",
+        "2016-09",
+        "2016-10",
+        "2016-11",
+        "2016-12",
+        "2017-01",
+        "2017-02",
+        "2017-03",
+        "2017-04",
+        "2017-05",
+        "2017-06",
+        "2017-07",
+        "2017-08",
+        "2017-09",
+        "2017-10",
+        "2017-11",
+        "2017-12",
+        "2018-01",
+        "2018-02",
+        "2018-03",
+        "2018-04",
+        "2018-05",
+        "2018-06",
+        "2018-07",
+        "2018-08",
+        "2018-09",
+        "2018-10",
+        "2018-11",
+        "2018-12",
+        "2019-01",
+        "2019-02",
+        "2019-03",
+        "2019-04",
+        "2019-05",
+        "2019-06",
+        "2019-07",
+        "2019-08",
+        "2019-09",
+        "2019-10",
+        "2019-11",
+        "2019-12",
+        "2020-01",
+        "2020-02",
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12",
+        "2022-01",
+        "2022-02",
+        "2022-03",
+        "2022-04",
+        "2022-05",
+        "2022-06",
+        "2022-07",
+        "2022-08",
+        "2022-09",
+        "2022-10",
+        "2022-11",
+        "2022-12",
+        "2023-01",
+        "2023-02",
+        "2023-03",
+        "2023-04",
+        "2023-05",
+        "2023-06",
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2023-12",
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12",
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
       "productSeries": [],
       "stocks": [
         {
@@ -5692,12 +8109,1013 @@
           "source": "月K",
           "latestDate": "2026-10-30",
           "latestClose": 9.77,
-          "changePct": null,
-          "values": []
+          "changePct": 47.81,
+          "values": [
+            {
+              "month": "2010-03",
+              "index": 100,
+              "price": 6.61
+            },
+            {
+              "month": "2010-04",
+              "index": 86.16,
+              "price": 5.695
+            },
+            {
+              "month": "2010-05",
+              "index": 78.44,
+              "price": 5.185
+            },
+            {
+              "month": "2010-06",
+              "index": 89.71,
+              "price": 5.93
+            },
+            {
+              "month": "2010-07",
+              "index": 98.49,
+              "price": 6.51
+            },
+            {
+              "month": "2010-08",
+              "index": 100.98,
+              "price": 6.675
+            },
+            {
+              "month": "2010-09",
+              "index": 113.77,
+              "price": 7.52
+            },
+            {
+              "month": "2010-10",
+              "index": 117.02,
+              "price": 7.735
+            },
+            {
+              "month": "2010-11",
+              "index": 120.95,
+              "price": 7.995
+            },
+            {
+              "month": "2010-12",
+              "index": 110.29,
+              "price": 7.29
+            },
+            {
+              "month": "2011-01",
+              "index": 99.85,
+              "price": 6.6
+            },
+            {
+              "month": "2011-02",
+              "index": 115.58,
+              "price": 7.64
+            },
+            {
+              "month": "2011-03",
+              "index": 165.28,
+              "price": 10.925
+            },
+            {
+              "month": "2011-04",
+              "index": 177.53,
+              "price": 11.735
+            },
+            {
+              "month": "2011-05",
+              "index": 137.75,
+              "price": 9.105
+            },
+            {
+              "month": "2011-06",
+              "index": 214.07,
+              "price": 14.15
+            },
+            {
+              "month": "2011-07",
+              "index": 218.46,
+              "price": 14.44
+            },
+            {
+              "month": "2011-08",
+              "index": 250.3,
+              "price": 16.545
+            },
+            {
+              "month": "2011-09",
+              "index": 207.26,
+              "price": 13.7
+            },
+            {
+              "month": "2011-10",
+              "index": 273.83,
+              "price": 18.1
+            },
+            {
+              "month": "2011-11",
+              "index": 246.75,
+              "price": 16.31
+            },
+            {
+              "month": "2011-12",
+              "index": 200,
+              "price": 13.22
+            },
+            {
+              "month": "2012-01",
+              "index": 212.41,
+              "price": 14.04
+            },
+            {
+              "month": "2012-02",
+              "index": 245.84,
+              "price": 16.25
+            },
+            {
+              "month": "2012-03",
+              "index": 195.16,
+              "price": 12.9
+            },
+            {
+              "month": "2012-04",
+              "index": 192.13,
+              "price": 12.7
+            },
+            {
+              "month": "2012-05",
+              "index": 196.97,
+              "price": 13.02
+            },
+            {
+              "month": "2012-06",
+              "index": 160.82,
+              "price": 10.63
+            },
+            {
+              "month": "2012-07",
+              "index": 122.54,
+              "price": 8.1
+            },
+            {
+              "month": "2012-08",
+              "index": 125.26,
+              "price": 8.28
+            },
+            {
+              "month": "2012-09",
+              "index": 126.02,
+              "price": 8.33
+            },
+            {
+              "month": "2012-10",
+              "index": 136.61,
+              "price": 9.03
+            },
+            {
+              "month": "2012-11",
+              "index": 96.97,
+              "price": 6.41
+            },
+            {
+              "month": "2012-12",
+              "index": 120.12,
+              "price": 7.94
+            },
+            {
+              "month": "2013-01",
+              "index": 125.72,
+              "price": 8.31
+            },
+            {
+              "month": "2013-02",
+              "index": 124.36,
+              "price": 8.22
+            },
+            {
+              "month": "2013-03",
+              "index": 122.24,
+              "price": 8.08
+            },
+            {
+              "month": "2013-04",
+              "index": 106.96,
+              "price": 7.07
+            },
+            {
+              "month": "2013-05",
+              "index": 129.65,
+              "price": 8.57
+            },
+            {
+              "month": "2013-06",
+              "index": 89.86,
+              "price": 5.94
+            },
+            {
+              "month": "2013-07",
+              "index": 106.2,
+              "price": 7.02
+            },
+            {
+              "month": "2013-08",
+              "index": 104.69,
+              "price": 6.92
+            },
+            {
+              "month": "2013-09",
+              "index": 104.69,
+              "price": 6.92
+            },
+            {
+              "month": "2013-10",
+              "index": 96.82,
+              "price": 6.4
+            },
+            {
+              "month": "2013-11",
+              "index": 97.73,
+              "price": 6.46
+            },
+            {
+              "month": "2013-12",
+              "index": 87.75,
+              "price": 5.8
+            },
+            {
+              "month": "2014-01",
+              "index": 81.85,
+              "price": 5.41
+            },
+            {
+              "month": "2014-02",
+              "index": 91.07,
+              "price": 6.02
+            },
+            {
+              "month": "2014-03",
+              "index": 86.38,
+              "price": 5.71
+            },
+            {
+              "month": "2014-04",
+              "index": 77.61,
+              "price": 5.13
+            },
+            {
+              "month": "2014-05",
+              "index": 82.9,
+              "price": 5.48
+            },
+            {
+              "month": "2014-06",
+              "index": 96.22,
+              "price": 6.36
+            },
+            {
+              "month": "2014-07",
+              "index": 108.77,
+              "price": 7.19
+            },
+            {
+              "month": "2014-08",
+              "index": 106.66,
+              "price": 7.05
+            },
+            {
+              "month": "2014-09",
+              "index": 162.03,
+              "price": 10.71
+            },
+            {
+              "month": "2014-10",
+              "index": 151.74,
+              "price": 10.03
+            },
+            {
+              "month": "2014-11",
+              "index": 151.59,
+              "price": 10.02
+            },
+            {
+              "month": "2014-12",
+              "index": 133.59,
+              "price": 8.83
+            },
+            {
+              "month": "2015-01",
+              "index": 148.56,
+              "price": 9.82
+            },
+            {
+              "month": "2015-02",
+              "index": 178.67,
+              "price": 11.81
+            },
+            {
+              "month": "2015-03",
+              "index": 200.15,
+              "price": 13.23
+            },
+            {
+              "month": "2015-04",
+              "index": 215.43,
+              "price": 14.24
+            },
+            {
+              "month": "2015-05",
+              "index": 253.4,
+              "price": 16.75
+            },
+            {
+              "month": "2015-06",
+              "index": 198.49,
+              "price": 13.12
+            },
+            {
+              "month": "2015-07",
+              "index": 167.17,
+              "price": 11.05
+            },
+            {
+              "month": "2015-08",
+              "index": 164.6,
+              "price": 10.88
+            },
+            {
+              "month": "2015-09",
+              "index": 164.9,
+              "price": 10.9
+            },
+            {
+              "month": "2015-10",
+              "index": 200.61,
+              "price": 13.26
+            },
+            {
+              "month": "2015-11",
+              "index": 224.81,
+              "price": 14.86
+            },
+            {
+              "month": "2015-12",
+              "index": 234.8,
+              "price": 15.52
+            },
+            {
+              "month": "2016-01",
+              "index": 191.68,
+              "price": 12.67
+            },
+            {
+              "month": "2016-02",
+              "index": 167.93,
+              "price": 11.1
+            },
+            {
+              "month": "2016-03",
+              "index": 203.48,
+              "price": 13.45
+            },
+            {
+              "month": "2016-04",
+              "index": 227.84,
+              "price": 15.06
+            },
+            {
+              "month": "2016-05",
+              "index": 198.03,
+              "price": 13.09
+            },
+            {
+              "month": "2016-06",
+              "index": 225.72,
+              "price": 14.92
+            },
+            {
+              "month": "2016-07",
+              "index": 214.22,
+              "price": 14.16
+            },
+            {
+              "month": "2016-08",
+              "index": 232.22,
+              "price": 15.35
+            },
+            {
+              "month": "2016-09",
+              "index": 218.91,
+              "price": 14.47
+            },
+            {
+              "month": "2016-10",
+              "index": 229.2,
+              "price": 15.15
+            },
+            {
+              "month": "2016-11",
+              "index": 234.8,
+              "price": 15.52
+            },
+            {
+              "month": "2016-12",
+              "index": 249.92,
+              "price": 16.52
+            },
+            {
+              "month": "2017-01",
+              "index": 234.64,
+              "price": 15.51
+            },
+            {
+              "month": "2017-02",
+              "index": 263.84,
+              "price": 17.44
+            },
+            {
+              "month": "2017-03",
+              "index": 267.47,
+              "price": 17.68
+            },
+            {
+              "month": "2017-04",
+              "index": 255.82,
+              "price": 16.91
+            },
+            {
+              "month": "2017-05",
+              "index": 205.75,
+              "price": 13.6
+            },
+            {
+              "month": "2017-06",
+              "index": 252.95,
+              "price": 16.72
+            },
+            {
+              "month": "2017-07",
+              "index": 268.68,
+              "price": 17.76
+            },
+            {
+              "month": "2017-08",
+              "index": 242.97,
+              "price": 16.06
+            },
+            {
+              "month": "2017-09",
+              "index": 228.44,
+              "price": 15.1
+            },
+            {
+              "month": "2017-10",
+              "index": 220.12,
+              "price": 14.55
+            },
+            {
+              "month": "2017-11",
+              "index": 205.45,
+              "price": 13.58
+            },
+            {
+              "month": "2017-12",
+              "index": 203.33,
+              "price": 13.44
+            },
+            {
+              "month": "2018-01",
+              "index": 207.41,
+              "price": 13.71
+            },
+            {
+              "month": "2018-02",
+              "index": 223,
+              "price": 14.74
+            },
+            {
+              "month": "2018-03",
+              "index": 198.79,
+              "price": 13.14
+            },
+            {
+              "month": "2018-04",
+              "index": 161.27,
+              "price": 10.66
+            },
+            {
+              "month": "2018-05",
+              "index": 147.5,
+              "price": 9.75
+            },
+            {
+              "month": "2018-06",
+              "index": 129.05,
+              "price": 8.53
+            },
+            {
+              "month": "2018-07",
+              "index": 137.67,
+              "price": 9.1
+            },
+            {
+              "month": "2018-08",
+              "index": 121.03,
+              "price": 8
+            },
+            {
+              "month": "2018-09",
+              "index": 126.17,
+              "price": 8.34
+            },
+            {
+              "month": "2018-10",
+              "index": 113.46,
+              "price": 7.5
+            },
+            {
+              "month": "2018-11",
+              "index": 111.2,
+              "price": 7.35
+            },
+            {
+              "month": "2018-12",
+              "index": 113.01,
+              "price": 7.47
+            },
+            {
+              "month": "2019-01",
+              "index": 99.85,
+              "price": 6.6
+            },
+            {
+              "month": "2019-02",
+              "index": 119.06,
+              "price": 7.87
+            },
+            {
+              "month": "2019-03",
+              "index": 123.9,
+              "price": 8.19
+            },
+            {
+              "month": "2019-04",
+              "index": 116.19,
+              "price": 7.68
+            },
+            {
+              "month": "2019-05",
+              "index": 117.7,
+              "price": 7.78
+            },
+            {
+              "month": "2019-06",
+              "index": 118.91,
+              "price": 7.86
+            },
+            {
+              "month": "2019-07",
+              "index": 123.45,
+              "price": 8.16
+            },
+            {
+              "month": "2019-08",
+              "index": 116.64,
+              "price": 7.71
+            },
+            {
+              "month": "2019-09",
+              "index": 112.56,
+              "price": 7.44
+            },
+            {
+              "month": "2019-10",
+              "index": 106.51,
+              "price": 7.04
+            },
+            {
+              "month": "2019-11",
+              "index": 101.97,
+              "price": 6.74
+            },
+            {
+              "month": "2019-12",
+              "index": 106.35,
+              "price": 7.03
+            },
+            {
+              "month": "2020-01",
+              "index": 100.15,
+              "price": 6.62
+            },
+            {
+              "month": "2020-02",
+              "index": 101.66,
+              "price": 6.72
+            },
+            {
+              "month": "2020-03",
+              "index": 119.36,
+              "price": 7.89
+            },
+            {
+              "month": "2020-04",
+              "index": 130.41,
+              "price": 8.62
+            },
+            {
+              "month": "2020-05",
+              "index": 119.36,
+              "price": 7.89
+            },
+            {
+              "month": "2020-06",
+              "index": 118.76,
+              "price": 7.85
+            },
+            {
+              "month": "2020-07",
+              "index": 140.54,
+              "price": 9.29
+            },
+            {
+              "month": "2020-08",
+              "index": 135.55,
+              "price": 8.96
+            },
+            {
+              "month": "2020-09",
+              "index": 126.17,
+              "price": 8.34
+            },
+            {
+              "month": "2020-10",
+              "index": 126.63,
+              "price": 8.37
+            },
+            {
+              "month": "2020-11",
+              "index": 152.8,
+              "price": 10.1
+            },
+            {
+              "month": "2020-12",
+              "index": 129.65,
+              "price": 8.57
+            },
+            {
+              "month": "2021-01",
+              "index": 139.18,
+              "price": 9.2
+            },
+            {
+              "month": "2021-02",
+              "index": 148.41,
+              "price": 9.81
+            },
+            {
+              "month": "2021-03",
+              "index": 142.81,
+              "price": 9.44
+            },
+            {
+              "month": "2021-04",
+              "index": 129.05,
+              "price": 8.53
+            },
+            {
+              "month": "2021-05",
+              "index": 156.43,
+              "price": 10.34
+            },
+            {
+              "month": "2021-06",
+              "index": 210.74,
+              "price": 13.93
+            },
+            {
+              "month": "2021-07",
+              "index": 231.77,
+              "price": 15.32
+            },
+            {
+              "month": "2021-08",
+              "index": 361.42,
+              "price": 23.89
+            },
+            {
+              "month": "2021-09",
+              "index": 297.28,
+              "price": 19.65
+            },
+            {
+              "month": "2021-10",
+              "index": 286.99,
+              "price": 18.97
+            },
+            {
+              "month": "2021-11",
+              "index": 261.27,
+              "price": 17.27
+            },
+            {
+              "month": "2021-12",
+              "index": 239.18,
+              "price": 15.81
+            },
+            {
+              "month": "2022-01",
+              "index": 209.08,
+              "price": 13.82
+            },
+            {
+              "month": "2022-02",
+              "index": 253.1,
+              "price": 16.73
+            },
+            {
+              "month": "2022-03",
+              "index": 274.13,
+              "price": 18.12
+            },
+            {
+              "month": "2022-04",
+              "index": 185.63,
+              "price": 12.27
+            },
+            {
+              "month": "2022-05",
+              "index": 208.02,
+              "price": 13.75
+            },
+            {
+              "month": "2022-06",
+              "index": 226.63,
+              "price": 14.98
+            },
+            {
+              "month": "2022-07",
+              "index": 231.92,
+              "price": 15.33
+            },
+            {
+              "month": "2022-08",
+              "index": 217.7,
+              "price": 14.39
+            },
+            {
+              "month": "2022-09",
+              "index": 189.41,
+              "price": 12.52
+            },
+            {
+              "month": "2022-10",
+              "index": 199.24,
+              "price": 13.17
+            },
+            {
+              "month": "2022-11",
+              "index": 209.83,
+              "price": 13.87
+            },
+            {
+              "month": "2022-12",
+              "index": 201.06,
+              "price": 13.29
+            },
+            {
+              "month": "2023-01",
+              "index": 225.26,
+              "price": 14.89
+            },
+            {
+              "month": "2023-02",
+              "index": 218.15,
+              "price": 14.42
+            },
+            {
+              "month": "2023-03",
+              "index": 201.21,
+              "price": 13.3
+            },
+            {
+              "month": "2023-04",
+              "index": 170.2,
+              "price": 11.25
+            },
+            {
+              "month": "2023-05",
+              "index": 165.36,
+              "price": 10.93
+            },
+            {
+              "month": "2023-06",
+              "index": 170.65,
+              "price": 11.28
+            },
+            {
+              "month": "2023-07",
+              "index": 179.27,
+              "price": 11.85
+            },
+            {
+              "month": "2023-08",
+              "index": 169.59,
+              "price": 11.21
+            },
+            {
+              "month": "2023-09",
+              "index": 164.9,
+              "price": 10.9
+            },
+            {
+              "month": "2023-10",
+              "index": 165.36,
+              "price": 10.93
+            },
+            {
+              "month": "2023-11",
+              "index": 173.98,
+              "price": 11.5
+            },
+            {
+              "month": "2023-12",
+              "index": 174.28,
+              "price": 11.52
+            },
+            {
+              "month": "2024-01",
+              "index": 137.37,
+              "price": 9.08
+            },
+            {
+              "month": "2024-02",
+              "index": 140.85,
+              "price": 9.31
+            },
+            {
+              "month": "2024-03",
+              "index": 139.03,
+              "price": 9.19
+            },
+            {
+              "month": "2024-04",
+              "index": 161.88,
+              "price": 10.7
+            },
+            {
+              "month": "2024-05",
+              "index": 156.43,
+              "price": 10.34
+            },
+            {
+              "month": "2024-06",
+              "index": 137.07,
+              "price": 9.06
+            },
+            {
+              "month": "2024-07",
+              "index": 141,
+              "price": 9.32
+            },
+            {
+              "month": "2024-08",
+              "index": 133.89,
+              "price": 8.85
+            },
+            {
+              "month": "2024-09",
+              "index": 152.8,
+              "price": 10.1
+            },
+            {
+              "month": "2024-10",
+              "index": 155.07,
+              "price": 10.25
+            },
+            {
+              "month": "2024-11",
+              "index": 165.66,
+              "price": 10.95
+            },
+            {
+              "month": "2024-12",
+              "index": 147.5,
+              "price": 9.75
+            },
+            {
+              "month": "2025-01",
+              "index": 146.29,
+              "price": 9.67
+            },
+            {
+              "month": "2025-02",
+              "index": 147.2,
+              "price": 9.73
+            },
+            {
+              "month": "2025-03",
+              "index": 150.98,
+              "price": 9.98
+            },
+            {
+              "month": "2025-04",
+              "index": 135.25,
+              "price": 8.94
+            },
+            {
+              "month": "2025-05",
+              "index": 165.96,
+              "price": 10.97
+            },
+            {
+              "month": "2025-06",
+              "index": 162.33,
+              "price": 10.73
+            },
+            {
+              "month": "2025-07",
+              "index": 156.73,
+              "price": 10.36
+            },
+            {
+              "month": "2025-08",
+              "index": 165.36,
+              "price": 10.93
+            },
+            {
+              "month": "2025-09",
+              "index": 165.05,
+              "price": 10.91
+            },
+            {
+              "month": "2025-10",
+              "index": 177.61,
+              "price": 11.74
+            },
+            {
+              "month": "2025-11",
+              "index": 206.66,
+              "price": 13.66
+            },
+            {
+              "month": "2025-12",
+              "index": 183.66,
+              "price": 12.14
+            },
+            {
+              "month": "2026-01",
+              "index": 200.15,
+              "price": 13.23
+            },
+            {
+              "month": "2026-02",
+              "index": 219.97,
+              "price": 14.54
+            },
+            {
+              "month": "2026-03",
+              "index": 191.07,
+              "price": 12.63
+            },
+            {
+              "month": "2026-04",
+              "index": 228.29,
+              "price": 15.09
+            },
+            {
+              "month": "2026-05",
+              "index": 202.12,
+              "price": 13.36
+            },
+            {
+              "month": "2026-06",
+              "index": 197.88,
+              "price": 13.08
+            },
+            {
+              "month": "2026-07",
+              "index": 182.45,
+              "price": 12.06
+            },
+            {
+              "month": "2026-08",
+              "index": 195.92,
+              "price": 12.95
+            },
+            {
+              "month": "2026-09",
+              "index": 177.76,
+              "price": 11.75
+            },
+            {
+              "month": "2026-10",
+              "index": 147.81,
+              "price": 9.77
+            }
+          ]
         }
       ],
-      "status": "pending",
-      "note": "钛白粉价格上行可能改善产品售价，需同时观察钛矿、硫酸等成本。"
+      "status": "stock-only",
+      "note": "钛白粉价格上行可能改善产品售价，需同时观察钛矿、硫酸等成本。 商品历史月线尚未接入；图表仅展示关联股票前复权月K，各股票分别以自身首月归一化为100，不代表商品与股票价格比较。"
     },
     {
       "id": "maleic-anhydride",
@@ -5709,7 +9127,201 @@
       "latestPrice": null,
       "latestDate": null,
       "productChange": null,
-      "months": [],
+      "months": [
+        "2010-05",
+        "2010-06",
+        "2010-07",
+        "2010-08",
+        "2010-09",
+        "2010-10",
+        "2010-11",
+        "2010-12",
+        "2011-01",
+        "2011-02",
+        "2011-03",
+        "2011-04",
+        "2011-05",
+        "2011-06",
+        "2011-07",
+        "2011-08",
+        "2011-09",
+        "2011-10",
+        "2011-11",
+        "2011-12",
+        "2012-01",
+        "2012-02",
+        "2012-03",
+        "2012-04",
+        "2012-05",
+        "2012-06",
+        "2012-07",
+        "2012-08",
+        "2012-09",
+        "2012-10",
+        "2012-11",
+        "2012-12",
+        "2013-01",
+        "2013-02",
+        "2013-03",
+        "2013-04",
+        "2013-05",
+        "2013-06",
+        "2013-07",
+        "2013-08",
+        "2013-09",
+        "2013-10",
+        "2013-11",
+        "2013-12",
+        "2014-01",
+        "2014-02",
+        "2014-03",
+        "2014-04",
+        "2014-05",
+        "2014-06",
+        "2014-07",
+        "2014-08",
+        "2014-09",
+        "2014-10",
+        "2014-11",
+        "2014-12",
+        "2015-01",
+        "2015-03",
+        "2015-04",
+        "2015-05",
+        "2015-06",
+        "2015-07",
+        "2015-08",
+        "2015-09",
+        "2015-10",
+        "2015-11",
+        "2015-12",
+        "2016-01",
+        "2016-02",
+        "2016-03",
+        "2016-04",
+        "2016-05",
+        "2016-06",
+        "2016-07",
+        "2016-08",
+        "2016-09",
+        "2016-10",
+        "2016-11",
+        "2016-12",
+        "2017-01",
+        "2017-02",
+        "2017-03",
+        "2017-04",
+        "2017-05",
+        "2017-06",
+        "2017-07",
+        "2017-08",
+        "2017-09",
+        "2017-10",
+        "2017-11",
+        "2017-12",
+        "2018-01",
+        "2018-02",
+        "2018-03",
+        "2018-04",
+        "2018-05",
+        "2018-06",
+        "2018-11",
+        "2018-12",
+        "2019-01",
+        "2019-02",
+        "2019-03",
+        "2019-04",
+        "2019-05",
+        "2019-06",
+        "2019-07",
+        "2019-08",
+        "2019-09",
+        "2019-10",
+        "2019-11",
+        "2019-12",
+        "2020-01",
+        "2020-02",
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12",
+        "2022-01",
+        "2022-02",
+        "2022-03",
+        "2022-04",
+        "2022-05",
+        "2022-06",
+        "2022-07",
+        "2022-08",
+        "2022-09",
+        "2022-10",
+        "2022-11",
+        "2022-12",
+        "2023-01",
+        "2023-02",
+        "2023-03",
+        "2023-04",
+        "2023-05",
+        "2023-06",
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2023-12",
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12",
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
       "productSeries": [],
       "stocks": [
         {
@@ -5722,55 +9334,1202 @@
           "source": "月K",
           "latestDate": "2026-10-30",
           "latestClose": 4.27,
-          "changePct": null,
-          "values": []
+          "changePct": 75.29,
+          "values": [
+            {
+              "month": "2010-05",
+              "index": 100,
+              "price": 2.436
+            },
+            {
+              "month": "2010-06",
+              "index": 87.23,
+              "price": 2.125
+            },
+            {
+              "month": "2010-07",
+              "index": 104.23,
+              "price": 2.539
+            },
+            {
+              "month": "2010-08",
+              "index": 131.81,
+              "price": 3.211
+            },
+            {
+              "month": "2010-09",
+              "index": 141.09,
+              "price": 3.437
+            },
+            {
+              "month": "2010-10",
+              "index": 180.05,
+              "price": 4.386
+            },
+            {
+              "month": "2010-11",
+              "index": 199.34,
+              "price": 4.856
+            },
+            {
+              "month": "2010-12",
+              "index": 169.75,
+              "price": 4.135
+            },
+            {
+              "month": "2011-01",
+              "index": 175.74,
+              "price": 4.281
+            },
+            {
+              "month": "2011-02",
+              "index": 202.3,
+              "price": 4.928
+            },
+            {
+              "month": "2011-03",
+              "index": 242.9,
+              "price": 5.917
+            },
+            {
+              "month": "2011-04",
+              "index": 299.38,
+              "price": 7.293
+            },
+            {
+              "month": "2011-05",
+              "index": 227.96,
+              "price": 5.553
+            },
+            {
+              "month": "2011-06",
+              "index": 261.37,
+              "price": 6.367
+            },
+            {
+              "month": "2011-07",
+              "index": 268.19,
+              "price": 6.533
+            },
+            {
+              "month": "2011-08",
+              "index": 233.46,
+              "price": 5.687
+            },
+            {
+              "month": "2011-09",
+              "index": 219.46,
+              "price": 5.346
+            },
+            {
+              "month": "2011-10",
+              "index": 181.57,
+              "price": 4.423
+            },
+            {
+              "month": "2011-11",
+              "index": 147.87,
+              "price": 3.602
+            },
+            {
+              "month": "2011-12",
+              "index": 132.64,
+              "price": 3.231
+            },
+            {
+              "month": "2012-01",
+              "index": 160.55,
+              "price": 3.911
+            },
+            {
+              "month": "2012-02",
+              "index": 171.92,
+              "price": 4.188
+            },
+            {
+              "month": "2012-03",
+              "index": 151.48,
+              "price": 3.69
+            },
+            {
+              "month": "2012-04",
+              "index": 153.74,
+              "price": 3.745
+            },
+            {
+              "month": "2012-05",
+              "index": 153.08,
+              "price": 3.729
+            },
+            {
+              "month": "2012-06",
+              "index": 147.62,
+              "price": 3.596
+            },
+            {
+              "month": "2012-07",
+              "index": 144.54,
+              "price": 3.521
+            },
+            {
+              "month": "2012-08",
+              "index": 126.03,
+              "price": 3.07
+            },
+            {
+              "month": "2012-09",
+              "index": 126.15,
+              "price": 3.073
+            },
+            {
+              "month": "2012-10",
+              "index": 119.66,
+              "price": 2.915
+            },
+            {
+              "month": "2012-11",
+              "index": 107.76,
+              "price": 2.625
+            },
+            {
+              "month": "2012-12",
+              "index": 153.28,
+              "price": 3.734
+            },
+            {
+              "month": "2013-01",
+              "index": 152.63,
+              "price": 3.718
+            },
+            {
+              "month": "2013-02",
+              "index": 169.66,
+              "price": 4.133
+            },
+            {
+              "month": "2013-03",
+              "index": 141.01,
+              "price": 3.435
+            },
+            {
+              "month": "2013-04",
+              "index": 139,
+              "price": 3.386
+            },
+            {
+              "month": "2013-05",
+              "index": 139,
+              "price": 3.386
+            },
+            {
+              "month": "2013-06",
+              "index": 94.66,
+              "price": 2.306
+            },
+            {
+              "month": "2013-07",
+              "index": 103.53,
+              "price": 2.522
+            },
+            {
+              "month": "2013-08",
+              "index": 107.84,
+              "price": 2.627
+            },
+            {
+              "month": "2013-09",
+              "index": 123.4,
+              "price": 3.006
+            },
+            {
+              "month": "2013-10",
+              "index": 117.41,
+              "price": 2.86
+            },
+            {
+              "month": "2013-11",
+              "index": 132.39,
+              "price": 3.225
+            },
+            {
+              "month": "2013-12",
+              "index": 127.05,
+              "price": 3.095
+            },
+            {
+              "month": "2014-01",
+              "index": 116.83,
+              "price": 2.846
+            },
+            {
+              "month": "2014-02",
+              "index": 133.42,
+              "price": 3.25
+            },
+            {
+              "month": "2014-03",
+              "index": 123.19,
+              "price": 3.001
+            },
+            {
+              "month": "2014-04",
+              "index": 120.57,
+              "price": 2.937
+            },
+            {
+              "month": "2014-05",
+              "index": 118.76,
+              "price": 2.893
+            },
+            {
+              "month": "2014-06",
+              "index": 124.79,
+              "price": 3.04
+            },
+            {
+              "month": "2014-07",
+              "index": 153.28,
+              "price": 3.734
+            },
+            {
+              "month": "2014-08",
+              "index": 145.57,
+              "price": 3.546
+            },
+            {
+              "month": "2014-09",
+              "index": 147.95,
+              "price": 3.604
+            },
+            {
+              "month": "2014-10",
+              "index": 172.37,
+              "price": 4.199
+            },
+            {
+              "month": "2014-11",
+              "index": 163.88,
+              "price": 3.992
+            },
+            {
+              "month": "2014-12",
+              "index": 152.05,
+              "price": 3.704
+            },
+            {
+              "month": "2015-01",
+              "index": 164.53,
+              "price": 4.008
+            },
+            {
+              "month": "2015-03",
+              "index": 200.66,
+              "price": 4.888
+            },
+            {
+              "month": "2015-04",
+              "index": 247.45,
+              "price": 6.028
+            },
+            {
+              "month": "2015-05",
+              "index": 252.34,
+              "price": 6.147
+            },
+            {
+              "month": "2015-06",
+              "index": 195.36,
+              "price": 4.759
+            },
+            {
+              "month": "2015-07",
+              "index": 146.18,
+              "price": 3.561
+            },
+            {
+              "month": "2015-08",
+              "index": 121.51,
+              "price": 2.96
+            },
+            {
+              "month": "2015-09",
+              "index": 109.4,
+              "price": 2.665
+            },
+            {
+              "month": "2015-10",
+              "index": 132.18,
+              "price": 3.22
+            },
+            {
+              "month": "2015-11",
+              "index": 133.37,
+              "price": 3.249
+            },
+            {
+              "month": "2015-12",
+              "index": 144.33,
+              "price": 3.516
+            },
+            {
+              "month": "2016-01",
+              "index": 95.69,
+              "price": 2.331
+            },
+            {
+              "month": "2016-02",
+              "index": 126.48,
+              "price": 3.081
+            },
+            {
+              "month": "2016-03",
+              "index": 143.51,
+              "price": 3.496
+            },
+            {
+              "month": "2016-04",
+              "index": 128.45,
+              "price": 3.129
+            },
+            {
+              "month": "2016-05",
+              "index": 128.98,
+              "price": 3.142
+            },
+            {
+              "month": "2016-06",
+              "index": 130.58,
+              "price": 3.181
+            },
+            {
+              "month": "2016-07",
+              "index": 134.07,
+              "price": 3.266
+            },
+            {
+              "month": "2016-08",
+              "index": 148.73,
+              "price": 3.623
+            },
+            {
+              "month": "2016-09",
+              "index": 140.52,
+              "price": 3.423
+            },
+            {
+              "month": "2016-10",
+              "index": 165.76,
+              "price": 4.038
+            },
+            {
+              "month": "2016-11",
+              "index": 303.57,
+              "price": 7.395
+            },
+            {
+              "month": "2016-12",
+              "index": 292.12,
+              "price": 7.116
+            },
+            {
+              "month": "2017-01",
+              "index": 251.97,
+              "price": 6.138
+            },
+            {
+              "month": "2017-02",
+              "index": 266.34,
+              "price": 6.488
+            },
+            {
+              "month": "2017-03",
+              "index": 255.17,
+              "price": 6.216
+            },
+            {
+              "month": "2017-04",
+              "index": 251.35,
+              "price": 6.123
+            },
+            {
+              "month": "2017-05",
+              "index": 264.29,
+              "price": 6.438
+            },
+            {
+              "month": "2017-06",
+              "index": 295.94,
+              "price": 7.209
+            },
+            {
+              "month": "2017-07",
+              "index": 299.47,
+              "price": 7.295
+            },
+            {
+              "month": "2017-08",
+              "index": 332.31,
+              "price": 8.095
+            },
+            {
+              "month": "2017-09",
+              "index": 331.4,
+              "price": 8.073
+            },
+            {
+              "month": "2017-10",
+              "index": 318.8,
+              "price": 7.766
+            },
+            {
+              "month": "2017-11",
+              "index": 326.44,
+              "price": 7.952
+            },
+            {
+              "month": "2017-12",
+              "index": 342.86,
+              "price": 8.352
+            },
+            {
+              "month": "2018-01",
+              "index": 356.94,
+              "price": 8.695
+            },
+            {
+              "month": "2018-02",
+              "index": 351.93,
+              "price": 8.573
+            },
+            {
+              "month": "2018-03",
+              "index": 357.22,
+              "price": 8.702
+            },
+            {
+              "month": "2018-04",
+              "index": 377.18,
+              "price": 9.188
+            },
+            {
+              "month": "2018-05",
+              "index": 373.36,
+              "price": 9.095
+            },
+            {
+              "month": "2018-06",
+              "index": 334.65,
+              "price": 8.152
+            },
+            {
+              "month": "2018-11",
+              "index": 208.87,
+              "price": 5.088
+            },
+            {
+              "month": "2018-12",
+              "index": 175.12,
+              "price": 4.266
+            },
+            {
+              "month": "2019-01",
+              "index": 156.65,
+              "price": 3.816
+            },
+            {
+              "month": "2019-02",
+              "index": 206.2,
+              "price": 5.023
+            },
+            {
+              "month": "2019-03",
+              "index": 218.84,
+              "price": 5.331
+            },
+            {
+              "month": "2019-04",
+              "index": 236.41,
+              "price": 5.759
+            },
+            {
+              "month": "2019-05",
+              "index": 215.31,
+              "price": 5.245
+            },
+            {
+              "month": "2019-06",
+              "index": 204.47,
+              "price": 4.981
+            },
+            {
+              "month": "2019-07",
+              "index": 199.18,
+              "price": 4.852
+            },
+            {
+              "month": "2019-08",
+              "index": 170.73,
+              "price": 4.159
+            },
+            {
+              "month": "2019-09",
+              "index": 179.23,
+              "price": 4.366
+            },
+            {
+              "month": "2019-10",
+              "index": 182.47,
+              "price": 4.445
+            },
+            {
+              "month": "2019-11",
+              "index": 189.78,
+              "price": 4.623
+            },
+            {
+              "month": "2019-12",
+              "index": 186.86,
+              "price": 4.552
+            },
+            {
+              "month": "2020-01",
+              "index": 181.28,
+              "price": 4.416
+            },
+            {
+              "month": "2020-02",
+              "index": 157.55,
+              "price": 3.838
+            },
+            {
+              "month": "2020-03",
+              "index": 151.4,
+              "price": 3.688
+            },
+            {
+              "month": "2020-04",
+              "index": 149.92,
+              "price": 3.652
+            },
+            {
+              "month": "2020-05",
+              "index": 148.73,
+              "price": 3.623
+            },
+            {
+              "month": "2020-06",
+              "index": 159.32,
+              "price": 3.881
+            },
+            {
+              "month": "2020-07",
+              "index": 205.58,
+              "price": 5.008
+            },
+            {
+              "month": "2020-08",
+              "index": 238.14,
+              "price": 5.801
+            },
+            {
+              "month": "2020-09",
+              "index": 184.2,
+              "price": 4.487
+            },
+            {
+              "month": "2020-10",
+              "index": 220.85,
+              "price": 5.38
+            },
+            {
+              "month": "2020-11",
+              "index": 256.9,
+              "price": 6.258
+            },
+            {
+              "month": "2020-12",
+              "index": 224.67,
+              "price": 5.473
+            },
+            {
+              "month": "2021-01",
+              "index": 256.61,
+              "price": 6.251
+            },
+            {
+              "month": "2021-02",
+              "index": 237.85,
+              "price": 5.794
+            },
+            {
+              "month": "2021-03",
+              "index": 241.67,
+              "price": 5.887
+            },
+            {
+              "month": "2021-04",
+              "index": 261.9,
+              "price": 6.38
+            },
+            {
+              "month": "2021-05",
+              "index": 316.71,
+              "price": 7.715
+            },
+            {
+              "month": "2021-06",
+              "index": 351.07,
+              "price": 8.552
+            },
+            {
+              "month": "2021-07",
+              "index": 336.12,
+              "price": 8.188
+            },
+            {
+              "month": "2021-08",
+              "index": 397.99,
+              "price": 9.695
+            },
+            {
+              "month": "2021-09",
+              "index": 485.26,
+              "price": 11.821
+            },
+            {
+              "month": "2021-10",
+              "index": 447.09,
+              "price": 10.891
+            },
+            {
+              "month": "2021-11",
+              "index": 394.95,
+              "price": 9.621
+            },
+            {
+              "month": "2021-12",
+              "index": 417.94,
+              "price": 10.181
+            },
+            {
+              "month": "2022-01",
+              "index": 365.39,
+              "price": 8.901
+            },
+            {
+              "month": "2022-02",
+              "index": 380.99,
+              "price": 9.281
+            },
+            {
+              "month": "2022-03",
+              "index": 336.66,
+              "price": 8.201
+            },
+            {
+              "month": "2022-04",
+              "index": 278.78,
+              "price": 6.791
+            },
+            {
+              "month": "2022-05",
+              "index": 311.62,
+              "price": 7.591
+            },
+            {
+              "month": "2022-06",
+              "index": 319.83,
+              "price": 7.791
+            },
+            {
+              "month": "2022-07",
+              "index": 295.2,
+              "price": 7.191
+            },
+            {
+              "month": "2022-08",
+              "index": 287.81,
+              "price": 7.011
+            },
+            {
+              "month": "2022-09",
+              "index": 268.51,
+              "price": 6.541
+            },
+            {
+              "month": "2022-10",
+              "index": 265.23,
+              "price": 6.461
+            },
+            {
+              "month": "2022-11",
+              "index": 293.14,
+              "price": 7.141
+            },
+            {
+              "month": "2022-12",
+              "index": 275.9,
+              "price": 6.721
+            },
+            {
+              "month": "2023-01",
+              "index": 284.93,
+              "price": 6.941
+            },
+            {
+              "month": "2023-02",
+              "index": 282.47,
+              "price": 6.881
+            },
+            {
+              "month": "2023-03",
+              "index": 281.24,
+              "price": 6.851
+            },
+            {
+              "month": "2023-04",
+              "index": 279.19,
+              "price": 6.801
+            },
+            {
+              "month": "2023-05",
+              "index": 245.94,
+              "price": 5.991
+            },
+            {
+              "month": "2023-06",
+              "index": 248.4,
+              "price": 6.051
+            },
+            {
+              "month": "2023-07",
+              "index": 264.41,
+              "price": 6.441
+            },
+            {
+              "month": "2023-08",
+              "index": 245.11,
+              "price": 5.971
+            },
+            {
+              "month": "2023-09",
+              "index": 257.02,
+              "price": 6.261
+            },
+            {
+              "month": "2023-10",
+              "index": 233.62,
+              "price": 5.691
+            },
+            {
+              "month": "2023-11",
+              "index": 223.36,
+              "price": 5.441
+            },
+            {
+              "month": "2023-12",
+              "index": 210.22,
+              "price": 5.121
+            },
+            {
+              "month": "2024-01",
+              "index": 177.79,
+              "price": 4.331
+            },
+            {
+              "month": "2024-02",
+              "index": 197.5,
+              "price": 4.811
+            },
+            {
+              "month": "2024-03",
+              "index": 196.26,
+              "price": 4.781
+            },
+            {
+              "month": "2024-04",
+              "index": 214.74,
+              "price": 5.231
+            },
+            {
+              "month": "2024-05",
+              "index": 217.2,
+              "price": 5.291
+            },
+            {
+              "month": "2024-06",
+              "index": 226.23,
+              "price": 5.511
+            },
+            {
+              "month": "2024-07",
+              "index": 214.33,
+              "price": 5.221
+            },
+            {
+              "month": "2024-08",
+              "index": 213.51,
+              "price": 5.201
+            },
+            {
+              "month": "2024-09",
+              "index": 232.8,
+              "price": 5.671
+            },
+            {
+              "month": "2024-10",
+              "index": 211.45,
+              "price": 5.151
+            },
+            {
+              "month": "2024-11",
+              "index": 213.51,
+              "price": 5.201
+            },
+            {
+              "month": "2024-12",
+              "index": 205.25,
+              "price": 5
+            },
+            {
+              "month": "2025-01",
+              "index": 197.45,
+              "price": 4.81
+            },
+            {
+              "month": "2025-02",
+              "index": 193.35,
+              "price": 4.71
+            },
+            {
+              "month": "2025-03",
+              "index": 194.99,
+              "price": 4.75
+            },
+            {
+              "month": "2025-04",
+              "index": 181.44,
+              "price": 4.42
+            },
+            {
+              "month": "2025-05",
+              "index": 185.96,
+              "price": 4.53
+            },
+            {
+              "month": "2025-06",
+              "index": 183.91,
+              "price": 4.48
+            },
+            {
+              "month": "2025-07",
+              "index": 206.9,
+              "price": 5.04
+            },
+            {
+              "month": "2025-08",
+              "index": 207.72,
+              "price": 5.06
+            },
+            {
+              "month": "2025-09",
+              "index": 197.87,
+              "price": 4.82
+            },
+            {
+              "month": "2025-10",
+              "index": 197.45,
+              "price": 4.81
+            },
+            {
+              "month": "2025-11",
+              "index": 198.69,
+              "price": 4.84
+            },
+            {
+              "month": "2025-12",
+              "index": 200.33,
+              "price": 4.88
+            },
+            {
+              "month": "2026-01",
+              "index": 242.2,
+              "price": 5.9
+            },
+            {
+              "month": "2026-02",
+              "index": 248.77,
+              "price": 6.06
+            },
+            {
+              "month": "2026-03",
+              "index": 243.02,
+              "price": 5.92
+            },
+            {
+              "month": "2026-04",
+              "index": 270.11,
+              "price": 6.58
+            },
+            {
+              "month": "2026-05",
+              "index": 209.36,
+              "price": 5.1
+            },
+            {
+              "month": "2026-06",
+              "index": 192.53,
+              "price": 4.69
+            },
+            {
+              "month": "2026-07",
+              "index": 207.72,
+              "price": 5.06
+            },
+            {
+              "month": "2026-08",
+              "index": 228.65,
+              "price": 5.57
+            },
+            {
+              "month": "2026-09",
+              "index": 214.29,
+              "price": 5.22
+            },
+            {
+              "month": "2026-10",
+              "index": 175.29,
+              "price": 4.27
+            }
+          ]
         }
       ],
-      "status": "pending",
-      "note": "齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。"
+      "status": "stock-only",
+      "note": "齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。 商品历史月线尚未接入；图表仅展示关联股票前复权月K，各股票分别以自身首月归一化为100，不代表商品与股票价格比较。"
     },
     {
-      "id": "rare-earth",
-      "name": "稀土（氧化镨钕）",
+      "id": "coal",
+      "name": "动力煤",
       "unit": "元/吨",
-      "source": null,
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
-      "sourceUrl": "https://www.100ppi.com/",
-      "latestPrice": null,
-      "latestDate": null,
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "latestPrice": 842.75,
+      "latestDate": "2026-10-31",
       "productChange": null,
-      "months": [],
+      "months": [
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12",
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
       "productSeries": [],
       "stocks": [
         {
-          "code": "sh600111",
-          "name": "北方稀土",
-          "group": "稀土钨",
+          "code": "sh600348",
+          "name": "华阳股份",
+          "group": "能源",
           "role": "producer",
           "roleLabel": "产品端",
-          "mainRatio": 1.7337,
+          "mainRatio": 0.8604,
           "source": "月K",
           "latestDate": "2026-10",
-          "latestClose": 34.21,
-          "changePct": null,
-          "values": []
-        },
-        {
-          "code": "sh600392",
-          "name": "盛和资源",
-          "group": "稀土钨",
-          "role": "mixed",
-          "roleLabel": "多因素",
-          "mainRatio": null,
-          "source": "月K",
-          "latestDate": "2026-10-30",
-          "latestClose": 14.64,
-          "changePct": null,
-          "values": []
+          "latestClose": 8.73,
+          "changePct": 7.57,
+          "values": [
+            {
+              "month": "2024-03",
+              "index": 100,
+              "price": 8.116
+            },
+            {
+              "month": "2024-04",
+              "index": 100.86,
+              "price": 8.186
+            },
+            {
+              "month": "2024-05",
+              "index": 119.71,
+              "price": 9.716
+            },
+            {
+              "month": "2024-06",
+              "index": 107.15,
+              "price": 8.696
+            },
+            {
+              "month": "2024-07",
+              "index": 81.62,
+              "price": 6.624
+            },
+            {
+              "month": "2024-08",
+              "index": 82.11,
+              "price": 6.664
+            },
+            {
+              "month": "2024-09",
+              "index": 97.63,
+              "price": 7.924
+            },
+            {
+              "month": "2024-10",
+              "index": 85.44,
+              "price": 6.934
+            },
+            {
+              "month": "2024-11",
+              "index": 85.07,
+              "price": 6.904
+            },
+            {
+              "month": "2024-12",
+              "index": 80.63,
+              "price": 6.544
+            },
+            {
+              "month": "2025-01",
+              "index": 76.69,
+              "price": 6.224
+            },
+            {
+              "month": "2025-02",
+              "index": 72.38,
+              "price": 5.874
+            },
+            {
+              "month": "2025-03",
+              "index": 76.32,
+              "price": 6.194
+            },
+            {
+              "month": "2025-04",
+              "index": 73.98,
+              "price": 6.004
+            },
+            {
+              "month": "2025-05",
+              "index": 74.84,
+              "price": 6.074
+            },
+            {
+              "month": "2025-06",
+              "index": 75.33,
+              "price": 6.114
+            },
+            {
+              "month": "2025-07",
+              "index": 81.36,
+              "price": 6.603
+            },
+            {
+              "month": "2025-08",
+              "index": 83.58,
+              "price": 6.783
+            },
+            {
+              "month": "2025-09",
+              "index": 87.89,
+              "price": 7.133
+            },
+            {
+              "month": "2025-10",
+              "index": 95.65,
+              "price": 7.763
+            },
+            {
+              "month": "2025-11",
+              "index": 91.34,
+              "price": 7.413
+            },
+            {
+              "month": "2025-12",
+              "index": 98.85,
+              "price": 8.023
+            },
+            {
+              "month": "2026-01",
+              "index": 113.64,
+              "price": 9.223
+            },
+            {
+              "month": "2026-02",
+              "index": 121.4,
+              "price": 9.853
+            },
+            {
+              "month": "2026-03",
+              "index": 105.63,
+              "price": 8.573
+            },
+            {
+              "month": "2026-04",
+              "index": 125.84,
+              "price": 10.213
+            },
+            {
+              "month": "2026-05",
+              "index": 111.55,
+              "price": 9.053
+            },
+            {
+              "month": "2026-06",
+              "index": 91.34,
+              "price": 7.413
+            },
+            {
+              "month": "2026-07",
+              "index": 106.21,
+              "price": 8.62
+            },
+            {
+              "month": "2026-08",
+              "index": 115.7,
+              "price": 9.39
+            },
+            {
+              "month": "2026-09",
+              "index": 109.41,
+              "price": 8.88
+            },
+            {
+              "month": "2026-10",
+              "index": 107.57,
+              "price": 8.73
+            }
+          ]
         }
       ],
-      "status": "pending",
-      "note": "氧化镨钕是稀土价格代理，不等于公司全部产品实现售价。 业务涉及稀土资源与分离加工，产品结构、原料来源会影响价格弹性。"
+      "status": "stock-only",
+      "note": "需区分动力煤与无烟煤/化工用煤，当前煤价序列仅作方向参考。 商品历史月线尚未接入；图表仅展示关联股票前复权月K，各股票分别以自身首月归一化为100，不代表商品与股票价格比较。"
     }
   ],
   "cards": [

@@ -84,3 +84,20 @@ test('productMonthly falls back to actual daily spot/futures when monthly K-line
     ['2026-01', 105], ['2026-02', 110]
   ]);
 });
+
+
+test('commodity database builder writes a dedicated page payload', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const root = path.resolve(__dirname, '..');
+  const { build } = require('../scripts/build_product_comparison');
+  const result = build();
+  const databasePath = path.join(root, 'data/commodity-db/index.json');
+  const database = JSON.parse(fs.readFileSync(databasePath, 'utf8'));
+  assert.equal(database.schemaVersion, 1);
+  assert.equal(database.productCount, database.commodityCards.length);
+  assert.equal(database.productCount, result.commodityCount);
+  assert.ok(database.productCount > 0);
+  assert.equal(Object.prototype.hasOwnProperty.call(database, 'cards'), false,
+    'the commodity page database must not duplicate the stock-only cards collection');
+});

@@ -384,7 +384,7 @@ function buildRow(stock) {
 
   return `
     <td>${nameHtml}</td>
-    <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
+    <td>${stock.group ? esc(stock.group) : '<span class="text-body-tertiary">—</span>'}</td>
     <td class="monthly-trend-cell">${monthlyTrend}</td>
     <td>${priceHtml}</td>
     <td>${entryHtml}${entryDiff}</td>

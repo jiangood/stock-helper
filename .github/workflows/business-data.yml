@@ -44,6 +44,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Test product monthly history selection
+        run: node scripts/test_product_comparison.js
       - name: Build stock product comparison
         run: node scripts/build_product_comparison.js
       - name: Commit refreshed data

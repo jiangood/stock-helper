@@ -35,7 +35,7 @@ function render(){
   chart.setOption({
    animation:false,
    grid:compactLegend
-    ?{left:12,right:12,top:12,bottom:48,containLabel:true}
+    ?{left:2,right:2,top:8,bottom:48,containLabel:false}
     :{left:12,right:12,top:38,bottom:34,containLabel:true},
    legend:compactLegend
     ?{type:'scroll',orient:'horizontal',left:8,right:8,bottom:2,itemGap:9,itemWidth:12,itemHeight:8,pageButtonItemGap:4,pageIconSize:9,textStyle:{fontSize:10,color:'inherit'},formatter:function(name){return name.length>5?name.slice(0,5)+'…':name;}}

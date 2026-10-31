@@ -53,11 +53,13 @@ python -m http.server 8089
 | `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
 | `.github/workflows/business-data.yml` | 工作日每日刷新一次商品数据，数据未变化时不更新文件，也支持手动触发 GitHub Actions |
 
-## 商品页面：主营产品价格与股价背离
+## 商品页面：商品与关联股票月线
 
-`products.html` 为独立页面，股票池 67 只股票每只一张卡片。主营产品名称优先取 `data/fundamentals.json` 的公开主营构成，代表性商品报价映射由 `data/stock-products.json` 明确维护。`scripts/build_product_comparison.js` 将商品日度参考价聚合为月末价格，并将股票月 K 与商品序列对齐到共同月份；若缺少月 K，则使用周 K 月末收盘聚合。两条序列均以首个共同月份 = 100，便于观察产品价格与股价是否背离。
+`products.html` 以商品为中心展示产业链观察卡片，而不是按股票拆成多张卡片。每个商品一张卡片，例如「纯碱」卡片会把纯碱月度参考价格、双环科技和中盐化工的复权月 K 放在同一张图中，使用统一月份横轴；每条序列都以共同起始月份 = 100 标准化，避免元/吨与股票价格共用绝对纵轴。
 
-商品与股票价格只作趋势对照，不代表利润传导或因果关系。产品映射未核实、商品历史不足或股票 K 线缺失时，页面明确显示待补充，不用相近商品或估算价格替代。商品工作流与静态缓存工作流都会重建 `data/product-comparison.json`，前端只读取同源静态 JSON。
+商品与股票的关联由 `data/stock-products.json` 明确维护，商品价格来自 `data/business-data.json`，股票月 K 来自 `data/stock-cache/`。`scripts/build_product_comparison.js` 生成 `data/product-comparison.json` 中的 `commodityCards`，把商品月末参考价与关联股票月 K 对齐到共同月份。商品和股票历史不足时明确显示数据缺失，不插值、不估算，也不以相近商品替代。
+
+图表仅作趋势观察，不代表利润传导或因果关系。商品价格不等于上市公司实际销售均价，关联公司还受其他产品、销量、成本、库存、合同定价、产能利用率等因素影响。商品工作流与静态缓存工作流都会重建比较数据，前端只读取同源静态 JSON。
 
 ## 生意 / 商品数据
 

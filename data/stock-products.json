@@ -9,10 +9,13 @@
       "note": "天然橡胶价格是核心产品价格代理，仍需结合加工、贸易业务占比。"
     },
     "sz002136": {
-      "productName": "钛白粉",
+      "productName": "钛白粉 / 磷酸铁",
       "marketItemId": "tio2",
+      "additionalMarketItemIds": [
+        "phosphate-iron"
+      ],
       "role": "producer",
-      "note": "钛白粉价格上行可能改善产品售价，需同时观察钛矿、硫酸等成本。"
+      "note": "钛白粉约55%、磷酸铁约37%主营收入，分别关联对应品种；两者不混用价格。"
     },
     "sz000707": {
       "productName": "纯碱 / 甲醇",
@@ -57,9 +60,10 @@
       "note": "业务涉及稀土资源与分离加工，产品结构、原料来源会影响价格弹性。"
     },
     "sh600409": {
-      "productName": "粘胶短纤维",
-      "role": "unknown",
-      "note": "主营构成为粘胶短纤维，相关产品价格历史序列尚未接入，不以纯碱价格替代。"
+      "productName": "粘胶短纤",
+      "marketItemId": "viscose-staple-fiber",
+      "role": "producer",
+      "note": "粘胶短纤维约51.6%主营收入；纯碱约18.0%也作为另一项产品单独观察。"
     },
     "sh600737": {
       "productName": "食糖",
@@ -68,10 +72,13 @@
       "note": "食糖类商品约90%主营收入。"
     },
     "sh600230": {
-      "productName": "TDI",
-      "marketItemId": null,
+      "productName": "TDI / 聚碳酸酯（PC）",
+      "marketItemId": "tdi",
+      "additionalMarketItemIds": [
+        "polycarbonate"
+      ],
       "role": "producer",
-      "note": "TDI价格数据尚未接入；暂不以其他化工品价格替代。"
+      "note": "TDI约44.4%、PC约29.4%主营收入；分开观察，暂无可靠连续期货报价时明确显示待补充。"
     },
     "sz000830": {
       "productName": "化工新材料产品",
@@ -90,16 +97,16 @@
       "note": "锡锭约50%主营收入，作为核心商品价格代理。"
     },
     "sh601958": {
-      "productName": "钼",
-      "marketItemId": null,
+      "productName": "钼产品",
+      "marketItemId": "molybdenum",
       "role": "producer",
-      "note": "钼精矿/钼铁价格历史序列尚未接入。"
+      "note": "钼矿采选、冶炼及深加工约89.2%主营收入；钼精矿、钼铁等不同加工环节报价不可混用。"
     },
     "sh600456": {
       "productName": "钛材",
-      "marketItemId": null,
+      "marketItemId": "titanium-material",
       "role": "producer",
-      "note": "钛材价格数据尚未接入，钛白粉不能作为钛材售价替代。"
+      "note": "钛产品约87.7%主营收入；钛材价格不以钛白粉或钛精矿替代。"
     },
     "sh600549": {
       "productName": "钨 / 稀土 / 钼产品",
@@ -148,9 +155,9 @@
     },
     "sh600299": {
       "productName": "蛋氨酸",
-      "marketItemId": null,
+      "marketItemId": "methionine",
       "role": "producer",
-      "note": "蛋氨酸价格数据尚未接入。"
+      "note": "功能性产品与特种产品分部占比高，蛋氨酸为公司核心产品价格观察项；报价按饲料级口径核实。"
     },
     "sz002100": {
       "productName": "生猪",
@@ -197,6 +204,52 @@
       ],
       "role": "producer",
       "note": "锌为第一大产品，银锭约22%、金锭约21%，分别观察。"
+    },
+    "sz000629": {
+      "productName": "钛产品 / 钒产品",
+      "marketItemId": "titanium-material",
+      "additionalMarketItemIds": [
+        "vanadium"
+      ],
+      "role": "producer",
+      "note": "钛产品约43.7%、钒产品约40.0%主营收入；分别建立钛材与钒产品观察，不以钛白粉替代钛材。"
+    },
+    "sz000962": {
+      "productName": "钽铌产品",
+      "marketItemId": "tantalum-niobium",
+      "role": "producer",
+      "note": "钽铌及其合金制品约99.7%主营收入；规格差异大，暂无统一可比连续报价。"
+    },
+    "sh600819": {
+      "productName": "浮法玻璃",
+      "marketItemId": "float-glass",
+      "role": "producer",
+      "note": "浮法玻璃约30.8%主营收入；汽车加工玻璃、建筑加工玻璃未用浮法玻璃报价替代。"
+    },
+    "sh688295": {
+      "productName": "碳纤维",
+      "marketItemId": "carbon-fiber",
+      "role": "producer",
+      "note": "碳纤维约99.0%主营收入；需区分型号和强度等级，未接入可靠报价前不补造价格。"
+    },
+    "sz000554": {
+      "productName": "汽油 / 柴油",
+      "marketItemId": "gasoline",
+      "additionalMarketItemIds": [
+        "diesel"
+      ],
+      "role": "mixed",
+      "note": "汽油约69.3%、柴油约18.1%主营收入；地区与牌号零售价格差异较大，不用原油期货替代成品油价格。"
+    },
+    "sh600963": {
+      "productName": "商品浆 / 印刷用纸 / 包装用纸",
+      "marketItemId": "pulp",
+      "additionalMarketItemIds": [
+        "printing-paper",
+        "packaging-paper"
+      ],
+      "role": "mixed",
+      "note": "印刷用纸约49.4%、商品浆约21.1%、包装用纸约17.8%主营收入；纸浆期货仅作商品浆价格代理，不代表成品纸售价。"
     }
   }
 }

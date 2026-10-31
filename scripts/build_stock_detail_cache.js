@@ -8,7 +8,7 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
 const LIMITS = { dailyAdjusted: 250, dailyRaw: 250, weeklyAdjusted: 200, monthlyAdjusted: 240 };
-const HOME_MONTHLY_TREND_LIMIT = 18;
+const HOME_MONTHLY_TREND_LIMIT = 200;
 
 function readJson(file, fallback) {
   try { return JSON.parse(fs.readFileSync(file, 'utf8')); }

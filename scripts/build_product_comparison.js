@@ -7,6 +7,7 @@ const readJson = (name) => JSON.parse(fs.readFileSync(path.join(ROOT, name), 'ut
 const stocks = readJson('data/stocks.json');
 const mapping = readJson('data/stock-products.json').byCode || {};
 const business = readJson('data/business-data.json');
+const fundamentals = readJson('data/fundamentals.json');
 const outputPath = path.join(ROOT, 'data/product-comparison.json');
 
 function validPoint(point) {
@@ -85,6 +86,8 @@ function build() {
   const productItems = business.items || {};
   const cards = stocks.filter((stock) => stock && stock.code).map((stock) => {
     const meta = mapping[stock.code] || {};
+    const fundamental = fundamentals.stocks && fundamentals.stocks[stock.code] || {};
+    const productName = meta.productName || fundamental.mainItem || '主营产品映射待核实';
     const market = meta.marketItemId ? productItems[meta.marketItemId] : null;
     const pSeries = productMonthly(market);
     const sSeries = stockMonthly(stock.code);
@@ -102,10 +105,13 @@ function build() {
     const roleLabel = role === 'producer' ? '产品端' : role === 'consumer' ? '成本端' : role === 'mixed' ? '多因素' : '待核实';
     return {
       code: stock.code, name: stock.name, group: stock.group || '',
-      productName: meta.productName || '主营产品映射待核实',
+      productName,
+      mainRatio: Number.isFinite(Number(fundamental.mainRatio)) && Number(fundamental.mainRatio) >= 0 && Number(fundamental.mainRatio) <= 1 ? Number(fundamental.mainRatio) : null,
+      mainBasis: fundamental.mainBasis || null,
+      fundamentalDate: fundamental.mainDate || null,
       marketItemId: meta.marketItemId || null,
       productUnit: market && market.unit || null,
-      role, roleLabel, note: meta.note || '尚未完成主营产品与公开报价品种的核实，暂不生成商品价格比较。',
+      role, roleLabel, note: meta.note || (fundamental.mainItem ? '主营构成参考公开基本面数据；该产品对应的公开月度报价尚未核实或接入。' : '尚未完成主营产品映射，暂不生成商品价格比较。'),
       productSource: market && market.source || null,
       productSourceUrl: market && market.sourceUrl || null,
       productDate: pSeries.length ? pSeries[pSeries.length - 1].date : null,
@@ -113,7 +119,7 @@ function build() {
       stockSeriesSource: sSeries.length ? sSeries[sSeries.length - 1].source : null,
       productChange, stockChange, divergence,
       series: comparison.series,
-      status: !meta.productName ? 'mapping-pending' : !market ? 'product-series-pending' : comparison.status
+      status: productName === '主营产品映射待核实' ? 'mapping-pending' : !market ? 'product-series-pending' : comparison.status
     };
   });
   const payload = {

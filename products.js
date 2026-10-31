@@ -34,12 +34,12 @@ function render(){
   chart.setOption({
    animation:false,
    grid:compactLegend
-    ?{left:42,right:10,top:12,bottom:48,containLabel:true}
-    :{left:52,right:18,top:38,bottom:34,containLabel:true},
+    ?{left:12,right:12,top:12,bottom:48,containLabel:true}
+    :{left:12,right:12,top:38,bottom:34,containLabel:true},
    legend:compactLegend
     ?{type:'scroll',orient:'horizontal',left:8,right:8,bottom:2,itemGap:9,itemWidth:12,itemHeight:8,pageButtonItemGap:4,pageIconSize:9,textStyle:{fontSize:10,color:'inherit'},formatter:function(name){return name.length>5?name.slice(0,5)+'…':name;}}
     :{top:2,textStyle:{fontSize:11,color:'inherit'}},
-   tooltip:{trigger:'axis',axisPointer:{type:'cross'},formatter:function(params){
+   tooltip:{trigger:'axis',axisPointer:{type:'cross',label:{show:false}},formatter:function(params){
     if(!Array.isArray(params)||!params.length)return '';
     var month=params[0].axisValue;
     return '<strong>'+esc(month)+'</strong><br>'+params.map(function(item){
@@ -48,7 +48,7 @@ function render(){
     }).join('<br>');
    }},
    xAxis:{type:'category',data:card.months||[],boundaryGap:false,axisLabel:{fontSize:10,hideOverlap:true}},
-   yAxis:{type:'value',scale:true,axisLabel:{fontSize:10,formatter:function(value){return Number(value).toFixed(0);}},name:'相对指数（共同起点=100）',nameTextStyle:{fontSize:9},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
+   yAxis:{type:'value',scale:true,axisLabel:{show:false},axisTick:{show:false},axisLine:{show:false},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
    series:series
   });
  });

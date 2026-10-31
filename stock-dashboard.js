@@ -774,8 +774,10 @@ function setPageLoading(message, done) {
 (async function init() {
   const startedAt = performance.now();
   const page = document.body.dataset.page || 'stocks';
+  if (page === 'stocks') sortState = { col: 'entry', dir: 1 };
   syncHeaderHeight();
   bindSortButtons();
+  updateSortUI();
   bindScrollHint();
   applyTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
   setPageLoading('正在加载股票清单…');

@@ -67,6 +67,11 @@ PRODUCTS = [
     {"id": "steel", "name": "钢材", "unit": "元/吨", "symbol": None, "aliases": ["钢材", "钢材销售"], "stocks": ["南钢股份"], "chain": "铁矿石、焦煤、焦炭 → 钢铁冶炼 → 板材、长材及特钢", "drivers": "钢材品种跨度大，未以单一螺纹钢或热卷期货代替公司综合钢材销售价格。"},
     {"id": "compound-fertilizer", "name": "复合肥", "unit": "元/吨", "symbol": None, "aliases": ["复合肥", "复合肥料"], "stocks": ["四川美丰"], "chain": "氮磷钾原料 → 复合肥 → 农业种植", "drivers": "配方、养分含量和区域差异较大，需按主流配方口径核实报价。"},
     {"id": "tungsten-products", "name": "钨产品", "unit": "元/吨", "symbol": None, "aliases": ["钨产品", "钨精矿", "仲钨酸铵", "APT"], "stocks": ["中钨高新"], "chain": "钨矿 → 钨精矿、APT、钨粉、硬质合金", "drivers": "钨产品跨多个加工环节，不同环节价格不可混用，暂无统一连续期货序列。"},
+    {"id": "yeast", "name": "酵母产品", "unit": "元/吨", "symbol": None, "aliases": ["酵母", "酵母及相关产品"], "stocks": ["安琪酵母"], "chain": "糖蜜等碳源 → 酵母发酵 → 食品、饲料及生物技术应用", "drivers": "食品级、饲料级及不同酵母产品规格差异较大，暂无统一连续期货报价。"},
+    {"id": "fluorine-materials", "name": "高端氟材料", "unit": "元/吨", "symbol": None, "aliases": ["高端氟材料", "含氟材料"], "stocks": ["昊华科技"], "chain": "萤石、氢氟酸 → 含氟单体/聚合物及精细化学品", "drivers": "氟聚合物、制冷剂及精细氟化学品口径不同，不以萤石价格代表终端产品售价。"},
+    {"id": "precious-metal-recycling", "name": "贵金属再生资源产品", "unit": "元/吨", "symbol": None, "aliases": ["贵金属再生资源产品"], "stocks": ["贵研铂业"], "chain": "含贵金属废料 → 回收精炼 → 铂、钯、铑、金、银等产品", "drivers": "具体金属元素和回收产品形态不同，不能以单一黄金价格代表。"},
+    {"id": "precious-metal-precursors", "name": "贵金属前驱体材料", "unit": "元/吨", "symbol": None, "aliases": ["贵金属前驱体材料"], "stocks": ["贵研铂业"], "chain": "贵金属原料 → 前驱体/化合物 → 催化及材料应用", "drivers": "金属元素、纯度和化合物规格差异大，暂无统一连续报价。"},
+    {"id": "industrial-explosives", "name": "工业炸药", "unit": "元/吨", "symbol": None, "aliases": ["工业包装炸药", "工业炸药"], "stocks": ["国泰集团", "凯龙股份"], "chain": "硝酸铵等原料 → 民用工业炸药 → 矿山及工程爆破", "drivers": "产品受许可、运输和区域供需约束，公开报价口径不统一；爆破工程服务不作为商品价格。"},
 ]
 
 def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:
@@ -524,8 +529,11 @@ def fetch_data() -> dict[str, Any]:
         "titanium-products": ["有色"], "cathode-materials": ["化工"],
         "cast-superalloy": ["有色", "钢铁"], "wrought-superalloy": ["有色", "钢铁"],
         "steel": ["钢铁"], "compound-fertilizer": ["化工", "农副"], "tungsten-products": ["有色"],
+        "yeast": ["农副"], "fluorine-materials": ["化工"],
+        "precious-metal-recycling": ["有色"], "precious-metal-precursors": ["有色"],
+        "industrial-explosives": ["化工"],
     }
-    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog", "tdi", "polycarbonate", "phosphate-iron", "molybdenum", "tantalum-niobium", "titanium-material", "vanadium", "carbon-fiber", "viscose-staple-fiber", "methionine", "gasoline", "diesel", "printing-paper", "packaging-paper", "titanium-products", "cathode-materials", "cast-superalloy", "wrought-superalloy", "steel", "compound-fertilizer", "tungsten-products"}
+    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog", "tdi", "polycarbonate", "phosphate-iron", "molybdenum", "tantalum-niobium", "titanium-material", "vanadium", "carbon-fiber", "viscose-staple-fiber", "methionine", "gasoline", "diesel", "printing-paper", "packaging-paper", "titanium-products", "cathode-materials", "cast-superalloy", "wrought-superalloy", "steel", "compound-fertilizer", "tungsten-products", "yeast", "fluorine-materials", "precious-metal-recycling", "precious-metal-precursors", "industrial-explosives"}
     categories = list(dict.fromkeys(
         category for values in industry_categories.values() for category in values
     ))

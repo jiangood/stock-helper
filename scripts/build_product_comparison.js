@@ -67,6 +67,20 @@ function normalizedComparison(productPoints, stockPoints) {
 function pct(first, last) {
   return first > 0 && last > 0 ? Number(((last / first - 1) * 100).toFixed(2)) : null;
 }
+function latestSourceTimestamp() {
+  const timestamps = [business.updatedAt];
+  stocks.forEach((stock) => {
+    if (!stock || !stock.code) return;
+    const file = path.join(ROOT, 'data', 'stock-cache', stock.code + '.json');
+    if (!fs.existsSync(file)) return;
+    try {
+      const cache = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (cache.updatedAt) timestamps.push(cache.updatedAt);
+    } catch (_) { /* a malformed stock cache is handled as missing history */ }
+  });
+  const valid = timestamps.map((value) => Date.parse(value)).filter(Number.isFinite);
+  return valid.length ? new Date(Math.max(...valid)).toISOString() : null;
+}
 function build() {
   const productItems = business.items || {};
   const cards = stocks.filter((stock) => stock && stock.code).map((stock) => {
@@ -104,7 +118,7 @@ function build() {
   });
   const payload = {
     schemaVersion: 1,
-    generatedAt: new Date().toISOString(),
+    generatedAt: latestSourceTimestamp(),
     marketDate: business.updatedAt || null,
     stockCount: cards.length,
     mappedCount: cards.filter((card) => card.productName !== '主营产品映射待核实').length,

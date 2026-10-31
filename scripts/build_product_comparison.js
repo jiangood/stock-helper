@@ -347,7 +347,11 @@ function build() {
     return {
       id: card.id, name: card.name, unit: card.unit, file,
       status: card.status, latestPrice: card.latestPrice, latestDate: card.latestDate,
-      source: card.source, monthCount: Array.isArray(card.months) ? card.months.length : 0
+      source: card.source,
+      // monthCount is strictly the commodity's own observed price history.
+      monthCount: card.productMonthCount || 0,
+      stockTimelineMonthCount: card.stockTimelineMonthCount || 0,
+      commonMonthCount: card.commonMonthCount || 0
     };
   });
   const activeFiles = new Set(productEntries.map((item) => path.basename(item.file)));

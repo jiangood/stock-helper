@@ -558,8 +558,10 @@ function buildRow(stock) {
       : `<span class="text-body-secondary">${fmtCompact(stock.tp1)}</span><span class="diff text-up">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span>`;
   }
   let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp2)}</span>` : '';
-  if (price != null && stock.tp2 != null && price >= stock.tp2) {
-    tp2Html = `<span class="badge badge-tp text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">${fmtCompact(stock.tp2)} ✓</span>`;
+  if (price != null && stock.tp2 != null) {
+    tp2Html = price >= stock.tp2
+      ? `<span class="badge badge-tp text-bg-warning-subtle border border-warning-subtle text-warning-emphasis">${fmtCompact(stock.tp2)} ✓</span>`
+      : `<span class="text-body-secondary">${fmtCompact(stock.tp2)}</span><span class="diff text-up">+${((stock.tp2 - price) / price * 100).toFixed(1)}%</span>`;
   }
 
   const monthlyTrend = monthlyTrendHtml(stock);

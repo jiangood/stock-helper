@@ -68,7 +68,7 @@ python -m http.server 8089
 
 - 自动抓取是定时更新，不是逐笔实时行情；期货连续报价只作市场参考，不等同于现货成交价。
 - 如果某个品种没有可靠匹配到公开数据源，会显示「等待可靠数据源」，不会生成虚构价格。
-- 顺酐由 `scripts/check_maleic_anhydride_source.py` 每个工作日自动探测 AKShare 文档公开的 99 期货现货走势接口；只有返回带日期的正数「现货价格」才入库，不使用期货字段、行业关联报价或其他化工品做代理。接口不可用或无有效报价时保持 `pending` / 空序列，并在 `data/business-data.json` 的 `maleicAnhydrideSourceCheck` 记录检查时间、状态和原因；最近一次经验证的顺酐数据会在临时故障时保留。
+- 顺酐目前没有确认同时满足免费、自动、历史数据可用及允许自动使用条件的数据源，因此保持 `pending` / 空序列。生意社、99 期货等页面可公开浏览，不代表允许批量自动采集；未经授权不接入，也不使用其他化工品或关联股票价格做代理。
 - 商品涨价不必然让关联上市公司受益，仍要结合公司实际业务占比、成本、库存、供需和盈利质量判断。
 - 自动抓取任务与运行状态可在 [GitHub Actions](https://github.com/jiangood/stock-helper/actions/workflows/business-data.yml) 查看。
 

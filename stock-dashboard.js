@@ -515,10 +515,11 @@ function researchReportHtml(stock) {
   const report = REPORT_SCORES[stock.code];
   if (!report || report.score == null || !Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
-  const tip = `研报评分 ${report.score.toFixed(1)} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
+  const scoreText = Number.isInteger(report.score) ? String(report.score) : scoreText;
+  const tip = `研报评分 ${scoreText} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
   const dateHtml = /^\\d{4}-\\d{2}-\\d{2}$/.test(report.date || '')
     ? `<span class="score-date">${esc(report.date.replace(/-/g, '/'))}</span>` : '';
-  return `<span class="score score-${tone}" title="${esc(tip)}">${report.score.toFixed(1)}</span>${dateHtml}`;
+  return `<span class="score score-${tone}" title="${esc(tip)}">${scoreText}</span>${dateHtml}`;
 }
 
 /** 研报日期独立展示和排序；过期标记不改变用于排序的原始日期。 */

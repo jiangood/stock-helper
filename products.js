@@ -36,9 +36,15 @@ function render(){
    var stockMax=stockIndices.length?Math.max.apply(null,stockIndices):0;
    series.push({name:stock.name,type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:stock.values.map(function(point){return {value:normalizedPosition(point.index,stockMin,stockMax),actualPrice:point.price,actualUnit:'元/股'};} )});
   });
+  var compactLegend=window.matchMedia&&window.matchMedia('(max-width:575px)').matches;
   chart.setOption({
-   animation:false,grid:{left:52,right:18,top:38,bottom:34,containLabel:true},
-   legend:{top:2,textStyle:{fontSize:11,color:'inherit'}},
+   animation:false,
+   grid:compactLegend
+    ?{left:42,right:10,top:12,bottom:48,containLabel:true}
+    :{left:52,right:18,top:38,bottom:34,containLabel:true},
+   legend:compactLegend
+    ?{type:'scroll',orient:'horizontal',left:8,right:8,bottom:2,itemGap:9,itemWidth:12,itemHeight:8,pageButtonItemGap:4,pageIconSize:9,textStyle:{fontSize:10,color:'inherit'},formatter:function(name){return name.length>5?name.slice(0,5)+'…':name;}}
+    :{top:2,textStyle:{fontSize:11,color:'inherit'}},
    tooltip:{trigger:'axis',axisPointer:{type:'cross'},formatter:function(params){
     if(!Array.isArray(params)||!params.length)return '';
     var month=params[0].axisValue;

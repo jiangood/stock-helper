@@ -369,7 +369,7 @@ def fetch_data() -> dict[str, Any]:
     # futures series, kept separate from the spot/basis series above.
     continuous_symbols = {
         "soda-ash": "SA0", "urea": "UR0", "methanol": "MA0",
-        "aluminium": "AL0", "rubber": "RU0",
+        "aluminium": "AL0", "rubber": "RU0", "corn": "C0", "soybean-meal": "M0",
     }
     old_items_for_monthly = existing_payload.get("items", {}) if isinstance(existing_payload.get("items"), dict) else {}
     for product_id, symbol in continuous_symbols.items():
@@ -434,7 +434,7 @@ def fetch_data() -> dict[str, Any]:
     payload["fetchErrors"] = errors[:5]
 
     # Add separate futures quotes where the source's product-name mapping supports them.
-    for code, chinese_name in {"SA": "纯碱", "UR": "尿素"}.items():
+    for code, chinese_name in {"SA": "纯碱", "UR": "尿素", "C": "玉米", "M": "豆粕"}.items():
         try:
             frame = call_with_timeout(12, ak.futures_zh_realtime, symbol=chinese_name)
             if frame is None or getattr(frame, "empty", True):
@@ -479,6 +479,8 @@ def fetch_data() -> dict[str, Any]:
         "rubber": ["化工", "纺织"],
         "rare-earth": ["有色"],
         "maleic-anhydride": ["化工"],
+        "corn": ["农副"],
+        "soybean-meal": ["农副"],
         "live-hog": ["农副"],
     }
     latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog"}

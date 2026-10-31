@@ -101,13 +101,15 @@ test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称�
 test('首页表格每行数据单元格数量与表头一致', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
-  const header = html.match(/<thead>[\\s\\S]*?<\\/thead>/);
+  const headerStart = html.indexOf('<thead>');
+  const headerEnd = html.indexOf('</thead>', headerStart);
   const rowStart = dashboard.indexOf('function buildRow(stock)');
-  const rowEnd = dashboard.indexOf('\\nfunction statusHtml(', rowStart);
-  assert.ok(header && rowStart >= 0 && rowEnd > rowStart, '未找到首页表格结构');
+  const rowEnd = dashboard.indexOf('\nfunction statusHtml(', rowStart);
+  assert.ok(headerStart >= 0 && headerEnd > headerStart && rowStart >= 0 && rowEnd > rowStart, '未找到首页表格结构');
+  const header = html.slice(headerStart, headerEnd);
   const rowRenderer = dashboard.slice(rowStart, rowEnd);
-  const headerCells = (header[0].match(/<th\\b/g) || []).length;
-  const bodyCells = (rowRenderer.match(/<td\\b/g) || []).length;
+  const headerCells = (header.match(/<th\b/g) || []).length;
+  const bodyCells = (rowRenderer.match(/<td\b/g) || []).length;
   assert.equal(bodyCells, headerCells, '首页表头与每行数据列数必须一致');
-  assert.doesNotMatch(rowRenderer, /stock\\.yearInit|screenHtml\\(|researchMachineHtml\\(/, '已移除的列不得残留在行渲染中');
+  assert.doesNotMatch(rowRenderer, /stock\.yearInit|screenHtml\(|researchMachineHtml\(/, '已移除的列不得残留在行渲染中');
 });

@@ -274,6 +274,48 @@
       "marketItemId": "steel",
       "role": "producer",
       "note": "钢材销售约60.5%主营收入；公司产品结构多元，未用单一螺纹钢或热卷期货冒充综合钢材售价。"
+    },
+    "sh688750": {
+      "productName": "钛及钛合金产品",
+      "marketItemId": "titanium-material",
+      "role": "producer",
+      "note": "钛及钛合金产品约95.7%主营收入；钛材按产品加工环节观察，不以钛白粉或钛精矿替代。"
+    },
+    "sh600298": {
+      "productName": "酵母及相关产品",
+      "marketItemId": "yeast",
+      "role": "producer",
+      "note": "酵母及相关行业约88.3%主营收入；酵母产品没有统一连续期货报价，缺报价时保持待补。"
+    },
+    "sh600378": {
+      "productName": "高端氟材料",
+      "marketItemId": "fluorine-materials",
+      "role": "producer",
+      "note": "高端氟材料约63.8%主营收入；不同含氟聚合物/制冷剂体系差异较大，不用萤石或其他氟化工原料价格替代。"
+    },
+    "sh600459": {
+      "productName": "贵金属再生资源产品 / 贵金属前驱体",
+      "marketItemId": "precious-metal-recycling",
+      "additionalMarketItemIds": [
+        "precious-metal-precursors"
+      ],
+      "role": "mixed",
+      "note": "贵金属再生资源产品约35.5%、贵金属前驱体材料约15.6%主营收入；具体金属与加工规格不同，不以黄金单价代表。"
+    },
+    "sh603977": {
+      "productName": "工业包装炸药",
+      "marketItemId": "industrial-explosives",
+      "role": "producer",
+      "note": "工业包装炸药约30.4%主营收入；爆破工程服务不纳入商品价格映射，暂无公开统一连续报价。"
+    },
+    "sz002783": {
+      "productName": "工业炸药 / 复混肥料",
+      "marketItemId": "industrial-explosives",
+      "additionalMarketItemIds": [
+        "compound-fertilizer"
+      ],
+      "role": "producer",
+      "note": "工业炸药约23.4%、复混肥料约16.7%主营收入；爆破服务业务排除，炸药和肥料分别观察。"
     }
   }
 }

@@ -149,3 +149,10 @@ test('商品页趋势图不显示 Tooltip 悬浮提示', () => {
   const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
   assert.doesNotMatch(products, /tooltip\s*:/i);
 });
+
+
+test('商品页趋势图隐藏水平网格线', () => {
+  const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
+  assert.match(products, /splitLine:\{show:false\}/);
+  assert.doesNotMatch(products, /splitLine:\{lineStyle:/);
+});

@@ -41,7 +41,7 @@ function render(){
     ?{type:'scroll',orient:'horizontal',left:8,right:8,bottom:2,itemGap:9,itemWidth:12,itemHeight:8,pageButtonItemGap:4,pageIconSize:9,textStyle:{fontSize:10,color:'inherit'},formatter:function(name){return name.length>5?name.slice(0,5)+'…':name;}}
     :{top:2,textStyle:{fontSize:11,color:'inherit'}},
    xAxis:{type:'category',data:card.months||[],boundaryGap:false,axisLabel:{fontSize:10,hideOverlap:true}},
-   yAxis:{type:'value',scale:true,axisLabel:{show:false},axisTick:{show:false},axisLine:{show:false},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
+   yAxis:{type:'value',scale:true,axisLabel:{show:false},axisTick:{show:false},axisLine:{show:false},splitLine:{show:false}},
    series:series
   });
   // 按容器真实尺寸校准；手机旋屏、地址栏和卡片宽度变化均触发重排。

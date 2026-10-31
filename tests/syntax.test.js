@@ -59,7 +59,7 @@ test('首页脚本使用版本化 URL，避免浏览器继续执行旧缓存', (
 
 test('首页研报日期显示在研报评分下方', () => {
   const css = fs.readFileSync(path.join(root, 'app.css'), 'utf8');
-  assert.match(css, /\\.score-date\\s*\\{[^}]*display:\\s*block/);
+  assert.match(css, /\.score-date\s*\{[^}]*display:\s*block/);
 });
 
 test('首页研报日期只显示发布日期，不标注旧或悬浮信息', () => {

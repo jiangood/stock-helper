@@ -384,10 +384,10 @@ function buildRow(stock) {
 
   const monthlyTrend = monthlyTrendHtml(stock);
   const aliasHtml = stock.alias
-    ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
+    ? `<span class="tag tag-alias">${esc(stock.alias)}</span>`
     : '<span class="text-body-tertiary">—</span>';
   const nameHtml = stock.code
-    ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}" title="查看 ${esc(stock.name)} 详情">${esc(stock.name)}</a>${statusHtml(e, stock, pd)}`
+    ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}">${esc(stock.name)}</a>${statusHtml(e, stock, pd)}`
     : `<span class="stock-name">${esc(stock.name)}</span>${flagHtml(e, stock, pd)}`;
 
   return `
@@ -412,10 +412,10 @@ function buildRow(stock) {
 function monthlyTrendHtml(stock) {
   const bars = monthlyTrends[stock.code];
   if (!Array.isArray(bars) || bars.length < 2) {
-    return '<span class="monthly-trend-empty" title="暂无足够的月线数据">—</span>';
+    return '<span class="monthly-trend-empty">—</span>';
   }
   const values = bars.map(item => Number(item && item.close)).filter(value => Number.isFinite(value) && value > 0);
-  if (values.length < 2) return '<span class="monthly-trend-empty" title="暂无足够的月线数据">—</span>';
+  if (values.length < 2) return '<span class="monthly-trend-empty">—</span>';
   const min = Math.min(...values);
   const max = Math.max(...values);
   const span = max - min || Math.max(max * 0.02, 0.01);
@@ -451,7 +451,7 @@ function monthlyTrendHtml(stock) {
   const entryText = Number.isFinite(entry) && entry > 0 ? '入场价 ' + entry.toFixed(2) : '入场价缺失';
   const title = status + ' · ' + quoteText + ' · ' + entryText
     + ' · 复权月收盘价 ' + firstTime + ' 至 ' + lastTime + ' · ' + first.toFixed(2) + ' → ' + last.toFixed(2);
-  return '<svg class="monthly-trend-svg ' + tone + '" viewBox="0 0 112 32" role="img" aria-label="' + esc(title) + '" title="' + esc(title) + '"><polyline points="' + points + '"></polyline></svg>';
+  return '<svg class="monthly-trend-svg ' + tone + '" viewBox="0 0 112 32" role="img" aria-label="' + esc(title) + '"><polyline points="' + points + '"></polyline></svg>';
 }
 
 function statusHtml(e, stock, quote) {
@@ -460,8 +460,8 @@ function statusHtml(e, stock, quote) {
 }
 
 function flagHtml(e, stock, quote) {
-  if (e.st) return '<span class="flag flag-danger" title="ST 风险警示股：铁律不买 ST">ST</span>';
-  if (e.loss) return '<span class="flag flag-warn" title="TTM 亏损：铁律不买亏损股">亏</span>';
+  if (e.st) return '<span class="flag flag-danger">ST</span>';
+  if (e.loss) return '<span class="flag flag-warn">亏</span>';
   const eligible = Croc.buyEligibility(stock, quote).eligible;
   const cls = eligible ? 'flag-buy' : 'flag-warn';
   const caveat = eligible
@@ -473,9 +473,9 @@ function flagHtml(e, stock, quote) {
       ? new Date(quoteTime).toISOString().slice(0, 10)
       : '未知';
     const detail = `PB ${fmtCompact(e.pb, 2)} · 股价 ${fmtCompact(e.price)} · 行情日期 ${quoteDate}`;
-    return `<span class="flag ${cls}" title="${esc(`${detail}；折数按 PB×10 计算；${caveat}`)}">${fmtCompact(e.pbFold, 1)}折</span>`;
+    return `<span class="flag ${cls}">${fmtCompact(e.pbFold, 1)}折</span>`;
   }
-  if (e.pbUnder1) return `<span class="flag ${cls}" title="PB<1：破净估值参考；${caveat}">破净</span>`;
+  if (e.pbUnder1) return `<span class="flag ${cls}">破净</span>`;
   return '';
 }
 
@@ -487,12 +487,12 @@ function screenHtml(stock, pd, e) {
     + (sc.failed.length ? `；未过 ${sc.failed.map(f => f.label).join('、')}` : '')
     + (sc.pending.length ? `；未取到 ${sc.pending.map(f => f.label).join('、')}` : '');
   if (sc.allPass) {
-    return `<span class="flag flag-buy" style="margin-left:0" title="${esc(tip)}">全过</span>`;
+    return `<span class="flag flag-buy" style="margin-left:0">全过</span>`;
   }
   if (sc.complete && sc.passed === sc.total - 1) {
-    return `<span class="flag flag-warn" style="margin-left:0" title="${esc(tip)}">${sc.passed}/${sc.total}</span>`;
+    return `<span class="flag flag-warn" style="margin-left:0">${sc.passed}/${sc.total}</span>`;
   }
-  return `<span class="text-body-tertiary" style="font-size:11px" title="${esc(tip)}">${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
+  return `<span class="text-body-tertiary" style="font-size:11px">${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
 }
 
 function reportBandLabel(score) {
@@ -516,8 +516,8 @@ function researchMachineHtml(stock) {
     `盘整 ${fmtScore(items.consolidation)}/9`, `月线 ${fmtScore(items.bottom)}/9`,
     `放量 ${fmtScore(items.volume)}/6`
   ].join(' · ');
-  const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n按 7 项可复算指标折算（覆盖 65/100 权重）；不构成投资建议`;
-  return `<span class="score score-${tone}" title="${esc(tip)}">${percent.toFixed(1)}</span>`;
+  const tip = `机器复算 ${percent.toFixed(1)} 分（${score.points}/${max}）${band ? ' · ' + band : ''}\n${detail}\n按 7 项可复算指标折算（覆盖 65/100 权重）`;
+  return `<span class="score score-${tone}">${percent.toFixed(1)}</span>`;
 }
 
 /** 研报原始总分独立展示，不回退为机器评分。 */
@@ -527,7 +527,7 @@ function researchReportHtml(stock) {
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const scoreText = Number.isInteger(report.score) ? String(report.score) : report.score.toFixed(1);
   const tip = `评分 ${scoreText} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n评分日期：${report.date || '日期未知'}`;
-  return `<span class="score score-${tone}" title="${esc(tip)}">${scoreText}</span>`;
+  return `<span class="score score-${tone}">${scoreText}</span>`;
 }
 
 /** 评分日期独立展示和排序；过期标记不改变用于排序的原始日期。 */
@@ -635,7 +635,7 @@ function applyTheme(theme) {
   btn.setAttribute('aria-pressed', String(dark));
   const label = dark ? '切换到浅色主题' : '切换到深色主题';
   btn.setAttribute('aria-label', label);
-  btn.title = label;
+
 }
 
 function toggleTheme() {

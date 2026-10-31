@@ -27,7 +27,7 @@ function render(){
  node.innerHTML=list.map(function(card,index){
   var stockRows=(card.stocks||[]).map(function(stock){
    var hasHistory=Array.isArray(stock.values)&&stock.values.length>=2;
-   return '<div class="commodity-stock"><div><a class="commodity-stock-name text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(stock.code)+'">'+esc(stock.name)+'</a><span class="product-meta ms-2">'+esc(stock.code)+' · '+esc(stock.roleLabel||'关联观察')+(stock.mainRatio!=null?' · 主营占比 '+(Number(stock.mainRatio)*100).toFixed(1)+'%':'')+'</span></div><div class="commodity-stock-meta">'+(stock.latestClose!=null?'最新复权月收 '+money(stock.latestClose)+' 元':'暂无月线')+' · '+esc(stock.latestDate||'—')+' · 区间 '+pct(stock.changePct)+'</div></div>';
+   return '<div class="commodity-stock"><div><a class="commodity-stock-name text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(stock.code)+'">'+esc(stock.name)+'</a><span class="product-meta ms-2">'+esc(stock.roleLabel||'关联观察')+(stock.mainRatio!=null?' · 主营占比 '+(Number(stock.mainRatio)*100).toFixed(1)+'%':'')+'</span></div><div class="commodity-stock-meta">'+(stock.latestClose!=null?'最新复权月收 '+money(stock.latestClose)+' 元':'暂无月线')+' · '+esc(stock.latestDate||'—')+' · 区间 '+pct(stock.changePct)+'</div></div>';
   }).join('');
   var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(card.name)+'及关联股票实际价格月线"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
   var badge=card.status==='ready'?'数据齐全':'部分数据缺失';

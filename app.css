@@ -78,7 +78,7 @@
   .stock-table thead th:nth-child(3) { text-align: right; }
   .stock-table thead th:first-child,
   .stock-table tbody td:first-child {
-    width: 112px; min-width: 112px; max-width: 112px;
+    width: 88px; min-width: 88px; max-width: 88px;
   }
   .stock-table tbody td:first-child { overflow: hidden; }
   .stock-table .stock-name {

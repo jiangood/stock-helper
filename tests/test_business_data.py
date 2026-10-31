@@ -1,3 +1,4 @@
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -60,6 +61,38 @@ class BusinessDataTests(unittest.TestCase):
         self.assertEqual(payload["items"]["maleic-anhydride"]["name"], "顺酐")
         self.assertIsNone(payload["items"]["maleic-anhydride"]["latest"])
         self.assertEqual(payload["items"]["maleic-anhydride"]["status"], "pending")
+
+    def test_new_primary_products_and_futures_proxies_are_explicit(self):
+        products = {item["id"]: item for item in fetcher.PRODUCTS}
+        self.assertEqual(products["float-glass"]["symbol"], "FG")
+        self.assertEqual(products["pulp"]["symbol"], "SP")
+        for item_id in (
+            "tdi", "polycarbonate", "phosphate-iron", "molybdenum",
+            "tantalum-niobium", "titanium-material", "vanadium",
+            "carbon-fiber", "viscose-staple-fiber", "methionine",
+            "gasoline", "diesel", "printing-paper", "packaging-paper",
+        ):
+            self.assertIn(item_id, products)
+            self.assertIsNone(products[item_id]["symbol"])
+        payload = fetcher.build_payload({})
+        for item_id in ("tdi", "molybdenum", "carbon-fiber", "gasoline"):
+            self.assertIsNone(payload["items"][item_id]["latest"])
+            self.assertEqual(payload["items"][item_id]["status"], "pending")
+
+    def test_stock_product_mapping_covers_material_primary_segments(self):
+        mapping = json.loads((Path(__file__).resolve().parents[1] / "data" / "stock-products.json").read_text(encoding="utf-8"))["byCode"]
+        expected = {
+            "sh600230": {"tdi", "polycarbonate"},
+            "sz000629": {"titanium-material", "vanadium"},
+            "sh600963": {"pulp", "printing-paper", "packaging-paper"},
+            "sh600819": {"float-glass"},
+            "sh688295": {"carbon-fiber"},
+            "sz000554": {"gasoline", "diesel"},
+        }
+        for code, expected_ids in expected.items():
+            meta = mapping[code]
+            actual_ids = {meta.get("marketItemId"), *meta.get("additionalMarketItemIds", [])}
+            self.assertTrue(expected_ids.issubset(actual_ids), (code, actual_ids))
 
     def test_build_payload_does_not_fabricate_missing_quotes(self):
         payload = fetcher.build_payload({

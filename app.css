@@ -138,10 +138,11 @@
   .stock-name::after { content: ''; position: absolute; inset: -9px -4px; }
   .stock-name:hover { color: var(--bs-primary) !important; text-decoration: underline; }
   .stock-alias {
-    font-size: 11px; max-width: 120px; display: inline-block;
-    white-space: normal; overflow-wrap: anywhere;
-    line-height: 1.25; vertical-align: top; color: var(--bs-secondary-color);
+    display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    max-width: 120px; vertical-align: top; color: var(--bs-secondary-color);
+    font-size: 11px; line-height: 1.25;
   }
+  .stock-alias-item { display: block; max-width: 100%; overflow-wrap: anywhere; }
 
   /* 数值旁的小号涨跌幅 */
   .diff { font-size: 11px; margin-left: .3rem; letter-spacing: 0; }

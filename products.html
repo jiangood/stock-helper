@@ -64,7 +64,7 @@
   <nav class="bg-body border-bottom px-2 px-sm-3 py-2 d-flex align-items-center gap-2" aria-label="主导航">
     <a class="d-flex align-items-center gap-2 text-body text-decoration-none me-auto text-nowrap" href="index.html"><span class="logo" aria-hidden="true">股</span><strong class="d-none d-sm-inline" style="font-size:14px">股票助手</strong></a>
     <a class="main-nav-link" href="index.html">自选</a>
-    <a class="main-nav-link" href="market.html">行情</a><a class="main-nav-link active" href="products.html" aria-current="page" >商品</a>
+    <a class="main-nav-link" href="market.html">行情</a><a class="main-nav-link active" href="products.html" aria-current="page">商品</a>
     <button class="btn btn-sm btn-outline-secondary icon-btn" id="theme-btn" type="button" aria-label="切换主题" title="切换主题">◐</button>
   </nav>
 </div>
@@ -80,7 +80,7 @@
     </select>
     <span id="product-count" class="panel-subtitle"></span>
   </div>
-  <div id="product-cards" class="product-grid" aria-live="polite"><div class="product-empty">正在加载商品与股票月线数据…</div></div>
+  <div id="product-cards" class="product-grid" aria-live="polite"><div class="product-empty">正在加载商品数据…</div></div>
   <p class="product-note mt-3">图表统一月份横轴，将商品价格和每只关联股票的月收盘价分别以共同起始月份 = 100 标准化，避免元/吨与股票价格共用绝对纵轴。商品月价按当月最后一个有效报价聚合，股票使用复权月 K 收盘价；当月数据可能尚未收盘。数据不足时保留卡片并明确提示，不插值、不估算。商品价格不是上市公司实际销售均价，关联股票也可能受其他产品、成本、库存、产能利用率和市场估值影响；仅供研究参考，不构成投资建议。</p>
 </main>
 <script src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>

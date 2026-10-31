@@ -153,7 +153,11 @@
       "marketItemId": "live-hog",
       "role": "producer",
       "note": "天康生物生猪养殖业务对应生猪价格；玉米、豆粕属于饲料成本，应作为独立成本指标观察，不与生猪售价混为一条序列。",
-      "unit": "元/公斤"
+      "unit": "元/公斤",
+      "costItemIds": [
+        "corn",
+        "soybean-meal"
+      ]
     },
     "sz002408": {
       "productName": "顺酐",

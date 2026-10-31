@@ -171,10 +171,16 @@ function buildCommodityCards(productItems) {
         history
       };
     });
-    const availableStocks = stocksWithHistory.filter((stock) => stock.history.length);
+    // 只保留主营产品收入占比达到 50% 的关联公司；占比未知时暂时保留，避免因数据缺失误删。
+    // 成本端指标不属于主营产品收入占比口径，继续作为独立成本参考展示。
+    const qualifiedStocks = stocksWithHistory.filter((stock) =>
+      stock.role === 'consumer' || stock.mainRatio === null || stock.mainRatio >= 0.5
+    );
+    if (!qualifiedStocks.length) return null;
+    const availableStocks = qualifiedStocks.filter((stock) => stock.history.length);
     const hasProductHistory = productPoints.length > 0;
     const stockOnlyMonths = !hasProductHistory
-      ? Array.from(new Set(stocksWithHistory.flatMap((stock) => stock.history.map((point) => point.month)))).sort().slice(-MONTHLY_BAR_LIMIT)
+      ? Array.from(new Set(qualifiedStocks.flatMap((stock) => stock.history.map((point) => point.month)))).sort().slice(-MONTHLY_BAR_LIMIT)
       : [];
     const commonMonths = hasProductHistory
       ? productPoints.map((point) => point.month).filter((month) =>
@@ -189,7 +195,7 @@ function buildCommodityCards(productItems) {
       index: Number((productMap.get(month).value / productBase * 100).toFixed(2)),
       price: Number(productMap.get(month).value.toFixed(4))
     })) : [];
-    const stockSeries = stocksWithHistory.map((stock) => {
+    const stockSeries = qualifiedStocks.map((stock) => {
       const historyMap = new Map(stock.history.map((point) => [point.month, point]));
       const base = hasProductHistory
         ? (firstMonth && historyMap.get(firstMonth) ? historyMap.get(firstMonth).value : null)
@@ -217,7 +223,7 @@ function buildCommodityCards(productItems) {
     // 即使没有足够历史序列，也保留采集器提供的最新有效现货/参考报价。
     const marketLatest = market && [market.latestSpot, market.latest].map(Number).find((value) => Number.isFinite(value) && value > 0);
     const latestPrice = latestProduct ? latestProduct.value : (marketLatest === undefined ? null : marketLatest);
-    const ready = hasProductHistory && commonMonths.length >= 2 && stocksWithHistory.every((stock) => stock.history.length > 0);
+    const ready = hasProductHistory && commonMonths.length >= 2 && qualifiedStocks.every((stock) => stock.history.length > 0);
     const stockOnlyReady = !hasProductHistory && stockSeries.some((stock) => stock.values.filter((point) => point.price !== null).length >= 2);
     return {
       id: itemId, name: productName, unit: market && market.unit || (itemId === 'corn' || itemId === 'soybean-meal' ? '元/吨' : (marketMeta.marketItemId === itemId ? marketMeta.unit : '')) || '',

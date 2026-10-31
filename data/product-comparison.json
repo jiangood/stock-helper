@@ -5,7 +5,7 @@
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 4,
-  "commodityCount": 6,
+  "commodityCount": 7,
   "commodityCards": [
     {
       "id": "soda-ash",
@@ -5700,6 +5700,36 @@
       "note": "钛白粉价格上行可能改善产品售价，需同时观察钛矿、硫酸等成本。"
     },
     {
+      "id": "maleic-anhydride",
+      "name": "顺酐",
+      "unit": "",
+      "source": null,
+      "sourceNote": null,
+      "sourceUrl": null,
+      "latestPrice": null,
+      "latestDate": null,
+      "productChange": null,
+      "months": [],
+      "productSeries": [],
+      "stocks": [
+        {
+          "code": "sz002408",
+          "name": "齐翔腾达",
+          "group": "化工",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.5019,
+          "source": "月K",
+          "latestDate": "2026-10-30",
+          "latestClose": 4.27,
+          "changePct": null,
+          "values": []
+        }
+      ],
+      "status": "pending",
+      "note": "齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。"
+    },
+    {
       "id": "rare-earth",
       "name": "稀土（氧化镨钕）",
       "unit": "元/吨",
@@ -5748,15 +5778,15 @@
       "code": "sz002408",
       "name": "齐翔腾达",
       "group": "化工",
-      "productName": "化工板块",
+      "productName": "顺酐",
       "mainRatio": 0.5019,
       "mainBasis": "industry",
       "fundamentalDate": "2026-06-30",
-      "marketItemId": null,
+      "marketItemId": "maleic-anhydride",
       "productUnit": null,
-      "role": "unknown",
-      "roleLabel": "待核实",
-      "note": "主营构成参考公开基本面数据；该产品对应的公开月度报价尚未核实或接入。",
+      "role": "producer",
+      "roleLabel": "产品端",
+      "note": "齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。",
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,

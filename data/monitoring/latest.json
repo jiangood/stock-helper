@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "status": "healthy",
-  "generatedAt": "2026-10-31T06:20:03.235Z",
-  "manifestGeneratedAt": "2026-10-31T06:20:03.235Z",
+  "generatedAt": "2026-10-31T06:21:51.435Z",
+  "manifestGeneratedAt": "2026-10-31T06:21:51.435Z",
   "marketDate": "2026-10-29",
-  "durationMs": 1235,
+  "durationMs": 1435,
   "cacheCount": 5,
   "healthyCount": 5,
   "staleCount": 0,

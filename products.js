@@ -43,7 +43,7 @@ function render(){
    series.push({name:stock.name+'（元/股）',type:'line',yAxisIndex:1,smooth:false,showSymbol:false,lineStyle:{width:2},data:stock.values.map(function(point){return point.price;})});
   });
   chart.setOption({
-   animation:false,grid:{left:44,right:16,top:34,bottom:34,containLabel:false},
+   animation:false,grid:{left:58,right:58,top:34,bottom:34,containLabel:false},
    legend:{top:2,textStyle:{fontSize:11,color:'inherit'}},
    tooltip:{trigger:'axis',axisPointer:{type:'cross'},formatter:function(params){
     if(!Array.isArray(params)||!params.length)return '';

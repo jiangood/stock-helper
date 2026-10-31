@@ -1471,9 +1471,9 @@
           "roleLabel": "产品端",
           "mainRatio": 0.8378,
           "source": "月K",
-          "latestDate": "2026-10-29",
-          "latestClose": 8.43,
-          "changePct": -28.54,
+          "latestDate": "2026-10-30",
+          "latestClose": 8.55,
+          "changePct": -27.52,
           "values": [
             {
               "month": "2025-12",
@@ -1527,8 +1527,8 @@
             },
             {
               "month": "2026-10",
-              "index": 71.46,
-              "price": 8.43
+              "index": 72.48,
+              "price": 8.55
             }
           ]
         }
@@ -1625,9 +1625,9 @@
           "roleLabel": "产品端",
           "mainRatio": 0.9429,
           "source": "月K",
-          "latestDate": "2026-10-29",
-          "latestClose": 5.09,
-          "changePct": -12.99,
+          "latestDate": "2026-10-30",
+          "latestClose": 5.08,
+          "changePct": -13.16,
           "values": [
             {
               "month": "2025-12",
@@ -1681,8 +1681,8 @@
             },
             {
               "month": "2026-10",
-              "index": 87.01,
-              "price": 5.09
+              "index": 86.84,
+              "price": 5.08
             }
           ]
         }
@@ -1697,7 +1697,7 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": null,
+      "latestPrice": 1441.25,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [],
@@ -1710,9 +1710,9 @@
           "role": "producer",
           "roleLabel": "产品端",
           "mainRatio": 0.8604,
-          "source": null,
-          "latestDate": null,
-          "latestClose": null,
+          "source": "月K",
+          "latestDate": "2026-10",
+          "latestClose": 8.73,
           "changePct": null,
           "values": []
         }
@@ -1727,7 +1727,7 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": null,
+      "latestPrice": 13740,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [],
@@ -1770,9 +1770,9 @@
           "role": "producer",
           "roleLabel": "产品端",
           "mainRatio": 1.7337,
-          "source": null,
-          "latestDate": null,
-          "latestClose": null,
+          "source": "月K",
+          "latestDate": "2026-10",
+          "latestClose": 34.21,
           "changePct": null,
           "values": []
         },
@@ -1859,8 +1859,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -1886,7 +1886,7 @@
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
       "productChange": 22.43,
-      "stockChange": -12.99,
+      "stockChange": -13.16,
       "divergence": "方向背离",
       "series": [
         {
@@ -1962,7 +1962,7 @@
         {
           "month": "2026-10",
           "productIndex": 122.43,
-          "stockIndex": 87.01,
+          "stockIndex": 86.84,
           "productPrice": 18783.3,
           "stockClose": 5.08
         }
@@ -2057,8 +2057,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -2108,7 +2108,7 @@
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
       "productChange": -13.52,
-      "stockChange": -30.91,
+      "stockChange": -32.56,
       "divergence": "涨跌幅差异较大",
       "series": [
         {
@@ -2184,7 +2184,7 @@
         {
           "month": "2026-10",
           "productIndex": 86.48,
-          "stockIndex": 69.09,
+          "stockIndex": 67.44,
           "productPrice": 1060,
           "stockClose": 4.08
         }
@@ -2402,7 +2402,7 @@
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
       "productChange": -13.52,
-      "stockChange": -35.48,
+      "stockChange": -36.46,
       "divergence": "涨跌幅差异较大",
       "series": [
         {
@@ -2478,7 +2478,7 @@
         {
           "month": "2026-10",
           "productIndex": 86.48,
-          "stockIndex": 64.52,
+          "stockIndex": 63.54,
           "productPrice": 1060,
           "stockClose": 5.22
         }
@@ -2525,8 +2525,8 @@
       "productSource": "东方财富现货与股票数据（经 AKShare 获取）",
       "productSourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -2597,8 +2597,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -2648,7 +2648,7 @@
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
       "productChange": 5.78,
-      "stockChange": -28.54,
+      "stockChange": -27.52,
       "divergence": "方向背离",
       "series": [
         {
@@ -2724,7 +2724,7 @@
         {
           "month": "2026-10",
           "productIndex": 105.78,
-          "stockIndex": 71.46,
+          "stockIndex": 72.48,
           "productPrice": 23771.7,
           "stockClose": 8.55
         }
@@ -2771,8 +2771,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -2891,8 +2891,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -2939,8 +2939,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -2987,8 +2987,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -3083,8 +3083,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -3299,8 +3299,8 @@
       "productSource": null,
       "productSourceUrl": "https://www.100ppi.com/",
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -3347,8 +3347,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -3491,8 +3491,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",
@@ -3635,8 +3635,8 @@
       "productSource": null,
       "productSourceUrl": null,
       "productDate": null,
-      "stockDate": null,
-      "stockSeriesSource": null,
+      "stockDate": "2026-10",
+      "stockSeriesSource": "月K",
       "productChange": null,
       "stockChange": null,
       "divergence": "数据不足",

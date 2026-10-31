@@ -44,6 +44,22 @@ PRODUCTS = [
     {"id": "pvc", "name": "聚氯乙烯", "unit": "元/吨", "symbol": "V", "aliases": ["PVC", "聚氯乙烯"], "stocks": ["中盐化工", "中泰化学", "氯碱化工"], "chain": "电石/乙烯 → PVC → 建材及管材", "drivers": "关注电石成本、装置开工、社会库存、房地产与出口。"},
     {"id": "caustic-soda", "name": "烧碱", "unit": "元/吨", "symbol": "SH", "aliases": ["烧碱", "液碱"], "stocks": ["氯碱化工"], "chain": "氯碱电解 → 烧碱与氯气", "drivers": "关注氧化铝需求、出口、氯碱开工、液碱库存和氯碱综合利润。"},
     {"id": "alumina", "name": "氧化铝", "unit": "元/吨", "symbol": "AO", "aliases": ["氧化铝"], "stocks": ["中国铝业"], "chain": "铝土矿 → 氧化铝 → 电解铝", "drivers": "关注铝土矿供应、氧化铝厂开工、港口库存及电解铝产能。"},
+    {"id": "float-glass", "name": "浮法玻璃", "unit": "元/吨", "symbol": "FG", "aliases": ["浮法玻璃", "玻璃"], "stocks": ["耀皮玻璃"], "chain": "纯碱、石英砂、燃料 → 浮法玻璃 → 建筑及汽车玻璃深加工", "drivers": "浮法玻璃期货是行业价格代理，需结合深加工产品结构、库存、产能与燃料成本。"},
+    {"id": "pulp", "name": "纸浆", "unit": "元/吨", "symbol": "SP", "aliases": ["纸浆", "针叶浆", "阔叶浆"], "stocks": ["岳阳林纸"], "chain": "木材 → 商品浆 → 文化纸、包装纸", "drivers": "纸浆期货是商品浆成本/价格代理，不等同于公司自制浆或实际销售均价。"},
+    {"id": "tdi", "name": "甲苯二异氰酸酯（TDI）", "unit": "元/吨", "symbol": None, "aliases": ["TDI", "甲苯二异氰酸酯"], "stocks": ["沧州大化"], "chain": "甲苯、硝酸、氯气 → TDI → 聚氨酯软泡", "drivers": "关注装置检修、进口、下游海绵需求与原料成本；暂无已接入的可靠连续期货序列。"},
+    {"id": "polycarbonate", "name": "聚碳酸酯（PC）", "unit": "元/吨", "symbol": None, "aliases": ["聚碳酸酯", "PC"], "stocks": ["沧州大化"], "chain": "双酚A、碳酸二苯酯/光气 → PC → 电子电器、汽车", "drivers": "关注双酚A成本、装置开工、进口与下游需求；暂无已接入的可靠连续期货序列。"},
+    {"id": "phosphate-iron", "name": "磷酸铁", "unit": "元/吨", "symbol": None, "aliases": ["磷酸铁"], "stocks": ["安纳达"], "chain": "磷源、铁源 → 磷酸铁 → 磷酸铁锂正极材料", "drivers": "需区分电池级规格与普通工业级报价；暂无已接入的可靠连续期货序列。"},
+    {"id": "molybdenum", "name": "钼产品", "unit": "元/吨", "symbol": None, "aliases": ["钼精矿", "钼铁", "氧化钼", "钼产品"], "stocks": ["金钼股份"], "chain": "钼矿 → 钼精矿、氧化钼、钼铁及深加工", "drivers": "不同加工环节价格不可混用，暂无统一连续期货价格序列。"},
+    {"id": "tantalum-niobium", "name": "钽铌产品", "unit": "元/吨", "symbol": None, "aliases": ["钽铌", "钽铌产品", "钽铌及其合金制品"], "stocks": ["东方钽业"], "chain": "钽铌矿 → 氧化物、粉末、合金及制品", "drivers": "产品规格差异大且公开报价口径不统一，暂无可直接比较的连续市场价格。"},
+    {"id": "titanium-material", "name": "钛材", "unit": "元/吨", "symbol": None, "aliases": ["钛材", "钛及钛合金", "钛产品"], "stocks": ["宝钛股份", "金天钛业"], "chain": "钛矿 → 海绵钛 → 钛锭、钛板及钛合金材", "drivers": "钛材价格与钛白粉、钛精矿并非同一环节，暂无可直接替代的连续期货序列。"},
+    {"id": "vanadium", "name": "钒产品", "unit": "元/吨", "symbol": None, "aliases": ["钒产品", "五氧化二钒", "钒铁"], "stocks": ["钒钛股份"], "chain": "钒钛磁铁矿 → 含钒渣 → 五氧化二钒、钒铁", "drivers": "需区分五氧化二钒与钒铁报价，暂无已接入的可靠连续期货序列。"},
+    {"id": "carbon-fiber", "name": "碳纤维", "unit": "元/吨", "symbol": None, "aliases": ["碳纤维"], "stocks": ["中复神鹰"], "chain": "丙烯腈/沥青基原料 → 原丝 → 碳纤维", "drivers": "需按型号、强度等级区分报价，暂无已接入的可靠连续期货序列。"},
+    {"id": "viscose-staple-fiber", "name": "粘胶短纤", "unit": "元/吨", "symbol": None, "aliases": ["粘胶短纤", "粘胶短纤维"], "stocks": ["三友化工"], "chain": "棉浆粕/木浆 → 粘胶短纤 → 纺织纱线", "drivers": "关注棉浆粕、烧碱、硫酸成本及纺织开工；暂无连续期货序列。"},
+    {"id": "methionine", "name": "蛋氨酸", "unit": "元/吨", "symbol": None, "aliases": ["蛋氨酸", "甲硫氨酸"], "stocks": ["安迪苏"], "chain": "化工合成 → 饲料级蛋氨酸 → 畜禽饲料", "drivers": "关注全球产能、厂家报价、进口与饲料需求；暂无连续期货序列。"},
+    {"id": "gasoline", "name": "汽油", "unit": "元/吨", "symbol": None, "aliases": ["汽油", "92#汽油", "95#汽油"], "stocks": ["泰山石油"], "chain": "原油 → 炼化 → 汽油零售", "drivers": "零售/批发地区与牌号差异较大；原油期货不作为汽油售价替代。"},
+    {"id": "diesel", "name": "柴油", "unit": "元/吨", "symbol": None, "aliases": ["柴油", "0#柴油"], "stocks": ["泰山石油"], "chain": "原油 → 炼化 → 柴油批零", "drivers": "柴油牌号、地区和批零口径需区分；原油期货不作为柴油售价替代。"},
+    {"id": "printing-paper", "name": "印刷用纸", "unit": "元/吨", "symbol": None, "aliases": ["印刷用纸", "文化纸", "双胶纸"], "stocks": ["岳阳林纸"], "chain": "商品浆 → 文化纸 → 印刷出版", "drivers": "纸种、克重与地区报价差异较大，暂无统一连续期货序列。"},
+    {"id": "packaging-paper", "name": "包装用纸", "unit": "元/吨", "symbol": None, "aliases": ["包装用纸", "箱板纸", "瓦楞纸"], "stocks": ["岳阳林纸"], "chain": "废纸/木浆 → 包装纸 → 纸箱包装", "drivers": "纸种、克重及再生纤维比例不同，暂无统一连续期货序列。"},
 ]
 
 def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:
@@ -378,7 +394,7 @@ def fetch_data() -> dict[str, Any]:
     # Long-range monthly candlesticks come from the provider's main-continuous
     # futures series, kept separate from the spot/basis series above.
     continuous_symbols = {
-        "soda-ash": "SA0", "urea": "UR0", "methanol": "MA0",
+        "soda-ash": "SA0", "urea": "UR0", "methanol": "MA0", "float-glass": "FG0", "pulp": "SP0",
         "aluminium": "AL0", "rubber": "RU0", "corn": "C0", "soybean-meal": "M0", "gold": "AU0", "silver": "AG0", "copper": "CU0", "iron-ore": "I0", "tin": "SN0", "zinc": "ZN0", "sugar": "SR0", "pvc": "V0", "caustic-soda": "SH0", "alumina": "AO0",
     }
     old_items_for_monthly = existing_payload.get("items", {}) if isinstance(existing_payload.get("items"), dict) else {}
@@ -493,8 +509,13 @@ def fetch_data() -> dict[str, Any]:
         "soybean-meal": ["农副"],
         "live-hog": ["农副"],
         "gold": ["有色"], "silver": ["有色"], "copper": ["有色"], "iron-ore": ["钢铁"], "tin": ["有色"], "zinc": ["有色"], "sugar": ["农副"], "pvc": ["化工", "建材"], "caustic-soda": ["化工"], "alumina": ["有色"],
+        "float-glass": ["建材"], "pulp": ["造纸"],
+        "tdi": ["化工"], "polycarbonate": ["化工"], "phosphate-iron": ["化工"],
+        "molybdenum": ["有色"], "tantalum-niobium": ["有色"], "titanium-material": ["有色"], "vanadium": ["钢铁", "有色"],
+        "carbon-fiber": ["化工"], "viscose-staple-fiber": ["纺织"], "methionine": ["农副", "化工"],
+        "gasoline": ["能源"], "diesel": ["能源"], "printing-paper": ["造纸"], "packaging-paper": ["造纸"],
     }
-    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog"}
+    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog", "tdi", "polycarbonate", "phosphate-iron", "molybdenum", "tantalum-niobium", "titanium-material", "vanadium", "carbon-fiber", "viscose-staple-fiber", "methionine", "gasoline", "diesel", "printing-paper", "packaging-paper"}
     categories = list(dict.fromkeys(
         category for values in industry_categories.values() for category in values
     ))

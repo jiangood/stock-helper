@@ -9,7 +9,7 @@ let RESEARCH = { totalMax: 32, bands: [], criteria: {} };
 const researchScores = {};     // code -> { items, points, max, percent, band, metrics }
 let REPORT_SCORES = {};        // code -> { score, date, source, alternates }
 let REPORT_BANDS = [];
-let monthlyTrends = {}; // code -> 最近 18 个月复权月收盘价
+let monthlyTrends = {}; // code -> 最近 200 根复权月收盘价
 
 const $ = id => document.getElementById(id);
 
@@ -399,7 +399,7 @@ function buildRow(stock) {
     <td>${aliasHtml}</td>`;
 }
 
-/** 最近 18 个月复权月收盘价迷你趋势图；不插值、不补造缺失月份 */
+/** 最近 200 根复权月收盘价迷你趋势图；不插值、不补造缺失月份 */
 function monthlyTrendHtml(stock) {
   const bars = monthlyTrends[stock.code];
   if (!Array.isArray(bars) || bars.length < 2) {

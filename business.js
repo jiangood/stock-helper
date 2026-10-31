@@ -21,60 +21,10 @@
   ];
   function el(id) { return document.getElementById(id); }
   function esc(v) { return String(v == null ? '' : v).replace(/[&<>\"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
-  var quoteClient = null, marketIndices = {}, marketIndexKlines = {}, marketIndexKlineStatus = {};
   function fmtPct(v){return v===null||v===undefined||v===''||!Number.isFinite(Number(v))?'—':((Number(v)>0?'+':'')+Number(v).toFixed(2)+'%');}
   function fmtMoney(v){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
   function tone(v){return Number(v)>0?'text-up':Number(v)<0?'text-down':'text-body-secondary';}
   function stockForCode(code){var c=String(code||'').trim().toLowerCase();if(/^\d{6}$/.test(c))c=(/^[5689]/.test(c)?'sh':'sz')+c;return stocks.find(function(s){return String(s.code||'').toLowerCase()===c;})||null;}
-  function renderBriefMarketTime(){
-    var node=el('brief-market-time');if(!node)return;
-    var available=Object.keys(marketIndices).some(function(code){var q=marketIndices[code];return q&&Number(q.price)>0;});
-    node.textContent=available?'A股行情基准：指数最新有效报价 · 行情源未提供可核实的报价时间':'A股行情基准：暂无有效指数报价';
-  }
-  function renderIndexMonthlyCurve(code){
-    var bars=marketIndexKlines[code]||[];
-    var status=marketIndexKlineStatus[code];
-    if(!bars.length)return '<div class="index-monthly-empty mini-label">'+(status==='loading'?'月线加载中…':status==='error'?'月线暂不可用':'等待月线数据')+'</div>';
-    var visible=bars.slice(-12), values=visible.map(function(bar){return Number(bar.close);});
-    var min=Math.min.apply(null,values),max=Math.max.apply(null,values),range=max-min||Math.max(Math.abs(max)*0.01,0.01);
-    var left=8,right=292,top=8,bottom=60,step=(right-left)/Math.max(1,visible.length-1);
-    var points=visible.map(function(bar,i){
-      var x=visible.length===1?(left+right)/2:left+step*i;
-      var y=top+(max-Number(bar.close))/range*(bottom-top);
-      return x.toFixed(2)+','+y.toFixed(2);
-    }).join(' ');
-    var first=String(visible[0].time||'').slice(0,7),last=String(visible[visible.length-1].time||'').slice(0,7);
-    var stroke=Number(visible[visible.length-1].close)>=Number(visible[0].close)?'var(--up)':'var(--down)';
-    return '<div class="index-monthly-wrap"><div class="d-flex justify-content-between align-items-center"><span class="mini-label">月线 · 最近'+visible.length+'个月</span><span class="mini-label">'+esc(first)+' — '+esc(last)+'</span></div><svg class="index-monthly-curve" viewBox="0 0 300 76" role="img" aria-label="'+esc(code)+'最近'+visible.length+'个月收盘价曲线"><line x1="8" y1="68" x2="292" y2="68" stroke="var(--bs-border-color)" stroke-width="1"/><polyline points="'+points+'" style="stroke:'+stroke+'"/><circle cx="292" cy="'+points.split(' ').pop().split(',')[1]+'" r="2.5" fill="'+stroke+'"/></svg><div class="mini-label">按月收盘价连线 · 本月数据可能尚未收盘</div></div>';
-  }
-  function renderMarketIndices(){
-    var node=el('market-index-summary');if(!node)return;
-    var specs=[{code:'sh000001',name:'上证指数'},{code:'sz399001',name:'深证成指'},{code:'sz399006',name:'创业板指'}];
-    node.innerHTML=specs.map(function(x){var q=marketIndices[x.code];return '<article class="insight-card index-market-card"><div class="mini-label">'+x.name+'</div><div class="business-price">'+(q&&q.price>0?Number(q.price).toFixed(2):'—')+'</div><div class="'+(q?tone(q.todayChange):'text-body-secondary')+' fw-semibold">'+(q?fmtPct(q.todayChange):'指数行情暂不可用')+'</div>'+renderIndexMonthlyCurve(x.code)+'</article>';}).join('');
-    renderBriefMarketTime();
-  }
-  function fetchMarketIndexKlines(){
-    if(!quoteClient||typeof quoteClient.fetchKline!=='function')return;
-    ['sh000001','sz399001','sz399006'].forEach(function(code){
-      if(marketIndexKlineStatus[code]==='loading'||marketIndexKlineStatus[code]==='loaded')return;
-      marketIndexKlineStatus[code]='loading';
-      quoteClient.fetchKline(code,{period:'month',count:12,adjust:'none'}).then(function(result){
-        var bars=result&&Array.isArray(result.bars)?result.bars:[];
-        marketIndexKlines[code]=bars.filter(function(bar){return bar&&Number(bar.open)>0&&Number(bar.close)>0&&Number(bar.high)>0&&Number(bar.low)>0;});
-        marketIndexKlineStatus[code]=marketIndexKlines[code].length?'loaded':'error';
-        renderMarketIndices();
-      }).catch(function(){marketIndexKlineStatus[code]='error';renderMarketIndices();});
-    });
-  }
-  function renderMarketPulse(){
-    var node=el('market-pulse-summary');if(!node)return;
-    var live=stocks.map(function(s){return {s:s,q:quotes[s.code]};}).filter(function(x){return x.q&&Number(x.q.price)>0;});
-    var up=live.filter(function(x){return Number(x.q.todayChange)>0;}).length,down=live.filter(function(x){return Number(x.q.todayChange)<0;}).length,flat=live.length-up-down;
-    var avg=live.length?live.reduce(function(a,x){return a+(Number.isFinite(Number(x.q.todayChange))?Number(x.q.todayChange):0);},0)/live.length:null;
-    var zone=live.filter(function(x){var z=Croc.evaluate(x.s,x.q).zone;return z==='heavy'||z==='entry';}).length;
-    var cards=[['涨 / 跌 / 平',up+' / '+down+' / '+flat,'仅统计本股票池，不代表全市场'],['股票池平均涨跌',fmtPct(avg),'等权平均温度参考'],['到计划价区',zone+' 只','按股票池入场 / 重仓计划价统计']];
-    node.innerHTML=cards.map(function(x){return '<div class="col-6 col-xl-4"><div class="insight-card h-100"><div class="mini-label">'+x[0]+'</div><div class="fs-4 fw-bold">'+x[1]+'</div><div class="mini-label">'+x[2]+'</div></div></div>';}).join('');
-  }
   function renderSectors(){
     var node=el('sector-hotspots');if(!node)return;
     renderSectorNote();
@@ -135,7 +85,7 @@
       .then(function(){renderSectors();});
   }
   function renderBrief(){
-    renderMarketIndices();renderMarketPulse();renderSectors();
+    renderSectors();
     var updated=el('brief-updated');
     if(updated){
       updated.textContent='正在读取行情缓存日期…';
@@ -148,7 +98,6 @@
       }else updated.textContent='行情缓存日期暂不可用';
     }
   }
-  function fetchMarketIndices(){if(!quoteClient||typeof quoteClient.fetch!=='function')return;quoteClient.fetch(['sh000001','sz399001','sz399006']).then(function(data){marketIndices=data||{};renderMarketIndices();fetchMarketIndexKlines();}).catch(function(){renderMarketIndices();fetchMarketIndexKlines();});}
   function formatNumber(value) {
     var n = Number(value);
     return Number.isFinite(n) ? n.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) : '—';
@@ -480,14 +429,12 @@
   function init(stocksArg, quoteArg, quoteClientArg) {
     stocks = Array.isArray(stocksArg) ? stocksArg : [];
     quotes = quoteArg || {};
-    quoteClient = quoteClientArg || null;
     renderBrief();
   }
-  // 只有进入行情页才拉取指数、板块月线与商品数据，避免自选/作战页的无效请求。
+  // 只有进入行情页才拉取板块月线与商品数据，避免自选/作战页的无效请求。
   function onTab(target) {
     if (target !== 'market') return;
     renderBrief();
-    fetchMarketIndices();
     loadSectorMonthly();
     fetchBusinessData();
   }

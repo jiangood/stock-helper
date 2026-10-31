@@ -44,11 +44,11 @@ function render(){
     var month=params[0].axisValue;
     return '<strong>'+esc(month)+'</strong><br>'+params.map(function(item){
      var point=item.data||{},actual=point.actualPrice;
-     return (item.marker||'')+esc(item.seriesName)+'：'+(actual==null?'暂无真实价格':Number(actual).toLocaleString('zh-CN',{maximumFractionDigits:point.actualUnit==='元/股'?3:2})+' '+esc(point.actualUnit||''))+' <span style="color:#888">（归一化指数 '+(Number(item.value)>0?'+':'')+money(item.value)+'）</span>';
+     return (item.marker||'')+esc(item.seriesName)+'：'+(actual==null?'暂无真实价格':Number(actual).toLocaleString('zh-CN',{maximumFractionDigits:point.actualUnit==='元/股'?3:2})+' '+esc(point.actualUnit||''))+' <span style="color:#888">（归一化 '+(Number(item.value)*100).toFixed(1)+'%）</span>';
     }).join('<br>');
    }},
    xAxis:{type:'category',data:card.months||[],boundaryGap:false,axisLabel:{fontSize:10,hideOverlap:true}},
-   yAxis:{type:'value',min:-100,max:100,interval:50,axisLabel:{fontSize:10,formatter:function(value){return (Number(value)*100).toFixed(0)+'%';}},name:'归一化指数（0%–100%）',nameTextStyle:{fontSize:9},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
+   yAxis:{type:'value',min:0,max:1,interval:0.25,axisLabel:{fontSize:10,formatter:function(value){return (Number(value)*100).toFixed(0)+'%';}},name:'归一化指数（0%–100%）',nameTextStyle:{fontSize:9},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
    series:series
   });
  });

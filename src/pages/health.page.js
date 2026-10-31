@@ -64,33 +64,42 @@ export function mount({ root }) {
 
   let mounted = true;
   async function load() {
-  try {
-    const { manifest, health } = await fetchCacheHealth({ signal: controller.signal });
-    if (!mounted || controller.signal.aborted) return;
-    metrics.healthy.textContent = health.healthyCount + ' / ' + health.cacheCount;
-    metrics.duration.textContent = Number.isFinite(health.durationMs) ? (health.durationMs / 1000).toFixed(2) + ' 秒' : '—';
-    metrics.reuse.textContent = Number.isFinite(health.contentReuseRate) ? health.contentReuseRate + '%' : '—';
-    metrics.bytes.textContent = formatCacheBytes(health.totalBytes);
-    updated.textContent = '行情日期：' + (manifest.marketDate || '未知') + ' · 最近成功发布：' + formatCacheTime(health.generatedAt);
+    try {
+      const { manifest, health } = await fetchCacheHealth({ signal: controller.signal });
+      if (!mounted || controller.signal.aborted) return;
 
-    for (const [id, item] of Object.entries(manifest.caches)) {
-      const row = createElement(documentLike, 'div', 'd-flex align-items-center justify-content-between gap-3 border-bottom pb-2');
-      const detail = createElement(documentLike, 'div', 'min-w-0');
-      detail.append(
-        createElement(documentLike, 'strong', 'd-block', id),
-        createElement(documentLike, 'small', 'text-body-secondary', '日期 ' + (item.marketDate || '未知') + ' · ' + item.recordCount + ' 条 · ' + formatCacheBytes(item.bytes))
-      );
-      const statusLabel = item.status === 'healthy' ? '正常' : item.status === 'stale' ? '过期' : '未知';
-      const badge = createElement(documentLike, 'span', 'badge rounded-pill text-bg-' + (item.status === 'healthy' ? 'success' : item.status === 'stale' ? 'danger' : 'warning'), statusLabel);
-      row.append(detail, badge);
-      cacheList.append(row);
+      metrics.healthy.textContent = health.healthyCount + ' / ' + health.cacheCount;
+      metrics.duration.textContent = Number.isFinite(health.durationMs)
+        ? (health.durationMs / 1000).toFixed(2) + ' 秒'
+        : '—';
+      metrics.reuse.textContent = Number.isFinite(health.contentReuseRate)
+        ? health.contentReuseRate + '%'
+        : '—';
+      metrics.bytes.textContent = formatCacheBytes(health.totalBytes);
+      updated.textContent = '行情日期：' + (manifest.marketDate || '未知') +
+        ' · 最近成功发布：' + formatCacheTime(health.generatedAt);
+
+      for (const [id, item] of Object.entries(manifest.caches)) {
+        const row = createElement(documentLike, 'div', 'd-flex align-items-center justify-content-between gap-3 border-bottom pb-2');
+        const detail = createElement(documentLike, 'div', 'min-w-0');
+        detail.append(
+          createElement(documentLike, 'strong', 'd-block', id),
+          createElement(documentLike, 'small', 'text-body-secondary',
+            '日期 ' + (item.marketDate || '未知') + ' · ' + item.recordCount +
+            ' 条 · ' + formatCacheBytes(item.bytes))
+        );
+        const statusLabel = item.status === 'healthy' ? '正常' : item.status === 'stale' ? '过期' : '未知';
+        const badgeVariant = item.status === 'healthy' ? 'success' : item.status === 'stale' ? 'danger' : 'warning';
+        row.append(detail, createElement(documentLike, 'span',
+          'badge rounded-pill text-bg-' + badgeVariant, statusLabel));
+        cacheList.append(row);
+      }
+    } catch (error) {
+      if (!mounted || controller.signal.aborted) return;
+      metrics.healthy.textContent = '不可用';
+      cacheList.textContent = '缓存监控读取失败：' + error.message;
+      updated.textContent = '请检查 GitHub Actions 最近一次成功的缓存构建。';
     }
-  } catch (error) {
-    if (!mounted || controller.signal.aborted) return;
-    metrics.healthy.textContent = '不可用';
-    cacheList.textContent = '缓存监控读取失败：' + error.message;
-    updated.textContent = '请检查 GitHub Actions 最近一次成功的缓存构建。';
-  }
   }
 
   load();

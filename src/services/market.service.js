@@ -54,8 +54,8 @@ export function formatMarketNumber(value, digits = 2) {
 
 export function normalizeDailyHistory(history, limit = 200) {
   if (!Array.isArray(history)) return [];
-  return history.filter(point =>
-    point && /^\\d{4}-\\d{2}-\\d{2}$/.test(String(point.date)) &&
+  const points = history.filter(point =>
+    point && /^\d{4}-\d{2}-\d{2}$/.test(String(point.date)) &&
     point.close != null && Number.isFinite(Number(point.close)) && Number(point.close) > 0
   ).map(point => ({ date: point.date, close: Number(point.close) }))
     .sort((left, right) => left.date.localeCompare(right.date));

@@ -80,7 +80,7 @@ test('研报评分 null 不参与数值渲染和筛选', () => {
 });
 
 
-test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称列不显示价格区间状态', () => {
+test('首页工具栏仅保留搜索框，分组列位于倒数第三且名称列不显示价格区间状态', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
   const toolbarStart = html.indexOf('<div id="stock-toolbar"');
@@ -91,14 +91,15 @@ test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称�
   const nameColumn = html.indexOf('id="th-name"');
   const groupColumn = html.indexOf('id="th-group"');
   const priceColumn = html.indexOf('id="th-price"');
-  assert.ok(nameColumn >= 0 && groupColumn > nameColumn && priceColumn > groupColumn, '名称、分组、价格列顺序不正确');
+  assert.ok(nameColumn >= 0 && priceColumn > nameColumn && groupColumn > priceColumn, '分组列应位于倒数第三列之前的主体列之后');
   assert.match(dashboard, /function statusHtml/);
   const statusStart = dashboard.indexOf('function statusHtml(');
   const statusEnd = dashboard.indexOf('function flagHtml(', statusStart);
   assert.ok(statusStart >= 0 && statusEnd > statusStart, '未找到名称列状态渲染函数');
   const statusFunction = dashboard.slice(statusStart, statusEnd);
   assert.doesNotMatch(statusFunction, /接近重仓|重仓区|入场区|高于入场|待确认/);
-  assert.ok(dashboard.includes('<td>${stock.group'), '分组单元格应紧跟股票名称');
+  assert.ok(dashboard.indexOf('<td class="stacked-cell">${researchReportHtml(stock)}</td>') < dashboard.indexOf('<td>${stock.group'), '分组单元格应位于研报评分之后');
+  assert.ok(dashboard.indexOf('<td>${stock.group') < dashboard.indexOf('<td>${aliasHtml}'), '分组单元格应位于别名之前');
   assert.equal(dashboard.includes("$('group-filter')") || dashboard.includes("$('status-filter')"), false);
 });
 

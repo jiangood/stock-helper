@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>
+(function () {
+  var scheme = window.matchMedia('(prefers-color-scheme: dark)');
+  function apply() {
+    var saved = null;
+    try { saved = localStorage.getItem('stock-theme'); } catch (e) {}
+    document.documentElement.setAttribute('data-bs-theme', saved || (scheme.matches ? 'dark' : 'light'));
+  }
+  apply();
+  if (scheme.addEventListener) scheme.addEventListener('change', apply);
+  else if (scheme.addListener) scheme.addListener(apply);
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>商品 · 股票助手</title>
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.product-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:12px}
+.product-card{background:var(--bs-body-bg);border:1px solid var(--bs-border-color);border-radius:12px;padding:14px;min-width:0}
+.product-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.product-card-name{font-weight:750;font-size:15px}
+.product-meta{font-size:11px;color:var(--bs-secondary-color)}
+.product-metrics{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 4px}
+.product-metric-label{font-size:10px;color:var(--bs-secondary-color)}
+.product-metric-value{font-size:19px;font-weight:750;font-variant-numeric:tabular-nums}
+.product-chart{height:190px;width:100%;margin-top:6px}
+.product-note{font-size:11px;color:var(--bs-secondary-color);line-height:1.6;margin-top:8px}
+.product-status{font-size:10px;border:1px solid var(--bs-border-color);border-radius:99px;padding:3px 8px;white-space:nowrap}
+.product-status.diverge{color:var(--bs-danger);border-color:var(--bs-danger-border-subtle)}
+.product-status.sync{color:var(--bs-success);border-color:var(--bs-success-border-subtle)}
+.product-empty{height:190px;display:grid;place-items:center;text-align:center;color:var(--bs-secondary-color);font-size:12px;padding:16px}
+.product-positive{color:var(--bs-success)}.product-negative{color:var(--bs-danger)}
+@media(max-width:575px){.product-chart{height:170px}.product-card{padding:12px}}
+</style>
+</head>
+<body class="bg-body-tertiary" data-page="products">
+<a class="skip-link" href="#products-pane">跳到主要内容</a>
+<div id="password-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-desc">
+  <form class="gate-card" id="password-gate-form">
+    <h1 id="gate-title">股票池监控</h1><p id="gate-desc">请输入访问密码以继续</p>
+    <label class="visually-hidden" for="gate-password">访问密码</label>
+    <input id="gate-password" type="password" placeholder="输入密码" autocomplete="current-password" required autofocus aria-describedby="gate-error">
+    <label class="gate-remember"><input id="gate-remember" type="checkbox" checked> 在此设备记住登录状态</label>
+    <button type="submit">进入</button><div id="gate-error" class="gate-error" role="alert">密码不正确，请重试。</div>
+  </form>
+</div>
+<div class="sticky-top">
+  <nav class="bg-body border-bottom px-2 px-sm-3 py-2 d-flex align-items-center gap-2" aria-label="主导航">
+    <a class="d-flex align-items-center gap-2 text-body text-decoration-none me-auto text-nowrap" href="index.html"><span class="logo" aria-hidden="true">股</span><strong class="d-none d-sm-inline" style="font-size:14px">股票助手</strong></a>
+    <a class="main-nav-link" href="index.html">自选</a><a class="main-nav-link" href="combat.html">作战</a>
+    <a class="main-nav-link" href="market.html">行情</a><a class="main-nav-link active" href="products.html" aria-current="page">商品</a>
+    <button class="btn btn-sm btn-outline-secondary icon-btn" id="theme-btn" type="button" aria-label="切换主题" title="切换主题">◐</button>
+  </nav>
+</div>
+<main id="products-pane" class="container-fluid px-3 py-3" tabindex="-1">
+  <div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
+    <div><h1 class="panel-title page-title mb-1">商品价格 · 股票走势</h1><div class="panel-subtitle">股票池主营产品价格与股价月线对比，统一以首个共同月份 = 100</div></div>
+    <div id="product-updated" class="panel-subtitle">正在读取静态数据…</div>
+  </div>
+  <div class="product-toolbar">
+    <input id="product-search" class="form-control form-control-sm" style="max-width:260px" type="search" placeholder="搜索股票 / 产品 / 代码" aria-label="搜索股票或产品">
+    <select id="product-filter" class="form-select form-select-sm" style="max-width:170px" aria-label="筛选数据状态">
+      <option value="all">全部股票</option><option value="ready">有可比月线</option><option value="pending">待补充数据</option><option value="divergence">走势背离</option>
+    </select>
+    <span id="product-count" class="panel-subtitle"></span>
+  </div>
+  <div id="product-cards" class="product-grid" aria-live="polite"><div class="product-empty">正在加载商品与股票月线数据…</div></div>
+  <p class="product-note mt-3">说明：图表展示商品价格与股票收盘价的标准化走势，不是商品与公司估值的直接因果关系。商品价格对生产商可能是收入端，对下游企业可能是成本端；多产品公司还受销量、成本、库存、合同定价、产能利用率等因素影响。月线本月可能未收盘，历史数据不足或映射未核实的股票会明确标注，不使用估算值补齐。仅供研究参考，不构成投资建议。</p>
+</main>
+<script src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>
+<script src="password-gate.js"></script>
+<script src="products.js"></script>
+<script>
+(function(){
+  var btn=document.getElementById('theme-btn');
+  if(btn)btn.addEventListener('click',function(){
+    var current=document.documentElement.getAttribute('data-bs-theme')||'light';
+    var next=current==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-bs-theme',next);
+    try{localStorage.setItem('stock-theme',next);}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>

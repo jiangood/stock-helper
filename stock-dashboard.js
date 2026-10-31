@@ -531,7 +531,7 @@ function researchReportHtml(stock) {
 /** 研报日期独立展示和排序；过期标记不改变用于排序的原始日期。 */
 function researchDateHtml(stock) {
   const report = REPORT_SCORES[stock.code];
-  if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '<span class="text-body-tertiary">—</span>';
+  if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '';
   return `<span class="score-date">${esc(report.date)}</span>`;
 }
 

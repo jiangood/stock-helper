@@ -485,7 +485,7 @@ function syncHeaderHeight() {
   window.addEventListener('resize', schedule);
 }
 
-/** 顶部摘要：重仓 / 破净 / 八折 / 风险 */
+/** 顶部摘要：重仓 / 破净 / 八折以内 / 风险 */
 function updateSummary() {
   const el = $('board-summary');
   if (!el) return;
@@ -506,7 +506,7 @@ function updateSummary() {
     }
   });
   el.innerHTML = `重仓 <b class="text-body">${c.heavy}</b> · 破净 <b class="text-body">${c.pb}</b>`
-    + ` · 八折 <b class="text-body">${c.pb80}</b> · 纪律 <b class="text-body">${c.pass}</b>`
+    + ` · 八折以内 <b class="text-body">${c.pb80}</b> · 纪律 <b class="text-body">${c.pass}</b>`
     + ` · 评分 <b class="text-body">${c.score}</b>`
     + ` · 风险 <b class="${c.risk ? 'text-up' : 'text-body'}">${c.risk}</b>`;
 }
@@ -649,7 +649,14 @@ function flagHtml(e, stock, quote) {
   const caveat = eligible
     ? '仍需核对主营、行业周期与安全边际'
     : '不是买点信号：先核实盈利并满足不买ST/亏损股纪律';
-  if (e.pbGolden) return `<span class="flag ${cls}" title="PB≤0.8：净资产八折估值参考；${caveat}">八折</span>`;
+  if (e.pbGolden) {
+    const quoteTime = Number(quote && quote.time);
+    const quoteDate = Number.isFinite(quoteTime) && quoteTime > 0 && Number.isFinite(new Date(quoteTime).getTime())
+      ? new Date(quoteTime).toISOString().slice(0, 10)
+      : '未知';
+    const detail = `PB ${fmtCompact(e.pb, 2)} · 股价 ${fmtCompact(e.price)} · 行情日期 ${quoteDate}`;
+    return `<span class="flag ${cls}" title="${esc(`${detail}；折数按 PB×10 计算；${caveat}`)}">${fmtCompact(e.pbFold, 1)}折</span>`;
+  }
   if (e.pbUnder1) return `<span class="flag ${cls}" title="PB<1：破净估值参考；${caveat}">破净</span>`;
   return '';
 }

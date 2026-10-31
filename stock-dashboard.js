@@ -385,7 +385,6 @@ function buildRow(stock) {
   return `
     <td>${nameHtml}</td>
     <td class="monthly-trend-cell">${monthlyTrend}</td>
-    <td>${stock.group ? esc(stock.group) : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${priceHtml}</td>
     <td class="stacked-cell">${entryHtml}${entryDiff}</td>
     <td class="stacked-cell">${heavyHtml}${heavyDiff}</td>
@@ -396,6 +395,7 @@ function buildRow(stock) {
     <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${fmtPct(pd && pd.divYield)}</td>
     <td class="stacked-cell">${researchReportHtml(stock)}</td>
+    <td>${stock.group ? esc(stock.group) : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${aliasHtml}</td>`;
 }
 

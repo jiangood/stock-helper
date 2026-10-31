@@ -55,7 +55,15 @@
     var history = Array.isArray(item && item.history) ? item.history.filter(function (p) {
       return p && numeric(p.close) > 0 && p.date;
     }) : [];
-    return history.slice(-60);
+    var byMonth = {};
+    history.forEach(function(p) {
+      var month = String(p.date).slice(0, 7);
+      if (!/^\d{4}-\d{2}$/.test(month)) return;
+      if (!byMonth[month] || String(p.date) > byMonth[month].date) byMonth[month] = p;
+    });
+    return Object.keys(byMonth).sort().slice(-60).map(function(month) {
+      return { date: month + '-01', close: Number(byMonth[month].close) };
+    });
   }
   function sparkline(history, id) {
     var points = Array.isArray(history) ? history.filter(function (p) { return numeric(p.close) > 0; }) : [];

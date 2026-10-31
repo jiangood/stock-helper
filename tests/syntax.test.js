@@ -180,5 +180,5 @@ test('商品趋势图为商品和关联股票标注真实价格关键点', () =>
   for (const label of ['最低', '最高', '期初', '当前']) assert.ok(products.includes("'" + label + "'"), '缺少图表关键点：' + label);
   assert.match(products, /markPoint:\{symbol:'circle',symbolSize:7,data:keyPriceMarks\(card\.productSeries,card\.months/);
   assert.match(products, /markPoint:\{symbol:'circle',symbolSize:7,data:keyPriceMarks\(stock\.values,card\.months/);
-  assert.match(products, /formatter:function\(param\)\{return param\.data\.name\+' '\+money\(param\.data\.actualPrice\)\}/);
+  assert.match(products, /formatter:function\(param\)\{return param\.data\.name\+' '\+money\(param\.data\.actualPrice\);?\}/);
 });

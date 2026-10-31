@@ -23,6 +23,15 @@
   function esc(v) { return String(v == null ? '' : v).replace(/[&<>\"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]; }); }
   function fmtPct(v){return v===null||v===undefined||v===''||!Number.isFinite(Number(v))?'—':((Number(v)>0?'+':'')+Number(v).toFixed(2)+'%');}
   function fmtMoney(v){return Number.isFinite(Number(v))?Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
+  function monthlyLastPoints(points, valueKey) {
+    var byMonth = {};
+    (Array.isArray(points) ? points : []).forEach(function(p) {
+      if (!p || !/^\\d{4}-\\d{2}-\\d{2}$/.test(p.date) || !(Number(p[valueKey]) > 0)) return;
+      var month = p.date.slice(0, 7);
+      if (!byMonth[month] || p.date > byMonth[month].date) byMonth[month] = { date: month, value: Number(p[valueKey]) };
+    });
+    return Object.keys(byMonth).sort().map(function(month) { return byMonth[month]; }).slice(-60);
+  }
   function tone(v){return Number(v)>0?'text-up':Number(v)<0?'text-down':'text-body-secondary';}
   function stockForCode(code){var c=String(code||'').trim().toLowerCase();if(/^\d{6}$/.test(c))c=(/^[5689]/.test(c)?'sh':'sz')+c;return stocks.find(function(s){return String(s.code||'').toLowerCase()===c;})||null;}
   function renderSectors(){
@@ -123,7 +132,14 @@
         return p && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && (Number(p.spot) > 0 || Number(p.futures) > 0);
       }).slice().sort(function (a,b) { return a.date.localeCompare(b.date); }) : [];
       var metricKey = series.some(function(p){ return Number(p.spot)>0; }) ? 'spot' : 'futures';
-      var points = series.filter(function(p){ return Number(p[metricKey])>0; }).slice(-60);
+      var dailyPoints = series.filter(function(p){ return Number(p[metricKey])>0; });
+      var suppliedMonthly = data.monthlyPrices && Array.isArray(data.monthlyPrices.series)
+        ? data.monthlyPrices.series.filter(function(p){ return p && Number(p.value)>0 && (p.date || p.label); }).map(function(p){
+            return { date: String(p.date || p.label).slice(0, 7), value: Number(p.value) };
+          }).filter(function(p){ return /^\\d{4}-\\d{2}$/.test(p.date); })
+        : [];
+      var points = suppliedMonthly.length >= 2 ? suppliedMonthly.slice(-60)
+        : monthlyLastPoints(dailyPoints, metricKey);
       var last = data.latest != null && Number(data.latest)>0 ? Number(data.latest) : (points.length ? Number(points[points.length-1][metricKey]) : null);
       var latestDate = data.latestDate || (points.length ? points[points.length-1].date : null);
       var delta = null;
@@ -141,7 +157,7 @@
           id: chartId,
           name: meta.name,
           unit: data.unit || meta.unit || '',
-          data: points.map(function(p){ return { time: p.date, value: Number(p[metricKey]) }; })
+          data: points.map(function(p){ return { time: p.date, value: Number(p.value != null ? p.value : p[metricKey]) }; })
         });
         chart = '<div class="business-chart-wrap"><div class="business-chart-caption"><span>'+esc(meta.name)+'价格走势</span><span>近'+points.length+'个数据点</span></div><div class="business-price-chart" id="'+chartId+'" role="img" aria-label="'+esc(meta.name)+'历史价格曲线"></div></div>';
       }
@@ -191,8 +207,8 @@
         : '<div class="mini-label mt-2">供需指标：该品种暂未取得可靠的自动仓单数据</div>';
       var marketSignalHtml = '';
       if (points.length >= 4 && inventoryPoints.length >= 4) {
-        var priceBase = Number(points[Math.max(0, points.length-5)][metricKey]);
-        var priceEnd = Number(points[points.length-1][metricKey]);
+        var priceBase = Number(dailyPoints[Math.max(0, dailyPoints.length-5)][metricKey]);
+        var priceEnd = Number(dailyPoints[dailyPoints.length-1][metricKey]);
         var invBase = Number(inventoryPoints[Math.max(0, inventoryPoints.length-5)].value);
         var invEnd = Number(inventoryPoints[inventoryPoints.length-1].value);
         if (priceBase>0 && invBase>0 && priceEnd>0 && invEnd>0) {
@@ -203,7 +219,7 @@
           else if (shortPriceChange<-0.5 && shortInvChange>1) signalText='价格下行、仓单上升：存在库存压力迹象';
           else if (shortPriceChange>0.5 && shortInvChange>1) signalText='价格与仓单同步上升：需辨别补库与供给增加';
           else if (shortPriceChange<-0.5 && shortInvChange<-1) signalText='价格与仓单同步下降：需留意需求走弱或库存转移';
-          marketSignalHtml = '<div class="mini-label mt-2">短期供需观察（近'+Math.min(points.length,inventoryPoints.length,5)+'个数据点）：'+esc(signalText)+'</div>';
+          marketSignalHtml = '<div class="mini-label mt-2">短期供需观察（近'+Math.min(dailyPoints.length,inventoryPoints.length,5)+'个数据点）：'+esc(signalText)+'</div>';
         }
       }
       var links = data.industryLinks && typeof data.industryLinks === 'object' ? data.industryLinks : null;
@@ -242,11 +258,13 @@
       costContainer.innerHTML = costInputs.map(function(input) {
         var datedSeries = Array.isArray(input.series) ? input.series.filter(function(p) {
           return p && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && (Number(p.spot)>0 || Number(p.futures)>0);
-        }).slice(-60) : [];
-        var monthlySeries = Array.isArray(input.monthlyPrices) ? input.monthlyPrices.filter(function(p) {
-          return p && Number(p.value)>0;
-        }).slice(-6) : [];
-        var series = datedSeries.length ? datedSeries : monthlySeries;
+        }) : [];
+        var suppliedMonthlySeries = Array.isArray(input.monthlyPrices) ? input.monthlyPrices.filter(function(p) {
+          return p && Number(p.value)>0 && (p.date || p.label);
+        }).map(function(p){ return { date: String(p.date || p.label).slice(0,7), value:Number(p.value), label:p.label || p.date }; }) : [];
+        var monthlySeries = suppliedMonthlySeries.length >= 2 ? suppliedMonthlySeries.slice(-6)
+          : monthlyLastPoints(datedSeries, datedSeries.some(function(p){return Number(p.spot)>0;}) ? 'spot' : 'futures');
+        var series = monthlySeries.length ? monthlySeries : datedSeries.slice(-6);
         function pointValue(p) { return Number(p.spot || p.futures || p.value); }
         var latest = input.latest != null && Number(input.latest)>0 ? Number(input.latest) :
           (series.length ? pointValue(series[series.length-1]) : null);
@@ -256,13 +274,13 @@
         var tone = change == null ? 'text-body-secondary' : change>0 ? 'text-up' : change<0 ? 'text-down' : 'text-body-secondary';
         var trend = change == null ? '趋势数据不足' : ((change>0?'+':'')+change.toFixed(2)+'%');
         var chart = '<div class="empty-state py-2 small">暂未获取到可绘制的原料历史价格</div>';
-        if (datedSeries.length>=2) {
+        if (monthlySeries.length>=2) {
           var chartId = 'business-cost-chart-' + input.id;
           businessChartSpecs.push({
             id: chartId,
             name: input.name,
             unit: input.unit || '元/吨',
-            data: datedSeries.map(function(p){ return { time: p.date, value: pointValue(p) }; })
+            data: monthlySeries.map(function(p){ return { time: String(p.date || p.label).slice(0,7), value: pointValue(p) }; })
           });
           chart = '<div class="business-chart-wrap"><div class="business-chart-caption"><span>'+esc(input.name)+'价格走势</span><span>近'+datedSeries.length+'个数据点</span></div><div class="business-price-chart business-cost-chart" id="'+chartId+'" role="img" aria-label="'+esc(input.name)+'历史价格曲线"></div></div>';
         }

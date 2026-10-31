@@ -23,7 +23,7 @@
 | `data/business-data.json`、`data/stock-products.json` | 商品报价及商品-上市公司关联关系 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
-| `data/product-comparison.json` | Actions 生成的商品及关联股票标准化月线读模型（`commodityCards`） |
+| `data/commodity-db/index.json` | Actions 生成的商品及关联股票标准化月线读模型（`commodityCards`） |
 
 | `data/research-reports.json` | 研报原始评分及来源信息 |
 | `data/fundamentals.json` | 基本面快照 |

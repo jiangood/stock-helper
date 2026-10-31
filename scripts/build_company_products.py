@@ -208,7 +208,7 @@ def build(
         old_name = str(old_row.get("productName") or "")
         old_market = infer_market_item(old_name)
         old_mapping = mappings.get(str(old_row.get("stockCode") or "").lower(), {}) if isinstance(mappings, dict) else {}
-        if not old_market and old_mapping.get("productName", "").casefold() == old_name.casefold():
+        if not old_market and str(old_mapping.get("productName") or "").casefold() == old_name.casefold():
             old_market = old_mapping.get("marketItemId")
         if old_market != old_row.get("marketItemId"):
             continue

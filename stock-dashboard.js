@@ -341,14 +341,20 @@ function rowClass(stock) {
   return '';
 }
 
+function fmtCompact(value, decimals = 2) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return '—';
+  return number.toFixed(decimals).replace(/\\.?0+$/, '');
+}
+
 function buildRow(stock) {
   const pd = priceData[stock.code];
   const price = pd ? pd.price : null;
   const e = Croc.evaluate(stock, pd);
 
   let priceHtml = '<span class="text-body-tertiary">…</span>';
-  let entryHtml = stock.entry != null ? Number(stock.entry).toFixed(2) : '<span class="text-body-tertiary">—</span>';
-  let heavyHtml = stock.heavy != null ? Number(stock.heavy).toFixed(2) : '<span class="text-body-tertiary">—</span>';
+  let entryHtml = stock.entry != null ? fmtCompact(stock.entry) : '<span class="text-body-tertiary">—</span>';
+  let heavyHtml = stock.heavy != null ? fmtCompact(stock.heavy) : '<span class="text-body-tertiary">—</span>';
   let entryDiff = '';
   let heavyDiff = '';
   let priceClass = '';
@@ -356,20 +362,20 @@ function buildRow(stock) {
   if (price != null && price > 0) {
     const entry = stock.entry == null || stock.entry === '' ? NaN : Number(stock.entry);
     priceClass = !Number.isFinite(entry) || entry <= 0 ? '' : price > entry ? 'text-up' : price < entry ? 'text-down' : '';
-    priceHtml = `<span class="price-cell ${priceClass}">${price.toFixed(2)}</span>`;
+    priceHtml = `<span class="price-cell ${priceClass}">${fmtCompact(price)}</span>`;
 
     if (stock.entry) entryDiff = diffHtml((price - stock.entry) / stock.entry * 100);
     if (stock.heavy) heavyDiff = diffHtml((price - stock.heavy) / stock.heavy * 100);
   }
 
   // 止盈列
-  let tp1Html = stock.tp1 != null ? `<span class="text-body-secondary">${stock.tp1}</span>` : '<span class="text-body-tertiary">—</span>';
+  let tp1Html = stock.tp1 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp1)}</span>` : '<span class="text-body-tertiary">—</span>';
   if (price != null && stock.tp1 != null) {
     tp1Html = price >= stock.tp1
       ? `<span class="badge badge-tp text-bg-warning-subtle border border-warning-subtle text-warning-emphasis">${stock.tp1} ✓</span>`
       : `<span class="text-body-secondary">${stock.tp1}</span><span class="diff text-down">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span>`;
   }
-  let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${stock.tp2}</span>` : '<span class="text-body-tertiary">—</span>';
+  let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp2)}</span>` : '<span class="text-body-tertiary">—</span>';
   if (price != null && stock.tp2 != null && price >= stock.tp2) {
     tp2Html = `<span class="badge badge-tp text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">${stock.tp2} ✓</span>`;
   }
@@ -530,26 +536,26 @@ function fmtScore(value) {
 function fmtCap(cap) {
   if (cap == null || !(cap > 0)) return '<span class="text-body-tertiary">—</span>';
   const yi = cap / 1e8;
-  if (yi >= 1e4) return `<span class="text-body-secondary">${(yi / 1e4).toFixed(2)}<span class="unit">万亿</span></span>`;
+  if (yi >= 1e4) return `<span class="text-body-secondary">${fmtCompact(yi / 1e4)}<span class="unit">万亿</span></span>`;
   return `<span class="text-body-secondary">${yi >= 1e3 ? yi.toFixed(0) : yi.toFixed(1)}<span class="unit">亿</span></span>`;
 }
 
 /** 市盈率 / 市净率（负值表示亏损，弱化显示） */
 function fmtRatio(v) {
   if (v == null || !isFinite(v)) return '<span class="text-body-tertiary">—</span>';
-  return `<span class="${v > 0 ? 'text-body-secondary' : 'text-body-tertiary'}">${v.toFixed(2)}</span>`;
+  return `<span class="${v > 0 ? 'text-body-secondary' : 'text-body-tertiary'}">${fmtCompact(v)}</span>`;
 }
 
 /** 股息率（%）：无分红 / 未取到显示 —；≥ 5% 高亮，作为收息参考 */
 function fmtPct(v) {
   if (v == null || !isFinite(v) || v <= 0) return '<span class="text-body-tertiary">—</span>';
   const cls = v >= 5 ? 'text-body fw-semibold' : 'text-body-secondary';
-  return `<span class="${cls}">${v.toFixed(2)}<span class="unit">%</span></span>`;
+  return `<span class="${cls}">${fmtCompact(v)}<span class="unit">%</span></span>`;
 }
 
 function diffHtml(d) {
   const cls = d > 0 ? 'text-up' : d < 0 ? 'text-down' : 'text-body-secondary';
-  return `<span class="diff ${cls}">${d > 0 ? '+' : ''}${d.toFixed(2)}%</span>`;
+  return `<span class="diff ${cls}">${d > 0 ? '+' : ''}${fmtCompact(d)}%</span>`;
 }
 
 function esc(s) {

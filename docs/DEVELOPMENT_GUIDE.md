@@ -147,3 +147,10 @@ node scripts/validate_stock_data.js
 6. 尚未完成事项及具体原因。
 
 **最终原则：以可验证的实际交付为目标。先检查工具，再执行；遇到障碍先排查和寻找安全替代路径；不把工具限制泛化为无法完成，也不把未执行的操作说成已经完成。**
+
+
+## 9. 前端 SPA 重构与文件命名
+
+前端重构按 [SPA 重构与文件命名迁移清单](SPA_MIGRATION_PLAN.md) 执行。采用原生 ES Modules + Hash Router，每个页面一个 `*.page.js` 主模块，公共 UI 放入 `src/components/`，数据访问放入 `src/services/`，纯计算工具和业务规则分别放入 `src/utils/`、`src/rules/`。
+
+迁移必须渐进进行：先建立路由和兼容层，再逐页迁移；旧 HTML/JS 在调用方迁移且测试通过前不得删除。不得因 SPA 改造改变行情数据 `cache: 'no-store'`、不持久化业务数据、评分/纪律口径、数据采集脚本或 Actions 发布流程。本阶段只完成盘点和规范文档，不代表 SPA 页面已经迁移。

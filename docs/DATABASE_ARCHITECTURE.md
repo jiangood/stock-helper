@@ -11,7 +11,7 @@
 | 股票基础资料、分组、交易计划 | `data/stocks.json` | 同源静态 JSON | 人工维护、代码审查、版本控制 |
 | 研报原始评分及来源 | `data/research-reports.json` | 同源静态 JSON | 保留报告日期、来源和原始分 |
 | 基本面快照 | `data/fundamentals.json` | 同源静态 JSON | Actions 更新；失败保留最后有效源文件 |
-| 行情快照、K 线、指数历史 | `data/stock-quotes.json`、`data/stock-cache/`、`data/index-cache.json` | 同源静态 JSON | Actions 采集；页面只读；保留历史序列 |
+| 股票行情快照与 K 线 | `data/stock-quotes.json`、`data/stock-cache/` | 同源静态 JSON | Actions 采集；页面只读；保留历史序列 |
 | 机器评分、板块汇总 | 对应构建脚本生成 | 同源静态 JSON | 派生数据，可从原始数据重建 |
 | 用户个人参数和主题 | 用户当前设备 | 少量 localStorage 设置项 | 仅保存用户设置，不保存行情、K 线或数据响应 |
 
@@ -41,7 +41,7 @@ GitHub Pages 无法托管数据库进程或安全写入 API。将 SQLite 二进�
 
 - 移除浏览器 IndexedDB 行情数据库。
 - 移除行情数据 localStorage 持久化缓存、内存缓存和后台刷新队列。
-- 行情/详情/K 线/指数数据每次直接请求同源静态 JSON，禁用 HTTP 缓存。
+- 行情/详情/K 线数据每次直接请求同源静态 JSON，禁用 HTTP 缓存。
 - 保留主题、资源股估值参数等用户设置；不再将其与行情数据缓存混用。
 
 ## 自动化数据校验

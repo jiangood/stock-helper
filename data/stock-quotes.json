@@ -942,48 +942,6 @@
       "floatCap": 11156578749,
       "divYield": 2.84,
       "time": 1793284138481
-    },
-    "sz399001": {
-      "code": "sz399001",
-      "name": null,
-      "price": 11138.2,
-      "prevClose": 11473.18,
-      "change": -334.98,
-      "todayChange": -2.92,
-      "pe": 0,
-      "pb": 0,
-      "totalCap": 37352516443821,
-      "floatCap": 31745708290724,
-      "divYield": 0,
-      "time": 1793284138481
-    },
-    "sz399006": {
-      "code": "sz399006",
-      "name": null,
-      "price": 2517.59,
-      "prevClose": 2634.76,
-      "change": -117.17,
-      "todayChange": -4.45,
-      "pe": 0,
-      "pb": 0,
-      "totalCap": 15105111184500,
-      "floatCap": 12070249584205,
-      "divYield": 0,
-      "time": 1793284138481
-    },
-    "sh000001": {
-      "code": "sh000001",
-      "name": "上证指数",
-      "price": 3651.43,
-      "prevClose": 3681.47,
-      "change": -30.04,
-      "todayChange": -0.82,
-      "pe": 16.08,
-      "pb": 0,
-      "totalCap": 63924591000000,
-      "floatCap": 57270843999999.99,
-      "divYield": null,
-      "time": 1793284139284
     }
   }
 }

@@ -12,7 +12,7 @@ const companyProducts = readJson('data/company-products.json').products || [];
 const outputPath = path.join(ROOT, 'data/product-comparison.json');
 
 function validPoint(point) {
-  return point && /^\d{4}-\d{2}-\d{2}$/.test(String(point.date || '')) &&
+  return point && /^\d{4}-\d{2}(?:-\d{2})?$/.test(String(point.date || '')) &&
     Number.isFinite(Number(point.value)) && Number(point.value) > 0;
 }
 function monthKey(date) { return String(date).slice(0, 7); }
@@ -38,7 +38,11 @@ function stockMonthly(code) {
     bars = cache.weeklyAdjusted && Array.isArray(cache.weeklyAdjusted.bars) ? cache.weeklyAdjusted.bars : [];
     source = '周K月末收盘聚合';
   }
-  return monthlyLast(bars.map((bar) => ({ date: String(bar.time || '').slice(0, 10), value: Number(bar.close) })))
+  return monthlyLast(bars.map((bar) => {
+    const time = String(bar.time || '').trim();
+    // 月 K 缓存同时存在 YYYY-MM 与 YYYY-MM-DD 两种合法格式；统一保留月份粒度。
+    return { date: /^\\d{4}-\\d{2}$/.test(time) ? time : time.slice(0, 10), value: Number(bar.close) };
+  }))
     .map((point) => ({ ...point, source }));
 }
 function productMonthly(item) {
@@ -161,11 +165,14 @@ function buildCommodityCards(productItems) {
       };
     });
     const latestProduct = productPoints[productPoints.length - 1] || null;
+    // 即使没有足够历史序列，也保留采集器提供的最新有效现货/参考报价。
+    const marketLatest = market && [market.latestSpot, market.latest].map(Number).find((value) => Number.isFinite(value) && value > 0);
+    const latestPrice = latestProduct ? latestProduct.value : (marketLatest === undefined ? null : marketLatest);
     const ready = commonMonths.length >= 2 && stocksWithHistory.every((stock) => stock.history.length > 0);
     return {
       id: itemId, name: productName, unit: market && market.unit || '',
       source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: market && market.sourceUrl || null,
-      latestPrice: latestProduct ? latestProduct.value : null,
+      latestPrice,
       latestDate: latestProduct ? latestProduct.date : market && market.latestDate || null,
       productChange: productSeries.length >= 2 ? pct(productSeries[0].price, productSeries[productSeries.length - 1].price) : null,
       months: commonMonths, productSeries, stocks: stockSeries,

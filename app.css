@@ -272,6 +272,21 @@
     align-items: center; justify-content: center; padding: 24px;
     background: #f3f6fb; color: #172033; font-family: system-ui, sans-serif;
   }
+  #password-gate[data-auth-state="checking"]::before {
+    content: "正在检查登录状态…";
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 18px 22px; border-radius: 12px; background: #fff;
+    color: #475569; font-size: 14px; box-shadow: 0 8px 30px rgba(15,23,42,.10);
+  }
+  #password-gate[data-auth-state="checking"]::after {
+    content: ""; position: absolute; width: 16px; height: 16px;
+    border: 2px solid #cbd5e1; border-top-color: #2563eb;
+    border-radius: 50%; animation: gate-spin .75s linear infinite;
+    margin-left: -188px;
+  }
+  @keyframes gate-spin { to { transform: rotate(360deg); } }
+  #password-gate[data-auth-state="checking"] .gate-card { display: none; }
+  #password-gate[data-auth-state="unlocked"] { display: none; }
   #password-gate .gate-card {
     width: 100%; max-width: 360px; padding: 28px; border-radius: 16px;
     background: #fff; box-shadow: 0 12px 40px rgba(15,23,42,.12);

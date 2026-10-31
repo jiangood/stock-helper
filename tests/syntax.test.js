@@ -53,6 +53,16 @@ test('首页脚本使用版本化 URL，避免浏览器继续执行旧缓存', (
   assert.ok(html.includes('stock-dashboard.js?v='), '首页 dashboard 脚本必须带版本参数');
 });
 
+test('首页研报日期只显示发布日期，不标注旧或悬浮信息', () => {
+  const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
+  const start = dashboard.indexOf('function researchDateHtml(');
+  const end = dashboard.indexOf('function fmtScore(', start);
+  assert.ok(start >= 0 && end > start, '未找到首页研报日期渲染函数');
+  const renderer = dashboard.slice(start, end);
+  assert.ok(renderer.includes('<span class="score-date">${esc(report.date)}</span>'));
+  assert.doesNotMatch(renderer, /旧|title=|monthsSince|text-warning/);
+});
+
 test('研报评分 null 不参与数值渲染和筛选', () => {
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
   assert.ok(dashboard.includes('report.score == null || !Number.isFinite(report.score)'), '研报评分必须排除 null');

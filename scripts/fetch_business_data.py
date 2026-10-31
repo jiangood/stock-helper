@@ -170,13 +170,13 @@ class _PageParser(HTMLParser):
 def caaa_report_date(source_url: str) -> str | None:
     """Parse CAAA report paths such as /2026/1028/26342.html and legacy /2026/10/28/...."""
     path = urlparse(source_url).path
-    compact = re.search(r"/(20\\d{2})/(\\d{4})/[^/?#]+\\.html$", path)
+    compact = re.search(r"/(20\d{2})/(\d{4})/[^/?#]+\.html$", path)
     if compact:
         try:
             return datetime.strptime(compact.group(1) + compact.group(2), "%Y%m%d").date().isoformat()
         except ValueError:
             return None
-    separated = re.search(r"/(20\\d{2})/(\\d{2})/(\\d{2})/[^/?#]+\\.html$", path)
+    separated = re.search(r"/(20\d{2})/(\d{2})/(\d{2})/[^/?#]+\.html$", path)
     if separated:
         try:
             return date(int(separated.group(1)), int(separated.group(2)), int(separated.group(3))).isoformat()

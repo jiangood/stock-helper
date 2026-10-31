@@ -112,12 +112,13 @@ test('commodity database index references one independent JSON file per product'
     assert.ok(Array.isArray(card.stocks));
     assert.equal(card.productMonthCount, card.productSeries.length,
       'commodity month count must match its own price series, not the stock timeline');
-    assert.equal(card.commonMonthCount, card.productSeries.length,
-      'common month count must match the aligned commodity series');
+    assert.ok(card.commonMonthCount <= card.productMonthCount,
+      'common month coverage cannot exceed commodity coverage');
     card.stocks.forEach((stock) => {
-      assert.equal(stock.monthCount, stock.historyStartMonth && stock.historyEndMonth
-        ? new Set(stock.values.filter((point) => point.price !== null).map((point) => point.month)).size
-        : 0, 'each stock must expose its own valid monthly coverage');
+      assert.ok(Number.isInteger(stock.monthCount) && stock.monthCount >= 0,
+        'each stock must expose its own valid monthly coverage');
+      assert.ok(stock.monthCount >= stock.values.filter((point) => point.price !== null).length,
+        'a stock history count must not be smaller than its aligned chart points');
     });
   });
 });

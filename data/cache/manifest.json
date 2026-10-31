@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "builderVersion": "490125efd2f7038de1eb2cf6b8711c2ca69059d5cfc1ce9dac1c0f47acfceb1c",
-  "generatedAt": "2026-10-31T06:21:51.435Z",
+  "generatedAt": "2026-10-31T06:34:18.709Z",
   "marketDate": "2026-10-29",
   "caches": {
     "market-quotes": {
@@ -10,10 +10,10 @@
       "generatedAt": "2026-10-29T14:28:59.492Z",
       "quoteSnapshotUpdatedAt": "2026-10-29T14:28:59.492Z",
       "marketDate": "2026-10-29",
-      "recordCount": 70,
-      "bytes": 22447,
-      "dataVersion": "c301c76f83e8d2720c3be5e5f183e848131b0359ee60ade136c66650d84733cf",
-      "sourceVersion": "7f07e4e91188dc5afa4be8b6e38502caa32fd8dd3ed7769736aa3440fa3d6e53",
+      "recordCount": 67,
+      "bytes": 21458,
+      "dataVersion": "1ed5622acbccf73bb73e46e1178a3a59caeebca2e306ed59782f10fe2439e3ff",
+      "sourceVersion": "4c41e3f59de81b2d9462d069015a382083ca005db162e04a745ca98b468c77e1",
       "freshness": "fresh",
       "status": "healthy"
     },
@@ -39,7 +39,7 @@
       "recordCount": 67,
       "bytes": 13333,
       "dataVersion": "9300cd2ff7a02dcc53cb715ae1b870028df34ce4c0a2bd3364e95c31822b6dae",
-      "sourceVersion": "11b176d5d9c013f44dc4a21791a095d7d2a7911a81c50905094a39ce15641473",
+      "sourceVersion": "a9a2b68b842320603154b29d18ffd94a43bbf6cb777cf40d93828fbbc4bdd324",
       "freshness": "fresh",
       "status": "healthy"
     },
@@ -52,7 +52,7 @@
       "recordCount": 67,
       "bytes": 6226,
       "dataVersion": "196d0f7fa70cc47354bb7ce354b6f2bf01481e8d00416d8eaee25ee5aec269ed",
-      "sourceVersion": "7998bc2a41c2520ff55dbbb4f3ec6215b06108b99bedcc9c979abc096c49b904",
+      "sourceVersion": "43cf85f67b11d823859c5702bef30545a7a6ad75a344997dfdeb7121cfc924ed",
       "freshness": "fresh",
       "status": "healthy"
     },
@@ -65,7 +65,7 @@
       "recordCount": 67,
       "bytes": 5182259,
       "dataVersion": "cb89f0db089b60b3dde2834f6609d35d446e775eef5623f42827a84bd40f655b",
-      "sourceVersion": "7998bc2a41c2520ff55dbbb4f3ec6215b06108b99bedcc9c979abc096c49b904",
+      "sourceVersion": "43cf85f67b11d823859c5702bef30545a7a6ad75a344997dfdeb7121cfc924ed",
       "freshness": "fresh",
       "status": "healthy"
     }

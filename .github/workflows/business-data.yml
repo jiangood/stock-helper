@@ -9,7 +9,6 @@ on:
     branches: [master, main]
     paths:
       - "scripts/fetch_business_data.py"
-      - "scripts/check_maleic_anhydride_source.py"
       - "scripts/build_company_products.py"
       - "scripts/build_product_comparison.js"
       - "data/business-data.json"
@@ -38,8 +37,6 @@ jobs:
         run: python -m pip install --upgrade pip akshare pandas
       - name: Fetch commodity data
         run: python scripts/fetch_business_data.py
-      - name: Probe free maleic anhydride spot source
-        run: python scripts/check_maleic_anhydride_source.py
       - name: Validate company product builder
         run: python -m py_compile scripts/build_company_products.py
       - name: Build company product database

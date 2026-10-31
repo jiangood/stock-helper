@@ -22,10 +22,6 @@ function fixture() {
   writeJson(path.join(data, 'stock-cache', 'sh600000.json'), { detail: {}, dailyAdjusted: { bars: [] } });
   writeJson(path.join(data, 'cache', 'stock-details.json'), { schemaVersion: 1, updatedAt: '2026-10-30T07:30:00Z', marketDate: '2026-10-29', details: { sh600000: { code: 'sh600000', name: 'Bank', price: 10, peTtm: 5, pb: 0.5 } } });
   writeJson(path.join(data, 'cache', 'stocks', 'sh600000.json'), { schemaVersion: 1, cacheType: 'stock-detail', code: 'sh600000', updatedAt: '2026-10-30T07:30:00Z', marketDate: '2026-10-29', data: { detail: { code: 'sh600000', price: 10 }, dailyAdjusted: { bars: [] } } });
-  writeJson(path.join(data, 'combat-kline.json'), {
-    schemaVersion: 1, updatedAt: '2026-10-30T07:30:00Z', marketDate: '2026-10-29',
-    stocks: { sh600000: { bars: [{ time: '2026-10-29' }] } }
-  });
   writeJson(path.join(data, 'research-scores.json'), {
     schemaVersion: 1, updatedAt: '2026-10-30T07:30:00Z', marketDate: '2026-10-29',
     scores: { sh600000: { percent: 80 } }
@@ -45,9 +41,7 @@ test('builds manifest metadata, record counts and freshness', () => {
       startedAt: '2026-10-30T07:59:00Z', completedAt: '2026-10-30T08:00:00Z', writeSummary: false });
     assert.equal(result.manifest.schemaVersion, 1);
     assert.match(result.manifest.builderVersion, /^[a-f0-9]{64}$/);
-    assert.equal(Object.keys(result.manifest.caches).length, 6);
-    assert.equal(result.manifest.caches['combat-kline'].recordCount, 1);
-    assert.equal(result.manifest.caches['combat-kline'].freshness, 'fresh');
+    assert.equal(Object.keys(result.manifest.caches).length, 5);
     assert.equal(result.health.status, 'healthy');
     assert.equal(result.health.durationMs, 60000);
     assert.equal(result.health.contentReuseRate, 0);
@@ -83,7 +77,7 @@ test('unchanged cache content is reused without rewriting manifest', () => {
     const before = fs.readFileSync(file, 'utf8');
     const second = buildManifest({ dataDir: env.data, now: '2026-10-30T09:00:00Z',
       startedAt: '2026-10-30T08:59:00Z', completedAt: '2026-10-30T09:00:00Z', writeSummary: false });
-    assert.equal(second.health.reusedCount, 6);
+    assert.equal(second.health.reusedCount, 5);
     assert.equal(second.health.contentReuseRate, 100);
     assert.equal(second.manifest.generatedAt, first.manifest.generatedAt);
     assert.equal(fs.readFileSync(file, 'utf8'), before);
@@ -99,7 +93,7 @@ test('marks stale read models when their market date trails the quote snapshot',
     quotes.marketDate = '2026-10-30';
     writeJson(file, quotes);
     const result = buildManifest({ dataDir: env.data, writeSummary: false });
-    assert.equal(result.manifest.caches['combat-kline'].freshness, 'stale');
+    assert.equal(result.manifest.caches['research-scores'].freshness, 'stale');
     assert.equal(result.health.status, 'stale');
     assert.equal(JSON.parse(fs.readFileSync(file, 'utf8')).marketDate, '2026-10-30');
   } finally { fs.rmSync(env.root, { recursive: true, force: true }); }

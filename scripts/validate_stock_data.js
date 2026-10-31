@@ -111,27 +111,6 @@ function validateStockCaches(stockCodes) {
   return { cacheFiles: files, bars };
 }
 
-function validateCombatSnapshot(payload, stockCodes) {
-  if (!isObject(payload) || payload.schemaVersion !== 1 || !isObject(payload.stocks)) {
-    fail('data/combat-kline.json must contain schemaVersion 1 and stocks object');
-  }
-  if (payload.barLimit !== 120) fail('data/combat-kline.json barLimit must be 120');
-  let covered = 0;
-  let bars = 0;
-  Object.entries(payload.stocks).forEach(([code, value]) => {
-    if (!stockCodes.has(code) || !isObject(value)) fail('invalid combat K-line record: ' + code);
-    if (!Array.isArray(value.bars) || !value.bars.length || value.bars.length > payload.barLimit) {
-      fail('combat K-line ' + code + '.bars must contain 1..120 bars');
-    }
-    bars += validateBars(value.bars, 'combat-kline/' + code + '.bars');
-    covered += 1;
-  });
-  if (covered < Math.ceil(stockCodes.size * 0.7)) {
-    fail('combat K-line coverage below 70%: ' + covered + '/' + stockCodes.size);
-  }
-  return { stocks: covered, bars };
-}
-
 function validateFundamentals(payload, stockCodes) {
   if (!isObject(payload) || !isObject(payload.stocks)) fail('data/fundamentals.json must contain stocks object');
   Object.entries(payload.stocks).forEach(([code, value]) => {
@@ -212,7 +191,7 @@ function validateCacheManifest(manifest) {
     fail('data/cache/manifest.json must contain schemaVersion 1 and caches object');
   }
   if (!/^[a-f0-9]{64}$/.test(manifest.builderVersion || '')) fail('cache manifest has invalid builderVersion');
-  ['market-quotes', 'combat-kline', 'research-scores', 'sector-monthly', 'stock-details-index', 'stock-detail-bundles'].forEach(id => {
+  ['market-quotes', 'research-scores', 'sector-monthly', 'stock-details-index', 'stock-detail-bundles'].forEach(id => {
     const item = manifest.caches[id];
     if (!isObject(item)) fail('cache manifest missing entry: ' + id);
     if (typeof item.path !== 'string' || !item.path.startsWith('data/')) fail('cache manifest ' + id + ' has invalid path');
@@ -247,7 +226,6 @@ function validateAll(options) {
   if (!opts.fundamentalsOnly) {
     result.quotes = validateQuotes(readJson(path.join(DATA, 'stock-quotes.json')), codes);
     result.caches = validateStockCaches(codes);
-    result.combat = validateCombatSnapshot(readJson(path.join(DATA, 'combat-kline.json')), codes);
     if (!opts.skipDetailCaches && fs.existsSync(path.join(DATA, 'cache', 'stock-details.json'))) {
       result.detailCaches = validateStockDetailCaches(readJson(path.join(DATA, 'cache', 'stock-details.json')), codes);
     }
@@ -277,4 +255,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateCombatSnapshot, validateFundamentals, validateCacheManifest, validateCacheHealth, validateStockDetailCaches, validateAll };
+module.exports = { validateStocks, validateQuotes, validateBars, validateStockCaches, validateFundamentals, validateCacheManifest, validateCacheHealth, validateStockDetailCaches, validateAll };

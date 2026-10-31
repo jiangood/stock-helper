@@ -81,8 +81,6 @@ function buildManifest(options) {
   const definitions = [
     { id: 'market-quotes', type: 'market-snapshot', file: 'stock-quotes.json', sources: ['stock-quotes.json', '../scripts/fetch_stock_snapshot.js'],
       count: p => Object.keys(p.quotes || {}).length, freshness: p => p.status === 'ok' ? 'fresh' : 'stale' },
-    { id: 'combat-kline', type: 'page-read-model', file: 'combat-kline.json', sources: ['stocks.json', 'stock-cache', '../scripts/build_combat_kline.js'],
-      count: p => Object.keys(p.stocks || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' },
     { id: 'research-scores', type: 'page-read-model', file: 'research-scores.json', sources: ['stocks.json', 'fundamentals.json', 'stock-cache', '../research-score.js', '../scripts/build_research_scores.js'],
       count: p => Object.keys(p.scores || {}).length, freshness: p => p.marketDate && marketDate ? (p.marketDate === marketDate ? 'fresh' : 'stale') : 'unknown' },
     { id: 'sector-monthly', type: 'page-read-model', file: 'sector-monthly.json', sources: ['stocks.json', 'stock-quotes.json', 'stock-cache', '../scripts/build_sector_monthly.js'],

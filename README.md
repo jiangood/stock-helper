@@ -3,12 +3,11 @@
 ## 访问地址
 
 - **自选页面：** [股票助手首页](https://jiangood.github.io/stock-helper/)
-- **作战页面：** [交易作战台](https://jiangood.github.io/stock-helper/combat.html)
 - **行情页面：** [市场行情](https://jiangood.github.io/stock-helper/market.html)
 - **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
 - **系统健康：** [静态缓存监控](https://jiangood.github.io/stock-helper/health.html)
 
-自选、作战、行情现为独立页面，通过顶部导航跳转，不再使用底部 tabs。自选页支持股票池监控、搜索、分组和纪律筛选；作战页展示交易条件与理由；行情页汇总板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
+自选与行情为独立页面，通过顶部导航跳转。自选页支持股票池监控、搜索、分组和纪律筛选；行情页汇总板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
 
 ## 本地预览
 
@@ -23,7 +22,6 @@ python -m http.server 8089
 | 文件 | 说明 |
 | --- | --- |
 | `index.html` | 自选页面：股票池监控看板（Bootstrap 5），支持搜索（含拼音）、分组、纪律筛选、市值/PE/PB/股息率、破净/八折/ST 旗标与纪律列 |
-| `combat.html` | 独立交易作战台页面，展示交易条件、技术指标、风险与失效条件 |
 | `market.html` | 独立行情页面：板块月线强弱、全球资产与产业链商品行情 |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
@@ -43,7 +41,6 @@ python -m http.server 8089
 | `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
 | `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
 | `data/stock-quotes.json` `data/stock-cache/*.json` `data/index-cache.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
-| `data/combat-kline.json` `scripts/build_combat_kline.js` | 作战页专用读模型：每只股票只保留最近 120 根前复权日 K；作战页一次请求全股票池，不逐只下载完整 K 线文件 |
 | `business.js` `data/business-data.json` | 行情页渲染板块月线强弱、全球资产及商品现货/期货 |
 | `data/sector-monthly.json` `scripts/build_sector_monthly.js` | 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅，行情页只读这个小文件 |
 | `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行和各资产近一个月迷你趋势图 |
@@ -78,7 +75,7 @@ python -m http.server 8089
 - **历史分位**：月 K（最多 240 根）价格分位，辅助判断长周期位置
 - **纪律全过**：非 ST、非亏损、PE ≤ 30、市值 ≤ 200 亿、PB < 1 五项自动筛选，首页「纪律」列显示通过数（全过 / 4/5 / 3/5…），可按「纪律全过」「全过 + 买点」筛选
 
-独立「行情」页面整合按分组统计的板块月线强弱（主导指标为近 12 个月）、全球资产及产业链商品行情；原机会雷达与首页简报按钮已移除，买入信号统一在作战页查看。
+独立「行情」页面整合按分组统计的板块月线强弱（主导指标为近 12 个月）、全球资产及产业链商品行情；原机会雷达与首页简报按钮已移除。
 
 详情页「鳄鱼纪律」提供纪律检查与连板风险提示；「资源股现价估值」按 `(P−C)×Q×折扣×PE` 粗算合理市值，参数只保存在本机。
 

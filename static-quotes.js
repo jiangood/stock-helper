@@ -6,8 +6,6 @@
   'use strict';
 
   const QUOTES_URL = 'data/stock-quotes.json';
-  const INDEX_URL = 'data/index-cache.json';
-  const INDEX_CODES = new Set(['sh000001', 'sz399001', 'sz399006']);
 
   function normalizeCode(code) {
     if (code === null || code === undefined) return null;
@@ -118,24 +116,16 @@
       const opts = options || {};
       const period = ['day', 'week', 'month'].includes(opts.period) ? opts.period : 'day';
       const adjust = opts.adjust === 'none' || opts.adjust === '' ? 'none' : (opts.adjust === 'hfq' ? 'hfq' : 'qfq');
+      const cache = await loadStockBundle(normalized);
       let bars = [];
-      if (INDEX_CODES.has(normalized)) {
-        if (period === 'month') {
-          const indexes = await loadJson(INDEX_URL);
-          const cached = indexes.monthly && indexes.monthly[normalized];
-          bars = cached && Array.isArray(cached.bars) ? cached.bars : [];
-        }
+      if (period === 'day') {
+        const value = adjust === 'none' ? cache.dailyRaw : cache.dailyAdjusted;
+        bars = value && Array.isArray(value.bars) ? value.bars : [];
+      } else if (period === 'month') {
+        bars = cache.monthlyAdjusted && Array.isArray(cache.monthlyAdjusted.bars) ? cache.monthlyAdjusted.bars : [];
       } else {
-        const cache = await loadStockBundle(normalized);
-        if (period === 'day') {
-          const value = adjust === 'none' ? cache.dailyRaw : cache.dailyAdjusted;
-          bars = value && Array.isArray(value.bars) ? value.bars : [];
-        } else if (period === 'month') {
-          bars = cache.monthlyAdjusted && Array.isArray(cache.monthlyAdjusted.bars) ? cache.monthlyAdjusted.bars : [];
-        } else {
-          const value = cache.weeklyAdjusted;
-          bars = value && Array.isArray(value.bars) ? value.bars : [];
-        }
+        const value = cache.weeklyAdjusted;
+        bars = value && Array.isArray(value.bars) ? value.bars : [];
       }
       const count = Math.min(1000, Math.max(10, Number(opts.count) || 180));
       bars = bars.slice(-count);

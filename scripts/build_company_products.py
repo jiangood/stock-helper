@@ -7,6 +7,7 @@ products remain explicitly unavailable rather than being substituted.
 """
 from __future__ import annotations
 
+import calendar
 import json
 import math
 from datetime import date, datetime, timezone, timedelta
@@ -52,22 +53,22 @@ ALIASES = {
     "soda-ash": ("纯碱", "联碱"),
     "urea": ("尿素",),
     "methanol": ("甲醇",),
-    "aluminium": ("电解铝", "铝锭", "铝产品"),
+    "aluminium": ("电解铝", "原铝", "铝锭", "铝产品"),
     "rubber": ("天然橡胶", "橡胶产品"),
-    "tin": ("锡", "锡锭"),
-    "sugar": ("白砂糖", "食糖", "白糖"),
+    "tin": ("锡", "锡锭", "锡材", "锡产品"),
+    "sugar": ("白砂糖", "食糖", "白糖", "食糖类商品"),
     "live-hog": ("生猪",),
     "corn": ("玉米",),
     "soybean-meal": ("豆粕",),
     "pvc": ("PVC", "聚氯乙烯"),
-    "caustic-soda": ("烧碱", "片碱"),
-    "zinc": ("锌锭", "精炼锌"),
-    "copper": ("电解铜", "阴极铜"),
-    "lead": ("铅锭", "精炼铅"),
+    "caustic-soda": ("烧碱", "片碱", "离子膜烧碱"),
+    "zinc": ("锌", "锌锭", "锌产品", "锌精矿", "精炼锌"),
+    "copper": ("铜", "铜产品", "铜锭", "铜精矿", "电解铜", "阴极铜"),
+    "lead": ("铅", "铅锭", "铅产品", "精炼铅"),
     "nickel": ("电解镍", "镍板"),
-    "gold": ("黄金",),
-    "silver": ("白银",),
-    "iron-ore": ("铁矿石",),
+    "gold": ("黄金", "金锭", "黄金产品"),
+    "silver": ("白银", "银锭", "银产品"),
+    "iron-ore": ("铁矿石", "磁铁矿"),
     "coking-coal": ("焦煤", "炼焦煤"),
     "rebar": ("螺纹钢",),
     "industrial-silicon": ("工业硅",),
@@ -106,22 +107,30 @@ def normalize_ratio(value: Any) -> float | None:
     return round(number, 6) if number <= 1 else None
 
 
-def infer_market_item(product_name: str, preferred: str | None = None) -> str | None:
-    if preferred:
-        return preferred
+def infer_market_item(product_name: str) -> str | None:
     name = str(product_name or "").replace(" ", "")
     # Combined segment labels (e.g. "锡/锑/锌") must not be mapped to one
     # component's quote series because that would misstate the segment price.
     if any(separator in name for separator in ("/", "、", "及", "与", "和", "，", ",")):
         return None
     for item_id, aliases in ALIASES.items():
-        if any(alias.lower() in name.lower() for alias in aliases):
-            return item_id
+        if item_id == "urea" and "车用" in name:
+            continue
+        for alias in aliases:
+            if alias.lower() in name.lower() and (len(alias) > 1 or name == alias):
+                return item_id
     return None
 
 
+def latest_completed_month(as_of: date | None = None) -> str:
+    today = as_of or date.today()
+    if today.day == calendar.monthrange(today.year, today.month)[1]:
+        return today.strftime("%Y-%m")
+    return (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+
+
 def monthly_last(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Take the last valid trading close in each calendar month."""
+    """Take the last valid trading close in each completed calendar month."""
     by_month: dict[str, dict[str, Any]] = {}
     for row in rows:
         raw_day = str(row.get("date") or row.get("日期") or "")[:10]
@@ -139,7 +148,7 @@ def monthly_last(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "price": round(price, 4),
             "date": day.isoformat(),
         }
-    completed_month = (date.today().replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+    completed_month = latest_completed_month()
     return [by_month[key] for key in sorted(by_month) if key <= completed_month][-60:]
 
 
@@ -194,12 +203,19 @@ def build(
 
     # Only refresh when a new completed calendar month is available or the
     # series has never been collected. This avoids re-fetching five years daily.
-    target_month = (date.today().replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+    target_month = latest_completed_month()
     existing_latest: dict[str, str] = {}
     for old_row in old_rows:
         if not isinstance(old_row, dict) or not old_row.get("marketItemId"):
             continue
-        old_series = old_row.get("priceSeries") or old_row.get("monthlyPrices") or []
+        old_name = str(old_row.get("productName") or "")
+        old_market = infer_market_item(old_name)
+        old_mapping = mappings.get(str(old_row.get("stockCode") or "").lower(), {}) if isinstance(mappings, dict) else {}
+        if not old_market and str(old_mapping.get("productName") or "").casefold() == old_name.casefold():
+            old_market = old_mapping.get("marketItemId")
+        if old_market != old_row.get("marketItemId"):
+            continue
+        old_series = old_row.get("priceSeries") or []
         if old_series:
             latest = max((str(point.get("month") or "") for point in old_series if isinstance(point, dict)), default="")
             if latest:
@@ -247,14 +263,28 @@ def build(
             ratio = normalize_ratio(segment.get("ratio", segment.get("MBI_RATIO")))
             basis = segment.get("basis") or segment.get("MAINOP_TYPE") or fundamental.get("mainBasis")
             market_id = infer_market_item(name)
-            if not market_id and len(segments) == 1:
+            # A manual mapping is valid only when its maintained product name
+            # exactly matches the disclosed segment; never apply it to broad
+            # "other", finance, logistics, or combined business categories.
+            mapped_name = str(mapping.get("productName") or "").strip()
+            if (
+                not market_id
+                and len(segments) == 1
+                and mapped_name
+                and name.casefold() == mapped_name.casefold()
+            ):
                 market_id = mapping.get("marketItemId")
             config = PRICE_CONFIG.get(market_id)
             key = (code, name)
             old = old_by_key.get(key, {})
             series = histories.get(market_id, []) if market_id else []
-            if not series and isinstance(old.get("monthlyPrices"), list):
-                series = old["monthlyPrices"]
+            if (
+                not series
+                and config
+                and old.get("marketItemId") == market_id
+                and isinstance(old.get("priceSeries"), list)
+            ):
+                series = old["priceSeries"]
             source = "新浪财经期货主力连续历史行情（AKShare）" if config and series else old.get("priceSource")
             products.append({
                 "stockCode": code,
@@ -288,7 +318,7 @@ def build(
         "priceWindowMonths": 60,
         "stockCount": len({row["stockCode"] for row in products}),
         "productCount": len(products),
-        "pricedCount": sum(1 for row in products if row["priceStatus"] == "available"),
+        "pricedCount": sum(1 for row in products if row.get("priceSeries")),
         "fetchErrors": errors,
         "products": products,
     }

@@ -9,7 +9,8 @@ const mapping = readJson('data/stock-products.json').byCode || {};
 const business = readJson('data/business-data.json');
 const fundamentals = readJson('data/fundamentals.json');
 const companyProducts = readJson('data/company-products.json').products || [];
-const outputPath = path.join(ROOT, 'data/product-comparison.json');
+const outputPath = path.join(ROOT, 'data/commodity-db/index.json');
+const legacyOutputPath = path.join(ROOT, 'data/product-comparison.json');
 
 function validPoint(point) {
   return point && /^\d{4}-\d{2}(?:-\d{2})?$/.test(String(point.date || '')) &&
@@ -327,7 +328,11 @@ function build() {
     commodityCards,
     cards
   };
-  fs.writeFileSync(outputPath, JSON.stringify(payload, null, 2) + '\n');
+  const serialized = JSON.stringify(payload, null, 2) + '\n';
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, serialized);
+  // Keep the previous read model in sync during the one-release migration window.
+  fs.writeFileSync(legacyOutputPath, serialized);
   console.log('Built product comparison:', payload.comparableCount + '/' + payload.stockCount, 'stock cards;', payload.commodityCards.length, 'commodity cards.');
   return payload;
 }

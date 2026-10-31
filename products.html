@@ -199,10 +199,17 @@ function load(){
  fetch('data/commodity-db/index.json?t='+Date.now(),{cache:'no-store'})
  .then(function(response){if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
  .then(function(payload){
-  if(!payload||!Array.isArray(payload.commodityCards))throw new Error('商品月线数据格式不正确，请等待缓存任务重建');
-  cards=payload.commodityCards;
-  $('product-updated').textContent='数据生成：'+(payload.generatedAt?new Date(payload.generatedAt).toLocaleString('zh-CN',{hour12:false}):'未知')+' · '+cards.length+' 个商品';
-  render();
+  if(!payload||payload.schemaVersion!==2||!Array.isArray(payload.products))throw new Error('商品索引格式不正确，请等待缓存任务重建');
+  return Promise.all(payload.products.map(function(product){
+   if(!product||typeof product.file!=='string'||!/^products\/[a-z0-9-]+\.json$/.test(product.file))throw new Error('商品索引包含无效文件路径');
+   return fetch('data/commodity-db/'+product.file+'?t='+Date.now(),{cache:'no-store'})
+    .then(function(response){if(!response.ok)throw new Error(product.name+'：HTTP '+response.status);return response.json();})
+    .then(function(card){if(!card||card.id!==product.id)throw new Error(product.name+'：商品文件与索引不匹配');return card;});
+  })).then(function(productCards){
+   cards=productCards;
+   $('product-updated').textContent='数据生成：'+(payload.generatedAt?new Date(payload.generatedAt).toLocaleString('zh-CN',{hour12:false}):'未知')+' · '+cards.length+' 个独立商品文件';
+   render();
+  });
  }).catch(function(error){
   $('product-updated').textContent='商品月线数据读取失败';
   $('product-cards').innerHTML='<div class="product-empty">商品月线数据暂不可用：'+esc(error.message)+'。</div>';

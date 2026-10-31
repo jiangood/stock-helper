@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-31T12:15:05.000Z",
-  "marketDate": "2026-10-31T12:15:05+00:00",
+  "generatedAt": "2026-10-31T13:42:37.000Z",
+  "marketDate": "2026-10-31T13:42:37+00:00",
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 4,
@@ -7892,7 +7892,7 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 17180,
+      "latestPrice": 13900,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [
@@ -9123,7 +9123,7 @@
       "unit": "元/吨",
       "source": null,
       "sourceNote": null,
-      "sourceUrl": null,
+      "sourceUrl": "https://www.100ppi.com/",
       "latestPrice": null,
       "latestDate": null,
       "productChange": null,
@@ -10309,12 +10309,12 @@
     },
     {
       "id": "coal",
-      "name": "动力煤",
+      "name": "炼焦煤",
       "unit": "元/吨",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": 842.75,
+      "latestPrice": 1441.25,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [
@@ -10542,12 +10542,12 @@
       "mainBasis": "industry",
       "fundamentalDate": "2026-06-30",
       "marketItemId": "maleic-anhydride",
-      "productUnit": null,
+      "productUnit": "元/吨",
       "role": "producer",
       "roleLabel": "产品端",
       "note": "齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。",
       "productSource": null,
-      "productSourceUrl": null,
+      "productSourceUrl": "https://www.100ppi.com/",
       "productDate": null,
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
@@ -10555,7 +10555,7 @@
       "stockChange": null,
       "divergence": "数据不足",
       "series": [],
-      "status": "product-series-pending"
+      "status": "insufficient-history"
     },
     {
       "code": "sh688707",

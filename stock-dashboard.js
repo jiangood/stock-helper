@@ -130,7 +130,6 @@ function getSortValue(stock, col) {
   switch (col) {
     case 'name':     return stock.name;
     case 'price':    return price;
-    case 'prevChg':  return stock.prevChg;
     case 'yearInit': return stock.yearInit;
     case 'totalCap': return pd ? pd.totalCap : null;
     case 'pe':       return pd ? pd.pe : null;
@@ -173,7 +172,7 @@ function sortedView(list) {
 }
 
 function updateSortUI() {
-  ['name','price','entry','heavy','prevChg','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','researchMachine','researchReport','researchDate','group','alias'].forEach(col => {
+  ['name','price','entry','heavy','tp1','tp2','yearInit','totalCap','pe','pb','divYield','screen','researchMachine','researchReport','researchDate','group','alias'].forEach(col => {
     const th = $('th-' + col);
     if (!th) return;
     const active = sortState.col === col;
@@ -357,10 +356,6 @@ function buildRow(stock) {
     tp2Html = `<span class="badge badge-tp text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">${stock.tp2} ✓</span>`;
   }
 
-  const prevChgHtml = stock.prevChg != null
-    ? `<span class="${stock.prevChg > 0 ? 'text-up' : stock.prevChg < 0 ? 'text-down' : 'text-body-secondary'}">${stock.prevChg > 0 ? '+' : ''}${Number(stock.prevChg).toFixed(2)}%</span>`
-    : '<span class="text-body-tertiary">—</span>';
-
   const aliasHtml = stock.alias
     ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
     : '<span class="text-body-tertiary">—</span>';
@@ -372,7 +367,6 @@ function buildRow(stock) {
     <td>${nameHtml}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${priceHtml}</td>
-    <td>${prevChgHtml}</td>
     <td>${entryHtml}${entryDiff}</td>
     <td>${heavyHtml}${heavyDiff}</td>
     <td>${tp1Html}</td>

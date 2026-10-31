@@ -165,3 +165,10 @@ test('商品页趋势图下方显示商品最高、最低、期初和当前价�
   assert.match(products, /productSummaryHtml\(card\.productSeries,card\.unit\)/);
   assert.match(products, /point\.price!=null&&Number\.isFinite\(Number\(point\.price\)\)/);
 });
+
+
+test('商品页关联股票也显示最高、最低、期初和当前价格', () => {
+  const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
+  assert.match(products, /productSummaryHtml\(stock\.values,'元\/股'\)/);
+  assert.match(products, /commodity-stock[\s\S]*productSummaryHtml\(stock\.values,'元\/股'\)/);
+});

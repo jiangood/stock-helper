@@ -174,11 +174,9 @@ test('商品页关联股票也显示最高、最低、期初和当前价格', ()
 });
 
 
-test('商品趋势图为商品和关联股票标注真实价格关键点', () => {
+test('商品趋势图不显示重叠的价格关键点标注', () => {
   const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
-  assert.match(products, /function keyPriceMarks\(values,months,unit\)/);
-  for (const label of ['最低', '最高', '期初', '当前']) assert.ok(products.includes("'" + label + "'"), '缺少图表关键点：' + label);
-  assert.match(products, /markPoint:\{symbol:'circle',symbolSize:7,data:keyPriceMarks\(card\.productSeries,card\.months/);
-  assert.match(products, /markPoint:\{symbol:'circle',symbolSize:7,data:keyPriceMarks\(stock\.values,card\.months/);
-  assert.match(products, /formatter:function\(param\)\{return param\.data\.name\+' '\+money\(param\.data\.actualPrice\);?\}/);
+  assert.doesNotMatch(products, /keyPriceMarks|markPoint/);
+  assert.match(products, /productSummaryHtml\\(card\\.productSeries,card\\.unit\\)/);
+  assert.match(products, /productSummaryHtml\\(stock\\.values,'元\\/股'\\)/);
 });

@@ -86,7 +86,7 @@ node scripts/validate_stock_data.js
 - `stock-snapshot.yml`：采集股票行情与 K 线。
 - `fundamentals.yml`：刷新基本面快照。
 - `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、商品及关联股票月线对比、manifest 和健康快照，并校验后发布。
-- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据；商品工作流同时重建商品及关联股票月线比较。
+- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据；商品工作流同时重建商品及关联股票月线比较。\n- `asset-fingerprints.yml`：页面或公共 CSS/JS 变化后，运行 `scripts/update_asset_fingerprints.js`，为 HTML 中实际引用的本地 CSS/JS 计算 SHA-256 前 12 位并更新 `?v=`；第三方 CDN、内联代码和业务 JSON 不参与。只有 HTML 指纹有变化时才提交到 master；工作流使用 `GITHUB_TOKEN` 提交，避免由自动提交递归触发工作流。
 
 重要原则：
 1. 采集失败或校验失败时保留最后一份有效数据，不发布不合格数据。

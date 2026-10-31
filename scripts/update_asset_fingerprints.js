@@ -27,7 +27,9 @@ function resolveLocalAsset(htmlPath, rawUrl, rootDir) {
   if (!ASSET_RE.test(pathname)) return null;
 
   const htmlDir = path.dirname(path.resolve(rootDir, htmlPath));
-  const assetPath = path.resolve(htmlDir, pathname);
+  const assetPath = pathname.startsWith('/')
+    ? path.resolve(rootDir, '.' + pathname)
+    : path.resolve(htmlDir, pathname);
   const root = path.resolve(rootDir);
   if (assetPath !== root && !assetPath.startsWith(root + path.sep)) {
     throw new Error('Local asset escapes repository root: ' + rawUrl);

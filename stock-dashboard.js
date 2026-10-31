@@ -421,15 +421,6 @@ function screenHtml(stock, pd, e) {
   return `<span class="text-body-tertiary" style="font-size:11px" title="${esc(tip)}">${sc.passed}/${sc.total}${sc.complete ? '' : '?'}</span>`;
 }
 
-/** 距今天数换算成月（用于标注研报是否过时） */
-function monthsSince(dateStr) {
-  const date = new Date(dateStr + 'T00:00:00');
-  if (isNaN(date.getTime())) return null;
-  const now = new Date();
-  const months = (now.getFullYear() - date.getFullYear()) * 12 + (now.getMonth() - date.getMonth());
-  return months < 0 ? 0 : months;
-}
-
 function reportBandLabel(score) {
   const band = (REPORT_BANDS || []).find(item => score >= item.min);
   return band ? band.label : '';
@@ -468,10 +459,7 @@ function researchReportHtml(stock) {
 function researchDateHtml(stock) {
   const report = REPORT_SCORES[stock.code];
   if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '<span class="text-body-tertiary">—</span>';
-  const months = monthsSince(report.date);
-  const stale = months !== null && months >= 12;
-  const tip = `报告来源：${report.source || '未知'}${months !== null ? `\n距今约 ${months} 个月` : ''}`;
-  return `<span class="score-date${stale ? ' text-warning' : ''}" title="${esc(tip)}">${esc(report.date)}${stale ? ' ·旧' : ''}</span>`;
+  return `<span class="score-date">${esc(report.date)}</span>`;
 }
 
 function fmtScore(value) {

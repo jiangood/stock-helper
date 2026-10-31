@@ -193,10 +193,11 @@
     color: var(--bs-body-color);
   }
   .app-pane { min-height:calc(100vh - 105px); }
-  .main-nav-link { display:inline-flex; align-items:center; min-height:40px; color:var(--bs-secondary-color); text-decoration:none; border-radius:8px; padding:.45rem .7rem; font-size:13px; white-space:nowrap; }
+  .main-nav-link { position:relative; display:inline-flex; align-items:center; min-height:34px; color:var(--bs-secondary-color); text-decoration:none; border-radius:0; padding:.25rem .55rem; font-size:13px; white-space:nowrap; }
   .main-nav-link:focus-visible { outline:2px solid var(--bs-primary); outline-offset:1px; }
-  .main-nav-link:hover { color:var(--bs-primary); background:var(--bs-tertiary-bg); }
-  .main-nav-link.active { color:var(--bs-primary); font-weight:700; background:var(--bs-primary-bg-subtle); }
+  .main-nav-link:hover { color:var(--bs-primary); background:transparent; }
+  .main-nav-link.active { color:var(--bs-primary); font-weight:650; background:transparent; }
+  .main-nav-link.active::after { content:""; position:absolute; left:.55rem; right:.55rem; bottom:0; height:2px; border-radius:2px; background:var(--bs-primary); }
   .panel-title { font-size:15px; font-weight:700; }
   h1.panel-title, h2.panel-title, h3.panel-title { margin:0; }
   .panel-title.page-title { font-size:18px; letter-spacing:-.3px; }
@@ -261,7 +262,7 @@
     .unit { font-size: 9.5px; }
     .tag-alias { font-size: 10px; max-width: 96px; }
     .flag { font-size: 9.5px; padding: 0 .18rem; margin-left: .18rem; }
-    .main-nav-link { min-height: 44px; padding: .45rem .6rem; }
+    .main-nav-link { min-height: 34px; padding: .2rem .5rem; }
     .toolbar .input-group { max-width: 100% !important; }
   }
 

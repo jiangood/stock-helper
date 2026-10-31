@@ -19,6 +19,16 @@ class BusinessDataTests(unittest.TestCase):
         self.assertNotIn("spot", series[-1])
         self.assertEqual(series[-1]["futures"], 104)
 
+    def test_maleic_anhydride_is_tracked_as_a_separate_commodity(self):
+        product = next(item for item in fetcher.PRODUCTS if item["id"] == "maleic-anhydride")
+        self.assertEqual(product["name"], "顺酐")
+        self.assertIn("顺酐", product["aliases"])
+        self.assertIn("齐翔腾达", product["stocks"])
+        payload = fetcher.build_payload({})
+        self.assertEqual(payload["items"]["maleic-anhydride"]["name"], "顺酐")
+        self.assertIsNone(payload["items"]["maleic-anhydride"]["latest"])
+        self.assertEqual(payload["items"]["maleic-anhydride"]["status"], "pending")
+
     def test_build_payload_does_not_fabricate_missing_quotes(self):
         payload = fetcher.build_payload({
             "SA": [

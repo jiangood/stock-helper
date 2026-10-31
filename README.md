@@ -25,7 +25,7 @@ python -m http.server 8089
 | `index.html` | 自选页面：股票池监控看板（Bootstrap 5），支持搜索（含拼音）、分组、纪律筛选、市值/PE/PB/股息率、破净/八折/ST 旗标与纪律列 |
 | `market.html` | 独立行情页面：板块月线强弱、全球资产与产业链商品行情 |
 | `products.html` `products.js` | 商品对比统一页面：每个商品一张卡片，同图展示商品价格与关联股票的标准化月线 |
-| `data/company-products.json` `scripts/build_company_products.py` | 主营产品数据源：按股票保存主营产品、收入占比、报告期及近 5 年月度价格，供商品对比页统一展示 |
+| `data/company-products.json` `scripts/build_company_products.py` | 商品历史价格候选序列：提供部分品种最多 60 个月的行业价格代理，供商品月线构建器按商品名称匹配 |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
 | `data/stock-products.json` `scripts/build_product_comparison.js` `data/product-comparison.json` | 主营产品与商品报价映射、Actions 生成的商品/股价月线比较读模型；主营产品名称优先读取基本面数据，未接入可靠报价时明确显示待补充 |
@@ -57,7 +57,7 @@ python -m http.server 8089
 
 `products.html` 以商品为中心展示产业链观察卡片，而不是按股票拆成多张卡片。每个商品一张卡片，例如「纯碱」卡片会把纯碱月度参考价格、双环科技和中盐化工的复权月 K 放在同一张图中，使用统一月份横轴；每条序列都以共同起始月份 = 100 标准化，避免元/吨与股票价格共用绝对纵轴。
 
-商品与股票的关联由 `data/stock-products.json` 明确维护，商品价格来自 `data/business-data.json`，股票月 K 来自 `data/stock-cache/`。`scripts/build_product_comparison.js` 生成 `data/product-comparison.json` 中的 `commodityCards`，把商品月末参考价与关联股票月 K 对齐到共同月份。商品和股票历史不足时明确显示数据缺失，不插值、不估算，也不以相近商品替代。
+商品与股票的关联由 `data/stock-products.json` 明确维护，商品价格优先匹配 `data/company-products.json` 中同名产品的历史月度序列（最多 60 个月），没有可用历史时回退到 `data/business-data.json` 的商品报价；股票月 K 来自 `data/stock-cache/`。`scripts/build_product_comparison.js` 生成 `data/product-comparison.json` 中的 `commodityCards`，把商品月末参考价与关联股票月 K 对齐到共同月份。商品和股票历史不足时明确显示数据缺失，不插值、不估算，也不以相近商品替代。
 
 图表仅作趋势观察，不代表利润传导或因果关系。商品价格不等于上市公司实际销售均价，关联公司还受其他产品、销量、成本、库存、合同定价、产能利用率等因素影响。商品工作流与静态缓存工作流都会重建比较数据，前端只读取同源静态 JSON。
 

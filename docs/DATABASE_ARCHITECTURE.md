@@ -11,16 +11,22 @@
 | 股票基础资料、分组、交易计划 | `data/stocks.json` | 同源静态 JSON | 人工维护、代码审查、版本控制 |
 | 研报原始评分及来源 | `data/research-reports.json` | 同源静态 JSON | 保留报告日期、来源和原始分 |
 | 基本面快照 | `data/fundamentals.json` | 同源静态 JSON | Actions 更新；失败保留最后有效源文件 |
-| 商品与关联股票月线 | `data/business-data.json`、`data/stock-products.json`、`data/stock-cache/` | 商品对比页读取 `data/product-comparison.json` | 以商品为主键聚合关联股票；商品与股票按共同月份对齐，分别归一化为 100；缺少可靠映射或历史时明确标记，不补造数据 |
+| 商品行情与关联股票对比 | `data/business-data.json`、`data/company-products.json`、`data/stock-products.json`、`data/stock-cache/` | 商品页直接读取 `data/commodity-db/index.json` | Actions 汇总为独立商品数据库；按共同月份归一化；缺少可靠映射或历史时明确标记，不补造数据 |
 | 股票行情快照与 K 线 | `data/stock-quotes.json`、`data/stock-cache/` | 同源静态 JSON | Actions 采集；页面只读；保留历史序列 |
 | 机器评分、板块汇总 | 对应构建脚本生成 | 同源静态 JSON | 派生数据，可从原始数据重建 |
 | 用户个人参数和主题 | 用户当前设备 | 少量 localStorage 设置项 | 仅保存用户设置，不保存行情、K 线或数据响应 |
+
+## 商品数据库与页面数据口径
+
+- `data/commodity-db/index.json` 是商品页面唯一读取入口，由 GitHub Actions 从权威行情、商品映射和股票历史数据构建；页面不再读取旧的 `data/product-comparison.json`。
+- `data/business-data.json` 仍是 `business.js` 产业链/商品数据区使用的原始采集缓存；`data/company-products.json` 仍由基本面工作流构建并提供长历史商品价格候选序列；`data/stock-products.json` 是人工核验的商品映射配置。这些文件仍被其他流程使用，不属于废弃数据，不得删除。
+- `data/stock-cache/<code>.json` 是股票历史行情权威数据，不能与商品数据库合并或清理。
 
 ## 商品对比页的数据口径
 
 - `data/stock-products.json` 显式维护商品与上市公司的关联关系及公司在产业链中的角色；不根据名称相似度自动推断关联。
 - `data/business-data.json` 提供商品现货/期货参考价，`data/stock-cache/<code>.json` 提供股票复权月 K。
-- `scripts/build_product_comparison.js` 将商品报价聚合为月度末值，与关联股票月 K 对齐到共同月份，生成 `commodityCards`；每条序列均以共同起始月份 = 100 标准化，便于在一张卡片中比较相对走势。
+- `scripts/build_product_comparison.js` 将商品报价聚合为月度末值，与关联股票月 K 对齐到共同月份，生成 `data/commodity-db/index.json`（仅含商品页所需 `commodityCards`）；每条序列均以共同起始月份 = 100 标准化，便于在一张卡片中比较相对走势。
 - 商品月价优先使用有可靠历史的现货参考价；若数据源只提供期货，则作为行业价格代理并明确标注，不等于上市公司实际销售均价。缺少可靠历史时不以相近商品替代、不插值、不估算。
 - 股票价格使用复权月 K 收盘价；月线本月可能尚未收盘。历史数据不足时保留数据缺失状态，不伪造曲线。
 

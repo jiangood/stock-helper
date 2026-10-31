@@ -117,6 +117,10 @@ def main() -> int:
         url = urljoin(BASE, path)
         try:
             status, html = read_url(url)
+            if index == 0:
+                debug_parser = TextExtractor()
+                debug_parser.feed(html)
+                print("PAGE1_TEXT_SAMPLE=" + debug_parser.text()[:2400])
             candidates = extract_candidates(html)
             for date, values in candidates.items():
                 merged[date].update(values)

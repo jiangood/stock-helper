@@ -9,6 +9,7 @@ on:
     branches: [master, main]
     paths:
       - "scripts/fetch_business_data.py"
+      - "scripts/check_maleic_anhydride_source.py"
       - "scripts/build_company_products.py"
       - "scripts/build_product_comparison.js"
       - "data/business-data.json"

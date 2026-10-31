@@ -566,7 +566,7 @@ function buildRow(stock) {
 
   const monthlyTrend = monthlyTrendHtml(stock);
   const aliasHtml = stock.alias
-    ? `<span class="tag tag-alias">${esc(stock.alias)}</span>`
+    ? `<span class="stock-alias">${esc(stock.alias)}</span>`
     : '';
   const nameHtml = stock.code
     ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}">${esc(stock.name)}</a>${statusHtml(e, stock, pd)}`

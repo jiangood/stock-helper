@@ -4,7 +4,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-import akshare as ak
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "data" / "business-data.json"
@@ -36,6 +35,7 @@ def main():
               "status": "unavailable", "observationCount": 0,
               "reason": "接口未返回可验证的顺酐现货报价"}
     try:
+        import akshare as ak
         points = normalize(ak.spot_price_qh(symbol="顺酐"))
         if points:
             item = payload["items"]["maleic-anhydride"]
@@ -46,8 +46,16 @@ def main():
                            "latestDate": points[-1]["date"], "reason": None})
         else:
             health["reason"] = "接口可访问，但没有返回带日期的正数现货报价"
+            item = payload["items"]["maleic-anhydride"]
+            if item.get("source") != PROVIDER:
+                item.update({"series": [], "latest": None, "latestSpot": None, "latestDate": None,
+                             "source": None, "sourceUrl": SOURCE_URL, "status": "pending"})
     except Exception as exc:
         health.update({"status": "error", "reason": str(exc)[:180]})
+        item = payload["items"]["maleic-anhydride"]
+        if item.get("source") != PROVIDER:
+            item.update({"series": [], "latest": None, "latestSpot": None, "latestDate": None,
+                         "source": None, "sourceUrl": SOURCE_URL, "status": "pending"})
     payload["maleicAnhydrideSourceCheck"] = health
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(health, ensure_ascii=False))

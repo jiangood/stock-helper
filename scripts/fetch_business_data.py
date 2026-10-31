@@ -78,7 +78,7 @@ def clean_series(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if futures is not None:
             item["futures"] = round(futures, 4)
         by_date[day] = item
-    return [by_date[k] for k in sorted(by_date)][-180:]
+    return [by_date[k] for k in sorted(by_date)][-200:]
 
 def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
     """Split source-provided company names without inventing or inferring relationships."""

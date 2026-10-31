@@ -149,10 +149,11 @@
       "note": "蛋氨酸价格数据尚未接入。"
     },
     "sz002100": {
-      "productName": "生猪 / 饲料原料",
-      "marketItemId": null,
-      "role": "mixed",
-      "note": "生猪价格影响养殖收入，玉米和豆粕影响饲料成本，需分开观察。"
+      "productName": "生猪",
+      "marketItemId": "live-hog",
+      "role": "producer",
+      "note": "天康生物生猪养殖业务对应生猪价格；玉米、豆粕属于饲料成本，应作为独立成本指标观察，不与生猪售价混为一条序列。",
+      "unit": "元/公斤"
     },
     "sz002408": {
       "productName": "顺酐",

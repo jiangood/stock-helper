@@ -56,10 +56,16 @@ function productMonthly(item) {
 }
 function commodityMonthly(item) {
   if (!item) return { points: [], source: null, note: null };
-  const candidates = companyProducts.filter((product) =>
-    String(product.productName || '').trim() === String(item.name || '').trim() &&
-    Array.isArray(product.priceSeries) && product.priceSeries.length >= 2
-  ).sort((a, b) => b.priceSeries.length - a.priceSeries.length);
+  const itemName = String(item.name || '').trim();
+  const candidates = companyProducts.filter((product) => {
+    const sameName = String(product.productName || '').trim() === itemName;
+    // A company's disclosed segment name may be broader than the market item
+    // (e.g. "橡胶产品销售" vs. "天然橡胶"). The maintained marketItemId is the
+    // explicit, reviewed link to the corresponding commodity price proxy.
+    const sameMarketItem = Boolean(item.id) && product.marketItemId === item.id;
+    return (sameName || sameMarketItem) &&
+      Array.isArray(product.priceSeries) && product.priceSeries.length >= 2;
+  }).sort((a, b) => b.priceSeries.length - a.priceSeries.length);
   if (candidates.length) {
     const selected = candidates[0];
     const points = monthlyLast(selected.priceSeries.map((point) => ({

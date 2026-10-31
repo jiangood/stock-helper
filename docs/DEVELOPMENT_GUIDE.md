@@ -19,10 +19,10 @@
 | --- | --- |
 | `index.html` | SPA 唯一 HTML 壳与 Hash 路由入口 |
 | `legacy-stocks.html`、`legacy-market.html`、`legacy-products.html`、`legacy-stock.html` | 迁移期间隔离运行的旧页面模板，禁止在原生迁移验收前删除 |
-| `market.html`、`business.js` | 行情与产业链数据展示 |
-| `products.html`、`products.js` | 以商品为中心的关联股票月线对比卡片 |
+| `src/pages/market.page.js`、`legacy-market.html`、`business.js` | 行情 SPA 入口与迁移期间旧页面桥接 |
+| `src/pages/products.page.js`、`src/services/products.service.js` | 原生商品页与商品月线数据服务；`legacy-products.html` 仅作回滚 |
 | `data/business-data.json`、`data/stock-products.json` | 商品报价及商品-上市公司关联关系 |
-| `stock.html`、`stock.js` | 个股详情 |
+| `src/pages/stock-detail.page.js`、`legacy-stock.html`、`stock.js` | 个股详情 SPA 入口与迁移期间旧页面桥接；`stock.html` 为兼容跳转 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
 | `data/product-comparison.json` | Actions 生成的商品及关联股票标准化月线读模型（`commodityCards`） |
 

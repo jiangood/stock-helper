@@ -41,7 +41,7 @@ function stockMonthly(code) {
   return monthlyLast(bars.map((bar) => {
     const time = String(bar.time || '').trim();
     // 月 K 缓存同时存在 YYYY-MM 与 YYYY-MM-DD 两种合法格式；统一保留月份粒度。
-    return { date: /^\\d{4}-\\d{2}$/.test(time) ? time : time.slice(0, 10), value: Number(bar.close) };
+    return { date: time.length === 7 && time[4] === '-' ? time : time.slice(0, 10), value: Number(bar.close) };
   }))
     .map((point) => ({ ...point, source }));
 }

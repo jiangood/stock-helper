@@ -128,6 +128,8 @@
 
   /* 数值旁的小号涨跌幅 */
   .diff { font-size: 11px; margin-left: .3rem; letter-spacing: 0; }
+  .stock-table tbody td.stacked-cell { white-space: normal; line-height: 1.15; }
+  .stock-table tbody td.stacked-cell .diff { display: block; margin-left: 0; line-height: 1.1; }
   .unit { font-size: 10px; margin-left: .15rem; }
   .badge-tp { font-size: 10.5px; font-weight: 500; }
 

@@ -30,6 +30,7 @@ PRODUCTS = [
     {"id": "coal", "name": "煤炭", "unit": "元/吨", "symbol": None, "aliases": ["动力煤", "焦煤", "煤炭", "炼焦煤"], "stocks": ["华阳股份"], "chain": "矿山供给 → 电力、钢铁、化工", "drivers": "动力煤与焦煤用途不同；要区分煤种、产地和交货口径，不能混用价格。"},
     {"id": "rubber", "name": "天然橡胶", "unit": "元/吨", "symbol": "RU", "aliases": ["天然橡胶", "RU"], "stocks": ["海南橡胶"], "chain": "天然橡胶 → 轮胎、汽车、工业制品", "drivers": "看主产区天气、割胶季、库存、轮胎开工和合成胶价差。"},
     {"id": "rare-earth", "name": "稀土（氧化镨钕）", "unit": "元/吨", "symbol": None, "aliases": ["氧化镨钕"], "stocks": ["北方稀土", "盛和资源"], "chain": "稀土矿/分离 → 磁材 → 新能源车、风电、电机", "drivers": "关注配额、分离产量、磁材需求、出口政策和上下游库存。"},
+    {"id": "maleic-anhydride", "name": "顺酐", "unit": "元/吨", "symbol": None, "aliases": ["顺酐", "马来酸酐", "顺丁烯二酸酐"], "stocks": ["齐翔腾达"], "chain": "正丁烷氧化 → 顺酐 → 不饱和聚酯树脂、BDO、THF等", "drivers": "关注正丁烷成本、装置开工、厂家库存、下游不饱和聚酯树脂需求及出口。"},
 ]
 
 def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:
@@ -474,8 +475,9 @@ def fetch_data() -> dict[str, Any]:
         "coal": ["能源", "钢铁"],
         "rubber": ["化工", "纺织"],
         "rare-earth": ["有色"],
+        "maleic-anhydride": ["化工"],
     }
-    latest_only_products = {"tio2", "coal", "rare-earth"}
+    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride"}
     categories = list(dict.fromkeys(
         category for values in industry_categories.values() for category in values
     ))

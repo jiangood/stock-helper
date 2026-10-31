@@ -21,11 +21,11 @@
 | --- | --- | --- | --- |
 | `legacy-stocks.html`（旧入口 `index.html`） | `stock-dashboard.js`、`password-gate.js`、`croc.js`、`static-quotes.js`、`pinyin.js` | `#/stocks` | `src/pages/stocks.page.js`（当前桥接旧页） |
 | `legacy-market.html`（旧入口 `market.html`） | `business.js`、`global-assets.js`、`stock-dashboard.js`、`password-gate.js` | `#/market` | `src/pages/market.page.js`（当前桥接旧页） |
-| `legacy-products.html`（旧入口 `products.html`） | `products.js`、`password-gate.js` | `#/products` | `src/pages/products.page.js`（当前桥接旧页） |
+| `src/pages/products.page.js` | `src/services/products.service.js`、ECharts | `#/products` | `src/pages/products.page.js`（已原生模块化；旧模板保留回滚） |
 | `legacy-stock.html?code=...`（旧入口 `stock.html?code=...`） | `stock.js`、`indicators.js`、`static-quotes.js`、`croc.js`、`research-score.js` | `#/stock/:code` | `src/pages/stock-detail.page.js`（当前桥接旧页） |
 | `health.html` | `cache-health.js` | `#/health` | `src/pages/health.page.js` |
 
-当前 `index.html` 已是唯一 SPA 壳，页面通过 `src/main.js` 和 Hash Router 调度。健康页已使用原生 ES Module；自选、行情、商品、个股详情由各自页面模块在同源 iframe 中加载 `legacy-*.html`，隔离旧脚本的全局变量与事件监听。此桥接保障现有业务可用，但仍需逐页替换成原生 DOM/组件/服务模块。
+当前 `index.html` 已是唯一 SPA 壳，页面通过 `src/main.js` 和 Hash Router 调度。健康页与商品页已使用原生 ES Module；自选、行情、个股详情由各自页面模块在同源 iframe 中加载 `legacy-*.html`，隔离旧脚本的全局变量与事件监听。商品页数据服务使用 `cache: 'no-store'`，图表卸载时释放 ECharts 实例。桥接页面仍需逐页替换成原生 DOM/组件/服务模块。
 
 ## 3. 目标目录结构
 
@@ -148,7 +148,7 @@ docs/
 1. **阶段一：盘点与规范（已完成）**：建立本清单，明确文件映射、命名规范和不变边界。
 2. **阶段二：SPA 外壳（已完成）**：`index.html` 已切换为唯一壳，Hash Router、统一导航、主题切换、页面生命周期和旧 URL 跳转已接入。
 3. **阶段三：公共基础设施（基础模块已完成）**：导航、主题、密码门禁、Toast、加载状态和缓存健康服务已独立成模块。
-4. **阶段四：逐页迁移（进行中）**：健康页已原生模块化；其余页面当前通过兼容桥接运行。下一步按自选 → 行情 → 商品 → 个股详情替换旧页面内部实现，并做新旧结果对照。
+4. **阶段四：逐页迁移（进行中）**：健康页与商品页已原生模块化；自选、行情和个股详情当前通过兼容桥接运行。下一步迁移自选 → 行情 → 个股详情，并做新旧结果对照。
 5. **阶段五：清理兼容层**：只有在旧 URL 全部兼容且测试覆盖后，才考虑删除重复页面模板和旧脚本。
 6. **阶段六：完整验收**：运行 JS/Python 测试、数据校验、语法检查，并检查 GitHub Actions。
 
@@ -162,10 +162,10 @@ docs/
 
 ## 8. 当前迁移边界
 
-- 当前已切换唯一 SPA 入口，但旧页面业务仍由 `legacy-*.html` 桥接运行。
+- 当前已切换唯一 SPA 入口；健康和商品页为原生模块，自选、行情、详情页仍由 `legacy-*.html` 桥接运行。
 - 不重命名或删除旧 JS/CSS/HTML 文件，直到对应页面完成原生迁移及新旧结果对照。
 - 不修改股票评分、交易纪律、行情数据来源、复权口径、数据采集和数据文件。
 - 不引入框架、构建器或 npm 依赖。
-- 旧 URL 通过跳转进入 SPA；旧模板只允许由对应 `*.page.js` 桥接加载。
+- 旧 URL 通过跳转进入 SPA；旧模板只允许由对应 `*.page.js` 桥接加载，原生迁移完成的页面除外。
 
 所有旧文件只有在调用方迁移且测试通过后才可清理。

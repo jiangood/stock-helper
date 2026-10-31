@@ -118,7 +118,8 @@ def main() -> int:
         try:
             status, html = read_url(url)
             candidates = extract_candidates(html)
-            for date, values in candidates.items():\n                merged[date].update(values)
+            for date, values in candidates.items():
+                merged[date].update(values)
             successful_pages += 1
             print(
                 f"page={index + 1} http={status} bytes={len(html.encode('utf-8'))} "

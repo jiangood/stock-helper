@@ -48,8 +48,12 @@ function render(){
   var comparisonTable=comparisonTableHtml(card);
   var hasChartData=Array.isArray(card.productSeries)&&card.productSeries.length>=2||(card.stocks||[]).some(function(stock){return Array.isArray(stock.values)&&stock.values.filter(function(point){return point&&point.price!=null;}).length>=2;});
   var chart=hasChartData?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+'商品及关联股票月线"></div>':'<div class="product-empty">暂无足够的商品或关联股票月线数据。</div>';
-  var monthCount=card.months&&card.months.length?monthLabel(card.months[0])+'—'+monthLabel(card.months[card.months.length-1])+' · '+card.months.length+' 根月线':'';
-  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div>'+(monthCount?'<div class="product-meta">'+monthCount+'</div>':'')+'</div><div class="commodity-head-info"><div class="commodity-latest-price">参考价 '+money(card.latestPrice,card.unit)+' '+esc(card.unit||'')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
+  var timeline=card.months&&card.months.length?monthLabel(card.months[0])+'—'+monthLabel(card.months[card.months.length-1]):'';
+  var coverage=['商品 '+Number(card.productMonthCount||0)+' 根'];
+  (card.stocks||[]).forEach(function(stock){coverage.push(esc(stock.name)+' '+Number(stock.monthCount||0)+' 根');});
+  if(Number(card.commonMonthCount||0)>0)coverage.push('共同 '+Number(card.commonMonthCount)+' 根');
+  var monthMeta=coverage.join(' · ')+(timeline?' · 图表跨度 '+timeline:'');
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+monthMeta+'</div></div><div class="commodity-head-info"><div class="commodity-latest-price">参考价 '+money(card.latestPrice,card.unit)+' '+esc(card.unit||'')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
   function updateScrollHint(){

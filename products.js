@@ -38,6 +38,7 @@ function comparisonTableHtml(card){
 }
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}
+function monthLabel(value){var month=String(value==null?'':value);return /^\\d{4}-\\d{2}$/.test(month)?month.replace('-','.'):month;}
 function destroyCharts(){chartObservers.forEach(function(observer){try{observer.disconnect();}catch(e){}});chartObservers=[];charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
 function render(){
  destroyCharts();
@@ -46,7 +47,7 @@ function render(){
  node.innerHTML=list.map(function(card,index){
   var comparisonTable=comparisonTableHtml(card);
   var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+'及关联股票归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
-  var monthCount=card.months&&card.months.length?card.months.length+' 根月线':'';
+  var monthCount=card.months&&card.months.length?monthLabel(card.months[0])+'—'+monthLabel(card.months[card.months.length-1])+' · '+card.months.length+' 根月线':'';
   return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div>'+(monthCount?'<div class="product-meta">'+monthCount+'</div>':'')+'</div><div class="commodity-head-info"><div class="commodity-latest-price">参考价 '+money(card.latestPrice,card.unit)+' '+esc(card.unit||'')+'</div></div></div>'+chart+''+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){

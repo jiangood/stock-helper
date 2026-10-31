@@ -139,8 +139,8 @@
   .stock-name:hover { color: var(--bs-primary) !important; text-decoration: underline; }
   .stock-alias {
     font-size: 11px; max-width: 120px; display: inline-block;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    vertical-align: bottom; color: var(--bs-secondary-color);
+    white-space: normal; overflow-wrap: anywhere;
+    line-height: 1.25; vertical-align: top; color: var(--bs-secondary-color);
   }
 
   /* 数值旁的小号涨跌幅 */

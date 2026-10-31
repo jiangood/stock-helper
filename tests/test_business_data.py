@@ -19,12 +19,23 @@ class BusinessDataTests(unittest.TestCase):
         self.assertNotIn("spot", series[-1])
         self.assertEqual(series[-1]["futures"], 104)
 
+    def test_feed_cost_commodities_are_tracked_for_tiankang(self):
+        products = {item["id"]: item for item in fetcher.PRODUCTS}
+        self.assertEqual(products["corn"]["symbol"], "C")
+        self.assertEqual(products["soybean-meal"]["symbol"], "M")
+        self.assertIn("玉米", products["corn"]["aliases"])
+        self.assertIn("豆粕", products["soybean-meal"]["aliases"])
+        payload = fetcher.build_payload({})
+        self.assertEqual(payload["items"]["corn"]["name"], "玉米")
+        self.assertEqual(payload["items"]["soybean-meal"]["name"], "豆粕")
+        self.assertIsNone(payload["items"]["corn"]["latest"])
+        self.assertIsNone(payload["items"]["soybean-meal"]["latest"])
+
     def test_live_hog_is_tracked_and_mapped_to_tiankang_biology(self):
         product = next(item for item in fetcher.PRODUCTS if item["id"] == "live-hog")
         self.assertEqual(product["name"], "生猪")
         self.assertIn("生猪", product["aliases"])
         self.assertIn("天康生物", product["stocks"])
-        self.assertIn("live-hog", fetcher.PRODUCTS[-1]["id"])
         payload = fetcher.build_payload({})
         self.assertEqual(payload["items"]["live-hog"]["name"], "生猪")
         self.assertIsNone(payload["items"]["live-hog"]["latest"])

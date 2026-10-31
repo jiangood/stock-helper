@@ -82,6 +82,77 @@ function latestSourceTimestamp() {
   const valid = timestamps.map((value) => Date.parse(value)).filter(Number.isFinite);
   return valid.length ? new Date(Math.max(...valid)).toISOString() : null;
 }
+function buildCommodityCards(productItems) {
+  const grouped = new Map();
+  Object.entries(mapping).forEach(([code, meta]) => {
+    if (!meta || !meta.marketItemId) return;
+    if (!grouped.has(meta.marketItemId)) grouped.set(meta.marketItemId, []);
+    const stock = stocks.find((item) => item.code === code);
+    if (stock) grouped.get(meta.marketItemId).push({ stock, meta });
+  });
+  return Array.from(grouped.entries()).map(([itemId, related]) => {
+    const market = productItems[itemId] || null;
+    const marketMeta = related[0] && related[0].meta || {};
+    const productName = market && market.name || marketMeta.productName || itemId;
+    const rawProduct = market && Array.isArray(market.series) ? market.series : [];
+    const metric = rawProduct.some((point) => Number(point.spot) > 0) ? 'spot' : 'futures';
+    const productPoints = monthlyLast(rawProduct.map((point) => ({ date: point.date, value: Number(point[metric]) })));
+    const stocksWithHistory = related.map(({ stock, meta }) => {
+      const history = stockMonthly(stock.code);
+      const fundamental = fundamentals.stocks && fundamentals.stocks[stock.code] || {};
+      return {
+        code: stock.code, name: stock.name, group: stock.group || '',
+        role: meta.role || 'unknown',
+        roleLabel: meta.role === 'producer' ? '产品端' : meta.role === 'consumer' ? '成本端' : meta.role === 'mixed' ? '多因素' : '待核实',
+        mainRatio: fundamental.mainRatio !== null && fundamental.mainRatio !== undefined && Number.isFinite(Number(fundamental.mainRatio)) ? Number(fundamental.mainRatio) : null,
+        source: history.length ? history[history.length - 1].source : null,
+        history
+      };
+    });
+    const availableStocks = stocksWithHistory.filter((stock) => stock.history.length);
+    const commonMonths = productPoints.map((point) => point.month).filter((month) =>
+      availableStocks.every((stock) => stock.history.some((point) => point.month === month))
+    ).sort();
+    const productMap = new Map(productPoints.map((point) => [point.month, point]));
+    const firstMonth = commonMonths[0];
+    const productBase = firstMonth ? productMap.get(firstMonth).value : null;
+    const productSeries = commonMonths.length >= 2 && productBase > 0 ? commonMonths.map((month) => ({
+      month,
+      index: Number((productMap.get(month).value / productBase * 100).toFixed(2)),
+      price: Number(productMap.get(month).value.toFixed(4))
+    })) : [];
+    const stockSeries = stocksWithHistory.map((stock) => {
+      const historyMap = new Map(stock.history.map((point) => [point.month, point]));
+      const base = firstMonth && historyMap.get(firstMonth) ? historyMap.get(firstMonth).value : null;
+      const values = commonMonths.length >= 2 && base > 0 ? commonMonths.map((month) => ({
+        month,
+        index: Number((historyMap.get(month).value / base * 100).toFixed(2)),
+        price: Number(historyMap.get(month).value.toFixed(4))
+      })) : [];
+      const first = values[0], last = values[values.length - 1];
+      return {
+        code: stock.code, name: stock.name, group: stock.group, role: stock.role,
+        roleLabel: stock.roleLabel, mainRatio: stock.mainRatio, source: stock.source,
+        latestDate: stock.history.length ? stock.history[stock.history.length - 1].date : null,
+        latestClose: stock.history.length ? stock.history[stock.history.length - 1].value : null,
+        changePct: first && last ? pct(first.price, last.price) : null,
+        values
+      };
+    });
+    const latestProduct = productPoints[productPoints.length - 1] || null;
+    const ready = commonMonths.length >= 2 && stocksWithHistory.every((stock) => stock.history.length > 0);
+    return {
+      id: itemId, name: productName, unit: market && market.unit || '',
+      source: market && market.source || null, sourceUrl: market && market.sourceUrl || null,
+      latestPrice: latestProduct ? latestProduct.value : null,
+      latestDate: latestProduct ? latestProduct.date : market && market.latestDate || null,
+      productChange: productSeries.length >= 2 ? pct(productSeries[0].price, productSeries[productSeries.length - 1].price) : null,
+      months: commonMonths, productSeries, stocks: stockSeries,
+      status: ready ? 'ready' : 'pending',
+      note: related.map(({ meta }) => meta.note).filter(Boolean).join(' ')
+    };
+  }).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+}
 function build() {
   const productItems = business.items || {};
   const cards = stocks.filter((stock) => stock && stock.code).map((stock) => {

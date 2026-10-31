@@ -13,7 +13,9 @@
       "latestPrice": 966,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 83
+      "monthCount": 83,
+      "stockTimelineMonthCount": 83,
+      "commonMonthCount": 83
     },
     {
       "id": "tio2",
@@ -24,7 +26,9 @@
       "latestPrice": 13900,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "maleic-anhydride",
@@ -35,7 +39,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 193
+      "monthCount": 0,
+      "stockTimelineMonthCount": 193,
+      "commonMonthCount": 0
     },
     {
       "id": "viscose-staple-fiber",
@@ -46,7 +52,9 @@
       "latestPrice": 12800,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "monthCount": 47
+      "monthCount": 0,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 0
     },
     {
       "id": "fluorine-materials",
@@ -57,7 +65,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 47
+      "monthCount": 0,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 0
     },
     {
       "id": "rubber",
@@ -68,7 +78,9 @@
       "latestPrice": 19170,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 185
+      "monthCount": 200,
+      "stockTimelineMonthCount": 185,
+      "commonMonthCount": 185
     },
     {
       "id": "soybean-meal",
@@ -79,7 +91,9 @@
       "latestPrice": 3183,
       "latestDate": "2026-10",
       "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
-      "monthCount": 47
+      "monthCount": 180,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 47
     },
     {
       "id": "corn",
@@ -90,7 +104,9 @@
       "latestPrice": 2221,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 47
+      "monthCount": 200,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 47
     },
     {
       "id": "tin",
@@ -101,7 +117,9 @@
       "latestPrice": 360880,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 138
+      "monthCount": 140,
+      "stockTimelineMonthCount": 138,
+      "commonMonthCount": 138
     },
     {
       "id": "zinc",
@@ -112,7 +130,9 @@
       "latestPrice": 25850,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 200
+      "monthCount": 200,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 200
     },
     {
       "id": "aluminium",
@@ -123,7 +143,9 @@
       "latestPrice": 23395,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 196
+      "monthCount": 200,
+      "stockTimelineMonthCount": 196,
+      "commonMonthCount": 196
     },
     {
       "id": "molybdenum",
@@ -134,7 +156,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "tantalum-niobium",
@@ -145,7 +169,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "rare-earth",
@@ -156,7 +182,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "tungsten-products",
@@ -167,7 +195,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "gold",
@@ -178,7 +208,9 @@
       "latestPrice": 855.18,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 200
+      "monthCount": 200,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 200
     },
     {
       "id": "iron-ore",
@@ -189,7 +221,9 @@
       "latestPrice": 672,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 47
+      "monthCount": 157,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 47
     },
     {
       "id": "steel",
@@ -200,7 +234,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 47
+      "monthCount": 0,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 0
     },
     {
       "id": "gasoline",
@@ -211,7 +247,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "coal",
@@ -222,7 +260,9 @@
       "latestPrice": 1441.25,
       "latestDate": "2026-10-31",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "monthCount": 47
+      "monthCount": 0,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 0
     },
     {
       "id": "titanium-material",
@@ -233,7 +273,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "cast-superalloy",
@@ -244,7 +286,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 200
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     },
     {
       "id": "cathode-materials",
@@ -255,7 +299,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 62
+      "monthCount": 0,
+      "stockTimelineMonthCount": 62,
+      "commonMonthCount": 0
     },
     {
       "id": "carbon-fiber",
@@ -266,7 +312,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 55
+      "monthCount": 0,
+      "stockTimelineMonthCount": 55,
+      "commonMonthCount": 0
     },
     {
       "id": "sugar",
@@ -277,7 +325,9 @@
       "latestPrice": 5263,
       "latestDate": "2026-10-30",
       "source": "期货主力连续",
-      "monthCount": 200
+      "monthCount": 200,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 200
     },
     {
       "id": "yeast",
@@ -288,7 +338,9 @@
       "latestPrice": null,
       "latestDate": null,
       "source": null,
-      "monthCount": 47
+      "monthCount": 0,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 0
     },
     {
       "id": "methionine",
@@ -299,7 +351,9 @@
       "latestPrice": 24950,
       "latestDate": "2026-10-28",
       "source": "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点",
-      "monthCount": 1
+      "monthCount": 1,
+      "stockTimelineMonthCount": 1,
+      "commonMonthCount": 1
     }
   ]
 }

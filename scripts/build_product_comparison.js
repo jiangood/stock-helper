@@ -92,7 +92,13 @@ function commodityMonthly(item) {
       note: item.id === 'live-hog' ? [selected.priceNote, '生猪期货原始报价为元/吨，展示时已换算为元/公斤（÷1000）。'].filter(Boolean).join(' ') : (selected.priceNote || null)
     };
   }
-  return { points: productMonthly(item), source: item.source || null, note: null };
+  return {
+    points: productMonthly(item),
+    source: item.monthlyKlines && item.monthlyKlines.source || item.source || null,
+    note: item.monthlyKlines && item.monthlyKlines.priceType === 'main-continuous-futures'
+      ? '期货主力连续价格仅作商品价格参考，不等于企业实际采购到厂价；连续合约换月可能产生价差。'
+      : null
+  };
 }
 function normalizedComparison(productPoints, stockPoints) {
   const p = new Map(productPoints.map((point) => [point.month, point]));

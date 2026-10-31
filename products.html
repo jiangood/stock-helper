@@ -74,7 +74,7 @@
     <a class="main-nav-link" data-page-link="stocks" href="index.html">自选</a>
     <a class="main-nav-link active" data-page-link="products" href="products.html" aria-current="page">商品</a>
     <span class="vr opacity-25 mx-1 d-none d-sm-block" aria-hidden="true"></span>
-    <button class="btn btn-sm icon-btn" id="theme-btn" type="button" aria-label="切换到深色主题" aria-pressed="false" title="切换到深色主题">
+    <button class="btn btn-sm icon-btn" id="theme-btn" type="button" aria-label="切换到深色主题" aria-pressed="false">
       <svg class="theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
       <svg class="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
     </button>
@@ -82,11 +82,11 @@
 </div>
 <main id="products-pane" class="container-fluid px-3 py-3" tabindex="-1">
   <div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
-    <div><h1 class="panel-title page-title mb-1">商品</h1><div class="panel-subtitle">最近 200 根月线；商品与关联股票以共同首月为基准（100），比较相对涨跌，悬停查看真实价格</div></div>
+    <div><h1 class="panel-title page-title mb-1">商品</h1><div class="panel-subtitle">最近 200 根月线；商品与关联股票以共同首月为基准（100），比较相对涨跌</div></div>
     <div id="product-updated" class="panel-subtitle">正在读取静态数据…</div>
   </div>
   <div id="product-cards" class="product-grid" aria-live="polite"><div class="product-empty">正在加载商品数据…</div></div>
-  <p class="product-note mt-3">图表统一月份横轴，商品与所有有数据的关联股票以共同可用首月为统一基准（100），展示此后相对涨跌幅；悬停任一月份可查看真实价格、单位及相对指数。商品月价按当月最后一个有效报价聚合，股票使用复权月 K 收盘价；当月数据可能尚未收盘。数据不足时保留卡片并明确提示，不插值、不估算。商品价格不是上市公司实际销售均价，关联股票也可能受其他产品、成本、库存、产能利用率和市场估值影响；仅供研究参考，不构成投资建议。</p>
+  <p class="product-note mt-3">图表统一月份横轴，商品与所有有数据的关联股票以共同可用首月为统一基准（100），展示此后相对涨跌幅。商品月价按当月最后一个有效报价聚合，股票使用复权月 K 收盘价；当月数据可能尚未收盘。数据不足时保留卡片并明确提示，不插值、不估算。商品价格不是上市公司实际销售均价，关联股票也可能受其他产品、成本、库存、产能利用率和市场估值影响。</p>
 </main>
 <script id="product-echarts" defer src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js?v=5.5.1"></script>
 <script src="password-gate.js?v=e24d3df42cad"></script>
@@ -142,7 +142,7 @@ function render(){
   var hasProductChart=Array.isArray(card.productSeries)&&card.productSeries.length>=2;
   var hasStockChart=(card.stocks||[]).some(function(stock){return Array.isArray(stock.values)&&stock.values.length>=2;});
   var hasChart=hasProductChart||hasStockChart;
-  var chart=hasChart?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+(hasProductChart?'及关联股票':'关联股票')+'归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品价格和关联股票均暂无足够的历史月份，暂不绘图。</div>';
+  var chart=hasChart?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+(hasProductChart?'及关联股票':'关联股票')+'归一化月线"></div>':'<div class="product-empty">商品价格和关联股票均暂无足够的历史月份，暂不绘图。</div>';
   return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+(card.months&&card.months.length?card.months.length+' 根月线':'月线数量 —')+' · 数据起止 '+esc(card.productStartDate||'—')+' 至 '+esc(card.productEndDate||'—')+' · 来源 '+esc(card.source||'—')+'</div></div></div>'+chart+comparisonTable+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
@@ -214,7 +214,7 @@ function initThemeButton(){
   var label=dark?'切换到浅色主题':'切换到深色主题';
   btn.setAttribute('aria-pressed',String(dark));
   btn.setAttribute('aria-label',label);
-  btn.title=label;
+
  }
  sync();
  btn.addEventListener('click',function(){

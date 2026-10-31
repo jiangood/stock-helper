@@ -388,21 +388,8 @@ function buildRow(stock) {
 }
 
 function statusHtml(e, stock, quote) {
-  let zoneLabel = '';
-  if (e.st) zoneLabel = '<span class="flag flag-danger" title="ST 风险警示股：铁律不买 ST">ST</span>';
-  else if (e.loss) zoneLabel = '<span class="flag flag-warn" title="TTM 亏损：铁律不买亏损股">亏</span>';
-  else if (!quote || e.price === null || e.price <= 0 || e.zone === 'unknown') {
-    zoneLabel = '<span class="flag flag-pending" title="行情或计划价格数据不足，无法判断交易区间">待确认</span>';
-  } else if (e.zone === 'heavy') {
-    zoneLabel = '<span class="flag flag-zone" title="当前价格已进入重仓价格区间；仍须通过买入纪律">重仓区</span>';
-  } else if (Croc.matchStatus(stock, quote, 'near')) {
-    zoneLabel = '<span class="flag flag-zone" title="当前价格高于重仓价且距离不超过 3%">接近重仓</span>';
-  } else if (e.zone === 'entry') {
-    zoneLabel = '<span class="flag flag-zone" title="当前价格已进入计划入场区间；不代表自动满足买入条件">入场区</span>';
-  } else if (e.zone === 'above') {
-    zoneLabel = '<span class="flag flag-pending" title="当前价格高于计划入场价">高于入场</span>';
-  }
-  return zoneLabel + (e.st || e.loss ? '' : flagHtml(e, stock, quote));
+  // 首页名称列不展示入场/重仓价格区间状态，仅保留 ST、亏损及估值提示。
+  return flagHtml(e, stock, quote);
 }
 
 function flagHtml(e, stock, quote) {

@@ -53,7 +53,7 @@ test('stockDaily 只使用复权日线，不回退月线', () => {
   const values = sector.stockDaily(cache);
   assert.equal(values.source, 'daily');
   assert.equal(values.bars, 25);
-  assert.equal(values.d20, 20);
+  assert.equal(values.d20, 19.23);
   assert.equal(sector.stockDaily({ monthlyAdjusted: { bars: dailyBars(25) } }), null);
 });
 

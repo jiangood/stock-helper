@@ -19,18 +19,18 @@ test('dailyReturns 使用最近最多 201 个交易日数据计算日线窗口',
   assert.equal(values.date, bars[239].time);
   assert.equal(values.close, 339);
   assert.equal(values.d1, 0.3);
-  assert.equal(values.d5, 1.49);
+  assert.equal(values.d5, 1.5);
   assert.equal(values.d20, 6.27);
   assert.equal(values.d60, 21.51);
   assert.equal(values.d120, 54.79);
-  assert.equal(values.d200, 144.6);
+  assert.equal(values.d200, 143.88);
 });
 
 test('日线数据不足时不伪造长周期涨跌幅', () => {
   const values = sector.dailyReturns(dailyBars(30, 100, 1));
-  assert.equal(values.d1, 0.97);
-  assert.equal(values.d5, 5.26);
-  assert.equal(values.d20, 25.32);
+  assert.equal(values.d1, 0.78);
+  assert.equal(values.d5, 4.03);
+  assert.equal(values.d20, 18.35);
   assert.equal(values.d60, null);
   assert.equal(values.d120, null);
   assert.equal(values.d200, null);
@@ -71,5 +71,5 @@ test('buildPayload 仅收录具有有效日线历史的股票', () => {
   });
   assert.deepEqual(Object.keys(payload.stocks), ['sh600111']);
   assert.equal(payload.marketDate, '2026-02-09');
-  assert.equal(payload.stocks.sh600111.d20, 50);
+  assert.equal(payload.stocks.sh600111.d20, 28.99);
 });

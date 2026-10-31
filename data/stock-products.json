@@ -21,15 +21,16 @@
       "note": "公司产品结构与产能利用率会影响价格传导；甲醇未纳入本轮可比序列。"
     },
     "sz000731": {
-      "productName": "天然气供应 / 尿素",
-      "role": "mixed",
-      "note": "基本面主营构成为天然气供应；尿素价格并非其主营收入的直接替代，本轮暂不绘制商品价格曲线。"
+      "productName": "尿素",
+      "marketItemId": "urea",
+      "role": "producer",
+      "note": "尿素约21.5%主营收入，天然气供应不以商品现货价格代替。"
     },
     "sh600328": {
-      "productName": "纯碱 / 氯化工产品",
+      "productName": "纯碱",
       "marketItemId": "soda-ash",
-      "role": "mixed",
-      "note": "纯碱只是主营产品之一，其他化工产品价格未纳入本轮序列。"
+      "role": "producer",
+      "note": "纯碱约42%主营收入；PVC占比不足本轮门槛。"
     },
     "sh600348": {
       "productName": "煤炭",
@@ -41,7 +42,7 @@
       "productName": "电解铝",
       "marketItemId": "aluminium",
       "role": "producer",
-      "note": "铝价是产品端代理，需同时观察氧化铝、电力成本及氧化铝业务贡献。"
+      "note": "原铝板块约72%主营收入，氧化铝业务不作为主要产品纳入。"
     },
     "sh600111": {
       "productName": "稀土（氧化镨钕）",
@@ -62,9 +63,9 @@
     },
     "sh600737": {
       "productName": "食糖",
-      "marketItemId": null,
+      "marketItemId": "sugar",
       "role": "producer",
-      "note": "食糖价格数据尚未接入；暂不以其他商品价格替代。"
+      "note": "食糖类商品约90%主营收入。"
     },
     "sh600230": {
       "productName": "TDI",
@@ -83,10 +84,10 @@
       "note": "主营构成为新能源新材料相关产品，尚未核实代表性商品价格序列，不以尿素价格替代。"
     },
     "sz000960": {
-      "productName": "锡",
-      "marketItemId": null,
+      "productName": "锡锭",
+      "marketItemId": "tin",
       "role": "producer",
-      "note": "锡价历史序列尚未接入。"
+      "note": "锡锭约50%主营收入，作为核心商品价格代理。"
     },
     "sh601958": {
       "productName": "钼",
@@ -107,10 +108,10 @@
       "note": "产品结构多元，需分别接入仲钨酸铵、钨粉等价格后再比较。"
     },
     "sh600301": {
-      "productName": "锡 / 锑 / 锌",
-      "marketItemId": null,
-      "role": "mixed",
-      "note": "多金属产品需分品种对比，本轮尚无对应可靠月度序列。"
+      "productName": "锡锭",
+      "marketItemId": "tin",
+      "role": "producer",
+      "note": "锡锭约52%主营收入，作为核心商品价格代理。"
     },
     "sz000657": {
       "productName": "钨产品",
@@ -120,9 +121,12 @@
     },
     "sh600618": {
       "productName": "烧碱 / PVC",
-      "marketItemId": null,
-      "role": "mixed",
-      "note": "烧碱与PVC价格序列尚未接入。"
+      "marketItemId": "caustic-soda",
+      "additionalMarketItemIds": [
+        "pvc"
+      ],
+      "role": "producer",
+      "note": "烧碱约32%、PVC约24%主营收入，分别展示。"
     },
     "sh601568": {
       "productName": "PVC / 烧碱",
@@ -131,10 +135,10 @@
       "note": "PVC与烧碱价格序列尚未接入。"
     },
     "sz002092": {
-      "productName": "PVC / 烧碱",
-      "marketItemId": null,
-      "role": "mixed",
-      "note": "PVC与烧碱价格序列尚未接入。"
+      "productName": "聚氯乙烯",
+      "marketItemId": "pvc",
+      "role": "producer",
+      "note": "PVC约36%主营收入，作为主要商品价格代理。"
     },
     "sh600500": {
       "productName": "化工中间体与贸易产品",
@@ -165,6 +169,34 @@
       "role": "producer",
       "note": "齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。",
       "unit": "元/吨"
+    },
+    "sz002237": {
+      "productName": "黄金",
+      "marketItemId": "gold",
+      "additionalMarketItemIds": [
+        "copper"
+      ],
+      "role": "producer",
+      "note": "黄金约60%、电解铜约19%，按主营收入重要性分别观察。"
+    },
+    "sz000923": {
+      "productName": "磁铁矿",
+      "marketItemId": "iron-ore",
+      "additionalMarketItemIds": [
+        "copper"
+      ],
+      "role": "producer",
+      "note": "磁铁矿约69%、铜约20%，分别观察两项主要产品。"
+    },
+    "sh600961": {
+      "productName": "锌 / 银 / 金",
+      "marketItemId": "zinc",
+      "additionalMarketItemIds": [
+        "silver",
+        "gold"
+      ],
+      "role": "producer",
+      "note": "锌为第一大产品，银锭约22%、金锭约21%，分别观察。"
     }
   }
 }

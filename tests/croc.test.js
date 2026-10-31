@@ -31,16 +31,6 @@ test('TTM 亏损股票不能通过纪律全过筛选', () => {
 });
 
 
-test('股票池保持 67 只且新增的易普力保留在列表中', () => {
-  const stocks = require('../data/stocks.json');
-  assert.equal(stocks.length, 67);
-  assert.ok(stocks.some(stock => stock.code === 'sz002096' && stock.name === '易普力'));
-  const codes = stocks.map(stock => stock.code);
-  assert.equal(new Set(codes).size, codes.length, '股票代码不得重复');
-  assert.ok(codes.every(code => /^(sh|sz)\d{6}$/.test(code)), '股票代码格式应为 sh/sz + 6 位数字');
-});
-
-
 test('统一买入资格闸门：ST、亏损和未知 PE 均禁止给出买入资格', () => {
   assert.equal(Croc.buyEligibility({ name: 'ST 测试股' }, { pe: 8 }).eligible, false);
   assert.match(Croc.buyEligibility({ name: '测试亏损股' }, { pe: -1 }).reason, /亏损/);

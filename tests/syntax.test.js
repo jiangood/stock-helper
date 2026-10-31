@@ -79,13 +79,13 @@ test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称�
   const toolbar = html.slice(toolbarStart, toolbarEnd);
   assert.ok(toolbar.includes('id="search-input"'));
   assert.doesNotMatch(toolbar, /stock-count|board-summary|group-filter|status-filter|<select/);
-  assert.match(html, /id="th-name"[\\s\\S]*?id="th-group"[\\s\\S]*?id="th-price"/);
+  assert.match(html, /id="th-name"[\s\S]*?id="th-group"[\s\S]*?id="th-price"/);
   assert.match(dashboard, /function statusHtml/);
   const statusStart = dashboard.indexOf('function statusHtml(');
   const statusEnd = dashboard.indexOf('function flagHtml(', statusStart);
   assert.ok(statusStart >= 0 && statusEnd > statusStart, '未找到名称列状态渲染函数');
   const statusFunction = dashboard.slice(statusStart, statusEnd);
   assert.doesNotMatch(statusFunction, /接近重仓|重仓区|入场区|高于入场|待确认/);
-  assert.match(dashboard, /<td>\\$\\{stock\\.group/);
-  assert.doesNotMatch(dashboard, /\\$\\('(group-filter|status-filter)'\\)/);
+  assert.match(dashboard, /<td>\$\{stock\.group/);
+  assert.doesNotMatch(dashboard, /\$\('(group-filter|status-filter)'\)/);
 });

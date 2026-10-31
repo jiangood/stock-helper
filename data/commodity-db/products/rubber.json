@@ -10,6 +10,9 @@
   "latestPrice": 19170,
   "latestDate": "2026-10-30",
   "productChange": -53.15,
+  "productMonthCount": 200,
+  "stockTimelineMonthCount": 185,
+  "commonMonthCount": 185,
   "months": [
     "2011-01",
     "2011-02",
@@ -1135,6 +1138,9 @@
       "source": "月K",
       "latestDate": "2026-10-30",
       "latestClose": 5.08,
+      "monthCount": 185,
+      "historyStartMonth": "2011-01",
+      "historyEndMonth": "2026-10",
       "changePct": -59.22,
       "values": [
         {

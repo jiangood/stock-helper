@@ -10,6 +10,9 @@
   "latestPrice": 3183,
   "latestDate": "2026-10",
   "productChange": -19.13,
+  "productMonthCount": 180,
+  "stockTimelineMonthCount": 47,
+  "commonMonthCount": 47,
   "months": [
     "2022-12",
     "2023-01",
@@ -307,6 +310,9 @@
       "source": "周K月末收盘聚合",
       "latestDate": "2026-10-29",
       "latestClose": 7.67,
+      "monthCount": 47,
+      "historyStartMonth": "2022-12",
+      "historyEndMonth": "2026-10",
       "changePct": -1.57,
       "values": [
         {

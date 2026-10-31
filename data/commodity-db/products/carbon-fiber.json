@@ -10,6 +10,9 @@
   "latestPrice": null,
   "latestDate": null,
   "productChange": null,
+  "productMonthCount": 0,
+  "stockTimelineMonthCount": 55,
+  "commonMonthCount": 0,
   "months": [
     "2022-04",
     "2022-05",
@@ -79,6 +82,9 @@
       "source": "月K",
       "latestDate": "2026-10-30",
       "latestClose": 29.39,
+      "monthCount": 55,
+      "historyStartMonth": "2022-04",
+      "historyEndMonth": "2026-10",
       "changePct": -7.17,
       "values": [
         {

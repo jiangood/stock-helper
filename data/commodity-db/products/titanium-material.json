@@ -10,6 +10,9 @@
   "latestPrice": null,
   "latestDate": null,
   "productChange": null,
+  "productMonthCount": 0,
+  "stockTimelineMonthCount": 200,
+  "commonMonthCount": 0,
   "months": [
     "2010-03",
     "2010-04",
@@ -224,6 +227,9 @@
       "source": "月K",
       "latestDate": "2026-10-30",
       "latestClose": 23.38,
+      "monthCount": 200,
+      "historyStartMonth": "2010-03",
+      "historyEndMonth": "2026-10",
       "changePct": 38.18,
       "values": [
         {
@@ -1238,6 +1244,9 @@
       "source": "月K",
       "latestDate": "2026-10-30",
       "latestClose": 12.53,
+      "monthCount": 24,
+      "historyStartMonth": "2024-11",
+      "historyEndMonth": "2026-10",
       "changePct": -45.93,
       "values": [
         {

@@ -48,7 +48,8 @@
     background: linear-gradient(to right, transparent, var(--bs-body-bg));
   }
   .table-scroll-wrap.can-scroll-right .scroll-hint { opacity: 1; }
-  .stock-table { min-width: 1360px; }
+  /* 列宽由表头和单元格实际内容决定；不足视口时铺满，超出时由滚动容器承载。 */
+  .stock-table { width: max-content; min-width: 100%; table-layout: auto; }
   .stock-table thead th {
     position: sticky; top: 0; z-index: 3;
     font-size: 11px; font-weight: 600; letter-spacing: .3px;
@@ -249,7 +250,6 @@
   .business-form .wide { grid-column:1 / -1; }
   @media (max-width:575.98px) { .business-form { grid-template-columns:1fr; } .business-form .wide { grid-column:auto; } }
   @media (max-width: 575.98px) {
-    .stock-table { min-width: 1160px; }
     .th-sort { padding: .36rem .22rem; font-size: 10.5px; letter-spacing: 0; }
     .stock-table tbody td { padding: .22rem .22rem; font-size: 12px; }
     .price-cell { font-size: 13.5px; }

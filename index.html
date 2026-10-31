@@ -66,9 +66,9 @@
     <span data-loading-text>正在准备股票清单…</span>
   </div>
   <div class="table-scroll-wrap">
-  <div class="table-scroll" tabindex="0" role="region" aria-label="自选股票表，可横向滚动查看全部 14 列">
+  <div class="table-scroll" tabindex="0" role="region" aria-label="自选股票表，可横向滚动查看全部 15 列">
     <table class="table table-sm table-hover align-middle mb-0 stock-table" id="main-table">
-      <caption class="visually-hidden">自选股票列表：名称、月线、价格、入场价、重仓价、止盈1、止盈2、市值、市盈率、市净率、股息率、研报评分、分组、别名</caption>
+      <caption class="visually-hidden">自选股票列表：名称、月线、价格、入场价、重仓价、止盈1、止盈2、市值、市盈率、市净率、股息率、研报评分、研报日期、分组、别名</caption>
       <thead>
         <tr>
           <th scope="col" id="th-name" aria-sort="none"><button type="button" class="th-sort" data-sort="name">名称<span class="sort-icon" aria-hidden="true"></span></button></th>
@@ -83,6 +83,7 @@
           <th scope="col" id="th-pb" aria-sort="none"><button type="button" class="th-sort" data-sort="pb">市净率<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-divYield" aria-sort="none"><button type="button" class="th-sort" data-sort="divYield">股息率<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-researchReport" aria-sort="none"><button type="button" class="th-sort" data-sort="researchReport">研报评分<span class="sort-icon" aria-hidden="true"></span></button></th>
+          <th scope="col" id="th-researchDate" aria-sort="none"><button type="button" class="th-sort" data-sort="researchDate">研报日期<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-group" aria-sort="none"><button type="button" class="th-sort" data-sort="group">分组<span class="sort-icon" aria-hidden="true"></span></button></th>
           <th scope="col" id="th-alias" aria-sort="none"><button type="button" class="th-sort" data-sort="alias">别名<span class="sort-icon" aria-hidden="true"></span></button></th>
         </tr>
@@ -581,7 +582,8 @@ function buildRow(stock) {
     <td>${fmtRatio(pd && pd.pe)}</td>
     <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${fmtPct(pd && pd.divYield)}</td>
-    <td class="stacked-cell">${researchReportHtml(stock)}</td>
+    <td>${researchReportHtml(stock)}</td>
+    <td>${researchDateHtml(stock)}</td>
     <td>${stock.group ? esc(stock.group) : ''}</td>
     <td>${aliasHtml}</td>`;
 }
@@ -698,15 +700,13 @@ function researchReportHtml(stock) {
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const scoreText = Number.isInteger(report.score) ? String(report.score) : report.score.toFixed(1);
   const tip = `研报评分 ${scoreText} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
-  const dateHtml = /^\d{4}-\d{2}-\d{2}$/.test(report.date || '')
-    ? `<span class="score-date">${esc(report.date.replace(/-/g, '/'))}</span>` : '';
-  return `<span class="score score-${tone}" title="${esc(tip)}">${scoreText}</span>${dateHtml}`;
+  return `<span class="score score-${tone}" title="${esc(tip)}">${scoreText}</span>`;
 }
 
 /** 研报日期独立展示和排序；过期标记不改变用于排序的原始日期。 */
 function researchDateHtml(stock) {
   const report = REPORT_SCORES[stock.code];
-  if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '';
+  if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '<span class="text-body-tertiary">—</span>';
   return `<span class="score-date">${esc(report.date)}</span>`;
 }
 

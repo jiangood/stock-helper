@@ -112,7 +112,7 @@ test('首页工具栏仅保留搜索框，分组列紧跟股票名称', () => {
   const toolbar = html.slice(toolbarStart, toolbarEnd);
   assert.ok(toolbar.includes('id="search-input"'));
   assert.doesNotMatch(toolbar, /stock-count|board-summary|group-filter|status-filter|<select/);
-  assert.match(html, /id="th-name"[\s\S]*?id="th-group"[\s\S]*?id="th-price"/);
+  assert.ok(html.indexOf('id="th-name"') < html.indexOf('id="th-group"') && html.indexOf('id="th-group"') < html.indexOf('id="th-price"'), '股票表头顺序应为名称、分组、价格');
   assert.match(dashboard, /function statusHtml/);
   assert.match(dashboard, /接近重仓/);
   assert.match(dashboard, /待确认/);

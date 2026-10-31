@@ -124,13 +124,13 @@ test('首页是唯一 SPA 壳，旧多页面入口均转入 Hash 路由', () => 
   assert.match(shell, /<script type="module" src="src\/main\.js"><\/script>/);
   assert.match(shell, /id="app-view"/);
   assert.doesNotMatch(shell, /stock-dashboard\.js|business\.js|products\.js|stock\.js/);
-  for (const [file, route] of [['market.html', '#\\/market'], ['products.html', '#\\/products'], ['health.html', '#\\/health']]) {
+  for (const [file, route] of [['market.html', '#/market'], ['products.html', '#/products'], ['health.html', '#/health']]) {
     const legacy = fs.readFileSync(path.join(root, file), 'utf8');
     assert.ok(legacy.includes(route), file + ' 未转入 SPA 路由');
   }
   const stockRedirect = fs.readFileSync(path.join(root, 'stock.html'), 'utf8');
   assert.match(stockRedirect, /URLSearchParams/);
-  assert.match(stockRedirect, /\\/stock\\//);
+  assert.match(stockRedirect, /\/stock\//);
 });
 
 test('SPA 页面入口均由独立页面模块承接，旧脚本隔离在桥接页', () => {
@@ -139,7 +139,7 @@ test('SPA 页面入口均由独立页面模块承接，旧脚本隔离在桥接�
     assert.ok(main.includes(page), 'SPA 未注册页面：' + page);
   }
   const bridge = fs.readFileSync(path.join(root, 'src/pages/legacy-page.js'), 'utf8');
-  assert.match(bridge, /createElement\\('iframe'\\)|createElement\\("iframe"\\)/);
-  assert.match(bridge, /addEventListener\\('click'/);
+  assert.match(bridge, /createElement\('iframe'\)|createElement\("iframe"\)/);
+  assert.match(bridge, /addEventListener\('click'/);
   assert.doesNotMatch(bridge, /innerHTML/);
 });

@@ -1,0 +1,34 @@
+{
+  "id": "methionine",
+  "name": "蛋氨酸",
+  "unit": "元/吨",
+  "source": "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点",
+  "sourceNote": null,
+  "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html",
+  "productStartDate": "2026-10-28",
+  "productEndDate": "2026-10-28",
+  "latestPrice": 24950,
+  "latestDate": "2026-10-28",
+  "productChange": null,
+  "months": [
+    "2026-10"
+  ],
+  "productSeries": [],
+  "stocks": [
+    {
+      "code": "sh600299",
+      "name": "安迪苏",
+      "group": "动保",
+      "role": "producer",
+      "roleLabel": "产品端",
+      "mainRatio": 0.7558,
+      "source": "月K",
+      "latestDate": "2026-10-30",
+      "latestClose": 7.35,
+      "changePct": null,
+      "values": []
+    }
+  ],
+  "status": "pending",
+  "note": "功能性产品与特种产品分部占比高，蛋氨酸为公司核心产品价格观察项；报价按饲料级口径核实。"
+}

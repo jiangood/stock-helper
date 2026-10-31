@@ -1,10 +1,413 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "generatedAt": "2026-10-31T06:41:16.000Z",
   "marketDate": "2026-10-31T06:41:16+00:00",
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 4,
+  "commodityCount": 6,
+  "commodityCards": [
+    {
+      "id": "soda-ash",
+      "name": "纯碱",
+      "unit": "元/吨",
+      "source": "生意社现货/期货基差数据（经 AKShare 获取）",
+      "sourceUrl": "https://www.100ppi.com/",
+      "latestPrice": 1060,
+      "latestDate": "2026-10-30",
+      "productChange": -11.03,
+      "months": [
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
+      "productSeries": [
+        {
+          "month": "2026-06",
+          "index": 100,
+          "price": 1191.43
+        },
+        {
+          "month": "2026-07",
+          "index": 92.69,
+          "price": 1104.29
+        },
+        {
+          "month": "2026-08",
+          "index": 91.25,
+          "price": 1087.14
+        },
+        {
+          "month": "2026-09",
+          "index": 90.29,
+          "price": 1075.71
+        },
+        {
+          "month": "2026-10",
+          "index": 88.97,
+          "price": 1060
+        }
+      ],
+      "stocks": [
+        {
+          "code": "sz000707",
+          "name": "双环科技",
+          "group": "化工",
+          "role": "mixed",
+          "roleLabel": "多因素",
+          "mainRatio": 0.984,
+          "source": "月K",
+          "latestDate": "2026-10-29",
+          "latestClose": 4.18,
+          "changePct": -0.95,
+          "values": [
+            {
+              "month": "2026-06",
+              "index": 100,
+              "price": 4.22
+            },
+            {
+              "month": "2026-07",
+              "index": 104.98,
+              "price": 4.43
+            },
+            {
+              "month": "2026-08",
+              "index": 111.61,
+              "price": 4.71
+            },
+            {
+              "month": "2026-09",
+              "index": 109.48,
+              "price": 4.62
+            },
+            {
+              "month": "2026-10",
+              "index": 99.05,
+              "price": 4.18
+            }
+          ]
+        },
+        {
+          "code": "sh600328",
+          "name": "中盐化工",
+          "group": "化工",
+          "role": "mixed",
+          "roleLabel": "多因素",
+          "mainRatio": 0.4165,
+          "source": "月K",
+          "latestDate": "2026-10-29",
+          "latestClose": 5.3,
+          "changePct": -11.67,
+          "values": [
+            {
+              "month": "2026-06",
+              "index": 100,
+              "price": 6
+            },
+            {
+              "month": "2026-07",
+              "index": 106.67,
+              "price": 6.4
+            },
+            {
+              "month": "2026-08",
+              "index": 107,
+              "price": 6.42
+            },
+            {
+              "month": "2026-09",
+              "index": 94.67,
+              "price": 5.68
+            },
+            {
+              "month": "2026-10",
+              "index": 88.33,
+              "price": 5.3
+            }
+          ]
+        }
+      ],
+      "status": "ready",
+      "note": "公司产品结构与产能利用率会影响价格传导；甲醇未纳入本轮可比序列。 纯碱只是主营产品之一，其他化工产品价格未纳入本轮序列。"
+    },
+    {
+      "id": "aluminium",
+      "name": "电解铝",
+      "unit": "元/吨",
+      "source": "生意社现货/期货基差数据（经 AKShare 获取）",
+      "sourceUrl": "https://www.100ppi.com/",
+      "latestPrice": 23771.7,
+      "latestDate": "2026-10-30",
+      "productChange": 5.56,
+      "months": [
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
+      "productSeries": [
+        {
+          "month": "2026-06",
+          "index": 100,
+          "price": 22520
+        },
+        {
+          "month": "2026-07",
+          "index": 104.99,
+          "price": 23643.33
+        },
+        {
+          "month": "2026-08",
+          "index": 106.51,
+          "price": 23986.67
+        },
+        {
+          "month": "2026-09",
+          "index": 106.78,
+          "price": 24046.67
+        },
+        {
+          "month": "2026-10",
+          "index": 105.56,
+          "price": 23771.7
+        }
+      ],
+      "stocks": [
+        {
+          "code": "sh601600",
+          "name": "中国铝业",
+          "group": "有色",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.8378,
+          "source": "月K",
+          "latestDate": "2026-10-29",
+          "latestClose": 8.43,
+          "changePct": 8.12,
+          "values": [
+            {
+              "month": "2026-06",
+              "index": 100,
+              "price": 7.797
+            },
+            {
+              "month": "2026-07",
+              "index": 117.31,
+              "price": 9.147
+            },
+            {
+              "month": "2026-08",
+              "index": 121.76,
+              "price": 9.494
+            },
+            {
+              "month": "2026-09",
+              "index": 110.99,
+              "price": 8.654
+            },
+            {
+              "month": "2026-10",
+              "index": 108.12,
+              "price": 8.43
+            }
+          ]
+        }
+      ],
+      "status": "ready",
+      "note": "铝价是产品端代理，需同时观察氧化铝、电力成本及氧化铝业务贡献。"
+    },
+    {
+      "id": "coal",
+      "name": "炼焦煤",
+      "unit": "元/吨",
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "latestPrice": null,
+      "latestDate": "2026-10-31",
+      "productChange": null,
+      "months": [],
+      "productSeries": [],
+      "stocks": [
+        {
+          "code": "sh600348",
+          "name": "华阳股份",
+          "group": "能源",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.8604,
+          "source": "周K月末收盘聚合",
+          "latestDate": "2026-10-29",
+          "latestClose": 8.43,
+          "changePct": null,
+          "values": []
+        }
+      ],
+      "status": "pending",
+      "note": "需区分动力煤与无烟煤/化工用煤，当前煤价序列仅作方向参考。"
+    },
+    {
+      "id": "tio2",
+      "name": "钛白粉",
+      "unit": "元/吨",
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "latestPrice": null,
+      "latestDate": "2026-10-31",
+      "productChange": null,
+      "months": [],
+      "productSeries": [],
+      "stocks": [
+        {
+          "code": "sz002136",
+          "name": "安纳达",
+          "group": "化工",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.5507,
+          "source": "月K",
+          "latestDate": "2026-10-29",
+          "latestClose": 10.07,
+          "changePct": null,
+          "values": []
+        }
+      ],
+      "status": "pending",
+      "note": "钛白粉价格上行可能改善产品售价，需同时观察钛矿、硫酸等成本。"
+    },
+    {
+      "id": "rubber",
+      "name": "天然橡胶",
+      "unit": "元/吨",
+      "source": "生意社现货/期货基差数据（经 AKShare 获取）",
+      "sourceUrl": "https://www.100ppi.com/",
+      "latestPrice": 18783.3,
+      "latestDate": "2026-10-30",
+      "productChange": 11.64,
+      "months": [
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
+      "productSeries": [
+        {
+          "month": "2026-06",
+          "index": 100,
+          "price": 16825
+        },
+        {
+          "month": "2026-07",
+          "index": 97.97,
+          "price": 16483.33
+        },
+        {
+          "month": "2026-08",
+          "index": 107.18,
+          "price": 18033.33
+        },
+        {
+          "month": "2026-09",
+          "index": 113.52,
+          "price": 19100
+        },
+        {
+          "month": "2026-10",
+          "index": 111.64,
+          "price": 18783.3
+        }
+      ],
+      "stocks": [
+        {
+          "code": "sh601118",
+          "name": "海南橡胶",
+          "group": "农业",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.9429,
+          "source": "月K",
+          "latestDate": "2026-10-29",
+          "latestClose": 5.09,
+          "changePct": 3.46,
+          "values": [
+            {
+              "month": "2026-06",
+              "index": 100,
+              "price": 4.92
+            },
+            {
+              "month": "2026-07",
+              "index": 101.02,
+              "price": 4.97
+            },
+            {
+              "month": "2026-08",
+              "index": 131.91,
+              "price": 6.49
+            },
+            {
+              "month": "2026-09",
+              "index": 129.47,
+              "price": 6.37
+            },
+            {
+              "month": "2026-10",
+              "index": 103.46,
+              "price": 5.09
+            }
+          ]
+        }
+      ],
+      "status": "ready",
+      "note": "天然橡胶价格是核心产品价格代理，仍需结合加工、贸易业务占比。"
+    },
+    {
+      "id": "rare-earth",
+      "name": "稀土（氧化镨钕）",
+      "unit": "元/吨",
+      "source": null,
+      "sourceUrl": "https://www.100ppi.com/",
+      "latestPrice": null,
+      "latestDate": null,
+      "productChange": null,
+      "months": [],
+      "productSeries": [],
+      "stocks": [
+        {
+          "code": "sh600111",
+          "name": "北方稀土",
+          "group": "稀土钨",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 1.7337,
+          "source": "周K月末收盘聚合",
+          "latestDate": "2026-10-29",
+          "latestClose": 34.97,
+          "changePct": null,
+          "values": []
+        },
+        {
+          "code": "sh600392",
+          "name": "盛和资源",
+          "group": "稀土钨",
+          "role": "mixed",
+          "roleLabel": "多因素",
+          "mainRatio": null,
+          "source": "月K",
+          "latestDate": "2026-10-29",
+          "latestClose": 15.21,
+          "changePct": null,
+          "values": []
+        }
+      ],
+      "status": "pending",
+      "note": "氧化镨钕是稀土价格代理，不等于公司全部产品实现售价。 业务涉及稀土资源与分离加工，产品结构、原料来源会影响价格弹性。"
+    }
+  ],
   "cards": [
     {
       "code": "sz002408",

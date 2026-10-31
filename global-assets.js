@@ -97,11 +97,7 @@
     style.id = 'global-assets-style';
     style.textContent = '#global-assets-overview .ga-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}#global-assets-overview .ga-ranking{grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:8px}#global-assets-overview .ga-rank-card{border:1px solid var(--bs-border-color);border-radius:11px;background:var(--bs-body-bg);padding:10px 12px;min-width:0}#global-assets-overview .ga-rank-top{display:flex;justify-content:space-between;gap:8px;align-items:center}#global-assets-overview .ga-rank-number{font-size:10px;color:var(--bs-secondary-color);font-variant-numeric:tabular-nums}#global-assets-overview .ga-rank-name{font-weight:700;font-size:12px}#global-assets-overview .ga-rank-change{font-weight:750;font-size:18px;font-variant-numeric:tabular-nums}#global-assets-overview .ga-spark{width:100%;height:42px;display:block;margin-top:3px}#global-assets-overview .ga-spark-empty{height:42px;display:flex;align-items:center;font-size:10px;color:var(--bs-secondary-color)}#global-assets-cards .insight-card{transition:transform .16s ease,border-color .16s ease}#global-assets-cards .insight-card:hover{transform:translateY(-2px);border-color:var(--bs-primary)}@media(max-width:575.98px){#global-assets-overview .ga-ranking{grid-template-columns:repeat(2,minmax(0,1fr))}#global-assets-overview .ga-rank-card{padding:9px}#global-assets-overview .ga-rank-change{font-size:16px}}';
     document.head.appendChild(style);
-        renderComparison(lastPayload);
-      });
-    });
   }
-  var lastPayload = null;
   function renderRanking(data, byId) {
     var node = el('global-assets-ranking');
     if (!node) return;
@@ -123,7 +119,6 @@
     }).join('');
   }
   function render(payload) {
-    lastPayload = payload || {};
     var data = payload && Array.isArray(payload.assets) ? payload.assets : [];
     var byId = {};
     data.forEach(function (item) { if (item && item.id) byId[item.id] = item; });

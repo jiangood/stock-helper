@@ -27,6 +27,20 @@ export function mountLegacyPage({ root, src, title, window: windowLike = window 
     try { frameDocument = frame.contentDocument; } catch (error) { return; }
     if (!frameDocument) return;
 
+    const syncTheme = theme => {
+      const selected = theme || documentLike.documentElement.getAttribute('data-bs-theme') || 'light';
+      frameDocument.documentElement.setAttribute('data-bs-theme', selected);
+    };
+    syncTheme();
+    const frameWindow = frame.contentWindow;
+    const onStorage = event => {
+      if (event.key === 'stock-theme' && (event.newValue === 'light' || event.newValue === 'dark')) {
+        syncTheme(event.newValue);
+      }
+    };
+    frameWindow.addEventListener('storage', onStorage);
+    frame.__spaStorageCleanup = () => frameWindow.removeEventListener('storage', onStorage);
+
     const legacyNavigation = frameDocument.querySelector('.sticky-top nav');
     if (legacyNavigation) legacyNavigation.style.display = 'none';
     const skipLink = frameDocument.querySelector('.skip-link');
@@ -54,6 +68,7 @@ export function mountLegacyPage({ root, src, title, window: windowLike = window 
   return () => {
     try { frame.contentDocument && frame.contentDocument.removeEventListener('click', onFrameClick); } catch (error) {}
     frame.removeEventListener('load', onFrameLoad);
+    if (typeof frame.__spaStorageCleanup === 'function') frame.__spaStorageCleanup();
     frame.src = 'about:blank';
     root.replaceChildren();
   };

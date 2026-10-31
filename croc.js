@@ -284,7 +284,7 @@
       lines.push(`🔴 风险 ${risk.length}：${riskNames}${risk.length > 8 ? ` 等 ${risk.length} 只` : ''}`);
     }
     if (movers.length) lines.push(`⚡ 异动 ≥5% ${movers.length}：${movers.slice(0, 6).map(r => `${r.s.name} ${fmtPct(r.q.todayChange)}`).join('、')}`);
-    lines.push('— 仅供个人记录，不构成投资建议');
+
     return lines.join('\n');
   }
 

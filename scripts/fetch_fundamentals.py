@@ -4,7 +4,7 @@
 Three public Eastmoney F10 endpoints, one request each per stock:
 
 * ShareholderResearch  -> 实际控制人（判断央企 / 省国资 / 地市国资 / 其他）
-* BusinessAnalysis     -> 最新报告期主营构成（取占比最大的品类，产品口径优先）
+* BusinessAnalysis     -> 最新报告期全部主营分部及收入占比（产品口径优先）
 * RPT_F10_FINANCE_GINCOME -> 扣非净利润与同比（保留最近若干个年报，用于「持续」判断）
 
 Only validated numeric observations are written; a failed request keeps the
@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import json
+import math
 import sys
 import threading
 import time
@@ -125,12 +126,31 @@ def fetch_main_business(code: str) -> dict:
     candidates = products or industries
     if not candidates:
         return {}
-    top = max(candidates, key=lambda row: float(row.get("MBI_RATIO") or 0))
+    normalized = []
+    for row in candidates:
+        try:
+            ratio = float(row.get("MBI_RATIO") or 0)
+        except (TypeError, ValueError):
+            ratio = 0
+        if not math.isfinite(ratio) or ratio < 0:
+            continue
+        normalized.append({
+            "name": str(row.get("ITEM_NAME") or "").strip(),
+            "ratio": round(ratio, 6),
+            "basis": basis,
+            "reportDate": latest[:10]
+        })
+    normalized = [item for item in normalized if item["name"]]
+    normalized.sort(key=lambda item: item["ratio"], reverse=True)
+    if not normalized:
+        return {}
+    top = normalized[0]
     return {
-        "mainItem": top.get("ITEM_NAME"),
-        "mainRatio": round(float(top.get("MBI_RATIO") or 0), 4),
+        "mainItem": top["name"],
+        "mainRatio": round(top["ratio"], 4),
         "mainBasis": basis,
-        "mainDate": latest[:10]
+        "mainDate": latest[:10],
+        "mainSegments": normalized
     }
 
 
@@ -210,13 +230,13 @@ def main() -> int:
         try:
             fresh_business = fetch_main_business(code)
             entry.update(merge_with_previous(
-                fresh_business, keep, ("mainItem", "mainRatio", "mainBasis", "mainDate")
+                fresh_business, keep, ("mainItem", "mainRatio", "mainBasis", "mainDate", "mainSegments")
             ))
         except Exception as error:
             local_failures += 1
             print(f"{code}: main business unavailable ({error})", file=sys.stderr)
             entry.update(merge_with_previous(
-                {}, keep, ("mainItem", "mainRatio", "mainBasis", "mainDate")
+                {}, keep, ("mainItem", "mainRatio", "mainBasis", "mainDate", "mainSegments")
             ))
         try:
             entry["annual"] = fetch_profit(code) or keep.get("annual") or []

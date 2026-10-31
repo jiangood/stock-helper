@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>
+(function(){var scheme=window.matchMedia('(prefers-color-scheme: dark)');function apply(){var saved=null;try{saved=localStorage.getItem('stock-theme');}catch(e){}document.documentElement.setAttribute('data-bs-theme',saved||(scheme.matches?'dark':'light'));}apply();if(scheme.addEventListener)scheme.addEventListener('change',apply);else if(scheme.addListener)scheme.addListener(apply);})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>主营产品数据库 · 股票助手</title>
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.db-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.db-toolbar input{max-width:280px}.db-toolbar select{max-width:180px}
+.db-table-wrap{overflow:auto;border:1px solid var(--bs-border-color);border-radius:10px;background:var(--bs-body-bg)}
+.db-table{width:100%;min-width:1050px;border-collapse:collapse;font-size:12px}
+.db-table th,.db-table td{padding:9px 10px;border-bottom:1px solid var(--bs-border-color);vertical-align:middle}
+.db-table th{position:sticky;top:0;background:var(--bs-tertiary-bg);white-space:nowrap;z-index:1;font-weight:650}
+.db-table tbody tr:last-child td{border-bottom:0}
+.db-stock{font-weight:700;white-space:nowrap}.db-code,.db-meta{font-size:10px;color:var(--bs-secondary-color)}
+.db-product{font-weight:650;min-width:170px}.db-ratio{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.db-chart{width:190px;height:42px;display:block}.db-price{font-variant-numeric:tabular-nums;white-space:nowrap}
+.db-status{font-size:10px;border:1px solid var(--bs-border-color);border-radius:99px;padding:2px 7px;white-space:nowrap}
+.db-status.ok{color:var(--bs-success);border-color:var(--bs-success)}
+.db-status.pending{color:var(--bs-secondary-color)}
+.db-months{display:grid;grid-template-columns:repeat(6,minmax(95px,1fr));gap:4px;padding:10px 0;min-width:650px}
+.db-month{display:flex;justify-content:space-between;gap:8px;padding:4px 6px;background:var(--bs-tertiary-bg);border-radius:4px;font-size:10px;font-variant-numeric:tabular-nums}
+.db-month span:first-child{color:var(--bs-secondary-color)}
+.db-empty{padding:35px;text-align:center;color:var(--bs-secondary-color)}
+.db-footnote{font-size:11px;color:var(--bs-secondary-color);line-height:1.7}
+@media(max-width:600px){.db-chart{width:145px}.db-months{grid-template-columns:repeat(3,minmax(90px,1fr));min-width:300px}}
+</style>
+</head>
+<body class="bg-body-tertiary" data-page="product-database">
+<a class="skip-link" href="#database-pane">跳到主要内容</a>
+<div id="password-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-desc">
+<form class="gate-card" id="password-gate-form"><h1 id="gate-title">股票池监控</h1><p id="gate-desc">请输入访问密码以继续</p><label class="visually-hidden" for="gate-password">访问密码</label><input id="gate-password" type="password" placeholder="输入密码" autocomplete="current-password" required autofocus aria-describedby="gate-error"><label class="gate-remember"><input id="gate-remember" type="checkbox" checked> 在此设备记住登录状态</label><button type="submit">进入</button><div id="gate-error" class="gate-error" role="alert">密码不正确，请重试。</div></form>
+</div>
+<div class="sticky-top">
+<nav class="bg-body border-bottom px-2 px-sm-3 py-2 d-flex align-items-center gap-2" aria-label="主导航">
+<a class="d-flex align-items-center gap-2 text-body text-decoration-none me-auto text-nowrap" href="index.html"><span class="logo" aria-hidden="true">股</span><strong class="d-none d-sm-inline" style="font-size:14px">股票助手</strong></a>
+<a class="main-nav-link" href="index.html">自选</a><a class="main-nav-link" href="market.html">行情</a><a class="main-nav-link" href="products.html">商品对比</a><a class="main-nav-link active" href="product-database.html" aria-current="page">主营产品表</a>
+<button class="btn btn-sm btn-outline-secondary icon-btn" id="theme-btn" type="button" aria-label="切换主题" title="切换主题">◐</button>
+</nav>
+</div>
+<main id="database-pane" class="container-fluid px-3 py-3" tabindex="-1">
+<div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
+<div><h1 class="panel-title page-title mb-1">主营产品数据库</h1><div class="panel-subtitle">按股票拆分主营产品、收入占比及近 5 年月度价格</div></div>
+<div id="db-updated" class="panel-subtitle">正在读取数据…</div>
+</div>
+<div class="db-toolbar">
+<input id="db-search" class="form-control form-control-sm" type="search" placeholder="搜索股票 / 产品 / 代码" aria-label="搜索股票或产品">
+<select id="db-filter" class="form-select form-select-sm" aria-label="价格数据状态"><option value="all">全部产品</option><option value="available">有月度价格</option><option value="unavailable">价格待补充</option></select>
+<span id="db-count" class="panel-subtitle"></span>
+</div>
+<div class="db-table-wrap">
+<table class="db-table">
+<thead><tr><th>股票</th><th>主营产品</th><th>主营收入占比</th><th>报告期</th><th>最新月价</th><th>近 5 年月度价格走势</th><th>数据</th></tr></thead>
+<tbody id="db-rows"><tr><td colspan="7" class="db-empty">正在加载主营产品数据…</td></tr></tbody>
+</table>
+</div>
+<p class="db-footnote mt-3">数据口径：主营产品及占比来自上市公司定期报告披露的东方财富 F10 主营构成，优先采用产品分类；报告期和来源随数据更新。月度价格按每月最后一个有效交易日收盘价聚合，最多保留 60 个月。当前已接入的部分品种使用期货主力连续价格作为行业价格代理，非公司实际销售均价，连续合约换月可能产生价差。未接入可靠价格源的产品显示待补充，不以相近商品、插值或估算值填充。价格只作产业景气观察，不构成投资建议。</p>
+</main>
+<script src="password-gate.js"></script>
+<script src="product-database.js"></script>
+<script>
+(function(){var btn=document.getElementById('theme-btn');if(btn)btn.addEventListener('click',function(){var current=document.documentElement.getAttribute('data-bs-theme')||'light';var next=current==='dark'?'light':'dark';document.documentElement.setAttribute('data-bs-theme',next);try{localStorage.setItem('stock-theme',next);}catch(e){}});})();
+</script>
+</body>
+</html>

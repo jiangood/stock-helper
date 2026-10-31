@@ -115,6 +115,6 @@ test('图表组件加载失败时仍保留商品数据卡片', async () => {
   await new Promise(resolve => setImmediate(resolve));
   await new Promise(resolve => setImmediate(resolve));
   assert.ok(findNode(root, node => node.textContent === '尿素'));
-  assert.ok(findNode(root, node => node.textContent.includes('图表组件暂不可用')));
+  assert.ok(findNode(root, node => typeof node.textContent === 'string' && node.textContent.includes('图表组件暂不可用')));
   cleanup();
 });

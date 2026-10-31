@@ -27,30 +27,34 @@ function monthlyLast(points) {
   });
   return Array.from(byMonth.values()).sort((a, b) => a.month.localeCompare(b.month)).slice(-MONTHLY_BAR_LIMIT);
 }
+function preferLongerHistory(primary, fallback) {
+  const first = Array.isArray(primary) ? primary : [];
+  const second = Array.isArray(fallback) ? fallback : [];
+  return second.length > first.length ? second : first;
+}
 function stockMonthly(code) {
   const file = path.join(ROOT, 'data', 'stock-cache', code + '.json');
   if (!fs.existsSync(file)) return [];
   let cache;
   try { cache = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (_) { return []; }
-  let bars = cache.monthlyAdjusted && Array.isArray(cache.monthlyAdjusted.bars) ? cache.monthlyAdjusted.bars : [];
-  let source = '月K';
-  if (bars.length < 2) {
-    bars = cache.weeklyAdjusted && Array.isArray(cache.weeklyAdjusted.bars) ? cache.weeklyAdjusted.bars : [];
-    source = '周K月末收盘聚合';
+  const monthlyBars = cache.monthlyAdjusted && Array.isArray(cache.monthlyAdjusted.bars) ? cache.monthlyAdjusted.bars : [];
+  const weeklyBars = cache.weeklyAdjusted && Array.isArray(cache.weeklyAdjusted.bars) ? cache.weeklyAdjusted.bars : [];
+  function toMonthly(bars, source) {
+    return monthlyLast(bars.map((bar) => {
+      const time = String(bar.time || '').trim();
+      // 月 K 缓存同时存在 YYYY-MM 与 YYYY-MM-DD 两种合法格式；周 K 按自然月取最后一个真实交易周收盘。
+      return { date: time.length === 7 && time[4] === '-' ? time : time.slice(0, 10), value: Number(bar.close) };
+    })).map((point) => ({ ...point, source }));
   }
-  return monthlyLast(bars.map((bar) => {
-    const time = String(bar.time || '').trim();
-    // 月 K 缓存同时存在 YYYY-MM 与 YYYY-MM-DD 两种合法格式；统一保留月份粒度。
-    return { date: time.length === 7 && time[4] === '-' ? time : time.slice(0, 10), value: Number(bar.close) };
-  }))
-    .map((point) => ({ ...point, source }));
+  const monthly = toMonthly(monthlyBars, '月K');
+  const weekly = toMonthly(weeklyBars, '周K月末收盘聚合');
+  // 部分股票的月 K 缓存只有约 32 根，但周 K 缓存仍覆盖更多月份；选覆盖更长的真实序列。
+  return preferLongerHistory(monthly, weekly);
 }
 function productMonthly(item) {
   if (!item) return [];
-
-  // Prefer the provider's native monthly OHLC close series. The business-data
-  // collector already stores long-range monthlyKlines for continuous futures;
-  // using only the 200-point daily spot series silently reduced history to ~7 months.
+  // Prefer native monthly OHLC; daily snapshots are a fallback only and may cover
+  // just a few months because the collector intentionally caps daily observations.
   const monthlyBars = item.monthlyKlines && Array.isArray(item.monthlyKlines.series)
     ? item.monthlyKlines.series : [];
   const monthlyPoints = monthlyLast(monthlyBars.map((bar) => ({
@@ -58,9 +62,6 @@ function productMonthly(item) {
     value: Number(bar.close)
   })));
   if (monthlyPoints.length >= 2) return monthlyPoints;
-
-  // Fallback to daily spot/futures observations only when native monthly bars
-  // are unavailable. monthlyLast keeps the last real observation in each month.
   const series = Array.isArray(item.series) ? item.series : [];
   const points = series.map((point) => ({
     date: point.date,
@@ -73,27 +74,26 @@ function commodityMonthly(item) {
   const itemName = String(item.name || '').trim();
   const candidates = companyProducts.filter((product) => {
     const sameName = String(product.productName || '').trim() === itemName;
-    // A company's disclosed segment name may be broader than the market item
-    // (e.g. "橡胶产品销售" vs. "天然橡胶"). The maintained marketItemId is the
-    // explicit, reviewed link to the corresponding commodity price proxy.
+    // marketItemId is an explicitly reviewed link when the disclosed segment name differs.
     const sameMarketItem = Boolean(item.id) && product.marketItemId === item.id;
     return (sameName || sameMarketItem) &&
       Array.isArray(product.priceSeries) && product.priceSeries.length >= 2;
   }).sort((a, b) => b.priceSeries.length - a.priceSeries.length);
-  if (candidates.length) {
-    const selected = candidates[0];
-    const points = monthlyLast(selected.priceSeries.map((point) => ({
-      date: point.date || (point.month ? point.month + '-01' : ''),
-      value: Number(point.price) / (item.id === 'live-hog' ? 1000 : 1)
-    })));
-    if (points.length >= 2) return {
-      points,
-      source: selected.priceKind || selected.priceSource || item.source || null,
-      note: item.id === 'live-hog' ? [selected.priceNote, '生猪期货原始报价为元/吨，展示时已换算为元/公斤（÷1000）。'].filter(Boolean).join(' ') : (selected.priceNote || null)
-    };
-  }
+  const selected = candidates[0] || null;
+  const companyPoints = selected ? monthlyLast(selected.priceSeries.map((point) => ({
+    date: point.date || (point.month ? point.month + '-01' : ''),
+    value: Number(point.price) / (item.id === 'live-hog' ? 1000 : 1)
+  }))) : [];
+  const marketPoints = productMonthly(item);
+
+  // A short company-specific series must not hide a longer verified native market history.
+  if (companyPoints.length >= 2 && companyPoints.length >= marketPoints.length) return {
+    points: companyPoints,
+    source: selected.priceKind || selected.priceSource || item.source || null,
+    note: item.id === 'live-hog' ? [selected.priceNote, '生猪期货原始报价为元/吨，展示时已换算为元/公斤（÷1000）。'].filter(Boolean).join(' ') : (selected.priceNote || null)
+  };
   return {
-    points: productMonthly(item),
+    points: marketPoints,
     source: item.monthlyKlines && item.monthlyKlines.source || item.source || null,
     note: item.monthlyKlines && item.monthlyKlines.priceType === 'main-continuous-futures'
       ? '期货主力连续价格仅作商品价格参考，不等于企业实际采购到厂价；连续合约换月可能产生价差。'
@@ -332,4 +332,4 @@ function build() {
   return payload;
 }
 if (require.main === module) build();
-module.exports = { build, monthlyLast, normalizedComparison, productMonthly, stockMonthly };
+module.exports = { build, monthlyLast, normalizedComparison, productMonthly, stockMonthly, preferLongerHistory };

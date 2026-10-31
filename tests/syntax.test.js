@@ -59,7 +59,7 @@ test('首页研报日期只显示发布日期，不标注旧或悬浮信息', ()
   const end = dashboard.indexOf('function fmtScore(', start);
   assert.ok(start >= 0 && end > start, '未找到首页研报日期渲染函数');
   const renderer = dashboard.slice(start, end);
-  assert.match(renderer, /<span class="score-date">\\$\\{esc\\(report\\.date\\)\\}<\\/span>/);
+  assert.ok(renderer.includes('<span class="score-date">${esc(report.date)}</span>'));
   assert.doesNotMatch(renderer, /旧|title=|monthsSince|text-warning/);
 });
 

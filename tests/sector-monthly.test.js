@@ -1,112 +1,75 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-
 const sector = require('../scripts/build_sector_monthly.js');
 
-const MONTHS = [
-  '2025-10', '2025-11', '2025-12', '2026-01', '2026-02', '2026-03', '2026-04',
-  '2026-05', '2026-06', '2026-07', '2026-08', '2026-09', '2026-10'
-];
-
-function monthlyBars(closes) {
-  return closes.map((close, index) => ({
-    time: MONTHS[index] + '-28',
-    open: close,
-    close,
-    high: close,
-    low: close,
-    volume: 1000
-  }));
+function dailyBars(count, start = 100, step = 1) {
+  const first = new Date('2026-01-01T00:00:00Z');
+  return Array.from({ length: count }, (_, index) => {
+    const date = new Date(first.getTime() + index * 86400000).toISOString().slice(0, 10);
+    const close = start + index * step;
+    return { time: date, open: close, close, high: close, low: close, volume: 1000 };
+  });
 }
 
-test('shiftMonth 跨年回退', () => {
-  assert.equal(sector.shiftMonth('2026-10', -1), '2026-09');
-  assert.equal(sector.shiftMonth('2026-01', -1), '2025-12');
-  assert.equal(sector.shiftMonth('2026-10', -12), '2025-10');
-  assert.equal(sector.shiftMonth('2026-03', -6), '2025-09');
-  assert.equal(sector.shiftMonth('bad', -1), null);
+test('dailyReturns 使用最近最多 201 个交易日数据计算日线窗口', () => {
+  const bars = dailyBars(240, 100, 1);
+  const values = sector.dailyReturns(bars);
+  assert.equal(values.bars, 201);
+  assert.equal(values.date, bars[239].time);
+  assert.equal(values.close, 339);
+  assert.equal(values.d1, 0.3);
+  assert.equal(values.d5, 1.49);
+  assert.equal(values.d20, 6.27);
+  assert.equal(values.d60, 21.51);
+  assert.equal(values.d120, 54.79);
+  assert.equal(values.d200, 144.6);
 });
 
-test('monthlyReturns 按月末收盘计算近1/3/6/12个月涨跌幅', () => {
-  const closes = MONTHS.map((_, index) => 100 + index * 10);
-  const values = sector.monthlyReturns(sector.seriesFromMonthlyBars(monthlyBars(closes)));
-  assert.equal(values.month, '2026-10');
-  assert.equal(values.close, 220);
-  assert.equal(values.months, 13);
-  assert.equal(values.m1, 4.76);   // 220 / 210 - 1
-  assert.equal(values.m3, 15.79);  // 220 / 190 - 1
-  assert.equal(values.m6, 37.5);   // 220 / 160 - 1
-  assert.equal(values.m12, 120);   // 220 / 100 - 1
+test('日线数据不足时不伪造长周期涨跌幅', () => {
+  const values = sector.dailyReturns(dailyBars(30, 100, 1));
+  assert.equal(values.d1, 0.97);
+  assert.equal(values.d5, 5.26);
+  assert.equal(values.d20, 25.32);
+  assert.equal(values.d60, null);
+  assert.equal(values.d120, null);
+  assert.equal(values.d200, null);
 });
 
-test('缺少基准月份时返回 null，而不是 0', () => {
-  const closes = MONTHS.slice(1).map((_, index) => 200 + index);
-  const values = sector.monthlyReturns(sector.seriesFromMonthlyBars(monthlyBars(closes)));
-  assert.equal(values.m1, 0.48);   // 211 / 210 - 1
-  assert.equal(values.m12, null, '注册前的月份不能被当成 0 涨跌');
-  assert.ok(values.m3 != null);
+test('无效日期、非正收盘价会被排除', () => {
+  const bars = dailyBars(4);
+  bars.push({ time: 'not-a-date', close: 999 });
+  bars.push({ time: '2026-02-01', close: 0 });
+  const values = sector.dailyReturns(bars);
+  assert.equal(values.bars, 4);
+  assert.equal(values.close, 103);
 });
 
-test('日线聚合成月线时取每月最后一个收盘', () => {
-  const daily = [
-    { time: '2026-08-30', close: 10 },
-    { time: '2026-08-31', close: 12 },
-    { time: '2026-09-30', close: 15 },
-    { time: '2026-10-09', close: 18 },
-    { time: '2026-10-29', close: 20 }
-  ];
-  const series = sector.seriesFromDailyBars(daily);
-  assert.deepEqual(series, [
-    { month: '2026-08', close: 12 },
-    { month: '2026-09', close: 15 },
-    { month: '2026-10', close: 20 }
-  ]);
-  const values = sector.monthlyReturns(series);
-  assert.equal(values.m1, 33.33); // 20 / 15 - 1
-  assert.equal(values.m3, null);
-});
-
-test('月线覆盖到当月时优先用月线，落后于当月时改用日线聚合', () => {
-  const fresh = {
-    monthlyAdjusted: { bars: monthlyBars([10, 11, 12]) },
-    dailyAdjusted: { bars: [
-      { time: '2026-05-29', close: 90 },
-      { time: '2026-06-30', close: 99 }
-    ] }
+test('stockDaily 只使用复权日线，不回退月线', () => {
+  const cache = {
+    monthlyAdjusted: { bars: [{ time: '2026-01-31', close: 999 }] },
+    dailyAdjusted: { bars: dailyBars(25) }
   };
-  const monthly = sector.stockMonthly(fresh, '2026-12');
-  assert.equal(monthly.source, 'daily', '月线落后于当月时不能混用两套复权基准');
-  assert.equal(monthly.close, 99);
-  assert.equal(monthly.m1, 10); // 99 / 90 - 1
-
-  const current = sector.stockMonthly({
-    monthlyAdjusted: { bars: monthlyBars(MONTHS.map((_, index) => 100 + index * 10)) },
-    dailyAdjusted: { bars: [] }
-  }, '2026-10');
-  assert.equal(current.source, 'monthly');
-  assert.equal(current.m12, 120);
+  const values = sector.stockDaily(cache);
+  assert.equal(values.source, 'daily');
+  assert.equal(values.bars, 25);
+  assert.equal(values.d20, 20);
+  assert.equal(sector.stockDaily({ monthlyAdjusted: { bars: dailyBars(25) } }), null);
 });
 
-test('buildPayload 只保留有至少两个月收盘的股票', () => {
+test('buildPayload 仅收录具有有效日线历史的股票', () => {
   const caches = {
-    sh600111: { monthlyAdjusted: { bars: monthlyBars([100, 120, 130]) } },
-    sz000001: { monthlyAdjusted: { bars: monthlyBars([100]) } },
-    sh600000: {}
+    sh600111: { dailyAdjusted: { bars: dailyBars(40, 100, 2) } },
+    sz000001: { dailyAdjusted: { bars: dailyBars(1) } },
+    sh600000: { monthlyAdjusted: { bars: dailyBars(40) } }
   };
   const payload = sector.buildPayload({
-    stocks: [
-      { code: 'sh600111' },
-      { code: 'sz000001' },
-      { code: 'sh600000' },
-      { code: 'bad-code' }
-    ],
-    marketDate: '2025-12-31',
-    updatedAt: '2026-01-01T00:00:00.000Z',
+    stocks: [{ code: 'sh600111' }, { code: 'sz000001' }, { code: 'sh600000' }, { code: 'bad-code' }],
+    marketDate: '2026-02-09',
+    updatedAt: '2026-02-10T00:00:00.000Z',
     readCache: code => caches[code] || null
   });
   assert.deepEqual(Object.keys(payload.stocks), ['sh600111']);
-  assert.equal(payload.marketDate, '2025-12-31');
-  assert.equal(payload.stocks.sh600111.months, 3);
-  assert.equal(payload.stocks.sh600111.m1, 8.33); // 130 / 120 - 1
+  assert.equal(payload.marketDate, '2026-02-09');
+  assert.equal(payload.stocks.sh600111.d20, 50);
 });

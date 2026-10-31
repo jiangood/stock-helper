@@ -47,6 +47,20 @@ function stockMonthly(code) {
 }
 function productMonthly(item) {
   if (!item) return [];
+
+  // Prefer the provider's native monthly OHLC close series. The business-data
+  // collector already stores long-range monthlyKlines for continuous futures;
+  // using only the 200-point daily spot series silently reduced history to ~7 months.
+  const monthlyBars = item.monthlyKlines && Array.isArray(item.monthlyKlines.series)
+    ? item.monthlyKlines.series : [];
+  const monthlyPoints = monthlyLast(monthlyBars.map((bar) => ({
+    date: bar.date,
+    value: Number(bar.close)
+  })));
+  if (monthlyPoints.length >= 2) return monthlyPoints;
+
+  // Fallback to daily spot/futures observations only when native monthly bars
+  // are unavailable. monthlyLast keeps the last real observation in each month.
   const series = Array.isArray(item.series) ? item.series : [];
   const points = series.map((point) => ({
     date: point.date,

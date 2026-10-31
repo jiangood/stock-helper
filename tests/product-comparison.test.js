@@ -54,3 +54,33 @@ test('every stock has a main product label or an explicit manual mapping', () =>
   const missing = stocks.filter((stock) => !(mappings[stock.code] && mappings[stock.code].productName) && !(fundamentals[stock.code] && fundamentals[stock.code].mainItem)).map((stock) => stock.code);
   assert.deepEqual(missing, []);
 });
+
+test('productMonthly prefers long-range native monthly K-line closes over short daily snapshots', () => {
+  const result = productMonthly({
+    series: [
+      { date: '2026-09-29', spot: 100 },
+      { date: '2026-10-30', spot: 110 }
+    ],
+    monthlyKlines: {
+      series: [
+        { date: '2025-01', open: 80, high: 90, low: 75, close: 85 },
+        { date: '2025-02', open: 85, high: 95, low: 82, close: 92 },
+        { date: '2025-03', open: 92, high: 98, low: 88, close: 96 }
+      ]
+    }
+  });
+  assert.deepEqual(result.map((point) => [point.month, point.value]), [
+    ['2025-01', 85], ['2025-02', 92], ['2025-03', 96]
+  ]);
+});
+
+test('productMonthly falls back to actual daily spot/futures when monthly K-lines are absent', () => {
+  const result = productMonthly({ series: [
+    { date: '2026-01-02', spot: 100 },
+    { date: '2026-01-30', spot: 105 },
+    { date: '2026-02-27', futures: 110 }
+  ] });
+  assert.deepEqual(result.map((point) => [point.month, point.value]), [
+    ['2026-01', 105], ['2026-02', 110]
+  ]);
+});

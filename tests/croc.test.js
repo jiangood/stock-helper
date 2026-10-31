@@ -12,6 +12,23 @@ test('200 亿市值边界在评估和纪律筛选中保持一致', () => {
   assert.equal(capCheck.ok, true);
 });
 
+test('PB 八折门槛与实际折数展示值分离', () => {
+  const stock = { name: '测试股', code: 'sh601618' };
+  const underEight = Croc.evaluate(stock, { price: 2.46, pb: 0.49 });
+  assert.equal(underEight.pbGolden, true);
+  assert.equal(underEight.pbFold, 4.9);
+
+  const exactEight = Croc.evaluate(stock, { price: 8, pb: 0.8 });
+  assert.equal(exactEight.pbGolden, true);
+  assert.equal(exactEight.pbFold, 8);
+
+  const aboveEight = Croc.evaluate(stock, { price: 8.1, pb: 0.81 });
+  assert.equal(aboveEight.pbGolden, false);
+  assert.equal(aboveEight.pbFold, 8.1);
+
+  assert.equal(Croc.evaluate(stock, { pb: null }).pbFold, null);
+});
+
 test('ST 股票不能通过纪律全过筛选', () => {
   const result = Croc.screen(
     { name: 'ST 测试股', code: 'sz000001' },

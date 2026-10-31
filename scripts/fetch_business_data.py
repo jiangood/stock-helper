@@ -16,7 +16,7 @@ from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -222,6 +222,9 @@ def fetch_methionine_public_reports(max_reports: int = 20) -> list[dict[str, Any
     candidates: dict[str, str] = {}
     for href, label in listing.links:
         absolute = urljoin(listing_url, href)
+        parsed_url = urlparse(absolute)
+        if parsed_url.scheme != "https" or parsed_url.netloc not in {"www.caaa.cn", "caaa.cn"}:
+            continue
         if "氨基酸市场价格评估日度报告" not in label:
             continue
         if not re.search(r"/20\d{2}/\d{2}/\d{2}/[^/?#]+\.html$", absolute):

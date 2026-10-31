@@ -7,7 +7,7 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 ## 架构说明
 
 - `index.html` — 首页，股票跟踪看板（表格）
-  - 样式基于 Bootstrap 5（CDN），列表页共享样式在 `app.css`，页面只保留本页特有样式
+  - 不依赖 Bootstrap；页面基础布局工具样式由自维护的 `utilities.css` 提供，列表页共享样式在 `app.css`，页面只保留本页特有样式
   - 两个列表页各自只加载需要的脚本：自选页不加载图表库或行情模块，行情数据只在行情页请求
   - 访问门禁：三个列表页共用 `password-gate.js` 前端弱校验（仅阻止普通访客，不是安全认证）；门禁显示时背景内容设为 `inert`，焦点限制在弹窗内
   - 数据：`data/stocks.json`（静态基础数据） + `static-quotes.js`（浏览器每次直接读取同源 JSON，不做缓存） + `data/stock-quotes.json` / `data/stock-cache/*.json`（Actions 生成的行情缓存）

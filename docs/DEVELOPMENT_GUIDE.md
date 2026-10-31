@@ -19,8 +19,8 @@
 | --- | --- |
 | `index.html` | 自选股票池页面 |
 | `market.html`、`business.js` | 行情与产业链数据展示 |
-| `products.html`、`products.js` | 股票主营产品价格与股价月线对比 |
-| `product-database.html`、`product-database.js`、`data/company-products.json` | 主营产品、收入占比及 60 个月价格数据库 |
+| `products.html`、`products.js` | 商品价格与股价月线对比、主营产品及 60 个月价格明细统一页面 |
+| `data/company-products.json` | 商品对比页读取的主营产品、收入占比及 60 个月价格数据 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
 | `data/stock-products.json`、`data/product-comparison.json` | 商品报价映射与商品/股价比较读模型 |

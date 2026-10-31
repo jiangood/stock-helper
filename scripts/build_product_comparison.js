@@ -215,6 +215,9 @@ function buildCommodityCards(productItems) {
         roleLabel: stock.roleLabel, mainRatio: stock.mainRatio, source: stock.source,
         latestDate: stock.history.length ? stock.history[stock.history.length - 1].date : null,
         latestClose: stock.history.length ? stock.history[stock.history.length - 1].value : null,
+        monthCount: stock.history.length,
+        historyStartMonth: stock.history.length ? stock.history[0].month : null,
+        historyEndMonth: stock.history.length ? stock.history[stock.history.length - 1].month : null,
         changePct: first && last ? pct(first.price, last.price) : null,
         values
       };
@@ -233,6 +236,12 @@ function buildCommodityCards(productItems) {
       latestPrice,
       latestDate: latestProduct ? latestProduct.date : market && market.latestDate || null,
       productChange: productSeries.length >= 2 ? pct(productSeries[0].price, productSeries[productSeries.length - 1].price) : null,
+      // Keep product and equity coverage separate. months is only the chart's
+      // comparison timeline; it must never be presented as the commodity's own
+      // history length when the commodity series is absent.
+      productMonthCount: productPoints.length,
+      stockTimelineMonthCount: stockOnlyMonths.length || commonMonths.length,
+      commonMonthCount: hasProductHistory ? commonMonths.length : 0,
       months: commonMonths, productSeries, stocks: stockSeries,
       status: ready ? 'ready' : stockOnlyReady ? 'stock-only' : 'pending',
       note: [productHistory.note].concat(related.map(({ meta }) => meta.note).filter(Boolean))

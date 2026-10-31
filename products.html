@@ -29,7 +29,10 @@
 .product-metric-label{font-size:10px;color:var(--bs-secondary-color)}
 .product-metric-value{font-size:19px;font-weight:750;font-variant-numeric:tabular-nums}
 .product-chart{height:270px;width:100%;margin-top:8px}
-.commodity-table-wrap{width:100%;overflow-x:auto;margin-top:8px;-webkit-overflow-scrolling:touch}
+.commodity-table-wrap{position:relative;width:100%;overflow-x:auto;margin-top:8px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--bs-secondary-color) var(--bs-tertiary-bg)}
+.commodity-table-wrap:focus-visible{outline:2px solid var(--bs-primary);outline-offset:2px}
+.commodity-table-wrap.can-scroll-right:after{content:'左右滑动查看';position:sticky;right:6px;float:right;display:block;width:max-content;margin-top:-30px;margin-right:6px;padding:4px 7px;border-radius:5px;background:var(--bs-body-bg);color:var(--bs-secondary-color);font-size:10px;box-shadow:0 1px 5px rgba(0,0,0,.12);pointer-events:none}
+.commodity-table-wrap.can-scroll-left{box-shadow:inset 10px 0 10px -10px var(--bs-secondary-color)}
 .commodity-comparison{width:100%;min-width:760px;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .commodity-comparison th,.commodity-comparison td{padding:7px 8px;text-align:center;border:1px solid var(--bs-border-color)}
 .commodity-comparison th{font-weight:600;background:var(--bs-tertiary-bg);color:var(--bs-secondary-color)}

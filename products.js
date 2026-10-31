@@ -30,7 +30,7 @@ function render(){
  }).join('');
  list.forEach(function(card){
   if(card.status!=='ready')return;
-  var node=$('product-chart-'+card.code);if(!node||!window.echarts)return;
+  var node=$('product-chart-'+card.code);if(!node)return;if(!window.echarts){node.textContent='图表组件暂不可用';return;}
   var chart=window.echarts.init(node);charts.push(chart);
   chart.setOption({
    animation:false,grid:{left:42,right:14,top:28,bottom:28},

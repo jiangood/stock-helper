@@ -6,6 +6,11 @@ const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 
+test('首页名称首列宽度保持紧凑', () => {
+  const css = fs.readFileSync(path.join(root, 'app.css'), 'utf8');
+  assert.match(css, /\.stock-table thead th:first-child,[\s\S]*?width: 112px; min-width: 112px; max-width: 112px;/);
+});
+
 test('应用 JavaScript 文件均可通过语法解析', () => {
   for (const file of ['croc.js', 'research-score.js', 'quotes.js', 'static-quotes.js', 'scripts/fetch_stock_snapshot.js', 'scripts/build_sector_monthly.js', 'scripts/build_research_scores.js', 'pinyin.js', 'indicators.js', 'stock.js', 'business.js', 'stock-dashboard.js']) {
     const source = fs.readFileSync(path.join(root, file), 'utf8');

@@ -175,7 +175,7 @@
 <div class="sticky-top">
   <nav class="navbar bg-body border-bottom px-3 py-1" aria-label="个股导航">
     <div class="d-flex align-items-center gap-2 min-w-0">
-      <a class="btn btn-sm btn-outline-secondary icon-btn" href="index.html" aria-label="返回股票池" title="返回股票池"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg></a>
+      <a class="btn btn-sm btn-outline-secondary icon-btn" href="index.html" aria-label="返回股票池"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg></a>
       <span class="logo" aria-hidden="true">▲</span>
       <div class="min-w-0">
         <div class="d-flex align-items-baseline gap-2 min-w-0">
@@ -188,7 +188,7 @@
     </div>
     <div class="ms-auto d-flex align-items-center gap-2">
 
-      <button class="btn btn-sm icon-btn" id="theme-btn" onclick="toggleTheme()" aria-label="切换主题" aria-pressed="false" title="切换主题"><svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button>
+      <button class="btn btn-sm icon-btn" id="theme-btn" onclick="toggleTheme()" aria-label="切换主题" aria-pressed="false"><svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button>
     </div>
   </nav>
 </div>
@@ -325,7 +325,7 @@
             因为价格位置和业绩都已变化。<br>
             没有研报总分的股票，用机器复算的 7 项折算成百分制（覆盖 65/100 权重：国资背景、扣非增长、主营集中、市值、盘整、月线、放量），
             缺少「独一无二 / 产品涨价 / 盈利模式」35 分，因此同类分数略低，不能与研报分直接比高低。<br>
-            下方 7 项始终是机器按当前数据复算的结果，可作为「研报之后发生了什么」的对照；不构成投资建议。
+            下方 7 项始终是机器按当前数据复算的结果，可作为「研报之后发生了什么」的对照。
           </div>
         </details>
       </div>
@@ -336,7 +336,6 @@
 
 <footer class="text-center text-body-secondary py-3 border-top bg-body px-3">
   <div style="font-size:11px">行情由 GitHub Actions 在交易日收盘后更新；页面读取静态缓存</div>
-  <div class="mt-1" style="font-size:10px">免责声明：本页面仅供个人投资记录参考，不构成任何投资建议。股市有风险，投资需谨慎。</div>
   <div class="mt-1"><a href="https://github.com/jiangood/stock-helper" target="_blank" rel="noopener noreferrer" class="repo-footer-link">GitHub</a></div>
 </footer>
 
@@ -969,7 +968,7 @@
     btn.setAttribute('aria-pressed', String(dark));
     const label = dark ? '切换到浅色主题' : '切换到深色主题';
     btn.setAttribute('aria-label', label);
-    btn.title = label;
+
   }
 
   function initTheme() {

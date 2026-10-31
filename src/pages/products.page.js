@@ -272,15 +272,23 @@ export function mount({
       rendered.forEach(item => cardsNode.append(item.article));
       if (!rendered.some(item => item.chartNode)) return;
 
-      const chartLibrary = await loadChartLibrary();
-      if (!mounted || controller.signal.aborted) return;
-      rendered.forEach(item => {
-        if (!item.chartNode || !Array.isArray(item.card.productSeries) ||
-            item.card.productSeries.length < 2) return;
-        const chart = chartLibrary.init(item.chartNode);
-        chart.setOption(buildChartOption(item.card, windowLike));
-        charts.push(chart);
-      });
+      try {
+        const chartLibrary = await loadChartLibrary();
+        if (!mounted || controller.signal.aborted) return;
+        rendered.forEach(item => {
+          if (!item.chartNode || !Array.isArray(item.card.productSeries) ||
+              item.card.productSeries.length < 2) return;
+          const chart = chartLibrary.init(item.chartNode);
+          chart.setOption(buildChartOption(item.card, windowLike));
+          charts.push(chart);
+        });
+      } catch (chartError) {
+        if (mounted && !controller.signal.aborted) {
+          rendered.forEach(item => {
+            if (item.chartNode) item.chartNode.textContent = '图表组件暂不可用，商品与股票数据仍可查看。';
+          });
+        }
+      }
     } catch (error) {
       if (!mounted || controller.signal.aborted) return;
       updated.textContent = '商品月线数据读取失败';

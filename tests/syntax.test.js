@@ -58,6 +58,11 @@ test('首页脚本使用版本化 URL，避免浏览器继续执行旧缓存', (
   assert.ok(html.includes('stock-dashboard.js?v='), '首页 dashboard 脚本必须带版本参数');
 });
 
+test('首页研报日期显示在研报评分下方', () => {
+  const css = fs.readFileSync(path.join(root, 'app.css'), 'utf8');
+  assert.match(css, /\\.score-date\\s*\\{[^}]*display:\\s*block/);
+});
+
 test('首页研报日期只显示发布日期，不标注旧或悬浮信息', () => {
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
   const start = dashboard.indexOf('function researchDateHtml(');

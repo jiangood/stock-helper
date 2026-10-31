@@ -5,10 +5,11 @@
 - **自选页面：** [股票助手首页](https://jiangood.github.io/stock-helper/)
 - **作战页面：** [交易作战台](https://jiangood.github.io/stock-helper/combat.html)
 - **行情页面：** [市场行情](https://jiangood.github.io/stock-helper/market.html)
+- **商品页面：** [商品价格与股价月线对比](https://jiangood.github.io/stock-helper/products.html)
 - **个股详情示例（002408）：** [打开个股详情](https://jiangood.github.io/stock-helper/stock.html?code=sz002408)
 - **系统健康：** [静态缓存监控](https://jiangood.github.io/stock-helper/health.html)
 
-自选、作战、行情现为独立页面，通过顶部导航跳转，不再使用底部 tabs。自选页支持股票池监控、搜索、分组和纪律筛选；作战页展示交易条件与理由；行情页汇总板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
+自选、作战、行情、商品现为独立页面，通过顶部导航跳转，不再使用底部 tabs。自选页支持股票池监控、搜索、分组和纪律筛选；作战页展示交易条件与理由；行情页汇总板块月线强弱、全球资产及产业链商品行情。个股详情页可查看行情、K 线、估值与交易辅助面板。网站以普通网页方式运行，不提供 PWA 安装或离线缓存功能。
 
 ## 本地预览
 
@@ -25,8 +26,10 @@ python -m http.server 8089
 | `index.html` | 自选页面：股票池监控看板（Bootstrap 5），支持搜索（含拼音）、分组、纪律筛选、市值/PE/PB/股息率、破净/八折/ST 旗标与纪律列 |
 | `combat.html` | 独立交易作战台页面，展示交易条件、技术指标、风险与失效条件 |
 | `market.html` | 独立行情页面：板块月线强弱、全球资产与产业链商品行情 |
+| `products.html` `products.js` | 商品页面：股票池逐股展示主营产品价格与股价标准化月线对比，前端只读 Actions 生成的 `data/product-comparison.json` |
 | `stock.html` `stock.js` | 个股详情页（`?code=sz002408`）：行情、日/月 K、估值与周期位置、跟踪计划、补仓、鳄鱼纪律、研报评分、卖出纪律、资源股估值 |
 | `data/stocks.json` | 股票基础数据（分组 / 别名 / 入场 / 重仓 / 止盈 / 股票池） |
+| `data/stock-products.json` `scripts/build_product_comparison.js` `data/product-comparison.json` | 股票主营产品映射与商品/股价月线比较读模型；按共同月份归一化为 100，缺数据时明确显示待补充 |
 | `croc.js` | 鳄鱼纪律工具：PB 八折、200 亿市值、PE 30 倍、纪律全过判定、入场/重仓区、连续涨停、月 K 分位与简报 |
 | `research-score.js` | 研报评分工具：复算研报评分卡里可自动化的 7 项（国资背景 / 扣非增长 / 主营集中 / 市值 / 盘整 / 月线位置 / 底部放量），合计 65 分后折算百分制 |
 | `data/research-scores.json` `scripts/build_research_scores.js` | 个股评分与中间指标；首页与详情页只读这个小文件，不逐只拉个股缓存 |
@@ -52,7 +55,7 @@ python -m http.server 8089
 | `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
 | `.github/workflows/business-data.yml` | 工作日每日刷新一次商品数据，数据未变化时不更新文件，也支持手动触发 GitHub Actions |
 
-## 生意 / 商品数据
+## 商品页面：主营产品价格与股价背离\n\n`products.html` 为独立页面，股票池每只股票一张卡片。`data/stock-products.json` 维护股票代码到代表性主营产品、产品端/成本端/多因素角色的映射；未核实的股票显示待核实，不根据行业标签臆造商品关系。`scripts/build_product_comparison.js` 将商品日度序列聚合为月末参考价，并将股票月 K（缺少月 K 时用周 K 月末收盘聚合）对齐到共同月份，两个序列均以首个共同月份 = 100，输出 `data/product-comparison.json`。页面显示同期涨跌、背离提示、数据日期和来源。商品价格与股价仅作趋势对照，不代表因果或利润传导；本月未收盘、历史不足、产品未映射时均明确提示。\n\n数据由商品行情工作流和静态缓存工作流重建，浏览器只读取同源静态 JSON，不抓取供应商数据。\n\n## 生意 / 商品数据
 
 行情页的「生意与产业链」区域不要求用户手工录入价格。GitHub Actions 工作日定时运行 `scripts/fetch_business_data.py`，更新 `data/business-data.json`，首页自动读取最新缓存。主要数据源包括生意社现货/期货基差数据、东方财富现货与股票数据，以及新浪财经商品期货行情；卡片会区分现货与期货口径并显示数据日期/来源。
 

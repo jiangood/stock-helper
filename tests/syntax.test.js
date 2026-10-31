@@ -117,3 +117,17 @@ test('首页表格每行数据单元格数量与表头一致', () => {
   assert.equal(bodyCells, headerCells, '首页表头与每行数据列数必须一致');
   assert.doesNotMatch(rowRenderer, /stock\.yearInit|screenHtml\(|researchMachineHtml\(/, '已移除的列不得残留在行渲染中');
 });
+
+
+test('首页月线盈亏颜色以入场价为唯一基准：盈利红、亏损绿、持平或缺失灰', () => {
+  const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
+  const start = dashboard.indexOf('function monthlyTrendHtml(stock)');
+  const end = dashboard.indexOf('\\nfunction statusHtml(', start);
+  assert.ok(start >= 0 && end > start, '未找到首页月线渲染函数');
+  const renderer = dashboard.slice(start, end);
+  assert.match(renderer, /currentPrice > entry[\\s\\S]*monthly-trend-profit/);
+  assert.match(renderer, /currentPrice < entry[\\s\\S]*monthly-trend-loss/);
+  assert.match(renderer, /currentPrice === entry/);
+  assert.match(renderer, /monthly-trend-neutral/);
+  assert.doesNotMatch(renderer, /stock\\.tp1|takeProfit|monthly-trend-above-target/);
+});

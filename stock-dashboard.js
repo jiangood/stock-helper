@@ -377,13 +377,11 @@ function buildRow(stock) {
     <td>${heavyHtml}${heavyDiff}</td>
     <td>${tp1Html}</td>
     <td>${tp2Html}</td>
-    <td class="text-body-secondary">${stock.yearInit != null ? Number(stock.yearInit).toFixed(2) : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${fmtCap(pd && pd.totalCap)}</td>
     <td>${fmtRatio(pd && pd.pe)}</td>
     <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${fmtPct(pd && pd.divYield)}</td>
-    <td>${screenHtml(stock, pd, e)}</td>
-    <td>${researchMachineHtml(stock)}</td>\n    <td>${researchReportHtml(stock)}</td>\n    <td>${researchDateHtml(stock)}</td>
+    <td>${researchReportHtml(stock)}</td>\n    <td>${researchDateHtml(stock)}</td>
     <td>${aliasHtml}</td>`;
 }
 

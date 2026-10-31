@@ -127,6 +127,22 @@
       var points = dailyPoints.slice(-200).map(function(p){ return { date:p.date, value:Number(p[metricKey]) }; });
       var last = data.latest != null && Number(data.latest)>0 ? Number(data.latest) : (points.length ? Number(points[points.length-1].value != null ? points[points.length-1].value : points[points.length-1][metricKey]) : null);
       var latestDate = data.latestDate || (points.length ? points[points.length-1].date : null);
+      var quoteRangeHtml = '';
+      var rangePoint = series.length ? series[series.length-1] : null;
+      if (rangePoint && Number(rangePoint.low)>0 && Number(rangePoint.high)>=Number(rangePoint.low)) {
+        var regionalRanges = rangePoint.markets && typeof rangePoint.markets === 'object'
+          ? Object.keys(rangePoint.markets).map(function(region) {
+              var quote = rangePoint.markets[region] || {};
+              return Number(quote.low)>0 && Number(quote.high)>=Number(quote.low)
+                ? esc(region)+' '+formatNumber(quote.low)+'–'+formatNumber(quote.high) : '';
+            }).filter(Boolean).join('；')
+          : '';
+        var rangeUnit = data.unit || meta.unit || '元/吨';
+        quoteRangeHtml = '<div class="mini-label">报价区间（'+esc(rangePoint.spec || '来源规格')+'）：'
+          + (regionalRanges || (esc(rangePoint.region || '山东')+' '+formatNumber(rangePoint.low)+'–'+formatNumber(rangePoint.high)))
+          + ' '+esc(rangeUnit)+' · 含税、现款、送到</div>'
+          + '<div class="mini-label">走势图采用山东报价区间中点，不代表单笔成交价或全国均价</div>';
+      }
       var delta = null;
       if (points.length > 1 && Number(points[0].value != null ? points[0].value : points[0][metricKey]) > 0) {
         delta = (Number(points[points.length-1].value != null ? points[points.length-1].value : points[points.length-1][metricKey]) / Number(points[0].value != null ? points[0].value : points[0][metricKey]) - 1) * 100;
@@ -216,6 +232,7 @@
         + '<div class="d-flex justify-content-between align-items-start gap-2"><div><div class="fw-bold">'+esc(data.name || meta.name)+'</div><div class="mini-label">'+esc(data.unit || meta.unit || '价格')+'</div></div><span class="flag" style="margin:0">'+status+'</span></div>'
         + '<div class="d-flex align-items-baseline justify-content-between mt-2 gap-2"><div class="business-price tabular">'+(last == null ? '—' : formatNumber(last))+'</div><div class="'+tone+' fw-semibold">'+trend+'</div></div>'
         + '<div class="mini-label">'+(latestDate ? '数据日期：'+esc(latestDate) : '当前没有有效报价')+' · '+(data.latestSpot != null && Number(data.latestSpot)>0 ? '现货价格' : '期货价格')+'</div>'
+        + quoteRangeHtml
         + (data.latestFutures != null && Number(data.latestFutures)>0 ? '<div class="mini-label">期货参考价：'+formatNumber(data.latestFutures)+' '+esc(data.unit || meta.unit || '')+' · '+esc(data.futuresDate || latestDate || '')+(data.futuresTime ? ' '+esc(data.futuresTime) : '')+' · '+esc(data.futuresSource || '主力合约参考价')+'</div>' : '')
         + '<div class="mt-2">'+chart+'</div>'
         + monthlyPriceHtml

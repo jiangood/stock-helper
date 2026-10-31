@@ -11,12 +11,12 @@
 | 股票基础资料、分组、交易计划 | `data/stocks.json` | 同源静态 JSON | 人工维护、代码审查、版本控制 |
 | 研报原始评分及来源 | `data/research-reports.json` | 同源静态 JSON | 保留报告日期、来源和原始分 |
 | 基本面快照 | `data/fundamentals.json` | 同源静态 JSON | Actions 更新；失败保留最后有效源文件 |
-| 主营产品表 | `data/company-products.json` | 主营产品数据库页只读 | 一行对应一只股票的一个主营产品；收入占比保留报告期，价格序列按月保存最多 60 个月；无可靠行情映射时不补值 |
+| 主营产品数据 | `data/company-products.json` | 商品对比页只读 | 一行对应一只股票的一个主营产品；收入占比保留报告期，价格序列按月保存最多 60 个月；无可靠行情映射时不补值 |
 | 股票行情快照与 K 线 | `data/stock-quotes.json`、`data/stock-cache/` | 同源静态 JSON | Actions 采集；页面只读；保留历史序列 |
 | 机器评分、板块汇总 | 对应构建脚本生成 | 同源静态 JSON | 派生数据，可从原始数据重建 |
 | 用户个人参数和主题 | 用户当前设备 | 少量 localStorage 设置项 | 仅保存用户设置，不保存行情、K 线或数据响应 |
 
-## 主营产品表的数据口径
+## 商品对比页中的主营产品数据口径
 
 - `scripts/fetch_fundamentals.py` 从东方财富 F10 最新报告期主营构成中保留全部产品分类及其收入占比，产品分类不可用时才回退行业分类。
 - `scripts/build_company_products.py` 将主营分部展开为股票-产品记录，保存产品名称、主营收入占比、分类口径、报告期、价格单位、价格来源和月度序列。

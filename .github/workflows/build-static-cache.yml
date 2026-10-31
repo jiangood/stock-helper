@@ -59,7 +59,7 @@ jobs:
             node scripts/build_cache_manifest.js
             node scripts/validate_stock_data.js
 
-            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/commodity-db/index.json data/product-comparison.json)" ]; then
+            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/commodity-db/index.json)" ]; then
               echo "Static page caches are already current."
               exit 0
             fi

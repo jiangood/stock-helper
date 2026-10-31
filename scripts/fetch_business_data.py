@@ -44,7 +44,7 @@ PRODUCTS = [
     {"id": "pvc", "name": "聚氯乙烯", "unit": "元/吨", "symbol": "V", "aliases": ["PVC", "聚氯乙烯"], "stocks": ["中盐化工", "中泰化学", "氯碱化工"], "chain": "电石/乙烯 → PVC → 建材及管材", "drivers": "关注电石成本、装置开工、社会库存、房地产与出口。"},
     {"id": "caustic-soda", "name": "烧碱", "unit": "元/吨", "symbol": "SH", "aliases": ["烧碱", "液碱"], "stocks": ["氯碱化工"], "chain": "氯碱电解 → 烧碱与氯气", "drivers": "关注氧化铝需求、出口、氯碱开工、液碱库存和氯碱综合利润。"},
     {"id": "alumina", "name": "氧化铝", "unit": "元/吨", "symbol": "AO", "aliases": ["氧化铝"], "stocks": ["中国铝业"], "chain": "铝土矿 → 氧化铝 → 电解铝", "drivers": "关注铝土矿供应、氧化铝厂开工、港口库存及电解铝产能。"},
-    {"id": "float-glass", "name": "浮法玻璃", "unit": "元/吨", "symbol": "FG", "aliases": ["浮法玻璃", "玻璃"], "stocks": ["耀皮玻璃"], "chain": "纯碱、石英砂、燃料 → 浮法玻璃 → 建筑及汽车玻璃深加工", "drivers": "浮法玻璃期货是行业价格代理，需结合深加工产品结构、库存、产能与燃料成本。"},
+    {"id": "float-glass", "name": "浮法玻璃", "unit": "元/吨", "symbol": "FG", "aliases": ["浮法玻璃"], "stocks": ["耀皮玻璃"], "chain": "纯碱、石英砂、燃料 → 浮法玻璃 → 建筑及汽车玻璃深加工", "drivers": "浮法玻璃期货是行业价格代理，需结合深加工产品结构、库存、产能与燃料成本。"},
     {"id": "pulp", "name": "纸浆", "unit": "元/吨", "symbol": "SP", "aliases": ["纸浆", "针叶浆", "阔叶浆"], "stocks": ["岳阳林纸"], "chain": "木材 → 商品浆 → 文化纸、包装纸", "drivers": "纸浆期货是商品浆成本/价格代理，不等同于公司自制浆或实际销售均价。"},
     {"id": "tdi", "name": "甲苯二异氰酸酯（TDI）", "unit": "元/吨", "symbol": None, "aliases": ["TDI", "甲苯二异氰酸酯"], "stocks": ["沧州大化"], "chain": "甲苯、硝酸、氯气 → TDI → 聚氨酯软泡", "drivers": "关注装置检修、进口、下游海绵需求与原料成本；暂无已接入的可靠连续期货序列。"},
     {"id": "polycarbonate", "name": "聚碳酸酯（PC）", "unit": "元/吨", "symbol": None, "aliases": ["聚碳酸酯", "PC"], "stocks": ["沧州大化"], "chain": "双酚A、碳酸二苯酯/光气 → PC → 电子电器、汽车", "drivers": "关注双酚A成本、装置开工、进口与下游需求；暂无已接入的可靠连续期货序列。"},

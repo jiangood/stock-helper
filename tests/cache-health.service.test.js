@@ -18,7 +18,7 @@ test('缓存健康服务以 no-store 读取两个静态文件并校验结构', a
   const result = await fetchCacheHealth({
     fetchImpl: async (url, options) => {
       calls.push({ url, options });
-      return { ok: true, json: async () => payloads[calls.length - 1] };
+      return { ok: true, json: async () => payloads[url.includes('manifest') ? 0 : 1] };
     }
   });
   assert.equal(result.manifest.marketDate, '2026-10-30');

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "builderVersion": "490125efd2f7038de1eb2cf6b8711c2ca69059d5cfc1ce9dac1c0f47acfceb1c",
-  "generatedAt": "2026-10-31T07:11:47.782Z",
+  "generatedAt": "2026-10-31T08:09:04.030Z",
   "marketDate": "2026-10-29",
   "caches": {
     "market-quotes": {
@@ -39,7 +39,7 @@
       "recordCount": 67,
       "bytes": 13333,
       "dataVersion": "9300cd2ff7a02dcc53cb715ae1b870028df34ce4c0a2bd3364e95c31822b6dae",
-      "sourceVersion": "a9a2b68b842320603154b29d18ffd94a43bbf6cb777cf40d93828fbbc4bdd324",
+      "sourceVersion": "0dbefd92faa3ef1c923d66f23c9fb9e8dbcf2d3a541b302aa8414e7021969604",
       "freshness": "fresh",
       "status": "healthy"
     },

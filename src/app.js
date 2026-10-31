@@ -94,6 +94,7 @@ export function createApp({ root, window: windowLike = window, pages = {}, rende
         }
         activePage = null;
       });
+      return renderQueue;
     },
     navigate(path) { router.navigate(path); },
     get currentRoute() { return router.current; }

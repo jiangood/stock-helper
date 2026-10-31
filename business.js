@@ -118,6 +118,12 @@
             return { date: String(p.date || p.label).slice(0, 7), value: Number(p.value) };
           }).filter(function(p){ return /^\d{4}-\d{2}$/.test(p.date); })
         : [];
+      var monthlyKlines = data.monthlyKlines && Array.isArray(data.monthlyKlines.series)
+        ? data.monthlyKlines.series.filter(function(p){
+            return p && /^\d{4}-\d{2}$/.test(p.date)
+              && Number(p.open)>0 && Number(p.high)>0 && Number(p.low)>0 && Number(p.close)>0;
+          }).slice(-180)
+        : [];
       var points = dailyPoints.slice(-200).map(function(p){ return { date:p.date, value:Number(p[metricKey]) }; });
       var last = data.latest != null && Number(data.latest)>0 ? Number(data.latest) : (points.length ? Number(points[points.length-1].value != null ? points[points.length-1].value : points[points.length-1][metricKey]) : null);
       var latestDate = data.latestDate || (points.length ? points[points.length-1].date : null);
@@ -130,11 +136,18 @@
       var trend = delta == null ? '趋势数据不足' : ((delta > 0 ? '+' : '') + delta.toFixed(2) + '%');
       var tone = delta == null ? 'text-body-secondary' : delta > 0 ? 'text-up' : delta < 0 ? 'text-down' : 'text-body-secondary';
       var chart = '<div class="empty-state py-2 small">' + (last ? '该来源暂未提供可绘制的历史序列' : '等待自动数据源返回有效报价') + '</div>';
-      if (points.length >= 2) {
+      if (monthlyKlines.length >= 2) {
         var chartId = 'business-price-chart-' + meta.id;
         businessChartSpecs.push({
-          id: chartId,
-          name: meta.name,
+          id: chartId, type: 'candlestick', name: meta.name,
+          unit: data.unit || meta.unit || '',
+          data: monthlyKlines.map(function(p){ return { time: p.date, value: [Number(p.open), Number(p.close), Number(p.low), Number(p.high)] }; })
+        });
+        chart = '<div class="business-chart-wrap"><div class="business-chart-caption"><span>'+esc(meta.name)+'月K线</span><span>近'+monthlyKlines.length+'个月 · 主力连续合约</span></div><div class="business-price-chart" id="'+chartId+'" role="img" aria-label="'+esc(meta.name)+'历史月K线"></div></div>';
+      } else if (points.length >= 2) {
+        var chartId = 'business-price-chart-' + meta.id;
+        businessChartSpecs.push({
+          id: chartId, type: 'line', name: meta.name,
           unit: data.unit || meta.unit || '',
           data: points.map(function(p){ return { time: p.date, value: Number(p.value != null ? p.value : p[metricKey]) }; })
         });
@@ -309,7 +322,12 @@
       var node = el(spec.id);
       if (!node || node.dataset.chartReady === '1') return;
       var data = (spec.data || []).filter(function(p) {
-        return p && /^\d{4}-\d{2}-\d{2}$/.test(p.time) && Number.isFinite(Number(p.value)) && Number(p.value) > 0;
+        if (!p) return false;
+        if (spec.type === 'candlestick') {
+          return /^\d{4}-\d{2}$/.test(p.time) && Array.isArray(p.value)
+            && p.value.length === 4 && p.value.every(function(v){ return Number.isFinite(Number(v)) && Number(v)>0; });
+        }
+        return /^\d{4}-\d{2}-\d{2}$/.test(p.time) && Number.isFinite(Number(p.value)) && Number(p.value) > 0;
       });
       if (data.length < 2) return;
       try {
@@ -330,6 +348,15 @@
             formatter: function (params) {
               var hit = Array.isArray(params) ? params[0] : params;
               if (!hit) return '';
+              if (spec.type === 'candlestick') {
+                var candle = Array.isArray(hit.data) ? hit.data : (hit.data && hit.data.value);
+                if (!Array.isArray(candle) || candle.length < 4) return '';
+                return esc(hit.axisValue) + '<br>' + esc(spec.name || '')
+                  + '<br>开：' + Number(candle[0]).toLocaleString('zh-CN')
+                  + ' 收：' + Number(candle[1]).toLocaleString('zh-CN')
+                  + '<br>低：' + Number(candle[2]).toLocaleString('zh-CN')
+                  + ' 高：' + Number(candle[3]).toLocaleString('zh-CN') + esc(unit);
+              }
               var value = Number(hit.data);
               return esc(hit.axisValue) + '<br>' + esc(spec.name || '') + ' '
                 + (Number.isFinite(value) ? value.toLocaleString('zh-CN', { maximumFractionDigits: 2 }) : '—')
@@ -361,13 +388,17 @@
             }
           },
           series: [{
-            type: 'line',
-            data: data.map(function (p) { return Number(p.value); }),
+            type: spec.type === 'candlestick' ? 'candlestick' : 'line',
+            data: spec.type === 'candlestick'
+              ? data.map(function(p){ return p.value.map(Number); })
+              : data.map(function (p) { return Number(p.value); }),
             showSymbol: false,
             symbolSize: 5,
+            itemStyle: spec.type === 'candlestick'
+              ? { color: '#ef232a', color0: '#14b143', borderColor: '#ef232a', borderColor0: '#14b143' }
+              : { color: primary },
             lineStyle: { color: primary, width: 2 },
-            itemStyle: { color: primary },
-            areaStyle: {
+            areaStyle: spec.type === 'candlestick' ? undefined : {
               color: {
                 type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
                 colorStops: [

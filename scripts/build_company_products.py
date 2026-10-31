@@ -15,6 +15,8 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+PRICE_WINDOW_MONTHS = 200
+HISTORY_YEARS = 20
 DATA = ROOT / "data"
 OUTPUT = DATA / "company-products.json"
 FUNDAMENTALS = DATA / "fundamentals.json"
@@ -149,7 +151,7 @@ def monthly_last(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "date": day.isoformat(),
         }
     completed_month = latest_completed_month()
-    return [by_month[key] for key in sorted(by_month) if key <= completed_month][-60:]
+    return [by_month[key] for key in sorted(by_month) if key <= completed_month][-PRICE_WINDOW_MONTHS:]
 
 
 def fetch_price_histories(item_ids: set[str] | None = None) -> tuple[dict[str, list[dict[str, Any]]], dict[str, str]]:
@@ -160,7 +162,7 @@ def fetch_price_histories(item_ids: set[str] | None = None) -> tuple[dict[str, l
     except ImportError:
         return histories, {}
     end_day = date.today()
-    start_day = date(end_day.year - 5, end_day.month, 1)
+    start_day = date(end_day.year - HISTORY_YEARS, end_day.month, 1)
     for item_id, config in PRICE_CONFIG.items():
         if item_ids is not None and item_id not in item_ids:
             continue
@@ -205,6 +207,7 @@ def build(
     # series has never been collected. This avoids re-fetching five years daily.
     target_month = latest_completed_month()
     existing_latest: dict[str, str] = {}
+    existing_counts: dict[str, int] = {}
     for old_row in old_rows:
         if not isinstance(old_row, dict) or not old_row.get("marketItemId"):
             continue
@@ -217,12 +220,13 @@ def build(
             continue
         old_series = old_row.get("priceSeries") or []
         if old_series:
+            existing_counts[old_row["marketItemId"]] = max(existing_counts.get(old_row["marketItemId"], 0), len(old_series))
             latest = max((str(point.get("month") or "") for point in old_series if isinstance(point, dict)), default="")
             if latest:
                 existing_latest[old_row["marketItemId"]] = max(existing_latest.get(old_row["marketItemId"], ""), latest)
     refresh_ids = {
         item_id for item_id in PRICE_CONFIG
-        if existing_latest.get(item_id, "") < target_month
+        if existing_latest.get(item_id, "") < target_month or existing_counts.get(item_id, 0) < PRICE_WINDOW_MONTHS
     }
     histories, errors = fetch_price_histories(refresh_ids) if fetch_prices and refresh_ids else ({}, {})
     products: list[dict[str, Any]] = []
@@ -315,7 +319,7 @@ def build(
         "schemaVersion": 1,
         "updatedAt": updated_at,
         "source": "Eastmoney F10主营构成 + AKShare公开商品历史行情",
-        "priceWindowMonths": 60,
+        "priceWindowMonths": PRICE_WINDOW_MONTHS,
         "stockCount": len({row["stockCode"] for row in products}),
         "productCount": len(products),
         "pricedCount": sum(1 for row in products if row.get("priceSeries")),

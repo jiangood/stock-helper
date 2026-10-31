@@ -14,6 +14,8 @@ on:
       - "scripts/build_stock_detail_cache.js"
       - "scripts/build_research_scores.js"
       - "scripts/build_sector_monthly.js"
+      - "scripts/build_product_comparison.js"
+      - "data/stock-products.json"
       - "scripts/build_cache_manifest.js"
       - "scripts/validate_stock_data.js"
       - "research-score.js"
@@ -51,16 +53,17 @@ jobs:
 
             node scripts/build_stock_detail_cache.js
             node scripts/build_sector_monthly.js
+            node scripts/build_product_comparison.js
             node scripts/build_research_scores.js
             node scripts/build_cache_manifest.js
             node scripts/validate_stock_data.js
 
-            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json)" ]; then
+            if [ -z "$(git status --porcelain -- data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/product-comparison.json)" ]; then
               echo "Static page caches are already current."
               exit 0
             fi
 
-            git add data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json
+            git add data/sector-monthly.json data/research-scores.json data/cache/stocks data/cache/stock-details.json data/cache/manifest.json data/monitoring/latest.json data/product-comparison.json
             git commit -m "Build static page caches"
             if git push origin HEAD:master; then
               exit 0

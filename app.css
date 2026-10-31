@@ -277,3 +277,9 @@
   #password-gate .gate-remember { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; color: #475569; font-size: 13px; }
   #password-gate .gate-remember input { width: 16px; height: 16px; margin: 0; }
   #password-gate .gate-error { display: none; margin-top: 12px; color: #dc2626; font-size: 13px; }
+
+/* 低调的项目源码入口：置于页面底部，不干扰主要操作。 */
+.repo-footer { padding: 10px 12px 14px; text-align: center; font-size: 10px; color: var(--bs-tertiary-color, var(--bs-secondary-color)); }
+.repo-footer a, .repo-footer-link { color: inherit; text-decoration: none; opacity: .58; }
+.repo-footer a:hover, .repo-footer-link:hover { color: var(--bs-secondary-color); opacity: 1; text-decoration: underline; }
+.repo-footer a:focus-visible, .repo-footer-link:focus-visible { outline: 2px solid var(--bs-primary); outline-offset: 3px; border-radius: 2px; }

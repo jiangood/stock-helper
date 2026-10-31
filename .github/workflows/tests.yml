@@ -23,11 +23,14 @@ jobs:
       - name: Build derived page read models for validation
         run: |
           node scripts/build_sector_monthly.js
+          node scripts/build_product_comparison.js
           node scripts/build_research_scores.js
           node scripts/build_combat_kline.js
           node scripts/build_stock_detail_cache.js
       - name: Check cache builder syntax
-        run: node --check scripts/build_cache_manifest.js
+        run: |
+          node --check scripts/build_cache_manifest.js
+          node --check scripts/build_product_comparison.js
       - name: Build static cache manifest and health snapshot
         run: node scripts/build_cache_manifest.js
       - name: Run indicator and syntax tests

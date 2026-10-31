@@ -209,7 +209,8 @@ async function main() {
       if (!nativeMonthlyOk) {
         try {
           const dailyHistory = await client.fetchKline(code, {
-            period: 'day', count: 5000, adjust: 'qfq', force: true
+            // SDK/provider cap: 1000 daily bars (roughly four years of trading history).
+            period: 'day', count: 1000, adjust: 'qfq', force: true
           });
           if (validBars(dailyHistory, 1)) {
             const bars = aggregateDailyToMonthly(dailyHistory.bars, 240);

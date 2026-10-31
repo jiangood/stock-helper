@@ -1,124 +1,76 @@
 (function(){
 'use strict';
-var cards=[], companyProducts=[], charts=[];
+var cards=[],charts=[];
 function $(id){return document.getElementById(id);}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)>0?'+':'')+Number(value).toFixed(2)+'%';}
-function share(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)*100).toFixed(1)+'%';}
 function money(value){return value==null||!Number.isFinite(Number(value))?'—':Number(value).toLocaleString('zh-CN',{maximumFractionDigits:2});}
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
-function destroyCharts(){charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
 function searchText(){return ($('product-search').value||'').trim().toLowerCase();}
 function visibleCards(){
  var query=searchText(),filter=$('product-filter').value;
  return cards.filter(function(card){
-  var text=[card.name,card.code,card.productName,card.group].join(' ').toLowerCase();
+  var related=(card.stocks||[]).map(function(stock){return [stock.name,stock.code,stock.group].join(' ');}).join(' ');
+  var text=[card.name,card.id,related].join(' ').toLowerCase();
   if(query&&!text.includes(query))return false;
   if(filter==='ready'&&card.status!=='ready')return false;
   if(filter==='pending'&&card.status==='ready')return false;
-  if(filter==='divergence'&&card.divergence!=='方向背离')return false;
   return true;
  });
 }
-function visibleProducts(){
- var query=searchText(),filter=$('db-filter').value;
- return companyProducts.filter(function(p){
-  var text=[p.stockName,p.stockCode,p.productName,p.group].join(' ').toLowerCase();
-  if(query&&!text.includes(query))return false;
-  if(filter==='available'&&(!Array.isArray(p.priceSeries)||!p.priceSeries.length))return false;
-  if(filter==='unavailable'&&Array.isArray(p.priceSeries)&&p.priceSeries.length)return false;
-  return true;
- });
-}
-function sparkline(series){
- if(!Array.isArray(series)||series.length<2)return '<span class="db-meta">暂无足够月度数据</span>';
- var values=series.map(function(p){return Number(p.price);}).filter(function(v){return Number.isFinite(v)&&v>0;});
- if(values.length<2)return '<span class="db-meta">暂无足够月度数据</span>';
- var min=Math.min.apply(null,values),max=Math.max.apply(null,values),range=max-min||1;
- var points=series.map(function(p,i){
-  var v=Number(p.price);if(!Number.isFinite(v)||v<=0)return null;
-  var x=4+i*182/Math.max(1,series.length-1),y=36-(v-min)/range*30;
-  return x.toFixed(1)+','+y.toFixed(1);
- }).filter(Boolean).join(' ');
- return '<svg class="db-chart" viewBox="0 0 190 42" role="img" aria-label="近五年月度价格趋势"><polyline fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" points="'+points+'"/></svg><span class="db-meta">'+esc(series[0].month)+' — '+esc(series[series.length-1].month)+' · '+series.length+' 个月</span>';
-}
-function monthDetails(series){
- if(!Array.isArray(series)||!series.length)return '';
- return '<details class="mt-1"><summary class="db-meta">展开月度价格（'+series.length+' 个月）</summary><div class="db-months">'+series.slice().reverse().map(function(p){
-  return '<div class="db-month"><span>'+esc(p.month)+'</span><strong>'+money(p.price)+'</strong></div>';
- }).join('')+'</div></details>';
-}
-function renderCompanyProducts(){
- var rows=visibleProducts(),body=$('db-rows');
- $('db-count').textContent='显示 '+rows.length+' / '+companyProducts.length+' 项产品';
- if(!rows.length){body.innerHTML='<tr><td colspan="7" class="db-empty">没有符合条件的产品</td></tr>';return;}
- body.innerHTML=rows.map(function(p){
-  var series=Array.isArray(p.priceSeries)?p.priceSeries:[],last=series.length?series[series.length-1]:null;
-  var status=series.length?'<span class="db-status ok">有历史价格</span>':'<span class="db-status pending">价格待补充</span>';
-  var price=last?money(last.price)+' '+esc(p.priceUnit||'')+'<div class="db-meta">'+esc(last.month)+'</div>':'—';
-  return '<tr><td><div class="db-stock"><a class="text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(p.stockCode)+'">'+esc(p.stockName)+'</a></div><div class="db-code">'+esc(p.stockCode)+' · '+esc(p.group)+'</div></td><td><div class="db-product">'+esc(p.productName)+'</div><div class="db-meta">'+esc(p.ratioBasis==='product'?'产品分类':p.ratioBasis==='industry'?'行业分类':p.ratioBasis==='manual-mapping'?'人工映射':'—')+' · '+esc(p.ratioUnit||'')+'</div></td><td class="db-ratio">'+share(p.revenueRatio)+'</td><td>'+esc(p.reportDate||'—')+'</td><td class="db-price">'+price+'</td><td>'+sparkline(series)+monthDetails(series)+(p.priceNote?'<div class="db-meta">'+esc(p.priceNote)+'</div>':'')+'</td><td>'+status+(p.priceKind?'<div class="db-meta">'+esc(p.priceKind)+'</div>':'')+'</td></tr>';
- }).join('');
-}
+function destroyCharts(){charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
 function render(){
  destroyCharts();
  var list=visibleCards(),node=$('product-cards');
- $('product-count').textContent='显示 '+list.length+' / '+cards.length+' 只';
- if(!list.length)node.innerHTML='<div class="product-empty">没有符合条件的股票</div>';
- else node.innerHTML=list.map(function(card){
-  var status=card.status==='ready'?card.divergence:card.status==='mapping-pending'?'主营映射待核实':'商品历史数据不足';
-  var badge=card.status==='ready'?(card.divergence==='方向背离'?'diverge':card.divergence==='走势大致同步'?'sync':''):'';
-  var chart=card.status==='ready'?'<div class="product-chart" id="product-chart-'+esc(card.code)+'" role="img" aria-label="'+esc(card.name)+'主营产品价格与股价标准化月线对比"></div>':'<div class="product-empty">'+(card.status==='mapping-pending'?'尚未核实该公司的代表性主营产品。':'已记录产品：'+esc(card.productName)+'；暂无足够的同口径历史商品月线，暂不绘图。')+'</div>';
-  return '<article class="product-card"><div class="product-card-head"><div><div class="product-card-name"><a class="text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(card.code)+'">'+esc(card.name)+'</a> <span class="product-meta">'+esc(card.code)+' · '+esc(card.group)+'</span></div><div class="product-meta mt-1">主营观察：'+esc(card.productName)+' · '+esc(card.roleLabel)+(card.productUnit?' · '+esc(card.productUnit):'')+(card.mainRatio!==null&&card.mainRatio!==undefined?' · 主营占比参考 '+(Number(card.mainRatio)*100).toFixed(1)+'%':'')+'</div></div><span class="product-status '+badge+'">'+esc(status)+'</span></div><div class="product-metrics"><div><div class="product-metric-label">商品价格区间涨跌</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div><div><div class="product-metric-label">股票同期涨跌</div><div class="product-metric-value '+tone(card.stockChange)+'">'+pct(card.stockChange)+'</div></div><div><div class="product-metric-label">商品 / 股价数据日期</div><div class="product-meta">'+esc(card.productDate||'—')+' / '+esc(card.stockDate||'—')+'</div></div></div>'+chart+'<div class="product-note">'+esc(card.note||'')+' '+(card.stockSeriesSource?'股价序列：'+esc(card.stockSeriesSource)+'。':'')+(card.productSource?'商品来源：'+esc(card.productSource)+'。':'')+'</div></article>';
+ $('product-count').textContent='显示 '+list.length+' / '+cards.length+' 个商品';
+ if(!list.length){node.innerHTML='<div class="product-empty">没有符合条件的商品</div>';return;}
+ node.innerHTML=list.map(function(card,index){
+  var stockRows=(card.stocks||[]).map(function(stock){
+   var hasHistory=Array.isArray(stock.values)&&stock.values.length>=2;
+   return '<div class="commodity-stock"><div><a class="commodity-stock-name text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(stock.code)+'">'+esc(stock.name)+'</a><span class="product-meta ms-2">'+esc(stock.code)+' · '+esc(stock.roleLabel||'关联观察')+(stock.mainRatio!=null?' · 主营占比 '+(Number(stock.mainRatio)*100).toFixed(1)+'%':'')+'</span></div><div class="commodity-stock-meta">'+(stock.latestClose!=null?'最新月收 '+money(stock.latestClose):'暂无月线')+' · '+esc(stock.latestDate||'—')+' · 区间 '+pct(stock.changePct)+'</div></div>';
+  }).join('');
+  var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(card.name)+'及关联股票标准化月线"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
+  var badge=card.status==='ready'?'数据齐全':'部分数据缺失';
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(card.name)+'</div><div class="product-meta">'+esc(card.id)+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice)+' <small>'+esc(card.unit||'')+'</small></div></div><div><div class="product-metric-label">共同月线区间</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 个月':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+'<div class="commodity-stocks-title">关联股票月线</div>'+stockRows+'<div class="product-note">图表将各序列在共同起始月份设为 100，比较相对走势而非绝对价格；商品使用'+esc(card.source||'可用商品参考价')+'，股票使用'+(card.stocks||[]).map(function(stock){return esc(stock.source||'缺少月K');}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(' / ')+'。'+esc(card.note||'')+' 商品价格不等同于公司实际售价，关联关系也不代表利润必然同向变化。</div></article>';
  }).join('');
- list.forEach(function(card){
-  if(card.status!=='ready')return;
-  var chartNode=$('product-chart-'+card.code);if(!chartNode)return;
-  if(!window.echarts){chartNode.textContent='图表组件暂不可用';return;}
-  var chart=window.echarts.init(chartNode);charts.push(chart);
+ list.forEach(function(card,index){
+  var node=$('commodity-chart-'+index);
+  if(!node||!window.echarts||!Array.isArray(card.productSeries)||card.productSeries.length<2)return;
+  var chart=window.echarts.init(node);charts.push(chart);
+  var series=[{name:card.name+'价格',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2.5},data:card.productSeries.map(function(point){return point.index;})}];
+  (card.stocks||[]).forEach(function(stock){
+   if(!Array.isArray(stock.values)||stock.values.length<2)return;
+   series.push({name:stock.name,type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:stock.values.map(function(point){return point.index;})});
+  });
   chart.setOption({
-   animation:false,grid:{left:42,right:14,top:28,bottom:28},
-   legend:{top:0,textStyle:{fontSize:10,color:'inherit'}},
-   tooltip:{trigger:'axis',valueFormatter:function(v){return Number(v).toFixed(2);}},
-   xAxis:{type:'category',data:card.series.map(function(p){return p.month;}),axisLabel:{fontSize:9,hideOverlap:true},boundaryGap:false},
-   yAxis:{type:'value',scale:true,axisLabel:{fontSize:9,formatter:'{value}'},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
-   series:[
-    {name:'商品价格指数',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:card.series.map(function(p){return p.productIndex;})},
-    {name:'股票价格指数',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:card.series.map(function(p){return p.stockIndex;})}
-   ]
+   animation:false,grid:{left:44,right:16,top:34,bottom:34,containLabel:false},
+   legend:{top:2,textStyle:{fontSize:11,color:'inherit'}},
+   tooltip:{trigger:'axis',axisPointer:{type:'cross'},formatter:function(params){
+    if(!Array.isArray(params)||!params.length)return '';
+    var month=params[0].axisValue;
+    return '<strong>'+esc(month)+'</strong><br>'+params.map(function(item){return esc(item.seriesName)+'：'+Number(item.value).toFixed(2);}).join('<br>');
+   }},
+   xAxis:{type:'category',data:card.months||[],boundaryGap:false,axisLabel:{fontSize:10,hideOverlap:true}},
+   yAxis:{type:'value',scale:true,axisLabel:{fontSize:10,formatter:'{value}'},name:'起点 = 100',nameTextStyle:{fontSize:9},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
+   series:series
   });
  });
- renderCompanyProducts();
 }
-function loadComparison(){
+function load(){
  fetch('data/product-comparison.json?t='+Date.now(),{cache:'no-store'})
  .then(function(response){if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
  .then(function(payload){
-  if(!payload||!Array.isArray(payload.cards))throw new Error('商品比较数据格式不正确');
-  cards=payload.cards;
-  $('product-updated').textContent='生成时间：'+(payload.generatedAt?new Date(payload.generatedAt).toLocaleString('zh-CN',{hour12:false}):'未知')+' · 可比 '+payload.comparableCount+'/'+payload.stockCount+' 只';
+  if(!payload||!Array.isArray(payload.commodityCards))throw new Error('商品月线数据格式不正确，请等待缓存任务重建');
+  cards=payload.commodityCards;
+  $('product-updated').textContent='数据生成：'+(payload.generatedAt?new Date(payload.generatedAt).toLocaleString('zh-CN',{hour12:false}):'未知')+' · '+cards.length+' 个商品';
   render();
  }).catch(function(error){
-  $('product-updated').textContent='商品对比数据读取失败';
-  $('product-cards').innerHTML='<div class="product-empty">商品比较数据暂不可用：'+esc(error.message)+'。请稍后刷新。</div>';
+  $('product-updated').textContent='商品月线数据读取失败';
+  $('product-cards').innerHTML='<div class="product-empty">商品月线数据暂不可用：'+esc(error.message)+'。</div>';
  });
 }
-function loadCompanyProducts(){
- fetch('data/company-products.json?t='+Date.now(),{cache:'no-store'})
- .then(function(response){if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
- .then(function(payload){
-  if(!payload||!Array.isArray(payload.products))throw new Error('主营产品数据格式不正确');
-  companyProducts=payload.products;
-  $('db-updated').textContent='数据更新：'+(payload.updatedAt?new Date(payload.updatedAt).toLocaleString('zh-CN',{hour12:false}):'未知')+' · '+companyProducts.length+' 项产品';
-  renderCompanyProducts();
- }).catch(function(error){
-  $('db-updated').textContent='主营产品数据读取失败';
-  $('db-rows').innerHTML='<tr><td colspan="7" class="db-empty">主营产品数据暂不可用：'+esc(error.message)+'</td></tr>';
- });
-}
-$('product-search').addEventListener('input',function(){render();});
+$('product-search').addEventListener('input',render);
 $('product-filter').addEventListener('change',render);
-$('db-filter').addEventListener('change',renderCompanyProducts);
 window.addEventListener('resize',function(){charts.forEach(function(chart){try{chart.resize();}catch(e){}});});
-loadComparison();
-loadCompanyProducts();
+load();
 })();

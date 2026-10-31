@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-31T08:19:07.677Z",
-  "marketDate": "2026-10-31T08:11:45+00:00",
+  "generatedAt": "2026-10-31T08:22:21.000Z",
+  "marketDate": "2026-10-31T08:22:21+00:00",
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 4,
@@ -1391,8 +1391,14 @@
       "sourceUrl": "https://www.100ppi.com/",
       "latestPrice": 23771.7,
       "latestDate": "2026-10-30",
-      "productChange": 5.56,
+      "productChange": 5.78,
       "months": [
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
         "2026-06",
         "2026-07",
         "2026-08",
@@ -1401,28 +1407,58 @@
       ],
       "productSeries": [
         {
-          "month": "2026-06",
+          "month": "2025-12",
           "index": 100,
+          "price": 22473.33
+        },
+        {
+          "month": "2026-01",
+          "index": 109.76,
+          "price": 24666.67
+        },
+        {
+          "month": "2026-02",
+          "index": 104.15,
+          "price": 23406.67
+        },
+        {
+          "month": "2026-03",
+          "index": 109.56,
+          "price": 24621.67
+        },
+        {
+          "month": "2026-04",
+          "index": 108.59,
+          "price": 24403.33
+        },
+        {
+          "month": "2026-05",
+          "index": 107.79,
+          "price": 24223.33
+        },
+        {
+          "month": "2026-06",
+          "index": 100.21,
           "price": 22520
         },
         {
           "month": "2026-07",
-          "index": 104.99,
+          "index": 105.21,
           "price": 23643.33
         },
         {
           "month": "2026-08",
-          "index": 106.51,
+          "index": 106.73,
           "price": 23986.67
         },
         {
           "month": "2026-09",
-          "index": 106.78,
+          "index": 107,
           "price": 24046.67
         },
         {
           "month": "2026-10",
-          "index": 105.56,
+          "index": 105.78,
           "price": 23771.7
         }
       ],
@@ -1435,34 +1471,64 @@
           "roleLabel": "产品端",
           "mainRatio": 0.8378,
           "source": "月K",
-          "latestDate": "2026-10-30",
-          "latestClose": 8.55,
-          "changePct": 9.66,
+          "latestDate": "2026-10-29",
+          "latestClose": 8.43,
+          "changePct": -28.54,
           "values": [
             {
-              "month": "2026-06",
+              "month": "2025-12",
               "index": 100,
+              "price": 11.797
+            },
+            {
+              "month": "2026-01",
+              "index": 116.19,
+              "price": 13.707
+            },
+            {
+              "month": "2026-02",
+              "index": 112.72,
+              "price": 13.297
+            },
+            {
+              "month": "2026-03",
+              "index": 93.05,
+              "price": 10.977
+            },
+            {
+              "month": "2026-04",
+              "index": 95.17,
+              "price": 11.227
+            },
+            {
+              "month": "2026-05",
+              "index": 93.22,
+              "price": 10.997
+            },
+            {
+              "month": "2026-06",
+              "index": 66.09,
               "price": 7.797
             },
             {
               "month": "2026-07",
-              "index": 117.31,
+              "index": 77.54,
               "price": 9.147
             },
             {
               "month": "2026-08",
-              "index": 121.76,
+              "index": 80.48,
               "price": 9.494
             },
             {
               "month": "2026-09",
-              "index": 110.99,
+              "index": 73.36,
               "price": 8.654
             },
             {
               "month": "2026-10",
-              "index": 109.66,
-              "price": 8.55
+              "index": 71.46,
+              "price": 8.43
             }
           ]
         }
@@ -1479,8 +1545,14 @@
       "sourceUrl": "https://www.100ppi.com/",
       "latestPrice": 18783.3,
       "latestDate": "2026-10-30",
-      "productChange": 11.64,
+      "productChange": 22.43,
       "months": [
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
         "2026-06",
         "2026-07",
         "2026-08",
@@ -1489,28 +1561,58 @@
       ],
       "productSeries": [
         {
-          "month": "2026-06",
+          "month": "2025-12",
           "index": 100,
+          "price": 15341.67
+        },
+        {
+          "month": "2026-01",
+          "index": 106.08,
+          "price": 16275
+        },
+        {
+          "month": "2026-02",
+          "index": 110.27,
+          "price": 16916.67
+        },
+        {
+          "month": "2026-03",
+          "index": 106.52,
+          "price": 16341.67
+        },
+        {
+          "month": "2026-04",
+          "index": 113.47,
+          "price": 17408.33
+        },
+        {
+          "month": "2026-05",
+          "index": 115.75,
+          "price": 17758.33
+        },
+        {
+          "month": "2026-06",
+          "index": 109.67,
           "price": 16825
         },
         {
           "month": "2026-07",
-          "index": 97.97,
+          "index": 107.44,
           "price": 16483.33
         },
         {
           "month": "2026-08",
-          "index": 107.18,
+          "index": 117.54,
           "price": 18033.33
         },
         {
           "month": "2026-09",
-          "index": 113.52,
+          "index": 124.5,
           "price": 19100
         },
         {
           "month": "2026-10",
-          "index": 111.64,
+          "index": 122.43,
           "price": 18783.3
         }
       ],
@@ -1523,34 +1625,64 @@
           "roleLabel": "产品端",
           "mainRatio": 0.9429,
           "source": "月K",
-          "latestDate": "2026-10-30",
-          "latestClose": 5.08,
-          "changePct": 3.25,
+          "latestDate": "2026-10-29",
+          "latestClose": 5.09,
+          "changePct": -12.99,
           "values": [
             {
-              "month": "2026-06",
+              "month": "2025-12",
               "index": 100,
+              "price": 5.85
+            },
+            {
+              "month": "2026-01",
+              "index": 125.47,
+              "price": 7.34
+            },
+            {
+              "month": "2026-02",
+              "index": 131.28,
+              "price": 7.68
+            },
+            {
+              "month": "2026-03",
+              "index": 107.52,
+              "price": 6.29
+            },
+            {
+              "month": "2026-04",
+              "index": 122.91,
+              "price": 7.19
+            },
+            {
+              "month": "2026-05",
+              "index": 109.06,
+              "price": 6.38
+            },
+            {
+              "month": "2026-06",
+              "index": 84.1,
               "price": 4.92
             },
             {
               "month": "2026-07",
-              "index": 101.02,
+              "index": 84.96,
               "price": 4.97
             },
             {
               "month": "2026-08",
-              "index": 131.91,
+              "index": 110.94,
               "price": 6.49
             },
             {
               "month": "2026-09",
-              "index": 129.47,
+              "index": 108.89,
               "price": 6.37
             },
             {
               "month": "2026-10",
-              "index": 103.25,
-              "price": 5.08
+              "index": 87.01,
+              "price": 5.09
             }
           ]
         }
@@ -1753,42 +1885,84 @@
       "productDate": "2026-10-30",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": 11.64,
-      "stockChange": 3.25,
-      "divergence": "走势大致同步",
+      "productChange": 22.43,
+      "stockChange": -12.99,
+      "divergence": "方向背离",
       "series": [
         {
-          "month": "2026-06",
+          "month": "2025-12",
           "productIndex": 100,
           "stockIndex": 100,
+          "productPrice": 15341.67,
+          "stockClose": 5.85
+        },
+        {
+          "month": "2026-01",
+          "productIndex": 106.08,
+          "stockIndex": 125.47,
+          "productPrice": 16275,
+          "stockClose": 7.34
+        },
+        {
+          "month": "2026-02",
+          "productIndex": 110.27,
+          "stockIndex": 131.28,
+          "productPrice": 16916.67,
+          "stockClose": 7.68
+        },
+        {
+          "month": "2026-03",
+          "productIndex": 106.52,
+          "stockIndex": 107.52,
+          "productPrice": 16341.67,
+          "stockClose": 6.29
+        },
+        {
+          "month": "2026-04",
+          "productIndex": 113.47,
+          "stockIndex": 122.91,
+          "productPrice": 17408.33,
+          "stockClose": 7.19
+        },
+        {
+          "month": "2026-05",
+          "productIndex": 115.75,
+          "stockIndex": 109.06,
+          "productPrice": 17758.33,
+          "stockClose": 6.38
+        },
+        {
+          "month": "2026-06",
+          "productIndex": 109.67,
+          "stockIndex": 84.1,
           "productPrice": 16825,
           "stockClose": 4.92
         },
         {
           "month": "2026-07",
-          "productIndex": 97.97,
-          "stockIndex": 101.02,
+          "productIndex": 107.44,
+          "stockIndex": 84.96,
           "productPrice": 16483.33,
           "stockClose": 4.97
         },
         {
           "month": "2026-08",
-          "productIndex": 107.18,
-          "stockIndex": 131.91,
+          "productIndex": 117.54,
+          "stockIndex": 110.94,
           "productPrice": 18033.33,
           "stockClose": 6.49
         },
         {
           "month": "2026-09",
-          "productIndex": 113.52,
-          "stockIndex": 129.47,
+          "productIndex": 124.5,
+          "stockIndex": 108.89,
           "productPrice": 19100,
           "stockClose": 6.37
         },
         {
           "month": "2026-10",
-          "productIndex": 111.64,
-          "stockIndex": 103.25,
+          "productIndex": 122.43,
+          "stockIndex": 87.01,
           "productPrice": 18783.3,
           "stockClose": 5.08
         }
@@ -1933,42 +2107,84 @@
       "productDate": "2026-10-30",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": -11.03,
-      "stockChange": -3.32,
-      "divergence": "走势大致同步",
+      "productChange": -13.52,
+      "stockChange": -30.91,
+      "divergence": "涨跌幅差异较大",
       "series": [
         {
-          "month": "2026-06",
+          "month": "2025-12",
           "productIndex": 100,
           "stockIndex": 100,
+          "productPrice": 1225.71,
+          "stockClose": 6.05
+        },
+        {
+          "month": "2026-01",
+          "productIndex": 98.14,
+          "stockIndex": 109.92,
+          "productPrice": 1202.86,
+          "stockClose": 6.65
+        },
+        {
+          "month": "2026-02",
+          "productIndex": 98.14,
+          "stockIndex": 111.9,
+          "productPrice": 1202.86,
+          "stockClose": 6.77
+        },
+        {
+          "month": "2026-03",
+          "productIndex": 101.69,
+          "stockIndex": 99.34,
+          "productPrice": 1246.43,
+          "stockClose": 6.01
+        },
+        {
+          "month": "2026-04",
+          "productIndex": 101.11,
+          "stockIndex": 98.35,
+          "productPrice": 1239.29,
+          "stockClose": 5.95
+        },
+        {
+          "month": "2026-05",
+          "productIndex": 100.12,
+          "stockIndex": 79.83,
+          "productPrice": 1227.14,
+          "stockClose": 4.83
+        },
+        {
+          "month": "2026-06",
+          "productIndex": 97.2,
+          "stockIndex": 69.75,
           "productPrice": 1191.43,
           "stockClose": 4.22
         },
         {
           "month": "2026-07",
-          "productIndex": 92.69,
-          "stockIndex": 104.98,
+          "productIndex": 90.09,
+          "stockIndex": 73.22,
           "productPrice": 1104.29,
           "stockClose": 4.43
         },
         {
           "month": "2026-08",
-          "productIndex": 91.25,
-          "stockIndex": 111.61,
+          "productIndex": 88.69,
+          "stockIndex": 77.85,
           "productPrice": 1087.14,
           "stockClose": 4.71
         },
         {
           "month": "2026-09",
-          "productIndex": 90.29,
-          "stockIndex": 109.48,
+          "productIndex": 87.76,
+          "stockIndex": 76.36,
           "productPrice": 1075.71,
           "stockClose": 4.62
         },
         {
           "month": "2026-10",
-          "productIndex": 88.97,
-          "stockIndex": 96.68,
+          "productIndex": 86.48,
+          "stockIndex": 69.09,
           "productPrice": 1060,
           "stockClose": 4.08
         }
@@ -2185,42 +2401,84 @@
       "productDate": "2026-10-30",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": -11.03,
-      "stockChange": -13,
-      "divergence": "走势大致同步",
+      "productChange": -13.52,
+      "stockChange": -35.48,
+      "divergence": "涨跌幅差异较大",
       "series": [
         {
-          "month": "2026-06",
+          "month": "2025-12",
           "productIndex": 100,
           "stockIndex": 100,
+          "productPrice": 1225.71,
+          "stockClose": 8.215
+        },
+        {
+          "month": "2026-01",
+          "productIndex": 98.14,
+          "stockIndex": 112.05,
+          "productPrice": 1202.86,
+          "stockClose": 9.205
+        },
+        {
+          "month": "2026-02",
+          "productIndex": 98.14,
+          "stockIndex": 118.38,
+          "productPrice": 1202.86,
+          "stockClose": 9.725
+        },
+        {
+          "month": "2026-03",
+          "productIndex": 101.69,
+          "stockIndex": 105.23,
+          "productPrice": 1246.43,
+          "stockClose": 8.645
+        },
+        {
+          "month": "2026-04",
+          "productIndex": 101.11,
+          "stockIndex": 98.3,
+          "productPrice": 1239.29,
+          "stockClose": 8.075
+        },
+        {
+          "month": "2026-05",
+          "productIndex": 100.12,
+          "stockIndex": 82.11,
+          "productPrice": 1227.14,
+          "stockClose": 6.745
+        },
+        {
+          "month": "2026-06",
+          "productIndex": 97.2,
+          "stockIndex": 73.04,
           "productPrice": 1191.43,
           "stockClose": 6
         },
         {
           "month": "2026-07",
-          "productIndex": 92.69,
-          "stockIndex": 106.67,
+          "productIndex": 90.09,
+          "stockIndex": 77.91,
           "productPrice": 1104.29,
           "stockClose": 6.4
         },
         {
           "month": "2026-08",
-          "productIndex": 91.25,
-          "stockIndex": 107,
+          "productIndex": 88.69,
+          "stockIndex": 78.15,
           "productPrice": 1087.14,
           "stockClose": 6.42
         },
         {
           "month": "2026-09",
-          "productIndex": 90.29,
-          "stockIndex": 94.67,
+          "productIndex": 87.76,
+          "stockIndex": 69.14,
           "productPrice": 1075.71,
           "stockClose": 5.68
         },
         {
           "month": "2026-10",
-          "productIndex": 88.97,
-          "stockIndex": 87,
+          "productIndex": 86.48,
+          "stockIndex": 64.52,
           "productPrice": 1060,
           "stockClose": 5.22
         }
@@ -2389,42 +2647,84 @@
       "productDate": "2026-10-30",
       "stockDate": "2026-10-30",
       "stockSeriesSource": "月K",
-      "productChange": 5.56,
-      "stockChange": 9.66,
-      "divergence": "走势大致同步",
+      "productChange": 5.78,
+      "stockChange": -28.54,
+      "divergence": "方向背离",
       "series": [
         {
-          "month": "2026-06",
+          "month": "2025-12",
           "productIndex": 100,
           "stockIndex": 100,
+          "productPrice": 22473.33,
+          "stockClose": 11.797
+        },
+        {
+          "month": "2026-01",
+          "productIndex": 109.76,
+          "stockIndex": 116.19,
+          "productPrice": 24666.67,
+          "stockClose": 13.707
+        },
+        {
+          "month": "2026-02",
+          "productIndex": 104.15,
+          "stockIndex": 112.72,
+          "productPrice": 23406.67,
+          "stockClose": 13.297
+        },
+        {
+          "month": "2026-03",
+          "productIndex": 109.56,
+          "stockIndex": 93.05,
+          "productPrice": 24621.67,
+          "stockClose": 10.977
+        },
+        {
+          "month": "2026-04",
+          "productIndex": 108.59,
+          "stockIndex": 95.17,
+          "productPrice": 24403.33,
+          "stockClose": 11.227
+        },
+        {
+          "month": "2026-05",
+          "productIndex": 107.79,
+          "stockIndex": 93.22,
+          "productPrice": 24223.33,
+          "stockClose": 10.997
+        },
+        {
+          "month": "2026-06",
+          "productIndex": 100.21,
+          "stockIndex": 66.09,
           "productPrice": 22520,
           "stockClose": 7.797
         },
         {
           "month": "2026-07",
-          "productIndex": 104.99,
-          "stockIndex": 117.31,
+          "productIndex": 105.21,
+          "stockIndex": 77.54,
           "productPrice": 23643.33,
           "stockClose": 9.147
         },
         {
           "month": "2026-08",
-          "productIndex": 106.51,
-          "stockIndex": 121.76,
+          "productIndex": 106.73,
+          "stockIndex": 80.48,
           "productPrice": 23986.67,
           "stockClose": 9.494
         },
         {
           "month": "2026-09",
-          "productIndex": 106.78,
-          "stockIndex": 110.99,
+          "productIndex": 107,
+          "stockIndex": 73.36,
           "productPrice": 24046.67,
           "stockClose": 8.654
         },
         {
           "month": "2026-10",
-          "productIndex": 105.56,
-          "stockIndex": 109.66,
+          "productIndex": 105.78,
+          "stockIndex": 71.46,
           "productPrice": 23771.7,
           "stockClose": 8.55
         }

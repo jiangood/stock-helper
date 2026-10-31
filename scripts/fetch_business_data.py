@@ -164,7 +164,7 @@ class _PageParser(HTMLParser):
 
     @property
     def text(self) -> str:
-        return re.sub(r"\\s+", " ", " ".join(self.parts)).strip()
+        return re.sub(r"\s+", " ", " ".join(self.parts)).strip()
 
 
 def parse_methionine_report(html: str, source_url: str) -> dict[str, Any] | None:
@@ -172,7 +172,7 @@ def parse_methionine_report(html: str, source_url: str) -> dict[str, Any] | None
     parser = _PageParser()
     parser.feed(html)
     text = parser.text
-    date_match = re.search(r"/(20\\d{2})/(\\d{2})/(\\d{2})/[^/?#]+\\.html", source_url)
+    date_match = re.search(r"/(20\d{2})/(\d{2})/(\d{2})/[^/?#]+\.html", source_url)
     if not date_match:
         return None
     observed_date = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}"
@@ -184,7 +184,7 @@ def parse_methionine_report(html: str, source_url: str) -> dict[str, Any] | None
         end = positions[index + 1][0] if index + 1 < len(positions) else len(table_text)
         region_text = table_text[start:end]
         match = re.search(
-            r"固体蛋氨酸\\s*([0-9,]+)\\s*[—–－-]\\s*([0-9,]+)",
+            r"固体蛋氨酸\s*([0-9,]+)\s*[—–－-]\s*([0-9,]+)",
             region_text,
         )
         if not match:
@@ -224,11 +224,11 @@ def fetch_methionine_public_reports(max_reports: int = 20) -> list[dict[str, Any
         absolute = urljoin(listing_url, href)
         if "氨基酸市场价格评估日度报告" not in label:
             continue
-        if not re.search(r"/20\\d{2}/\\d{2}/\\d{2}/[^/?#]+\\.html$", absolute):
+        if not re.search(r"/20\d{2}/\d{2}/\d{2}/[^/?#]+\.html$", absolute):
             continue
         candidates[absolute] = label
     reports: list[dict[str, Any]] = []
-    for url in sorted(candidates, key=lambda value: tuple(map(int, re.search(r"/(20\\d{2})/(\\d{2})/(\\d{2})/", value).groups())), reverse=True)[:max_reports]:
+    for url in sorted(candidates, key=lambda value: tuple(map(int, re.search(r"/(20\d{2})/(\d{2})/(\d{2})/", value).groups())), reverse=True)[:max_reports]:
         try:
             parsed = parse_methionine_report(get_page(url), url)
             if parsed:

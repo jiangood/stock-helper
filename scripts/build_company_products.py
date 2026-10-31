@@ -7,6 +7,7 @@ products remain explicitly unavailable rather than being substituted.
 """
 from __future__ import annotations
 
+import calendar
 import json
 import math
 from datetime import date, datetime, timezone, timedelta
@@ -118,8 +119,15 @@ def infer_market_item(product_name: str) -> str | None:
     return None
 
 
+def latest_completed_month(as_of: date | None = None) -> str:
+    today = as_of or date.today()
+    if today.day == calendar.monthrange(today.year, today.month)[1]:
+        return today.strftime("%Y-%m")
+    return (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+
+
 def monthly_last(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Take the last valid trading close in each calendar month."""
+    """Take the last valid trading close in each completed calendar month."""
     by_month: dict[str, dict[str, Any]] = {}
     for row in rows:
         raw_day = str(row.get("date") or row.get("日期") or "")[:10]
@@ -137,7 +145,7 @@ def monthly_last(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "price": round(price, 4),
             "date": day.isoformat(),
         }
-    completed_month = (date.today().replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+    completed_month = latest_completed_month()
     return [by_month[key] for key in sorted(by_month) if key <= completed_month][-60:]
 
 
@@ -192,12 +200,19 @@ def build(
 
     # Only refresh when a new completed calendar month is available or the
     # series has never been collected. This avoids re-fetching five years daily.
-    target_month = (date.today().replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+    target_month = latest_completed_month()
     existing_latest: dict[str, str] = {}
     for old_row in old_rows:
         if not isinstance(old_row, dict) or not old_row.get("marketItemId"):
             continue
-        old_series = old_row.get("priceSeries") or old_row.get("monthlyPrices") or []
+        old_name = str(old_row.get("productName") or "")
+        old_market = infer_market_item(old_name)
+        old_mapping = mappings.get(str(old_row.get("stockCode") or "").lower(), {}) if isinstance(mappings, dict) else {}
+        if not old_market and old_mapping.get("productName", "").casefold() == old_name.casefold():
+            old_market = old_mapping.get("marketItemId")
+        if old_market != old_row.get("marketItemId"):
+            continue
+        old_series = old_row.get("priceSeries") or []
         if old_series:
             latest = max((str(point.get("month") or "") for point in old_series if isinstance(point, dict)), default="")
             if latest:
@@ -260,8 +275,13 @@ def build(
             key = (code, name)
             old = old_by_key.get(key, {})
             series = histories.get(market_id, []) if market_id else []
-            if not series and isinstance(old.get("monthlyPrices"), list):
-                series = old["monthlyPrices"]
+            if (
+                not series
+                and config
+                and old.get("marketItemId") == market_id
+                and isinstance(old.get("priceSeries"), list)
+            ):
+                series = old["priceSeries"]
             source = "新浪财经期货主力连续历史行情（AKShare）" if config and series else old.get("priceSource")
             products.append({
                 "stockCode": code,
@@ -295,7 +315,7 @@ def build(
         "priceWindowMonths": 60,
         "stockCount": len({row["stockCode"] for row in products}),
         "productCount": len(products),
-        "pricedCount": sum(1 for row in products if row["priceStatus"] == "available"),
+        "pricedCount": sum(1 for row in products if row.get("priceSeries")),
         "fetchErrors": errors,
         "products": products,
     }

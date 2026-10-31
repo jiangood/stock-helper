@@ -228,6 +228,8 @@ function buildCommodityCards(productItems) {
     return {
       id: itemId, name: productName, unit: market && market.unit || (itemId === 'corn' || itemId === 'soybean-meal' ? '元/吨' : (marketMeta.marketItemId === itemId ? marketMeta.unit : '')) || '',
       source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: market && market.sourceUrl || null,
+      productStartDate: productPoints.length ? productPoints[0].date : null,
+      productEndDate: productPoints.length ? productPoints[productPoints.length - 1].date : null,
       latestPrice,
       latestDate: latestProduct ? latestProduct.date : market && market.latestDate || null,
       productChange: productSeries.length >= 2 ? pct(productSeries[0].price, productSeries[productSeries.length - 1].price) : null,

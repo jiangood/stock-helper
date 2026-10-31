@@ -8,6 +8,7 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
 const LIMITS = { dailyAdjusted: 250, dailyRaw: 250, weeklyAdjusted: 200, monthlyAdjusted: 240 };
+const HOME_MONTHLY_TREND_LIMIT = 18;
 
 function readJson(file, fallback) {
   try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
@@ -53,6 +54,7 @@ function buildFile(options) {
   const quoteMap = quotes.quotes || {};
   const bundles = [];
   const details = {};
+  const monthlyTrends = {};
 
   (Array.isArray(stocks) ? stocks : []).forEach(stock => {
     const code = String(stock && stock.code || '').trim().toLowerCase();
@@ -61,6 +63,12 @@ function buildFile(options) {
     const quote = quoteMap[code] || {};
     const sourceDetail = source && isObject(source.detail) ? source.detail : {};
     if (!Object.keys(sourceDetail).length && !Object.keys(quote).length) return;
+
+    const monthlyBars = getBars(source, 'monthlyAdjusted', LIMITS.monthlyAdjusted);
+    monthlyTrends[code] = monthlyBars
+      .filter(bar => bar && Number.isFinite(Number(bar.close)) && Number(bar.close) > 0)
+      .slice(-HOME_MONTHLY_TREND_LIMIT)
+      .map(bar => ({ time: bar.time || null, close: Number(bar.close) }));
 
     const detail = Object.assign({}, quote, sourceDetail);
     detail.code = detail.code || code;
@@ -76,7 +84,7 @@ function buildFile(options) {
       dailyAdjusted: { bars: getBars(source, 'dailyAdjusted', LIMITS.dailyAdjusted) },
       dailyRaw: { bars: getBars(source, 'dailyRaw', LIMITS.dailyRaw) },
       weeklyAdjusted: { bars: getBars(source, 'weeklyAdjusted', LIMITS.weeklyAdjusted) },
-      monthlyAdjusted: { bars: getBars(source, 'monthlyAdjusted', LIMITS.monthlyAdjusted) }
+      monthlyAdjusted: { bars: monthlyBars }
     };
     bundles.push({
       file: path.join(outputDir, code + '.json'),
@@ -114,7 +122,8 @@ function buildFile(options) {
     updatedAt,
     marketDate,
     sourceUpdatedAt: quotes.updatedAt || null,
-    details
+    details,
+    monthlyTrends
   };
   const indexChanged = writeStable(indexFile, index);
   const totalBytes = bundles.reduce((sum, item) => sum + fs.statSync(item.file).size, 0);

@@ -106,9 +106,7 @@ def normalize_ratio(value: Any) -> float | None:
     return round(number, 6) if number <= 1 else None
 
 
-def infer_market_item(product_name: str, preferred: str | None = None) -> str | None:
-    if preferred:
-        return preferred
+def infer_market_item(product_name: str) -> str | None:
     name = str(product_name or "").replace(" ", "")
     # Combined segment labels (e.g. "锡/锑/锌") must not be mapped to one
     # component's quote series because that would misstate the segment price.
@@ -247,7 +245,16 @@ def build(
             ratio = normalize_ratio(segment.get("ratio", segment.get("MBI_RATIO")))
             basis = segment.get("basis") or segment.get("MAINOP_TYPE") or fundamental.get("mainBasis")
             market_id = infer_market_item(name)
-            if not market_id and len(segments) == 1:
+            # A manual mapping is valid only when its maintained product name
+            # exactly matches the disclosed segment; never apply it to broad
+            # "other", finance, logistics, or combined business categories.
+            mapped_name = str(mapping.get("productName") or "").strip()
+            if (
+                not market_id
+                and len(segments) == 1
+                and mapped_name
+                and name.casefold() == mapped_name.casefold()
+            ):
                 market_id = mapping.get("marketItemId")
             config = PRICE_CONFIG.get(market_id)
             key = (code, name)

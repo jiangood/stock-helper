@@ -100,3 +100,10 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 - 全球资产抓取通过 `.github/workflows/global-assets.yml` 定时运行，每日一次；该频率不是逐笔实时行情，数据未变化时保留原文件。
 
 
+
+## 商品页面与价格背离
+
+- `products.html` / `products.js` — 独立商品页面，股票池每只股票一张卡片；主营产品名称优先读取 `data/fundamentals.json` 的 `mainItem`，代表性商品报价映射由 `data/stock-products.json` 明确维护。
+- `scripts/build_product_comparison.js` — 将商品日度参考价聚合为月度末值，与股票月 K 对齐；缺少月 K 时使用周 K 月末收盘聚合；只比较共同月份并将两条序列分别归一化为 100。
+- `data/product-comparison.json` — Actions 生成的前端读模型；不在浏览器抓取供应商数据。产品映射未核实、历史不足或数据缺失时必须明确显示，不得用相近商品替代或补造数据。
+- `business-data.yml` 和 `build-static-cache.yml` 均会重建商品/股价比较数据，覆盖商品报价变化与股票 K 线变化。

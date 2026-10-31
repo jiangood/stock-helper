@@ -134,7 +134,7 @@ function buildCommodityCards(productItems) {
     if (!meta || (!meta.marketItemId && !meta.costItemIds)) return;
     const itemIds = [meta.marketItemId].concat(meta.costItemIds || []).filter(Boolean);
     const stock = stocks.find((item) => item.code === code);
-    if (stock) grouped.get(meta.marketItemId).push({ stock, meta });
+    if (stock) itemIds.forEach((itemId) => { if (!grouped.has(itemId)) grouped.set(itemId, []); grouped.get(itemId).push({ stock, meta }); });
   });
   return Array.from(grouped.entries()).map(([itemId, related]) => {
     const market = productItems[itemId] || null;

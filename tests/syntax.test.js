@@ -69,7 +69,7 @@ test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称�
   const toolbar = html.slice(toolbarStart, toolbarEnd);
   assert.ok(toolbar.includes('id="search-input"'));
   assert.doesNotMatch(toolbar, /stock-count|board-summary|group-filter|status-filter|<select/);
-  assert.match(html, /id="th-name"[\\s\\S]*?id="th-group"[\\s\\S]*?id="th-price"/);
+  assert.match(html, /id="th-name"[\s\S]*?id="th-group"[\s\S]*?id="th-price"/);
   assert.match(dashboard, /function statusHtml/);
   const statusStart = dashboard.indexOf('function statusHtml(');
   const statusEnd = dashboard.indexOf('function flagHtml(', statusStart);

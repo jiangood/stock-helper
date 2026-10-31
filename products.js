@@ -4,7 +4,23 @@ var cards=[],charts=[],chartObservers=[];
 function $(id){return document.getElementById(id);}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)>0?'+':'')+Number(value).toFixed(2)+'%';}
-function money(value){return value==null||!Number.isFinite(Number(value))?'—':Number(value).toLocaleString('zh-CN',{maximumFractionDigits:2});}
+function priceScale(value,unit){
+ var n=Number(value),base=String(unit||'');
+ if(value==null||!Number.isFinite(n))return {value:'—',unit:base||'—'};
+ var scale=1,suffix='';
+ if(Math.abs(n)>=10000){scale=10000;suffix='万';}
+ else if(Math.abs(n)>=1000){scale=1000;suffix='千';}
+ return {value:(n/scale).toFixed(2).replace(/\\.?0+$/,''),unit:suffix?base.replace(/^元/,'元') .replace(/^元/,'') : base};
+}
+function money(value,unit){
+ var display=priceScale(value,unit);
+ return display.value;
+}
+function displayUnit(unit,value){
+ var display=priceScale(value,unit);
+ if(display.unit===String(unit||''))return display.unit;
+ return display.unit;
+}
 function normalizedPosition(value,min,max){var n=Number(value);if(!Number.isFinite(n))return null;if(!(max>min))return 0;return Math.max(0,Math.min(1,(n-min)/(max-min)));}
 function priceStats(series){
  var points=(Array.isArray(series)?series:[]).filter(function(point){return point&&point.price!=null&&Number.isFinite(Number(point.price));});
@@ -16,7 +32,7 @@ function comparisonRow(name,type,ratio,unit,series,change,href){
  var stats=priceStats(series);
  var ratioText=type==='商品'?'—':(ratio==null||!Number.isFinite(Number(ratio))?'暂无数据':(Number(ratio)*100).toFixed(1)+'%');
  var nameHtml=href?'<a class="commodity-stock-name text-body text-decoration-none" href="'+esc(href)+'">'+esc(name)+'</a>':'<strong>'+esc(name)+'</strong>';
- return '<tr><td>'+nameHtml+'</td><td>'+type+'</td><td>'+ratioText+'</td><td>'+esc(unit||'—')+'</td><td>'+(stats?money(stats.low):'—')+'</td><td>'+(stats?money(stats.high):'—')+'</td><td>'+(stats?money(stats.first):'—')+'</td><td>'+(stats?money(stats.current):'—')+'</td><td class="'+tone(change)+'">'+pct(change)+'</td></tr>';
+ var rowUnit=unit||'—';\n var priceUnit=function(value){var scaled=priceScale(value,unit);return scaled.value==='—'?rowUnit:(Math.abs(Number(value))>=10000?rowUnit.replace(/^元/,'万元'):Math.abs(Number(value))>=1000?rowUnit.replace(/^元/,'千元'):rowUnit);};\n var displayPrices=stats?[stats.low,stats.high,stats.first,stats.current].map(function(value){return money(value,unit);}):['—','—','—','—'];\n var unitLabel=stats?priceUnit(stats.current):rowUnit;\n return '<tr><td>'+nameHtml+'</td><td>'+type+'</td><td>'+ratioText+'</td><td>'+esc(unitLabel)+'</td><td>'+displayPrices[0]+'</td><td>'+displayPrices[1]+'</td><td>'+displayPrices[2]+'</td><td>'+displayPrices[3]+'</td><td class="'+tone(change)+'">'+pct(change)+'</td></tr>';
 }
 function comparisonTableHtml(card){
  var rows=comparisonRow(displayProductName(card.name),'商品',null,card.unit,card.productSeries,card.productChange,'');
@@ -36,7 +52,7 @@ function render(){
   var comparisonTable=comparisonTableHtml(card);
   var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+'及关联股票归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
   var badge=card.status==='ready'?'数据齐全':'部分数据缺失';
-  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice)+' <small>'+esc(card.unit||'')+'</small></div></div><div><div class="product-metric-label">共同月线区间（最多 200 根）</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 根月线':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+'<div class="commodity-stocks-title">商品及关联股票价格汇总</div>'+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice,card.unit)+' <small>'+esc(Math.abs(Number(card.latestPrice))>=10000?(card.unit||'').replace(/^元/,'万元'):Math.abs(Number(card.latestPrice))>=1000?(card.unit||'').replace(/^元/,'千元'):(card.unit||''))+'</small></div></div><div><div class="product-metric-label">共同月线区间（最多 200 根）</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 根月线':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+'<div class="commodity-stocks-title">商品及关联股票价格汇总</div>'+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
   function updateScrollHint(){

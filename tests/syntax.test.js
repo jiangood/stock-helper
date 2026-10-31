@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, '..');
 
 test('首页名称首列宽度保持紧凑', () => {
   const css = fs.readFileSync(path.join(root, 'app.css'), 'utf8');
-  assert.match(css, /\.stock-table thead th:first-child,[\s\S]*?width: 112px; min-width: 112px; max-width: 112px;/);
+  assert.match(css, /\.stock-table thead th:first-child,[\s\S]*?width: 88px; min-width: 88px; max-width: 88px;/);
 });
 
 test('应用 JavaScript 文件均可通过语法解析', () => {

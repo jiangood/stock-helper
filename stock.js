@@ -30,18 +30,6 @@
   let REPORTS = {};
   let DISCIPLINE_RULES = null;
 
-  let DAY_FAILED = false;
-
-  /* 补仓（日线）判定阈值（集中调参） */
-  const ADD_RULES = {
-    supportDist: 3,    // 距支撑多少 % 以内算到支撑
-    mfiLow: 20,        // MFI < 20 后回升上穿
-    mfiRecoverBars: 10,
-    maPeriod: 20,
-    obvLookback: 20,
-    profileLookback: 120
-  };
-
   let chartTab = 'month';
   let chart = null;
   let chartKey = '';
@@ -248,7 +236,6 @@
       klineCache.dayRaw = toKline('day', 'none', bundle.dailyRaw);
       klineCache.week = toKline('week', 'qfq', bundle.weeklyAdjusted);
       klineCache.month = toKline('month', 'qfq', bundle.monthlyAdjusted);
-      DAY_FAILED = !klineCache.day;
       HISTORY = klineCache.month;
       historyAt = HISTORY ? Date.now() : 0;
       if (klineCache.day) apply52WeekFallback(klineCache.day.bars);
@@ -289,9 +276,7 @@
     renderHeader();
     renderQuote(DETAIL);
     renderValuation(DETAIL);
-    
-    
-    
+
     renderResearchScore();
     
     updateCalc();
@@ -534,14 +519,10 @@
       if (adjusted.status !== 'fulfilled') throw adjusted.reason;
 
       klineCache.day = adjusted.value;
-      DAY_FAILED = false;
       apply52WeekFallback(klineCache.day.bars);
-      
-      
-      
+
     } catch (e) {
       /* 日 K 失败不影响主流程 */
-      DAY_FAILED = true;
       
     }
   }
@@ -1000,10 +981,7 @@
       }
       renderKline(klineCache[tab], tab);
       $('chart-empty').classList.add('d-none');
-      if (tab === 'day' && DETAIL) {
-        
-        
-      }
+
     } catch (e) {
       console.warn('图表加载失败:', e);
       $('chart-empty').textContent = '图表加载失败：' + (e.message || '接口不可用');

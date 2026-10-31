@@ -360,103 +360,6 @@
       </div>
     </section>
 
-    <!-- 跟踪计划 -->
-    <section class="card shadow-sm">
-      <div class="card-header bg-body py-2"><h2 class="mb-0 fw-semibold" style="font-size:13px">跟踪计划</h2></div>
-      <div class="card-body">
-        <div class="text-body-secondary" style="font-size:12px" id="plan-note">该股票未纳入股票池，暂无跟踪计划。</div>
-        <div class="d-none" id="plan-body">
-          <div class="ruler-track" id="ruler-track"></div>
-          <div class="ruler-legend" id="ruler-legend"></div>
-          <div class="table-responsive mt-3">
-            <table class="table table-sm align-middle mb-0 plan-table">
-              <thead>
-                <tr>
-                  <th>价位</th>
-                  <th class="text-end">价格</th>
-                  <th class="text-end">距现价</th>
-                  <th class="text-end">状态</th>
-                </tr>
-              </thead>
-              <tbody id="plan-rows"></tbody>
-            </table>
-          </div>
-          <div class="stat-grid mt-3" id="plan-meta"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 鳄鱼纪律 -->
-    <section class="card shadow-sm">
-      <div class="card-header bg-body d-flex align-items-center py-2">
-        <h2 class="mb-0 fw-semibold" style="font-size:13px">鳄鱼纪律</h2>
-        <span class="ms-auto text-body-secondary" style="font-size:10.5px" id="discipline-score"></span>
-      </div>
-      <div class="card-body">
-        <div class="d-flex align-items-center gap-2 mb-1">
-          <h3 class="mb-0 fw-semibold" style="font-size:12px">选股硬纪律（5 项）</h3>
-          <span class="text-body-tertiary" style="font-size:10.5px">计入上方得分</span>
-        </div>
-        <div class="check-grid" id="discipline-hard-checks"></div>
-
-        <div class="d-flex align-items-center gap-2 mt-3 mb-1 pt-3 border-top">
-          <h3 class="mb-0 fw-semibold" style="font-size:12px">辅助估值与交易检查</h3>
-          <span class="text-body-tertiary" style="font-size:10.5px">不计入 5 项得分</span>
-        </div>
-        <div class="check-grid" id="discipline-extra-checks"></div>
-
-        <div class="d-flex align-items-center gap-2 mt-3 mb-1 pt-3 border-top">
-          <h3 class="mb-0 fw-semibold" style="font-size:12px">评分卡同步项与人工核对</h3>
-          <span class="text-body-tertiary" style="font-size:10.5px">评分项读取共享 JSON；护城河需人工核对</span>
-        </div>
-        <div class="check-grid" id="discipline-manual-checks"></div>
-
-        <div class="text-body-tertiary mt-3" style="font-size:10.5px">
-          仓位纪律：单账户持仓 ≤3 只 · 主仓 ≥70% · 原则上不使用融资。评分卡同步项不计入选股筛选 5 项得分；护城河需人工核对。
-        </div>
-
-        <div class="alert d-none mt-3 mb-0 py-2 px-3" id="limitup-alert" style="font-size:12px"></div>
-
-        <details class="mt-3 pt-3 border-top">
-          <summary class="fw-semibold" style="font-size:13px;cursor:pointer">资源股现价估值（(P−C)×Q 法）</summary>
-          <div class="text-body-secondary mt-1" style="font-size:10.5px">
-            不预测未来，只用已经发生的产品价格计算当下应有多少市值。Q 以「万」为单位，例如 2.5 万吨填 2.5。
-          </div>
-          <div class="calc-grid mt-2">
-            <div>
-              <label for="calc-p">P 产品现价（元/单位）</label>
-              <input type="number" class="form-control form-control-sm" id="calc-p" step="0.01" min="0"
-                     placeholder="如 180000" oninput="updateCalc()">
-            </div>
-            <div>
-              <label for="calc-c">C 现金成本（元/单位）</label>
-              <input type="number" class="form-control form-control-sm" id="calc-c" step="0.01" min="0"
-                     placeholder="如 100000" oninput="updateCalc()">
-            </div>
-            <div>
-              <label for="calc-q">Q 年产能（万单位）</label>
-              <input type="number" class="form-control form-control-sm" id="calc-q" step="0.01" min="0"
-                     placeholder="如 2.5" oninput="updateCalc()">
-            </div>
-            <div>
-              <label for="calc-discount">安全折扣</label>
-              <input type="number" class="form-control form-control-sm" id="calc-discount" step="0.05" min="0.1" max="1"
-                     value="0.65" oninput="updateCalc()">
-            </div>
-            <div>
-              <label for="calc-multiple">PE 倍数</label>
-              <input type="number" class="form-control form-control-sm" id="calc-multiple" step="1" min="1"
-                     value="20" oninput="updateCalc()">
-            </div>
-          </div>
-          <div class="calc-out mt-2" id="calc-out">填写 P / C / Q 后自动计算。</div>
-          <div class="text-body-tertiary mt-1" style="font-size:10.5px">
-            保守净利 = (P−C)×Q×1万×折扣；合理市值 = 保守净利×PE。结果只是模糊的正确，不构成投资建议。
-          </div>
-        </details>
-      </div>
-    </section>
-
     <!-- 研报评分（可比项） -->
     <section class="card shadow-sm">
       <div class="card-header bg-body d-flex align-items-center py-2">
@@ -488,24 +391,6 @@
       </div>
     </section>
 
-    <!-- 补仓（日线） -->
-    <section class="card shadow-sm">
-      <div class="card-header bg-body d-flex flex-wrap align-items-center gap-2 py-2">
-        <h2 class="mb-0 fw-semibold" style="font-size:13px">补仓（日线）</h2>
-        <span class="badge rounded-pill text-bg-secondary" id="add-badge">加载中…</span>
-        <span class="ms-auto text-body-secondary" style="font-size:10.5px" id="add-note">日 K</span>
-      </div>
-      <div class="card-body">
-        <div class="check-grid" id="add-checks"></div>
-        <div class="alert alert-secondary mt-3 mb-0 py-2 px-3" id="add-hint" style="font-size:12px">
-          补仓看日线是否止跌：到支撑 + 资金确认 + 趋势过滤，三项缺一即降级。辅助参考，不构成投资建议。
-        </div>
-        <div class="stat-grid mt-3" id="add-stats"></div>
-        <div class="text-body-tertiary mt-2" style="font-size:10.5px">
-          筹码分布按日 K 成交量均匀摊到价格区间，为<b>近似</b>值，不是真实逐笔筹码。
-        </div>
-      </div>
-    </section>
   </div>
 </main>
 

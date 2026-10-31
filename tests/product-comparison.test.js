@@ -35,3 +35,14 @@ test('productMonthly uses spot first and futures only as fallback', () => {
   ] });
   assert.equal(result[0].value, 110);
 });
+
+test('every stock has a main product label or an explicit manual mapping', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const root = path.resolve(__dirname, '..');
+  const stocks = JSON.parse(fs.readFileSync(path.join(root, 'data/stocks.json'), 'utf8'));
+  const fundamentals = JSON.parse(fs.readFileSync(path.join(root, 'data/fundamentals.json'), 'utf8')).stocks;
+  const mappings = JSON.parse(fs.readFileSync(path.join(root, 'data/stock-products.json'), 'utf8')).byCode;
+  const missing = stocks.filter((stock) => !(mappings[stock.code] && mappings[stock.code].productName) && !(fundamentals[stock.code] && fundamentals[stock.code].mainItem)).map((stock) => stock.code);
+  assert.deepEqual(missing, []);
+});

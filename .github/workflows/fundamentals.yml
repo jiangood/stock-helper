@@ -34,17 +34,21 @@ jobs:
         run: python -m py_compile scripts/fetch_fundamentals.py
       - name: Fetch fundamentals
         run: python scripts/fetch_fundamentals.py
+      - name: Validate company product builder
+        run: python -m py_compile scripts/build_company_products.py
+      - name: Build company product table
+        run: python scripts/build_company_products.py
       - name: Validate fundamentals data
         run: node scripts/validate_stock_data.js --fundamentals-only --skip-cache-manifest
       - name: Commit changed fundamentals
         run: |
-          if [ -z "$(git status --porcelain -- data/fundamentals.json)" ]; then
+          if [ -z "$(git status --porcelain -- data/fundamentals.json data/company-products.json)" ]; then
             echo "No fundamentals changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/fundamentals.json
+          git add data/fundamentals.json data/company-products.json
           git commit -m "Refresh stock fundamentals"
           for attempt in 1 2 3; do
             git fetch origin "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"

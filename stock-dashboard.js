@@ -526,11 +526,11 @@ function researchReportHtml(stock) {
   if (!report || report.score == null || !Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const scoreText = Number.isInteger(report.score) ? String(report.score) : report.score.toFixed(1);
-  const tip = `研报评分 ${scoreText} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
+  const tip = `评分 ${scoreText} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n评分日期：${report.date || '日期未知'}`;
   return `<span class="score score-${tone}" title="${esc(tip)}">${scoreText}</span>`;
 }
 
-/** 研报日期独立展示和排序；过期标记不改变用于排序的原始日期。 */
+/** 评分日期独立展示和排序；过期标记不改变用于排序的原始日期。 */
 function researchDateHtml(stock) {
   const report = REPORT_SCORES[stock.code];
   if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '';

@@ -5,7 +5,7 @@
 function aggregateDailyToMonthly(dailyBars, limit = 240) {
   if (!Array.isArray(dailyBars)) return [];
   const sorted = dailyBars
-    .filter(bar => bar && /^\\d{4}-\\d{2}-\\d{2}$/.test(String(bar.time || '')) &&
+    .filter(bar => bar && /^\d{4}-\d{2}-\d{2}$/.test(String(bar.time || '')) &&
       ['open', 'high', 'low', 'close'].every(key => Number.isFinite(Number(bar[key])) && Number(bar[key]) > 0))
     .slice()
     .sort((a, b) => String(a.time).localeCompare(String(b.time)));

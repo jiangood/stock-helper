@@ -32,8 +32,9 @@
 .commodity-table-wrap{position:relative;width:100%;overflow-x:auto;margin-top:8px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--bs-secondary-color) var(--bs-tertiary-bg)}
 .commodity-table-wrap:focus-visible{outline:2px solid var(--bs-primary);outline-offset:2px}
 .commodity-table-wrap.can-scroll-left{box-shadow:inset 10px 0 10px -10px var(--bs-secondary-color)}
-.commodity-comparison{width:100%;min-width:760px;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.commodity-comparison th,.commodity-comparison td{padding:7px 8px;text-align:center;border:1px solid var(--bs-border-color)}
+.commodity-comparison{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums;white-space:normal}
+.commodity-comparison th,.commodity-comparison td{padding:7px 4px;text-align:center;border:1px solid var(--bs-border-color);overflow-wrap:anywhere}
+.commodity-comparison th:first-child,.commodity-comparison td:first-child{width:28%}
 .commodity-comparison th{font-weight:600;background:var(--bs-tertiary-bg);color:var(--bs-secondary-color)}
 .commodity-comparison td:first-child,.commodity-comparison th:first-child{text-align:left}
 .commodity-comparison tbody tr:hover{background:var(--bs-tertiary-bg)}

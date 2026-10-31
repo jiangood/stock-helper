@@ -204,7 +204,7 @@ function buildCommodityCards(productItems) {
     const ready = hasProductHistory && commonMonths.length >= 2 && stocksWithHistory.every((stock) => stock.history.length > 0);
     const stockOnlyReady = !hasProductHistory && stockSeries.some((stock) => stock.values.filter((point) => point.price !== null).length >= 2);
     return {
-      id: itemId, name: productName, unit: market && market.unit || marketMeta.unit || '',
+      id: itemId, name: productName, unit: market && market.unit || (itemId === 'corn' || itemId === 'soybean-meal' ? '元/吨' : (marketMeta.marketItemId === itemId ? marketMeta.unit : '')) || '',
       source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: market && market.sourceUrl || null,
       latestPrice,
       latestDate: latestProduct ? latestProduct.date : market && market.latestDate || null,

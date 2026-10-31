@@ -87,40 +87,6 @@
     font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
   }
 
-  /* 价格刻度条 */
-  .ruler-track {
-    position: relative; height: 6px; margin: 1.5rem 0 .5rem;
-    border-radius: 3px;
-    background: var(--bs-tertiary-bg);
-    box-shadow: inset 0 0 0 1px var(--bs-border-color);
-  }
-  .ruler-zone {
-    position: absolute; top: 0; bottom: 0;
-    background: rgba(22,163,74,.22);
-  }
-  .ruler-tick {
-    position: absolute; top: -4px; width: 2px; height: 14px;
-    margin-left: -1px; background: var(--bs-secondary-color);
-  }
-  .ruler-tick.is-current {
-    top: -7px; width: 3px; height: 20px;
-    background: var(--bs-primary);
-    box-shadow: 0 0 0 2px var(--bs-body-bg);
-  }
-  .ruler-legend {
-    display: flex; flex-wrap: wrap; gap: .3rem 1rem;
-    font-size: 11px; color: var(--bs-secondary-color);
-    font-variant-numeric: tabular-nums;
-  }
-  .ruler-legend .pip {
-    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-    margin-right: .25rem; vertical-align: middle;
-  }
-
-  .plan-table th, .plan-table td { font-variant-numeric: tabular-nums; }
-  .plan-table th { font-size: 11px; font-weight: 600; color: var(--bs-secondary-color); }
-  .plan-table td { font-size: 13px; }
-
   #chart { height: 340px; }
   .chart-wrap { position: relative; }
 
@@ -147,7 +113,7 @@
   .insight-tag.warn { border-color: rgba(220,38,38,.35); color: var(--up); background: rgba(220,38,38,.06); }
   .insight-tag.calm { border-color: rgba(22,163,74,.35); color: var(--down); background: rgba(22,163,74,.06); }
 
-  /* 鳄鱼纪律 */
+  /* 研报评分项 */
   .check-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: .5rem;
@@ -176,13 +142,6 @@
   .check-item .check-value { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .check-item .check-note { font-size: 10.5px; color: var(--bs-secondary-color); }
 
-  .sell-box {
-    border: 1px solid var(--bs-border-color); border-radius: 6px;
-    padding: .6rem .7rem; background: var(--bs-tertiary-bg);
-  }
-  .sell-box .sell-line { font-size: 12px; font-variant-numeric: tabular-nums; }
-  .sell-box .sell-line + .sell-line { margin-top: .25rem; }
-
   .calc-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: .5rem .65rem;
@@ -191,17 +150,6 @@
   .calc-grid .form-control { font-size: 12px; font-variant-numeric: tabular-nums; }
   .calc-out { font-size: 12px; font-variant-numeric: tabular-nums; }
   .calc-out b { font-weight: 700; }
-
-  .decision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .65rem; }
-  .decision-item { min-width: 0; padding: .7rem; border: 1px solid var(--bs-border-color); border-radius: 8px; background: var(--bs-tertiary-bg); }
-  .decision-label { font-size: 11px; color: var(--bs-secondary-color); margin-bottom: .25rem; }
-  .decision-value { font-size: 13px; font-weight: 650; line-height: 1.45; }
-  .decision-note { margin-top: .25rem; font-size: 11px; color: var(--bs-secondary-color); line-height: 1.5; }
-  .decision-status { display: inline-flex; align-items: center; gap: .3rem; border-radius: 999px; padding: .15rem .5rem; font-size: 11px; border: 1px solid var(--bs-border-color); }
-  .decision-status.ok { color: var(--down); border-color: rgba(22,163,74,.35); background: rgba(22,163,74,.07); }
-  .decision-status.warn { color: #b45309; border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.08); }
-  .decision-status.bad { color: var(--up); border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.07); }
-  [data-bs-theme="dark"] .decision-status.warn { color: #fbbf24; }
 
   @media (max-width: 575.98px) {
     .price-big { font-size: 32px; }

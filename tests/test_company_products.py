@@ -1,5 +1,6 @@
 import importlib.util
 import unittest
+from datetime import date
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "build_company_products.py"

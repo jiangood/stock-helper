@@ -29,33 +29,24 @@
 .product-metrics{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 4px}
 .product-metric-label{font-size:10px;color:var(--bs-secondary-color)}
 .product-metric-value{font-size:19px;font-weight:750;font-variant-numeric:tabular-nums}
-.product-chart{height:270px;width:100%;margin-top:8px}\n.commodity-card{background:var(--bs-body-bg);border:1px solid var(--bs-border-color);border-radius:12px;padding:15px;min-width:0}\n.commodity-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}\n.commodity-title{font-size:19px;font-weight:800}\n.commodity-metrics{display:flex;gap:22px;flex-wrap:wrap;margin:14px 0 4px}\n.commodity-stocks-title{font-size:12px;font-weight:700;margin-top:10px;padding-top:10px;border-top:1px solid var(--bs-border-color)}\n.commodity-stock{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bs-border-color)}\n.commodity-stock:last-child{border-bottom:0}\n.commodity-stock-name{font-weight:750;font-size:13px}\n.commodity-stock-meta{font-size:11px;color:var(--bs-secondary-color);white-space:nowrap}\n@media(max-width:575px){.product-chart{height:230px}.commodity-stock{display:block}.commodity-stock-meta{margin-top:3px}}
+.product-chart{height:270px;width:100%;margin-top:8px}
+.commodity-card{background:var(--bs-body-bg);border:1px solid var(--bs-border-color);border-radius:12px;padding:15px;min-width:0}
+.commodity-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.commodity-title{font-size:19px;font-weight:800}
+.commodity-metrics{display:flex;gap:22px;flex-wrap:wrap;margin:14px 0 4px}
+.commodity-stocks-title{font-size:12px;font-weight:700;margin-top:10px;padding-top:10px;border-top:1px solid var(--bs-border-color)}
+.commodity-stock{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bs-border-color)}
+.commodity-stock:last-child{border-bottom:0}
+.commodity-stock-name{font-weight:750;font-size:13px}
+.commodity-stock-meta{font-size:11px;color:var(--bs-secondary-color);white-space:nowrap}
+@media(max-width:575px){.product-chart{height:230px}.product-card,.commodity-card{padding:12px}.commodity-stock{display:block}.commodity-stock-meta{margin-top:3px}}
 .product-note{font-size:11px;color:var(--bs-secondary-color);line-height:1.6;margin-top:8px}
 .product-status{font-size:10px;border:1px solid var(--bs-border-color);border-radius:99px;padding:3px 8px;white-space:nowrap}
 .product-status.diverge{color:var(--bs-danger);border-color:var(--bs-danger-border-subtle)}
 .product-status.sync{color:var(--bs-success);border-color:var(--bs-success-border-subtle)}
 .product-empty{height:190px;display:grid;place-items:center;text-align:center;color:var(--bs-secondary-color);font-size:12px;padding:16px}
 .product-positive{color:var(--bs-success)}.product-negative{color:var(--bs-danger)}
-.db-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0}
-.db-toolbar select{max-width:180px}
-.db-table-wrap{overflow:auto;border:1px solid var(--bs-border-color);border-radius:10px;background:var(--bs-body-bg)}
-.db-table{width:100%;min-width:1050px;border-collapse:collapse;font-size:12px}
-.db-table th,.db-table td{padding:9px 10px;border-bottom:1px solid var(--bs-border-color);vertical-align:middle}
-.db-table th{position:sticky;top:0;background:var(--bs-tertiary-bg);white-space:nowrap;z-index:1;font-weight:650}
-.db-table tbody tr:last-child td{border-bottom:0}
-.db-stock{font-weight:700;white-space:nowrap}.db-code,.db-meta{font-size:10px;color:var(--bs-secondary-color)}
-.db-product{font-weight:650;min-width:170px}.db-ratio{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
-.db-chart{width:190px;height:42px;display:block}.db-price{font-variant-numeric:tabular-nums;white-space:nowrap}
-.db-status{font-size:10px;border:1px solid var(--bs-border-color);border-radius:99px;padding:2px 7px;white-space:nowrap}
-.db-status.ok{color:var(--bs-success);border-color:var(--bs-success)}
-.db-status.pending{color:var(--bs-secondary-color)}
-.db-months{display:grid;grid-template-columns:repeat(6,minmax(95px,1fr));gap:4px;padding:10px 0;min-width:650px}
-.db-month{display:flex;justify-content:space-between;gap:8px;padding:4px 6px;background:var(--bs-tertiary-bg);border-radius:4px;font-size:10px;font-variant-numeric:tabular-nums}
-.db-month span:first-child{color:var(--bs-secondary-color)}
-.db-empty{padding:35px;text-align:center;color:var(--bs-secondary-color)}
-.db-footnote{font-size:11px;color:var(--bs-secondary-color);line-height:1.7}
-@media(max-width:600px){.db-chart{width:145px}.db-months{grid-template-columns:repeat(3,minmax(90px,1fr));min-width:300px}}
-@media(max-width:575px){.product-chart{height:170px}.product-card{padding:12px}}
+.db-months{grid-template-columns:repeat(3,minmax(90px,1fr));min-width:300px}}
 </style>
 </head>
 <body class="bg-body-tertiary" data-page="products">

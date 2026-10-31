@@ -416,19 +416,22 @@ function monthlyTrendHtml(stock) {
     return x.toFixed(1) + ',' + y.toFixed(1);
   }).join(' ');
 
-  // 月线颜色按当前价相对交易计划价位判断，而非按月线首尾涨跌判断。
+  // 盈亏颜色只比较当前价与计划入场价：盈利红、亏损绿；不受止盈价影响。
   const quote = priceData[stock.code];
-  const currentPrice = quote && Number.isFinite(quote.price) ? quote.price : null;
+  const currentPrice = quote && Number.isFinite(quote.price) && quote.price > 0 ? quote.price : null;
   const entry = stock.entry == null || stock.entry === '' ? NaN : Number(stock.entry);
-  const takeProfit = stock.tp1 == null || stock.tp1 === '' ? NaN : Number(stock.tp1);
   let tone = 'monthly-trend-neutral';
-  let status = '当前价处于入场价与止盈价之间或价位数据不完整';
-  if (currentPrice !== null && Number.isFinite(entry) && currentPrice < entry) {
-    tone = 'monthly-trend-below-entry';
-    status = '当前价低于入场价';
-  } else if (currentPrice !== null && Number.isFinite(takeProfit) && currentPrice > takeProfit) {
-    tone = 'monthly-trend-above-target';
-    status = '当前价高于第一止盈价';
+  let status = '当前价或入场价缺失，无法判断盈亏';
+  if (currentPrice !== null && Number.isFinite(entry) && entry > 0) {
+    if (currentPrice > entry) {
+      tone = 'monthly-trend-profit';
+      status = '高于入场价，当前盈利';
+    } else if (currentPrice < entry) {
+      tone = 'monthly-trend-loss';
+      status = '低于入场价，当前亏损';
+    } else {
+      status = '当前价等于入场价，盈亏持平';
+    }
   }
 
   const first = values[0];
@@ -436,9 +439,8 @@ function monthlyTrendHtml(stock) {
   const firstTime = bars[0] && bars[0].time || '';
   const lastTime = bars[bars.length - 1] && bars[bars.length - 1].time || '';
   const quoteText = currentPrice === null ? '当前价缺失' : '当前价 ' + currentPrice.toFixed(2);
-  const entryText = Number.isFinite(entry) ? '入场价 ' + entry.toFixed(2) : '入场价缺失';
-  const targetText = Number.isFinite(takeProfit) ? '第一止盈价 ' + takeProfit.toFixed(2) : '第一止盈价缺失';
-  const title = status + ' · ' + quoteText + ' · ' + entryText + ' · ' + targetText
+  const entryText = Number.isFinite(entry) && entry > 0 ? '入场价 ' + entry.toFixed(2) : '入场价缺失';
+  const title = status + ' · ' + quoteText + ' · ' + entryText
     + ' · 复权月收盘价 ' + firstTime + ' 至 ' + lastTime + ' · ' + first.toFixed(2) + ' → ' + last.toFixed(2);
   return '<svg class="monthly-trend-svg ' + tone + '" viewBox="0 0 112 32" role="img" aria-label="' + esc(title) + '" title="' + esc(title) + '"><polyline points="' + points + '"></polyline></svg>';
 }

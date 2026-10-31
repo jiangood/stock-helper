@@ -37,7 +37,7 @@ function render(){
    legend:{top:0,textStyle:{fontSize:10,color:'inherit'}},
    tooltip:{trigger:'axis',valueFormatter:function(v){return Number(v).toFixed(2);}},
    xAxis:{type:'category',data:card.series.map(function(p){return p.month;}),axisLabel:{fontSize:9,hideOverlap:true},boundaryGap:false},
-   yAxis:{type:'value',scale:false,min:function(){return null;},axisLabel:{fontSize:9,formatter:'{value}'},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
+   yAxis:{type:'value',scale:true,axisLabel:{fontSize:9,formatter:'{value}'},splitLine:{lineStyle:{type:'dashed',opacity:.35}}},
    series:[
     {name:'商品价格指数',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:card.series.map(function(p){return p.productIndex;})},
     {name:'股票价格指数',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},data:card.series.map(function(p){return p.stockIndex;})}

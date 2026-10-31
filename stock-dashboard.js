@@ -372,12 +372,12 @@ function buildRow(stock) {
   let tp1Html = stock.tp1 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp1)}</span>` : '<span class="text-body-tertiary">—</span>';
   if (price != null && stock.tp1 != null) {
     tp1Html = price >= stock.tp1
-      ? `<span class="badge badge-tp text-bg-warning-subtle border border-warning-subtle text-warning-emphasis">${stock.tp1} ✓</span>`
-      : `<span class="text-body-secondary">${stock.tp1}</span><span class="diff text-down">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span>`;
+      ? `<span class="badge badge-tp text-bg-warning-subtle border border-warning-subtle text-warning-emphasis">${fmtCompact(stock.tp1)} ✓</span>`
+      : `<span class="text-body-secondary">${fmtCompact(stock.tp1)}</span><span class="diff text-down">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span>`;
   }
   let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp2)}</span>` : '<span class="text-body-tertiary">—</span>';
   if (price != null && stock.tp2 != null && price >= stock.tp2) {
-    tp2Html = `<span class="badge badge-tp text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">${stock.tp2} ✓</span>`;
+    tp2Html = `<span class="badge badge-tp text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">${fmtCompact(stock.tp2)} ✓</span>`;
   }
 
   const monthlyTrend = monthlyTrendHtml(stock);

@@ -235,10 +235,13 @@ function buildCommodityCards(productItems) {
     // 商品列表先按关联公司的行业周期观察顺序排列：化工优先；
     // 同一行业优先级内，再按历史数据覆盖度排序，避免把覆盖度误当成周期位置。
     const cyclePriority = (card) => {
+      // 用户重点关注的生猪与民爆周期品种单独前置，避免被农业/民爆大类排序压后。
+      const itemPriorities = { 'live-hog': 1, 'industrial-explosives': 2 };
+      if (Object.prototype.hasOwnProperty.call(itemPriorities, card.id)) return itemPriorities[card.id];
       const priorities = {
-        '化工': 0, '农药': 1, '农业': 2, '有色': 3, '稀土钨': 4,
-        '贵金属': 5, '钢铁': 6, '能源': 7, '新材料': 8, '轻工': 9,
-        '食品': 10, '动保': 11, '民爆': 12, '装备': 13, '军工': 14
+        '化工': 0, '农药': 3, '农业': 4, '有色': 5, '稀土钨': 6,
+        '贵金属': 7, '钢铁': 8, '能源': 9, '新材料': 10, '轻工': 11,
+        '食品': 12, '动保': 13, '民爆': 14, '装备': 15, '军工': 16
       };
       const groups = (card.stocks || []).map((stock) => stock.group).filter(Boolean);
       return groups.length

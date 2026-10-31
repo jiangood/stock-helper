@@ -94,6 +94,19 @@ class BusinessDataTests(unittest.TestCase):
             actual_ids = {meta.get("marketItemId"), *meta.get("additionalMarketItemIds", [])}
             self.assertTrue(expected_ids.issubset(actual_ids), (code, actual_ids))
 
+    def test_additional_high_revenue_products_are_tracked_without_fake_quotes(self):
+        products = {item["id"]: item for item in fetcher.PRODUCTS}
+        for item_id in (
+            "titanium-products", "cathode-materials", "cast-superalloy",
+            "wrought-superalloy", "steel", "compound-fertilizer",
+            "tungsten-products",
+        ):
+            self.assertIn(item_id, products)
+            self.assertIsNone(products[item_id]["symbol"])
+            payload = fetcher.build_payload({})
+            self.assertIsNone(payload["items"][item_id]["latest"])
+            self.assertEqual(payload["items"][item_id]["status"], "pending")
+
     def test_build_payload_does_not_fabricate_missing_quotes(self):
         payload = fetcher.build_payload({
             "SA": [

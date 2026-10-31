@@ -139,7 +139,7 @@ function buildCommodityCards(productItems) {
   return Array.from(grouped.entries()).map(([itemId, related]) => {
     const market = productItems[itemId] || null;
     const marketMeta = related[0] && related[0].meta || {};
-    const productName = market && market.name || marketMeta.productName || itemId;
+    const productName = market && market.name || (itemId === 'corn' ? '玉米' : itemId === 'soybean-meal' ? '豆粕' : (marketMeta.marketItemId === itemId ? marketMeta.productName : itemId));
     const productHistory = commodityMonthly(market);
     const productPoints = productHistory.points;
     const stocksWithHistory = related.map(({ stock, meta }) => {

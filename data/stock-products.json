@@ -21,9 +21,8 @@
       "note": "公司产品结构与产能利用率会影响价格传导；甲醇未纳入本轮可比序列。"
     },
     "sz000731": {
-      "productName": "尿素",
-      "marketItemId": "urea",
-      "role": "producer",
+      "productName": "天然气供应 / 尿素",
+      "role": "mixed",
       "note": "尿素价格是产品端观察指标，需结合煤气成本、出口政策与销量。"
     },
     "sh600328": {
@@ -57,9 +56,8 @@
       "note": "业务涉及稀土资源与分离加工，产品结构、原料来源会影响价格弹性。"
     },
     "sh600409": {
-      "productName": "纯碱 / 粘胶短纤",
-      "marketItemId": "soda-ash",
-      "role": "mixed",
+      "productName": "粘胶短纤维",
+      "role": "unknown",
       "note": "纯碱仅覆盖部分产品链，粘胶短纤价格及原料成本未纳入。"
     },
     "sh600737": {
@@ -75,15 +73,13 @@
       "note": "TDI价格数据尚未接入；暂不以其他化工品价格替代。"
     },
     "sz000830": {
-      "productName": "尿素 / 己内酰胺等化工品",
-      "marketItemId": "urea",
-      "role": "mixed",
+      "productName": "化工新材料产品",
+      "role": "unknown",
       "note": "尿素仅是产品组合之一，综合盈利还受其他化工品价差影响。"
     },
     "sh600426": {
-      "productName": "尿素 / 醋酸 / 多元醇",
-      "marketItemId": "urea",
-      "role": "mixed",
+      "productName": "新能源新材料相关产品",
+      "role": "unknown",
       "note": "尿素仅是产品组合之一，需结合煤炭成本及其他产品价差。"
     },
     "sz000960": {

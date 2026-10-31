@@ -36,7 +36,8 @@ export function mountLegacyPage({ root, src, title, window: windowLike = window 
   }
 
   function onFrameClick(event) {
-    const anchor = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+    const target = event.target && event.target.nodeType === 1 ? event.target : event.target && event.target.parentElement;
+    const anchor = target && target.closest ? target.closest('a[href]') : null;
     if (!anchor || anchor.target === '_blank' || event.defaultPrevented ||
         (event.button !== 0) || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     let url;

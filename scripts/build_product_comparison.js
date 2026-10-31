@@ -10,7 +10,6 @@ const business = readJson('data/business-data.json');
 const fundamentals = readJson('data/fundamentals.json');
 const companyProducts = readJson('data/company-products.json').products || [];
 const outputPath = path.join(ROOT, 'data/commodity-db/index.json');
-const legacyOutputPath = path.join(ROOT, 'data/product-comparison.json');
 
 function validPoint(point) {
   return point && /^\d{4}-\d{2}(?:-\d{2})?$/.test(String(point.date || '')) &&
@@ -329,8 +328,7 @@ function build() {
     commodityCards,
     cards
   };
-  // The commodity page gets a dedicated, compact database. Stock-only analysis
-  // cards remain in the legacy model only until all readers have migrated.
+  // The commodity page reads this dedicated, compact database directly.
   const commodityDatabase = {
     schemaVersion: 1,
     generatedAt,
@@ -340,8 +338,6 @@ function build() {
   };
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(commodityDatabase, null, 2) + '\n');
-  // Temporary compatibility output; removed after the frontend migration is verified.
-  fs.writeFileSync(legacyOutputPath, JSON.stringify(payload, null, 2) + '\n');
   console.log('Built commodity database:', commodityDatabase.productCount, 'products;', payload.comparableCount + '/' + payload.stockCount, 'stock cards.');
   return payload;
 }

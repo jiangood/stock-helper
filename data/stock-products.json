@@ -153,6 +153,12 @@
       "marketItemId": null,
       "role": "mixed",
       "note": "生猪价格影响养殖收入，玉米和豆粕影响饲料成本，需分开观察。"
+    },
+    "sz002408": {
+      "productName": "顺酐",
+      "marketItemId": "maleic-anhydride",
+      "role": "producer",
+      "note": "齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。"
     }
   }
 }

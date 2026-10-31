@@ -148,7 +148,7 @@ function buildCommodityCards(productItems) {
       const role = (meta.costItemIds || []).includes(itemId) ? 'consumer' : (meta.role || 'unknown');
       return {
         code: stock.code, name: stock.name, group: stock.group || '',
-        role: meta.role || 'unknown',
+        role: (meta.costItemIds || []).includes(itemId) ? 'consumer' : (meta.role || 'unknown'),
         roleLabel: meta.role === 'producer' ? '产品端' : meta.role === 'consumer' ? '成本端' : meta.role === 'mixed' ? '多因素' : '待核实',
         mainRatio: fundamental.mainRatio !== null && fundamental.mainRatio !== undefined && Number.isFinite(Number(fundamental.mainRatio)) ? Number(fundamental.mainRatio) : null,
         source: history.length ? history[history.length - 1].source : null,

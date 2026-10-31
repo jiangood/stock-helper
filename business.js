@@ -26,7 +26,7 @@
   function monthlyLastPoints(points, valueKey) {
     var byMonth = {};
     (Array.isArray(points) ? points : []).forEach(function(p) {
-      if (!p || !/^\\d{4}-\\d{2}-\\d{2}$/.test(p.date) || !(Number(p[valueKey]) > 0)) return;
+      if (!p || !/^\d{4}-\d{2}-\d{2}$/.test(p.date) || !(Number(p[valueKey]) > 0)) return;
       var month = p.date.slice(0, 7);
       if (!byMonth[month] || p.date > byMonth[month].date) byMonth[month] = { date: month, value: Number(p[valueKey]) };
     });
@@ -136,15 +136,15 @@
       var suppliedMonthly = data.monthlyPrices && Array.isArray(data.monthlyPrices.series)
         ? data.monthlyPrices.series.filter(function(p){ return p && Number(p.value)>0 && (p.date || p.label); }).map(function(p){
             return { date: String(p.date || p.label).slice(0, 7), value: Number(p.value) };
-          }).filter(function(p){ return /^\\d{4}-\\d{2}$/.test(p.date); })
+          }).filter(function(p){ return /^\d{4}-\d{2}$/.test(p.date); })
         : [];
       var points = suppliedMonthly.length >= 2 ? suppliedMonthly.slice(-60)
         : monthlyLastPoints(dailyPoints, metricKey);
-      var last = data.latest != null && Number(data.latest)>0 ? Number(data.latest) : (points.length ? Number(points[points.length-1][metricKey]) : null);
+      var last = data.latest != null && Number(data.latest)>0 ? Number(data.latest) : (points.length ? Number(points[points.length-1].value != null ? points[points.length-1].value : points[points.length-1][metricKey]) : null);
       var latestDate = data.latestDate || (points.length ? points[points.length-1].date : null);
       var delta = null;
-      if (points.length > 1 && Number(points[0][metricKey]) > 0) {
-        delta = (Number(points[points.length-1][metricKey]) / Number(points[0][metricKey]) - 1) * 100;
+      if (points.length > 1 && Number(points[0].value != null ? points[0].value : points[0][metricKey]) > 0) {
+        delta = (Number(points[points.length-1].value != null ? points[points.length-1].value : points[points.length-1][metricKey]) / Number(points[0].value != null ? points[0].value : points[0][metricKey]) - 1) * 100;
       } else if (Number.isFinite(Number(data.changePct))) {
         delta = Number(data.changePct);
       }
@@ -206,7 +206,7 @@
         ? '<div class="mt-2 p-2 rounded border"><div class="mini-label">'+esc(inventory.label || '期货仓单库存')+'</div><div class="d-flex justify-content-between align-items-baseline gap-2"><strong>'+formatNumber(inventory.latest)+'</strong><span class="mini-label">较上期 '+inventoryChange+'</span></div><div class="mini-label">日期：'+esc(inventory.latestDate || '—')+' · <a href="'+esc(inventory.sourceUrl || 'https://data.eastmoney.com/ifdata/kcsj.html')+'" target="_blank" rel="noopener noreferrer">数据来源</a></div>'+inventoryChart+'</div>'
         : '<div class="mini-label mt-2">供需指标：该品种暂未取得可靠的自动仓单数据</div>';
       var marketSignalHtml = '';
-      if (points.length >= 4 && inventoryPoints.length >= 4) {
+      if (dailyPoints.length >= 4 && inventoryPoints.length >= 4) {
         var priceBase = Number(dailyPoints[Math.max(0, dailyPoints.length-5)][metricKey]);
         var priceEnd = Number(dailyPoints[dailyPoints.length-1][metricKey]);
         var invBase = Number(inventoryPoints[Math.max(0, inventoryPoints.length-5)].value);

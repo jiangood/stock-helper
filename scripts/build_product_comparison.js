@@ -328,17 +328,34 @@ function build() {
     commodityCards,
     cards
   };
-  // The commodity page reads this dedicated, compact database directly.
+  // Keep the index small: each commodity's complete history lives in its own file.
+  const databaseDir = path.dirname(outputPath);
+  const productsDir = path.join(databaseDir, 'products');
+  fs.mkdirSync(productsDir, { recursive: true });
+  const productEntries = commodityCards.map((card) => {
+    const file = 'products/' + card.id + '.json';
+    fs.writeFileSync(path.join(databaseDir, file), JSON.stringify(card, null, 2) + '\n');
+    return {
+      id: card.id, name: card.name, unit: card.unit, file,
+      status: card.status, latestPrice: card.latestPrice, latestDate: card.latestDate,
+      source: card.source, monthCount: Array.isArray(card.months) ? card.months.length : 0
+    };
+  });
+  const activeFiles = new Set(productEntries.map((item) => path.basename(item.file)));
+  fs.readdirSync(productsDir, { withFileTypes: true }).forEach((entry) => {
+    if (entry.isFile() && entry.name.endsWith('.json') && !activeFiles.has(entry.name)) {
+      fs.unlinkSync(path.join(productsDir, entry.name));
+    }
+  });
   const commodityDatabase = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     generatedAt,
     marketDate: business.updatedAt || null,
-    productCount: commodityCards.length,
-    commodityCards
+    productCount: productEntries.length,
+    products: productEntries
   };
-  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(commodityDatabase, null, 2) + '\n');
-  console.log('Built commodity database:', commodityDatabase.productCount, 'products;', payload.comparableCount + '/' + payload.stockCount, 'stock cards.');
+  console.log('Built commodity database:', commodityDatabase.productCount, 'separate product files;', payload.comparableCount + '/' + payload.stockCount, 'stock cards.');
   return payload;
 }
 if (require.main === module) build();

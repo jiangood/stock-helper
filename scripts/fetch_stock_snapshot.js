@@ -8,6 +8,7 @@ const path = require('node:path');
 const StockQuotes = require('../quotes.js');
 const sectorMonthly = require('./build_sector_monthly.js');
 const researchScores = require('./build_research_scores.js');
+const { aggregateDailyToMonthly } = require('./monthly_kline.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
@@ -188,15 +189,47 @@ async function main() {
     }
 
     // 月线也要跟着最新行情日刷新，否则当月那根月 K 整月停留在月初，板块月线强弱会滞后。
-    if (!monthlyAdjusted || monthlyFetchedFor !== chinaDate) {
+    if (!monthlyAdjusted || !Array.isArray(monthlyAdjusted.bars) || monthlyAdjusted.bars.length === 0 ||
+        monthlyFetchedFor !== chinaDate) {
+      let nativeMonthlyOk = false;
       try {
         const value = await client.fetchKline(code, { period: 'month', count: 240, adjust: 'qfq', force: true });
-        if (validBars(value, 6)) {
+        // IPOs may have fewer than six months of valid history; one real monthly bar is enough.
+        if (validBars(value, 1)) {
           monthlyAdjusted = value;
           monthlyFetchedFor = chinaDate;
+          nativeMonthlyOk = true;
         }
       } catch (error) {
-        console.warn(code + ': monthly K-line unavailable; keeping cache if present (' + error.message + ')');
+        console.warn(code + ': native monthly K-line unavailable (' + error.message + ')');
+      }
+
+      // Fallback: fetch sufficient adjusted daily history and aggregate it into real calendar-month OHLCV.
+      // Do not synthesize prices; every monthly value comes from provider-supplied qfq daily bars.
+      if (!nativeMonthlyOk) {
+        try {
+          const dailyHistory = await client.fetchKline(code, {
+            period: 'day', count: 5000, adjust: 'qfq', force: true
+          });
+          if (validBars(dailyHistory, 1)) {
+            const bars = aggregateDailyToMonthly(dailyHistory.bars, 240);
+            if (bars.length) {
+              monthlyAdjusted = {
+                code,
+                period: 'month',
+                adjust: 'qfq',
+                bars,
+                source: 'aggregated-adjusted-daily'
+              };
+              monthlyFetchedFor = chinaDate;
+            }
+          }
+        } catch (error) {
+          console.warn(code + ': adjusted daily history fallback unavailable (' + error.message + ')');
+        }
+      }
+      if (!monthlyAdjusted || !Array.isArray(monthlyAdjusted.bars) || monthlyAdjusted.bars.length === 0) {
+        console.warn(code + ': monthly K-line still missing; retaining last-known-good cache.');
       }
     }
 
@@ -219,6 +252,9 @@ async function main() {
 
   const good = results.filter(item => item && !item.error && !item.skipped);
   console.log('Stock caches: ' + good.length + '/' + codes.length + ' available; ' + good.filter(item => item.changed).length + ' changed.');
+  const monthlyReady = good.filter(item => item.hasMonthly).length;
+  console.log('Monthly K-line coverage: ' + monthlyReady + '/' + codes.length + ' (' +
+    Math.round(monthlyReady / Math.max(codes.length, 1) * 100) + '%).');
   if (good.length < Math.ceil(codes.length * 0.7)) {
     throw new Error('Too few valid stock caches; preserving existing data where possible.');
   }

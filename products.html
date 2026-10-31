@@ -196,7 +196,7 @@ function render(){
  });
 }
 function load(){
- fetch('data/product-comparison.json?t='+Date.now(),{cache:'no-store'})
+ fetch('data/commodity-db/index.json?t='+Date.now(),{cache:'no-store'})
  .then(function(response){if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
  .then(function(payload){
   if(!payload||!Array.isArray(payload.commodityCards))throw new Error('商品月线数据格式不正确，请等待缓存任务重建');

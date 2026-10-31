@@ -206,6 +206,7 @@ def build(
     # Only refresh when a new completed calendar month is available or the
     # series has never been collected. This avoids re-fetching five years daily.
     target_month = latest_completed_month()
+    backfill_required = int(previous.get("priceWindowMonths") or 0) < PRICE_WINDOW_MONTHS
     existing_latest: dict[str, str] = {}
     existing_counts: dict[str, int] = {}
     for old_row in old_rows:
@@ -226,7 +227,7 @@ def build(
                 existing_latest[old_row["marketItemId"]] = max(existing_latest.get(old_row["marketItemId"], ""), latest)
     refresh_ids = {
         item_id for item_id in PRICE_CONFIG
-        if existing_latest.get(item_id, "") < target_month or existing_counts.get(item_id, 0) < PRICE_WINDOW_MONTHS
+        if existing_latest.get(item_id, "") < target_month or (backfill_required and existing_counts.get(item_id, 0) < PRICE_WINDOW_MONTHS)
     }
     histories, errors = fetch_price_histories(refresh_ids) if fetch_prices and refresh_ids else ({}, {})
     products: list[dict[str, Any]] = []

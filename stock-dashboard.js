@@ -344,7 +344,7 @@ function rowClass(stock) {
 function fmtCompact(value, decimals = 2) {
   const number = Number(value);
   if (!Number.isFinite(number)) return '—';
-  return number.toFixed(decimals).replace(/\\.?0+$/, '');
+  return number.toFixed(decimals).replace(/\.?0+$/, '');
 }
 
 function buildRow(stock) {

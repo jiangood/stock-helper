@@ -86,18 +86,29 @@ test('productMonthly falls back to actual daily spot/futures when monthly K-line
 });
 
 
-test('commodity database builder writes a dedicated page payload', () => {
+test('commodity database index references one independent JSON file per product', () => {
   const fs = require('node:fs');
   const path = require('node:path');
   const root = path.resolve(__dirname, '..');
   const { build } = require('../scripts/build_product_comparison');
   const result = build();
-  const databasePath = path.join(root, 'data/commodity-db/index.json');
-  const database = JSON.parse(fs.readFileSync(databasePath, 'utf8'));
-  assert.equal(database.schemaVersion, 1);
-  assert.equal(database.productCount, database.commodityCards.length);
+  const databaseDir = path.join(root, 'data/commodity-db');
+  const database = JSON.parse(fs.readFileSync(path.join(databaseDir, 'index.json'), 'utf8'));
+  assert.equal(database.schemaVersion, 2);
+  assert.equal(database.productCount, database.products.length);
   assert.equal(database.productCount, result.commodityCount);
   assert.ok(database.productCount > 0);
-  assert.equal(Object.prototype.hasOwnProperty.call(database, 'cards'), false,
-    'the commodity page database must not duplicate the stock-only cards collection');
+  assert.equal(Object.prototype.hasOwnProperty.call(database, 'commodityCards'), false,
+    'the index must not contain full commodity histories');
+  const ids = new Set();
+  database.products.forEach((product) => {
+    assert.ok(!ids.has(product.id), 'product ids must be unique');
+    ids.add(product.id);
+    assert.match(product.file, /^products\\/[a-z0-9-]+\\.json$/);
+    const card = JSON.parse(fs.readFileSync(path.join(databaseDir, product.file), 'utf8'));
+    assert.equal(card.id, product.id);
+    assert.ok(Array.isArray(card.months));
+    assert.ok(Array.isArray(card.productSeries));
+    assert.ok(Array.isArray(card.stocks));
+  });
 });

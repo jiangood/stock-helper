@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-31T16:00:10.000Z",
-  "marketDate": "2026-10-31T16:00:10+00:00",
+  "generatedAt": "2026-10-31T16:06:05.000Z",
+  "marketDate": "2026-10-31T16:06:05+00:00",
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 15,
@@ -964,7 +964,7 @@
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "productStartDate": null,
       "productEndDate": null,
-      "latestPrice": 13900,
+      "latestPrice": 13740,
       "latestDate": "2026-10-31",
       "productChange": null,
       "months": [

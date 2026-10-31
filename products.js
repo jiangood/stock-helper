@@ -105,7 +105,7 @@ function load(){
  .then(function(payload){
   if(!payload||payload.schemaVersion!==2||!Array.isArray(payload.products))throw new Error('商品索引格式不正确，请等待缓存任务重建');
   return Promise.all(payload.products.map(function(product){
-   if(!product||typeof product.file!=='string'||!/^products\\/[a-z0-9-]+\\.json$/.test(product.file))throw new Error('商品索引包含无效文件路径');
+   if(!product||typeof product.file!=='string'||!/^products\/[a-z0-9-]+\.json$/.test(product.file))throw new Error('商品索引包含无效文件路径');
    return fetch('data/commodity-db/'+product.file+'?t='+Date.now(),{cache:'no-store'})
     .then(function(response){if(!response.ok)throw new Error(product.name+'：HTTP '+response.status);return response.json();})
     .then(function(card){if(!card||card.id!==product.id)throw new Error(product.name+'：商品文件与索引不匹配');return card;});

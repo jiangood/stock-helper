@@ -19,7 +19,7 @@ test('应用 JavaScript 文件均可通过语法解析', () => {
 });
 
 test('网页行情入口只使用同源静态缓存适配器', () => {
-  for (const file of ['legacy-stocks.html', 'legacy-stock.html']) {
+  for (const file of ['index.html', 'stock.html']) {
     const html = fs.readFileSync(path.join(root, file), 'utf8');
     assert.match(html, /<script src="static-quotes\.js"><\/script>/, file + ' 未加载静态行情适配器');
     assert.doesNotMatch(html, /<script src="quotes\.js"><\/script>/, file + ' 仍加载外部行情 SDK');
@@ -29,7 +29,7 @@ test('网页行情入口只使用同源静态缓存适配器', () => {
 });
 
 test('首页内嵌 JavaScript 均可通过语法解析', () => {
-  const html = fs.readFileSync(path.join(root, 'legacy-stocks.html'), 'utf8');
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
     .map(match => match[1].trim())
     .filter(Boolean);
@@ -44,7 +44,7 @@ test('首页内嵌 JavaScript 均可通过语法解析', () => {
 
 
 test('首页不展示已移除的年初价、纪律、机器评分和独立研报日期列', () => {
-  const html = fs.readFileSync(path.join(root, 'legacy-stocks.html'), 'utf8');
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   for (const key of ['yearInit', 'screen', 'researchMachine', 'researchDate']) {
     assert.doesNotMatch(html, new RegExp('data-sort="' + key + '"'), key + ' 不应再有表头');
   }
@@ -53,7 +53,7 @@ test('首页不展示已移除的年初价、纪律、机器评分和独立研�
 
 
 test('首页脚本使用版本化 URL，避免浏览器继续执行旧缓存', () => {
-  const html = fs.readFileSync(path.join(root, 'legacy-stocks.html'), 'utf8');
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(html.includes('stock-dashboard.js?v='), '首页 dashboard 脚本必须带版本参数');
 });
 
@@ -81,7 +81,7 @@ test('研报评分 null 不参与数值渲染和筛选', () => {
 
 
 test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称列不显示价格区间状态', () => {
-  const html = fs.readFileSync(path.join(root, 'legacy-stocks.html'), 'utf8');
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
   const toolbarStart = html.indexOf('<div id="stock-toolbar"');
   const toolbarEnd = html.indexOf('<main id="stocks-pane"', toolbarStart);
@@ -103,7 +103,7 @@ test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称�
 });
 
 test('首页表格每行数据单元格数量与表头一致', () => {
-  const html = fs.readFileSync(path.join(root, 'legacy-stocks.html'), 'utf8');
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
   const headerStart = html.indexOf('<thead>');
   const headerEnd = html.indexOf('</thead>', headerStart);
@@ -116,30 +116,4 @@ test('首页表格每行数据单元格数量与表头一致', () => {
   const bodyCells = (rowRenderer.match(/<td\b/g) || []).length;
   assert.equal(bodyCells, headerCells, '首页表头与每行数据列数必须一致');
   assert.doesNotMatch(rowRenderer, /stock\.yearInit|screenHtml\(|researchMachineHtml\(/, '已移除的列不得残留在行渲染中');
-});
-
-
-test('首页是唯一 SPA 壳，旧多页面入口均转入 Hash 路由', () => {
-  const shell = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(shell, /<script type="module" src="src\/main\.js"><\/script>/);
-  assert.match(shell, /id="app-view"/);
-  assert.doesNotMatch(shell, /stock-dashboard\.js|business\.js|products\.js|stock\.js/);
-  for (const [file, route] of [['market.html', '#/market'], ['products.html', '#/products'], ['health.html', '#/health']]) {
-    const legacy = fs.readFileSync(path.join(root, file), 'utf8');
-    assert.ok(legacy.includes(route), file + ' 未转入 SPA 路由');
-  }
-  const stockRedirect = fs.readFileSync(path.join(root, 'stock.html'), 'utf8');
-  assert.match(stockRedirect, /URLSearchParams/);
-  assert.match(stockRedirect, /\/stock\//);
-});
-
-test('SPA 页面入口均由独立页面模块承接，旧脚本隔离在桥接页', () => {
-  const main = fs.readFileSync(path.join(root, 'src/main.js'), 'utf8');
-  for (const page of ['stocks', 'market', 'products', 'stock-detail', 'health']) {
-    assert.ok(main.includes(page), 'SPA 未注册页面：' + page);
-  }
-  const bridge = fs.readFileSync(path.join(root, 'src/pages/legacy-page.js'), 'utf8');
-  assert.match(bridge, /createElement\('iframe'\)|createElement\("iframe"\)/);
-  assert.match(bridge, /addEventListener\('click'/);
-  assert.doesNotMatch(bridge, /innerHTML/);
 });

@@ -108,6 +108,10 @@ test('commodity database index references one independent JSON file per product'
     const card = JSON.parse(fs.readFileSync(path.join(databaseDir, product.file), 'utf8'));
     assert.equal(card.id, product.id);
     assert.ok(Array.isArray(card.months));
+    assert.equal(product.monthCount, card.productMonthCount,
+      'index monthCount must represent commodity prices only');
+    assert.equal(product.stockTimelineMonthCount, card.stockTimelineMonthCount);
+    assert.equal(product.commonMonthCount, card.commonMonthCount);
     assert.ok(Array.isArray(card.productSeries));
     assert.ok(Array.isArray(card.stocks));
     assert.equal(card.productMonthCount, card.productSeries.length,
@@ -121,4 +125,11 @@ test('commodity database index references one independent JSON file per product'
         'a stock history count must not be smaller than its aligned chart points');
     });
   });
+  const maleic = database.products.find((item) => item.id === 'maleic-anhydride');
+  assert.ok(maleic, 'maleic anhydride must remain in the product index');
+  const maleicCard = JSON.parse(fs.readFileSync(path.join(databaseDir, maleic.file), 'utf8'));
+  assert.equal(maleic.monthCount, 0,
+    'stock-only history must never be reported as maleic anhydride price history');
+  assert.ok(maleicCard.stocks.some((stock) => stock.monthCount > 0),
+    'linked equity history should remain available and separately counted');
 });

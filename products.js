@@ -6,6 +6,13 @@ function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,funct
 function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)>0?'+':'')+Number(value).toFixed(2)+'%';}
 function money(value){return value==null||!Number.isFinite(Number(value))?'—':Number(value).toLocaleString('zh-CN',{maximumFractionDigits:2});}
 function normalizedPosition(value,min,max){var n=Number(value);if(!Number.isFinite(n))return null;if(!(max>min))return 0;return Math.max(0,Math.min(1,(n-min)/(max-min)));}
+function productSummaryHtml(series,unit){
+ var points=(Array.isArray(series)?series:[]).filter(function(point){return point&&point.price!=null&&Number.isFinite(Number(point.price));});
+ if(!points.length)return '';
+ var prices=points.map(function(point){return Number(point.price);});
+ var high=Math.max.apply(null,prices),low=Math.min.apply(null,prices);
+ return '<div class="product-summary" aria-label="商品价格统计"><span>最高 '+money(high)+'</span><span>最低 '+money(low)+'</span><span>期初 '+money(prices[0])+'</span><span>当前 '+money(prices[prices.length-1])+'</span><span>'+esc(unit||'')+'</span></div>';
+}
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}
 function destroyCharts(){chartObservers.forEach(function(observer){try{observer.disconnect();}catch(e){}});chartObservers=[];charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
@@ -20,7 +27,7 @@ function render(){
   }).join('');
   var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+'及关联股票归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
   var badge=card.status==='ready'?'数据齐全':'部分数据缺失';
-  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(card.id)+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice)+' <small>'+esc(card.unit||'')+'</small></div></div><div><div class="product-metric-label">共同月线区间（最多 200 根）</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 根月线':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+'<div class="commodity-stocks-title">关联股票月线</div>'+stockRows+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(card.id)+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice)+' <small>'+esc(card.unit||'')+'</small></div></div><div><div class="product-metric-label">共同月线区间（最多 200 根）</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 根月线':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+productSummaryHtml(card.productSeries,card.unit)+'<div class="commodity-stocks-title">关联股票月线</div>'+stockRows+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  list.forEach(function(card,index){
   var node=$('commodity-chart-'+index);

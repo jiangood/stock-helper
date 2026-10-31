@@ -156,3 +156,12 @@ test('商品页趋势图隐藏水平网格线', () => {
   assert.match(products, /splitLine:\{show:false\}/);
   assert.doesNotMatch(products, /splitLine:\{lineStyle:/);
 });
+
+
+test('商品页趋势图下方显示商品最高、最低、期初和当前价格', () => {
+  const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
+  assert.match(products, /function productSummaryHtml\(series,unit\)/);
+  for (const label of ['最高 ', '最低 ', '期初 ', '当前 ']) assert.ok(products.includes(label), '缺少价格统计：' + label);
+  assert.match(products, /productSummaryHtml\(card\.productSeries,card\.unit\)/);
+  assert.match(products, /point\.price!=null&&Number\.isFinite\(Number\(point\.price\)\)/);
+});

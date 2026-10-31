@@ -143,3 +143,9 @@ test('商品页手机端趋势图横向铺满且按容器尺寸自适应', () =>
   assert.ok(products.includes('observer.observe(node)'));
   assert.ok(products.includes('observer.disconnect()'));
 });
+
+
+test('商品页趋势图不显示 Tooltip 悬浮提示', () => {
+  const products = fs.readFileSync(path.join(root, 'products.js'), 'utf8');
+  assert.doesNotMatch(products, /tooltip\s*:/i);
+});

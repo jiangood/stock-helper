@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
-  validateStocks, validateQuotes, validateBars, validateCombatSnapshot, validateFundamentals, validateCacheManifest, validateCacheHealth, validateAll
+  validateStocks, validateQuotes, validateBars, validateFundamentals, validateCacheManifest, validateCacheHealth, validateAll
 } = require('../scripts/validate_stock_data');
 
 const stocks = [
@@ -51,7 +51,7 @@ test('fundamentals retain explicit nulls but reject unknown classifications and 
 
 test('cache manifest and health snapshots validate versions, hashes and counters', () => {
   const entry = {
-    path: 'data/combat-kline.json',
+    path: 'data/stock-quotes.json',
     dataVersion: 'a'.repeat(64),
     sourceVersion: 'b'.repeat(64),
     bytes: 100,
@@ -59,12 +59,12 @@ test('cache manifest and health snapshots validate versions, hashes and counters
     status: 'healthy'
   };
   const manifest = { schemaVersion: 1, builderVersion: 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc', caches: {
-    'market-quotes': entry, 'combat-kline': entry,
+    'market-quotes': entry,
     'research-scores': entry, 'sector-monthly': entry,
     'stock-details-index': entry, 'stock-detail-bundles': entry
   } };
-  assert.equal(validateCacheManifest(manifest), 6);
-  assert.throws(() => validateCacheManifest({ ...manifest, caches: { ...manifest.caches, 'combat-kline': { ...entry, dataVersion: 'bad' } } }), /dataVersion/);
+  assert.equal(validateCacheManifest(manifest), 5);
+  assert.throws(() => validateCacheManifest({ ...manifest, caches: { ...manifest.caches, 'research-scores': { ...entry, dataVersion: 'bad' } } }), /dataVersion/);
   assert.equal(validateCacheHealth({
     schemaVersion: 1, status: 'healthy', cacheCount: 4, healthyCount: 4,
     staleCount: 0, unknownCount: 0, durationMs: 1200, totalBytes: 400
@@ -80,18 +80,4 @@ test('committed project data passes the production data contract', () => {
   assert.ok(result.stocks > 0);
   assert.ok(result.quotes.coverage >= 0.7);
   assert.ok(result.caches.cacheFiles >= Math.ceil(result.stocks * 0.7));
-});
-
-test('combat K-line read model validates stock coverage and bar limit', () => {
-  const payload = {
-    schemaVersion: 1,
-    barLimit: 120,
-    stocks: {
-      sh600000: { bars: [{ time: '2026-10-29', open: 10, close: 11, high: 12, low: 9 }] },
-      sz000001: { bars: [{ time: '2026-10-29', open: 10, close: 11, high: 12, low: 9 }] }
-    }
-  };
-  assert.deepEqual(validateCombatSnapshot(payload, new Set(['sh600000', 'sz000001'])), { stocks: 2, bars: 2 });
-  assert.throws(() => validateCombatSnapshot({ ...payload, barLimit: 200 }, new Set(['sh600000', 'sz000001'])), /barLimit/);
-  assert.throws(() => validateCombatSnapshot({ ...payload, stocks: { sh600000: payload.stocks.sh600000 } }, new Set(['sh600000', 'sz000001'])), /coverage below 70%/);
 });

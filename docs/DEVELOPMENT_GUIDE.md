@@ -19,9 +19,10 @@
 | --- | --- |
 | `index.html` | 自选股票池页面 |
 | `market.html`、`business.js` | 行情与产业链数据展示 |
+| `products.html`、`products.js` | 股票主营产品价格与股价月线对比 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
-| `data/research-reports.json` | 研报原始评分及来源信息 |
+| `data/stock-products.json`、`data/product-comparison.json` | 主营产品映射与 Actions 生成的商品/股价比较读模型 |\n| `data/research-reports.json` | 研报原始评分及来源信息 |
 | `data/fundamentals.json` | 基本面快照 |
 | `data/stock-quotes.json`、`data/stock-cache/` | 行情与个股历史数据 |
 | `data/research-scores.json`、`data/sector-monthly.json` | 页面使用的派生读模型 |
@@ -80,8 +81,8 @@ node scripts/validate_stock_data.js
 - `tests.yml`：构建派生读模型、构建缓存 manifest、运行 JS/Python 测试并校验数据。
 - `stock-snapshot.yml`：采集股票行情与 K 线。
 - `fundamentals.yml`：刷新基本面快照。
-- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、manifest 和健康快照，并校验后发布。
-- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据。
+- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、商品/股价对比、manifest 和健康快照，并校验后发布。
+- `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据；商品工作流同时重建股票主营产品与股价月线比较。
 
 重要原则：
 1. 采集失败或校验失败时保留最后一份有效数据，不发布不合格数据。

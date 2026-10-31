@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-31T08:05:28.000Z",
-  "marketDate": "2026-10-31T08:05:28+00:00",
+  "generatedAt": "2026-10-31T08:11:45.000Z",
+  "marketDate": "2026-10-31T08:11:45+00:00",
   "stockCount": 67,
   "mappedCount": 67,
   "comparableCount": 4,
@@ -1560,7 +1560,7 @@
     },
     {
       "id": "coal",
-      "name": "动力煤",
+      "name": "炼焦煤",
       "unit": "元/吨",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceNote": null,

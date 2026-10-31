@@ -55,9 +55,9 @@ python -m http.server 8089
 
 ## 商品页面：商品与关联股票月线
 
-`products.html` 以商品为中心展示产业链观察卡片，而不是按股票拆成多张卡片。每个商品一张卡片，例如「纯碱」卡片会把纯碱月度参考价格、双环科技和中盐化工的复权月 K 放在同一张图中，使用统一月份横轴；商品实际价格使用左侧纵轴，股票复权月收盘价（元/股）使用右侧纵轴，分别按各自价格量级缩放，不将价格标准化为 100。
+`products.html` 以商品为中心展示产业链观察卡片，而不是按股票拆成多张卡片。每个商品一张卡片，例如「纯碱」卡片会把纯碱月度参考价格、双环科技和中盐化工的复权月 K 放在同一张图中，统一展示最近最多 200 根共同月份月线；商品与每只关联股票分别独立归一化到 0%–100%，悬停显示各自真实价格，不把商品价格与股票价格直接放在同一量纲纵轴。
 
-商品与股票的关联由 `data/stock-products.json` 明确维护，商品价格优先匹配 `data/company-products.json` 中同名产品的历史月度序列（最多 200 根月线），没有可用历史时回退到 `data/business-data.json` 的商品报价；股票月 K 来自 `data/stock-cache/`。`scripts/build_product_comparison.js` 生成 `data/product-comparison.json` 中的 `commodityCards`，把商品月末参考价与关联股票月 K 对齐到共同月份。商品和股票历史不足时明确显示数据缺失，不插值、不估算，也不以相近商品替代。
+商品与股票的关联由 `data/stock-products.json` 明确维护，商品价格优先匹配 `data/company-products.json` 中同名产品的历史月度序列（最多 200 根月线，首次回填约 20 年历史），没有可用历史时回退到 `data/business-data.json` 的商品报价；股票月 K 来自 `data/stock-cache/`。`scripts/build_product_comparison.js` 生成 `data/product-comparison.json` 中的 `commodityCards`，把商品月末参考价与关联股票月 K 对齐到共同月份。商品和股票历史不足时明确显示数据缺失，不插值、不估算，也不以相近商品替代。
 
 图表仅作趋势观察，不代表利润传导或因果关系。商品价格不等于上市公司实际销售均价，关联公司还受其他产品、销量、成本、库存、合同定价、产能利用率等因素影响。商品工作流与静态缓存工作流都会重建比较数据，前端只读取同源静态 JSON。
 

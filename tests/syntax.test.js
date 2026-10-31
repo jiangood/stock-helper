@@ -122,12 +122,12 @@ test('首页表格每行数据单元格数量与表头一致', () => {
 test('首页月线盈亏颜色以入场价为唯一基准：盈利红、亏损绿、持平或缺失灰', () => {
   const dashboard = fs.readFileSync(path.join(root, 'stock-dashboard.js'), 'utf8');
   const start = dashboard.indexOf('function monthlyTrendHtml(stock)');
-  const end = dashboard.indexOf('\\nfunction statusHtml(', start);
+  const end = dashboard.indexOf('\nfunction statusHtml(', start);
   assert.ok(start >= 0 && end > start, '未找到首页月线渲染函数');
   const renderer = dashboard.slice(start, end);
-  assert.match(renderer, /currentPrice > entry[\\s\\S]*monthly-trend-profit/);
-  assert.match(renderer, /currentPrice < entry[\\s\\S]*monthly-trend-loss/);
-  assert.match(renderer, /currentPrice === entry/);
+  assert.match(renderer, /currentPrice > entry[\s\S]*monthly-trend-profit/);
+  assert.match(renderer, /currentPrice < entry[\s\S]*monthly-trend-loss/);
+  assert.match(renderer, /当前价等于入场价，盈亏持平/);
   assert.match(renderer, /monthly-trend-neutral/);
-  assert.doesNotMatch(renderer, /stock\\.tp1|takeProfit|monthly-trend-above-target/);
+  assert.doesNotMatch(renderer, /stock\.tp1|takeProfit|monthly-trend-above-target/);
 });

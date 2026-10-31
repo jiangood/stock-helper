@@ -167,15 +167,32 @@ class _PageParser(HTMLParser):
         return re.sub(r"\s+", " ", " ".join(self.parts)).strip()
 
 
+def caaa_report_date(source_url: str) -> str | None:
+    """Parse CAAA report paths such as /2026/1028/26342.html and legacy /2026/10/28/...."""
+    path = urlparse(source_url).path
+    compact = re.search(r"/(20\\d{2})/(\\d{4})/[^/?#]+\\.html$", path)
+    if compact:
+        try:
+            return datetime.strptime(compact.group(1) + compact.group(2), "%Y%m%d").date().isoformat()
+        except ValueError:
+            return None
+    separated = re.search(r"/(20\\d{2})/(\\d{2})/(\\d{2})/[^/?#]+\\.html$", path)
+    if separated:
+        try:
+            return date(int(separated.group(1)), int(separated.group(2)), int(separated.group(3))).isoformat()
+        except ValueError:
+            return None
+    return None
+
+
 def parse_methionine_report(html: str, source_url: str) -> dict[str, Any] | None:
     """Extract source-published solid methionine quote ranges, not inferred transaction prices."""
     parser = _PageParser()
     parser.feed(html)
     text = parser.text
-    date_match = re.search(r"/(20\d{2})/(\d{2})/(\d{2})/[^/?#]+\.html", source_url)
-    if not date_match:
+    observed_date = caaa_report_date(source_url)
+    if not observed_date:
         return None
-    observed_date = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}"
     table_text = text.split("价格条件", 1)[0]
     markets: dict[str, dict[str, int]] = {}
     names = ("山东", "河南", "河北", "广东")
@@ -227,17 +244,14 @@ def fetch_methionine_public_reports(after_date: str | None = None, max_reports: 
             continue
         if "氨基酸市场价格评估日度报告" not in label:
             continue
-        if not re.search(r"/20\d{2}/\d{2}/\d{2}/[^/?#]+\.html$", absolute):
+        report_day = caaa_report_date(absolute)
+        if not report_day:
             continue
-        date_match = re.search(r"/(20\d{2})/(\d{2})/(\d{2})/", absolute)
-        if not date_match:
-            continue
-        report_day = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}"
         if after_date and report_day < after_date:
             continue
         candidates[absolute] = label
     reports: list[dict[str, Any]] = []
-    for url in sorted(candidates, key=lambda value: tuple(map(int, re.search(r"/(20\d{2})/(\d{2})/(\d{2})/", value).groups())), reverse=True)[:max_reports]:
+    for url in sorted(candidates, key=lambda value: caaa_report_date(value) or "", reverse=True)[:max_reports]:
         try:
             parsed = parse_methionine_report(get_page(url), url)
             if parsed:

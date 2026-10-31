@@ -193,17 +193,20 @@ function build() {
       status: productName === '主营产品映射待核实' ? 'mapping-pending' : !market ? 'product-series-pending' : comparison.status
     };
   });
+  const commodityCards = buildCommodityCards(productItems);
   const payload = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     generatedAt: latestSourceTimestamp(),
     marketDate: business.updatedAt || null,
     stockCount: cards.length,
     mappedCount: cards.filter((card) => card.productName !== '主营产品映射待核实').length,
     comparableCount: cards.filter((card) => card.status === 'ready').length,
+    commodityCount: commodityCards.length,
+    commodityCards,
     cards
   };
   fs.writeFileSync(outputPath, JSON.stringify(payload, null, 2) + '\n');
-  console.log('Built product comparison:', payload.comparableCount + '/' + payload.stockCount, 'cards comparable;', payload.mappedCount, 'product mappings.');
+  console.log('Built product comparison:', payload.comparableCount + '/' + payload.stockCount, 'stock cards;', payload.commodityCards.length, 'commodity cards.');
   return payload;
 }
 if (require.main === module) build();

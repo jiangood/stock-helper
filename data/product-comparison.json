@@ -1103,66 +1103,6 @@
       "note": "铝价是产品端代理，需同时观察氧化铝、电力成本及氧化铝业务贡献。"
     },
     {
-      "id": "coal",
-      "name": "炼焦煤",
-      "unit": "元/吨",
-      "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "sourceNote": null,
-      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": null,
-      "latestDate": "2026-10-31",
-      "productChange": null,
-      "months": [],
-      "productSeries": [],
-      "stocks": [
-        {
-          "code": "sh600348",
-          "name": "华阳股份",
-          "group": "能源",
-          "role": "producer",
-          "roleLabel": "产品端",
-          "mainRatio": 0.8604,
-          "source": "周K月末收盘聚合",
-          "latestDate": "2026-10-29",
-          "latestClose": 8.43,
-          "changePct": null,
-          "values": []
-        }
-      ],
-      "status": "pending",
-      "note": "需区分动力煤与无烟煤/化工用煤，当前煤价序列仅作方向参考。"
-    },
-    {
-      "id": "tio2",
-      "name": "钛白粉",
-      "unit": "元/吨",
-      "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "sourceNote": null,
-      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
-      "latestPrice": null,
-      "latestDate": "2026-10-31",
-      "productChange": null,
-      "months": [],
-      "productSeries": [],
-      "stocks": [
-        {
-          "code": "sz002136",
-          "name": "安纳达",
-          "group": "化工",
-          "role": "producer",
-          "roleLabel": "产品端",
-          "mainRatio": 0.5507,
-          "source": "月K",
-          "latestDate": "2026-10-29",
-          "latestClose": 10.07,
-          "changePct": null,
-          "values": []
-        }
-      ],
-      "status": "pending",
-      "note": "钛白粉价格上行可能改善产品售价，需同时观察钛矿、硫酸等成本。"
-    },
-    {
       "id": "rubber",
       "name": "天然橡胶",
       "unit": "元/吨",
@@ -1249,6 +1189,66 @@
       ],
       "status": "ready",
       "note": "天然橡胶价格是核心产品价格代理，仍需结合加工、贸易业务占比。"
+    },
+    {
+      "id": "coal",
+      "name": "炼焦煤",
+      "unit": "元/吨",
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceNote": null,
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "latestPrice": null,
+      "latestDate": "2026-10-31",
+      "productChange": null,
+      "months": [],
+      "productSeries": [],
+      "stocks": [
+        {
+          "code": "sh600348",
+          "name": "华阳股份",
+          "group": "能源",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.8604,
+          "source": "周K月末收盘聚合",
+          "latestDate": "2026-10-29",
+          "latestClose": 8.43,
+          "changePct": null,
+          "values": []
+        }
+      ],
+      "status": "pending",
+      "note": "需区分动力煤与无烟煤/化工用煤，当前煤价序列仅作方向参考。"
+    },
+    {
+      "id": "tio2",
+      "name": "钛白粉",
+      "unit": "元/吨",
+      "source": "东方财富现货与股票数据（经 AKShare 获取）",
+      "sourceNote": null,
+      "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+      "latestPrice": null,
+      "latestDate": "2026-10-31",
+      "productChange": null,
+      "months": [],
+      "productSeries": [],
+      "stocks": [
+        {
+          "code": "sz002136",
+          "name": "安纳达",
+          "group": "化工",
+          "role": "producer",
+          "roleLabel": "产品端",
+          "mainRatio": 0.5507,
+          "source": "月K",
+          "latestDate": "2026-10-29",
+          "latestClose": 10.07,
+          "changePct": null,
+          "values": []
+        }
+      ],
+      "status": "pending",
+      "note": "钛白粉价格上行可能改善产品售价，需同时观察钛矿、硫酸等成本。"
     },
     {
       "id": "rare-earth",

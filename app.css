@@ -73,6 +73,15 @@
     background-color: var(--bs-body-bg);
     box-shadow: inset -1px 0 0 var(--bs-border-color);
   }
+  /* 首页文字信息列居中：名称、分组、别名；数值列保持原有右对齐。 */
+  .stock-table thead th:first-child,
+  .stock-table tbody td:first-child,
+  .stock-table thead th:nth-child(14),
+  .stock-table tbody td:nth-child(14),
+  .stock-table thead th:nth-child(15),
+  .stock-table tbody td:nth-child(15) {
+    text-align: center;
+  }
   .stock-table thead th:first-child { z-index: 4; background-color: var(--bs-tertiary-bg); }
   .stock-table thead th:nth-child(2),
   .stock-table tbody td:nth-child(2) { text-align: center; }

@@ -7,11 +7,11 @@ function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(N
 function priceScale(value,unit){
  var n=Number(value),base=String(unit||'');
  if(value==null||!Number.isFinite(n))return {value:'—',unit:base||'—'};
- var scale=1,scaledUnit=base;
- if(Math.abs(n)>=10000){scale=10000;scaledUnit=base.replace(/^元/,'万元');}
- else if(Math.abs(n)>=1000){scale=1000;scaledUnit=base.replace(/^元/,'千元');}
- var formatted=(n/scale).toFixed(2).replace(/\\.?0+$/,'');
- return {value:formatted,unit:scaledUnit};
+ var scale=1,suffix='';
+ if(Math.abs(n)>=10000){scale=10000;suffix='万';}
+ else if(Math.abs(n)>=1000){scale=1000;suffix='千';}
+ var formatted=(n/scale).toFixed(2).replace(/\.?(?:0+)$/,'');
+ return {value:formatted+suffix,unit:base||'—'};
 }
 function money(value,unit){return priceScale(value,unit).value;}
 function normalizedPosition(value,min,max){var n=Number(value);if(!Number.isFinite(n))return null;if(!(max>min))return 0;return Math.max(0,Math.min(1,(n-min)/(max-min)));}

@@ -106,7 +106,7 @@ function build() {
     return {
       code: stock.code, name: stock.name, group: stock.group || '',
       productName,
-      mainRatio: Number.isFinite(Number(fundamental.mainRatio)) && Number(fundamental.mainRatio) >= 0 && Number(fundamental.mainRatio) <= 1 ? Number(fundamental.mainRatio) : null,
+      mainRatio: fundamental.mainRatio !== null && fundamental.mainRatio !== undefined && Number.isFinite(Number(fundamental.mainRatio)) && Number(fundamental.mainRatio) >= 0 && Number(fundamental.mainRatio) <= 1 ? Number(fundamental.mainRatio) : null,
       mainBasis: fundamental.mainBasis || null,
       fundamentalDate: fundamental.mainDate || null,
       marketItemId: meta.marketItemId || null,

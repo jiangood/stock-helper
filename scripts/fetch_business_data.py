@@ -18,7 +18,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "data" / "business-data.json"
-LOOKBACK_DAYS = 120
+LOOKBACK_DAYS = 365
 SOURCE_TIMEOUT_SECONDS = 35
 
 PRODUCTS = [
@@ -276,7 +276,7 @@ def fetch_data() -> dict[str, Any]:
             daily_by_symbol["AO"] = clean_series(old_alumina["series"])
 
     core_codes = ["SA", "UR", "MA", "AL", "RU"]
-    missing_history = [code for code in core_codes if len(daily_by_symbol.get(code, [])) < 5]
+    missing_history = [code for code in core_codes if len(daily_by_symbol.get(code, [])) < 200]
     fresh_data = False
 
     # Bootstrap history only when the cache is empty/incomplete. This source is

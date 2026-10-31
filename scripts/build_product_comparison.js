@@ -237,7 +237,7 @@ function buildCommodityCards(productItems) {
         .concat(stockOnlyReady ? ['商品历史月线尚未接入；图表仅展示关联股票前复权月K，各股票分别以自身首月归一化为100，不代表商品与股票价格比较。'] : [])
         .filter(Boolean).join(' ')
     };
-  }).sort((a, b) => {
+  }).filter(Boolean).sort((a, b) => {
     // 商品列表先按关联公司的行业周期观察顺序排列：化工优先；
     // 同一行业优先级内，再按历史数据覆盖度排序，避免把覆盖度误当成周期位置。
     const cyclePriority = (card) => {

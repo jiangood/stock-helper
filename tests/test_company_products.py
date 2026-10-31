@@ -19,6 +19,26 @@ class CompanyProductDatabaseTests(unittest.TestCase):
         self.assertIsNone(MODULE.infer_market_item("锡/锑/锌"))
         self.assertIsNone(MODULE.infer_market_item("PVC、烧碱"))
 
+    def test_unrelated_segment_does_not_inherit_manual_commodity_mapping(self):
+        result = MODULE.build(
+            fetch_prices=False,
+            fundamentals={"stocks": {"sh600000": {
+                "mainItem": "其他(补充)",
+                "mainRatio": 0.2,
+                "mainBasis": "product",
+            }}},
+            stock_products={"byCode": {"sh600000": {
+                "productName": "甲醇",
+                "marketItemId": "methanol",
+            }}},
+            stocks=[{"code": "sh600000", "name": "测试公司"}],
+            previous={},
+        )
+        row = result["products"][0]
+        self.assertEqual(row["productName"], "其他(补充)")
+        self.assertIsNone(row["marketItemId"])
+        self.assertEqual(row["priceStatus"], "unavailable")
+
     def test_monthly_last_uses_last_valid_close_per_month(self):
         rows = [
             {"date": "2025-01-03", "close": 100},

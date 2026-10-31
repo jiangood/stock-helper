@@ -55,8 +55,15 @@
     var history = Array.isArray(item && item.history) ? item.history.filter(function (p) {
       return p && numeric(p.close) > 0 && p.date;
     }) : [];
-    if (range === '1w') return history.slice(-5);
-    return history.slice(-22);
+    var byMonth = {};
+    history.forEach(function(p) {
+      var month = String(p.date).slice(0, 7);
+      if (!/^\d{4}-\d{2}$/.test(month)) return;
+      if (!byMonth[month] || String(p.date) > byMonth[month].date) byMonth[month] = p;
+    });
+    return Object.keys(byMonth).sort().slice(-60).map(function(month) {
+      return { date: month + '-01', close: Number(byMonth[month].close) };
+    });
   }
   function sparkline(history, id) {
     var points = Array.isArray(history) ? history.filter(function (p) { return numeric(p.close) > 0; }) : [];
@@ -89,7 +96,7 @@
     if (!pane) return;
     var overview = document.createElement('div');
     overview.id = 'global-assets-overview';
-    overview.innerHTML = '<div class="ga-section-head"><div><h3 class="panel-title">今日涨跌排行</h3><div class="panel-subtitle">按最近报价的日涨跌幅排序；不同市场交易时段并不一致。</div></div></div>'
+    overview.innerHTML = '<div class="ga-section-head"><div><h3 class="panel-title">最新报价涨跌排行</h3><div class="panel-subtitle">按最近报价的日涨跌幅排序；下方趋势图使用月线收盘价。</div></div></div>'
       + '<div id="global-assets-ranking" class="ga-ranking insight-grid mb-3"></div>'
 ;
     pane.insertBefore(overview, cards);

@@ -50,7 +50,7 @@ python -m http.server 8089
 | `data/sector-monthly.json` `scripts/build_sector_monthly.js` | 板块月线强弱汇总：每只股票近 1/3/6/12 个月涨跌幅，行情页只读这个小文件 |
 | `global-assets.js` `data/global-assets-data.json` | 全球资产页：黄金、比特币、以太坊、日经 225、纳斯达克 100、标普 500、VIX；包含涨跌排行和各资产近一个月迷你趋势图 |
 | `scripts/fetch_global_assets.py` | 从 Yahoo Finance 公开图表接口抓取全球资产报价，抓取失败时保留最近有效值并标记缓存状态 |
-| `.github/workflows/global-assets.yml` | 每日尝试刷新全球资产行情；数据未变化时不更新文件，支持手动触发 |
+| `.github/workflows/global-assets.yml` | 每日尝试刷新全球资产行情及近 5 年月线；数据未变化时不更新文件，支持手动触发 |
 | `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
 | `.github/workflows/business-data.yml` | 工作日每日刷新一次商品数据，数据未变化时不更新文件，也支持手动触发 GitHub Actions |
 
@@ -138,7 +138,7 @@ python -m http.server 8089
 ## 行情数据策略
 
 - 页面只读取 GitHub Pages 同源静态 JSON；东方财富/腾讯行情接口只由 GitHub Actions 采集脚本调用。
-- A 股缓存工作日北京时间收盘后更新；日线每日检查，周线每周检查，月线随最新行情日检查（保证当月月 K 不滞后）。全球资产每日检查，商品数据工作日每日检查。
+- A 股缓存工作日北京时间收盘后更新；日线每日检查，周线每周检查，月线随最新行情日检查（保证当月月 K 不滞后）。全球资产每日检查，保存近 5 年月线收盘序列；行情页趋势图按月展示。商品数据工作日每日检查，行情页商品与原料历史曲线优先展示月线。
 - 采集失败或数据质量不合格时保留上一次有效数据；数据没有实质变化时不更新时间、不产生新的数据提交。
 - 页面每次直接请求同源静态 JSON（`cache: 'no-store'`），不保留浏览器旧数据；网络不可用时明确显示读取失败；池外股票代码不再从浏览器实时回源。
 - 这套设计提供延迟的收盘行情，不是实时行情；GitHub Actions 的定时任务可能延迟。

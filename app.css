@@ -166,7 +166,7 @@
   
   .score-line { display: flex; align-items: baseline; gap: 4px; white-space: nowrap; }
   .score-label { color: var(--bs-secondary-color); font-size: 10px; min-width: 19px; }
-  .score-date { color: var(--bs-secondary-color); font-size: 10px; font-weight: 400; }
+  .score-date { display: block; color: var(--bs-secondary-color); font-size: 10px; font-weight: 400; line-height: 1.25; }
   .score { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; font-weight: 600; }
   .score-good { color: var(--down); }
   .score-mid { color: #b45309; }

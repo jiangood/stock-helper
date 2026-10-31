@@ -6,12 +6,24 @@ function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,funct
 function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)>0?'+':'')+Number(value).toFixed(2)+'%';}
 function money(value){return value==null||!Number.isFinite(Number(value))?'—':Number(value).toLocaleString('zh-CN',{maximumFractionDigits:2});}
 function normalizedPosition(value,min,max){var n=Number(value);if(!Number.isFinite(n))return null;if(!(max>min))return 0;return Math.max(0,Math.min(1,(n-min)/(max-min)));}
-function productSummaryHtml(series,unit){
+function priceStats(series){
  var points=(Array.isArray(series)?series:[]).filter(function(point){return point&&point.price!=null&&Number.isFinite(Number(point.price));});
- if(!points.length)return '';
+ if(!points.length)return null;
  var prices=points.map(function(point){return Number(point.price);});
- var high=Math.max.apply(null,prices),low=Math.min.apply(null,prices);
- return '<div class="product-summary-wrap"><table class="product-summary" aria-label="商品价格对比"><thead><tr><th>最低</th><th>最高</th><th>期初</th><th>当前</th></tr></thead><tbody><tr><td>'+money(low)+'</td><td>'+money(high)+'</td><td>'+money(prices[0])+'</td><td>'+money(prices[prices.length-1])+'</td></tr></tbody></table><span class="product-summary-unit">'+esc(unit||'')+'</span></div>';
+ return {low:Math.min.apply(null,prices),high:Math.max.apply(null,prices),first:prices[0],current:prices[prices.length-1]};
+}
+function comparisonRow(name,type,ratio,unit,series,change,href){
+ var stats=priceStats(series);
+ var ratioText=ratio==null||!Number.isFinite(Number(ratio))?'暂无数据':(Number(ratio)*100).toFixed(1)+'%';
+ var nameHtml=href?'<a class="commodity-stock-name text-body text-decoration-none" href="'+esc(href)+'">'+esc(name)+'</a>':'<strong>'+esc(name)+'</strong>';
+ return '<tr><td>'+nameHtml+'</td><td>'+type+'</td><td>'+ratioText+'</td><td>'+esc(unit||'—')+'</td><td>'+(stats?money(stats.low):'—')+'</td><td>'+(stats?money(stats.high):'—')+'</td><td>'+(stats?money(stats.first):'—')+'</td><td>'+(stats?money(stats.current):'—')+'</td><td class="'+tone(change)+'">'+pct(change)+'</td></tr>';
+}
+function comparisonTableHtml(card){
+ var rows=comparisonRow(displayProductName(card.name),'商品',null,card.unit,card.productSeries,card.productChange,'');
+ rows+=(card.stocks||[]).map(function(stock){
+  return comparisonRow(stock.name,'股票',stock.mainRatio,'元/股',stock.values,stock.changePct,'stock.html?code='+encodeURIComponent(stock.code));
+ }).join('');
+ return '<div class="commodity-table-wrap"><table class="commodity-comparison" aria-label="'+esc(displayProductName(card.name))+'及关联股票价格与主营占比汇总"><thead><tr><th>名称</th><th>类型</th><th>主营占比</th><th>单位</th><th>最低价</th><th>最高价</th><th>期初价</th><th>当前价</th><th>区间涨跌</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}
@@ -21,13 +33,10 @@ function render(){
  var list=cards,node=$('product-cards');
  if(!list.length){node.innerHTML='<div class="product-empty">没有符合条件的商品</div>';return;}
  node.innerHTML=list.map(function(card,index){
-  var stockRows=(card.stocks||[]).map(function(stock){
-   var hasHistory=Array.isArray(stock.values)&&stock.values.length>=2;
-   return '<div class="commodity-stock"><div><a class="commodity-stock-name text-body text-decoration-none" href="stock.html?code='+encodeURIComponent(stock.code)+'">'+esc(stock.name)+'</a><span class="product-meta ms-2">'+esc(stock.roleLabel||'关联观察')+(stock.mainRatio!=null?' · 主营占比 '+(Number(stock.mainRatio)*100).toFixed(1)+'%':'')+'</span></div><div class="commodity-stock-meta">'+(stock.latestClose!=null?'最新复权月收 '+money(stock.latestClose)+' 元':'暂无月线')+' · '+esc(stock.latestDate||'—')+' · 区间 '+pct(stock.changePct)+'</div>'+productSummaryHtml(stock.values,'元/股')+'</div>';
-  }).join('');
+  var comparisonTable=comparisonTableHtml(card);
   var chart=Array.isArray(card.productSeries)&&card.productSeries.length>=2?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+'及关联股票归一化月线，悬停查看真实价格"></div>':'<div class="product-empty">商品与关联股票暂无足够的共同月份，暂不绘图。</div>';
   var badge=card.status==='ready'?'数据齐全':'部分数据缺失';
-  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice)+' <small>'+esc(card.unit||'')+'</small></div></div><div><div class="product-metric-label">共同月线区间（最多 200 根）</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 根月线':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+productSummaryHtml(card.productSeries,card.unit)+'<div class="commodity-stocks-title">关联股票月线</div>'+stockRows+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div><div class="product-meta">'+esc(displayProductName(card.name))+' · '+esc(card.unit||'')+' · 商品数据 '+esc(card.latestDate||'—')+'</div></div><span class="product-status '+(card.status==='ready'?'sync':'')+'">'+badge+'</span></div><div class="commodity-metrics"><div><div class="product-metric-label">商品最新参考价</div><div class="product-metric-value">'+money(card.latestPrice)+' <small>'+esc(card.unit||'')+'</small></div></div><div><div class="product-metric-label">共同月线区间（最多 200 根）</div><div class="product-metric-value">'+(card.months&&card.months.length?card.months.length+' 根月线':'—')+'</div></div><div><div class="product-metric-label">商品区间变化</div><div class="product-metric-value '+tone(card.productChange)+'">'+pct(card.productChange)+'</div></div></div>'+chart+'<div class="commodity-stocks-title">商品及关联股票价格汇总</div>'+comparisonTable+''+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
  }).join('');
  list.forEach(function(card,index){
   var node=$('commodity-chart-'+index);

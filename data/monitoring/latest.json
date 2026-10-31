@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "status": "healthy",
-  "generatedAt": "2026-10-31T07:10:45.393Z",
-  "manifestGeneratedAt": "2026-10-31T07:10:45.393Z",
+  "generatedAt": "2026-10-31T07:11:47.782Z",
+  "manifestGeneratedAt": "2026-10-31T07:11:47.782Z",
   "marketDate": "2026-10-29",
-  "durationMs": 1393,
+  "durationMs": 1782,
   "cacheCount": 5,
   "healthyCount": 5,
   "staleCount": 0,
   "unknownCount": 0,
   "reusedCount": 4,
   "contentReuseRate": 80,
-  "totalBytes": 5309057,
+  "totalBytes": 5610097,
   "caches": [
     {
       "id": "market-quotes",
@@ -39,7 +39,7 @@
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 41905
+      "bytes": 342945
     },
     {
       "id": "stock-detail-bundles",

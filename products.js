@@ -42,7 +42,7 @@ function render(){
   var node=$('commodity-chart-'+index);
   if(!node||!window.echarts||!Array.isArray(card.productSeries)||card.productSeries.length<2)return;
   var chart=window.echarts.init(node);charts.push(chart);
-  var series=[{name:displayProductName(card.name)+'（商品）',type:'line',smooth:false,showSymbol:false,lineStyle:{width:2.5},markPoint:{symbol:'circle',symbolSize:7,data:keyPriceMarks(card.productSeries,card.months,card.unit||'商品价格'),label:{show:true,formatter:function(param){return param.data.name+' '+money(param.data.actualPrice);}}},data:card.productSeries.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:card.unit||'商品价格'};})}];
+  var series=[{name:displayProductName(card.name),type:'line',smooth:false,showSymbol:false,lineStyle:{width:2.5},markPoint:{symbol:'circle',symbolSize:7,data:keyPriceMarks(card.productSeries,card.months,card.unit||'商品价格'),label:{show:true,formatter:function(param){return param.data.name+' '+money(param.data.actualPrice);}}},data:card.productSeries.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:card.unit||'商品价格'};})}];
   (card.stocks||[]).forEach(function(stock){
    if(!Array.isArray(stock.values)||stock.values.length<2)return;
    series.push({name:stock.name,type:'line',smooth:false,showSymbol:false,lineStyle:{width:2},markPoint:{symbol:'circle',symbolSize:7,data:keyPriceMarks(stock.values,card.months,'元/股'),label:{show:true,formatter:function(param){return param.data.name+' '+money(param.data.actualPrice);}}},data:stock.values.map(function(point){return {value:Number(point.index),actualPrice:point.price,actualUnit:'元/股'};} )});

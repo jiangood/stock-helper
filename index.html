@@ -533,9 +533,9 @@ function buildRow(stock) {
   const price = pd ? pd.price : null;
   const e = Croc.evaluate(stock, pd);
 
-  let priceHtml = '<span class="text-body-tertiary">…</span>';
-  let entryHtml = stock.entry != null ? fmtCompact(stock.entry) : '<span class="text-body-tertiary">—</span>';
-  let heavyHtml = stock.heavy != null ? fmtCompact(stock.heavy) : '<span class="text-body-tertiary">—</span>';
+  let priceHtml = '';
+  let entryHtml = stock.entry != null ? fmtCompact(stock.entry) : '';
+  let heavyHtml = stock.heavy != null ? fmtCompact(stock.heavy) : '';
   let entryDiff = '';
   let heavyDiff = '';
   let priceClass = '';
@@ -550,13 +550,13 @@ function buildRow(stock) {
   }
 
   // 止盈列
-  let tp1Html = stock.tp1 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp1)}</span>` : '<span class="text-body-tertiary">—</span>';
+  let tp1Html = stock.tp1 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp1)}</span>` : '';
   if (price != null && stock.tp1 != null) {
     tp1Html = price >= stock.tp1
       ? `<span class="badge badge-tp text-bg-warning-subtle border border-warning-subtle text-warning-emphasis">${fmtCompact(stock.tp1)} ✓</span>`
       : `<span class="text-body-secondary">${fmtCompact(stock.tp1)}</span><span class="diff text-down">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span>`;
   }
-  let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp2)}</span>` : '<span class="text-body-tertiary">—</span>';
+  let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${fmtCompact(stock.tp2)}</span>` : '';
   if (price != null && stock.tp2 != null && price >= stock.tp2) {
     tp2Html = `<span class="badge badge-tp text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">${fmtCompact(stock.tp2)} ✓</span>`;
   }
@@ -564,7 +564,7 @@ function buildRow(stock) {
   const monthlyTrend = monthlyTrendHtml(stock);
   const aliasHtml = stock.alias
     ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
-    : '<span class="text-body-tertiary">—</span>';
+    : '';
   const nameHtml = stock.code
     ? `<a class="stock-name text-decoration-none text-body" href="stock.html?code=${encodeURIComponent(stock.code)}" title="查看 ${esc(stock.name)} 详情">${esc(stock.name)}</a>${statusHtml(e, stock, pd)}`
     : `<span class="stock-name">${esc(stock.name)}</span>${flagHtml(e, stock, pd)}`;
@@ -582,7 +582,7 @@ function buildRow(stock) {
     <td>${fmtRatio(pd && pd.pb)}</td>
     <td>${fmtPct(pd && pd.divYield)}</td>
     <td class="stacked-cell">${researchReportHtml(stock)}</td>
-    <td>${stock.group ? esc(stock.group) : '<span class="text-body-tertiary">—</span>'}</td>
+    <td>${stock.group ? esc(stock.group) : ''}</td>
     <td>${aliasHtml}</td>`;
 }
 
@@ -590,7 +590,7 @@ function buildRow(stock) {
 function monthlyTrendHtml(stock) {
   const bars = monthlyTrends[stock.code];
   if (!Array.isArray(bars) || bars.length < 2) {
-    return '<span class="monthly-trend-empty" title="暂无足够的月线数据">—</span>';
+    return '';
   }
   const values = bars.map(item => Number(item && item.close)).filter(value => Number.isFinite(value) && value > 0);
   if (values.length < 2) return '<span class="monthly-trend-empty" title="暂无足够的月线数据">—</span>';
@@ -652,7 +652,7 @@ function flagHtml(e, stock, quote) {
 
 /** 首页纪律列：5 项可量化选股条件的通过情况 */
 function screenHtml(stock, pd, e) {
-  if (!pd || !e || e.price === null) return '<span class="text-body-tertiary">—</span>';
+  if (!pd || !e || e.price === null) return '';
   const sc = Croc.screen(stock, pd);
   const tip = '选股纪律：非ST · 非亏损 · PE≤30 · 市值≤200亿 · PB<1'
     + (sc.failed.length ? `；未过 ${sc.failed.map(f => f.label).join('、')}` : '')
@@ -676,7 +676,7 @@ function reportBandLabel(score) {
 function researchMachineHtml(stock) {
   const score = researchScores[stock.code];
   const percent = score && score.percent;
-  if (!score || score.points == null || percent == null || !Number.isFinite(score.points) || !Number.isFinite(percent)) return '<span class="text-body-tertiary">—</span>';
+  if (!score || score.points == null || percent == null || !Number.isFinite(score.points) || !Number.isFinite(percent)) return '';
   const max = Number.isFinite(score.max) && score.max > 0 ? score.max : RESEARCH.totalMax;
   const tone = score.band === 'good' ? 'good' : score.band === 'high' ? 'high' : 'mid';
   const band = (RESEARCH.bands.find(item => item.key === score.band) || {}).label || '';
@@ -694,7 +694,7 @@ function researchMachineHtml(stock) {
 /** 研报原始总分独立展示，不回退为机器评分。 */
 function researchReportHtml(stock) {
   const report = REPORT_SCORES[stock.code];
-  if (!report || report.score == null || !Number.isFinite(report.score)) return '<span class="text-body-tertiary">—</span>';
+  if (!report || report.score == null || !Number.isFinite(report.score)) return '';
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const scoreText = Number.isInteger(report.score) ? String(report.score) : report.score.toFixed(1);
   const tip = `研报评分 ${scoreText} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
@@ -706,7 +706,7 @@ function researchReportHtml(stock) {
 /** 研报日期独立展示和排序；过期标记不改变用于排序的原始日期。 */
 function researchDateHtml(stock) {
   const report = REPORT_SCORES[stock.code];
-  if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '<span class="text-body-tertiary">—</span>';
+  if (!report || !/^\d{4}-\d{2}-\d{2}$/.test(report.date || '')) return '';
   return `<span class="score-date">${esc(report.date)}</span>`;
 }
 
@@ -716,7 +716,7 @@ function fmtScore(value) {
 
 /** 市值：元 -> 亿 / 万亿 */
 function fmtCap(cap) {
-  if (cap == null || !(cap > 0)) return '<span class="text-body-tertiary">—</span>';
+  if (cap == null || !(cap > 0)) return '';
   const yi = cap / 1e8;
   if (yi >= 1e4) return `<span class="text-body-secondary">${fmtCompact(yi / 1e4)}<span class="unit">万亿</span></span>`;
   return `<span class="text-body-secondary">${yi >= 1e3 ? yi.toFixed(0) : yi.toFixed(1)}<span class="unit">亿</span></span>`;
@@ -724,13 +724,13 @@ function fmtCap(cap) {
 
 /** 市盈率 / 市净率（负值表示亏损，弱化显示） */
 function fmtRatio(v) {
-  if (v == null || !isFinite(v)) return '<span class="text-body-tertiary">—</span>';
+  if (v == null || !isFinite(v)) return '';
   return `<span class="${v > 0 ? 'text-body-secondary' : 'text-body-tertiary'}">${fmtCompact(v)}</span>`;
 }
 
 /** 股息率（%）：无分红 / 未取到显示 —；≥ 5% 高亮，作为收息参考 */
 function fmtPct(v) {
-  if (v == null || !isFinite(v) || v <= 0) return '<span class="text-body-tertiary">—</span>';
+  if (v == null || !isFinite(v) || v <= 0) return '';
   const cls = v >= 5 ? 'text-body fw-semibold' : 'text-body-secondary';
   return `<span class="${cls}">${fmtCompact(v)}<span class="unit">%</span></span>`;
 }

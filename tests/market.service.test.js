@@ -62,6 +62,7 @@ test('全球资产历史序列按日期排序、过滤无效报价并限制数�
     { date: '2026-10-03', close: 103 },
     { date: '2026-10-04', close: 104 }
   ]);
+  assert.deepEqual(service.normalizeDailyHistory([{ date: '2026-10-01', close: 1 }], 0), []);
 });
 
 test('行情格式化不把缺失数据渲染为零', async () => {

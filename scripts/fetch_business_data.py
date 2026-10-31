@@ -34,6 +34,16 @@ PRODUCTS = [
     {"id": "live-hog", "name": "生猪", "unit": "元/公斤", "symbol": None, "aliases": ["生猪", "活猪"], "stocks": ["天康生物"], "chain": "玉米/豆粕等饲料 → 生猪养殖 → 屠宰及猪肉消费", "drivers": "关注能繁母猪存栏、仔猪价格、出栏体重、养殖成本、猪粮比、屠宰开工和冻品库存。"},
     {"id": "corn", "name": "玉米", "unit": "元/吨", "symbol": "C", "aliases": ["玉米", "黄玉米"], "stocks": ["天康生物"], "chain": "玉米 → 饲料加工 → 生猪养殖", "drivers": "关注产区天气、进口、港口库存、深加工需求和饲料采购。"},
     {"id": "soybean-meal", "name": "豆粕", "unit": "元/吨", "symbol": "M", "aliases": ["豆粕"], "stocks": ["天康生物"], "chain": "大豆压榨 → 豆粕 → 饲料 → 生猪养殖", "drivers": "关注大豆到港、压榨开机、油厂库存、基差和饲料需求。"},
+    {"id": "gold", "name": "黄金", "unit": "元/克", "symbol": "AU", "aliases": ["黄金", "金锭"], "stocks": ["恒邦股份", "株冶集团"], "chain": "金矿/冶炼 → 黄金及金锭", "drivers": "关注美元、实际利率、央行购金、矿山供给与冶炼加工费。"},
+    {"id": "silver", "name": "白银", "unit": "元/千克", "symbol": "AG", "aliases": ["白银", "银锭"], "stocks": ["恒邦股份", "株冶集团"], "chain": "银矿/伴生金属冶炼 → 白银", "drivers": "关注工业需求、光伏用银、金银比、矿山供给及库存。"},
+    {"id": "copper", "name": "电解铜", "unit": "元/吨", "symbol": "CU", "aliases": ["铜", "电解铜"], "stocks": ["恒邦股份", "河钢资源"], "chain": "铜矿 → 冶炼 → 电解铜", "drivers": "关注矿端TC、冶炼开工、库存、美元及电网和新能源需求。"},
+    {"id": "iron-ore", "name": "铁矿石", "unit": "元/吨", "symbol": "I", "aliases": ["铁矿石", "磁铁矿"], "stocks": ["河钢资源"], "chain": "铁矿开采 → 选矿 → 钢铁冶炼", "drivers": "关注澳巴发运、港口库存、钢厂日耗、高炉开工和钢材利润。"},
+    {"id": "tin", "name": "锡", "unit": "元/吨", "symbol": "SN", "aliases": ["锡", "锡锭"], "stocks": ["锡业股份", "华锡有色"], "chain": "锡矿 → 冶炼 → 锡锭", "drivers": "关注缅甸矿供应、冶炼开工、焊料需求、半导体和库存。"},
+    {"id": "zinc", "name": "锌", "unit": "元/吨", "symbol": "ZN", "aliases": ["锌", "锌锭"], "stocks": ["株冶集团"], "chain": "锌精矿 → 冶炼 → 锌锭", "drivers": "关注矿端TC、冶炼利润、镀锌开工、基建需求和库存。"},
+    {"id": "sugar", "name": "白糖", "unit": "元/吨", "symbol": "SR", "aliases": ["白糖", "食糖"], "stocks": ["中粮糖业"], "chain": "甘蔗/甜菜制糖 → 食糖", "drivers": "关注巴西产量、印度出口政策、国内压榨进度、进口和库存。"},
+    {"id": "pvc", "name": "聚氯乙烯", "unit": "元/吨", "symbol": "V", "aliases": ["PVC", "聚氯乙烯"], "stocks": ["中盐化工", "中泰化学", "氯碱化工"], "chain": "电石/乙烯 → PVC → 建材及管材", "drivers": "关注电石成本、装置开工、社会库存、房地产与出口。"},
+    {"id": "caustic-soda", "name": "烧碱", "unit": "元/吨", "symbol": "SH", "aliases": ["烧碱", "液碱"], "stocks": ["氯碱化工"], "chain": "氯碱电解 → 烧碱与氯气", "drivers": "关注氧化铝需求、出口、氯碱开工、液碱库存和氯碱综合利润。"},
+    {"id": "alumina", "name": "氧化铝", "unit": "元/吨", "symbol": "AO", "aliases": ["氧化铝"], "stocks": ["中国铝业"], "chain": "铝土矿 → 氧化铝 → 电解铝", "drivers": "关注铝土矿供应、氧化铝厂开工、港口库存及电解铝产能。"},
 ]
 
 def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:
@@ -369,7 +379,7 @@ def fetch_data() -> dict[str, Any]:
     # futures series, kept separate from the spot/basis series above.
     continuous_symbols = {
         "soda-ash": "SA0", "urea": "UR0", "methanol": "MA0",
-        "aluminium": "AL0", "rubber": "RU0", "corn": "C0", "soybean-meal": "M0",
+        "aluminium": "AL0", "rubber": "RU0", "corn": "C0", "soybean-meal": "M0", "gold": "AU0", "silver": "AG0", "copper": "CU0", "iron-ore": "I0", "tin": "SN0", "zinc": "ZN0", "sugar": "SR0", "pvc": "V0", "caustic-soda": "SH0", "alumina": "AO0",
     }
     old_items_for_monthly = existing_payload.get("items", {}) if isinstance(existing_payload.get("items"), dict) else {}
     for product_id, symbol in continuous_symbols.items():
@@ -482,6 +492,7 @@ def fetch_data() -> dict[str, Any]:
         "corn": ["农副"],
         "soybean-meal": ["农副"],
         "live-hog": ["农副"],
+        "gold": ["有色"], "silver": ["有色"], "copper": ["有色"], "iron-ore": ["钢铁"], "tin": ["有色"], "zinc": ["有色"], "sugar": ["农副"], "pvc": ["化工", "建材"], "caustic-soda": ["化工"], "alumina": ["有色"],
     }
     latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog"}
     categories = list(dict.fromkeys(

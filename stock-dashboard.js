@@ -517,7 +517,7 @@ function researchReportHtml(stock) {
   const tone = report.score >= 80 ? 'good' : report.score >= 70 ? 'mid' : 'high';
   const scoreText = Number.isInteger(report.score) ? String(report.score) : report.score.toFixed(1);
   const tip = `研报评分 ${scoreText} 分 · ${reportBandLabel(report.score)}\n来源：${report.source || '未知'}\n报告日期：${report.date || '日期未知'}`;
-  const dateHtml = /^\\d{4}-\\d{2}-\\d{2}$/.test(report.date || '')
+  const dateHtml = /^\d{4}-\d{2}-\d{2}$/.test(report.date || '')
     ? `<span class="score-date">${esc(report.date.replace(/-/g, '/'))}</span>` : '';
   return `<span class="score score-${tone}" title="${esc(tip)}">${scoreText}</span>${dateHtml}`;
 }

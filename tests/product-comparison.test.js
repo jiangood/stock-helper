@@ -13,6 +13,14 @@ test('monthlyLast keeps the last valid observation in each month', () => {
   assert.deepEqual(result.map((point) => [point.month, point.value]), [['2026-01', 12], ['2026-02', 15]]);
 });
 
+test('monthlyLast accepts month-only dates used by cached monthly K-lines', () => {
+  const result = monthlyLast([
+    { date: '2026-09', value: 8.8 },
+    { date: '2026-10', value: 8.7 }
+  ]);
+  assert.deepEqual(result.map((point) => [point.month, point.value]), [['2026-09', 8.8], ['2026-10', 8.7]]);
+});
+
 test('normalizedComparison aligns common months and uses a common base of 100', () => {
   const result = normalizedComparison(
     [{ month: '2026-01', value: 100 }, { month: '2026-02', value: 110 }],

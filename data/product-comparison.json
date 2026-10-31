@@ -1606,7 +1606,7 @@
           "source": "月K",
           "latestDate": "2026-10",
           "latestClose": 34.21,
-          "changePct": null,
+          "changePct": 78.78,
           "values": [
             {
               "month": "2009-06",
@@ -9120,7 +9120,7 @@
     {
       "id": "maleic-anhydride",
       "name": "顺酐",
-      "unit": "",
+      "unit": "元/吨",
       "source": null,
       "sourceNote": null,
       "sourceUrl": null,

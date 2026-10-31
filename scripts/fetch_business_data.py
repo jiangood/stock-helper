@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fetch public commodity/spot-futures data for the Stock Helper business tab.
 
-Data providers are accessed through AKShare. The script deliberately writes only
-validated numeric observations and never fabricates a quote when a source fails.
+Data providers use AKShare where available; public CAAA reports use the standard library.
+The script writes only validated numeric observations and never fabricates a quote.
 """
 from __future__ import annotations
 
@@ -207,7 +207,7 @@ def parse_methionine_report(html: str, source_url: str) -> dict[str, Any] | None
     }
 
 
-def fetch_methionine_public_reports(max_reports: int = 20) -> list[dict[str, Any]]:
+def fetch_methionine_public_reports(after_date: str | None = None, max_reports: int = 8) -> list[dict[str, Any]]:
     """Read recent public daily reports linked from CAAA's feed-raw-material listing."""
     listing_url = "https://www.caaa.cn/html/fw/market/slyl/"
     headers = {"User-Agent": "Mozilla/5.0 (compatible; StockHelperCommodityBot/1.0)"}
@@ -228,6 +228,12 @@ def fetch_methionine_public_reports(max_reports: int = 20) -> list[dict[str, Any
         if "氨基酸市场价格评估日度报告" not in label:
             continue
         if not re.search(r"/20\d{2}/\d{2}/\d{2}/[^/?#]+\.html$", absolute):
+            continue
+        date_match = re.search(r"/(20\d{2})/(\d{2})/(\d{2})/", absolute)
+        if not date_match:
+            continue
+        report_day = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}"
+        if after_date and report_day < after_date:
             continue
         candidates[absolute] = label
     reports: list[dict[str, Any]] = []
@@ -731,11 +737,13 @@ def fetch_data() -> dict[str, Any]:
     # CAAA republishes 卓创资讯 daily amino-acid reports. Preserve the published
     # regional quote ranges and use the Shandong midpoint only as the chart series.
     try:
-        public_reports = fetch_methionine_public_reports()
+        methionine = payload["items"]["methionine"]
+        old_methionine = old_items.get("methionine", {})
+        old_series = old_methionine.get("series", []) if isinstance(old_methionine, dict) else []
+        old_dates = [date_text(point.get("date")) for point in old_series if isinstance(point, dict)] if isinstance(old_series, list) else []
+        after_date = max((day for day in old_dates if day), default=None)
+        public_reports = fetch_methionine_public_reports(after_date=after_date)
         if public_reports:
-            methionine = payload["items"]["methionine"]
-            old_methionine = old_items.get("methionine", {})
-            old_series = old_methionine.get("series", []) if isinstance(old_methionine, dict) else []
             merged = clean_series((old_series if isinstance(old_series, list) else []) + public_reports)
             if merged:
                 latest_point = merged[-1]

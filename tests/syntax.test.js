@@ -79,6 +79,6 @@ test('首页工具栏仅保留搜索框，分组列紧跟股票名称且名称�
   assert.ok(statusStart >= 0 && statusEnd > statusStart, '未找到名称列状态渲染函数');
   const statusFunction = dashboard.slice(statusStart, statusEnd);
   assert.doesNotMatch(statusFunction, /接近重仓|重仓区|入场区|高于入场|待确认/);
-  assert.match(dashboard, /<td>\\$\\{stock\\.group/);
-  assert.doesNotMatch(dashboard, /\\$\\('(group-filter|status-filter)'\\)/);
+  assert.ok(dashboard.includes('<td>${stock.group'), '分组单元格应紧跟股票名称');
+  assert.equal(dashboard.includes("$('group-filter')") || dashboard.includes("$('status-filter')"), false);
 });

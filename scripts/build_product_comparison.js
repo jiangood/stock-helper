@@ -84,7 +84,7 @@ function commodityMonthly(item) {
     const selected = candidates[0];
     const points = monthlyLast(selected.priceSeries.map((point) => ({
       date: point.date || (point.month ? point.month + '-01' : ''),
-      value: Number(point.price)
+      value: Number(point.price) / (item.id === 'live-hog' ? 1000 : 1)
     })));
     if (points.length >= 2) return {
       points,

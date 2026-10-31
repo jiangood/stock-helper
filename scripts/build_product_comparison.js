@@ -155,12 +155,18 @@ function buildCommodityCards(productItems) {
       };
     });
     const availableStocks = stocksWithHistory.filter((stock) => stock.history.length);
-    const commonMonths = productPoints.map((point) => point.month).filter((month) =>
-      availableStocks.every((stock) => stock.history.some((point) => point.month === month))
-    ).sort().slice(-MONTHLY_BAR_LIMIT);
+    const hasProductHistory = productPoints.length > 0;
+    const stockOnlyMonths = !hasProductHistory
+      ? Array.from(new Set(stocksWithHistory.flatMap((stock) => stock.history.map((point) => point.month)))).sort().slice(-MONTHLY_BAR_LIMIT)
+      : [];
+    const commonMonths = hasProductHistory
+      ? productPoints.map((point) => point.month).filter((month) =>
+          availableStocks.every((stock) => stock.history.some((point) => point.month === month))
+        ).sort().slice(-MONTHLY_BAR_LIMIT)
+      : stockOnlyMonths;
     const productMap = new Map(productPoints.map((point) => [point.month, point]));
     const firstMonth = commonMonths[0];
-    const productBase = firstMonth ? productMap.get(firstMonth).value : null;
+    const productBase = firstMonth && productMap.get(firstMonth) ? productMap.get(firstMonth).value : null;
     const productSeries = commonMonths.length >= 2 && productBase > 0 ? commonMonths.map((month) => ({
       month,
       index: Number((productMap.get(month).value / productBase * 100).toFixed(2)),
@@ -168,12 +174,17 @@ function buildCommodityCards(productItems) {
     })) : [];
     const stockSeries = stocksWithHistory.map((stock) => {
       const historyMap = new Map(stock.history.map((point) => [point.month, point]));
-      const base = firstMonth && historyMap.get(firstMonth) ? historyMap.get(firstMonth).value : null;
-      const values = commonMonths.length >= 2 && base > 0 ? commonMonths.map((month) => ({
-        month,
-        index: Number((historyMap.get(month).value / base * 100).toFixed(2)),
-        price: Number(historyMap.get(month).value.toFixed(4))
-      })) : [];
+      const base = hasProductHistory
+        ? (firstMonth && historyMap.get(firstMonth) ? historyMap.get(firstMonth).value : null)
+        : (stock.history.length ? stock.history[0].value : null);
+      const values = commonMonths.length >= 2 && base > 0 ? commonMonths.map((month) => {
+        const point = historyMap.get(month);
+        return {
+          month,
+          index: point ? Number((point.value / base * 100).toFixed(2)) : null,
+          price: point ? Number(point.value.toFixed(4)) : null
+        };
+      }) : [];
       const first = values[0], last = values[values.length - 1];
       return {
         code: stock.code, name: stock.name, group: stock.group, role: stock.role,
@@ -188,7 +199,8 @@ function buildCommodityCards(productItems) {
     // 即使没有足够历史序列，也保留采集器提供的最新有效现货/参考报价。
     const marketLatest = market && [market.latestSpot, market.latest].map(Number).find((value) => Number.isFinite(value) && value > 0);
     const latestPrice = latestProduct ? latestProduct.value : (marketLatest === undefined ? null : marketLatest);
-    const ready = commonMonths.length >= 2 && stocksWithHistory.every((stock) => stock.history.length > 0);
+    const ready = hasProductHistory && commonMonths.length >= 2 && stocksWithHistory.every((stock) => stock.history.length > 0);
+    const stockOnlyReady = !hasProductHistory && stockSeries.some((stock) => stock.values.filter((point) => point.price !== null).length >= 2);
     return {
       id: itemId, name: productName, unit: market && market.unit || '',
       source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: market && market.sourceUrl || null,
@@ -196,8 +208,10 @@ function buildCommodityCards(productItems) {
       latestDate: latestProduct ? latestProduct.date : market && market.latestDate || null,
       productChange: productSeries.length >= 2 ? pct(productSeries[0].price, productSeries[productSeries.length - 1].price) : null,
       months: commonMonths, productSeries, stocks: stockSeries,
-      status: ready ? 'ready' : 'pending',
-      note: [productHistory.note].concat(related.map(({ meta }) => meta.note).filter(Boolean)).filter(Boolean).join(' ')
+      status: ready ? 'ready' : stockOnlyReady ? 'stock-only' : 'pending',
+      note: [productHistory.note].concat(related.map(({ meta }) => meta.note).filter(Boolean))
+        .concat(stockOnlyReady ? ['商品历史月线尚未接入；图表仅展示关联股票前复权月K，各股票分别以自身首月归一化为100，不代表商品与股票价格比较。'] : [])
+        .filter(Boolean).join(' ')
     };
   }).sort((a, b) => {
     // Put cards with usable market history first; among them, prefer broader coverage.

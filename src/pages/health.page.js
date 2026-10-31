@@ -7,7 +7,7 @@ function createElement(documentLike, tag, className, text) {
   return element;
 }
 
-export async function mount({ root }) {
+export function mount({ root }) {
   const documentLike = root.ownerDocument;
   const controller = new AbortController();
   const page = createElement(documentLike, 'main', 'container-xxl py-3');
@@ -62,9 +62,11 @@ export async function mount({ root }) {
 
   root.replaceChildren(page);
 
+  let mounted = true;
+  async function load() {
   try {
     const { manifest, health } = await fetchCacheHealth({ signal: controller.signal });
-    if (controller.signal.aborted) return () => controller.abort();
+    if (!mounted || controller.signal.aborted) return;
     metrics.healthy.textContent = health.healthyCount + ' / ' + health.cacheCount;
     metrics.duration.textContent = Number.isFinite(health.durationMs) ? (health.durationMs / 1000).toFixed(2) + ' 秒' : '—';
     metrics.reuse.textContent = Number.isFinite(health.contentReuseRate) ? health.contentReuseRate + '%' : '—';
@@ -84,13 +86,16 @@ export async function mount({ root }) {
       cacheList.append(row);
     }
   } catch (error) {
-    if (controller.signal.aborted) return () => controller.abort();
+    if (!mounted || controller.signal.aborted) return;
     metrics.healthy.textContent = '不可用';
     cacheList.textContent = '缓存监控读取失败：' + error.message;
     updated.textContent = '请检查 GitHub Actions 最近一次成功的缓存构建。';
   }
+  }
 
+  load();
   return () => {
+    mounted = false;
     controller.abort();
     root.replaceChildren();
   };

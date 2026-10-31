@@ -537,7 +537,10 @@ function esc(s) {
 // 行情（通过同源静态缓存获取）
 // ============================================================
 async function loadPrices(manual, options) {
-  if (!STOCKS.length) return;
+  if (!STOCKS.length) {
+    if (manual) showToast('股票清单尚未加载完成，请稍后重试。');
+    return;
+  }
   if (manual) spinRefresh();
 
   try {
@@ -553,6 +556,8 @@ async function loadPrices(manual, options) {
     console.error('获取行情失败:', e);
     if (!(options && options.deferRender)) showToast('行情获取失败：' + e.message);
     else console.warn('行情加载失败，页面将保留基础股票清单：', e.message);
+  } finally {
+    if (manual) finishRefresh();
   }
 }
 
@@ -561,17 +566,25 @@ function spinRefresh() {
   if (!btn) return;
   btn.setAttribute('aria-busy', 'true');
   btn.disabled = true;
-  clearTimeout(btn._t);
-  btn._t = setTimeout(() => {
-    btn.removeAttribute('aria-busy');
-    btn.disabled = false;
-  }, 700);
+}
+
+function finishRefresh() {
+  const btn = $('refresh-btn');
+  if (!btn) return;
+  btn.removeAttribute('aria-busy');
+  btn.disabled = false;
 }
 
 /** 重新读取同源静态行情缓存 */
-function refreshQuotes() {
-  if (window.StockBusiness && typeof window.StockBusiness.reloadSectors === 'function') window.StockBusiness.reloadSectors();
-  loadPrices(true);
+async function refreshQuotes() {
+  if (window.StockBusiness && typeof window.StockBusiness.reloadSectors === 'function') {
+    try {
+      await window.StockBusiness.reloadSectors();
+    } catch (e) {
+      console.warn('板块数据刷新失败：', e);
+    }
+  }
+  await loadPrices(true);
 }
 window.refreshQuotes = refreshQuotes;
 
@@ -774,43 +787,63 @@ function setPageLoading(message, done) {
 (async function init() {
   const startedAt = performance.now();
   const page = document.body.dataset.page || 'stocks';
-  if (page === 'stocks') sortState = { col: 'entry', dir: 1 };
-  syncHeaderHeight();
-  bindSortButtons();
-  updateSortUI();
-  bindScrollHint();
-  applyTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
-  setPageLoading('正在加载股票清单…');
-  const stocksStartedAt = performance.now();
-  await loadStocks();
-  const stocksLoadedAt = performance.now();
-  if (!STOCKS.length) {
-    setPageLoading('股票清单加载失败，请检查网络后刷新。');
-    return;
-  }
-  setPageLoading('股票清单已显示，正在并行读取评分与行情…');
-  // 评分和行情互不依赖：并行请求，行情完成时暂不触发重复渲染。
-  const results = await Promise.allSettled([
-    loadResearchScores(),
-    loadReportScores(),
-    loadPrices(false, { deferRender: true }),
-    loadMonthlyTrends()
-  ]);
-  if (STOCKS.length) applyFilter();
-  const finishedAt = performance.now();
-  setPageLoading('', true);
-  console.info('[StockDashboard] 初始化耗时', {
-    stocksMs: Math.round(stocksLoadedAt - stocksStartedAt),
-    enrichmentMs: Math.round(finishedAt - stocksLoadedAt),
-    totalMs: Math.round(finishedAt - startedAt),
-    enrichment: results.map((result, index) => ({
-      task: ['researchScores', 'reportScores', 'quotes', 'monthlyTrends'][index],
-      status: result.status
-    }))
-  });
-  if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
-  if (page === 'market') {
-    if (window.StockBusiness) window.StockBusiness.onTab('market');
-    if (window.StockGlobalAssets) window.StockGlobalAssets.onTab('market');
+  let keepLoadingMessage = false;
+  try {
+    if (page === 'stocks') sortState = { col: 'entry', dir: 1 };
+    syncHeaderHeight();
+    bindSortButtons();
+    updateSortUI();
+    bindScrollHint();
+    applyTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
+    setPageLoading('正在加载股票清单…');
+    const stocksStartedAt = performance.now();
+    await loadStocks();
+    const stocksLoadedAt = performance.now();
+    if (!STOCKS.length) {
+      setPageLoading('股票清单加载失败，请检查网络后刷新。');
+      keepLoadingMessage = true;
+      return;
+    }
+    setPageLoading('股票清单已显示，正在并行读取评分与行情…');
+    // 评分和行情互不依赖：并行请求；单项失败时保留基础股票清单。
+    const results = await Promise.allSettled([
+      loadResearchScores(),
+      loadReportScores(),
+      loadPrices(false, { deferRender: true }),
+      loadMonthlyTrends()
+    ]);
+    if (STOCKS.length) applyFilter();
+    const finishedAt = performance.now();
+    console.info('[StockDashboard] 初始化耗时', {
+      stocksMs: Math.round(stocksLoadedAt - stocksStartedAt),
+      enrichmentMs: Math.round(finishedAt - stocksLoadedAt),
+      totalMs: Math.round(finishedAt - startedAt),
+      enrichment: results.map((result, index) => ({
+        task: ['researchScores', 'reportScores', 'quotes', 'monthlyTrends'][index],
+        status: result.status
+      }))
+    });
+    if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
+    if (page === 'market') {
+      if (window.StockBusiness) window.StockBusiness.onTab('market');
+      if (window.StockGlobalAssets) window.StockGlobalAssets.onTab('market');
+    }
+  } catch (e) {
+    console.error('[StockDashboard] 页面初始化失败：', e);
+    try {
+      if (STOCKS.length) applyFilter();
+    } catch (renderError) {
+      console.error('[StockDashboard] 基础列表渲染失败：', renderError);
+    }
+    showErrorDialog({
+      time: new Date().toISOString(),
+      type: '首页初始化异常',
+      message: e && e.message ? e.message : String(e),
+      stack: e && e.stack || '',
+      page: location.href
+    });
+    showToast('页面初始化遇到问题，已尝试保留股票清单。');
+  } finally {
+    if (!keepLoadingMessage) setPageLoading('', true);
   }
 })();

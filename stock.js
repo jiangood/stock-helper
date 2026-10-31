@@ -30,18 +30,6 @@
   let REPORTS = {};
   let DISCIPLINE_RULES = null;
 
-  let DAY_FAILED = false;
-
-  /* 补仓（日线）判定阈值（集中调参） */
-  const ADD_RULES = {
-    supportDist: 3,    // 距支撑多少 % 以内算到支撑
-    mfiLow: 20,        // MFI < 20 后回升上穿
-    mfiRecoverBars: 10,
-    maPeriod: 20,
-    obvLookback: 20,
-    profileLookback: 120
-  };
-
   let chartTab = 'month';
   let chart = null;
   let chartKey = '';
@@ -215,7 +203,7 @@
       };
     }
     renderResearchScore();
-    if (DETAIL) renderDiscipline(DETAIL);
+
   }
 
   /** 读取 Actions 预计算的 32 分制评分；缺失时卡片显示「暂无」 */
@@ -232,7 +220,7 @@
       RESEARCH_SCORE = null;
     }
     renderResearchScore();
-    if (DETAIL) renderDiscipline(DETAIL);
+
   }
 
   async function loadQuote(force) {
@@ -248,7 +236,6 @@
       klineCache.dayRaw = toKline('day', 'none', bundle.dailyRaw);
       klineCache.week = toKline('week', 'qfq', bundle.weeklyAdjusted);
       klineCache.month = toKline('month', 'qfq', bundle.monthlyAdjusted);
-      DAY_FAILED = !klineCache.day;
       HISTORY = klineCache.month;
       historyAt = HISTORY ? Date.now() : 0;
       if (klineCache.day) apply52WeekFallback(klineCache.day.bars);
@@ -277,8 +264,6 @@
     if (manual) spinRefresh();
     const ok = await loadQuote(manual);
     if (!ok) return;
-    if (manual) {
-    }
     loadChart(chartTab, false).catch(() => {});
     if (manual) showToast('已重新读取静态行情缓存', 'success');
   }
@@ -289,11 +274,7 @@
     renderHeader();
     renderQuote(DETAIL);
     renderValuation(DETAIL);
-    renderPlan(DETAIL);
-    renderAdd(DETAIL);
-    renderDiscipline(DETAIL);
     renderResearchScore();
-    renderDecisionSummary(DETAIL);
     updateCalc();
   }
 
@@ -519,11 +500,7 @@
 
   /** 预取日 K，并在详情源缺少 52 周高低时用日 K 补算（同时加速「日K」标签切换） */
   async function warmupDaily() {
-    if (klineCache.day) {
-      renderDiscipline(DETAIL);
-      renderAdd(DETAIL);
-      return;
-    }
+    if (klineCache.day) return;
     try {
       // 趋势/均线使用前复权 K；涨停幅度和涨停价必须使用未复权 K。
       const [adjusted, raw] = await Promise.allSettled([
@@ -534,15 +511,11 @@
       if (adjusted.status !== 'fulfilled') throw adjusted.reason;
 
       klineCache.day = adjusted.value;
-      DAY_FAILED = false;
       apply52WeekFallback(klineCache.day.bars);
-      renderDiscipline(DETAIL);
-      renderAdd(DETAIL);
-      renderDecisionSummary(DETAIL);
+
     } catch (e) {
       /* 日 K 失败不影响主流程 */
-      DAY_FAILED = true;
-      renderAdd(DETAIL);
+      
     }
   }
 
@@ -554,8 +527,6 @@
       HISTORY = res;
       historyAt = Date.now();
       renderHistoryRange();
-      renderDiscipline(DETAIL);
-      renderDecisionSummary(DETAIL);
     } catch (e) {
       /* 月 K 失败不影响主流程 */
       HISTORY = { bars: [] };
@@ -581,348 +552,6 @@
     renderInsightTags(DETAIL);
   }
 
-  /* ────────────────────────── 补仓数据 ────────────────────────── */
-
-  function dayBars() {
-    return klineCache.day && Array.isArray(klineCache.day.bars) ? klineCache.day.bars : [];
-  }
-
-  function badge(el, text, cls) {
-    if (!el) return;
-    el.textContent = text;
-    el.className = 'badge rounded-pill ' + cls;
-  }
-
-  /** MFI < 20 后回升上穿 20 */
-  function mfiRecovery(series) {
-    const vals = Array.isArray(series) ? series : [];
-    const n = vals.length;
-    if (n < 3) return null;
-    const latest = vals[n - 1];
-    if (!isNum(latest) || latest < ADD_RULES.mfiLow) return null;
-
-    const from = Math.max(0, n - 1 - ADD_RULES.mfiRecoverBars);
-    for (let i = n - 2; i >= from; i--) {
-      if (isNum(vals[i]) && vals[i] < ADD_RULES.mfiLow) {
-        return { barsAgo: n - 1 - i, low: vals[i], latest };
-      }
-    }
-    return null;
-  }
-
-  /** 距 POC / 价值区下沿 / 重仓价的最近支撑 */
-  function nearestSupport(price, profile, plan) {
-    if (!isNum(price) || price <= 0) return null;
-    const cands = [];
-    if (profile) {
-      if (isNum(profile.poc)) cands.push({ label: 'POC', value: profile.poc });
-      if (isNum(profile.val)) cands.push({ label: '价值区下沿', value: profile.val });
-    }
-    if (plan && isNum(plan.heavy) && plan.heavy > 0) {
-      cands.push({ label: '重仓价', value: plan.heavy });
-    }
-    let best = null;
-    for (const c of cands) {
-      if (!(c.value > 0)) continue;
-      const dist = Math.abs(price / c.value - 1) * 100;
-      if (!best || dist < best.dist) best = { label: c.label, value: c.value, dist };
-    }
-    return best;
-  }
-
-  function renderAdd(d) {
-    if (!d || typeof TechInd === 'undefined') return;
-    const price = d.price;
-    const bars = dayBars();
-    const dayNote = DAY_FAILED ? '日K 不可用' : '日K 加载中…';
-    const profile = bars.length >= 20
-      ? TechInd.volumeProfile(bars, { bins: 30, lookback: ADD_RULES.profileLookback }) : null;
-    const mfiRes = bars.length >= 16 ? TechInd.mfi(bars, 14) : null;
-    const mfi = mfiRes ? mfiRes.latest : null;
-    const div = mfiRes ? TechInd.detectDivergence(bars, mfiRes.series) : null;
-    const bottomDiv = div && div.type === 'bottom' ? div : null;
-    const recover = mfiRes ? mfiRecovery(mfiRes.series) : null;
-
-    const maRes = bars.length >= ADD_RULES.maPeriod ? TechInd.ma(bars, ADD_RULES.maPeriod) : null;
-    const maLatest = maRes ? maRes.latest : null;
-    const aboveMa = isNum(maLatest) && isNum(price) && price > maLatest;
-
-    let obvNewLow = null;
-    if (bars.length >= ADD_RULES.obvLookback) {
-      const obvRes = TechInd.obv(bars);
-      const arr = obvRes.series.slice(-ADD_RULES.obvLookback).filter(isNum);
-      if (arr.length >= 2) obvNewLow = arr[arr.length - 1] <= Math.min.apply(null, arr.slice(0, -1));
-    }
-
-    const trendKnown = isNum(maLatest) || obvNewLow !== null;
-    const trendOk = aboveMa || obvNewLow === false;
-
-    const support = nearestSupport(price, profile, PLAN);
-    const supportOk = !!support && support.dist <= ADD_RULES.supportDist;
-    const confirmOk = !!bottomDiv || !!recover;
-    const confirmKnown = !!mfiRes;
-    const score = [supportOk, confirmOk, trendOk].filter(Boolean).length;
-
-    let text = DAY_FAILED ? '日K 不可用' : '加载中…';
-    let tone = 'text-bg-secondary';
-    if (!bars.length) {
-      // 日 K 尚未返回
-    } else if (score >= 3) { text = '可考虑分批补仓'; tone = 'text-bg-success'; }
-    else if (score === 2) { text = '小仓试探'; tone = 'text-bg-warning'; }
-    else { text = '观望'; tone = 'text-bg-secondary'; }
-    badge($('add-badge'), text, tone);
-
-    const checks = [];
-
-    if (!support) {
-      checks.push(checkItem('neutral', '① 到支撑', '—', bars.length ? '筹码 / 重仓价数据不足' : dayNote));
-    } else {
-      checks.push(checkItem(
-        supportOk ? 'ok' : 'warn',
-        '① 到支撑',
-        `${fmtNum(price)} · 距${support.label} ${support.dist.toFixed(1)}%`,
-        `${support.label} ${fmtNum(support.value)}（阈值 ${ADD_RULES.supportDist}%）`
-      ));
-    }
-
-    if (!confirmKnown) {
-      checks.push(checkItem('neutral', '② 资金确认', '—', dayNote));
-    } else if (bottomDiv) {
-      checks.push(checkItem('ok', '② 资金确认', `MFI ${fmtNum(mfi, 1)}`,
-        `MFI 底背离：${bottomDiv.barsAgo} 根前枢轴，指标 +${bottomDiv.indDelta.toFixed(1)}`));
-    } else if (recover) {
-      checks.push(checkItem('ok', '② 资金确认', `MFI ${fmtNum(mfi, 1)}`,
-        `MFI ${recover.low.toFixed(1)} 后回升上穿 ${ADD_RULES.mfiLow}（${recover.barsAgo} 根前）`));
-    } else {
-      checks.push(checkItem('warn', '② 资金确认', mfi === null ? '—' : `MFI ${mfi.toFixed(1)}`,
-        '无底背离，也未上穿 20'));
-    }
-
-    if (!trendKnown) {
-      checks.push(checkItem('neutral', '③ 趋势过滤', '—', dayNote));
-    } else {
-      const trendText = trendOk ? '趋势未破' : '趋势偏弱';
-      const note = [
-        isNum(maLatest) ? `MA20 ${fmtNum(maLatest)}（现价在其${aboveMa ? '上方' : '下方'}）` : 'MA20 —',
-        obvNewLow === null ? 'OBV —' : obvNewLow ? 'OBV 20 日创新低' : 'OBV 未创新低'
-      ].join(' · ');
-      checks.push(checkItem(trendOk ? 'ok' : 'bad', '③ 趋势过滤', trendText, note));
-    }
-
-    $('add-checks').innerHTML = checks.join('');
-
-    const hint = $('add-hint');
-    let hintCls = 'alert-secondary';
-    let hintText;
-    if (!bars.length) {
-      hintText = DAY_FAILED
-        ? '日K 获取失败，补仓面板暂不可用；不影响行情展示。'
-        : '日K 数据加载中；补仓看日线是否止跌，三项缺一即降级。';
-    } else if (score >= 3) {
-      hintCls = 'alert-success';
-      hintText = '三项齐备：价格到支撑、资金出现确认、趋势未破。可考虑分批补仓，单次不超过计划仓位的 1/3。';
-    } else if (score === 2) {
-      hintCls = 'alert-warning';
-      hintText = '只满足 2/3，小仓试探；等缺失项补齐，不要一次打满。';
-    } else {
-      hintText = `仅满足 ${score}/3，观望；补仓看日线止跌，不接下跌趋势。`;
-    }
-    hint.className = `alert ${hintCls} mt-3 mb-0 py-2 px-3`;
-    hint.textContent = hintText + ' 辅助参考，不构成投资建议。';
-
-    $('add-stats').innerHTML = [
-      ['POC', profile ? fmtNum(profile.poc) : '—'],
-      ['价值区下沿', profile ? fmtNum(profile.val) : '—'],
-      ['价值区上沿', profile ? fmtNum(profile.vah) : '—'],
-      ['MA20', fmtNum(maLatest)],
-      ['日线 MFI', mfi === null ? '—' : mfi.toFixed(1)],
-      ['OBV 20日', obvNewLow === null ? '—' : obvNewLow ? '新低' : '未创新低'],
-      ['距支撑', support ? `${support.label} ${support.dist.toFixed(1)}%` : '—'],
-      ['筹码样本', profile ? `${profile.count} 根` : '—']
-    ].map(([k, v]) => statItem(k, v)).join('');
-
-    const lastDay = bars.length ? bars[bars.length - 1].time : '';
-    $('add-note').textContent = DAY_FAILED
-      ? '日 K 不可用 · 降级展示'
-      : `日 K · ${profile ? profile.count : bars.length || '—'} 根 · 筹码近似`
-        + (lastDay && isStale(lastDay) ? ' · 上一交易日' : '');
-  }
-
-  /* ────────────────────────── 渲染：跟踪计划 ────────────────────────── */
-
-  function levelColor(key) {
-    return {
-      heavy: 'var(--down)',
-      entry: 'var(--bs-primary)',
-      tp1: '#f59e0b',
-      tp2: '#8b5cf6'
-    }[key] || 'var(--bs-secondary-color)';
-  }
-
-  function renderPlan(d) {
-    if (!PLAN) {
-      $('plan-note').classList.remove('d-none');
-      $('plan-body').classList.add('d-none');
-      return;
-    }
-    $('plan-note').classList.add('d-none');
-    $('plan-body').classList.remove('d-none');
-
-    const price = d.price;
-    const evalPlan = currentEval(d);
-    // 与首页共用同一套硬性买入资格闸门。
-    const eligibility = Croc.buyEligibility(PLAN || {}, { name: evalPlan.name, pe: evalPlan.pe });
-    const buyBlock = eligibility.eligible ? null : eligibility.reason;
-    const levels = [
-      { key: 'heavy', label: '重仓', value: PLAN.heavy },
-      { key: 'entry', label: '入场', value: PLAN.entry },
-      { key: 'tp1', label: '止盈1', value: PLAN.tp1 },
-      { key: 'tp2', label: '止盈2', value: PLAN.tp2 }
-    ];
-    const valid = levels.filter(l => isNum(l.value) && l.value > 0);
-
-    // 刻度条
-    const vals = valid.map(l => l.value).concat(price);
-    const lo = Math.min.apply(null, vals);
-    const hi = Math.max.apply(null, vals);
-    const span = hi - lo || Math.max(hi * 0.02, 0.01);
-    const posOf = v => ((v - lo) / span) * 100;
-
-    let zoneHtml = '';
-    if (isNum(PLAN.heavy) && isNum(PLAN.entry)) {
-      const a = posOf(Math.min(PLAN.heavy, PLAN.entry));
-      const b = posOf(Math.max(PLAN.heavy, PLAN.entry));
-      zoneHtml = `<div class="ruler-zone" style="left:${a}%;width:${b - a}%"></div>`;
-    }
-
-    const ticks = valid.map(l =>
-      `<span class="ruler-tick" style="left:${posOf(l.value)}%;background:${levelColor(l.key)}" `
-      + `title="${l.label} ${l.value}"></span>`
-    ).join('');
-
-    $('ruler-track').innerHTML = zoneHtml + ticks
-      + `<span class="ruler-tick is-current" style="left:${posOf(price)}%" title="现价 ${fmtNum(price)}"></span>`;
-
-    $('ruler-legend').innerHTML = valid.map(l =>
-      `<span><span class="pip" style="background:${levelColor(l.key)}"></span>${l.label} `
-      + `<span class="text-body">${fmtNum(l.value)}</span></span>`
-    ).join('')
-      + `<span><span class="pip" style="background:${price >= (PLAN.entry || price) ? 'var(--up)' : 'var(--down)'}"></span>现价 `
-      + `<span class="text-body">${fmtNum(price)}</span></span>`;
-
-    // 明细表
-    $('plan-rows').innerHTML = levels.map(l => {
-      if (!isNum(l.value) || l.value <= 0) {
-        return `<tr>
-          <td class="text-body-secondary">${l.label}</td>
-          <td class="text-end text-body-tertiary">未设置</td>
-          <td class="text-end text-body-tertiary">—</td>
-          <td class="text-end text-body-tertiary">—</td>
-        </tr>`;
-      }
-
-      const diff = (l.value - price) / price * 100;
-      const dir = diff > 0 ? '上方' : diff < 0 ? '下方' : '持平';
-      const diffHtml = diff === 0
-        ? '<span class="text-body-secondary">持平</span>'
-        : `<span class="text-body-secondary">${dir} ${Math.abs(diff).toFixed(2)}%</span>`;
-
-      return `<tr>
-        <td class="text-body-secondary">${l.label}</td>
-        <td class="text-end fw-semibold">${fmtNum(l.value)}</td>
-        <td class="text-end">${diffHtml}</td>
-        <td class="text-end">${statusBadge(l.key, l.value, price, buyBlock)}</td>
-      </tr>`;
-    }).join('');
-
-    // 计划附加信息
-    const ytd = isNum(PLAN.yearInit) && PLAN.yearInit > 0 ? (price / PLAN.yearInit - 1) * 100 : null;
-    $('plan-meta').innerHTML = [
-      ['年初价', fmtNum(PLAN.yearInit)],
-      ['年初至今', signed(ytd, fmtPct(ytd))],
-      ['昨日涨幅', signed(PLAN.prevChg, fmtPct(PLAN.prevChg))],
-      ['分组', esc(PLAN.group || '—')],
-      ['更新日期', esc(PLAN.updDate || '—')],
-      ['别名', esc(PLAN.alias || '—')]
-    ].map(([k, v]) => statItem(k, v)).join('');
-  }
-
-  function statusBadge(key, value, price, buyBlock) {
-    if ((key === 'heavy' || key === 'entry') && buyBlock) {
-      const label = buyBlock === '盈利数据缺失，暂不判断买点' ? '待核实盈利' : '禁止买入';
-      return '<span class="badge text-bg-danger" title="' + esc(buyBlock) + '">' + label + '</span>';
-    }
-    if (key === 'heavy') {
-      return price <= value
-        ? '<span class="badge text-bg-success">已到重仓区</span>'
-        : '<span class="badge text-bg-secondary">未到</span>';
-    }
-    if (key === 'entry') {
-      return price <= value
-        ? '<span class="badge text-bg-success">低于入场</span>'
-        : '<span class="badge text-bg-secondary">高于入场</span>';
-    }
-    return price >= value
-      ? `<span class="badge ${key === 'tp1' ? 'text-bg-warning' : 'text-bg-primary'}">已达成</span>`
-      : '<span class="text-body-secondary">未达成</span>';
-  }
-
-  /* ────────────────────────── 渲染：交易纪律摘要 ────────────────────────── */
-
-  function renderDecisionSummary(d) {
-    const grid = $('decision-grid');
-    const note = $('decision-note');
-    if (!grid || !note) return;
-    if (!d || typeof Croc === 'undefined') {
-      grid.textContent = '行情数据尚未就绪，暂无法汇总。';
-      return;
-    }
-
-    const quote = Object.assign({}, d, { pe: isNum(d.peTtm) ? d.peTtm : d.pe });
-    const evaluation = Croc.evaluate(PLAN || {}, quote);
-    const eligibility = Croc.buyEligibility(PLAN || {}, quote);
-    const screen = Croc.screen({ name: evaluation.name || (PLAN && PLAN.name) || '', code: CODE }, quote);
-    const zoneLabels = { heavy: '已进入重仓价区间', entry: '已进入入场价区间', above: '尚高于入场价', unknown: '未设置有效买入价位' };
-    const zoneTone = evaluation.zone === 'heavy' || evaluation.zone === 'entry' ? 'ok' : evaluation.zone === 'above' ? 'warn' : 'neutral';
-    const gateTone = eligibility.eligible ? 'ok' : eligibility.reason.includes('缺失') ? 'warn' : 'bad';
-    const screenTone = screen.allPass ? 'ok' : screen.failed.length ? 'bad' : 'warn';
-    const position = isNum(d.low52) && isNum(d.high52) && d.high52 > d.low52
-      ? Math.min(100, Math.max(0, (d.price - d.low52) / (d.high52 - d.low52) * 100)) : null;
-    const status = (tone, text) => '<span class="decision-status ' + tone + '">' + esc(text) + '</span>';
-    const item = (label, value, detail, tone) => '<div class="decision-item"><div class="decision-label">' + esc(label)
-      + '</div><div class="decision-value">' + (tone ? status(tone, value) : esc(value))
-      + '</div><div class="decision-note">' + esc(detail || '') + '</div></div>';
-
-    const planLabel = !PLAN ? '未纳入股票池' : (zoneLabels[evaluation.zone] || '计划区间未知');
-    const planDetail = !PLAN ? '没有入场价与重仓价计划' : [
-      isNum(PLAN.entry) ? '入场 ' + fmtNum(PLAN.entry) : '入场价未设置',
-      isNum(PLAN.heavy) ? '重仓 ' + fmtNum(PLAN.heavy) : '重仓价未设置',
-      position == null ? '52 周位置待核实' : '52 周区间 ' + position.toFixed(0) + '%'
-    ].join(' · ');
-    const gateLabel = eligibility.eligible ? '未触发硬性禁买条件' : eligibility.reason;
-    const gateDetail = eligibility.eligible
-      ? '仅代表 ST / 盈利数据闸门未触发，不代表估值或基本面合格'
-      : '先核对该项；数据缺失时不应视为通过';
-    const screenLabel = screen.allPass ? '5 项筛选全部通过' : '已通过 ' + screen.passed + '/' + screen.total + ' 项';
-    const screenDetail = [
-      screen.failed.length ? '未通过：' + screen.failed.map(c => ({ st: 'ST', loss: '亏损股', pe: 'PE≤30', cap: '市值≤200亿', pb: 'PB<1' }[c.key] || c.label)).join('、') : '',
-      screen.pending.length ? '待核实：' + screen.pending.map(c => ({ loss: '盈利状态', pe: 'PE', cap: '市值', pb: 'PB' }[c.key] || c.label)).join('、') : ''
-    ].filter(Boolean).join('；') || '5 项量化筛选均有数据；仍需人工核对企业质量与周期风险';
-
-    grid.innerHTML = item('计划区间', planLabel, planDetail, zoneTone)
-      + item('硬性买入闸门', gateLabel, gateDetail, gateTone)
-      + item('选股纪律', screenLabel, screenDetail, screenTone);
-    note.textContent = '摘要沿用鳄鱼纪律的现有规则，不生成新的综合买入评分。价格进入计划区间不等于应立即交易；人工判断、数据日期与企业基本面仍需单独核对。';
-  }
-
-  /* ────────────────────────── 渲染：鳄鱼纪律 ────────────────────────── */
-
-  function currentEval(d) {
-    return Croc.evaluate(PLAN || {}, Object.assign({}, d, {
-      pe: isNum(d.peTtm) ? d.peTtm : d.pe
-    }));
-  }
-
   function checkItem(tone, label, value, note) {
     const icon = tone === 'ok' ? '✓' : tone === 'bad' ? '×' : tone === 'warn' ? '!' : '·';
     return `<div class="check-item ${tone}">
@@ -933,131 +562,6 @@
         ${note ? `<div class="check-note">${esc(note)}</div>` : ''}
       </div>
     </div>`;
-  }
-
-  function renderDiscipline(d) {
-    if (!d || typeof Croc === 'undefined') return;
-    const e = currentEval(d);
-    const extraChecks = [];
-
-    // 选股硬纪律：直接使用 Croc.screen() 的同一份结果，避免展示与计分口径不一致。
-    const sc = Croc.screen(
-      { name: e.name || (PLAN && PLAN.name) || '', code: CODE },
-      Object.assign({}, d, { pe: isNum(d.peTtm) ? d.peTtm : d.pe })
-    );
-    const hardLabels = {
-      st: 'ST / 风险警示',
-      loss: '亏损股',
-      pe: 'PE(TTM) / 30 倍',
-      cap: '市值 / 200 亿',
-      pb: '破净 / PB<1'
-    };
-    const hardNotes = {
-      st: c => c.ok ? '铁律：不买 ST，当前符合' : '铁律：不买 ST',
-      loss: c => c.known ? (c.ok ? '非亏损股' : 'TTM 亏损或无有效盈利') : '盈利数据缺失，暂无法判断',
-      pe: c => c.known ? (c.ok ? 'PE 在 0–30 倍以内' : 'PE 超过 30 倍或盈利无效') : '行情源未提供 PE',
-      cap: c => c.known ? (c.ok ? '总市值 ≤200 亿' : '总市值超过 200 亿或数据无效') : '行情源未提供总市值',
-      pb: c => c.known ? (c.ok ? 'PB<1，符合破净条件' : 'PB≥1 或数据无效') : '行情源未提供 PB'
-    };
-    const hardChecks = sc.checks.map(c => checkItem(
-      !c.known ? 'neutral' : c.ok ? 'ok' : 'bad',
-      hardLabels[c.key] || c.label,
-      !c.known ? '待补数据' : c.ok ? '通过' : '未通过',
-      hardNotes[c.key] ? hardNotes[c.key](c) : ''
-    ));
-    const hardEl = $('discipline-hard-checks');
-    if (hardEl) hardEl.innerHTML = hardChecks.join('');
-
-    // 辅助估值与交易检查：用于观察买点和风险，不计入上方 5 项得分。
-    const pbVal = isNum(e.pb) ? `PB ${e.pb.toFixed(2)}` : 'PB —';
-    const navVal = isNum(e.navGolden) ? ` · 八折价 ${e.navGolden.toFixed(2)}` : '';
-    if (e.pbGolden) {
-      extraChecks.push(checkItem('ok', 'PB / 净资产八折', pbVal + navVal, 'PB≤0.8：黄金买点'));
-    } else if (e.pbUnder1) {
-      extraChecks.push(checkItem('warn', 'PB / 净资产八折', pbVal + navVal, '已破净，但未到八折'));
-    } else if (e.pb !== null && e.pb > 0) {
-      extraChecks.push(checkItem('bad', 'PB / 净资产八折', pbVal + navVal, '高于八折，安全边际不足'));
-    } else {
-      extraChecks.push(checkItem('neutral', 'PB / 净资产八折', pbVal, '行情源未提供 PB'));
-    }
-
-    const price = d.price;
-    const pos52 = (isNum(d.low52) && isNum(d.high52) && d.high52 > d.low52)
-      ? (price - d.low52) / (d.high52 - d.low52) * 100 : null;
-    extraChecks.push(checkItem(
-      pos52 == null ? 'neutral' : pos52 <= 25 ? 'ok' : pos52 >= 75 ? 'bad' : 'neutral',
-      '52 周位置',
-      pos52 == null ? '—' : `分位 ${pos52.toFixed(0)}%`,
-      pos52 == null ? '区间数据缺失' : pos52 <= 25 ? '低位区' : pos52 >= 75 ? '高位区' : '中枢区'
-    ));
-
-    const hs = historyStats();
-    extraChecks.push(checkItem(
-      !hs || hs.pos == null ? 'neutral' : hs.pos <= 25 ? 'ok' : hs.pos >= 75 ? 'bad' : 'neutral',
-      '历史分位（月K）',
-      hs && hs.pos != null ? `${hs.pos.toFixed(0)}%` : '—',
-      hs ? `${hs.count} 根月K · 低 ${hs.lo.toFixed(2)} / 高 ${hs.hi.toFixed(2)}` : HISTORY ? '月K 数据不足' : '月K 加载中…'
-    ));
-
-    if (!PLAN) {
-      extraChecks.push(checkItem('neutral', '计划区间', '未纳入股票池', '无入场 / 重仓计划'));
-    } else if (!isNum(PLAN.entry) && !isNum(PLAN.heavy)) {
-      extraChecks.push(checkItem('neutral', '计划区间', '未设置买点', '入场价与重仓价都为空'));
-    } else {
-      const zoneText = e.zone === 'heavy' ? '重仓区' : e.zone === 'entry' ? '入场区'
-        : e.zone === 'above' ? '高于入场' : '—';
-      const buyBlock = e.st ? 'ST 风险股，不买'
-        : e.pe === null ? '盈利数据缺失，暂不判断买点'
-        : e.pe <= 0 ? '亏损股，不买' : null;
-      const note = [
-        isNum(PLAN.heavy) ? `重仓 ${fmtNum(PLAN.heavy)}` : null,
-        isNum(PLAN.entry) ? `入场 ${fmtNum(PLAN.entry)}` : null,
-        buyBlock
-      ].filter(Boolean).join(' · ');
-      extraChecks.push(checkItem(
-        buyBlock ? 'bad' : e.zone === 'heavy' || e.zone === 'entry' ? 'ok' : e.zone === 'above' ? 'warn' : 'neutral',
-        '计划区间', buyBlock ? '禁止买入' : zoneText, note
-      ));
-    }
-
-    const li = Croc.limitUpInfo(klineCache.dayRaw && klineCache.dayRaw.bars, CODE, e.name);
-    let lTone = 'neutral';
-    let lVal = '—';
-    let lNote = !klineCache.dayRaw ? (klineCache.day ? '未复权日K 不可用，无法可靠识别涨停' : '日K 加载中…') : '未复权日K 数据不足';
-    if (li) {
-      lTone = li.count >= 3 || li.opened ? 'bad' : li.count === 2 ? 'warn' : 'ok';
-      lVal = li.count ? `${li.count} 连板` : '无连板';
-      lNote = li.opened ? '最近交易日涨停打开' : `涨停幅度 ${li.pct}%`;
-    }
-    extraChecks.push(checkItem(lTone, '连续涨停', lVal, lNote));
-
-    const extraEl = $('discipline-extra-checks');
-    if (extraEl) extraEl.innerHTML = extraChecks.join('');
-
-    // 评分卡和鳄鱼纪律共享同一份 JSON 规则与机器评分数据。
-    const manualEl = $('discipline-manual-checks');
-    if (manualEl) {
-      const sharedItems = buildResearchScoreItems(RESEARCH_SCORE);
-      const manualRules = DISCIPLINE_RULES && Array.isArray(DISCIPLINE_RULES.manualItems)
-        ? DISCIPLINE_RULES.manualItems : [];
-      const sharedHtml = sharedItems.length
-        ? sharedItems.map(item => checkItem(item.tone, item.label, item.value, item.note)).join('')
-        : (DISCIPLINE_RULES && Array.isArray(DISCIPLINE_RULES.scoreItems) ? DISCIPLINE_RULES.scoreItems : [])
-          .map(rule => checkItem('neutral', rule.label, '暂无评分数据', '机器评分数据缺失，暂无法判断')).join('');
-      const manualHtml = manualRules.map(item =>
-        checkItem('neutral', item.label, item.value || '无法自动判断', item.note || '需要人工核对')
-      ).join('');
-      manualEl.innerHTML = sharedHtml + manualHtml;
-    }
-
-    const scoreEl = $('discipline-score');
-    if (scoreEl) {
-      scoreEl.innerHTML = sc.allPass
-        ? '<span class="flag flag-buy" style="margin-left:0">选股筛选全过</span>'
-        : `<span class="${sc.passed === sc.total - 1 ? 'text-warning-emphasis' : 'text-body-tertiary'}">选股筛选 ${sc.passed}/${sc.total}${sc.complete ? '' : '?'} </span>`;
-    }
-
-    renderLimitUpAlert(li);
   }
 
   /** 研报评分：优先展示研报原始总分并注明来源与日期，机器分作为对照 */
@@ -1467,10 +971,7 @@
       }
       renderKline(klineCache[tab], tab);
       $('chart-empty').classList.add('d-none');
-      if (tab === 'day' && DETAIL) {
-        renderDiscipline(DETAIL);
-        renderAdd(DETAIL);
-      }
+
     } catch (e) {
       console.warn('图表加载失败:', e);
       $('chart-empty').textContent = '图表加载失败：' + (e.message || '接口不可用');

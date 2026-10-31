@@ -951,8 +951,6 @@
   async function loadChart(tab, force) {
     if (!CODE) return;
 
-    $('chart-hint').textContent = '前复权 · 200 根 · 拖拽平移 / Ctrl 滚轮缩放';
-
     if (!klineCache[tab]) {
       $('chart-empty').textContent = '图表加载中…';
       $('chart-empty').classList.remove('d-none');

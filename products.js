@@ -6,23 +6,10 @@ function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,funct
 function pct(value){return value==null||!Number.isFinite(Number(value))?'—':(Number(value)>0?'+':'')+Number(value).toFixed(2)+'%';}
 function money(value){return value==null||!Number.isFinite(Number(value))?'—':Number(value).toLocaleString('zh-CN',{maximumFractionDigits:2});}
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
-function searchText(){return ($('product-search').value||'').trim().toLowerCase();}
-function visibleCards(){
- var query=searchText(),filter=$('product-filter').value;
- return cards.filter(function(card){
-  var related=(card.stocks||[]).map(function(stock){return [stock.name,stock.code,stock.group].join(' ');}).join(' ');
-  var text=[card.name,card.id,related].join(' ').toLowerCase();
-  if(query&&!text.includes(query))return false;
-  if(filter==='ready'&&card.status!=='ready')return false;
-  if(filter==='pending'&&card.status==='ready')return false;
-  return true;
- });
-}
 function destroyCharts(){charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
 function render(){
  destroyCharts();
- var list=visibleCards(),node=$('product-cards');
- $('product-count').textContent='显示 '+list.length+' / '+cards.length+' 个商品';
+ var list=cards,node=$('product-cards');
  if(!list.length){node.innerHTML='<div class="product-empty">没有符合条件的商品</div>';return;}
  node.innerHTML=list.map(function(card,index){
   var stockRows=(card.stocks||[]).map(function(stock){
@@ -69,8 +56,6 @@ function load(){
   $('product-cards').innerHTML='<div class="product-empty">商品月线数据暂不可用：'+esc(error.message)+'。</div>';
  });
 }
-$('product-search').addEventListener('input',render);
-$('product-filter').addEventListener('change',render);
 window.addEventListener('resize',function(){charts.forEach(function(chart){try{chart.resize();}catch(e){}});});
 load();
 })();

@@ -32,6 +32,8 @@ PRODUCTS = [
     {"id": "rare-earth", "name": "稀土（氧化镨钕）", "unit": "元/吨", "symbol": None, "aliases": ["氧化镨钕"], "stocks": ["北方稀土", "盛和资源"], "chain": "稀土矿/分离 → 磁材 → 新能源车、风电、电机", "drivers": "关注配额、分离产量、磁材需求、出口政策和上下游库存。"},
     {"id": "maleic-anhydride", "name": "顺酐", "unit": "元/吨", "symbol": None, "aliases": ["顺酐", "马来酸酐", "顺丁烯二酸酐"], "stocks": ["齐翔腾达"], "chain": "正丁烷氧化 → 顺酐 → 不饱和聚酯树脂、BDO、THF等", "drivers": "关注正丁烷成本、装置开工、厂家库存、下游不饱和聚酯树脂需求及出口。"},
     {"id": "live-hog", "name": "生猪", "unit": "元/公斤", "symbol": None, "aliases": ["生猪", "活猪"], "stocks": ["天康生物"], "chain": "玉米/豆粕等饲料 → 生猪养殖 → 屠宰及猪肉消费", "drivers": "关注能繁母猪存栏、仔猪价格、出栏体重、养殖成本、猪粮比、屠宰开工和冻品库存。"},
+    {"id": "corn", "name": "玉米", "unit": "元/吨", "symbol": "C", "aliases": ["玉米", "黄玉米"], "stocks": ["天康生物"], "chain": "玉米 → 饲料加工 → 生猪养殖", "drivers": "关注产区天气、进口、港口库存、深加工需求和饲料采购。"},
+    {"id": "soybean-meal", "name": "豆粕", "unit": "元/吨", "symbol": "M", "aliases": ["豆粕"], "stocks": ["天康生物"], "chain": "大豆压榨 → 豆粕 → 饲料 → 生猪养殖", "drivers": "关注大豆到港、压榨开机、油厂库存、基差和饲料需求。"},
 ]
 
 def call_with_timeout(seconds: int, function: Any, *args: Any, **kwargs: Any) -> Any:

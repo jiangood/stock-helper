@@ -24,7 +24,7 @@
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
 
-  const VERSION = '1.1.0';
+  const VERSION = '1.1.1';
   const SMALL_CAP = 2e10;      // 200 亿（元）
   const PB_GOLDEN = 0.8;       // 净资产八折
   const PE_HIGH = 30;          // 30 倍估值算高
@@ -88,6 +88,8 @@
       loss: pe !== null && pe < 0,
       pbUnder1: pb !== null && pb > 0 && pb < 1,
       pbGolden: pb !== null && pb > 0 && pb <= PB_GOLDEN,
+      // PB × 10 即净资产折数：PB 0.49 对应 4.9 折。
+      pbFold: pb !== null && pb > 0 ? pb * 10 : null,
       smallCap: cap !== null && cap > 0 && cap <= SMALL_CAP,
       navGolden: nav !== null && nav > 0 ? nav * PB_GOLDEN : null,
       toEntry: price !== null && entry !== null && entry > 0 ? (price / entry - 1) * 100 : null,
@@ -269,7 +271,7 @@
     lines.push(`🟢 到重仓 ${heavy.length}${heavy.length ? '：' + names(heavy, 8) : ''}`);
     if (near.length) lines.push(`🟡 接近重仓 ${near.length}：${names(near, 8)}`);
     lines.push(`🔵 到入场 ${entry.length}${entry.length ? '：' + names(entry, 8) : ''}`);
-    lines.push(`🟩 破净 ${pb.length}（八折 ${pb80.length}）${pb80.length ? '：' + names(pb80, 8) : ''}`);
+    lines.push(`🟩 破净 ${pb.length}（八折以内 ${pb80.length}）${pb80.length ? '：' + names(pb80, 8) : ''}`);
     lines.push(`✅ 纪律全过 ${passAll.length}${passAll.length ? '：' + names(passAll, 8) : ''}`);
     if (passBuy.length) lines.push(`🎯 全过且到买点 ${passBuy.length}：${names(passBuy, 6)}`);
     if (passNear.length) {

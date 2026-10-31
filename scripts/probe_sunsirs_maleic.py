@@ -20,8 +20,8 @@ from urllib.request import Request, urlopen
 BASE = "https://ma.100ppi.com"
 PAGES = ["/kx/"] + [f"/kx/list---{n}.html" for n in range(2, 6)]
 USER_AGENT = "StockHelperPersonalResearchProbe/1.0 (low-rate; contact: repository owner)"
-DATE_RE = re.compile(r"20\\d{2}[-年/.]\\d{1,2}[-月/.]\\d{1,2}日?")
-PRICE_RE = re.compile(r"(?<![\\d.])\\d{3,6}(?:\\.\\d+)?(?![\\d.])")
+DATE_RE = re.compile(r"20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?")
+PRICE_RE = re.compile(r"(?<![\d.])\d{3,6}(?:\.\d+)?(?![\d.])")
 
 
 class TextExtractor(HTMLParser):
@@ -38,14 +38,14 @@ class TextExtractor(HTMLParser):
         if tag in {"script", "style", "noscript"} and self.skip:
             self.skip -= 1
         if not self.skip and tag in {"li", "tr", "p", "br", "div"}:
-            self.parts.append("\\n")
+            self.parts.append(" ")
 
     def handle_data(self, data: str) -> None:
         if not self.skip and data.strip():
             self.parts.append(data.strip())
 
     def text(self) -> str:
-        return re.sub(r"\\s+", " ", " ".join(self.parts))
+        return re.sub(r"\s+", " ", " ".join(self.parts))
 
 
 def read_url(url: str) -> tuple[int, str]:
@@ -118,7 +118,7 @@ def main() -> int:
         try:
             status, html = read_url(url)
             candidates = extract_candidates(html)
-            merged.update(candidates)
+            for date, values in candidates.items():\n                merged[date].update(values)
             successful_pages += 1
             print(
                 f"page={index + 1} http={status} bytes={len(html.encode('utf-8'))} "

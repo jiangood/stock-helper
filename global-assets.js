@@ -1,4 +1,4 @@
-/* Global asset dashboard: rankings, normalized trend comparison and quote cards. */
+/* Global asset dashboard: daily rankings and quote cards. */
 (function (global) {
   'use strict';
   var assets = [
@@ -13,7 +13,6 @@
   ];
   var loading = false;
   var lastLoad = 0;
-  var compareRange = '1m';
   function el(id) { return document.getElementById(id); }
   function esc(v) {
     return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
@@ -92,20 +91,12 @@
     overview.id = 'global-assets-overview';
     overview.innerHTML = '<div class="ga-section-head"><div><h3 class="panel-title">今日涨跌排行</h3><div class="panel-subtitle">按最近报价的日涨跌幅排序；不同市场交易时段并不一致。</div></div></div>'
       + '<div id="global-assets-ranking" class="ga-ranking insight-grid mb-3"></div>'
-      + '<div class="insight-card ga-comparison mb-3"><div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2"><div><h3 class="panel-title">趋势对比</h3><div class="panel-subtitle">将各资产区间起点归一为 100，比较相对涨跌，不比较绝对价格。</div></div><div class="btn-group btn-group-sm" role="group" aria-label="趋势区间"><button type="button" class="btn btn-outline-secondary ga-range" data-range="1w">近 1 周</button><button type="button" class="btn btn-outline-secondary ga-range active" data-range="1m">近 1 月</button></div></div><div id="global-assets-comparison"></div><div class="panel-subtitle mt-2">仅对同时有有效历史点的资产绘图；缺失数据不补值。VIX 是波动率指标，方向含义与风险资产不同。</div></div>';
+;
     pane.insertBefore(overview, cards);
     var style = document.createElement('style');
     style.id = 'global-assets-style';
-    style.textContent = '#global-assets-overview .ga-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}#global-assets-overview .ga-ranking{grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:8px}#global-assets-overview .ga-rank-card{border:1px solid var(--bs-border-color);border-radius:11px;background:var(--bs-body-bg);padding:10px 12px;min-width:0}#global-assets-overview .ga-rank-top{display:flex;justify-content:space-between;gap:8px;align-items:center}#global-assets-overview .ga-rank-number{font-size:10px;color:var(--bs-secondary-color);font-variant-numeric:tabular-nums}#global-assets-overview .ga-rank-name{font-weight:700;font-size:12px}#global-assets-overview .ga-rank-change{font-weight:750;font-size:18px;font-variant-numeric:tabular-nums}#global-assets-overview .ga-spark{width:100%;height:42px;display:block;margin-top:3px}#global-assets-overview .ga-spark-empty{height:42px;display:flex;align-items:center;font-size:10px;color:var(--bs-secondary-color)}#global-assets-overview .ga-comparison{overflow:hidden}#global-assets-overview .ga-chart{width:100%;height:auto;display:block;min-height:180px}#global-assets-overview .ga-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:8px}#global-assets-overview .ga-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--bs-secondary-color)}#global-assets-overview .ga-legend-line{width:15px;height:3px;border-radius:2px;display:inline-block}#global-assets-overview .ga-range.active{background:var(--bs-primary);border-color:var(--bs-primary);color:#fff}#global-assets-cards .insight-card{transition:transform .16s ease,border-color .16s ease}#global-assets-cards .insight-card:hover{transform:translateY(-2px);border-color:var(--bs-primary)}@media(max-width:575.98px){#global-assets-overview .ga-ranking{grid-template-columns:repeat(2,minmax(0,1fr))}#global-assets-overview .ga-rank-card{padding:9px}#global-assets-overview .ga-rank-change{font-size:16px}}';
+    style.textContent = '#global-assets-overview .ga-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}#global-assets-overview .ga-ranking{grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:8px}#global-assets-overview .ga-rank-card{border:1px solid var(--bs-border-color);border-radius:11px;background:var(--bs-body-bg);padding:10px 12px;min-width:0}#global-assets-overview .ga-rank-top{display:flex;justify-content:space-between;gap:8px;align-items:center}#global-assets-overview .ga-rank-number{font-size:10px;color:var(--bs-secondary-color);font-variant-numeric:tabular-nums}#global-assets-overview .ga-rank-name{font-weight:700;font-size:12px}#global-assets-overview .ga-rank-change{font-weight:750;font-size:18px;font-variant-numeric:tabular-nums}#global-assets-overview .ga-spark{width:100%;height:42px;display:block;margin-top:3px}#global-assets-overview .ga-spark-empty{height:42px;display:flex;align-items:center;font-size:10px;color:var(--bs-secondary-color)}#global-assets-cards .insight-card{transition:transform .16s ease,border-color .16s ease}#global-assets-cards .insight-card:hover{transform:translateY(-2px);border-color:var(--bs-primary)}@media(max-width:575.98px){#global-assets-overview .ga-ranking{grid-template-columns:repeat(2,minmax(0,1fr))}#global-assets-overview .ga-rank-card{padding:9px}#global-assets-overview .ga-rank-change{font-size:16px}}';
     document.head.appendChild(style);
-    overview.querySelectorAll('.ga-range').forEach(function (button) {
-      button.setAttribute('aria-pressed', String(button.classList.contains('active')));
-      button.addEventListener('click', function () {
-        compareRange = button.getAttribute('data-range') || '1m';
-        overview.querySelectorAll('.ga-range').forEach(function (b) {
-          b.classList.toggle('active', b === button);
-          b.setAttribute('aria-pressed', String(b === button));
-        });
         renderComparison(lastPayload);
       });
     });
@@ -131,54 +122,6 @@
         + '<div class="mini-label">' + esc(item.status || '行情状态未知') + '</div></article>';
     }).join('');
   }
-  function renderComparison(payload) {
-    var node = el('global-assets-comparison');
-    if (!node) return;
-    var data = payload && Array.isArray(payload.assets) ? payload.assets : [];
-    var series = data.map(function (item) {
-      var meta = assets.find(function (a) { return a.id === item.id; });
-      var points = historyOf(item, compareRange);
-      if (!meta || points.length < 2) return null;
-      var base = Number(points[0].close);
-      if (!(base > 0)) return null;
-      return { id: item.id, name: meta.name, points: points.map(function (p) {
-        return { date: p.date, value: Number(p.close) / base * 100 };
-      }) };
-    }).filter(Boolean);
-    if (!series.length) {
-      node.innerHTML = '<div class="empty-state">趋势对比数据正在积累，请等待各资产历史行情更新。</div>';
-      return;
-    }
-    var width = 680, height = 225, left = 42, right = 12, top = 12, bottom = 30;
-    var values = [];
-    series.forEach(function (s) { s.points.forEach(function (p) { values.push(p.value); }); });
-    var min = Math.floor((Math.min.apply(null, values) - 1) / 2) * 2;
-    var max = Math.ceil((Math.max.apply(null, values) + 1) / 2) * 2;
-    if (max - min < 4) { min -= 2; max += 2; }
-    var allDates = {};
-    series.forEach(function (s) { s.points.forEach(function (p) { allDates[p.date] = true; }); });
-    var dates = Object.keys(allDates).sort();
-    function xFor(date) { var i = dates.indexOf(date); return left + (dates.length <= 1 ? 0 : i * (width - left - right) / (dates.length - 1)); }
-    function yFor(value) { return top + (max - value) * (height - top - bottom) / (max - min); }
-    var colors = ['#2563eb', '#7c3aed', '#0891b2', '#d97706', '#db2777', '#16a34a', '#64748b'];
-    var grid = [];
-    for (var i = 0; i <= 4; i++) {
-      var v = min + (max - min) * i / 4, y = yFor(v);
-      grid.push('<line x1="' + left + '" y1="' + y.toFixed(1) + '" x2="' + (width-right) + '" y2="' + y.toFixed(1) + '" stroke="currentColor" stroke-opacity=".12"/>'
-        + '<text x="' + (left-7) + '" y="' + (y+4).toFixed(1) + '" text-anchor="end" fill="currentColor" opacity=".65" font-size="10">' + v.toFixed(0) + '</text>');
-    }
-    var paths = series.map(function (s, idx) {
-      var path = s.points.map(function (p, i) { return (i ? 'L' : 'M') + xFor(p.date).toFixed(1) + ',' + yFor(p.value).toFixed(1); }).join(' ');
-      return '<path d="' + path + '" fill="none" stroke="' + colors[idx % colors.length] + '" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
-    }).join('');
-    var dateLabels = dates.length ? '<text x="' + left + '" y="' + (height-8) + '" fill="currentColor" opacity=".65" font-size="10">' + esc(dates[0]) + '</text><text x="' + (width-right) + '" y="' + (height-8) + '" text-anchor="end" fill="currentColor" opacity=".65" font-size="10">' + esc(dates[dates.length-1]) + '</text>' : '';
-    node.innerHTML = '<svg class="ga-chart" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="全球资产归一化趋势比较图">'
-      + grid.join('') + '<line x1="' + left + '" y1="' + yFor(100).toFixed(1) + '" x2="' + (width-right) + '" y2="' + yFor(100).toFixed(1) + '" stroke="currentColor" stroke-dasharray="4 4" stroke-opacity=".5"/>'
-      + paths + dateLabels + '</svg><div class="ga-legend">' + series.map(function (s, idx) {
-        var last = s.points[s.points.length-1];
-        return '<span class="ga-legend-item"><span class="ga-legend-line" style="background:' + colors[idx % colors.length] + '"></span>' + esc(s.name) + ' <b class="' + tone(last.value - 100) + '">' + (last.value >= 100 ? '+' : '') + (last.value - 100).toFixed(2) + '%</b></span>';
-      }).join('') + '</div>';
-  }
   function render(payload) {
     lastPayload = payload || {};
     var data = payload && Array.isArray(payload.assets) ? payload.assets : [];
@@ -186,7 +129,6 @@
     data.forEach(function (item) { if (item && item.id) byId[item.id] = item; });
     ensureDashboard();
     renderRanking(data, byId);
-    renderComparison(payload);
     var node = el('global-assets-cards');
     if (!node) return;
     node.innerHTML = assets.map(function (meta) {

@@ -9,6 +9,7 @@ let RESEARCH = { totalMax: 32, bands: [], criteria: {} };
 const researchScores = {};     // code -> { items, points, max, percent, band, metrics }
 let REPORT_SCORES = {};        // code -> { score, date, source, alternates }
 let REPORT_BANDS = [];
+let monthlyTrends = {}; // code -> 最近 18 个月复权月收盘价
 
 const $ = id => document.getElementById(id);
 
@@ -71,6 +72,23 @@ async function loadStocks() {
 }
 
 /** 读取 Actions 生成的研报评分小文件；失败时静默降级为「—」 */
+/** 读取首页专用月线趋势索引；缺失或异常时图表降级为横线 */
+async function loadMonthlyTrends() {
+  try {
+    const res = await fetch(new URL('data/cache/stock-details.json', document.baseURI).href, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const payload = await res.json();
+    monthlyTrends = payload && payload.monthlyTrends && typeof payload.monthlyTrends === 'object'
+      ? payload.monthlyTrends : {};
+  } catch (e) {
+    monthlyTrends = {};
+    console.warn('首页月线趋势加载失败：', e.message);
+  }
+}
+
 async function loadResearchScores() {
   try {
     const res = await fetch(new URL('data/research-scores.json', document.baseURI).href, {
@@ -356,6 +374,7 @@ function buildRow(stock) {
     tp2Html = `<span class="badge badge-tp text-bg-primary-subtle border border-primary-subtle text-primary-emphasis">${stock.tp2} ✓</span>`;
   }
 
+  const monthlyTrend = monthlyTrendHtml(stock);
   const aliasHtml = stock.alias
     ? `<span class="tag tag-alias" title="${esc(stock.alias)}">${esc(stock.alias)}</span>`
     : '<span class="text-body-tertiary">—</span>';
@@ -366,6 +385,7 @@ function buildRow(stock) {
   return `
     <td>${nameHtml}</td>
     <td>${stock.group ? `<span class="tag">${esc(stock.group)}</span>` : '<span class="text-body-tertiary">—</span>'}</td>
+    <td class="monthly-trend-cell">${monthlyTrend}</td>
     <td>${priceHtml}</td>
     <td>${entryHtml}${entryDiff}</td>
     <td>${heavyHtml}${heavyDiff}</td>
@@ -377,6 +397,31 @@ function buildRow(stock) {
     <td>${fmtPct(pd && pd.divYield)}</td>
     <td>${researchReportHtml(stock)}</td>\n    <td>${researchDateHtml(stock)}</td>
     <td>${aliasHtml}</td>`;
+}
+
+/** 最近 18 个月复权月收盘价迷你趋势图；不插值、不补造缺失月份 */
+function monthlyTrendHtml(stock) {
+  const bars = monthlyTrends[stock.code];
+  if (!Array.isArray(bars) || bars.length < 2) {
+    return '<span class="monthly-trend-empty" title="暂无足够的月线数据">—</span>';
+  }
+  const values = bars.map(item => Number(item && item.close)).filter(value => Number.isFinite(value) && value > 0);
+  if (values.length < 2) return '<span class="monthly-trend-empty" title="暂无足够的月线数据">—</span>';
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const span = max - min || Math.max(max * 0.02, 0.01);
+  const points = values.map((value, index) => {
+    const x = 2 + index * 108 / Math.max(1, values.length - 1);
+    const y = 29 - (value - min) / span * 25;
+    return x.toFixed(1) + ',' + y.toFixed(1);
+  }).join(' ');
+  const first = values[0];
+  const last = values[values.length - 1];
+  const tone = last >= first ? 'monthly-trend-up' : 'monthly-trend-down';
+  const firstTime = bars[0] && bars[0].time || '';
+  const lastTime = bars[bars.length - 1] && bars[bars.length - 1].time || '';
+  const title = '复权月收盘价 · ' + firstTime + ' 至 ' + lastTime + ' · ' + first.toFixed(2) + ' → ' + last.toFixed(2);
+  return '<svg class="monthly-trend-svg ' + tone + '" viewBox="0 0 112 32" role="img" aria-label="' + esc(title) + '" title="' + esc(title) + '"><polyline points="' + points + '"></polyline></svg>';
 }
 
 function statusHtml(e, stock, quote) {
@@ -746,7 +791,8 @@ function setPageLoading(message, done) {
   const results = await Promise.allSettled([
     loadResearchScores(),
     loadReportScores(),
-    loadPrices(false, { deferRender: true })
+    loadPrices(false, { deferRender: true }),
+    loadMonthlyTrends()
   ]);
   if (STOCKS.length) applyFilter();
   const finishedAt = performance.now();
@@ -756,7 +802,7 @@ function setPageLoading(message, done) {
     enrichmentMs: Math.round(finishedAt - stocksLoadedAt),
     totalMs: Math.round(finishedAt - startedAt),
     enrichment: results.map((result, index) => ({
-      task: ['researchScores', 'reportScores', 'quotes'][index],
+      task: ['researchScores', 'reportScores', 'quotes', 'monthlyTrends'][index],
       status: result.status
     }))
   });

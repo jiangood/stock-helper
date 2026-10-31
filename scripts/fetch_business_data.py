@@ -13,8 +13,11 @@ import re
 import signal
 import sys
 from datetime import date, datetime, timedelta, timezone
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
+from urllib.parse import urljoin
+from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "data" / "business-data.json"
@@ -119,8 +122,120 @@ def clean_series(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             item["spot"] = round(spot, 4)
         if futures is not None:
             item["futures"] = round(futures, 4)
+        for key in ("low", "high"):
+            value = finite_number(row.get(key))
+            if value is not None:
+                item[key] = round(value, 4)
+        for key in ("region", "spec", "sourceUrl"):
+            if row.get(key):
+                item[key] = str(row[key])
+        if isinstance(row.get("markets"), dict):
+            item["markets"] = row["markets"]
         by_date[day] = item
     return [by_date[k] for k in sorted(by_date)][-200:]
+
+
+class _PageParser(HTMLParser):
+    """Collect readable page text and anchor labels using only the Python standard library."""
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+        self.links: list[tuple[str, str]] = []
+        self._href: str | None = None
+        self._anchor: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.parts.append(" ")
+        if tag.lower() == "a":
+            self._href = dict(attrs).get("href")
+            self._anchor = []
+
+    def handle_endtag(self, tag: str) -> None:
+        self.parts.append(" ")
+        if tag.lower() == "a" and self._href:
+            self.links.append((self._href, " ".join(self._anchor)))
+            self._href = None
+            self._anchor = []
+
+    def handle_data(self, data: str) -> None:
+        self.parts.append(data)
+        if self._href is not None:
+            self._anchor.append(data)
+
+    @property
+    def text(self) -> str:
+        return re.sub(r"\\s+", " ", " ".join(self.parts)).strip()
+
+
+def parse_methionine_report(html: str, source_url: str) -> dict[str, Any] | None:
+    """Extract source-published solid methionine quote ranges, not inferred transaction prices."""
+    parser = _PageParser()
+    parser.feed(html)
+    text = parser.text
+    date_match = re.search(r"/(20\\d{2})/(\\d{2})/(\\d{2})/[^/?#]+\\.html", source_url)
+    if not date_match:
+        return None
+    observed_date = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}"
+    table_text = text.split("价格条件", 1)[0]
+    markets: dict[str, dict[str, int]] = {}
+    names = ("山东", "河南", "河北", "广东")
+    positions = sorted((table_text.find(name), name) for name in names if table_text.find(name) >= 0)
+    for index, (start, region) in enumerate(positions):
+        end = positions[index + 1][0] if index + 1 < len(positions) else len(table_text)
+        region_text = table_text[start:end]
+        match = re.search(
+            r"固体蛋氨酸\\s*([0-9,]+)\\s*[—–－-]\\s*([0-9,]+)",
+            region_text,
+        )
+        if not match:
+            continue
+        low, high = int(match.group(1).replace(",", "")), int(match.group(2).replace(",", ""))
+        if 1000 <= low <= high <= 200000:
+            markets[region] = {"low": low, "high": high, "spot": round((low + high) / 2)}
+    shandong = markets.get("山东")
+    if not shandong:
+        return None
+    return {
+        "date": observed_date,
+        "spot": shandong["spot"],
+        "low": shandong["low"],
+        "high": shandong["high"],
+        "region": "山东",
+        "spec": "饲料级固体蛋氨酸",
+        "markets": markets,
+        "sourceUrl": source_url,
+    }
+
+
+def fetch_methionine_public_reports(max_reports: int = 20) -> list[dict[str, Any]]:
+    """Read recent public daily reports linked from CAAA's feed-raw-material listing."""
+    listing_url = "https://www.caaa.cn/html/fw/market/slyl/"
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; StockHelperCommodityBot/1.0)"}
+
+    def get_page(url: str) -> str:
+        request = Request(url, headers=headers)
+        with urlopen(request, timeout=18) as response:
+            return response.read().decode("utf-8", errors="replace")
+
+    listing = _PageParser()
+    listing.feed(get_page(listing_url))
+    candidates: dict[str, str] = {}
+    for href, label in listing.links:
+        absolute = urljoin(listing_url, href)
+        if "氨基酸市场价格评估日度报告" not in label:
+            continue
+        if not re.search(r"/20\\d{2}/\\d{2}/\\d{2}/[^/?#]+\\.html$", absolute):
+            continue
+        candidates[absolute] = label
+    reports: list[dict[str, Any]] = []
+    for url in sorted(candidates, key=lambda value: tuple(map(int, re.search(r"/(20\\d{2})/(\\d{2})/(\\d{2})/", value).groups())), reverse=True)[:max_reports]:
+        try:
+            parsed = parse_methionine_report(get_page(url), url)
+            if parsed:
+                reports.append(parsed)
+        except Exception as exc:
+            print(f"CAAA report skipped ({url}): {str(exc)[:140]}", file=sys.stderr)
+    return sorted(reports, key=lambda point: point["date"])
 
 def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
     """Split source-provided company names without inventing or inferring relationships."""
@@ -608,6 +723,32 @@ def fetch_data() -> dict[str, Any]:
                     target[key] = old_item[key]
             if not target.get("series") and isinstance(old_item.get("series"), list):
                 target["series"] = old_item["series"]
+
+
+    # CAAA republishes 卓创资讯 daily amino-acid reports. Preserve the published
+    # regional quote ranges and use the Shandong midpoint only as the chart series.
+    try:
+        public_reports = fetch_methionine_public_reports()
+        if public_reports:
+            methionine = payload["items"]["methionine"]
+            old_methionine = old_items.get("methionine", {})
+            old_series = old_methionine.get("series", []) if isinstance(old_methionine, dict) else []
+            merged = clean_series((old_series if isinstance(old_series, list) else []) + public_reports)
+            if merged:
+                latest_point = merged[-1]
+                methionine["series"] = merged
+                methionine["latest"] = latest_point.get("spot")
+                methionine["latestSpot"] = latest_point.get("spot")
+                methionine["latestDate"] = latest_point["date"]
+                methionine["latestFutures"] = None
+                methionine["source"] = "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点"
+                methionine["sourceUrl"] = latest_point.get("sourceUrl", "https://www.caaa.cn/html/fw/market/slyl/")
+                methionine["priceMethod"] = "山东市场含税、现款、送到报价区间中点；series 同时保留 low/high 和各市场报价"
+                methionine["status"] = "ok"
+                methionine["drivers"] = "关注全球产能、厂家报价、进口与饲料需求；价格序列为山东市场饲料级固体蛋氨酸公开报价区间中点，非全国均价及非单笔成交价。"
+                fresh_data = True
+    except Exception as exc:
+        errors.append("caaa_methionine_reports: " + str(exc)[:180])
 
     # Cost proxies are matched only against source rows that actually exist in
     # Eastmoney's public spot-and-stock table. Unsupported raw materials remain pending.

@@ -132,7 +132,7 @@ function buildCommodityCards(productItems) {
   const grouped = new Map();
   Object.entries(mapping).forEach(([code, meta]) => {
     if (!meta || (!meta.marketItemId && !meta.costItemIds)) return;
-    if (!grouped.has(meta.marketItemId)) grouped.set(meta.marketItemId, []);
+    const itemIds = [meta.marketItemId].concat(meta.costItemIds || []).filter(Boolean);
     const stock = stocks.find((item) => item.code === code);
     if (stock) grouped.get(meta.marketItemId).push({ stock, meta });
   });

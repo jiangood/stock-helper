@@ -13,8 +13,11 @@ export function mountPasswordGate({
     throw new TypeError('密码门禁需要 gate、form、input 和 verifyPassword');
   }
 
-  const localStore = storage || documentLike.defaultView && documentLike.defaultView.localStorage;
-  const sessionStore = session || documentLike.defaultView && documentLike.defaultView.sessionStorage;
+  const windowLike = documentLike.defaultView;
+  let localStore = storage || null;
+  let sessionStore = session || null;
+  try { if (!localStore && windowLike) localStore = windowLike.localStorage; } catch (error) {}
+  try { if (!sessionStore && windowLike) sessionStore = windowLike.sessionStorage; } catch (error) {}
   const body = documentLike.body;
   const inertSnapshot = [];
 

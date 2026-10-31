@@ -1,0 +1,65 @@
+name: Update static asset fingerprints
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "**.html"
+      - "**.css"
+      - "**.js"
+      - ".github/workflows/asset-fingerprints.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: asset-fingerprints-master
+  cancel-in-progress: false
+
+jobs:
+  fingerprint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate fingerprint updater
+        run: |
+          node --check scripts/update_asset_fingerprints.js
+          node --test tests/asset-fingerprints.test.js
+      - name: Update fingerprints and publish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for attempt in 1 2 3; do
+            git fetch origin master
+            git reset --hard origin/master
+
+            node scripts/update_asset_fingerprints.js
+
+            if git diff --quiet -- '*.html'; then
+              echo "All local CSS/JS fingerprints are current."
+              exit 0
+            fi
+
+            git add -- '*.html'
+            git commit -m "Update static asset fingerprints"
+            if git push origin HEAD:master; then
+              echo "Published updated asset fingerprints."
+              exit 0
+            fi
+
+            echo "Master changed during publication (attempt $attempt); retrying from latest master."
+          done
+
+          echo "Unable to publish asset fingerprints after 3 attempts." >&2
+          exit 1

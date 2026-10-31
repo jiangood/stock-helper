@@ -107,6 +107,27 @@ function load(){
   $('product-cards').innerHTML='<div class="product-empty">商品月线数据暂不可用：'+esc(error.message)+'。</div>';
  });
 }
+function initThemeButton(){
+ var btn=$('theme-btn');
+ if(!btn)return;
+ function sync(){
+  var dark=document.documentElement.getAttribute('data-bs-theme')==='dark';
+  var label=dark?'切换到浅色主题':'切换到深色主题';
+  btn.setAttribute('aria-pressed',String(dark));
+  btn.setAttribute('aria-label',label);
+  btn.title=label;
+ }
+ sync();
+ btn.addEventListener('click',function(){
+  var next=document.documentElement.getAttribute('data-bs-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-bs-theme',next);
+  try{localStorage.setItem('stock-theme',next);}catch(e){}
+  sync();
+  // 重建图表以同步当前主题下的文字与网格配色。
+  render();
+ });
+}
+initThemeButton();
 window.addEventListener('resize',function(){charts.forEach(function(chart){try{chart.resize();}catch(e){}});});
 load();
 })();

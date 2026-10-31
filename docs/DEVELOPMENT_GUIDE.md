@@ -22,7 +22,8 @@
 | `products.html`、`products.js` | 股票主营产品价格与股价月线对比 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
-| `data/stock-products.json`、`data/product-comparison.json` | 主营产品映射与 Actions 生成的商品/股价比较读模型 |\n| `data/research-reports.json` | 研报原始评分及来源信息 |
+| `data/stock-products.json`、`data/product-comparison.json` | 主营产品映射与 Actions 生成的商品/股价比较读模型 |
+| `data/research-reports.json` | 研报原始评分及来源信息 |
 | `data/fundamentals.json` | 基本面快照 |
 | `data/stock-quotes.json`、`data/stock-cache/` | 行情与个股历史数据 |
 | `data/research-scores.json`、`data/sector-monthly.json` | 页面使用的派生读模型 |
@@ -52,6 +53,7 @@ python -m http.server 8089
 ```bash
 # 构建页面派生读模型
 node scripts/build_sector_monthly.js
+node scripts/build_product_comparison.js
 node scripts/build_research_scores.js
 node scripts/build_stock_detail_cache.js
 

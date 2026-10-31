@@ -367,7 +367,7 @@ function buildRow(stock) {
   if (price != null && stock.tp1 != null) {
     tp1Html = price >= stock.tp1
       ? `<span class="badge badge-tp text-bg-warning-subtle border border-warning-subtle text-warning-emphasis">${stock.tp1} ✓</span>`
-      : `<span class="text-body-secondary">${stock.tp1}<span class="diff text-down">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span></span>`;
+      : `<span class="text-body-secondary">${stock.tp1}</span><span class="diff text-down">+${((stock.tp1 - price) / price * 100).toFixed(1)}%</span>`;
   }
   let tp2Html = stock.tp2 != null ? `<span class="text-body-secondary">${stock.tp2}</span>` : '<span class="text-body-tertiary">—</span>';
   if (price != null && stock.tp2 != null && price >= stock.tp2) {
@@ -387,9 +387,9 @@ function buildRow(stock) {
     <td class="monthly-trend-cell">${monthlyTrend}</td>
     <td>${stock.group ? esc(stock.group) : '<span class="text-body-tertiary">—</span>'}</td>
     <td>${priceHtml}</td>
-    <td>${entryHtml}${entryDiff}</td>
-    <td>${heavyHtml}${heavyDiff}</td>
-    <td>${tp1Html}</td>
+    <td class="stacked-cell">${entryHtml}${entryDiff}</td>
+    <td class="stacked-cell">${heavyHtml}${heavyDiff}</td>
+    <td class="stacked-cell">${tp1Html}</td>
     <td>${tp2Html}</td>
     <td>${fmtCap(pd && pd.totalCap)}</td>
     <td>${fmtRatio(pd && pd.pe)}</td>

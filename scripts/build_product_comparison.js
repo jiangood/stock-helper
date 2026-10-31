@@ -137,8 +137,8 @@ function latestSourceTimestamp() {
 function buildCommodityCards(productItems) {
   const grouped = new Map();
   Object.entries(mapping).forEach(([code, meta]) => {
-    if (!meta || (!meta.marketItemId && !meta.costItemIds)) return;
-    const itemIds = [meta.marketItemId].concat(meta.costItemIds || []).filter(Boolean);
+    if (!meta || (!meta.marketItemId && !meta.costItemIds && !meta.additionalMarketItemIds)) return;
+    const itemIds = [meta.marketItemId].concat(meta.additionalMarketItemIds || [], meta.costItemIds || []).filter(Boolean);
     const stock = stocks.find((item) => item.code === code);
     if (stock) itemIds.forEach((itemId) => { if (!grouped.has(itemId)) grouped.set(itemId, []); grouped.get(itemId).push({ stock, meta }); });
   });

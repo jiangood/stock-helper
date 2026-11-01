@@ -50,7 +50,7 @@ python -m http.server 8089
 
 ### 自动化测试
 
-当前 `.github/workflows/tests.yml` 使用 Node.js 22 和 Python 3.11。可在本地按工作流顺序执行：
+仓库不再保留统一的测试工作流，完整测试套件只在本地执行（参考环境：Node.js 22、Python 3.11）。CI 中仅个别工作流运行与其相关的单个测试文件（`asset-fingerprints.yml`、`stock-snapshot.yml`）。本地按以下顺序执行：
 
 ```bash
 # 构建页面派生读模型
@@ -82,8 +82,7 @@ node scripts/validate_stock_data.js
 
 主要工作流（以当前 `.github/workflows/` 为准）：
 
-- `tests.yml`：构建派生读模型、构建缓存 manifest、运行 JS/Python 测试并校验数据。
-- `stock-snapshot.yml`：采集股票行情与 K 线。
+- `stock-snapshot.yml`：采集股票行情与 K 线，并在提交前运行 `tests/monthly-kline.test.js`。
 - `fundamentals.yml`：刷新基本面快照。
 - `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、商品及关联股票月线对比、manifest 和健康快照，并校验后发布。
 - `business-data.yml`、`global-assets.yml`：更新商品及全球资产数据；商品工作流同时重建商品及关联股票月线比较。\n- `asset-fingerprints.yml`：页面或公共 CSS/JS 变化后，运行 `scripts/update_asset_fingerprints.js`，为 HTML 中实际引用的本地 CSS/JS 计算 SHA-256 前 12 位并更新 `?v=`；第三方 CDN、内联代码和业务 JSON 不参与。只有 HTML 指纹有变化时才提交到 master；工作流使用 `GITHUB_TOKEN` 提交，避免由自动提交递归触发工作流。

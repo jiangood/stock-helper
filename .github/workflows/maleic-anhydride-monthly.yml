@@ -1,6 +1,14 @@
 name: Refresh maleic anhydride monthly chart history
 
 on:
+  push:
+    paths:
+      - 'scripts/collect_maleic_anhydride_monthly.py'
+      - 'scripts/test_sunsirs_month_start_ocr.py'
+      - 'scripts/build_product_comparison.js'
+      - 'data/maleic-anhydride-monthly.json'
+      - 'tests/product-comparison.test.js'
+      - '.github/workflows/maleic-anhydride-monthly.yml'
   schedule:
     - cron: "45 8 * * 1-5"
   workflow_dispatch:

@@ -55,16 +55,42 @@ PRICE_SOURCE_BY_PRODUCT = {
     "polycarbonate": "sunsirs-benchmark",
     "vanadium": "sunsirs-benchmark",
     "tungsten-products": "sunsirs-benchmark",
+    "live-hog": "sina-futures",
+    "steel": "sina-futures",
 }
+
+# Products whose price series is the main-continuous futures contract because no
+# usable spot series exists. The contract is standardised, so it only stands for
+# the trend of the commodity, never for a company's realised selling price.
+FUTURES_ONLY_PRODUCTS = {
+    product_id for product_id, source in PRICE_SOURCE_BY_PRODUCT.items()
+    if source == "sina-futures"
+}
+
+# Main-continuous contract per commodity, collected from Sina's public daily
+# history. A commodity may only appear here when the contract tracks the same
+# product as the item, otherwise the series would be a proxy for something else.
+CONTINUOUS_FUTURES_SYMBOLS = {
+    "soda-ash": "SA0", "urea": "UR0", "methanol": "MA0", "float-glass": "FG0", "pulp": "SP0",
+    "aluminium": "AL0", "rubber": "RU0", "corn": "C0", "soybean-meal": "M0", "gold": "AU0", "silver": "AG0", "copper": "CU0", "iron-ore": "I0", "tin": "SN0", "zinc": "ZN0", "sugar": "SR0", "pvc": "V0", "caustic-soda": "SH0", "alumina": "AO0",
+    # 生猪：大商所标准合约，与商品同一标的，单位需从元/吨换算为元/公斤。
+    "live-hog": "LH0",
+    # 钢材：热卷（板材）主力连续。南钢股份以板材、特钢为主，用热卷只观察钢材
+    # 价格走势，不代表公司综合钢材销售均价，也不替代螺纹钢等其他钢材品种。
+    "steel": "HC0",
+}
+
+# 生猪期货按元/吨报价，商品口径是元/公斤；换算只改单位，不改走势。
+FUTURES_PRICE_DIVISOR = {"live-hog": 1000.0}
 
 # Products whose only Eastmoney contribution is the latest spot quote. Nothing
 # here may also be listed in PRICE_SOURCE_BY_PRODUCT.
 LATEST_ONLY_PRODUCTS = {
-    "tio2", "coal", "live-hog", "tdi", "phosphate-iron", "molybdenum",
+    "tio2", "coal", "tdi", "phosphate-iron", "molybdenum",
     "tantalum-niobium", "titanium-material", "carbon-fiber",
     "viscose-staple-fiber", "gasoline", "diesel", "printing-paper",
     "packaging-paper", "titanium-products", "cathode-materials",
-    "cast-superalloy", "wrought-superalloy", "steel", "compound-fertilizer",
+    "cast-superalloy", "wrought-superalloy", "compound-fertilizer",
     "yeast", "fluorine-materials", "precious-metal-recycling",
     "precious-metal-precursors", "industrial-explosives",
 }
@@ -155,7 +181,7 @@ PRODUCTS = [
     {"id": "cathode-materials", "name": "锂电正极材料", "unit": "元/吨", "symbol": None, "aliases": ["正极材料"], "stocks": ["振华新材"], "chain": "锂盐、镍钴锰/磷铁原料 → 正极材料 → 锂电池", "drivers": "不同化学体系和型号价格差异大，未核实具体产品结构前不匹配碳酸锂或单一正极材料报价。"},
     {"id": "cast-superalloy", "name": "铸造高温合金", "unit": "元/吨", "symbol": None, "aliases": ["铸造合金制品"], "stocks": ["钢研高纳"], "chain": "镍、钴、铬等合金原料 → 铸造高温合金 → 航空发动机及燃气轮机", "drivers": "牌号、工艺和应用等级差异显著，暂无统一可比公开连续报价。"},
     {"id": "wrought-superalloy", "name": "变形高温合金", "unit": "元/吨", "symbol": None, "aliases": ["变形合金制品"], "stocks": ["钢研高纳"], "chain": "镍基/钴基合金 → 锻造、轧制高温合金 → 航空发动机及燃气轮机", "drivers": "合金牌号、规格和加工状态不同，暂无统一可比公开连续报价。"},
-    {"id": "steel", "name": "钢材", "unit": "元/吨", "symbol": None, "aliases": ["钢材", "钢材销售"], "stocks": ["南钢股份"], "chain": "铁矿石、焦煤、焦炭 → 钢铁冶炼 → 板材、长材及特钢", "drivers": "钢材品种跨度大，未以单一螺纹钢或热卷期货代替公司综合钢材销售价格。"},
+    {"id": "steel", "name": "钢材", "unit": "元/吨", "symbol": None, "aliases": ["钢材", "钢材销售"], "stocks": ["南钢股份"], "chain": "铁矿石、焦煤、焦炭 → 钢铁冶炼 → 板材、长材及特钢", "drivers": "钢材品种跨度大；走势线用热卷期货主力连续合约，只观察钢材价格方向，不代表公司综合钢材销售均价，也不替代螺纹钢等其他品种。"},
     {"id": "compound-fertilizer", "name": "复合肥", "unit": "元/吨", "symbol": None, "aliases": ["复合肥", "复合肥料"], "stocks": ["四川美丰"], "chain": "氮磷钾原料 → 复合肥 → 农业种植", "drivers": "配方、养分含量和区域差异较大，需按主流配方口径核实报价。"},
     {"id": "tungsten-products", "name": "钨产品", "unit": "元/吨", "symbol": None, "aliases": ["钨产品", "钨精矿", "仲钨酸铵", "APT"], "stocks": ["中钨高新"], "chain": "钨矿 → 钨精矿、APT、钨粉、硬质合金", "drivers": "钨产品跨多个加工环节，不同环节价格不可混用，暂无统一连续期货序列。"},
     {"id": "yeast", "name": "酵母产品", "unit": "元/吨", "symbol": None, "aliases": ["酵母", "酵母及相关产品"], "stocks": ["安琪酵母"], "chain": "糖蜜等碳源 → 酵母发酵 → 食品、饲料及生物技术应用", "drivers": "食品级、饲料级及不同酵母产品规格差异较大，暂无统一连续期货报价。"},
@@ -623,6 +649,16 @@ def normalize_daily_frame(frame: Any) -> dict[str, list[dict[str, Any]]]:
         result.setdefault(symbol, []).append({"date": day, "spot": spot, "futures": futures})
     return {key: clean_series(value) for key, value in result.items()}
 
+def last_daily_date(frame: Any) -> str | None:
+    """Return the newest dated row in a daily OHLC frame, so a monthly contract
+    series can still report the exact trading day its quote belongs to."""
+    if frame is None or getattr(frame, "empty", True):
+        return None
+    days = [date_text(row.get("日期", row.get("date"))) for _, row in frame.iterrows()]
+    days = [day for day in days if day]
+    return max(days) if days else None
+
+
 def normalize_monthly_klines(frame: Any) -> list[dict[str, Any]]:
     """Aggregate continuous-futures daily OHLC into true monthly candlesticks."""
     if frame is None or getattr(frame, "empty", True):
@@ -816,10 +852,7 @@ def fetch_data() -> dict[str, Any]:
 
     # Long-range monthly candlesticks come from the provider's main-continuous
     # futures series, kept separate from the spot/basis series above.
-    continuous_symbols = {
-        "soda-ash": "SA0", "urea": "UR0", "methanol": "MA0", "float-glass": "FG0", "pulp": "SP0",
-        "aluminium": "AL0", "rubber": "RU0", "corn": "C0", "soybean-meal": "M0", "gold": "AU0", "silver": "AG0", "copper": "CU0", "iron-ore": "I0", "tin": "SN0", "zinc": "ZN0", "sugar": "SR0", "pvc": "V0", "caustic-soda": "SH0", "alumina": "AO0",
-    }
+    continuous_symbols = CONTINUOUS_FUTURES_SYMBOLS
     old_items_for_monthly = existing_payload.get("items", {}) if isinstance(existing_payload.get("items"), dict) else {}
     for product_id, symbol in continuous_symbols.items():
         try:
@@ -830,8 +863,14 @@ def fetch_data() -> dict[str, Any]:
                 end_date=(end_day + timedelta(days=1)).strftime("%Y%m%d"),
             )
             monthly_klines = normalize_monthly_klines(frame)
+            divisor = FUTURES_PRICE_DIVISOR.get(product_id)
+            if monthly_klines and divisor:
+                monthly_klines = [
+                    {**bar, **{key: round(bar[key] / divisor, 4) for key in ("open", "high", "low", "close")}}
+                    for bar in monthly_klines
+                ]
             if monthly_klines:
-                payload["items"][product_id]["monthlyKlines"] = {
+                entry = {
                     "label": "主力连续合约月K线",
                     "series": monthly_klines,
                     "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -839,6 +878,9 @@ def fetch_data() -> dict[str, Any]:
                     "period": "monthly",
                     "priceType": "main-continuous-futures",
                 }
+                if product_id in FUTURES_ONLY_PRODUCTS:
+                    entry["latestDate"] = last_daily_date(frame)
+                payload["items"][product_id]["monthlyKlines"] = entry
                 fresh_data = True
             else:
                 prior = old_items_for_monthly.get(product_id, {})
@@ -849,6 +891,30 @@ def fetch_data() -> dict[str, Any]:
             prior = old_items_for_monthly.get(product_id, {})
             if isinstance(prior, dict) and isinstance(prior.get("monthlyKlines"), dict):
                 payload["items"][product_id]["monthlyKlines"] = prior["monthlyKlines"]
+
+    # Futures-only commodities quote, chart and source from that one series, so a
+    # second provider can never leave a spot price that disagrees with the chart.
+    for product_id in FUTURES_ONLY_PRODUCTS:
+        item = payload["items"].get(product_id)
+        klines = item.get("monthlyKlines") if isinstance(item, dict) else None
+        bars = klines.get("series") if isinstance(klines, dict) else None
+        if not bars:
+            continue
+        close = finite_number(bars[-1].get("close"))
+        if close is None:
+            continue
+        item.update({
+            "latest": close,
+            "latestDate": klines.get("latestDate") or bars[-1].get("date"),
+            "latestSpot": None,
+            "latestFutures": close,
+            "futuresSource": klines.get("source"),
+            "futuresSourceUrl": klines.get("sourceUrl"),
+            "changePct": None,
+            "source": klines.get("source"),
+            "sourceUrl": klines.get("sourceUrl"),
+            "status": "ok",
+        })
 
     # Exchange warehouse receipts provide a useful, narrow supply-side signal.
     # They are NOT the same as total producer, port, or social inventory.
@@ -1016,6 +1082,10 @@ def fetch_data() -> dict[str, Any]:
 
     # Preserve last good latest-only quotes when a provider is temporarily unavailable.
     for product in PRODUCTS:
+        if product["id"] in PRICE_SOURCE_BY_PRODUCT:
+            # Owned-price items keep whatever their own provider wrote; a stale
+            # spot quote from Eastmoney must never reappear here.
+            continue
         target = payload["items"][product["id"]]
         old_item = old_items.get(product["id"], {})
         if target.get("latest") is None and isinstance(old_item, dict) and old_item.get("latest") is not None:

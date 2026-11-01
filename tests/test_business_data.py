@@ -189,6 +189,26 @@ class BusinessDataTests(unittest.TestCase):
         self.assertEqual(fetcher.PRICE_SOURCE_BY_PRODUCT["maleic-anhydride"], "sunsirs-reference")
         self.assertEqual(fetcher.PRICE_SOURCE_BY_PRODUCT["methionine"], "caaa-report")
 
+    def test_futures_only_commodities_carry_one_contract_and_one_unit(self):
+        """A futures-only item needs a real contract, and it must not also be
+        fed a spot quote, so quote and chart always show the same series."""
+        product_ids = {item["id"] for item in fetcher.PRODUCTS}
+        self.assertTrue(fetcher.FUTURES_ONLY_PRODUCTS)
+        for product_id in fetcher.FUTURES_ONLY_PRODUCTS:
+            self.assertIn(product_id, product_ids)
+            self.assertIn(product_id, fetcher.CONTINUOUS_FUTURES_SYMBOLS)
+            self.assertNotIn(product_id, fetcher.LATEST_ONLY_PRODUCTS)
+            self.assertRegex(fetcher.CONTINUOUS_FUTURES_SYMBOLS[product_id], r"^[A-Z]{1,2}0$")
+
+    def test_futures_unit_conversion_is_declared_only_where_needed(self):
+        """A contract quoted in different units than the commodity must be
+        converted explicitly, instead of silently relabelling the number."""
+        products = {item["id"]: item for item in fetcher.PRODUCTS}
+        self.assertEqual(products["live-hog"]["unit"], "元/公斤")
+        self.assertEqual(fetcher.FUTURES_PRICE_DIVISOR["live-hog"], 1000.0)
+        for product_id in fetcher.FUTURES_PRICE_DIVISOR:
+            self.assertIn(product_id, fetcher.FUTURES_ONLY_PRODUCTS)
+
     def test_other_material_primary_segments_are_not_left_unmapped(self):
         mapping = json.loads((Path(__file__).resolve().parents[1] / "data" / "stock-products.json").read_text(encoding="utf-8"))["byCode"]
         expected = {

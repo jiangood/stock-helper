@@ -213,6 +213,19 @@
       "commonMonthCount": 200
     },
     {
+      "id": "steel",
+      "name": "钢材",
+      "unit": "元/吨",
+      "file": "products/steel.json",
+      "status": "ready",
+      "latestPrice": 3170,
+      "latestDate": "2026-10",
+      "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
+      "monthCount": 152,
+      "stockTimelineMonthCount": 47,
+      "commonMonthCount": 47
+    },
+    {
       "id": "iron-ore",
       "name": "铁矿石",
       "unit": "元/吨",
@@ -224,19 +237,6 @@
       "monthCount": 157,
       "stockTimelineMonthCount": 47,
       "commonMonthCount": 47
-    },
-    {
-      "id": "steel",
-      "name": "钢材",
-      "unit": "元/吨",
-      "file": "products/steel.json",
-      "status": "stock-only",
-      "latestPrice": null,
-      "latestDate": null,
-      "source": null,
-      "monthCount": 0,
-      "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0
     },
     {
       "id": "gasoline",

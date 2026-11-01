@@ -649,6 +649,16 @@ def normalize_daily_frame(frame: Any) -> dict[str, list[dict[str, Any]]]:
         result.setdefault(symbol, []).append({"date": day, "spot": spot, "futures": futures})
     return {key: clean_series(value) for key, value in result.items()}
 
+def restores_previous_quote(product_id: str) -> bool:
+    """Whether a commodity may fall back to the previous run's quote.
+
+    Futures-only items must not: their quote is derived from the contract series
+    every run, and a preserved spot price would contradict the chart. Every other
+    commodity keeps its last good value when a provider is temporarily down.
+    """
+    return product_id not in FUTURES_ONLY_PRODUCTS
+
+
 def last_daily_date(frame: Any) -> str | None:
     """Return the newest dated row in a daily OHLC frame, so a monthly contract
     series can still report the exact trading day its quote belongs to."""
@@ -1080,11 +1090,11 @@ def fetch_data() -> dict[str, Any]:
         if not target.get("industryLinks") and isinstance(old_item, dict) and isinstance(old_item.get("industryLinks"), dict):
             target["industryLinks"] = old_item["industryLinks"]
 
-    # Preserve last good latest-only quotes when a provider is temporarily unavailable.
+    # Preserve last good quotes when a provider is temporarily unavailable.
+    # Futures-only items are excluded: their quote must come from the contract
+    # series, otherwise a stale spot price could reappear beside the chart.
     for product in PRODUCTS:
-        if product["id"] in PRICE_SOURCE_BY_PRODUCT:
-            # Owned-price items keep whatever their own provider wrote; a stale
-            # spot quote from Eastmoney must never reappear here.
+        if not restores_previous_quote(product["id"]):
             continue
         target = payload["items"][product["id"]]
         old_item = old_items.get(product["id"], {})

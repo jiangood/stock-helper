@@ -347,13 +347,13 @@
       "name": "蛋氨酸",
       "unit": "元/吨",
       "file": "products/methionine.json",
-      "status": "stock-only",
-      "latestPrice": null,
-      "latestDate": null,
-      "source": null,
-      "monthCount": 0,
-      "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
+      "status": "pending",
+      "latestPrice": 24950,
+      "latestDate": "2026-10-28",
+      "source": "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点",
+      "monthCount": 1,
+      "stockTimelineMonthCount": 1,
+      "commonMonthCount": 1
     }
   ]
 }

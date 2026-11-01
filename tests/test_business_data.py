@@ -209,6 +209,15 @@ class BusinessDataTests(unittest.TestCase):
         for product_id in fetcher.FUTURES_PRICE_DIVISOR:
             self.assertIn(product_id, fetcher.FUTURES_ONLY_PRODUCTS)
 
+    def test_previous_quote_is_kept_only_for_commodities_without_a_contract(self):
+        """A failed provider must not erase a good quote, but a futures-only item
+        must never fall back to an older spot price instead of its contract."""
+        self.assertFalse(fetcher.restores_previous_quote("live-hog"))
+        self.assertFalse(fetcher.restores_previous_quote("steel"))
+        # Commodities whose provider can fail for a day still keep their last value.
+        for product_id in ("methionine", "maleic-anhydride", "rare-earth", "tio2", "coal"):
+            self.assertTrue(fetcher.restores_previous_quote(product_id))
+
     def test_other_material_primary_segments_are_not_left_unmapped(self):
         mapping = json.loads((Path(__file__).resolve().parents[1] / "data" / "stock-products.json").read_text(encoding="utf-8"))["byCode"]
         expected = {

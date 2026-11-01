@@ -29270,23 +29270,336 @@
       "name": "蛋氨酸",
       "unit": "元/吨",
       "symbol": null,
-      "series": [],
-      "latest": null,
-      "latestDate": null,
-      "latestSpot": null,
+      "series": [
+        {
+          "date": "2026-10-09",
+          "spot": 23850,
+          "low": 23500,
+          "high": 24200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 23500,
+              "high": 24200,
+              "spot": 23850
+            },
+            "河南": {
+              "low": 23500,
+              "high": 24200,
+              "spot": 23850
+            },
+            "广东": {
+              "low": 23700,
+              "high": 24300,
+              "spot": 24000
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1009/25969.html"
+        },
+        {
+          "date": "2026-10-10",
+          "spot": 24350,
+          "low": 24200,
+          "high": 24500,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 24200,
+              "high": 24500,
+              "spot": 24350
+            },
+            "河南": {
+              "low": 24200,
+              "high": 24500,
+              "spot": 24350
+            },
+            "广东": {
+              "low": 24300,
+              "high": 24700,
+              "spot": 24500
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1010/26002.html"
+        },
+        {
+          "date": "2026-10-12",
+          "spot": 24550,
+          "low": 24400,
+          "high": 24700,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 24400,
+              "high": 24700,
+              "spot": 24550
+            },
+            "河南": {
+              "low": 24400,
+              "high": 24700,
+              "spot": 24550
+            },
+            "广东": {
+              "low": 24500,
+              "high": 24900,
+              "spot": 24700
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1012/26028.html"
+        },
+        {
+          "date": "2026-10-13",
+          "spot": 24950,
+          "low": 24700,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "河南": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "广东": {
+              "low": 24800,
+              "high": 25300,
+              "spot": 25050
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1013/26054.html"
+        },
+        {
+          "date": "2026-10-14",
+          "spot": 24950,
+          "low": 24700,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "河南": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "广东": {
+              "low": 24800,
+              "high": 25300,
+              "spot": 25050
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1014/26053.html"
+        },
+        {
+          "date": "2026-10-15",
+          "spot": 25100,
+          "low": 25000,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "河南": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "广东": {
+              "low": 25100,
+              "high": 25300,
+              "spot": 25200
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1015/26097.html"
+        },
+        {
+          "date": "2026-10-16",
+          "spot": 25100,
+          "low": 25000,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "河南": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "广东": {
+              "low": 25100,
+              "high": 25300,
+              "spot": 25200
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1016/26126.html"
+        },
+        {
+          "date": "2026-10-20",
+          "spot": 25100,
+          "low": 25000,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "河南": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "广东": {
+              "low": 25100,
+              "high": 25300,
+              "spot": 25200
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1020/26169.html"
+        },
+        {
+          "date": "2026-10-21",
+          "spot": 25100,
+          "low": 25000,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "河南": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "广东": {
+              "low": 25100,
+              "high": 25300,
+              "spot": 25200
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1021/26197.html"
+        },
+        {
+          "date": "2026-10-23",
+          "spot": 25100,
+          "low": 25000,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "河南": {
+              "low": 25000,
+              "high": 25200,
+              "spot": 25100
+            },
+            "广东": {
+              "low": 25100,
+              "high": 25300,
+              "spot": 25200
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1023/26251.html"
+        },
+        {
+          "date": "2026-10-26",
+          "spot": 24950,
+          "low": 24700,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "河南": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "广东": {
+              "low": 24800,
+              "high": 25300,
+              "spot": 25050
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1026/26274.html"
+        },
+        {
+          "date": "2026-10-28",
+          "spot": 24950,
+          "low": 24700,
+          "high": 25200,
+          "region": "山东",
+          "spec": "饲料级固体蛋氨酸",
+          "markets": {
+            "山东": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "河南": {
+              "low": 24700,
+              "high": 25200,
+              "spot": 24950
+            },
+            "广东": {
+              "low": 24800,
+              "high": 25300,
+              "spot": 25050
+            }
+          },
+          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html"
+        }
+      ],
+      "latest": 24950,
+      "latestDate": "2026-10-28",
+      "latestSpot": 24950,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
       "changePct": null,
       "inventory": null,
-      "source": null,
-      "sourceUrl": "https://www.100ppi.com/",
+      "source": "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点",
+      "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html",
       "stocks": [
         "安迪苏"
       ],
       "chain": "化工合成 → 饲料级蛋氨酸 → 畜禽饲料",
       "drivers": "关注全球产能、厂家报价、进口与饲料需求；暂无连续期货序列。",
-      "status": "pending"
+      "status": "ok"
     },
     "gasoline": {
       "id": "gasoline",

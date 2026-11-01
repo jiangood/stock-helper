@@ -111,9 +111,9 @@ function isoWeekKey(date = new Date()) {
 }
 
 async function main() {
-  // Scheduled and code-push runs must not publish intraday snapshots.
+  // Scheduled runs must not publish intraday snapshots.
   // Manual workflow_dispatch is an explicit operator override for backfills.
-  if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch' && process.env.GITHUB_EVENT_NAME !== 'push') {
+  if (process.env.GITHUB_EVENT_NAME !== 'workflow_dispatch') {
     const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', {
       timeZone: 'Asia/Shanghai', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
     }).formatToParts(new Date()).map(part => [part.type, part.value]));

@@ -5,15 +5,6 @@ on:
     # Value-investing cadence: one daily snapshot after the China daytime session.
     - cron: "25 8 * * 1-5"
   workflow_dispatch:
-  push:
-    branches: [master, main]
-    paths:
-      - "scripts/fetch_business_data.py"
-      - "scripts/build_company_products.py"
-      - "scripts/build_product_comparison.js"
-      - "data/business-data.json"
-      - "data/commodity-db/**"
-      - ".github/workflows/business-data.yml"
 
 permissions:
   contents: write

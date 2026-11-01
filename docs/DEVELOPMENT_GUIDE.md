@@ -82,9 +82,11 @@ node scripts/validate_stock_data.js
 
 主要工作流（以当前 `.github/workflows/` 为准）：
 
+触发约定：除 `asset-fingerprints.yml` 外，其余工作流只在定时任务或手动 `workflow_dispatch` 时运行；提交代码不会顺带抓取或发布数据，避免在非交易时段或盘中生成快照。需要立即刷新数据时手动触发对应工作流。
+
 - `stock-snapshot.yml`：采集股票行情与 K 线，并在提交前运行 `tests/monthly-kline.test.js`。
 - `fundamentals.yml`：刷新基本面快照。
-- `build-static-cache.yml`：在上游数据更新后或相关构建脚本变更时，统一重建详情缓存、评分、板块月线、商品及关联股票月线对比、manifest 和健康快照，并校验后发布。
+- `build-static-cache.yml`：在上游采集工作流成功后（`workflow_run`）或手动触发时，统一重建详情缓存、评分、板块月线、商品及关联股票月线对比、manifest 和健康快照，并校验后发布。
 - `business-data.yml`：更新商品数据，并重建商品及关联股票月线比较。
 - `asset-fingerprints.yml`：页面或公共 CSS/JS 变化后，运行 `scripts/update_asset_fingerprints.js`，为 HTML 中实际引用的本地 CSS/JS 计算 SHA-256 前 12 位并更新 `?v=`；第三方 CDN、内联代码和业务 JSON 不参与。只有 HTML 指纹有变化时才提交到 master；工作流使用 `GITHUB_TOKEN` 提交，避免由自动提交递归触发工作流。
 

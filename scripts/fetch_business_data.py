@@ -21,6 +21,8 @@ from typing import Any, Callable
 from urllib.parse import urljoin, urlparse
 from urllib.request import HTTPCookieProcessor, Request, build_opener, urlopen
 
+import sunsirs
+
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "data" / "business-data.json"
 LOOKBACK_DAYS = 365
@@ -42,6 +44,49 @@ SUNSIRS_MALEIC_ROW = re.compile(
     r"(20\d{2})-(\d{2})-(\d{2})\s+\d{2}:\d{2}:\d{2}\s+"
     r"(\d{1,2})月(\d{1,2})日\s*[，,]\s*顺酐参考价为\s*([0-9][0-9,]*(?:\.[0-9]+)?)"
 )
+
+# Business Society also publishes a daily 08:30 benchmark price per commodity on
+# a paginated public list (~3 pages, about six months). It is used only as a
+# fallback for items that no other provider covers, and every list is pinned to
+# the commodity name so a wrong id can never produce a different commodity's price.
+SUNSIRS_BENCHMARKS = {
+    "rare-earth": sunsirs.Product(
+        id="rare-earth",
+        name="镨钕氧化物",
+        list_path="/news/list-12-1217-1454-1.html",
+        source="生意社镨钕氧化物基准价（每日 08:30 公开）",
+        price_note="生意社镨钕氧化物（即氧化镨钕）基准价，元/吨，为行业参考价，不等于公司实际成交价或结算价。",
+        min_price=50_000.0,
+        max_price=3_000_000.0,
+    ),
+    "polycarbonate": sunsirs.Product(
+        id="polycarbonate",
+        name="PC",
+        list_path="/news/list-15-1217-825-1.html",
+        source="生意社PC基准价（每日 08:30 公开）",
+        price_note="生意社PC（聚碳酸酯）基准价，元/吨，为通用牌号行业参考价，不等于公司实际成交价或结算价。",
+        min_price=5_000.0,
+        max_price=60_000.0,
+    ),
+    "vanadium": sunsirs.Product(
+        id="vanadium",
+        name="五氧化二钒",
+        list_path="/news/list-12-1217-10452-1.html",
+        source="生意社五氧化二钒基准价（每日 08:30 公开）",
+        price_note="生意社五氧化二钒基准价，元/吨，只代表 V2O5 这一钒产品口径，不等于钒铁、钒氮合金或公司成交价。",
+        min_price=20_000.0,
+        max_price=1_000_000.0,
+    ),
+    "tungsten-products": sunsirs.Product(
+        id="tungsten-products",
+        name="仲钨酸铵",
+        list_path="/news/list-12-1217-994-1.html",
+        source="生意社仲钨酸铵基准价（每日 08:30 公开）",
+        price_note="生意社仲钨酸铵（APT）基准价，元/吨，只代表 APT 这一钨产品口径，不等于钨精矿、碳化钨粉或公司成交价。",
+        min_price=50_000.0,
+        max_price=3_000_000.0,
+    ),
+}
 
 PRODUCTS = [
     {"id": "soda-ash", "name": "纯碱", "unit": "元/吨", "symbol": "SA", "aliases": ["纯碱", "SA"], "stocks": ["双环科技", "中盐化工", "三友化工"], "chain": "玻璃、光伏玻璃、日用玻璃、硅酸钠", "drivers": "重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨成本。"},
@@ -400,12 +445,16 @@ def fetch_sunsirs_maleic_reference_prices(
     return [observed[day] for day in sorted(observed)]
 
 
-def apply_sunsirs_maleic(
+def apply_sunsirs_series(
     target: dict[str, Any],
     previous: dict[str, Any],
     fresh_points: list[dict[str, Any]],
+    *,
+    source: str,
+    source_url: str,
+    price_note: str,
 ) -> bool:
-    """Merge observed reference prices into the item and keep quote and series in step."""
+    """Merge verified daily prices into the item and keep quote and series in step."""
     old_series = previous.get("series", []) if isinstance(previous, dict) else []
     if not isinstance(old_series, list):
         old_series = []
@@ -419,12 +468,45 @@ def apply_sunsirs_maleic(
         "latestSpot": latest_point.get("spot"),
         "latestDate": latest_point["date"],
         "latestFutures": None,
-        "source": "生意社顺酐每日参考价（公开价格快讯）",
-        "sourceUrl": latest_point.get("sourceUrl") or SUNSIRS_MALEIC_ORIGIN + "/kx/",
-        "priceMethod": "生意社顺酐参考价为行业参考价，不等于公司实际成交均价或结算价。",
+        "source": source,
+        "sourceUrl": latest_point.get("sourceUrl") or source_url,
+        "priceMethod": price_note,
         "status": "ok",
     })
     return bool(fresh_points)
+
+
+def apply_sunsirs_maleic(
+    target: dict[str, Any],
+    previous: dict[str, Any],
+    fresh_points: list[dict[str, Any]],
+) -> bool:
+    """Merge observed reference prices into the item and keep quote and series in step."""
+    return apply_sunsirs_series(
+        target,
+        previous,
+        fresh_points,
+        source="生意社顺酐每日参考价（公开价格快讯）",
+        source_url=SUNSIRS_MALEIC_ORIGIN + "/kx/",
+        price_note="生意社顺酐参考价为行业参考价，不等于公司实际成交均价或结算价。",
+    )
+
+
+def apply_sunsirs_benchmark(
+    target: dict[str, Any],
+    previous: dict[str, Any],
+    fresh_points: list[dict[str, Any]],
+    product: sunsirs.Product,
+) -> bool:
+    """Merge Business Society benchmark prices for one fallback commodity."""
+    return apply_sunsirs_series(
+        target,
+        previous,
+        fresh_points,
+        source=product.source,
+        source_url=sunsirs.ORIGIN + product.list_path,
+        price_note=product.price_note,
+    )
 
 
 def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
@@ -956,6 +1038,32 @@ def fetch_data() -> dict[str, Any]:
             fresh_data = True
     except Exception as exc:
         errors.append("sunsirs_maleic_reference: " + str(exc)[:180])
+
+    # Fallback only: commodities that no other provider covers are filled from
+    # Business Society's daily benchmark list. One session is reused across
+    # commodities so the browser check is answered once per run.
+    try:
+        read = sunsirs.session()
+        for product_id, product in SUNSIRS_BENCHMARKS.items():
+            target = payload["items"].get(product_id)
+            if not isinstance(target, dict):
+                continue
+            old_item = old_items.get(product_id, {})
+            old_series = old_item.get("series", []) if isinstance(old_item, dict) else []
+            old_dates = [date_text(point.get("date")) for point in old_series if isinstance(point, dict)] \
+                if isinstance(old_series, list) else []
+            after_date = max((day for day in old_dates if day), default=None)
+            try:
+                fresh_points = sunsirs.fetch_benchmark_series(
+                    read, product, after_date=after_date,
+                )
+            except Exception as exc:
+                errors.append(f"sunsirs_benchmark/{product_id}: " + str(exc)[:160])
+                continue
+            if apply_sunsirs_benchmark(target, old_item, fresh_points, product):
+                fresh_data = True
+    except Exception as exc:
+        errors.append("sunsirs_benchmark: " + str(exc)[:180])
 
     # Cost proxies are matched only against source rows that actually exist in
     # Eastmoney's public spot-and-stock table. Unsupported raw materials remain pending.

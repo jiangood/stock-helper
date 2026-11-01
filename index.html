@@ -1044,10 +1044,7 @@ function setPageLoading(message, done) {
       }))
     });
     if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
-    if (page === 'market') {
-      if (window.StockBusiness) window.StockBusiness.onTab('market');
-      if (window.StockGlobalAssets) window.StockGlobalAssets.onTab('market');
-    }
+    if (page === 'market' && window.StockBusiness) window.StockBusiness.onTab('market');
   } catch (e) {
     console.error('[StockDashboard] 页面初始化失败：', e);
     try {

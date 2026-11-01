@@ -46,9 +46,6 @@ python -m http.server 8089
 | `data/stock-quotes.json` `data/stock-cache/*.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
 | `data/business-data.json` `scripts/fetch_business_data.py` | 商品现货/期货参考数据缓存与采集脚本；原行情展示页面已移除 |
 | `data/sector-monthly.json` `scripts/build_sector_monthly.js` | 板块日线强弱汇总缓存：每只股票近 1/5/20/60/120/200 个交易日涨跌幅；目前无独立展示页面 |
-| `data/global-assets-data.json` `scripts/fetch_global_assets.py` | 全球资产行情缓存与采集脚本；原行情展示页面已移除 |
-| `scripts/fetch_global_assets.py` | 从 Yahoo Finance 公开图表接口抓取全球资产报价，抓取失败时保留最近有效值并标记缓存状态 |
-| `.github/workflows/global-assets.yml` | 每日尝试刷新全球资产行情及近 5 年月线；数据未变化时不更新文件，支持手动触发 |
 | `scripts/fetch_business_data.py` | 使用 AKShare 抓取公开商品数据；抓取失败时不伪造价格，并保留上一份有效缓存 |
 | `.github/workflows/business-data.yml` | 工作日每日刷新一次商品数据，数据未变化时不更新文件，也支持手动触发 GitHub Actions |
 
@@ -71,10 +68,6 @@ python -m http.server 8089
 - 顺酐接入生意社公开价格快讯的每日参考价（顺酐产业网 `ma.100ppi.com/kx/`，99.5% 口径，元/吨）：脚本按页抓取最近约 3 个月的公开列表，校验标题日期与正文日期、标题价格与正文价格一致后才写入，并把每日观测累积到 `data/business-data.json` 的 `series`；商品月线由这些真实日度观测聚合而来，不插值、不估算，也不用甲醇、苯酐等相近商品或关联股票价格做代理。生意社只公开最近若干页，因此历史长度随时间累积增长，页面会显示商品自身有效月线根数。
 - 商品涨价不必然让关联上市公司受益，仍要结合公司实际业务占比、成本、库存、供需和盈利质量判断。
 - 自动抓取任务与运行状态可在 [GitHub Actions](https://github.com/jiangood/stock-helper/actions/workflows/business-data.yml) 查看。
-
-## 全球资产
-
-全球资产数据采集任务暂时保留，但原行情展示页面已移除，数据暂不在站点页面呈现。抓取脚本为各资产保存近一个月日线历史；历史点不足时明确提示，不补造数据。VIX 上升通常表示期权市场隐含的预期波动增强，不是市场涨跌方向预测。行情通过 GitHub Actions 每日抓取并缓存，实际调度可能延迟；这是公开行情参考，不是逐笔实时行情。各市场币种和交易时段不同，报价失败时不生成模拟价格，页面会显示最近有效报价及更新时间。
 
 ## 鳄鱼纪律
 
@@ -141,7 +134,7 @@ python -m http.server 8089
 ## 行情数据策略
 
 - 页面只读取 GitHub Pages 同源静态 JSON；东方财富/腾讯行情接口只由 GitHub Actions 采集脚本调用。
-- A 股缓存工作日北京时间收盘后更新；日线每日检查，周线每周检查，月线随最新行情日检查（保证当月月 K 不滞后）。全球资产与商品数据采集任务仍按原计划更新缓存；由于行情展示页面已移除，这些数据暂不在站点页面呈现。
+- A 股缓存工作日北京时间收盘后更新；日线每日检查，周线每周检查，月线随最新行情日检查（保证当月月 K 不滞后）。商品数据采集任务仍按原计划更新缓存；由于行情展示页面已移除，商品明细数据只在商品页呈现。
 - 采集失败或数据质量不合格时保留上一次有效数据；数据没有实质变化时不更新时间、不产生新的数据提交。
 - 页面每次直接请求同源静态 JSON（`cache: 'no-store'`），不保留浏览器旧数据；网络不可用时明确显示读取失败；池外股票代码不再从浏览器实时回源。
 - 这套设计提供延迟的收盘行情，不是实时行情；GitHub Actions 的定时任务可能延迟。

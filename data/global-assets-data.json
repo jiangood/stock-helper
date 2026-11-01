@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T08:09:08.956494Z",
+  "updatedAt": "2026-11-01T01:07:47.275470Z",
   "source": "Yahoo Finance public chart endpoint",
   "assets": [
     {
@@ -822,11 +822,11 @@
       "name": "比特币",
       "currency": "USD",
       "status": "已更新",
-      "price": 77196.55,
-      "prevClose": 61318.957,
-      "change": 15877.593,
-      "changePct": 25.893449,
-      "quoteTime": "2026-10-31T08:09:04Z",
+      "price": 77555.16,
+      "prevClose": 61004.406,
+      "change": 16550.754,
+      "changePct": 27.130424,
+      "quoteTime": "2026-11-01T01:07:42Z",
       "sourceSymbol": "BTC-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/BTC-USD",
       "history": [
@@ -1627,8 +1627,8 @@
           "close": 77198.2109
         },
         {
-          "date": "2026-10-31",
-          "close": 77196.5469
+          "date": "2026-11-01",
+          "close": 77555.1562
         }
       ]
     },
@@ -1637,11 +1637,11 @@
       "name": "以太坊",
       "currency": "USD",
       "status": "已更新",
-      "price": 2239.85,
-      "prevClose": 4288.074,
-      "change": -2048.224,
-      "changePct": -47.765594,
-      "quoteTime": "2026-10-31T08:09:05Z",
+      "price": 2260.77,
+      "prevClose": 4324.627,
+      "change": -2063.857,
+      "changePct": -47.723353,
+      "quoteTime": "2026-11-01T01:07:39Z",
       "sourceSymbol": "ETH-USD",
       "sourceUrl": "https://finance.yahoo.com/quote/ETH-USD",
       "history": [
@@ -2442,8 +2442,8 @@
           "close": 2241.0544
         },
         {
-          "date": "2026-10-31",
-          "close": 2239.8501
+          "date": "2026-11-01",
+          "close": 2260.77
         }
       ]
     },
@@ -5712,11 +5712,11 @@
       "name": "美元兑人民币",
       "currency": "CNY",
       "status": "已更新",
-      "price": 6.654,
+      "price": 6.6449,
       "prevClose": 6.3904,
-      "change": 0.2636,
-      "changePct": 4.124937,
-      "quoteTime": "2026-10-31T03:33:49Z",
+      "change": 0.2545,
+      "changePct": 3.982536,
+      "quoteTime": "2026-10-31T21:32:17Z",
       "sourceSymbol": "CNY=X",
       "sourceUrl": "https://finance.yahoo.com/quote/CNY%3DX",
       "history": [
@@ -6518,7 +6518,7 @@
         },
         {
           "date": "2026-10-31",
-          "close": 6.654
+          "close": 6.6449
         }
       ]
     }

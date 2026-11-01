@@ -62,7 +62,6 @@ def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
             float(row["top"]) + float(row["height"]) / 2
         ) / SCALE
         ticks.append((y, value, confidence))
-    # OCR can occasionally return the same tick twice.
     unique: dict[int, tuple[float, float, float]] = {}
     for tick in ticks:
         unique[round(tick[0])] = tick
@@ -76,6 +75,27 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
     if image.shape[1] < 700 or image.shape[0] < 400:
         raise ValueError(f"图表尺寸异常：{image.shape[1]}x{image.shape[0]}")
 
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    blue_mask = cv2.inRange(
+        hsv,
+        np.array([95, 100, 100], dtype=np.uint8),
+        np.array([135, 255, 255], dtype=np.uint8),
+    )
+    # No axis and no blue curve means the provider returned its explicit
+    # no-data chart. Missing months must remain null, never be guessed.
+    plot_blue = blue_mask[80:430, PLOT_LEFT:PLOT_RIGHT]
+    if cv2.countNonZero(plot_blue) == 0:
+        return {
+            "month": month,
+            "date_rule": "每月1日至2日图表最左侧蓝色价格线",
+            "value": None,
+            "unit": "元/吨",
+            "status": "no_data",
+            "estimated": True,
+            "method": "图表无价格曲线，保留空值",
+            "source_image": image_path.name,
+        }
+
     ticks = read_axis_ticks(image)
     if len(ticks) < 4:
         raise ValueError(f"纵轴刻度识别不足：{len(ticks)} 个")
@@ -88,14 +108,7 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
     if rmse > 8:
         raise ValueError(f"纵轴刻度拟合误差过大：{rmse:.2f}")
 
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    blue_mask = cv2.inRange(
-        hsv,
-        np.array([95, 100, 100], dtype=np.uint8),
-        np.array([135, 255, 255], dtype=np.uint8),
-    )
-    # The first plotted date is at the left edge of the graph. Sample only a
-    # narrow strip so later price movement cannot affect the monthly value.
+    # Sample only a narrow strip at the left edge, i.e. the first day.
     x_end = min(PLOT_LEFT + 12, PLOT_RIGHT)
     y_region = blue_mask[80:430, PLOT_LEFT:x_end]
     ys = np.where(y_region > 0)[0] + 80
@@ -111,6 +124,7 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
         "date_rule": "每月1日至2日图表最左侧蓝色价格线",
         "value": round(price, 2),
         "unit": "元/吨",
+        "status": "estimated",
         "method": "图像估算：OCR纵轴刻度线性拟合 + 蓝线像素定位",
         "estimated": True,
         "quality": {

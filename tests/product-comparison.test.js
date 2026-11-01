@@ -130,8 +130,13 @@ test('commodity database index references one independent JSON file per product'
   const maleic = database.products.find((item) => item.id === 'maleic-anhydride');
   assert.ok(maleic, 'maleic anhydride must remain in the product index');
   const maleicCard = JSON.parse(fs.readFileSync(path.join(databaseDir, maleic.file), 'utf8'));
-  assert.equal(maleic.monthCount, 0,
-    'stock-only history must never be reported as maleic anhydride price history');
+  const maleicSeries = JSON.parse(fs.readFileSync(path.join(root, 'data/business-data.json'), 'utf8'))
+    .items['maleic-anhydride'].series || [];
+  const observedMonths = new Set(maleicSeries.map((point) => String(point.date).slice(0, 7)));
+  assert.equal(maleic.monthCount, observedMonths.size,
+    'maleic anhydride months must come only from observed daily reference prices');
+  maleicCard.months.forEach((month) => assert.ok(observedMonths.has(month),
+    'a comparison month cannot exist without an observed commodity price'));
   assert.ok(maleicCard.stocks.some((stock) => stock.monthCount > 0),
     'linked equity history should remain available and separately counted');
 });

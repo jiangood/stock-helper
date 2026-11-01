@@ -97,7 +97,7 @@ function commodityMonthly(item) {
     source: item.monthlyKlines && item.monthlyKlines.source || item.source || null,
     note: item.monthlyKlines && item.monthlyKlines.priceType === 'main-continuous-futures'
       ? '期货主力连续价格仅作商品价格参考，不等于企业实际采购到厂价；连续合约换月可能产生价差。'
-      : null
+      : (item.priceMethod || null)
   };
 }
 function normalizedComparison(productPoints, stockPoints) {

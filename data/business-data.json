@@ -10767,23 +10767,415 @@
       "name": "顺酐",
       "unit": "元/吨",
       "symbol": null,
-      "series": [],
-      "latest": null,
-      "latestDate": null,
-      "latestSpot": null,
+      "series": [
+        {
+          "date": "2026-08-03",
+          "spot": 8550.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---5.html"
+        },
+        {
+          "date": "2026-08-04",
+          "spot": 8550.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---5.html"
+        },
+        {
+          "date": "2026-08-05",
+          "spot": 8550.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---5.html"
+        },
+        {
+          "date": "2026-08-06",
+          "spot": 8475.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---5.html"
+        },
+        {
+          "date": "2026-08-07",
+          "spot": 8475.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---5.html"
+        },
+        {
+          "date": "2026-08-10",
+          "spot": 8475.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-11",
+          "spot": 8325.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-12",
+          "spot": 8325.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-13",
+          "spot": 8300.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-14",
+          "spot": 8325.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-17",
+          "spot": 8250.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-18",
+          "spot": 8225.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-19",
+          "spot": 8200.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-20",
+          "spot": 8350.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-21",
+          "spot": 8325.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-24",
+          "spot": 8300.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-25",
+          "spot": 8225.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-26",
+          "spot": 8200.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-27",
+          "spot": 8175.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-28",
+          "spot": 8175.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---4.html"
+        },
+        {
+          "date": "2026-08-31",
+          "spot": 8200.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-01",
+          "spot": 8200.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-02",
+          "spot": 8200.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-03",
+          "spot": 8225.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-04",
+          "spot": 8225.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-07",
+          "spot": 8250.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-08",
+          "spot": 8250.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-09",
+          "spot": 8687.5,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-10",
+          "spot": 8687.5,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-11",
+          "spot": 8687.5,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-14",
+          "spot": 9500.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-15",
+          "spot": 9500.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-16",
+          "spot": 9600.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-17",
+          "spot": 9825.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-18",
+          "spot": 9750.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---3.html"
+        },
+        {
+          "date": "2026-09-21",
+          "spot": 9600.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-09-22",
+          "spot": 9650.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-09-23",
+          "spot": 9650.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-09-24",
+          "spot": 9650.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-09-25",
+          "spot": 9650.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-09-28",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-09-29",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-09-30",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-01",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-02",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-05",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-06",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-07",
+          "spot": 9850.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-08",
+          "spot": 9900.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-09",
+          "spot": 9900.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/list---2.html"
+        },
+        {
+          "date": "2026-10-12",
+          "spot": 10100.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-13",
+          "spot": 10100.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-14",
+          "spot": 10100.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-15",
+          "spot": 10100.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-16",
+          "spot": 10100.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-19",
+          "spot": 10100.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-20",
+          "spot": 10075.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-21",
+          "spot": 10050.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-22",
+          "spot": 10050.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-23",
+          "spot": 10050.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-26",
+          "spot": 10150.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-27",
+          "spot": 10200.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-28",
+          "spot": 10200.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-29",
+          "spot": 10000.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-10-30",
+          "spot": 9975.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
+        }
+      ],
+      "latest": 9975.0,
+      "latestDate": "2026-10-30",
+      "latestSpot": 9975.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
       "changePct": null,
       "inventory": null,
-      "source": null,
-      "sourceUrl": "https://www.100ppi.com/",
+      "source": "生意社顺酐每日参考价（公开价格快讯）",
+      "sourceUrl": "https://ma.100ppi.com/kx/",
       "stocks": [
         "齐翔腾达"
       ],
       "chain": "正丁烷氧化 → 顺酐 → 不饱和聚酯树脂、BDO、THF等",
       "drivers": "关注正丁烷成本、装置开工、厂家库存、下游不饱和聚酯树脂需求及出口。",
-      "status": "pending"
+      "status": "ok",
+      "priceMethod": "生意社顺酐参考价为行业参考价，不等于公司实际成交均价或结算价。"
     },
     "live-hog": {
       "id": "live-hog",

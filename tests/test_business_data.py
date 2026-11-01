@@ -63,6 +63,74 @@ class BusinessDataTests(unittest.TestCase):
         self.assertIsNone(payload["items"]["maleic-anhydride"]["latest"])
         self.assertEqual(payload["items"]["maleic-anhydride"]["status"], "pending")
 
+    def test_sunsirs_maleic_parser_keeps_rows_the_source_repeats_consistently(self):
+        html = (
+            '<ul>'
+            '<li><div class="pr-news-tit">[<a href="/kx/">顺酐</a>]10月29日顺酐为10000.00 '
+            '<span>2026-10-29 16:38:12</span></div>'
+            '<div class="pr-news-txt">10月29日，顺酐参考价为10000.00，与10月1日(9850.00)相比，上涨了1.52%</div></li>'
+            '<li><div class="pr-news-tit">[<a href="/kx/">顺酐</a>]10月30日顺酐为9975.00 '
+            '<span>2026-10-30 16:38:13</span></div>'
+            '<div class="pr-news-txt">10月30日，顺酐参考价为9975.00，与10月1日(9850.00)相比，上涨了1.27%</div></li>'
+            '</ul>'
+        )
+        points = fetcher.parse_sunsirs_maleic_page(html, "https://ma.100ppi.com/kx/")
+        self.assertEqual([point["date"] for point in points], ["2026-10-29", "2026-10-30"])
+        self.assertEqual(points[-1]["spot"], 9975.0)
+        self.assertEqual(points[-1]["spec"], "顺酐 99.5% 参考价")
+        self.assertEqual(points[-1]["sourceUrl"], "https://ma.100ppi.com/kx/")
+
+    def test_sunsirs_maleic_parser_drops_rows_it_cannot_verify(self):
+        html = (
+            '<ul>'
+            # Headline date does not match the published date.
+            '<li>[顺酐]10月28日顺酐为10200.00 <span>2026-10-27 16:38:13</span>'
+            '10月27日，顺酐参考价为10200.00</li>'
+            # Headline price and summary price disagree.
+            '<li>[顺酐]10月27日顺酐为10200.00 <span>2026-10-27 16:38:13</span>'
+            '10月27日，顺酐参考价为10100.00</li>'
+            # Value outside the plausible range for this commodity.
+            '<li>[顺酐]10月26日顺酐为90000.00 <span>2026-10-26 16:38:13</span>'
+            '10月26日，顺酐参考价为90000.00</li>'
+            # The same date published twice with different values must not be averaged.
+            '<li>[顺酐]10月23日顺酐为10050.00 <span>2026-10-23 16:38:13</span>'
+            '10月23日，顺酐参考价为10050.00</li>'
+            '<li>[顺酐]10月23日顺酐为10100.00 <span>2026-10-23 16:38:13</span>'
+            '10月23日，顺酐参考价为10100.00</li>'
+            '</ul>'
+        )
+        self.assertEqual(fetcher.parse_sunsirs_maleic_page(html, "https://ma.100ppi.com/kx/"), [])
+
+    def test_sunsirs_maleic_merge_appends_history_and_keeps_the_quote_in_step(self):
+        previous = {
+            "series": [
+                {"date": "2026-10-29", "spot": 10000},
+                {"date": "2026-10-30", "spot": 9975},
+            ]
+        }
+        target = {
+            "series": [],
+            "latest": 12345,
+            "latestDate": "2026-10-31",
+            "status": "latest-only",
+        }
+        fresh = fetcher.apply_sunsirs_maleic(target, previous, [])
+        self.assertFalse(fresh)
+        self.assertEqual([point["date"] for point in target["series"]], ["2026-10-29", "2026-10-30"])
+        self.assertEqual(target["latest"], 9975)
+        self.assertEqual(target["latestSpot"], 9975)
+        self.assertEqual(target["latestDate"], "2026-10-30")
+        self.assertEqual(target["status"], "ok")
+
+        appended = fetcher.apply_sunsirs_maleic(target, previous, [
+            {"date": "2026-11-02", "spot": 10100, "sourceUrl": "https://ma.100ppi.com/kx/"},
+        ])
+        self.assertTrue(appended)
+        self.assertEqual([point["date"] for point in target["series"]],
+                         ["2026-10-29", "2026-10-30", "2026-11-02"])
+        self.assertEqual(target["latest"], 10100)
+        self.assertEqual(target["sourceUrl"], "https://ma.100ppi.com/kx/")
+
     def test_new_primary_products_and_futures_proxies_are_explicit(self):
         products = {item["id"]: item for item in fetcher.PRODUCTS}
         self.assertEqual(products["float-glass"]["symbol"], "FG")

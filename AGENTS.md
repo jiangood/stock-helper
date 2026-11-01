@@ -92,4 +92,5 @@ GitHub Pages 已配置为使用仓库根目录（不是 `docs/`）。
 - `products.html` / `products.js` — 以商品为中心的关联股票月线对比卡片；页面先读 `data/commodity-db/index.json` 商品索引，再按文件路径读取 `data/commodity-db/products/<商品ID>.json` 独立商品数据，由构建脚本结合商品历史价格、明确的股票映射和复权月 K 生成。
 - `scripts/build_product_comparison.js` — 将商品日度参考价聚合为月度末值，与股票月 K 对齐；缺少月 K 时使用周 K 月末收盘聚合；只比较共同月份并将两条序列分别归一化为 100。
 - `data/commodity-db/index.json` — 轻量商品总索引；`data/commodity-db/products/<商品ID>.json` — 每个商品独立的历史月线与关联股票数据。均由 Actions 生成，前端不抓取供应商数据。产品映射未核实、历史不足或数据缺失时必须明确显示，不得用相近商品替代或补造数据。
+- 顺酐商品价来自生意社公开价格快讯（`ma.100ppi.com/kx/`，99.5% 口径、元/吨）：`scripts/fetch_business_data.py` 的 `fetch_sunsirs_maleic_reference_prices` 按页抓取最近约 3 个月的公开列表（含 HW_CHECK 浏览器校验 cookie 处理，低频、每日一次），`parse_sunsirs_maleic_page` 只在标题日期=发布日期且标题价格=正文参考价时才接受一行；每日观测累积写入 `data/business-data.json` 的 `series`，再由构建器聚合为月末值。生意社只公开最近几页，历史长度随每日累积增长，不得用指数涨幅反推价格，也不得用相近商品或股价替代。
 - `business-data.yml` 和 `build-static-cache.yml` 均会重建商品/股价比较数据，覆盖商品报价变化与股票 K 线变化。

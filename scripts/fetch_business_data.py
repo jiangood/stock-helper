@@ -6,23 +6,42 @@ The script writes only validated numeric observations and never fabricates a quo
 """
 from __future__ import annotations
 
+import http.cookiejar
 import json
 import math
 import os
 import re
 import signal
 import sys
+import time
 from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from urllib.parse import urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPCookieProcessor, Request, build_opener, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "data" / "business-data.json"
 LOOKBACK_DAYS = 365
 SOURCE_TIMEOUT_SECONDS = 35
+
+# Business Society (生意社) publishes a daily maleic anhydride reference price on
+# its public price-news listing. The listing is paginated and only keeps the most
+# recent pages, so the repository accumulates the observed daily history instead
+# of rebuilding it from the source each run.
+SUNSIRS_MALEIC_ORIGIN = "https://ma.100ppi.com"
+SUNSIRS_MALEIC_PAGES = ["/kx/"] + [f"/kx/list---{page}.html" for page in range(2, 6)]
+SUNSIRS_MALEIC_DELAY_SECONDS = 1.5
+SUNSIRS_MALEIC_MIN_PRICE = 1000.0
+SUNSIRS_MALEIC_MAX_PRICE = 50000.0
+# The headline and the summary line both repeat the same value; the row is only
+# accepted when the headline date, the published date and both prices agree.
+SUNSIRS_MALEIC_ROW = re.compile(
+    r"\[\s*顺酐\s*\]\s*(\d{1,2})月(\d{1,2})日顺酐为\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s+"
+    r"(20\d{2})-(\d{2})-(\d{2})\s+\d{2}:\d{2}:\d{2}\s+"
+    r"(\d{1,2})月(\d{1,2})日\s*[，,]\s*顺酐参考价为\s*([0-9][0-9,]*(?:\.[0-9]+)?)"
+)
 
 PRODUCTS = [
     {"id": "soda-ash", "name": "纯碱", "unit": "元/吨", "symbol": "SA", "aliases": ["纯碱", "SA"], "stocks": ["双环科技", "中盐化工", "三友化工"], "chain": "玻璃、光伏玻璃、日用玻璃、硅酸钠", "drivers": "重点看厂家库存、开工率、检修与新增产能；同时跟踪煤炭、合成氨成本。"},
@@ -259,6 +278,154 @@ def fetch_methionine_public_reports(after_date: str | None = None, max_reports: 
         except Exception as exc:
             print(f"CAAA report skipped ({url}): {str(exc)[:140]}", file=sys.stderr)
     return sorted(reports, key=lambda point: point["date"])
+
+
+def sunsirs_session() -> Callable[[str], str]:
+    """Return a reader that answers Business Society's short browser-check once.
+
+    The site returns a ~700 byte page that only sets an HW_CHECK cookie and
+    reloads. Replaying that cookie keeps the collector on the public HTML pages
+    without executing any script from the source, and one session covers every
+    page of a run so the challenge is not repeated per request.
+    """
+    jar = http.cookiejar.CookieJar()
+    opener = build_opener(HTTPCookieProcessor(jar))
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; StockHelperCommodityBot/1.0)",
+        "Accept": "text/html",
+    }
+
+    def read(url: str) -> str:
+        def request() -> str:
+            with opener.open(Request(url, headers=headers), timeout=18) as response:
+                return response.read().decode("utf-8", errors="replace")
+
+        html = request()
+        if len(html) < 3000 and "HW_CHECK" in html:
+            token = re.search(r'_0x2\s*=\s*"([0-9a-f]{8,})"', html)
+            if token:
+                jar.set_cookie(http.cookiejar.Cookie(
+                    0, "HW_CHECK", token.group(1), None, False,
+                    urlparse(url).hostname or "", False, False,
+                    "/", True, False, None, False, None, None, {},
+                ))
+                html = request()
+        return html
+
+    return read
+
+
+def parse_sunsirs_maleic_page(html: str, source_url: str) -> list[dict[str, Any]]:
+    """Extract the source-published daily maleic anhydride reference prices.
+
+    Rows are rejected instead of guessed: the headline month/day must equal the
+    published date, both prices must match, and the value must stay inside the
+    plausible range. A date with conflicting values is dropped, never averaged.
+    """
+    parser = _PageParser()
+    parser.feed(html)
+    text = parser.text
+    found: dict[str, set[float]] = {}
+    for match in SUNSIRS_MALEIC_ROW.finditer(text):
+        title_month, title_day = int(match.group(1)), int(match.group(2))
+        headline = finite_number(match.group(3))
+        year, month, day = int(match.group(4)), int(match.group(5)), int(match.group(6))
+        summary_month, summary_day = int(match.group(7)), int(match.group(8))
+        summary = finite_number(match.group(9))
+        if headline is None or summary is None:
+            continue
+        if (title_month, title_day) != (month, day) or (summary_month, summary_day) != (month, day):
+            continue
+        if abs(headline - summary) > 0.001:
+            continue
+        if not SUNSIRS_MALEIC_MIN_PRICE <= headline <= SUNSIRS_MALEIC_MAX_PRICE:
+            continue
+        try:
+            observed = date(year, month, day).isoformat()
+        except ValueError:
+            continue
+        found.setdefault(observed, set()).add(round(headline, 2))
+    return [
+        {
+            "date": observed,
+            "spot": values.pop(),
+            "spec": "顺酐 99.5% 参考价",
+            "sourceUrl": source_url,
+        }
+        for observed, values in sorted(found.items())
+        if len(values) == 1
+    ]
+
+
+def fetch_sunsirs_maleic_reference_prices(
+    after_date: str | None = None,
+    pages: int = len(SUNSIRS_MALEIC_PAGES),
+    delay: float = SUNSIRS_MALEIC_DELAY_SECONDS,
+    budget_seconds: float = 60.0,
+) -> list[dict[str, Any]]:
+    """Collect recent daily reference prices from the paginated public listing."""
+    observed: dict[str, dict[str, Any]] = {}
+    read = sunsirs_session()
+    deadline = time.monotonic() + budget_seconds
+    for index, path in enumerate(SUNSIRS_MALEIC_PAGES[:pages]):
+        if time.monotonic() > deadline:
+            break
+        url = SUNSIRS_MALEIC_ORIGIN + path
+        page_points: list[dict[str, Any]] | None = None
+        for attempt in range(3):
+            try:
+                page_points = parse_sunsirs_maleic_page(read(url), url)
+                break
+            except Exception as exc:
+                # A failed page is retried and then skipped; it must not be
+                # mistaken for the end of the paginated listing. The listing keeps
+                # roughly three months online, so a later run can still fill a gap.
+                if attempt < 2:
+                    time.sleep(delay * (attempt + 1))
+                    continue
+                print(f"Business Society maleic page skipped ({url}): {str(exc)[:140]}", file=sys.stderr)
+        if page_points is None:
+            continue
+        if not page_points:
+            # The listing is exhausted; older pages add nothing.
+            break
+        for point in page_points:
+            if after_date and point["date"] <= after_date:
+                continue
+            observed.setdefault(point["date"], point)
+        if after_date and page_points[-1]["date"] <= after_date:
+            break
+        if index < pages - 1:
+            time.sleep(delay)
+    return [observed[day] for day in sorted(observed)]
+
+
+def apply_sunsirs_maleic(
+    target: dict[str, Any],
+    previous: dict[str, Any],
+    fresh_points: list[dict[str, Any]],
+) -> bool:
+    """Merge observed reference prices into the item and keep quote and series in step."""
+    old_series = previous.get("series", []) if isinstance(previous, dict) else []
+    if not isinstance(old_series, list):
+        old_series = []
+    merged = clean_series(old_series + fresh_points)
+    if not merged:
+        return False
+    latest_point = merged[-1]
+    target.update({
+        "series": merged,
+        "latest": latest_point.get("spot"),
+        "latestSpot": latest_point.get("spot"),
+        "latestDate": latest_point["date"],
+        "latestFutures": None,
+        "source": "生意社顺酐每日参考价（公开价格快讯）",
+        "sourceUrl": latest_point.get("sourceUrl") or SUNSIRS_MALEIC_ORIGIN + "/kx/",
+        "priceMethod": "生意社顺酐参考价为行业参考价，不等于公司实际成交均价或结算价。",
+        "status": "ok",
+    })
+    return bool(fresh_points)
+
 
 def normalize_company_list(value: Any, limit: int = 8) -> list[str]:
     """Split source-provided company names without inventing or inferring relationships."""
@@ -774,6 +941,21 @@ def fetch_data() -> dict[str, Any]:
                 fresh_data = True
     except Exception as exc:
         errors.append("caaa_methionine_reports: " + str(exc)[:180])
+
+    # Business Society's maleic anhydride reference price is published daily on a
+    # paginated public listing. Only a few pages stay online, so the accumulated
+    # series in this file is the long-term history; each run appends new days.
+    try:
+        maleic = payload["items"]["maleic-anhydride"]
+        old_maleic = old_items.get("maleic-anhydride", {})
+        old_series = old_maleic.get("series", []) if isinstance(old_maleic, dict) else []
+        old_dates = [date_text(point.get("date")) for point in old_series if isinstance(point, dict)] if isinstance(old_series, list) else []
+        after_date = max((day for day in old_dates if day), default=None)
+        fresh_maleic = fetch_sunsirs_maleic_reference_prices(after_date=after_date)
+        if apply_sunsirs_maleic(maleic, old_maleic, fresh_maleic):
+            fresh_data = True
+    except Exception as exc:
+        errors.append("sunsirs_maleic_reference: " + str(exc)[:180])
 
     # Cost proxies are matched only against source rows that actually exist in
     # Eastmoney's public spot-and-stock table. Unsupported raw materials remain pending.

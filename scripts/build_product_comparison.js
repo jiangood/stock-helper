@@ -71,6 +71,23 @@ function productMonthly(item) {
 }
 function commodityMonthly(item) {
   if (!item) return { points: [], source: null, note: null };
+  // Maleic anhydride uses the explicitly approved month-start chart-image series.
+  // Keep it separate from the short daily reference-price feed in business-data.json.
+  if (item.id === 'maleic-anhydride') {
+    const historyPath = path.join(ROOT, 'data', 'maleic-anhydride-monthly.json');
+    if (!fs.existsSync(historyPath)) return { points: [], source: null, note: '顺酐月初图表估算序列尚未生成；不回退混用每日参考价。' };
+    let history;
+    try { history = JSON.parse(fs.readFileSync(historyPath, 'utf8')); }
+    catch (_) { return { points: [], source: null, note: '顺酐月初图表估算数据文件无法解析；保留缺失状态。' }; }
+    const points = monthlyLast((history.points || []).filter((point) => point && point.status === 'estimated' && point.estimated === true).map((point) => ({
+      date: point.month + '-01', value: Number(point.value)
+    })));
+    return {
+      points,
+      source: history.source || '生意社顺酐现货均价图表（图像估算）',
+      note: history.methodNote || '每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。'
+    };
+  }
   const itemName = String(item.name || '').trim();
   const candidates = companyProducts.filter((product) => {
     const sameName = String(product.productName || '').trim() === itemName;

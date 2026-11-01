@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""One-off, low-rate read-only probe of Sunsirs public maleic-anhydride price-news pages.
+"""Low-rate, read-only parser validation for public Sunsirs maleic price-news pages.
 
-This script deliberately does not persist or publish scraped price records.
-It checks robots.txt, fetches only the five public pagination pages, and prints
-aggregate parsing diagnostics (never the collected values).
+The probe checks robots.txt, fetches only five public pagination pages, and
+prints aggregate diagnostics. It does not save or publish scraped price data.
 """
 from __future__ import annotations
 
@@ -20,8 +19,12 @@ from urllib.request import Request, urlopen
 BASE = "https://ma.100ppi.com"
 PAGES = ["/kx/"] + [f"/kx/list---{n}.html" for n in range(2, 6)]
 USER_AGENT = "StockHelperPersonalResearchProbe/1.0 (low-rate; contact: repository owner)"
-DATE_RE = re.compile(r"20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?")
-PRICE_RE = re.compile(r"(?<![\d.])\d{3,6}(?:\.\d+)?(?![\d.])")
+ENTRY_RE = re.compile(
+    r"\[\s*顺酐\s*\]\s*(\d{1,2})月(\d{1,2})日顺酐为"
+    r"(\d{4,6}(?:\.\d+)?)\s+(20\d{2})-(\d{2})-(\d{2})"
+    r"\s+\d{2}:\d{2}:\d{2}\s+\d{1,2}月\d{1,2}日[，,]\s*顺酐参考价为"
+    r"(\d{4,6}(?:\.\d+)?)"
+)
 
 
 class TextExtractor(HTMLParser):
@@ -79,31 +82,28 @@ def robots_allows() -> bool:
     return allowed
 
 
-def extract_candidates(html: str) -> dict[str, set[float]]:
+def extract_candidates(html: str) -> tuple[dict[str, set[float]], int, int]:
     parser = TextExtractor()
     parser.feed(html)
     text = parser.text()
     found: dict[str, set[float]] = defaultdict(set)
-    for match in DATE_RE.finditer(text):
-        raw_date = match.group(0)
-        date = re.sub(r"[年月/.日]", "-", raw_date).strip("-")
-        date = re.sub(r"-+", "-", date)
-        if len(date.split("-")) != 3:
+    accepted = 0
+    rejected = 0
+    for match in ENTRY_RE.finditer(text):
+        title_month, title_day = int(match.group(1)), int(match.group(2))
+        headline_price = float(match.group(3))
+        year, month, day = int(match.group(4)), int(match.group(5)), int(match.group(6))
+        detail_price = float(match.group(7))
+        if (title_month, title_day) != (month, day):
+            rejected += 1
             continue
-        start = max(0, match.start() - 100)
-        end = min(len(text), match.end() + 180)
-        snippet = text[start:end]
-        if "顺酐" not in snippet and "参考价" not in snippet:
+        if not (1000 <= headline_price <= 50000) or abs(headline_price - detail_price) > 0.001:
+            rejected += 1
             continue
-        snippet = DATE_RE.sub(" ", snippet)
-        prices = {
-            float(value)
-            for value in PRICE_RE.findall(snippet)
-            if 1000 <= float(value) <= 50000
-        }
-        if prices:
-            found[date].update(prices)
-    return found
+        date = f"{year:04d}-{month:02d}-{day:02d}"
+        found[date].add(headline_price)
+        accepted += 1
+    return found, accepted, rejected
 
 
 def main() -> int:
@@ -113,38 +113,39 @@ def main() -> int:
 
     merged: dict[str, set[float]] = defaultdict(set)
     successful_pages = 0
+    total_records = 0
     for index, path in enumerate(PAGES):
         url = urljoin(BASE, path)
         try:
             status, html = read_url(url)
-            if index == 0:
-                debug_parser = TextExtractor()
-                debug_parser.feed(html)
-                print("PAGE1_TEXT_SAMPLE=" + debug_parser.text()[:2400])
-            candidates = extract_candidates(html)
+            candidates, accepted, rejected = extract_candidates(html)
             for date, values in candidates.items():
                 merged[date].update(values)
             successful_pages += 1
+            total_records += accepted
+            page_dates = sorted(candidates)
             print(
                 f"page={index + 1} http={status} bytes={len(html.encode('utf-8'))} "
-                f"candidate_dates={len(candidates)}"
+                f"records={accepted} unique_dates={len(candidates)} rejected={rejected} "
+                f"range={page_dates[0] if page_dates else 'none'}..{page_dates[-1] if page_dates else 'none'}"
             )
         except HTTPError as exc:
-            print(f"page={index + 1} http={exc.code} candidate_dates=0")
+            print(f"page={index + 1} http={exc.code} records=0")
         except (URLError, TimeoutError, UnicodeError, RuntimeError) as exc:
-            print(f"page={index + 1} error={type(exc).__name__} candidate_dates=0")
+            print(f"page={index + 1} error={type(exc).__name__} records=0")
         if index < len(PAGES) - 1:
             time.sleep(2)
 
     dates = sorted(merged)
     conflicts = sum(1 for values in merged.values() if len(values) > 1)
     print(
-        f"SUMMARY pages_ok={successful_pages}/{len(PAGES)} "
-        f"unique_candidate_dates={len(dates)} conflicting_dates={conflicts} "
+        f"SUMMARY pages_ok={successful_pages}/{len(PAGES)} records={total_records} "
+        f"unique_dates={len(dates)} duplicate_rows={total_records - len(dates)} "
+        f"conflicting_dates={conflicts} "
         f"earliest={dates[0] if dates else 'none'} latest={dates[-1] if dates else 'none'}"
     )
-    print("No price values were printed or saved; this is a technical parsing probe only.")
-    return 0 if successful_pages == len(PAGES) and dates and conflicts == 0 else 1
+    print("No price values were printed or saved; this is a technical parser probe only.")
+    return 0 if successful_pages == len(PAGES) and total_records > 0 and conflicts == 0 else 1
 
 
 if __name__ == "__main__":

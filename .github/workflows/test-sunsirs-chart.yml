@@ -6,6 +6,7 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/test-sunsirs-chart.yml"
+      - "scripts/test_sunsirs_month_start_ocr.py"
 
 permissions:
   contents: read
@@ -13,15 +14,21 @@ permissions:
 jobs:
   fetch-chart:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install chart OCR dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr
+          python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
       - name: Request chart images with Chrome-like headers
         run: |
-          python -m pip install --disable-pip-version-check requests
           mkdir -p artifacts
           python - <<'PY'
           import hashlib
@@ -77,6 +84,10 @@ jobs:
               json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
           )
           PY
+      - name: Estimate first-day prices from two-day charts
+        run: |
+          python scripts/test_sunsirs_month_start_ocr.py --image artifacts/month_start_weekday.png --month 2026-06 --output artifacts/month_start_weekday_estimate.json
+          python scripts/test_sunsirs_month_start_ocr.py --image artifacts/month_start_holiday.png --month 2026-08 --output artifacts/month_start_holiday_estimate.json
       - name: Upload response files
         if: always()
         uses: actions/upload-artifact@v4

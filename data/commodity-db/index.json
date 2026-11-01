@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-01T01:45:58.000Z",
-  "marketDate": "2026-11-01T01:45:58+00:00",
+  "generatedAt": "2026-11-01T03:14:32.000Z",
+  "marketDate": "2026-11-01T03:14:32+00:00",
   "productCount": 27,
   "products": [
     {
@@ -36,7 +36,7 @@
       "unit": "元/吨",
       "file": "products/tio2.json",
       "status": "stock-only",
-      "latestPrice": 17180,
+      "latestPrice": 13900,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
@@ -49,7 +49,7 @@
       "unit": "元/吨",
       "file": "products/viscose-staple-fiber.json",
       "status": "stock-only",
-      "latestPrice": 13980,
+      "latestPrice": 12800,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
@@ -253,11 +253,11 @@
     },
     {
       "id": "coal",
-      "name": "动力煤",
+      "name": "炼焦煤",
       "unit": "元/吨",
       "file": "products/coal.json",
       "status": "stock-only",
-      "latestPrice": 842.75,
+      "latestPrice": 1441.25,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
@@ -347,13 +347,13 @@
       "name": "蛋氨酸",
       "unit": "元/吨",
       "file": "products/methionine.json",
-      "status": "pending",
-      "latestPrice": 24950,
-      "latestDate": "2026-10-28",
-      "source": "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点",
-      "monthCount": 1,
-      "stockTimelineMonthCount": 1,
-      "commonMonthCount": 1
+      "status": "stock-only",
+      "latestPrice": null,
+      "latestDate": null,
+      "source": null,
+      "monthCount": 0,
+      "stockTimelineMonthCount": 200,
+      "commonMonthCount": 0
     }
   ]
 }

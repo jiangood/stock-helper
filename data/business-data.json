@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-01T01:45:58+00:00",
+  "updatedAt": "2026-11-01T03:14:32+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -3547,14 +3547,14 @@
         "label": "数据源列示产业链企业",
         "productName": "尿素",
         "producers": [
-          "博源化工",
-          "华鲁恒升",
-          "河化股份",
           "华锦股份",
+          "湖北宜化",
+          "博源化工",
+          "四川美丰",
+          "泸天化",
+          "河化股份",
           "华昌化工",
-          "兰花科创",
-          "赤天化",
-          "湖北宜化"
+          "辉隆股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -5742,14 +5742,14 @@
         "label": "数据源列示产业链企业",
         "productName": "甲醇",
         "producers": [
-          "湖北宜化",
-          "鲁西化工",
-          "泸天化",
-          "诚志股份",
           "兴化股份",
+          "博源化工",
           "华昌化工",
-          "兖矿能源",
-          "赤天化"
+          "岳阳兴长",
+          "柳化股份",
+          "兰花科创",
+          "山西焦化",
+          "泸天化"
         ],
         "downstreamUsers": [
           "联泓新科"
@@ -5764,13 +5764,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 17180.0,
+      "latest": 13900.0,
       "latestDate": "2026-11-01",
-      "latestSpot": 17180.0,
+      "latestSpot": 13900.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 25.04,
+      "changePct": 3.12,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -8238,23 +8238,24 @@
         "label": "数据源列示产业链企业",
         "productName": "铝",
         "producers": [
-          "焦作万方",
+          "中国铝业",
           "云铝股份",
           "神火股份",
-          "电投能源",
-          "天山铝业",
+          "焦作万方",
           "中孚实业",
-          "中国铝业"
+          "中国宏桥",
+          "金瑞矿业",
+          "电投能源"
         ],
         "downstreamUsers": [
-          "兴发铝业",
-          "万邦德",
+          "明泰铝业",
+          "南山铝业",
+          "闽发铝业",
           "常铝股份",
-          "罗普斯金",
+          "上海能源",
           "宏创控股",
-          "利源精制",
-          "亚太科技",
-          "闽发铝业"
+          "中国忠旺",
+          "利源精制"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -8262,17 +8263,17 @@
     },
     "coal": {
       "id": "coal",
-      "name": "动力煤",
+      "name": "炼焦煤",
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 842.75,
+      "latest": 1441.25,
       "latestDate": "2026-11-01",
-      "latestSpot": 842.75,
+      "latestSpot": 1441.25,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 19.12,
+      "changePct": 1.59,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -8284,16 +8285,16 @@
       "status": "latest-only",
       "industryLinks": {
         "label": "数据源列示产业链企业",
-        "productName": "动力煤",
+        "productName": "炼焦煤",
         "producers": [
-          "甘肃能化",
-          "神火股份",
           "冀中能源",
-          "电投能源",
-          "郑州煤电",
+          "山西焦煤",
           "兰花科创",
           "兖矿能源",
-          "华阳股份"
+          "盘江股份",
+          "江钨装备",
+          "淮北矿业",
+          "开滦股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -12004,23 +12005,6 @@
       "chain": "玉米/豆粕等饲料 → 生猪养殖 → 屠宰及猪肉消费",
       "drivers": "关注能繁母猪存栏、仔猪价格、出栏体重、养殖成本、猪粮比、屠宰开工和冻品库存。",
       "status": "ok",
-      "industryLinks": {
-        "label": "数据源列示产业链企业",
-        "productName": "生猪",
-        "producers": [
-          "京基智农",
-          "正虹科技",
-          "罗牛山",
-          "顺鑫农业",
-          "新希望",
-          "双汇发展",
-          "东瑞股份",
-          "天康生物"
-        ],
-        "downstreamUsers": [],
-        "source": "东方财富现货与股票数据（经 AKShare 获取）",
-        "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
-      },
       "monthlyKlines": {
         "label": "主力连续合约月K线",
         "series": [
@@ -12520,6 +12504,23 @@
         "period": "monthly",
         "priceType": "main-continuous-futures",
         "latestDate": "2026-10-30"
+      },
+      "industryLinks": {
+        "label": "数据源列示产业链企业",
+        "productName": "生猪",
+        "producers": [
+          "基京智农",
+          "正虹科技",
+          "罗牛山",
+          "顺鑫农业",
+          "新希望",
+          "双汇发展",
+          "东瑞股份",
+          "天康生物"
+        ],
+        "downstreamUsers": [],
+        "source": "东方财富现货与股票数据（经 AKShare 获取）",
+        "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
       }
     },
     "corn": {
@@ -13819,23 +13820,23 @@
         "label": "数据源列示产业链企业",
         "productName": "玉米",
         "producers": [
-          "北大荒",
-          "登海种业",
-          "敦煌种业",
           "国投丰乐",
           "隆平高科",
+          "登海种业",
+          "大北农",
           "荃银高科",
-          "万向德农",
-          "大北农"
+          "神农种业",
+          "农发种业",
+          "敦煌种业"
         ],
         "downstreamUsers": [
+          "西王食品",
           "中粮科技",
-          "ST西王",
-          "保龄宝",
-          "中国淀粉",
-          "梅花生物",
           "天康生物",
-          "仙坛股份"
+          "保龄宝",
+          "仙坛股份",
+          "中国淀粉",
+          "梅花生物"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -15140,15 +15141,13 @@
         "producers": [
           "京粮控股",
           "金龙鱼",
-          "嘉华股份"
+          "北大荒"
         ],
         "downstreamUsers": [
-          "大北农",
-          "天康生物",
-          "金新农",
           "新希望",
-          "禾丰股份",
-          "海大集团"
+          "天康生物",
+          "大北农",
+          "金新农"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -16450,18 +16449,19 @@
         "label": "数据源列示产业链企业",
         "productName": "黄金",
         "producers": [
-          "中金黄金",
-          "湖南黄金",
-          "湖南白银",
-          "赤峰黄金",
-          "豫光金铅",
           "铜陵有色",
-          "盛屯矿业",
-          "西部矿业"
+          "湖南黄金",
+          "恒邦股份",
+          "湖南白银",
+          "中金黄金",
+          "豫光金铅",
+          "山东黄金",
+          "盛屯矿业"
         ],
         "downstreamUsers": [
-          "金一文化",
-          "明牌珠宝"
+          "生意宝",
+          "明牌珠宝",
+          "金一文化"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -17722,13 +17722,13 @@
         "productName": "白银",
         "producers": [
           "兴业银锡",
-          "盛达资源",
-          "铜陵有色",
           "锡业股份",
           "恒邦股份",
           "湖南白银",
-          "江西铜业",
-          "鹏欣资源"
+          "鹏欣资源",
+          "豫光金铅",
+          "山东黄金",
+          "盛屯矿业"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -19038,7 +19038,7 @@
           "国城矿业",
           "北方铜业",
           "中色股份",
-          "云南铜业"
+          "西藏矿业"
         ],
         "downstreamUsers": [
           "楚江新材",
@@ -21199,17 +21199,18 @@
         "label": "数据源列示产业链企业",
         "productName": "锡",
         "producers": [
-          "兴业银锡",
-          "西藏矿业",
           "锡业股份",
+          "兴业银锡",
+          "华锡有色",
+          "西部矿业",
+          "章源钨业",
+          "西藏矿业",
           "飞南资源",
-          "华锡有色"
+          "新疆众和"
         ],
         "downstreamUsers": [
-          "格林美",
-          "章源钨业",
           "新星新材",
-          "盛屯矿业"
+          "格林美"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -22510,14 +22511,14 @@
         "label": "数据源列示产业链企业",
         "productName": "锌",
         "producers": [
-          "中金岭南",
-          "兴业银锡",
-          "盛达资源",
           "国城矿业",
-          "锌业股份",
-          "中色股份",
-          "智慧农业",
-          "锡业股份"
+          "盛达资源",
+          "兴业银锡",
+          "金钼股份",
+          "宏达股份",
+          "紫金矿业",
+          "中金岭南",
+          "中色股份"
         ],
         "downstreamUsers": [
           "新威凌"
@@ -23823,8 +23824,9 @@
         "producers": [
           "粤桂股份",
           "冠农股份",
+          "甘化科工",
           "华资实业",
-          "*ST广糖",
+          "广农糖业",
           "中粮糖业"
         ],
         "downstreamUsers": [],
@@ -25436,7 +25438,9 @@
           "中泰化学",
           "天原股份"
         ],
-        "downstreamUsers": [],
+        "downstreamUsers": [
+          "博汇纸业"
+        ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
       }
@@ -27688,13 +27692,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 16066.67,
+      "latest": 14333.33,
       "latestDate": "2026-11-01",
-      "latestSpot": 16066.67,
+      "latestSpot": 14333.33,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 9.55,
+      "changePct": -2.49,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -27709,7 +27713,8 @@
         "productName": "TDI",
         "producers": [
           "沧州大化",
-          "万华化学"
+          "万华化学",
+          "航锦科技"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -29226,13 +29231,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 13980.0,
+      "latest": 12800.0,
       "latestDate": "2026-11-01",
-      "latestSpot": 13980.0,
+      "latestSpot": 12800.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 8.37,
+      "changePct": -1.84,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -29246,12 +29251,14 @@
         "label": "数据源列示产业链企业",
         "productName": "粘胶短纤",
         "producers": [
-          "三友化工",
+          "吉林化纤",
+          "*ST美谷",
+          "恒天海龙",
           "新乡化纤",
+          "华孚色纺",
           "中泰化学",
-          "*ST京化",
-          "ST海龙",
-          "吉林化纤"
+          "澳洋健康",
+          "三友化工"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -29263,336 +29270,23 @@
       "name": "蛋氨酸",
       "unit": "元/吨",
       "symbol": null,
-      "series": [
-        {
-          "date": "2026-10-09",
-          "spot": 23850,
-          "low": 23500,
-          "high": 24200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 23500,
-              "high": 24200,
-              "spot": 23850
-            },
-            "河南": {
-              "low": 23500,
-              "high": 24200,
-              "spot": 23850
-            },
-            "广东": {
-              "low": 23700,
-              "high": 24300,
-              "spot": 24000
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1009/25969.html"
-        },
-        {
-          "date": "2026-10-10",
-          "spot": 24350,
-          "low": 24200,
-          "high": 24500,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 24200,
-              "high": 24500,
-              "spot": 24350
-            },
-            "河南": {
-              "low": 24200,
-              "high": 24500,
-              "spot": 24350
-            },
-            "广东": {
-              "low": 24300,
-              "high": 24700,
-              "spot": 24500
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1010/26002.html"
-        },
-        {
-          "date": "2026-10-12",
-          "spot": 24550,
-          "low": 24400,
-          "high": 24700,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 24400,
-              "high": 24700,
-              "spot": 24550
-            },
-            "河南": {
-              "low": 24400,
-              "high": 24700,
-              "spot": 24550
-            },
-            "广东": {
-              "low": 24500,
-              "high": 24900,
-              "spot": 24700
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1012/26028.html"
-        },
-        {
-          "date": "2026-10-13",
-          "spot": 24950,
-          "low": 24700,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "河南": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "广东": {
-              "low": 24800,
-              "high": 25300,
-              "spot": 25050
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1013/26054.html"
-        },
-        {
-          "date": "2026-10-14",
-          "spot": 24950,
-          "low": 24700,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "河南": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "广东": {
-              "low": 24800,
-              "high": 25300,
-              "spot": 25050
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1014/26053.html"
-        },
-        {
-          "date": "2026-10-15",
-          "spot": 25100,
-          "low": 25000,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "河南": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "广东": {
-              "low": 25100,
-              "high": 25300,
-              "spot": 25200
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1015/26097.html"
-        },
-        {
-          "date": "2026-10-16",
-          "spot": 25100,
-          "low": 25000,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "河南": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "广东": {
-              "low": 25100,
-              "high": 25300,
-              "spot": 25200
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1016/26126.html"
-        },
-        {
-          "date": "2026-10-20",
-          "spot": 25100,
-          "low": 25000,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "河南": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "广东": {
-              "low": 25100,
-              "high": 25300,
-              "spot": 25200
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1020/26169.html"
-        },
-        {
-          "date": "2026-10-21",
-          "spot": 25100,
-          "low": 25000,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "河南": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "广东": {
-              "low": 25100,
-              "high": 25300,
-              "spot": 25200
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1021/26197.html"
-        },
-        {
-          "date": "2026-10-23",
-          "spot": 25100,
-          "low": 25000,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "河南": {
-              "low": 25000,
-              "high": 25200,
-              "spot": 25100
-            },
-            "广东": {
-              "low": 25100,
-              "high": 25300,
-              "spot": 25200
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1023/26251.html"
-        },
-        {
-          "date": "2026-10-26",
-          "spot": 24950,
-          "low": 24700,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "河南": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "广东": {
-              "low": 24800,
-              "high": 25300,
-              "spot": 25050
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1026/26274.html"
-        },
-        {
-          "date": "2026-10-28",
-          "spot": 24950,
-          "low": 24700,
-          "high": 25200,
-          "region": "山东",
-          "spec": "饲料级固体蛋氨酸",
-          "markets": {
-            "山东": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "河南": {
-              "low": 24700,
-              "high": 25200,
-              "spot": 24950
-            },
-            "广东": {
-              "low": 24800,
-              "high": 25300,
-              "spot": 25050
-            }
-          },
-          "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html"
-        }
-      ],
-      "latest": 24950,
-      "latestDate": "2026-10-28",
-      "latestSpot": 24950,
+      "series": [],
+      "latest": null,
+      "latestDate": null,
+      "latestSpot": null,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
       "changePct": null,
       "inventory": null,
-      "source": "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点",
-      "sourceUrl": "https://www.caaa.cn/html/fw/market/slyl/2026/1028/26342.html",
+      "source": null,
+      "sourceUrl": "https://www.100ppi.com/",
       "stocks": [
         "安迪苏"
       ],
       "chain": "化工合成 → 饲料级蛋氨酸 → 畜禽饲料",
       "drivers": "关注全球产能、厂家报价、进口与饲料需求；暂无连续期货序列。",
-      "status": "ok"
+      "status": "pending"
     },
     "gasoline": {
       "id": "gasoline",
@@ -29798,7 +29492,7 @@
         "南钢股份"
       ],
       "chain": "铁矿石、焦煤、焦炭 → 钢铁冶炼 → 板材、长材及特钢",
-      "drivers": "钢材品种跨度大，未以单一螺纹钢或热卷期货代替公司综合钢材销售价格。",
+      "drivers": "钢材品种跨度大；走势线用热卷期货主力连续合约，只观察钢材价格方向，不代表公司综合钢材销售均价，也不替代螺纹钢等其他品种。",
       "status": "ok",
       "monthlyKlines": {
         "label": "主力连续合约月K线",
@@ -31616,7 +31310,7 @@
       ],
       "role": "化工原料参考价",
       "series": [],
-      "latest": 2240.0,
+      "latest": 2366.67,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -31631,7 +31325,7 @@
       ],
       "role": "硫酸法钛白粉成本参考",
       "series": [],
-      "latest": 1862.5,
+      "latest": 917.5,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -31663,7 +31357,7 @@
       ],
       "role": "煤化工能源成本参考；煤种/地区口径需核对",
       "series": [],
-      "latest": 842.75,
+      "latest": 710.0,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",

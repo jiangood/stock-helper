@@ -45,9 +45,33 @@ SUNSIRS_MALEIC_ROW = re.compile(
     r"(\d{1,2})月(\d{1,2})日\s*[，,]\s*顺酐参考价为\s*([0-9][0-9,]*(?:\.[0-9]+)?)"
 )
 
-# Business Society also publishes a daily 08:30 benchmark price per commodity on
-# a paginated public list (~3 pages, about six months). It is used only as a
-# fallback for items that no other provider covers, and every list is pinned to
+# One commodity, one price source. A product listed here is written only by the
+# provider named, so a single item never mixes two suppliers' quotes and a run
+# can never average or flip between them.
+PRICE_SOURCE_BY_PRODUCT = {
+    "maleic-anhydride": "sunsirs-reference",
+    "methionine": "caaa-report",
+    "rare-earth": "sunsirs-benchmark",
+    "polycarbonate": "sunsirs-benchmark",
+    "vanadium": "sunsirs-benchmark",
+    "tungsten-products": "sunsirs-benchmark",
+}
+
+# Products whose only Eastmoney contribution is the latest spot quote. Nothing
+# here may also be listed in PRICE_SOURCE_BY_PRODUCT.
+LATEST_ONLY_PRODUCTS = {
+    "tio2", "coal", "live-hog", "tdi", "phosphate-iron", "molybdenum",
+    "tantalum-niobium", "titanium-material", "carbon-fiber",
+    "viscose-staple-fiber", "gasoline", "diesel", "printing-paper",
+    "packaging-paper", "titanium-products", "cathode-materials",
+    "cast-superalloy", "wrought-superalloy", "steel", "compound-fertilizer",
+    "yeast", "fluorine-materials", "precious-metal-recycling",
+    "precious-metal-precursors", "industrial-explosives",
+}
+
+# Business Society publishes a daily 08:30 benchmark price per commodity on a
+# paginated public list (~3 pages, about six months). These commodities have no
+# other price source, so this list is their only one; every entry is pinned to
 # the commodity name so a wrong id can never produce a different commodity's price.
 SUNSIRS_BENCHMARKS = {
     "rare-earth": sunsirs.Product(
@@ -920,7 +944,7 @@ def fetch_data() -> dict[str, Any]:
         "precious-metal-recycling": ["有色"], "precious-metal-precursors": ["有色"],
         "industrial-explosives": ["化工"],
     }
-    latest_only_products = {"tio2", "coal", "rare-earth", "maleic-anhydride", "live-hog", "tdi", "polycarbonate", "phosphate-iron", "molybdenum", "tantalum-niobium", "titanium-material", "vanadium", "carbon-fiber", "viscose-staple-fiber", "methionine", "gasoline", "diesel", "printing-paper", "packaging-paper", "titanium-products", "cathode-materials", "cast-superalloy", "wrought-superalloy", "steel", "compound-fertilizer", "tungsten-products", "yeast", "fluorine-materials", "precious-metal-recycling", "precious-metal-precursors", "industrial-explosives"}
+    latest_only_products = LATEST_ONLY_PRODUCTS
     categories = list(dict.fromkeys(
         category for values in industry_categories.values() for category in values
     ))
@@ -936,6 +960,7 @@ def fetch_data() -> dict[str, Any]:
     for product in PRODUCTS:
         target = payload["items"][product["id"]]
         old_item = old_items.get(product["id"], {})
+        owns_price = product["id"] in PRICE_SOURCE_BY_PRODUCT
         for row in spot_rows:
             name = str(row.get("商品名称", row.get("商品", row.get("名称", "")))).strip()
             if not name or name not in product["aliases"]:
@@ -951,6 +976,10 @@ def fetch_data() -> dict[str, Any]:
                 "source": "东方财富现货与股票数据（经 AKShare 获取）",
                 "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
             }
+            if owns_price:
+                # The price of this commodity belongs to another provider; the
+                # industry links above are company facts, not a second quote.
+                break
             monthly_prices = normalize_source_monthly_prices(row)
             if monthly_prices:
                 target["monthlyPrices"] = {
@@ -1039,9 +1068,9 @@ def fetch_data() -> dict[str, Any]:
     except Exception as exc:
         errors.append("sunsirs_maleic_reference: " + str(exc)[:180])
 
-    # Fallback only: commodities that no other provider covers are filled from
-    # Business Society's daily benchmark list. One session is reused across
-    # commodities so the browser check is answered once per run.
+    # Business Society's benchmark list is the only price source for these
+    # commodities. One session is reused across them so the site's browser check
+    # is answered once per run.
     try:
         read = sunsirs.session()
         for product_id, product in SUNSIRS_BENCHMARKS.items():

@@ -176,6 +176,19 @@ class BusinessDataTests(unittest.TestCase):
             self.assertIsNone(payload["items"][item_id]["latest"])
             self.assertEqual(payload["items"][item_id]["status"], "pending")
 
+    def test_each_commodity_declares_a_single_price_source(self):
+        product_ids = {item["id"] for item in fetcher.PRODUCTS}
+        self.assertTrue(set(fetcher.PRICE_SOURCE_BY_PRODUCT).issubset(product_ids))
+        self.assertFalse(set(fetcher.PRICE_SOURCE_BY_PRODUCT) & fetcher.LATEST_ONLY_PRODUCTS,
+                         "a commodity must not also take a quote from another provider")
+        self.assertEqual(
+            {pid for pid, source in fetcher.PRICE_SOURCE_BY_PRODUCT.items() if source == "sunsirs-benchmark"},
+            set(fetcher.SUNSIRS_BENCHMARKS),
+            "every benchmark commodity must be declared, and nothing else",
+        )
+        self.assertEqual(fetcher.PRICE_SOURCE_BY_PRODUCT["maleic-anhydride"], "sunsirs-reference")
+        self.assertEqual(fetcher.PRICE_SOURCE_BY_PRODUCT["methionine"], "caaa-report")
+
     def test_other_material_primary_segments_are_not_left_unmapped(self):
         mapping = json.loads((Path(__file__).resolve().parents[1] / "data" / "stock-products.json").read_text(encoding="utf-8"))["byCode"]
         expected = {

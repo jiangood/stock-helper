@@ -41,6 +41,7 @@ jobs:
           }
           urls = {
               "week": "https://www.100ppi.com/graph/report.php?btime=2026-5-18&etime=2026-5-25&f=xht_agent_price&ppid=660",
+              "month": "https://www.100ppi.com/graph/report.php?btime=2026-5-1&etime=2026-5-31&f=xht_agent_price&ppid=660",
               "long": "https://www.100ppi.com/graph/report.php?btime=2010-02-28&etime=2026-10-29&f=xht_agent_price&ppid=660",
           }
           report = []

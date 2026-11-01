@@ -1,0 +1,85 @@
+name: Test Sunsirs chart image access
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/test-sunsirs-chart.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-chart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Request chart images with Chrome-like headers
+        run: |
+          python -m pip install --disable-pip-version-check requests
+          mkdir -p artifacts
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import requests
+
+          headers = {
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+              "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+              "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+              "Referer": "https://www.100ppi.com/",
+              "Sec-Fetch-Dest": "image",
+              "Sec-Fetch-Mode": "no-cors",
+              "Sec-Fetch-Site": "same-origin",
+              "Connection": "keep-alive",
+          }
+          urls = {
+              "week": "https://www.100ppi.com/graph/report.php?btime=2026-5-18&etime=2026-5-25&f=xht_agent_price&ppid=660",
+              "long": "https://www.100ppi.com/graph/report.php?btime=2010-02-28&etime=2026-10-29&f=xht_agent_price&ppid=660",
+          }
+          report = []
+          for name, url in urls.items():
+              row = {"name": name, "url": url}
+              try:
+                  response = requests.get(url, headers=headers, timeout=45, allow_redirects=True)
+                  body = response.content
+                  content_type = response.headers.get("Content-Type", "")
+                  is_image = (
+                      body.startswith(b"\\x89PNG\\r\\n\\x1a\\n")
+                      or body.startswith(b"\\xff\\xd8\\xff")
+                      or body.startswith((b"GIF87a", b"GIF89a"))
+                      or (len(body) >= 12 and body[:4] == b"RIFF" and body[8:12] == b"WEBP")
+                  )
+                  row.update({
+                      "status_code": response.status_code,
+                      "final_url": response.url,
+                      "content_type": content_type,
+                      "bytes": len(body),
+                      "sha256": hashlib.sha256(body).hexdigest(),
+                      "is_image": is_image,
+                  })
+                  suffix = ".img" if is_image else ".response.txt"
+                  Path(f"artifacts/{name}{suffix}").write_bytes(body)
+                  print(json.dumps(row, ensure_ascii=False))
+              except Exception as exc:
+                  row["error"] = repr(exc)
+                  print(json.dumps(row, ensure_ascii=False))
+              report.append(row)
+          Path("artifacts/report.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+          )
+          PY
+      - name: Upload response files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunsirs-chart-test
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 7

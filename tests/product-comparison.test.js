@@ -130,13 +130,16 @@ test('commodity database index references one independent JSON file per product'
   const maleic = database.products.find((item) => item.id === 'maleic-anhydride');
   assert.ok(maleic, 'maleic anhydride must remain in the product index');
   const maleicCard = JSON.parse(fs.readFileSync(path.join(databaseDir, maleic.file), 'utf8'));
-  const maleicSeries = JSON.parse(fs.readFileSync(path.join(root, 'data/business-data.json'), 'utf8'))
-    .items['maleic-anhydride'].series || [];
-  const observedMonths = new Set(maleicSeries.map((point) => String(point.date).slice(0, 7)));
+  const maleicHistory = JSON.parse(fs.readFileSync(path.join(root, 'data/maleic-anhydride-monthly.json'), 'utf8'));
+  const observedMonths = new Set(maleicHistory.points
+    .filter((point) => point.status === 'estimated' && point.estimated === true && Number(point.value) > 0)
+    .map((point) => point.month));
   assert.equal(maleic.monthCount, observedMonths.size,
-    'maleic anhydride months must come only from observed daily reference prices');
+    'maleic anhydride months must come only from valid month-start chart estimates');
   maleicCard.months.forEach((month) => assert.ok(observedMonths.has(month),
-    'a comparison month cannot exist without an observed commodity price'));
+    'a comparison month cannot exist without a valid month-start chart estimate'));
+  assert.match(maleic.source, /图像估算/,
+    'maleic anhydride chart must disclose its image-derived estimate basis');
   assert.ok(maleicCard.stocks.some((stock) => stock.monthCount > 0),
     'linked equity history should remain available and separately counted');
 });

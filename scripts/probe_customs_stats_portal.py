@@ -44,7 +44,8 @@ def main() -> int:
     try:
         status, content_type, html = fetch(BASE)
     except Exception as exc:
-        print(f"portal_fetch=failed error={type(exc).__name__}")
+        detail = getattr(exc, "reason", None)
+        print(f"portal_fetch=failed error={type(exc).__name__} reason={detail!s}"[:300])
         return 1
 
     print(f"portal_fetch=ok http={status} content_type={content_type} html_chars={len(html)}")

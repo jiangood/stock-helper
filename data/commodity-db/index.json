@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-31T23:53:29.000Z",
-  "marketDate": "2026-10-31T23:53:29+00:00",
+  "generatedAt": "2026-11-01T01:35:53.000Z",
+  "marketDate": "2026-11-01T01:35:53+00:00",
   "productCount": 27,
   "products": [
     {
@@ -37,7 +37,7 @@
       "file": "products/tio2.json",
       "status": "stock-only",
       "latestPrice": 13900,
-      "latestDate": "2026-10-31",
+      "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
@@ -50,7 +50,7 @@
       "file": "products/viscose-staple-fiber.json",
       "status": "stock-only",
       "latestPrice": 12800,
-      "latestDate": "2026-10-31",
+      "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
@@ -258,7 +258,7 @@
       "file": "products/coal.json",
       "status": "stock-only",
       "latestPrice": 1441.25,
-      "latestDate": "2026-10-31",
+      "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
       "stockTimelineMonthCount": 47,

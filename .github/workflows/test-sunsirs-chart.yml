@@ -51,8 +51,8 @@ jobs:
                   body = response.content
                   content_type = response.headers.get("Content-Type", "")
                   is_image = (
-                      body.startswith(b"\\x89PNG\\r\\n\\x1a\\n")
-                      or body.startswith(b"\\xff\\xd8\\xff")
+                      body[:8] == bytes.fromhex("89504e470d0a1a0a")
+                      or body.startswith(bytes.fromhex("ffd8ff"))
                       or body.startswith((b"GIF87a", b"GIF89a"))
                       or (len(body) >= 12 and body[:4] == b"RIFF" and body[8:12] == b"WEBP")
                   )
@@ -64,7 +64,7 @@ jobs:
                       "sha256": hashlib.sha256(body).hexdigest(),
                       "is_image": is_image,
                   })
-                  suffix = ".img" if is_image else ".response.txt"
+                  suffix = ".png" if is_image else ".response.txt"
                   Path(f"artifacts/{name}{suffix}").write_bytes(body)
                   print(json.dumps(row, ensure_ascii=False))
               except Exception as exc:

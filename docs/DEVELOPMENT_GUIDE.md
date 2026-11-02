@@ -218,5 +218,6 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 ## 生意社商品标识字段
 
 - 生意社图表 PPID 作为商品元数据维护在 `data/business-data.json` 每个 `items.<商品ID>` 记录的 `sunsirsPpid` 字段；已核实填写数字字符串，未核实统一为 `null`，禁止根据其他页面 ID 推测。
-- `scripts/build_product_comparison.js` 将该字段透传到 `data/commodity-db/index.json` 对应商品记录，页面及通用采集器优先读取商品元数据，不在采集代码中硬编码 PPID。
+- `scripts/fetch_business_data.py` 每次刷新时从上一版商品记录保留人工核验的 PPID，避免采集器重建商品报价后丢失元数据；新商品默认写入 `null`。
+- `scripts/build_product_comparison.js` 将该字段透传到 `data/commodity-db/index.json` 对应商品记录，顺酐采集器从商品记录读取 PPID，不在采集代码中硬编码。
 - 当前仅顺酐配置已验证 PPID `660`；钛白粉保持 `null`（候选 81 未通过 report.php 图表验证），粘胶短纤候选 1017 尚未完成跨年份 OCR 验证，暂不登记为已确认值。

@@ -84,7 +84,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+users.noreply.github.com"
-          git add "data/sunsirs-chart-monthly/${PRODUCT_ID}.json"
+          git add "data/sunsirs-chart-monthly/${PRODUCT_ID}.json" "data/sunsirs-chart-monthly-history/${PRODUCT_ID}.json"
           if ! git diff --cached --quiet; then
             git commit -m "data: refresh Sunsirs monthly history for ${PRODUCT_ID}"
             for attempt in 1 2 3; do

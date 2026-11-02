@@ -82,9 +82,14 @@ function commodityMonthly(item) {
     const points = monthlyLast((history.points || []).filter((point) => point && point.status === 'estimated' && point.estimated === true).map((point) => ({
       date: point.month + '-01', value: Number(point.value)
     })));
+    const latestImagePoint = (history.points || []).filter((point) =>
+      point && point.status === 'estimated' && point.estimated === true &&
+      Number.isFinite(Number(point.value)) && point.sourceImageUrl
+    ).sort((a, b) => String(a.month).localeCompare(String(b.month))).pop();
     return {
       points,
       source: history.source || '生意社顺酐现货均价图表（图像估算）',
+      sourceUrl: latestImagePoint ? latestImagePoint.sourceImageUrl : null,
       note: history.methodNote || '每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。'
     };
   }
@@ -96,11 +101,18 @@ function commodityMonthly(item) {
         const chartPoints = monthlyLast((history.points || [])
           .filter((point) => point && point.status === 'estimated' && point.estimated === true)
           .map((point) => ({ date: point.month + '-01', value: Number(point.value) })));
-        if (chartPoints.length >= 2) return {
-          points: chartPoints,
-          source: history.source || '生意社商品现货价格走势图（图像估算）',
-          note: history.methodNote || '生意社 report.php 图表月初价格线 OCR 估算；非原始报价。缺失月份留空，不插值。'
-        };
+        if (chartPoints.length >= 2) {
+          const latestImagePoint = (history.points || []).filter((point) =>
+            point && point.status === 'estimated' && point.estimated === true &&
+            Number.isFinite(Number(point.value)) && point.sourceImageUrl
+          ).sort((a, b) => String(a.month).localeCompare(String(b.month))).pop();
+          return {
+            points: chartPoints,
+            source: history.source || '生意社商品现货价格走势图（图像估算）',
+            sourceUrl: latestImagePoint ? latestImagePoint.sourceImageUrl : null,
+            note: history.methodNote || '生意社 report.php 图表月初价格线 OCR 估算；非原始报价。缺失月份留空，不插值。'
+          };
+        }
       } catch (_) { /* malformed optional chart history remains unavailable */ }
     }
   }
@@ -281,7 +293,7 @@ function buildCommodityCards(productItems) {
     const stockOnlyReady = !hasProductHistory && stockSeries.some((stock) => stock.values.filter((point) => point.price !== null).length >= 2);
     return {
       id: itemId, name: productName, unit: market && market.unit || (itemId === 'corn' || itemId === 'soybean-meal' ? '元/吨' : (marketMeta.marketItemId === itemId ? marketMeta.unit : '')) || '',
-      source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: market && market.sourceUrl || null,
+      source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: productHistory.sourceUrl || (market && market.sourceUrl) || null,
       productStartDate: productPoints.length ? productPoints[0].date : null,
       productEndDate: productPoints.length ? productPoints[productPoints.length - 1].date : null,
       latestPrice,

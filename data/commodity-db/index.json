@@ -33,6 +33,20 @@
       "commonMonthCount": 83
     },
     {
+      "id": "tio2",
+      "name": "钛白粉",
+      "unit": "元/吨",
+      "file": "products/tio2.json",
+      "status": "ready",
+      "latestPrice": 14265.69,
+      "latestDate": "2026-11-01",
+      "source": "生意社 report.php 商品价格走势图（图像估算）",
+      "sunsirsPpid": "645",
+      "monthCount": 79,
+      "stockTimelineMonthCount": 78,
+      "commonMonthCount": 78
+    },
+    {
       "id": "viscose-staple-fiber",
       "name": "粘胶短纤",
       "unit": "元/吨",
@@ -45,20 +59,6 @@
       "monthCount": 79,
       "stockTimelineMonthCount": 47,
       "commonMonthCount": 47
-    },
-    {
-      "id": "tio2",
-      "name": "钛白粉",
-      "unit": "元/吨",
-      "file": "products/tio2.json",
-      "status": "stock-only",
-      "latestPrice": 17180,
-      "latestDate": "2026-11-01",
-      "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "sunsirsPpid": "645",
-      "monthCount": 0,
-      "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
     },
     {
       "id": "fluorine-materials",

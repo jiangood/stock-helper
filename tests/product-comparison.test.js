@@ -146,6 +146,8 @@ test('commodity database index references one independent JSON file per product'
     'maleic anhydride months must come only from valid month-start chart estimates');
   maleicCard.months.forEach((month) => assert.ok(observedMonths.has(month),
     'a comparison month cannot exist without a valid month-start chart estimate'));
+  assert.ok(Array.isArray(maleicCard.alternateProductSeries), 'independent market source series is exposed separately');
+  assert.ok(maleicCard.alternateSource, 'alternate source label is available for the clickable chart control');
   assert.match(maleic.source, /图像估算/,
     'maleic anhydride chart must disclose its image-derived estimate basis');
   assert.ok(maleicCard.stocks.some((stock) => stock.monthCount > 0),

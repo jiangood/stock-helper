@@ -1,4 +1,4 @@
-name: Validate reusable Sunsirs chart method with titanium dioxide
+name: Validate reusable Sunsirs chart method with candidate commodities
 
 on:
   workflow_dispatch:
@@ -32,11 +32,14 @@ jobs:
       - name: Request titanium dioxide chart using report.php
         continue-on-error: true
         run: python scripts/test_sunsirs_chart_product.py --ppid 81 --name "钛白粉（硫酸法金红石型 R2）" --start-month 2020-04 --end-month 2026-10
+      - name: Validate viscose staple fiber candidate PPID 1017
+        continue-on-error: true
+        run: python scripts/test_sunsirs_chart_product.py --ppid 1017 --name "粘胶短纤" --start-month 2020-04 --end-month 2026-10
       - name: Upload titanium dioxide chart validation
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sunsirs-tio2-chart-validation
+          name: sunsirs-chart-candidate-validation
           path: artifacts/sunsirs-chart-validation/
           if-no-files-found: warn
           retention-days: 7

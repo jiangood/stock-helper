@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -16,6 +17,11 @@ def main() -> int:
     parser.add_argument("--product-id", required=True)
     parser.add_argument("--before", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--history", type=Path, required=True)
+    parser.add_argument("--run-id", default="local")
+    parser.add_argument("--run-attempt", default="1")
+    parser.add_argument("--start-month", required=True)
+    parser.add_argument("--end-month", required=True)
     args = parser.parse_args()
 
     before = load(args.before)

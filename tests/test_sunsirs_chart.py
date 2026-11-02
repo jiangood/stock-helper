@@ -7,9 +7,21 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import sunsirs_chart
 from test_sunsirs_month_start_ocr import robust_axis_fit
+from collect_sunsirs_product_monthly import is_manual_override
 
 
 class SunsirsChartTests(unittest.TestCase):
+    def test_manual_verification_is_never_overwritten_by_ocr(self):
+        # 2026-11 粘胶短纤人工复核值：价格线与网格线重叠，正确读数为 14700。
+        point = {
+            "month": "2026-11", "value": 14700, "status": "estimated",
+            "estimated": True, "verification": "manual"
+        }
+        self.assertTrue(is_manual_override(point))
+        self.assertTrue(is_manual_override({"status": "manual_verified", "value": 14700}))
+        self.assertFalse(is_manual_override({"status": "estimated", "value": 14650}))
+        self.assertFalse(is_manual_override(None))
+
     def test_robust_axis_fit_rejects_bad_ocr_tick(self):
         ticks = [(100.0, 18000.0, 90), (180.0, 16000.0, 90), (260.0, 14000.0, 90), (340.0, 12000.0, 90), (220.0, 99999.0, 30)]
         slope, intercept, inliers, rmse = robust_axis_fit(ticks)

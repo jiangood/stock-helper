@@ -8,6 +8,13 @@ on:
     types: [completed]
     branches: [master]
   workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "scripts/build_product_comparison.js"
+      - "data/business-data.json"
+      - "data/sunsirs-chart-monthly/**"
+      - "data/maleic-anhydride-monthly.json"
 
 permissions:
   contents: write

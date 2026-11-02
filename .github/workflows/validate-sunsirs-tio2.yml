@@ -8,6 +8,7 @@ on:
       - "scripts/sunsirs_chart.py"
       - "scripts/test_sunsirs_chart_product.py"
       - "scripts/collect_sunsirs_product_monthly.py"
+      - "scripts/test_sunsirs_month_start_ocr.py"
       - "tests/test_sunsirs_chart.py"
       - "scripts/audit_sunsirs_product_monthly.py"
       - ".github/workflows/validate-sunsirs-tio2.yml"
@@ -37,8 +38,43 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v
       - name: Validate titanium dioxide chart PPID from official product page
         run: python scripts/test_sunsirs_chart_product.py --ppid 645 --name "钛白粉指数" --start-month 2020-04 --end-month 2026-10
+      - name: Snapshot existing titanium dioxide history for before-after comparison
+        run: |
+          mkdir -p artifacts/sunsirs-chart-comparison
+          cp data/sunsirs-chart-monthly/tio2.json artifacts/sunsirs-chart-comparison/tio2-before.json
       - name: Refresh all monthly OCR estimates for titanium dioxide using full-month charts
         run: python scripts/collect_sunsirs_product_monthly.py --product-id tio2 --start-month 2020-04 --end-month 2026-11 --refresh-existing
+      - name: Compare refreshed titanium dioxide history with previous values
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          before = json.loads(Path("artifacts/sunsirs-chart-comparison/tio2-before.json").read_text(encoding="utf-8"))
+          after = json.loads(Path("data/sunsirs-chart-monthly/tio2.json").read_text(encoding="utf-8"))
+          old = {p["month"]: p for p in before.get("points", [])}
+          new = {p["month"]: p for p in after.get("points", [])}
+          rows = []
+          changed = 0
+          for month in sorted(set(old) | set(new)):
+              a, b = old.get(month, {}), new.get(month, {})
+              av, bv = a.get("value"), b.get("value")
+              delta = round(bv - av, 2) if isinstance(av, (int, float)) and isinstance(bv, (int, float)) else None
+              is_changed = a.get("status") != b.get("status") or av != bv
+              changed += int(is_changed)
+              rows.append({"month": month, "old_value": av, "old_status": a.get("status"), "new_value": bv, "new_status": b.get("status"), "delta": delta, "changed": is_changed})
+          report = {
+              "product": "tio2", "ppid": after.get("ppid"),
+              "old_months": len(old), "new_months": len(new),
+              "changed_months": changed,
+              "estimated_months": sum(p.get("status") == "estimated" and p.get("value") is not None for p in after.get("points", [])),
+              "no_data_months": sum(p.get("status") == "no_data" for p in after.get("points", [])),
+              "unavailable_months": sum(p.get("status") == "unavailable" for p in after.get("points", [])),
+              "rows": rows
+          }
+          out = Path("artifacts/sunsirs-chart-comparison/tio2-before-after.json")
+          out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+          print(json.dumps({k: v for k, v in report.items() if k != "rows"}, ensure_ascii=False))
+          PY
       - name: Validate viscose staple fiber candidate PPID 1017
         continue-on-error: true
         run: python scripts/test_sunsirs_chart_product.py --ppid 1017 --name "粘胶短纤" --start-month 2020-04 --end-month 2026-10
@@ -72,6 +108,7 @@ jobs:
           name: sunsirs-chart-candidate-validation
           path: |
             artifacts/sunsirs-chart-validation/
+            artifacts/sunsirs-chart-comparison/
             artifacts/viscose-audit/
           if-no-files-found: warn
           retention-days: 7

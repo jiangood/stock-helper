@@ -205,3 +205,11 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 - 钛白粉：此前尝试的 `nppid.php?id=81` 属于另一种图表请求，不能证明 `report.php` 的 `ppid`；目前没有确认符合本规范的 `ppid`，暂不接入。
 - 任何其他商品：状态均以实际 `report.php` 图表请求及跨年份验证结果为准，不能根据目录编号或搜索摘要推断。
 
+### 9.6 通用采集模块与验证命令
+
+- 通用请求模块：`scripts/sunsirs_chart.py`。新增商品时传入经实际请求确认的 `ppid`，使用 `build_chart_url(ppid, year, month)` 生成月初图表 URL，再用 `fetch_chart_image(url, output_path)` 下载并校验 PNG；模块同时返回最终 URL、HTTP 状态、图片字节数和 SHA-256，便于追溯。
+- 顺酐采集器 `scripts/collect_maleic_anhydride_monthly.py` 已复用该模块；OCR 仍由 `scripts/test_sunsirs_month_start_ocr.py` 执行。通用模块只负责构造请求和验证图像，不会自动猜测 PPID，也不会绕过 OCR 质量检查。
+- 通用模块单元测试：`python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v`。
+- 多年份商品验证脚本：`scripts/test_sunsirs_chart_product.py`。它对起始、中间、结束年份请求月初图表并运行 OCR，生成 JSON 报告和原始图像；任何请求失败、无价格曲线或 OCR 不通过都会使验证失败。
+- 钛白粉当前验证仅把 `ppid=81` 作为待验证候选值。该数字此前出现在另一种 `nppid.php?id=81` 请求中，**并未因此确认它是 report.php 的 PPID**。只有新验证工作流实际取得多个年份的有效 report.php 图片并通过 OCR，才能确认；失败就放弃钛白粉这条图表接入，不改用其他报价。
+

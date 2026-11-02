@@ -55,7 +55,7 @@
       "latestPrice": 17180,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "sunsirsPpid": null,
+      "sunsirsPpid": "645",
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
       "commonMonthCount": 0

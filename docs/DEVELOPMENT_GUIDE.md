@@ -221,3 +221,10 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 - `scripts/fetch_business_data.py` 每次刷新时从上一版商品记录保留人工核验的 PPID，避免采集器重建商品报价后丢失元数据；新商品默认写入 `null`。
 - `scripts/build_product_comparison.js` 将该字段透传到 `data/commodity-db/index.json` 对应商品记录，顺酐采集器从商品记录读取 PPID，不在采集代码中硬编码。
 - 当前仅顺酐配置已验证 PPID `660`；钛白粉保持 `null`（候选 81 未通过 report.php 图表验证），粘胶短纤候选 1017 尚未完成跨年份 OCR 验证，暂不登记为已确认值。
+
+
+## 商品页面多来源价格线
+
+- 商品主价格序列与备用来源必须分别保留，不得平均、拼接或静默切换。若商品月线当前采用的来源与 `business-data.json` 商品行情来源不同，构建器会将后者作为 `alternateProductSeries` 输出，并按各自首个共同月份归一化，仅用于趋势比较。
+- 商品页在具备备用序列时显示来源切换按钮；按钮通过图表图例控制备用来源线显示/隐藏。来源名称及口径在商品说明中保留，缺失月份留空，不插值。
+- 生意社图表 PPID 仍须通过真实 `report.php` 请求及至少三个年份的 OCR 验证后才能写入商品元数据。钛白粉候选 81 失败；粘胶短纤候选 1017 仅进入验证工作流，验证完成前不得登记为正式 PPID。

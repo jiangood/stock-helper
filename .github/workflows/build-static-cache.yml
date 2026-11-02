@@ -5,6 +5,7 @@ on:
     workflows:
       - Refresh value-investing stock cache
       - Refresh stock fundamentals
+      - Validate reusable Sunsirs chart method with candidate commodities
     types: [completed]
     branches: [master]
   workflow_dispatch:
@@ -41,7 +42,7 @@ jobs:
       - name: Build, validate and publish from the latest source revision
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+users.noreply.github.com"
           for attempt in 1 2 3; do
             git fetch origin master
             git reset --hard origin/master

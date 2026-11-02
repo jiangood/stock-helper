@@ -1,0 +1,41 @@
+name: Validate reusable Sunsirs chart method with titanium dioxide
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "scripts/sunsirs_chart.py"
+      - "scripts/test_sunsirs_chart_product.py"
+      - "tests/test_sunsirs_chart.py"
+      - ".github/workflows/validate-sunsirs-tio2.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-tio2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install chart OCR dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr
+          python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
+      - name: Unit tests for reusable chart downloader
+        run: python -m unittest tests/test_sunsirs_chart.py -v
+      - name: Request titanium dioxide chart using report.php
+        run: python scripts/test_sunsirs_chart_product.py --ppid 81 --name "钛白粉（硫酸法金红石型 R2）" --start-month 2020-04 --end-month 2026-10
+      - name: Upload titanium dioxide chart validation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunsirs-tio2-chart-validation
+          path: artifacts/sunsirs-chart-validation/
+          if-no-files-found: warn
+          retention-days: 7

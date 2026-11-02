@@ -6,9 +6,17 @@ from tempfile import TemporaryDirectory
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import sunsirs_chart
+from test_sunsirs_month_start_ocr import robust_axis_fit
 
 
 class SunsirsChartTests(unittest.TestCase):
+    def test_robust_axis_fit_rejects_bad_ocr_tick(self):
+        ticks = [(100.0, 18000.0, 90), (180.0, 16000.0, 90), (260.0, 14000.0, 90), (340.0, 12000.0, 90), (220.0, 99999.0, 30)]
+        slope, intercept, inliers, rmse = robust_axis_fit(ticks)
+        self.assertEqual(len(inliers), 4)
+        self.assertAlmostEqual(slope * 220 + intercept, 15000, delta=1)
+        self.assertLess(rmse, 1)
+
     def test_month_start_url_matches_maleic_template_for_any_ppid(self):
         self.assertEqual(
             sunsirs_chart.build_chart_url("660", 2020, 4),

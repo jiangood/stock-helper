@@ -11,6 +11,7 @@ import csv
 import io
 import json
 import re
+from itertools import combinations
 import subprocess
 from pathlib import Path
 
@@ -68,6 +69,34 @@ def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
     return sorted(unique.values())
 
 
+def robust_axis_fit(ticks: list[tuple[float, float, float]]) -> tuple[float, float, list[int], float]:
+    if len(ticks) < 4:
+        raise ValueError(f"纵轴刻度识别不足：{len(ticks)} 个")
+    ys = np.array([item[0] for item in ticks], dtype=float)
+    values = np.array([item[1] for item in ticks], dtype=float)
+    best, best_error = [], float("inf")
+    for i, j in combinations(range(len(ticks)), 2):
+        if abs(ys[j] - ys[i]) < 18:
+            continue
+        slope = (values[j] - values[i]) / (ys[j] - ys[i])
+        intercept = values[i] - slope * ys[i]
+        residuals = np.abs(values - (slope * ys + intercept))
+        inliers = np.where(residuals <= 18)[0].tolist()
+        error = float(np.median(residuals[inliers])) if inliers else float("inf")
+        if len(inliers) > len(best) or (len(inliers) == len(best) and error < best_error):
+            best, best_error = inliers, error
+    if len(best) < 4:
+        raise ValueError(f"纵轴有效刻度不足：仅 {len(best)} 个一致刻度")
+    iy, iv = ys[best], values[best]
+    if float(np.ptp(iy)) < 80:
+        raise ValueError("纵轴有效刻度分布范围不足")
+    slope, intercept = np.polyfit(iy, iv, 1)
+    rmse = float(np.sqrt(np.mean((iv - (slope * iy + intercept)) ** 2)))
+    if rmse > 8:
+        raise ValueError(f"纵轴刻度稳健拟合误差仍过大：{rmse:.2f}")
+    return float(slope), float(intercept), best, rmse
+
+
 def estimate_first_price(image_path: Path, month: str) -> dict:
     image = cv2.imread(str(image_path))
     if image is None:
@@ -97,16 +126,7 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
         }
 
     ticks = read_axis_ticks(image)
-    if len(ticks) < 4:
-        raise ValueError(f"纵轴刻度识别不足：{len(ticks)} 个")
-
-    y_ticks = np.array([item[0] for item in ticks], dtype=float)
-    prices = np.array([item[1] for item in ticks], dtype=float)
-    slope, intercept = np.polyfit(y_ticks, prices, 1)
-    fitted = slope * y_ticks + intercept
-    rmse = float(np.sqrt(np.mean((fitted - prices) ** 2)))
-    if rmse > 8:
-        raise ValueError(f"纵轴刻度拟合误差过大：{rmse:.2f}")
+    slope, intercept, inlier_indices, rmse = robust_axis_fit(ticks)
 
     # Sample only a narrow strip at the left edge, i.e. the first day.
     x_end = min(PLOT_LEFT + 12, PLOT_RIGHT)
@@ -129,6 +149,8 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
         "estimated": True,
         "quality": {
             "axis_tick_count": len(ticks),
+            "axis_inlier_count": len(inlier_indices),
+            "axis_rejected_count": len(ticks) - len(inlier_indices),
             "axis_fit_rmse": round(rmse, 3),
             "blue_pixels_sampled": int(len(ys)),
             "first_line_y": round(first_y, 2),

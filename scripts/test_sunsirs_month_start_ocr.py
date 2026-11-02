@@ -40,7 +40,22 @@ def _normalise_tick(text: str) -> float | None:
 
 
 def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
-    crop = image[AXIS_CROP_TOP:AXIS_CROP_BOTTOM, 0:PLOT_LEFT]
+    crop = image[AXIS_CROP_TOP:AXIS_CROP_BOTTOM, 0:PLOT_LEFT].copy()
+
+    # Remove chromatic chart traces from the axis-label OCR input. Keep neutral
+    # grayscale text, ticks and axes; only suppress saturated colored pixels.
+    # A small dilation also removes anti-aliased fringes around colored lines.
+    hsv_crop = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
+    colored_mask = cv2.inRange(
+        hsv_crop,
+        np.array([0, 35, 45], dtype=np.uint8),
+        np.array([179, 255, 255], dtype=np.uint8),
+    )
+    colored_mask = cv2.dilate(
+        colored_mask, cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3)), iterations=1
+    )
+    crop[colored_mask > 0] = (255, 255, 255)
+
     enlarged = cv2.resize(crop, None, fx=SCALE, fy=SCALE, interpolation=cv2.INTER_CUBIC)
     ok, encoded = cv2.imencode(".png", enlarged)
     if not ok:

@@ -1808,5 +1808,814 @@
     }
   ],
   "status": "ready",
-  "note": "每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。 齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。"
+  "note": "每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。 齐翔腾达顺酐为核心产品；商品报价采用可核验的顺酐现货口径，不能用甲醇、苯酐等价格替代。",
+  "alternateSource": "生意社顺酐每日参考价（公开价格快讯）",
+  "alternateSourceNote": "生意社顺酐参考价为行业参考价，不等于公司实际成交均价或结算价。",
+  "alternateProductSeries": [
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2011-02",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2026-08",
+      "index": 100,
+      "price": 8200
+    },
+    {
+      "month": "2026-09",
+      "index": 120.12,
+      "price": 9850
+    },
+    {
+      "month": "2026-10",
+      "index": 121.65,
+      "price": 9975
+    }
+  ]
 }

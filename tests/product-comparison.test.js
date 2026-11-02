@@ -129,6 +129,7 @@ test('commodity database index references one independent JSON file per product'
   });
   const sourceProducts = JSON.parse(fs.readFileSync(path.join(root, 'data/business-data.json'), 'utf8')).items;
   assert.equal(sourceProducts['maleic-anhydride'].sunsirsPpid, '660');
+  assert.equal(sourceProducts['viscose-staple-fiber'].sunsirsPpid, '1017');
   assert.equal(sourceProducts.tio2.sunsirsPpid, null,
     'unverified Sunsirs PPIDs must remain explicitly empty');
   database.products.forEach((product) => {

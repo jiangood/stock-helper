@@ -3,14 +3,14 @@
   "name": "粘胶短纤",
   "unit": "元/吨",
   "source": "生意社 report.php 商品价格走势图（图像估算）",
-  "sourceNote": "每月1日至2日图表最左侧价格线；OCR纵轴刻度采用抗异常值拟合与像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
+  "sourceNote": "每月完整自然月图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
   "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
   "productStartDate": "2020-04-01",
   "productEndDate": "2026-11-01",
   "latestPrice": 14704.98,
   "latestDate": "2026-11-01",
   "productChange": 10.46,
-  "productMonthCount": 79,
+  "productMonthCount": 80,
   "stockTimelineMonthCount": 47,
   "commonMonthCount": 47,
   "months": [
@@ -556,5 +556,5 @@
     }
   ],
   "status": "ready",
-  "note": "每月1日至2日图表最左侧价格线；OCR纵轴刻度采用抗异常值拟合与像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。 粘胶短纤维约51.6%主营收入；纯碱约18.0%也作为另一项产品单独观察。"
+  "note": "每月完整自然月图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。 粘胶短纤维约51.6%主营收入；纯碱约18.0%也作为另一项产品单独观察。"
 }

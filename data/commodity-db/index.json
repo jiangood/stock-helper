@@ -42,9 +42,9 @@
       "latestDate": "2026-11-01",
       "source": "生意社 report.php 商品价格走势图（图像估算）",
       "sunsirsPpid": "645",
-      "monthCount": 79,
-      "stockTimelineMonthCount": 78,
-      "commonMonthCount": 78
+      "monthCount": 78,
+      "stockTimelineMonthCount": 77,
+      "commonMonthCount": 77
     },
     {
       "id": "viscose-staple-fiber",
@@ -56,7 +56,7 @@
       "latestDate": "2026-11-01",
       "source": "生意社 report.php 商品价格走势图（图像估算）",
       "sunsirsPpid": "1017",
-      "monthCount": 79,
+      "monthCount": 80,
       "stockTimelineMonthCount": 47,
       "commonMonthCount": 47
     },

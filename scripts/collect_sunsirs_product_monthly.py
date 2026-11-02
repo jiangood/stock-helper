@@ -17,14 +17,6 @@ from sunsirs_chart import DEFAULT_HEADERS, build_chart_url, fetch_chart_image
 from test_sunsirs_month_start_ocr import estimate_first_price
 
 
-def is_manual_override(point: dict) -> bool:
-    """人工核验记录优先于 OCR；兼容旧 status 标记和 verification 标记。"""
-    return isinstance(point, dict) and (
-        point.get("verification") == "manual"
-        or point.get("status") == "manual_verified"
-    )
-
-
 def month_iter(start: str, end: str):
     year, month = map(int, start.split("-"))
     end_year, end_month = map(int, end.split("-"))
@@ -64,13 +56,6 @@ def main() -> int:
     fetched = failed = 0
     current_month = date.today().strftime("%Y-%m")
     for month in month_iter(args.start_month, args.end_month):
-        # 人工核验记录无论是否为当月，都禁止自动 OCR 覆盖。
-        if month in known and is_manual_override(known[month]):
-            print(json.dumps({
-                "month": month, "status": "preserved_manual",
-                "value": known[month].get("value")
-            }, ensure_ascii=False))
-            continue
         if month in known and month != current_month and known[month].get("status") in ("estimated", "no_data"):
             continue
         year, mon = map(int, month.split("-"))

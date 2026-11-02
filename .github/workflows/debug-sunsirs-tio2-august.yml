@@ -40,6 +40,45 @@ jobs:
               result = fetch_chart_image(url, Path("artifacts/sunsirs-august") / f"{label}.png")
               print(f"{label}: HTTP {result['status_code']}, {result['content_type']}, {result['bytes']} bytes, sha256={result['sha256']}, url={result['url']}")
           PY
+      - name: Diagnose blue target curve versus non-blue curves
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import cv2
+          import numpy as np
+
+          out = Path('artifacts/sunsirs-august')
+          for label in ('full-month', 'collector-short-range'):
+              path = out / f'{label}.png'
+              image = cv2.imread(str(path))
+              if image is None:
+                  raise RuntimeError(f'cannot read {path}')
+              hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+              plot = hsv[80:430, 60:760]
+              # Keep the known blue hue family separate; report other saturated
+              # colors independently rather than assuming their chart meaning.
+              blue = cv2.inRange(plot, np.array([95, 70, 60], np.uint8), np.array([135, 255, 255], np.uint8))
+              saturated = cv2.inRange(plot, np.array([0, 70, 60], np.uint8), np.array([179, 255, 255], np.uint8))
+              non_blue = cv2.bitwise_and(saturated, cv2.bitwise_not(blue))
+              count, labels, stats, centroids = cv2.connectedComponentsWithStats(blue, 8)
+              components = sorted(
+                  [(int(stats[i, cv2.CC_STAT_AREA]), int(stats[i, cv2.CC_STAT_WIDTH]),
+                    int(stats[i, cv2.CC_STAT_HEIGHT]), round(float(centroids[i][0]) + 60, 1),
+                    round(float(centroids[i][1]) + 80, 1))
+                   for i in range(1, count) if stats[i, cv2.CC_STAT_AREA] >= 3],
+                  reverse=True
+              )
+              print(f'{label}: blue_pixels={cv2.countNonZero(blue)}, non_blue_saturated_pixels={cv2.countNonZero(non_blue)}')
+              print(f'{label}: blue_components(area,width,height,cx,cy)={components[:40]}')
+              # Diagnostic overlays: blue pixels in blue, other saturated
+              # pixels in red; gray background preserves grid/context.
+              overlay = image.copy()
+              region = overlay[80:430, 60:760]
+              region[blue > 0] = (255, 0, 0)
+              region[non_blue > 0] = (0, 0, 255)
+              cv2.imwrite(str(out / f'{label}-color-diagnostic.png'), overlay)
+              cv2.imwrite(str(out / f'{label}-blue-mask.png'), blue)
+          PY
       - name: Compare Tesseract page segmentation modes on short-range axis
         run: |
           python - <<'PY'

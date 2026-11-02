@@ -56,7 +56,9 @@ def main() -> int:
     fetched = failed = 0
     current_month = date.today().strftime("%Y-%m")
     for month in month_iter(args.start_month, args.end_month):
-        if month in known and month != current_month:
+        if month in known and month != current_month and known[month].get("status") in ("estimated", "no_data", "manual_verified"):
+            continue
+        if month in known and known[month].get("status") == "manual_verified":
             continue
         year, mon = map(int, month.split("-"))
         url = build_chart_url(ppid, year, mon)

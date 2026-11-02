@@ -9,6 +9,7 @@ on:
       - "scripts/test_sunsirs_chart_product.py"
       - "scripts/collect_sunsirs_product_monthly.py"
       - "tests/test_sunsirs_chart.py"
+      - "scripts/audit_sunsirs_product_monthly.py"
       - ".github/workflows/validate-sunsirs-tio2.yml"
 
 permissions:
@@ -38,6 +39,8 @@ jobs:
         run: python scripts/test_sunsirs_chart_product.py --ppid 1017 --name "粘胶短纤" --start-month 2020-04 --end-month 2026-10
       - name: Collect monthly chart history for verified viscose staple fiber
         run: python scripts/collect_sunsirs_product_monthly.py --product-id viscose-staple-fiber --start-month 2020-04 --end-month 2026-11
+      - name: Audit suspicious historical viscose chart months
+        run: python scripts/audit_sunsirs_product_monthly.py --product-id viscose-staple-fiber --ppid 1017 --start-month 2020-04 --end-month 2026-11
       - name: Commit verified chart history
         run: |
           git config user.name "github-actions[bot]"
@@ -52,6 +55,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sunsirs-chart-candidate-validation
-          path: artifacts/sunsirs-chart-validation/
+          path: |
+            artifacts/sunsirs-chart-validation/
+            artifacts/viscose-audit/
           if-no-files-found: warn
           retention-days: 7

@@ -202,7 +202,7 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 
 - 顺酐：`ppid=660`，已用于月初图表 OCR 采集。
 - 粘胶短纤：`ppid=1017`，已确认通用接口图表可打开；月度跨年份样本和 OCR 质量仍需验证，验证完成前不得视为正式接入。
-- 钛白粉：此前尝试的 `nppid.php?id=81` 属于另一种图表请求，不能证明 `report.php` 的 `ppid`；目前没有确认符合本规范的 `ppid`，暂不接入。
+- 钛白粉：专属商品页的指数图 iframe 使用 `ppid=645`；已将其作为 `report.php` 候选交由跨年份图表与 OCR 工作流验证。验证通过前不视为正式可用历史数据。
 - 任何其他商品：状态均以实际 `report.php` 图表请求及跨年份验证结果为准，不能根据目录编号或搜索摘要推断。
 
 ### 9.6 通用采集模块与验证命令
@@ -211,7 +211,7 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 - 顺酐采集器 `scripts/collect_maleic_anhydride_monthly.py` 已复用该模块；OCR 仍由 `scripts/test_sunsirs_month_start_ocr.py` 执行。通用模块只负责构造请求和验证图像，不会自动猜测 PPID，也不会绕过 OCR 质量检查。
 - 通用模块单元测试：`python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v`。
 - 多年份商品验证脚本：`scripts/test_sunsirs_chart_product.py`。它对起始、中间、结束年份请求月初图表并运行 OCR，生成 JSON 报告和原始图像；任何请求失败、无价格曲线或 OCR 不通过都会使验证失败。
-- 钛白粉候选 `ppid=81` 已经用通用模块实测：`report.php` 在 2020-04、2023-04、2026-10 均返回相同 SHA-256 的 15,999 字节 PNG，OCR 均识别为无价格曲线（`no_data`）。这说明 `id=81` 不是可用的 `report.php` PPID；钛白粉尚未找到合格 PPID，不得接入。该验证结果来自 GitHub Actions 运行记录，不能将 HTTP 200 误判为有图表数据。
+- 钛白粉候选 `ppid=81` 已经用通用模块实测：`report.php` 在 2020-04、2023-04、2026-10 均返回相同 SHA-256 的 15,999 字节 PNG，OCR 均识别为无价格曲线（`no_data`），禁止使用。专属商品页 iframe 指向 `ppid=645`，当前工作流改为对 645 执行三年份图表与 OCR 验证，并在验证通过后回补历史；不得把 iframe 中的 ID 本身当成 report.php 验证已经通过。
 
 
 
@@ -227,7 +227,7 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 
 - 商品主价格序列与备用来源必须分别保留，不得平均、拼接或静默切换。若商品月线当前采用的来源与 `business-data.json` 商品行情来源不同，构建器会将后者作为 `alternateProductSeries` 输出，并按各自首个共同月份归一化，仅用于趋势比较。
 - 商品页在具备备用序列时显示来源切换按钮；按钮通过图表图例控制备用来源线显示/隐藏。来源名称及口径在商品说明中保留，缺失月份留空，不插值。
-- 生意社图表 PPID 仍须通过真实 `report.php` 请求及至少三个年份的 OCR 验证后才能写入商品元数据。钛白粉候选 81 失败；粘胶短纤候选 1017 仅进入验证工作流，验证完成前不得登记为正式 PPID。
+- 生意社图表 PPID 仍须通过真实 `report.php` 请求及至少三个年份的 OCR 验证后才能正式启用。钛白粉候选 81 失败，候选 645 正在执行验证；粘胶短纤 1017 已通过验证。
 
 
 ### 通用商品图表历史回补

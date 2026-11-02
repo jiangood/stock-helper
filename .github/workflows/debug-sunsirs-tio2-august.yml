@@ -40,7 +40,25 @@ jobs:
               result = fetch_chart_image(url, Path("artifacts/sunsirs-august") / f"{label}.png")
               print(f"{label}: HTTP {result['status_code']}, {result['content_type']}, {result['bytes']} bytes, sha256={result['sha256']}, url={result['url']}")
           PY
+      - name: Compare Tesseract page segmentation modes on short-range axis
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, cv2
+          image = cv2.imread('artifacts/sunsirs-august/collector-short-range.png')
+          crop = image[75:435, 0:60]
+          for scale in (4, 6, 8):
+              enlarged = cv2.resize(crop, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+              path = Path(f'/tmp/axis-{scale}.png')
+              cv2.imwrite(str(path), enlarged)
+              for psm in (6, 7, 8, 11, 13):
+                  result = subprocess.run(['tesseract', str(path), 'stdout', '--psm', str(psm), 'tsv'], capture_output=True, text=True)
+                  rows = [line for line in result.stdout.splitlines()[1:] if line.strip()]
+                  words = [line.split('\t')[-1] for line in rows if line.split('\t')[-1].strip()]
+                  print(f'scale={scale} psm={psm}: {words}')
+          PY
       - name: Run the production OCR estimator against both images
+        continue-on-error: true
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -56,6 +74,7 @@ jobs:
               print(f"{label}: estimate={estimate_first_price(path, '2026-08')}")
           PY
       - name: Upload returned chart images
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sunsirs-tio2-august-chart-debug

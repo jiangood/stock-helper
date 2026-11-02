@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare monthly Sunsirs product history before and after a collection run."""
+"""Compare monthly Sunsirs product history and append a durable audit record."""
 from __future__ import annotations
 
 import argparse
@@ -39,8 +39,16 @@ def main() -> int:
             "new_value": bv, "new_status": b.get("status"), "delta": delta,
             "changed": a.get("status") != b.get("status") or av != bv,
         })
+
+    run = {
+        "run_id": args.run_id,
+        "run_attempt": args.run_attempt,
+        "recorded_at": datetime.now(timezone.utc).isoformat(),
+        "start_month": args.start_month,
+        "end_month": args.end_month,
+    }
     report = {
-        "product": args.product_id, "ppid": after.get("ppid"),
+        "product": args.product_id, "ppid": after.get("ppid"), "run": run,
         "old_months": len(old), "new_months": len(new),
         "changed_months": sum(row["changed"] for row in rows),
         "estimated_months": sum(p.get("status") == "estimated" and p.get("value") is not None for p in new.values()),
@@ -50,7 +58,37 @@ def main() -> int:
         "rows": rows,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+
+    history = load(args.history)
+    history.setdefault("schemaVersion", 1)
+    history.setdefault("product", args.product_id)
+    history.setdefault("runs", [])
+    history["runs"].append({
+        **run,
+        "ppid": report["ppid"],
+        "old_months": report["old_months"],
+        "new_months": report["new_months"],
+        "changed_months": report["changed_months"],
+        "estimated_months": report["estimated_months"],
+        "no_data_months": report["no_data_months"],
+        "unavailable_months": report["unavailable_months"],
+        "refresh_errors": report["refresh_errors"],
+        "values": [
+            {
+                "month": row["month"],
+                "previous_value": row["old_value"],
+                "previous_status": row["old_status"],
+                "current_value": row["new_value"],
+                "current_status": row["new_status"],
+                "delta": row["delta"],
+                "equal": row["old_value"] == row["new_value"] and row["old_status"] == row["new_status"],
+            }
+            for row in rows if args.start_month <= row["month"] <= args.end_month
+        ],
+    })
+    args.history.parent.mkdir(parents=True, exist_ok=True)
+    args.history.write_text(json.dumps(history, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "rows"}, ensure_ascii=False))
     return 0
 

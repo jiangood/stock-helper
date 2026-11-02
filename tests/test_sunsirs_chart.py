@@ -17,6 +17,10 @@ class SunsirsChartTests(unittest.TestCase):
             ["2026-10", "2026-11", "2026-12", "2027-01", "2027-02"],
         )
 
+    def test_month_iter_rejects_reversed_range(self):
+        with self.assertRaises(ValueError):
+            list(month_iter("2026-11", "2026-10"))
+
     def test_robust_axis_fit_rejects_bad_ocr_tick(self):
         ticks = [(100.0, 18000.0, 90), (180.0, 16000.0, 90), (260.0, 14000.0, 90), (340.0, 12000.0, 90), (220.0, 99999.0, 30)]
         slope, intercept, inliers, rmse = robust_axis_fit(ticks)
@@ -24,12 +28,13 @@ class SunsirsChartTests(unittest.TestCase):
         self.assertAlmostEqual(slope * 220 + intercept, 15000, delta=1)
         self.assertLess(rmse, 1)
 
-    def test_month_start_url_matches_maleic_template_for_any_ppid(self):
+    def test_url_spans_full_calendar_month_including_leap_february(self):
         self.assertEqual(
-            sunsirs_chart.build_chart_url("660", 2020, 4),
-            "https://www.100ppi.com/graph/report.php?btime=2020-4-1&etime=2020-4-2&f=xht_agent_price&ppid=660",
+            sunsirs_chart.build_chart_url("645", 2026, 8),
+            "https://www.100ppi.com/graph/report.php?btime=2026-8-1&etime=2026-8-31&f=xht_agent_price&ppid=645",
         )
-        self.assertIn("ppid=1017", sunsirs_chart.build_chart_url("1017", 2026, 10))
+        self.assertIn("etime=2024-2-29", sunsirs_chart.build_chart_url("660", 2024, 2))
+        self.assertIn("etime=2025-2-28", sunsirs_chart.build_chart_url("1017", 2025, 2))
 
     def test_rejects_unverified_ppid_and_invalid_month(self):
         with self.assertRaises(ValueError):

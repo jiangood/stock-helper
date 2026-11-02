@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download and re-check suspicious historical viscose-staple-fiber chart months.
+"""Download and re-check suspicious historical viscose-staple-fiber OCR estimates.
 
 This is an audit-only tool: it never changes the production price history.
 It saves original PNGs and a comparison report for visual/manual review.
@@ -41,8 +41,6 @@ def select_suspicious_months(points: list[dict]) -> list[tuple[dict, list[str]]]
             reasons.append("纵轴拟合误差异常偏低，需核对刻度识别")
         if quality.get("axis_rejected_count", 0) >= 2:
             reasons.append("纵轴刻度被剔除数量较多")
-        if point.get("verification") == "manual":
-            reasons.append("已有人工核验值，检查原图留档")
         if reasons:
             selected.append((point, reasons))
     return selected
@@ -83,7 +81,6 @@ def main() -> int:
             row = {
                 "month": month, "recordedValue": point.get("value"),
                 "recordedStatus": point.get("status"),
-                "recordedVerification": point.get("verification"),
                 "recordedQuality": point.get("quality"),
                 "recordedImageSha256": point.get("imageSha256"),
                 "reasons": reasons, "url": url

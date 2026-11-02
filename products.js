@@ -86,6 +86,11 @@ function render(){
   });
   if(!series.length)return;
   var chart=window.echarts.init(node);charts.push(chart);
+  if(card.sourceUrl&&/^https:\/\/www\.100ppi\.com\/graph\/report\.php\?/.test(card.sourceUrl)){
+   node.style.cursor='pointer';
+   node.setAttribute('aria-label',esc(displayProductName(card.name))+'商品及关联股票月线；点击打开生意社原始趋势图');
+   chart.getZr().on('click',function(){window.open(card.sourceUrl,'_blank','noopener');});
+  }
   var compactLegend=window.matchMedia&&window.matchMedia('(max-width:575px)').matches;
   chart.setOption({
    animation:false,

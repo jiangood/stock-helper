@@ -12,6 +12,10 @@ on:
       - "scripts/audit_sunsirs_product_monthly.py"
       - ".github/workflows/validate-sunsirs-tio2.yml"
 
+concurrency:
+  group: sunsirs-chart-validation-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -37,18 +41,28 @@ jobs:
       - name: Validate viscose staple fiber candidate PPID 1017
         continue-on-error: true
         run: python scripts/test_sunsirs_chart_product.py --ppid 1017 --name "粘胶短纤" --start-month 2020-04 --end-month 2026-10
-      - name: Collect monthly chart history for verified viscose staple fiber
+      - name: Collect monthly OCR estimates for viscose staple fiber
         run: python scripts/collect_sunsirs_product_monthly.py --product-id viscose-staple-fiber --start-month 2020-04 --end-month 2026-11
       - name: Audit suspicious historical viscose chart months
         run: python scripts/audit_sunsirs_product_monthly.py --product-id viscose-staple-fiber --ppid 1017 --start-month 2020-04 --end-month 2026-11
-      - name: Commit verified chart history
+      - name: Commit OCR chart history
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+users.noreply.github.com"
           git add data/sunsirs-chart-monthly/viscose-staple-fiber.json
           if ! git diff --cached --quiet; then
-            git commit -m "data: backfill viscose Sunsirs chart history"
-            git push origin HEAD:master
+            git commit -m "data: backfill viscose Sunsirs OCR estimates"
+            for attempt in 1 2 3; do
+              git fetch origin master
+              git rebase origin/master
+              if git push origin HEAD:master; then
+                exit 0
+              fi
+              echo "Push attempt ${attempt} failed; retrying after fetching latest master"
+              sleep 2
+            done
+            echo "Unable to push OCR history after 3 attempts" >&2
+            exit 1
           fi
       - name: Upload titanium dioxide chart validation
         if: always()

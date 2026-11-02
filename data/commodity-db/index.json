@@ -15,7 +15,8 @@
       "source": "生意社顺酐现货均价图表（图像估算）",
       "monthCount": 166,
       "stockTimelineMonthCount": 161,
-      "commonMonthCount": 161
+      "commonMonthCount": 161,
+      "sunsirsPpid": "660"
     },
     {
       "id": "soda-ash",
@@ -28,7 +29,8 @@
       "source": "期货主力连续",
       "monthCount": 83,
       "stockTimelineMonthCount": 83,
-      "commonMonthCount": 83
+      "commonMonthCount": 83,
+      "sunsirsPpid": null
     },
     {
       "id": "tio2",
@@ -41,7 +43,8 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "viscose-staple-fiber",
@@ -54,7 +57,8 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "fluorine-materials",
@@ -67,7 +71,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "rubber",
@@ -80,7 +85,8 @@
       "source": "期货主力连续",
       "monthCount": 200,
       "stockTimelineMonthCount": 185,
-      "commonMonthCount": 185
+      "commonMonthCount": 185,
+      "sunsirsPpid": null
     },
     {
       "id": "soybean-meal",
@@ -93,7 +99,8 @@
       "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
       "monthCount": 180,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47
+      "commonMonthCount": 47,
+      "sunsirsPpid": null
     },
     {
       "id": "corn",
@@ -106,7 +113,8 @@
       "source": "期货主力连续",
       "monthCount": 200,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47
+      "commonMonthCount": 47,
+      "sunsirsPpid": null
     },
     {
       "id": "tin",
@@ -119,7 +127,8 @@
       "source": "期货主力连续",
       "monthCount": 140,
       "stockTimelineMonthCount": 138,
-      "commonMonthCount": 138
+      "commonMonthCount": 138,
+      "sunsirsPpid": null
     },
     {
       "id": "zinc",
@@ -132,7 +141,8 @@
       "source": "期货主力连续",
       "monthCount": 200,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 200
+      "commonMonthCount": 200,
+      "sunsirsPpid": null
     },
     {
       "id": "aluminium",
@@ -145,7 +155,8 @@
       "source": "期货主力连续",
       "monthCount": 200,
       "stockTimelineMonthCount": 196,
-      "commonMonthCount": 196
+      "commonMonthCount": 196,
+      "sunsirsPpid": null
     },
     {
       "id": "molybdenum",
@@ -158,7 +169,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "tantalum-niobium",
@@ -171,7 +183,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "rare-earth",
@@ -184,7 +197,8 @@
       "source": "生意社镨钕氧化物基准价（每日 08:30 公开）",
       "monthCount": 7,
       "stockTimelineMonthCount": 7,
-      "commonMonthCount": 7
+      "commonMonthCount": 7,
+      "sunsirsPpid": null
     },
     {
       "id": "tungsten-products",
@@ -197,7 +211,8 @@
       "source": "生意社仲钨酸铵基准价（每日 08:30 公开）",
       "monthCount": 5,
       "stockTimelineMonthCount": 5,
-      "commonMonthCount": 5
+      "commonMonthCount": 5,
+      "sunsirsPpid": null
     },
     {
       "id": "gold",
@@ -210,7 +225,8 @@
       "source": "期货主力连续",
       "monthCount": 200,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 200
+      "commonMonthCount": 200,
+      "sunsirsPpid": null
     },
     {
       "id": "steel",
@@ -223,7 +239,8 @@
       "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
       "monthCount": 152,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47
+      "commonMonthCount": 47,
+      "sunsirsPpid": null
     },
     {
       "id": "iron-ore",
@@ -236,7 +253,8 @@
       "source": "期货主力连续",
       "monthCount": 157,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47
+      "commonMonthCount": 47,
+      "sunsirsPpid": null
     },
     {
       "id": "gasoline",
@@ -249,7 +267,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "coal",
@@ -262,7 +281,8 @@
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "titanium-material",
@@ -275,7 +295,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "cast-superalloy",
@@ -288,7 +309,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "cathode-materials",
@@ -301,7 +323,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 62,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "carbon-fiber",
@@ -314,7 +337,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 55,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "sugar",
@@ -327,7 +351,8 @@
       "source": "期货主力连续",
       "monthCount": 200,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 200
+      "commonMonthCount": 200,
+      "sunsirsPpid": null
     },
     {
       "id": "yeast",
@@ -340,7 +365,8 @@
       "source": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0
+      "commonMonthCount": 0,
+      "sunsirsPpid": null
     },
     {
       "id": "methionine",
@@ -353,7 +379,8 @@
       "source": "卓创资讯公开日度报告（中国畜牧业协会转载）：山东市场饲料级固体蛋氨酸报价区间中点",
       "monthCount": 1,
       "stockTimelineMonthCount": 1,
-      "commonMonthCount": 1
+      "commonMonthCount": 1,
+      "sunsirsPpid": null
     }
   ]
 }

@@ -70,14 +70,21 @@ jobs:
             args+=(--refresh-existing)
           fi
           python scripts/collect_sunsirs_product_monthly.py "${args[@]}"
-      - name: Compare before and after
+      - name: Compare before and after and append audit history
         env:
           PRODUCT_ID: ${{ inputs.product_id }}
+          START_MONTH: ${{ inputs.start_month }}
+          END_MONTH: ${{ inputs.end_month }}
         run: |
           python scripts/compare_sunsirs_product_monthly.py \
             --product-id "$PRODUCT_ID" \
             --before "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before.json" \
-            --output "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before-after.json"
+            --output "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before-after.json" \
+            --history "data/sunsirs-chart-monthly-history/${PRODUCT_ID}.json" \
+            --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --start-month "$START_MONTH" \
+            --end-month "$END_MONTH"
       - name: Commit refreshed product history
         env:
           PRODUCT_ID: ${{ inputs.product_id }}

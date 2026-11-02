@@ -220,7 +220,7 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 - 生意社图表 PPID 作为商品元数据维护在 `data/business-data.json` 每个 `items.<商品ID>` 记录的 `sunsirsPpid` 字段；已核实填写数字字符串，未核实统一为 `null`，禁止根据其他页面 ID 推测。
 - `scripts/fetch_business_data.py` 每次刷新时从上一版商品记录保留人工核验的 PPID，避免采集器重建商品报价后丢失元数据；新商品默认写入 `null`。
 - `scripts/build_product_comparison.js` 将该字段透传到 `data/commodity-db/index.json` 对应商品记录，顺酐采集器从商品记录读取 PPID，不在采集代码中硬编码。
-- 当前仅顺酐配置已验证 PPID `660`；钛白粉保持 `null`（候选 81 未通过 report.php 图表验证），粘胶短纤候选 1017 尚未完成跨年份 OCR 验证，暂不登记为已确认值。
+- 顺酐 PPID `660` 已验证；粘胶短纤 PPID `1017` 已通过 2020-04、2023-04、2026-10 三个年份的图表与 OCR 验证，登记为已确认值并由通用采集器回补月初序列；钛白粉候选 81 在三个年份均无曲线，保持 `null`。
 
 
 ## 商品页面多来源价格线
@@ -228,3 +228,9 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 - 商品主价格序列与备用来源必须分别保留，不得平均、拼接或静默切换。若商品月线当前采用的来源与 `business-data.json` 商品行情来源不同，构建器会将后者作为 `alternateProductSeries` 输出，并按各自首个共同月份归一化，仅用于趋势比较。
 - 商品页在具备备用序列时显示来源切换按钮；按钮通过图表图例控制备用来源线显示/隐藏。来源名称及口径在商品说明中保留，缺失月份留空，不插值。
 - 生意社图表 PPID 仍须通过真实 `report.php` 请求及至少三个年份的 OCR 验证后才能写入商品元数据。钛白粉候选 81 失败；粘胶短纤候选 1017 仅进入验证工作流，验证完成前不得登记为正式 PPID。
+
+
+### 通用商品图表历史回补
+
+- 已确认 PPID 的商品可使用 `scripts/collect_sunsirs_product_monthly.py --product-id <商品ID> --start-month YYYY-MM --end-month YYYY-MM` 回补月初图表估算，数据独立写入 `data/sunsirs-chart-monthly/<商品ID>.json`。
+- 通用商品图表序列优先作为独立价格来源，不覆盖 `business-data.json` 中的行情接口数据；商品页面可将两者并列显示并分别开关。

@@ -299,6 +299,8 @@
       "price": 3170
     }
   ],
+  "alternateProductSeries": [],
+  "alternateSource": null,
   "stocks": [
     {
       "code": "sh600282",

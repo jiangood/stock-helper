@@ -28,7 +28,9 @@ SCALE = 4
 
 def _normalise_tick(text: str) -> float | None:
     value = re.sub(r"[^0-9.]", "", text)
-    if "." not in value and len(value) == 6:
+    if "." not in value and len(value) == 7:
+        value = value[:5] + "." + value[5:]
+    elif "." not in value and len(value) == 6:
         value = value[:4] + "." + value[4:]
     if not re.fullmatch(r"\d{4,5}(?:\.\d{1,2})?", value):
         return None
@@ -40,44 +42,84 @@ def _normalise_tick(text: str) -> float | None:
 
 
 def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
-    crop = image[AXIS_CROP_TOP:AXIS_CROP_BOTTOM, 0:PLOT_LEFT].copy()
+    # Locate neutral horizontal grid lines in the plot area. Colored series
+    # (including the blue target and other colored traces) are excluded by the
+    # low-saturation condition, so they cannot masquerade as axis grid lines.
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    grid_rows: list[int] = []
+    for y in range(AXIS_CROP_TOP, AXIS_CROP_BOTTOM):
+        row = hsv[y, PLOT_LEFT:PLOT_RIGHT]
+        neutral_dark = (row[:, 1] < 55) & (row[:, 2] < 180)
+        if int(np.count_nonzero(neutral_dark)) >= 250:
+            grid_rows.append(y)
 
-    # Remove chromatic chart traces from the axis-label OCR input. Keep neutral
-    # grayscale text, ticks and axes; only suppress saturated colored pixels.
-    # A small dilation also removes anti-aliased fringes around colored lines.
-    hsv_crop = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
-    colored_mask = cv2.inRange(
-        hsv_crop,
-        np.array([0, 35, 45], dtype=np.uint8),
-        np.array([179, 255, 255], dtype=np.uint8),
-    )
-    colored_mask = cv2.dilate(
-        colored_mask, cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3)), iterations=1
-    )
-    crop[colored_mask > 0] = (255, 255, 255)
+    clusters: list[list[int]] = []
+    for y in grid_rows:
+        if not clusters or y > clusters[-1][-1] + 1:
+            clusters.append([y])
+        else:
+            clusters[-1].append(y)
+    centers = [int(round(float(np.mean(cluster)))) for cluster in clusters]
+    if len(centers) < 4:
+        raise ValueError(f"纵轴水平网格线识别不足：{len(centers)} 条")
 
-    enlarged = cv2.resize(crop, None, fx=SCALE, fy=SCALE, interpolation=cv2.INTER_CUBIC)
-    ok, encoded = cv2.imencode(".png", enlarged)
-    if not ok:
-        raise ValueError("无法生成纵轴 OCR 图片")
-    output = subprocess.check_output(
-        ["tesseract", "stdin", "stdout", "tsv", "--psm", "6"],
-        input=encoded.tobytes(),
-        stderr=subprocess.DEVNULL,
-    ).decode("utf-8", errors="replace")
+    # A colored series can cover one grid line. Restore only regularly spaced
+    # missing rows from the median tick interval; do not treat colored traces
+    # themselves as grid lines.
+    intervals = np.diff(centers)
+    base_interval = float(np.median(intervals))
+    tick_rows: list[int] = []
+    for index, y in enumerate(centers):
+        tick_rows.append(y)
+        if index == len(centers) - 1:
+            continue
+        gap = centers[index + 1] - y
+        missing_count = int(round(gap / base_interval))
+        if missing_count >= 2 and abs(gap / missing_count - base_interval) <= 4:
+            tick_rows.extend(
+                int(round(y + gap * step / missing_count))
+                for step in range(1, missing_count)
+            )
+
     ticks: list[tuple[float, float, float]] = []
-    for row in csv.DictReader(io.StringIO(output), delimiter="\t"):
-        raw = row.get("text", "").strip()
-        value = _normalise_tick(raw)
-        if value is None:
+    for y in sorted(set(tick_rows)):
+        top = max(0, y - 12)
+        bottom = min(image.shape[0], y + 13)
+        crop = image[top:bottom, 0:PLOT_LEFT].copy()
+
+        # Suppress chromatic pixels before OCR while retaining neutral text.
+        hsv_crop = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
+        colored = cv2.inRange(
+            hsv_crop,
+            np.array([0, 35, 45], dtype=np.uint8),
+            np.array([179, 255, 255], dtype=np.uint8),
+        )
+        crop[colored > 0] = (255, 255, 255)
+
+        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+        enlarged = cv2.resize(gray, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
+        _, binary = cv2.threshold(
+            enlarged, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
+        )
+        ok, encoded = cv2.imencode(".png", binary)
+        if not ok:
             continue
-        confidence = float(row.get("conf", "-1"))
-        if confidence < 25:
-            continue
-        y = AXIS_CROP_TOP + (
-            float(row["top"]) + float(row["height"]) / 2
-        ) / SCALE
-        ticks.append((y, value, confidence))
+        output = subprocess.check_output(
+            ["tesseract", "stdin", "stdout", "tsv", "--psm", "7"],
+            input=encoded.tobytes(),
+            stderr=subprocess.DEVNULL,
+        ).decode("utf-8", errors="replace")
+        for row in csv.DictReader(io.StringIO(output), delimiter="\\t"):
+            raw = row.get("text", "").strip()
+            value = _normalise_tick(raw)
+            if value is None:
+                continue
+            confidence = float(row.get("conf", "-1"))
+            if confidence < 25:
+                continue
+            ticks.append((float(y), value, confidence))
+            break
+
     unique: dict[int, tuple[float, float, float]] = {}
     for tick in ticks:
         unique[round(tick[0])] = tick

@@ -1251,6 +1251,13 @@ def fetch_data() -> dict[str, Any]:
         updated_cost_inputs[input_id] = item
     payload["costInputs"] = updated_cost_inputs
 
+    # Preserve manually verified Sunsirs chart identifiers across data refreshes.
+    # They are metadata, not provider observations, and must never be inferred from quote data.
+    for product_id, target in payload["items"].items():
+        previous = old_items.get(product_id, {})
+        ppid = previous.get("sunsirsPpid") if isinstance(previous, dict) else None
+        target["sunsirsPpid"] = str(ppid) if ppid is not None and str(ppid).isdigit() else None
+
     payload["fetchErrors"] = errors[:5]
     payload["hasFreshData"] = fresh_data
     return payload

@@ -35,9 +35,10 @@ jobs:
           python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
       - name: Unit tests for reusable chart downloader
         run: python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v
-      - name: Request titanium dioxide chart using report.php
-        continue-on-error: true
-        run: python scripts/test_sunsirs_chart_product.py --ppid 81 --name "钛白粉（硫酸法金红石型 R2）" --start-month 2020-04 --end-month 2026-10
+      - name: Validate titanium dioxide chart PPID from official product page
+        run: python scripts/test_sunsirs_chart_product.py --ppid 645 --name "钛白粉指数" --start-month 2020-04 --end-month 2026-10
+      - name: Collect monthly OCR estimates for titanium dioxide
+        run: python scripts/collect_sunsirs_product_monthly.py --product-id tio2 --start-month 2020-04 --end-month 2026-11
       - name: Validate viscose staple fiber candidate PPID 1017
         continue-on-error: true
         run: python scripts/test_sunsirs_chart_product.py --ppid 1017 --name "粘胶短纤" --start-month 2020-04 --end-month 2026-10
@@ -49,7 +50,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+users.noreply.github.com"
-          git add data/sunsirs-chart-monthly/viscose-staple-fiber.json
+          git add data/sunsirs-chart-monthly/viscose-staple-fiber.json data/sunsirs-chart-monthly/tio2.json
           if ! git diff --cached --quiet; then
             git commit -m "data: backfill viscose Sunsirs OCR estimates"
             for attempt in 1 2 3; do

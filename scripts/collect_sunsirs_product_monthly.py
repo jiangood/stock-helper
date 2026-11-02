@@ -110,13 +110,13 @@ def main() -> int:
             failed += 1
             # Never destroy a previously valid estimate because a refresh request/OCR failed.
             previous = known.get(month)
-            if not (isinstance(previous, dict) and isinstance(previous.get("value"), (int, float)) and previous.get("status") == "estimated"):
+            if not (isinstance(previous, dict) and (previous.get("status") == "no_data" or (previous.get("status") == "estimated" and isinstance(previous.get("value"), (int, float))))):
                 known[month] = {
                     "month": month, "value": None, "status": "unavailable",
                     "estimated": True, "observedDate": f"{month}-01", "unit": unit,
                     "error": str(exc)[:300]
                 }
-            refresh_errors[month] = {"month": month, "error": str(exc)[:300], "previous_value_preserved": bool(previous and previous.get("status") == "estimated" and previous.get("value") is not None)}
+            refresh_errors[month] = {"month": month, "error": str(exc)[:300], "previous_value_preserved": bool(previous and (previous.get("status") == "no_data" or (previous.get("status") == "estimated" and previous.get("value") is not None)))}
             print(json.dumps({"month": month, "status": "unavailable", "error": str(exc)}, ensure_ascii=False))
         if args.delay > 0:
             time.sleep(args.delay)

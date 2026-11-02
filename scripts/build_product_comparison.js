@@ -365,6 +365,7 @@ function build() {
       id: card.id, name: card.name, unit: card.unit, file,
       status: card.status, latestPrice: card.latestPrice, latestDate: card.latestDate,
       source: card.source,
+      sunsirsPpid: (productItems[card.id] && productItems[card.id].sunsirsPpid) || null,
       // monthCount is strictly the commodity's own observed price history.
       monthCount: card.productMonthCount || 0,
       stockTimelineMonthCount: card.stockTimelineMonthCount || 0,

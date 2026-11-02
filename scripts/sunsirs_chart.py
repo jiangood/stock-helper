@@ -7,6 +7,7 @@ substitutes another price source, or treats a non-chart response as valid data.
 """
 from __future__ import annotations
 
+import calendar
 import hashlib
 from dataclasses import dataclass
 from pathlib import Path
@@ -37,14 +38,15 @@ class SunsirsChartProduct:
 
 
 def build_chart_url(ppid: str, year: int, month: int) -> str:
-    """Build the exact month-start report.php request used by maleic anhydride."""
+    """Build a full-calendar-month chart so axis labels remain OCR-readable."""
     if not str(ppid).isdigit():
         raise ValueError("PPID 必须是从生意社真实图表请求中确认的数字")
     if not 1 <= month <= 12:
         raise ValueError(f"无效月份：{month}")
+    last_day = calendar.monthrange(year, month)[1]
     params = {
         "btime": f"{year}-{month}-1",
-        "etime": f"{year}-{month}-2",
+        "etime": f"{year}-{month}-{last_day}",
         "f": "xht_agent_price",
         "ppid": str(ppid),
     }

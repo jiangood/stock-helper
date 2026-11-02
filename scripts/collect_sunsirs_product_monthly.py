@@ -32,7 +32,7 @@ def main() -> int:
     parser.add_argument("--product-id", required=True)
     parser.add_argument("--start-month", default="2020-01")
     parser.add_argument("--end-month", default=date.today().strftime("%Y-%m"))
-    parser.add_argument("--delay", type=float, default=0.5)
+    parser.add_argument("--delay", type=float, default=1.5)
     args = parser.parse_args()
 
     products = json.loads((ROOT / "data" / "business-data.json").read_text(encoding="utf-8"))["items"]
@@ -53,8 +53,6 @@ def main() -> int:
     if payload.get("ppid") != ppid:
         raise RuntimeError("商品 PPID 与历史文件不一致；为避免串品种，停止覆盖")
     known = {point.get("month"): point for point in payload.get("points", []) if point.get("month")}
-    session = requests.Session()
-    session.headers.update(DEFAULT_HEADERS)
     fetched = failed = 0
     current_month = date.today().strftime("%Y-%m")
     for month in month_iter(args.start_month, args.end_month):
@@ -64,7 +62,23 @@ def main() -> int:
         url = build_chart_url(ppid, year, mon)
         image_path = ROOT / "artifacts" / "sunsirs-chart-monthly" / f"{args.product_id}-{month}.png"
         try:
-            image = fetch_chart_image(url, image_path, session=session, timeout=40)
+            image = None
+            last_error = None
+            # Rotate sessions and back off when Sunsirs serves browser-check HTML.
+            for attempt in range(3):
+                session = requests.Session()
+                session.headers.update(DEFAULT_HEADERS)
+                try:
+                    image = fetch_chart_image(url, image_path, session=session, timeout=40)
+                    break
+                except Exception as exc:
+                    last_error = exc
+                    if attempt < 2:
+                        time.sleep(2 + attempt * 3)
+                finally:
+                    session.close()
+            if image is None:
+                raise RuntimeError(str(last_error or "图表请求失败"))
             estimate = estimate_first_price(image_path, month)
             point = {
                 "month": month, "value": estimate.get("value"),

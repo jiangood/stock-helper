@@ -7,6 +7,7 @@ on:
     paths:
       - "scripts/sunsirs_chart.py"
       - "scripts/test_sunsirs_chart_product.py"
+      - "scripts/collect_sunsirs_product_monthly.py"
       - "tests/test_sunsirs_chart.py"
       - ".github/workflows/validate-sunsirs-tio2.yml"
 

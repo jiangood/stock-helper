@@ -6,8 +6,8 @@
   "ppid": "1017",
   "source": "生意社 report.php 商品价格走势图（图像估算）",
   "sourceUrl": "https://www.100ppi.com/graph/report.php",
-  "methodNote": "每月1日至2日图表最左侧价格线；OCR纵轴刻度采用抗异常值拟合与像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
-  "dateRule": "每月1日至2日图表最左侧蓝色价格线",
+  "methodNote": "每月完整自然月图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
+  "dateRule": "每月完整自然月图表最左侧蓝色价格线",
   "points": [
     {
       "month": "2020-04",
@@ -441,12 +441,21 @@
     },
     {
       "month": "2022-06",
-      "value": null,
-      "status": "unavailable",
+      "value": 15500.56,
+      "status": "estimated",
       "estimated": true,
       "observedDate": "2022-06-01",
       "unit": "元/吨",
-      "error": "纵轴有效刻度不足：仅 3 个一致刻度"
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-6-1&etime=2022-6-30&f=xht_agent_price&ppid=1017",
+      "imageSha256": "a576cb157d8c45bb86f466dc28f40b74464c841e791f32b5265d01dfe5b3ddb3",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.125,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 384.5
+      }
     },
     {
       "month": "2022-07",
@@ -1307,7 +1316,7 @@
       "estimated": true,
       "observedDate": "2026-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-2&f=xht_agent_price&ppid=1017",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=1017",
       "imageSha256": "9f768d820973a3dcf3df92268636123ffb4bc19dda70a7b2a8f68be65999dc2c",
       "quality": {
         "axis_tick_count": 7,

@@ -6,79 +6,79 @@
   "ppid": "645",
   "source": "生意社 report.php 商品价格走势图（图像估算）",
   "sourceUrl": "https://www.100ppi.com/graph/report.php",
-  "methodNote": "每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
-  "dateRule": "每月1日至2日图表最左侧蓝色价格线",
+  "methodNote": "每月完整自然月图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
+  "dateRule": "每月完整自然月图表最左侧蓝色价格线",
   "points": [
     {
       "month": "2020-04",
-      "value": 15738.64,
+      "value": 15734.36,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2020-04-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-4-1&etime=2020-4-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "88ae49bc2babf67c05c1f8a2f1aad8ccb9eaa690a295aed3de184b30f4f49afe",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-4-1&etime=2020-4-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "4d7055ecd64e5f0031aaf3ab58310a0f80ee290c81a2c5aa6e71e0446541be42",
       "quality": {
         "axis_tick_count": 7,
         "axis_inlier_count": 6,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 4.589,
+        "axis_fit_rmse": 0.248,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2020-05",
-      "value": 15438.5,
+      "value": 15437.59,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2020-05-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-5-1&etime=2020-5-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "a6b8632d72abfce8a32af5fb51ef73343e6224f628f03c11a4219d7b59231f60",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 3.052,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2020-06",
-      "value": 14170.49,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2020-06-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-6-1&etime=2020-6-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "81b15dfa3a7ed1f376aedcb2c2098452aa1fd3ab1c856234f85463a1d3b011dc",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-5-1&etime=2020-5-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "df14073c208b95f01bf581703dc2cfe5b2d56d40b15328c6cbf681bb5b10dabf",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.793,
+        "axis_fit_rmse": 1.595,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2020-06",
+      "value": 14167.57,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2020-06-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-6-1&etime=2020-6-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "eb51b5e76b952c17e87a30d2f4bc80a76bd5583e7ccfe33180d11cd6f4244b7f",
+      "quality": {
+        "axis_tick_count": 7,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.32,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2020-07",
-      "value": 13870.71,
+      "value": 13867.79,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2020-07-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-7-1&etime=2020-7-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "f4b8b1bf8c4fd076e4271e563cfd8300bd54e19d0fd439a06745a1c581eb31db",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-7-1&etime=2020-7-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "e90bc053a5c72f7850d3f21cc35a8e237c50163521731c887bae9b1553b4a61e",
       "quality": {
-        "axis_tick_count": 4,
-        "axis_inlier_count": 4,
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.046,
+        "axis_fit_rmse": 0.345,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
@@ -88,8 +88,8 @@
       "estimated": true,
       "observedDate": "2020-08-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-8-1&etime=2020-8-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "6fdc7c0d1f26fe566305274b2e130816cd4dc56c76f3fb884b411dfbee096a95",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-8-1&etime=2020-8-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "d64d6307aa610627b9eccb88b6380268b6ce3b58cf9b98559078d0eb87b7808a",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 5,
@@ -101,164 +101,155 @@
     },
     {
       "month": "2020-09",
-      "value": 13537.86,
+      "value": 13536.08,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2020-09-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-9-1&etime=2020-9-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "5b0ceb23963bfc99c5b677f8bfc6a6dfa6050180f4b124405964b3a2673c99ae",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-9-1&etime=2020-9-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "c108b8d285efd295c90be7be060aa5df3f2c5cafcf0a3e4cc0d9d2df66e476f1",
       "quality": {
-        "axis_tick_count": 5,
+        "axis_tick_count": 6,
         "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 2.677,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 1.185,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2020-10",
-      "value": 14339.05,
+      "value": 14337.51,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2020-10-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-10-1&etime=2020-10-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "db27669262dd5ab72012342840bad4b7833b53b5bc2327170941d7b02ad2bfed",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-10-1&etime=2020-10-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "91fbe372f07f39e058eabaa21a9db696491e397092e3a0db5c47208b359a2a45",
       "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.382,
+        "axis_tick_count": 5,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.939,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2020-11",
-      "value": 15353.52,
+      "value": 15335.78,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2020-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-11-1&etime=2020-11-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "f35f31ed22b3b324ad9775dbdb3488c1751f84a8a70bcf7d7ab08312765340d4",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-11-1&etime=2020-11-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "71556faa2865e9af8d45e8b160341f0b64ba32cf645ab0e96ccdbba5c364573e",
       "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.03,
+        "axis_fit_rmse": 0.714,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2020-12",
-      "value": 16007.76,
+      "value": 16178.73,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2020-12-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-12-1&etime=2020-12-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "aadb30f44f6571e17fd8eb8c632db4c705c59e3de1c7f4ede8fb052bce877bd6",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-12-1&etime=2020-12-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "901cfe89ee7c4e89642087cfe491baa86a98a41e710eec12d97fdd70c11fdd1c",
       "quality": {
-        "axis_tick_count": 5,
+        "axis_tick_count": 6,
         "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
+        "axis_rejected_count": 1,
         "axis_fit_rmse": 0.665,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 382.5
+        "blue_pixels_sampled": 261,
+        "first_line_y": 317.0
       }
     },
     {
       "month": "2021-01",
-      "value": 16689.13,
+      "value": 16668.31,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2021-01-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-1-1&etime=2021-1-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "441a80c3053e9bb343e8dd51a5f997b96e6228f871366e75c5345140d5229812",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-1-1&etime=2021-1-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "7cb09b9d6b22d6b8ef7b495a4e397484e5b866647298f19c77fdcbcedb6e50e6",
       "quality": {
         "axis_tick_count": 7,
-        "axis_inlier_count": 7,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 5.282,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 2,
+        "axis_fit_rmse": 0.45,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2021-02",
-      "value": 17139.07,
+      "value": 17135.75,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2021-02-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-2-1&etime=2021-2-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "1f044f58147cbd352d29f902dce22344a0e63ce2f52d2dc5974de002aadc62bc",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-2-1&etime=2021-2-28&f=xht_agent_price&ppid=645",
+      "imageSha256": "885d83c15bfa40ba0785d04bf5e7b4fae07db57036bf7f29d270539cda8e0ea8",
       "quality": {
         "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.389,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.775,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2021-03",
-      "value": 18071.15,
+      "value": 18071.12,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2021-03-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-3-1&etime=2021-3-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "a8ed868bea43ebee0f501c0cce7bf42fab5d78aaee404ceea065a634659dddc4",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-3-1&etime=2021-3-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "6ac744a3a370145116db5b640e4b852bdbf76c32f1760725f84c1cfaaddab58a",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.227,
+        "axis_fit_rmse": 1.473,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2021-04",
-      "value": 19609.48,
-      "status": "estimated",
+      "value": null,
+      "status": "unavailable",
       "estimated": true,
       "observedDate": "2021-04-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-4-1&etime=2021-4-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "b850f360a0d7f229b997bc32b56dd75de7246509659016458f9547614e56ae90",
-      "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.119,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
+      "error": "纵轴有效刻度不足：仅 3 个一致刻度"
     },
     {
       "month": "2021-05",
-      "value": 20273.69,
+      "value": 20271.38,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2021-05-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-5-1&etime=2021-5-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "8bed75416ec191af44f25e1cb89b91a6e42ba0e29912d0cda0ef2593afd1b166",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-5-1&etime=2021-5-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "0cc75a7a7e775c79b444c00e9fb0d78b4fffabe55bb95b927723a47871eb903a",
       "quality": {
         "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 5.894,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 1.23,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
@@ -268,8 +259,8 @@
       "estimated": true,
       "observedDate": "2021-06-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-6-1&etime=2021-6-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "d16fdf73e1a23aed6a0a96dd25a0572320e24f19cf88bbe42dbfb549851d01e1",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-6-1&etime=2021-6-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "c937d67e6a1f6d28c45cf6ede8553a9c60165bde8e9eaf961febb89899203379",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 5,
@@ -281,56 +272,56 @@
     },
     {
       "month": "2021-07",
-      "value": 21571.3,
+      "value": 21568.09,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2021-07-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-7-1&etime=2021-7-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "f8bc56f4906bcd473a6f699184dedcbd6cd005662aac328850ad647eb9ed15ce",
-      "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 5.377,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2021-08",
-      "value": 21242.17,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2021-08-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-8-1&etime=2021-8-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "a9d89f893ea6d72d0bc723518893241677b6ae9ab6aaa53274b5584a6ba4433c",
-      "quality": {
-        "axis_tick_count": 7,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 2,
-        "axis_fit_rmse": 5.415,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2021-09",
-      "value": 21072.82,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2021-09-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-9-1&etime=2021-9-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "8747f815cc34feea7895c31854a519e2a4aa362a9891018c675dfdf22188aa20",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-7-1&etime=2021-7-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "b9f4a9e81b7da1ffb2460bd4662f416cac1fc8acb1cd1baaf69548fbee72ff17",
       "quality": {
         "axis_tick_count": 4,
         "axis_inlier_count": 4,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 6.145,
+        "axis_fit_rmse": 0.278,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2021-08",
+      "value": 21233.71,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2021-08-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-8-1&etime=2021-8-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "1e7ff549ea6ae17a85cf518ca659c7604814abb5ce57afeb30a92a123b36cf5b",
+      "quality": {
+        "axis_tick_count": 5,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.176,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2021-09",
+      "value": 21067.12,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2021-09-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-9-1&etime=2021-9-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "4e01bd3986cdf1327b82698098288ef05e7df4d1b962716792971165bbb31004",
+      "quality": {
+        "axis_tick_count": 7,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.139,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
       }
     },
     {
@@ -340,8 +331,8 @@
       "estimated": true,
       "observedDate": "2021-10-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-10-1&etime=2021-10-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "d2354ae3a9f285ce93fb80166fd774785791e3454b11a6dfa6cf40e6917ba3f6",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-10-1&etime=2021-10-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "d4befe26b9e47fdc46ef4047922a0a3541edb1644ef220bf8dda78bd1e67f8be",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 5,
@@ -353,236 +344,236 @@
     },
     {
       "month": "2021-11",
-      "value": 20956.66,
+      "value": 20950.31,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2021-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-11-1&etime=2021-11-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "d8d653ebe791b283643cac7a9e42f4d1bd4371024d15e1eacd1017dc88311e05",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-11-1&etime=2021-11-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "e7b7e402f1ed4f87e8c2e6529daf7f7b09e6d578f02a92d6ef27176863a08863",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 5,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 5.028,
+        "axis_fit_rmse": 0.124,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2021-12",
-      "value": 20787.79,
+      "value": 20783.52,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2021-12-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-12-1&etime=2021-12-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "832a79a59239c1e1ee31ffdf51b88cf121e59df996d79a259b44cf8ece843235",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2021-12-1&etime=2021-12-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "5f2773bc5bfd96299f93f3dd20467498c2f815df760873b22e8c90e62bf74c76",
       "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 5.182,
+        "axis_fit_rmse": 0.079,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-01",
-      "value": 20740.27,
+      "value": 20733.72,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-01-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-1-1&etime=2022-1-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "8f152d5b79dff23b7f9889a1827f2f4e1687b7412b4f36ed30b805dd64ee72e0",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-1-1&etime=2022-1-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "a04ef484ee4b6f7cff2ea94af80505d83ecb6764fc352ebf98ac557b93a14bf6",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 5,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 4.101,
+        "axis_fit_rmse": 0.119,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2022-02",
-      "value": 20856.93,
+      "value": 20850.2,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-02-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-2-1&etime=2022-2-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "909ee87d2d370c93607c39524e01eccfcedcece1cd7426240174140ca3a7663e",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-2-1&etime=2022-2-28&f=xht_agent_price&ppid=645",
+      "imageSha256": "61e58ecd6d0cb9543cecd7a493320f33b9385602eef7019fbd5e71e64ef9e38b",
       "quality": {
-        "axis_tick_count": 7,
-        "axis_inlier_count": 7,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 5.656,
+        "axis_tick_count": 6,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 2,
+        "axis_fit_rmse": 0.028,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-03",
-      "value": 20808.37,
+      "value": 20801.28,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-03-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-3-1&etime=2022-3-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "b164743866cb7c00635f99b396e53e7737fae23404cfa8f82f501e4a3176eadd",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-3-1&etime=2022-3-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "cecf25cdb42180c3132c8bff73b80e455137a4421e9bf90ad79544280bacbc4a",
       "quality": {
         "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.978,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 2,
+        "axis_fit_rmse": 0.315,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2022-04",
-      "value": 21108.78,
+      "value": 21100.15,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-04-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-4-1&etime=2022-4-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "27ec4f4aa6bf2d269ecc41b3bd34c8e3ba881eef4a47a5996da16bd6e2cac0b4",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-4-1&etime=2022-4-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "39859a8fafd21bdca2cdbce9724ee0b9b6a37cc1d791e7a1f6921c3567bc5067",
       "quality": {
         "axis_tick_count": 5,
-        "axis_inlier_count": 4,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 3.27,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.068,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-05",
-      "value": 21038.96,
+      "value": 21034.77,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-05-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-5-1&etime=2022-5-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "aa80abd9eeedc9b7b88617e0daeb8128c96749061349d53ca236767c767f6545",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 5.454,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2022-06",
-      "value": 20620.62,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2022-06-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-6-1&etime=2022-6-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "a61c2fa96b0f55c447b9b71fda7065188ff110b9b42b93295866656d3d0bfedb",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-5-1&etime=2022-5-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "e26fa84f661976ebb2bcda317cb4840a7430df5e6cefaa1393979b187bc035d4",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 4,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 4.181,
+        "axis_fit_rmse": 0.452,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2022-06",
+      "value": 20617.29,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2022-06-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-6-1&etime=2022-6-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "2aaaeb2d563ab02537def95ea306e5caa95b72ee82be3b358197121b4d8cb065",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.161,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-07",
-      "value": 20405.06,
+      "value": 20405.16,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-07-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-7-1&etime=2022-7-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "9fd4cead745ac93e19d9d1c63fb4e62704331909e62a0acd0db9d54e56728240",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-7-1&etime=2022-7-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "732bbfc665fe13ef2f1421d8dd613396e6c03e737d38ba9249d736d4834cbd61",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.777,
+        "axis_fit_rmse": 1.59,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-08",
-      "value": 18871.34,
+      "value": 18871.07,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-08-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-8-1&etime=2022-8-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "a253503224e725b56a6ca6d551952229f223af25ebad8daa3ffeec9b32f233ec",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-8-1&etime=2022-8-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "06a8f88f6f7b432e4ae6032c4c1495bcad167218170b369168bbf4e3a96d24d8",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.413,
+        "axis_fit_rmse": 1.598,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-09",
-      "value": 17505.87,
+      "value": 17503.65,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-09-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-9-1&etime=2022-9-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "da85694ce5b75f942cbc80305698388a2e43b0541648ea45b65daba00431ad8f",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-9-1&etime=2022-9-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "b300bf994c47307c4d2c52fe1456afc94d1cf1cdcfd0293258414afdddbd54c5",
       "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 5,
+        "axis_tick_count": 7,
+        "axis_inlier_count": 6,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 2.787,
+        "axis_fit_rmse": 1.338,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-10",
-      "value": 16355.72,
+      "value": 16351.12,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-10-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-10-1&etime=2022-10-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "e50e3fea23d521e7e22dc848bcd59e3d36679db062190920eee29a785815f76b",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-10-1&etime=2022-10-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "212bfdc3548d2596f6a7029ff8a348e7f0583231e0d6191eda6397d62b4b361b",
       "quality": {
-        "axis_tick_count": 7,
-        "axis_inlier_count": 7,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.067,
+        "axis_tick_count": 6,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.377,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2022-11",
-      "value": 16016.33,
+      "value": 15995.57,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2022-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-11-1&etime=2022-11-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "2635ad03880d8a24e76cbe791c898d089633081c4d7ea18b2c9b648c7e69b0c3",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-11-1&etime=2022-11-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "2f5f76d6b5fef3793a3af09192e8ce9ee653a6676cf92fe029e8257fa09a0167",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 5,
         "axis_rejected_count": 1,
         "axis_fit_rmse": 0.086,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 131.5
+        "blue_pixels_sampled": 250,
+        "first_line_y": 195.0
       }
     },
     {
@@ -592,8 +583,8 @@
       "estimated": true,
       "observedDate": "2022-12-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-12-1&etime=2022-12-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "a32e6daf514661cb437b3e95889bbcd8a8f7637ff6dfe3bef6f1ad10ff1b817a",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2022-12-1&etime=2022-12-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "94972112f2fd967b71fb7f46f418b8ef2ea45f5322b13149e15f6b27920af5c8",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
@@ -610,8 +601,8 @@
       "estimated": true,
       "observedDate": "2023-01-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-1-1&etime=2023-1-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "844478149b092b12026c388013790a7e044d8b82f4762c8c3eb1d7e6a17b1637",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-1-1&etime=2023-1-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "04fdad1704dc0bee6a2ef630ffb02fcd1c180430babb3397dd5a84ff10f27e1e",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
@@ -623,74 +614,74 @@
     },
     {
       "month": "2023-02",
-      "value": 16119.37,
+      "value": 16101.98,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-02-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-2-1&etime=2023-2-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "5666e00fef23bbabf88cda83d2bcf702f259a98d808740c1c6bb3b445a741d31",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-2-1&etime=2023-2-28&f=xht_agent_price&ppid=645",
+      "imageSha256": "610ff0f93abfed3a3b45ffad8e1e03a22a2a127196349656dc3a10eff4839ea5",
       "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 4.473,
+        "axis_tick_count": 7,
+        "axis_inlier_count": 7,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.633,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2023-03",
-      "value": 16686.38,
+      "value": 16754.92,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-03-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-3-1&etime=2023-3-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "1c0474886f5c1ca6be199e93447f3ae1acfe347b53a3184ab1d5da82687ed5f4",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-3-1&etime=2023-3-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "4901666c4a71ab2c8f93b14def1829c31637a973b02fecbe96ab42a8a5f28fb6",
       "quality": {
         "axis_tick_count": 7,
         "axis_inlier_count": 5,
         "axis_rejected_count": 2,
-        "axis_fit_rmse": 0.252,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 382.5
+        "axis_fit_rmse": 0.483,
+        "blue_pixels_sampled": 161,
+        "first_line_y": 343.0
       }
     },
     {
       "month": "2023-04",
-      "value": 17139.93,
+      "value": 17117.34,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-04-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-4-1&etime=2023-4-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "3138420ead18636625b51ef202a1131e3ed5e8c143c7c11934edfacd4b8b3d62",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-4-1&etime=2023-4-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "0ea2a1fd391d72e7ef0e28d1c6ff10affb6adb9033d8d8bec830bfc303a3f5a5",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.962,
+        "axis_fit_rmse": 0.169,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2023-05",
-      "value": 16957.41,
+      "value": 16952.54,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-05-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-5-1&etime=2023-5-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "6a193b492bc538d10d85f6fdee0b0e8de418f5c948bbb4e49281d14b04432b79",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-5-1&etime=2023-5-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "73908a2f8bb1da052d01d481e9e8bd482599e18cde53f189b69f26f8a3f7f0e4",
       "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
+        "axis_tick_count": 4,
+        "axis_inlier_count": 4,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.275,
+        "axis_fit_rmse": 0.827,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
@@ -700,8 +691,8 @@
       "estimated": true,
       "observedDate": "2023-06-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-6-1&etime=2023-6-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "5fcb15eb1e044000a1ca809d56874984de169c7d74afa371f7326e921fb49176",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-6-1&etime=2023-6-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "74c526eb4ca8e8bb3b55a2cfee851cb6af49aee85a560486cb058fcb1a389d44",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
@@ -713,56 +704,56 @@
     },
     {
       "month": "2023-07",
-      "value": 16139.77,
+      "value": 16135.42,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-07-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-7-1&etime=2023-7-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "e1f9c1b016aa8dbfce2ffc015240c289e110fa872b735874f51e2bd99fec1659",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-7-1&etime=2023-7-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "f8c3d9c561197b3d67d92c49855a86de50f25e550809ca8fee4ffd819f77110f",
       "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
+        "axis_tick_count": 5,
+        "axis_inlier_count": 5,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.806,
+        "axis_fit_rmse": 0.603,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2023-08",
-      "value": 16007.74,
+      "value": 16002.47,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-08-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-8-1&etime=2023-8-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "2c22c39c6b82bd7caffcf7e40dfd367f0fc1a9538291e52e21b648c30373a3b8",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-8-1&etime=2023-8-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "32a4fced9f984fed8b2175b16b8c7e9c3927f054ca3a069fc13858d632800077",
       "quality": {
-        "axis_tick_count": 5,
+        "axis_tick_count": 6,
         "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 2.546,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.674,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2023-09",
-      "value": 16720.91,
+      "value": 16702.04,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-09-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-9-1&etime=2023-9-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "23d99e5bf60477e6b8646a8ac9c3ba5b23020d8994fa007d2840b3919d43f4e5",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-9-1&etime=2023-9-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "174ff7d1944a24e3062cde4668360edc53551cdb36b795374d6abe03019fd030",
       "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
+        "axis_tick_count": 7,
+        "axis_inlier_count": 7,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.742,
+        "axis_fit_rmse": 0.654,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 384.5
       }
     },
     {
@@ -772,8 +763,8 @@
       "estimated": true,
       "observedDate": "2023-10-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-10-1&etime=2023-10-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "60f0b974bc4f061380fd815cef71fef44993368a6ed626aaa313790c69b7e4a0",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-10-1&etime=2023-10-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "3d60465fed50c2b4b3c9db245905578bba53c0315548d0b23a2a457052803f0d",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 4,
@@ -785,146 +776,146 @@
     },
     {
       "month": "2023-11",
-      "value": 17320.81,
+      "value": 17302.03,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-11-1&etime=2023-11-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "825a2998b25695584e2f1b1d0a9d9c1b7a053115be73d52536587112b7b5aa68",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-11-1&etime=2023-11-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "2b76c306760679c84696550b554c8710ce356a45ed7b89ae058ea1c1cba494cf",
       "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 4,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 5.371,
+        "axis_tick_count": 7,
+        "axis_inlier_count": 7,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.751,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2023-12",
-      "value": 16655.83,
+      "value": 16650.38,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2023-12-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-12-1&etime=2023-12-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "99c30865d5a799e4ae2ba2a32064a0e527309e440aeda9e2b81e135968d8ec73",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2023-12-1&etime=2023-12-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "0bef5684a8f1b2c0ebd9261f82f0945c24484c75352604a893645c34d444681a",
       "quality": {
-        "axis_tick_count": 7,
-        "axis_inlier_count": 7,
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.532,
+        "axis_fit_rmse": 0.187,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2024-01",
-      "value": 16489.06,
+      "value": 16484.35,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-01-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-1-1&etime=2024-1-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "17db0665699389a1b44e9a0fa63b32630ee736b52a9434ba1f8f7ad77aaff776",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-1-1&etime=2024-1-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "0ed8e7e5b21e644019d96cfb464ce94e0101400494deca7f50d898f93b903ba4",
       "quality": {
         "axis_tick_count": 6,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 4.03,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.3,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 238.5
       }
     },
     {
       "month": "2024-02",
-      "value": 16603.68,
+      "value": 16584.41,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-02-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-2-1&etime=2024-2-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "9308e6f0a41b324838ab32676758cf248d6d7e1103d944169aca739020cde68b",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.882,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
-      }
-    },
-    {
-      "month": "2024-03",
-      "value": 16988.94,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2024-03-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-3-1&etime=2024-3-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "d1b122f097cd745311cd8d7e4bf3be7e6dffc5737f78794b54d6507cfea48d11",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-2-1&etime=2024-2-29&f=xht_agent_price&ppid=645",
+      "imageSha256": "1361b85947a01d37bc3ea87aa4b42e1e88fca468406d2f3420a70fc9c6947492",
       "quality": {
         "axis_tick_count": 7,
         "axis_inlier_count": 7,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.6,
+        "axis_fit_rmse": 0.28,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 384.5
+      }
+    },
+    {
+      "month": "2024-03",
+      "value": 16967.51,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2024-03-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-3-1&etime=2024-3-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "22d8f010ff3a365b678817bb405c80675d3ac211c61622d8c28cc55a8f404c3a",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.344,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2024-04",
-      "value": 17290.48,
+      "value": 17267.12,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-04-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-4-1&etime=2024-4-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "605d7d653367082226c9ee3421258b7a8789f67082c43015968d1bb4f90d51cd",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-4-1&etime=2024-4-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "e7a0d34de438e593492bfe419b008012fe14d4ceadb8d5c0b5aa348dff82c365",
       "quality": {
-        "axis_tick_count": 6,
+        "axis_tick_count": 7,
         "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.073,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.139,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2024-05",
-      "value": 17139.07,
+      "value": 17135.07,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-05-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-5-1&etime=2024-5-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "1c8fa82a0e4d1bb8bc31573070c405925084767d8937992d7391084875f0ceed",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-5-1&etime=2024-5-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "c003ee8e68a1f07ac0da45e429c0a41518d73a85c6b254d111203fb82f8995c0",
       "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.389,
+        "axis_tick_count": 7,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.718,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2024-06",
-      "value": 16373.2,
+      "value": 16368.62,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-06-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-6-1&etime=2024-6-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "9608e3b462de04d19b627fe30fa05b0ecb3a083d2b34660ef3d60f21b18f3410",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-6-1&etime=2024-6-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "61c6e53ab8a16a8313628d74a2d778f8b3c9c606466887a817092afa3e67e7b7",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.863,
+        "axis_fit_rmse": 0.495,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
@@ -934,8 +925,8 @@
       "estimated": true,
       "observedDate": "2024-07-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-7-1&etime=2024-7-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "9adb3749e0309f7d8368c21ef5854ebdbd3582c15ab35e480ad60da851ee2589",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-7-1&etime=2024-7-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "0c0d3d0a73824b49f055cbfc1160463dbb08ea6b947f7c52d5afd596783caa4f",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 5,
@@ -947,92 +938,92 @@
     },
     {
       "month": "2024-08",
-      "value": 15803.81,
+      "value": 15783.41,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-08-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-8-1&etime=2024-8-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "2b7facc70abfd52737280f0f8720387a5f5242d1250c479d322bb3a7d229b015",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 3.788,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
-      }
-    },
-    {
-      "month": "2024-09",
-      "value": 15755.24,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2024-09-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-9-1&etime=2024-9-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "617c3a6498105ccda169028def0c115ed37a04ad453f82c173b78e1a01b917a3",
-      "quality": {
-        "axis_tick_count": 7,
-        "axis_inlier_count": 7,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.271,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2024-10",
-      "value": 15706.53,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2024-10-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-10-1&etime=2024-10-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "cf3fb4eed09cc6ecb951cec84e9007096318056f557fbe507dd228376ffcb9cb",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-8-1&etime=2024-8-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "58d51d8ac78232932d01d2421abfae1f573068e0fe7a8a1e028df54f442836da",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 4,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 2.434,
+        "axis_fit_rmse": 0.073,
         "blue_pixels_sampled": 24,
         "first_line_y": 257.5
+      }
+    },
+    {
+      "month": "2024-09",
+      "value": 15750.2,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2024-09-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-9-1&etime=2024-9-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "570d9349f45055c12db0b42f5ae03d936d32557b1ee58fccacb32dd9e64c5f68",
+      "quality": {
+        "axis_tick_count": 5,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.052,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2024-10",
+      "value": 15701.21,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2024-10-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-10-1&etime=2024-10-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "c53469ffbf6102928a9287fbc579f659fc71acb93d28f124448aa33c5f97d4e3",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.445,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2024-11",
-      "value": 15318.01,
+      "value": 15317.53,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-11-1&etime=2024-11-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "5e352656447bc7e938561f67222610a01139a7e1f4ae8fd9d1222791578c935f",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-11-1&etime=2024-11-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "dd9c8c7e9c7a32e369e2e053d1531006520380d024036be81b00329ec415682f",
       "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 5,
+        "axis_tick_count": 7,
+        "axis_inlier_count": 6,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 1.702,
+        "axis_fit_rmse": 0.265,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
       "month": "2024-12",
-      "value": 15065.01,
+      "value": 15060.64,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2024-12-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-12-1&etime=2024-12-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "b10d618ad187afe6c48b820ad2b76c1bee45a6d109c38b39aa5002676bcc8bde",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2024-12-1&etime=2024-12-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "ae7b7beaac2a2cd800beb0955efbc972b3f7da246a9a05b8de50f26b22e0192f",
       "quality": {
-        "axis_tick_count": 7,
-        "axis_inlier_count": 7,
+        "axis_tick_count": 5,
+        "axis_inlier_count": 5,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.085,
+        "axis_fit_rmse": 0.127,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
       }
     },
     {
@@ -1042,8 +1033,8 @@
       "estimated": true,
       "observedDate": "2025-01-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-1-1&etime=2025-1-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "4e8b6322a276f07912d6345c0f5124d5d317e2129460e1c8c2361b51a02dd1ea",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-1-1&etime=2025-1-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "1d32420ca744313f59140c00e34dcceebede4337a9f3918178408b073c013b7a",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 5,
@@ -1055,218 +1046,209 @@
     },
     {
       "month": "2025-02",
-      "value": 14918.95,
+      "value": 14900.78,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2025-02-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-2-1&etime=2025-2-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "3a234e2e0d61e1843beaa5d9f47ca0b48a20f45ddbfee23c881f641b302f6ef2",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-2-1&etime=2025-2-28&f=xht_agent_price&ppid=645",
+      "imageSha256": "6a663355de29f35a891f8f88274044b40269176797e4200a26cfc2ef696d6eaa",
       "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 3.757,
+        "axis_tick_count": 4,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.201,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2025-03",
-      "value": 15242.93,
+      "value": 15240.38,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2025-03-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-3-1&etime=2025-3-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "e7a310fdcd6056fa31c98827e5f2b812f5370cc3489b66f362193f1624d4ab20",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-3-1&etime=2025-3-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "aef337508847578000cfe5a9fbc8bf5a6a8000d641be7e59a8c0bea096df0278",
       "quality": {
-        "axis_tick_count": 7,
-        "axis_inlier_count": 7,
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.69,
+        "axis_fit_rmse": 0.095,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 384.5
       }
     },
     {
       "month": "2025-04",
-      "value": 15346.12,
+      "value": 15340.61,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2025-04-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-4-1&etime=2025-4-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "9383cda84ceac35e7e33cc53cc9d3aa560814338a0b895e92935cbe000d53b22",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.619,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2025-05",
-      "value": 15481.89,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2025-05-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-5-1&etime=2025-5-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "a53f7adffc642a831ba42065d1abf4716ac53f456ef36dbef7238ce61a100e19",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 2.862,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2025-06",
-      "value": 15099.45,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2025-06-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-6-1&etime=2025-6-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "7a72311ee31a206d87121eb5c28eeb535a158ae37e566fd0dd39e8dd8d94c2bb",
-      "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.04,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
-      }
-    },
-    {
-      "month": "2025-07",
-      "value": 13725.48,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2025-07-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-7-1&etime=2025-7-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "67d0a865c861892d36796d3519d426ce15f6092aa8cb2e9ad8c7c7bbd1cb6a70",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.237,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2025-08",
-      "value": 13643.51,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2025-08-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-8-1&etime=2025-8-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "4e2b2c6aa640e965bc187b2f42f0e563de5e0a9dec7d57c9ab417857144d50a1",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 1,
-        "axis_fit_rmse": 3.317,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2025-09",
-      "value": 13480.67,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2025-09-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-9-1&etime=2025-9-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "34fe03db7cdd890bc39914153f3cb90ad4dd88c614c1e16b18ee4876ba9ffb5d",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-4-1&etime=2025-4-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "4fcbb731c33dc152529b970c55ffac34b2b611ae8910ea5012cb68a254547b97",
       "quality": {
         "axis_tick_count": 7,
         "axis_inlier_count": 7,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 0.068,
+        "axis_fit_rmse": 0.195,
         "blue_pixels_sampled": 24,
-        "first_line_y": 382.5
+        "first_line_y": 384.5
       }
     },
     {
-      "month": "2025-10",
-      "value": 13824.93,
+      "month": "2025-05",
+      "value": 15481.75,
       "status": "estimated",
       "estimated": true,
-      "observedDate": "2025-10-01",
+      "observedDate": "2025-05-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-10-1&etime=2025-10-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "9f1e2eddbb71caa3e96c56bad649594c555195f77bc013483508388c858f114f",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.299,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2025-11",
-      "value": 13865.58,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2025-11-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-11-1&etime=2025-11-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "8b300f2ba5bfa4d1750daf6fab8ffeeeee9d791c48df7f0e8d52fc16d155b70c",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.317,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2025-12",
-      "value": 13501.18,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2025-12-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-12-1&etime=2025-12-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "fa2091f0107c8a44513adfe41c42d7ae5f836695609895630b960876060b160c",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-5-1&etime=2025-5-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "3a3b14e70064798ef212061e976b114dac1e4b9cabdcce9325d84253655ac27e",
       "quality": {
         "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 0.075,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.239,
         "blue_pixels_sampled": 24,
-        "first_line_y": 382.5
+        "first_line_y": 129.5
       }
     },
     {
-      "month": "2026-01",
-      "value": 13743.02,
+      "month": "2025-06",
+      "value": 15083.09,
       "status": "estimated",
       "estimated": true,
-      "observedDate": "2026-01-01",
+      "observedDate": "2025-06-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-1-1&etime=2026-1-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "811609e7403c032a8c2f855e03f454c6e8299477cd1e6849ee13f8dc68eee899",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-6-1&etime=2025-6-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "b9ee80560719e71970a73e99c17297b545ca6985cd15d869bc5fd8c9d957f861",
       "quality": {
         "axis_tick_count": 7,
         "axis_inlier_count": 6,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 3.471,
+        "axis_fit_rmse": 1.126,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2025-07",
+      "value": 13720.25,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2025-07-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-7-1&etime=2025-7-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "ede84cfd59d3a12164ad2989c601a3673a87728835bfbbb64f5d647808d91a34",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.094,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2025-08",
+      "value": 13640.6,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2025-08-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-8-1&etime=2025-8-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "f9271f0ee50a34447cd496e601b1a7df0ffd859dd97bee49d0060c96f253fe06",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.154,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2025-09",
+      "value": 13495.19,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2025-09-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-9-1&etime=2025-9-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "1fbae913a01a9b376c748b1409fe87ac9f86e1db85336435f997f05eacef9e04",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.354,
+        "blue_pixels_sampled": 45,
+        "first_line_y": 374.0
+      }
+    },
+    {
+      "month": "2025-10",
+      "value": null,
+      "status": "unavailable",
+      "estimated": true,
+      "observedDate": "2025-10-01",
+      "unit": "元/吨",
+      "error": "纵轴有效刻度不足：仅 3 个一致刻度"
+    },
+    {
+      "month": "2025-11",
+      "value": 13861.46,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2025-11-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-11-1&etime=2025-11-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "b672b5de55ec0323d61b361acd6ca71d9efcc888db8ccfe89476482235e09851",
+      "quality": {
+        "axis_tick_count": 5,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.285,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2025-12",
+      "value": 13526.72,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2025-12-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2025-12-1&etime=2025-12-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "84d6508c514594e060d766df41f2af6f7bcef3412dcc318f26971b2e98695226",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.282,
+        "blue_pixels_sampled": 109,
+        "first_line_y": 357.0
+      }
+    },
+    {
+      "month": "2026-01",
+      "value": 13740.53,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2026-01-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-1-1&etime=2026-1-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "6ede808feaa799b0995b938ab58b06d4051cde688aa80a1eea1339a9897a28d8",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.154,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 384.5
       }
     },
     {
@@ -1276,8 +1258,8 @@
       "estimated": true,
       "observedDate": "2026-02-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-2-1&etime=2026-2-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "dd47e02c29ee91187824486f37fce31c1c640e6850c342655702ac818bb7aede",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-2-1&etime=2026-2-28&f=xht_agent_price&ppid=645",
+      "imageSha256": "58998fc1e9e417d567f431fafb3059ad8d66813482a9834f6d25d55281083dfa",
       "quality": {
         "axis_tick_count": 5,
         "axis_inlier_count": 5,
@@ -1289,137 +1271,146 @@
     },
     {
       "month": "2026-03",
-      "value": 13902.92,
+      "value": 13972.3,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2026-03-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-3-1&etime=2026-3-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "8aa2c9b49950fb65ad0cd6e329d458be0de931aadfaa8e8b4d98106d2e628818",
-      "quality": {
-        "axis_tick_count": 6,
-        "axis_inlier_count": 6,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 0.28,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 382.5
-      }
-    },
-    {
-      "month": "2026-04",
-      "value": 15281.31,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2026-04-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-4-1&etime=2026-4-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "2815dda1dd7071976f7154101897a7bb8d97518332324f38293821bf2431135e",
-      "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.892,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
-      }
-    },
-    {
-      "month": "2026-05",
-      "value": 17201.41,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2026-05-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-5-1&etime=2026-5-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "055ef313c99918db101cc6740d15b3d71615c6d208c87e8f7107f5f39c4df8b3",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-3-1&etime=2026-3-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "3580112c64d4dbe65061ebc35cd7d49e7f2ee72733722f4597df967fd4d0639a",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 5,
         "axis_rejected_count": 1,
-        "axis_fit_rmse": 4.285,
+        "axis_fit_rmse": 1.309,
+        "blue_pixels_sampled": 50,
+        "first_line_y": 372.0
+      }
+    },
+    {
+      "month": "2026-04",
+      "value": 15266.64,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2026-04-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-4-1&etime=2026-4-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "0707eda9b806f5859e849c53b95a37422da284629c0912580b94fe059d304f5e",
+      "quality": {
+        "axis_tick_count": 7,
+        "axis_inlier_count": 7,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 2.148,
         "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
+        "first_line_y": 384.5
+      }
+    },
+    {
+      "month": "2026-05",
+      "value": 17180.27,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2026-05-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-5-1&etime=2026-5-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "50178b2cc1069b1e8eb6cb7ec6f7313c986e533bd2cb535c9399000737b33a2c",
+      "quality": {
+        "axis_tick_count": 5,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.075,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 180.5
       }
     },
     {
       "month": "2026-06",
-      "value": 17205.46,
+      "value": 17202.37,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2026-06-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-6-1&etime=2026-6-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "54cf83e64ad146024d1d22e41cdd12df7acbf4485a5540f3eabfdd264ca27e22",
-      "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.13,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
-      }
-    },
-    {
-      "month": "2026-07",
-      "value": 16482.39,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2026-07-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-7-1&etime=2026-7-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "68c2228f3630884db826138282f57324dfdfc7af4a6948f62f743ba53e4bc86f",
-      "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.747,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
-      }
-    },
-    {
-      "month": "2026-08",
-      "value": null,
-      "status": "unavailable",
-      "estimated": true,
-      "observedDate": "2026-08-01",
-      "unit": "元/吨",
-      "error": "纵轴刻度识别不足：3 个"
-    },
-    {
-      "month": "2026-09",
-      "value": 14079.15,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2026-09-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-9-1&etime=2026-9-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "0aa21de3b811434ab445ee56dbf0b2d2d4c5a4b0db2243581a8739b6ab3df762",
-      "quality": {
-        "axis_tick_count": 5,
-        "axis_inlier_count": 5,
-        "axis_rejected_count": 0,
-        "axis_fit_rmse": 4.711,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 256.5
-      }
-    },
-    {
-      "month": "2026-10",
-      "value": 14225.73,
-      "status": "estimated",
-      "estimated": true,
-      "observedDate": "2026-10-01",
-      "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-10-1&etime=2026-10-2&f=xht_agent_price&ppid=645",
-      "imageSha256": "00b2d3e0ccfc0c8f59cab8d471d0ce345917188e6aff5beb4ddbdbeaeca5909d",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-6-1&etime=2026-6-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "bb38e566fbdfba22e6c40774b5de028ad605aa4fd405940fd7d6f806be94e4e5",
       "quality": {
         "axis_tick_count": 6,
         "axis_inlier_count": 6,
         "axis_rejected_count": 0,
-        "axis_fit_rmse": 3.403,
+        "axis_fit_rmse": 0.785,
         "blue_pixels_sampled": 24,
-        "first_line_y": 257.5
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2026-07",
+      "value": 16463.29,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2026-07-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-7-1&etime=2026-7-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "7a11afbce2e60024256e505c29c43e1d0866ca4ce6a138cfb81ba40ad1b9af77",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.898,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2026-08",
+      "value": 15464.51,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2026-08-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-8-1&etime=2026-8-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "d1e4b1b060041a49ecc8827c855da4cf5f13620c8bb1d4d748f3b1ceb9984a65",
+      "quality": {
+        "axis_tick_count": 5,
+        "axis_inlier_count": 5,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 1.782,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
+      "month": "2026-09",
+      "value": 14060.54,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2026-09-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-9-1&etime=2026-9-30&f=xht_agent_price&ppid=645",
+      "imageSha256": "f1e38d68e19d5796733c1630e3e354d9aa88228ae7319e9cadfd9216e343995b",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.149,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 384.5
+      }
+    },
+    {
+      "month": "2026-10",
+      "value": 14220.13,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2026-10-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-10-1&etime=2026-10-31&f=xht_agent_price&ppid=645",
+      "imageSha256": "4a72ee0fe4ee64938d9cf5e498af7eb7628de8837f42edd8752d5566c2eb35a5",
+      "quality": {
+        "axis_tick_count": 5,
+        "axis_inlier_count": 4,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 0.025,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 384.5
       }
     },
     {
@@ -1429,7 +1420,7 @@
       "estimated": true,
       "observedDate": "2026-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-2&f=xht_agent_price&ppid=645",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=645",
       "imageSha256": "04779984710b4c9ce866653d96e00a0f3f264dc209e13f9eddfabb842340c96a",
       "quality": {
         "axis_tick_count": 6,

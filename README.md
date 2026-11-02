@@ -42,6 +42,7 @@ python -m http.server 8089
 | `docs/DATABASE_ARCHITECTURE.md` | 数据存储分层、禁止前端数据缓存的约定，以及静态部署下 SQL 数据库的适用边界 |
 | `docs/DEVELOPMENT_GUIDE.md` | 开发环境、本地预览、测试命令、GitHub Actions、AI 协作与代码修改交付流程 |
 | `quotes.js` | 仅供 GitHub Actions 使用的行情采集 SDK（东方财富 + 腾讯财经，多源降级；日/周/月 K） |
+| `scripts/sunsirs_chart.py` `scripts/test_sunsirs_chart_product.py` `tests/test_sunsirs_chart.py` | 生意社 `report.php` 通用走势图下载与验证：按商品 PPID 生成月初图表请求，校验 PNG、记录 SHA-256，并支持多年份 OCR 验证；顺酐采集器复用该模块 |
 | `scripts/fetch_stock_snapshot.js` `.github/workflows/stock-snapshot.yml` | A 股收盘后采集股票池行情；日线每日、周线每周、月线随最新行情日更新；只提交有变化的数据 |
 | `data/stock-quotes.json` `data/stock-cache/*.json` | 股票行情、详情与日/周/月 K 线的同源静态缓存 |
 | `data/business-data.json` `scripts/fetch_business_data.py` | 商品现货/期货参考数据缓存与采集脚本；原行情展示页面已移除 |

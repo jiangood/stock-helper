@@ -1,0 +1,50 @@
+name: Debug Sunsirs titanium dioxide August chart image
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/debug-sunsirs-tio2-august.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-august-chart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install downloader dependency
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Fetch August chart with full-month range and compare short range
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, "scripts")
+          from sunsirs_chart import fetch_chart_image
+
+          urls = {
+              "full-month": "https://www.100ppi.com/graph/report.php?btime=2026-08-01&etime=2026-08-31&f=xht_agent_price&ppid=645",
+              "collector-short-range": "https://www.100ppi.com/graph/report.php?btime=2026-8-1&etime=2026-8-2&f=xht_agent_price&ppid=645",
+          }
+          for label, url in urls.items():
+              try:
+                  result = fetch_chart_image(url, Path("artifacts/sunsirs-august") / f"{label}.png")
+                  print(f"{label}: HTTP {result['status_code']}, {result['content_type']}, {result['bytes']} bytes, sha256={result['sha256']}, url={result['url']}")
+              except Exception as exc:
+                  print(f"{label}: FAILED: {type(exc).__name__}: {exc}")
+                  raise
+          PY
+      - name: Upload returned chart images
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunsirs-tio2-august-chart-debug
+          path: artifacts/sunsirs-august/*.png
+          if-no-files-found: error
+          retention-days: 7

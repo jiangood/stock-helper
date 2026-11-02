@@ -132,6 +132,24 @@ function comparisonTableHtml(card){
 }
 function tone(value){return Number(value)>0?'product-positive':Number(value)<0?'product-negative':'';}
 function displayProductName(value){return String(value==null?'':value).replace(/[（(][^）)]*[）)]/g,'').trim();}
+function compactSource(card){
+ var source=String(card&&card.source||'').trim();
+ if(!source)return '';
+ if(/图像估算|走势图.*估算/.test(source))return '生意社图表 · OCR估算（非原始报价）';
+ if(/生意社.*基准价/.test(source))return '生意社基准价';
+ if(/生意社.*参考价/.test(source))return '生意社参考价';
+ if(/期货主力连续/.test(source))return '期货主力连续（价格参考）';
+ if(/新浪财经/.test(source))return '新浪期货';
+ if(/卓创资讯/.test(source))return '卓创报价';
+ if(/东方财富/.test(source))return '东方财富';
+ return source.replace(/（经 AKShare 获取）/g,'').replace(/（.*?）/g,'').trim();
+}
+function compactNote(card){
+ var note=String(card&&card.note||'').trim();
+ var sourceNote=String(card&&card.sourceNote||'').trim();
+ if(sourceNote&&note.indexOf(sourceNote)===0)note=note.slice(sourceNote.length).trim();
+ return note.replace(/^([；;。\s])+|([；;。\s])+$/g,'').trim();
+}
 function destroyCharts(){chartObservers.forEach(function(observer){try{observer.disconnect();}catch(e){}});chartObservers=[];charts.forEach(function(chart){try{chart.dispose();}catch(e){}});charts=[];}
 function render(){
  destroyCharts();
@@ -144,8 +162,10 @@ function render(){
   var hasChart=hasProductChart||hasStockChart;
   var chart=hasChart?'<div class="product-chart" id="commodity-chart-'+index+'" role="img" aria-label="'+esc(displayProductName(card.name))+(hasProductChart?'及关联股票':'关联股票')+'归一化月线"></div>':'<div class="product-empty">商品价格和关联股票均暂无足够的历史月份，暂不绘图。</div>';
   var monthRange=card.productStartDate&&card.productEndDate?String(card.productStartDate).slice(0,7).replace(/-/g,'/')+'—'+String(card.productEndDate).slice(0,7).replace(/-/g,'/'):'';
-  var meta=[card.months&&card.months.length?card.months.length+'根月线':'',monthRange,card.source||''].filter(Boolean).join(' · ');
-  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div>'+(meta?'<div class="product-meta">'+esc(meta)+'</div>':'')+'</div></div>'+chart+comparisonTable+(card.note?'<div class="product-note">'+esc(card.note)+'</div>':'')+'</article>';
+  var sourceLabel=compactSource(card);
+  var meta=[card.months&&card.months.length?card.months.length+'根月线':'',monthRange,sourceLabel].filter(Boolean).join(' · ');
+  var note=compactNote(card);
+  return '<article class="commodity-card"><div class="commodity-head"><div><div class="commodity-title">'+esc(displayProductName(card.name))+'</div>'+(meta?'<div class="product-meta">'+esc(meta)+'</div>':'')+'</div></div>'+chart+comparisonTable+(note?'<div class="product-note">'+esc(note)+'</div>':'')+'</article>';
  }).join('');
  Array.prototype.forEach.call(node.querySelectorAll('.commodity-table-wrap'),function(wrap){
   function updateScrollHint(){

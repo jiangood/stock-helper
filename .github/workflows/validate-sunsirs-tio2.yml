@@ -1,29 +1,40 @@
-name: Validate reusable Sunsirs chart method with candidate commodities
+name: Collect Sunsirs monthly product history
 
 on:
   workflow_dispatch:
-  push:
-    branches: [master]
-    paths:
-      - "scripts/sunsirs_chart.py"
-      - "scripts/test_sunsirs_chart_product.py"
-      - "scripts/collect_sunsirs_product_monthly.py"
-      - "scripts/test_sunsirs_month_start_ocr.py"
-      - "tests/test_sunsirs_chart.py"
-      - "scripts/audit_sunsirs_product_monthly.py"
-      - ".github/workflows/validate-sunsirs-tio2.yml"
+    inputs:
+      product_id:
+        description: "商品 ID（对应 data/business-data.json 中的已核实商品）"
+        required: true
+        default: "tio2"
+        type: string
+      start_month:
+        description: "起始月份 YYYY-MM"
+        required: true
+        default: "2020-04"
+        type: string
+      end_month:
+        description: "结束月份 YYYY-MM"
+        required: true
+        default: "2026-11"
+        type: string
+      refresh_existing:
+        description: "重新识别已有月份（用于 OCR 口径修正）"
+        required: true
+        default: false
+        type: boolean
 
 concurrency:
-  group: sunsirs-chart-validation-${{ github.ref }}
-  cancel-in-progress: true
+  group: sunsirs-monthly-collection-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
 
 jobs:
-  validate-tio2:
+  collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,81 +45,64 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y tesseract-ocr
           python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
-      - name: Unit tests for reusable chart downloader
-        run: python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v
-      - name: Validate titanium dioxide chart PPID from official product page
-        run: python scripts/test_sunsirs_chart_product.py --ppid 645 --name "钛白粉指数" --start-month 2020-04 --end-month 2026-10
-      - name: Snapshot existing titanium dioxide history for before-after comparison
+      - name: Run collector tests
+        run: python -m unittest discover -s tests -p 'test_sunsirs_*.py' -v
+      - name: Snapshot existing product history
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
         run: |
           mkdir -p artifacts/sunsirs-chart-comparison
-          cp data/sunsirs-chart-monthly/tio2.json artifacts/sunsirs-chart-comparison/tio2-before.json
-      - name: Refresh all monthly OCR estimates for titanium dioxide using full-month charts
-        run: python scripts/collect_sunsirs_product_monthly.py --product-id tio2 --start-month 2020-04 --end-month 2026-11 --refresh-existing
-      - name: Compare refreshed titanium dioxide history with previous values
+          file="data/sunsirs-chart-monthly/${PRODUCT_ID}.json"
+          if [ -f "$file" ]; then
+            cp "$file" "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before.json"
+          else
+            printf '{"points":[]}' > "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before.json"
+          fi
+      - name: Collect selected product and month range
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
+          START_MONTH: ${{ inputs.start_month }}
+          END_MONTH: ${{ inputs.end_month }}
+          REFRESH_EXISTING: ${{ inputs.refresh_existing }}
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          before = json.loads(Path("artifacts/sunsirs-chart-comparison/tio2-before.json").read_text(encoding="utf-8"))
-          after = json.loads(Path("data/sunsirs-chart-monthly/tio2.json").read_text(encoding="utf-8"))
-          old = {p["month"]: p for p in before.get("points", [])}
-          new = {p["month"]: p for p in after.get("points", [])}
-          rows = []
-          changed = 0
-          for month in sorted(set(old) | set(new)):
-              a, b = old.get(month, {}), new.get(month, {})
-              av, bv = a.get("value"), b.get("value")
-              delta = round(bv - av, 2) if isinstance(av, (int, float)) and isinstance(bv, (int, float)) else None
-              is_changed = a.get("status") != b.get("status") or av != bv
-              changed += int(is_changed)
-              rows.append({"month": month, "old_value": av, "old_status": a.get("status"), "new_value": bv, "new_status": b.get("status"), "delta": delta, "changed": is_changed})
-          report = {
-              "product": "tio2", "ppid": after.get("ppid"),
-              "old_months": len(old), "new_months": len(new),
-              "changed_months": changed,
-              "estimated_months": sum(p.get("status") == "estimated" and p.get("value") is not None for p in after.get("points", [])),
-              "no_data_months": sum(p.get("status") == "no_data" for p in after.get("points", [])),
-              "unavailable_months": sum(p.get("status") == "unavailable" for p in after.get("points", [])),
-              "rows": rows
-          }
-          out = Path("artifacts/sunsirs-chart-comparison/tio2-before-after.json")
-          out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
-          print(json.dumps({k: v for k, v in report.items() if k != "rows"}, ensure_ascii=False))
-          PY
-      - name: Validate viscose staple fiber candidate PPID 1017
-        continue-on-error: true
-        run: python scripts/test_sunsirs_chart_product.py --ppid 1017 --name "粘胶短纤" --start-month 2020-04 --end-month 2026-10
-      - name: Collect monthly OCR estimates for viscose staple fiber
-        run: python scripts/collect_sunsirs_product_monthly.py --product-id viscose-staple-fiber --start-month 2020-04 --end-month 2026-11
-      - name: Audit suspicious historical viscose chart months
-        run: python scripts/audit_sunsirs_product_monthly.py --product-id viscose-staple-fiber --ppid 1017 --start-month 2020-04 --end-month 2026-11
-      - name: Commit OCR chart history
+          args=(--product-id "$PRODUCT_ID" --start-month "$START_MONTH" --end-month "$END_MONTH")
+          if [ "$REFRESH_EXISTING" = "true" ]; then
+            args+=(--refresh-existing)
+          fi
+          python scripts/collect_sunsirs_product_monthly.py "${args[@]}"
+      - name: Compare before and after
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
+        run: |
+          python scripts/compare_sunsirs_product_monthly.py \
+            --product-id "$PRODUCT_ID" \
+            --before "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before.json" \
+            --output "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before-after.json"
+      - name: Commit refreshed product history
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+users.noreply.github.com"
-          git add data/sunsirs-chart-monthly/viscose-staple-fiber.json data/sunsirs-chart-monthly/tio2.json
+          git add "data/sunsirs-chart-monthly/${PRODUCT_ID}.json"
           if ! git diff --cached --quiet; then
-            git commit -m "data: refresh Sunsirs OCR estimates with full-month charts"
+            git commit -m "data: refresh Sunsirs monthly history for ${PRODUCT_ID}"
             for attempt in 1 2 3; do
               git fetch origin master
               git rebase origin/master
               if git push origin HEAD:master; then
                 exit 0
               fi
-              echo "Push attempt ${attempt} failed; retrying after fetching latest master"
+              echo "Push attempt ${attempt} failed; retrying"
               sleep 2
             done
-            echo "Unable to push OCR history after 3 attempts" >&2
             exit 1
           fi
-      - name: Upload titanium dioxide chart validation
+      - name: Upload collection report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sunsirs-chart-candidate-validation
-          path: |
-            artifacts/sunsirs-chart-validation/
-            artifacts/sunsirs-chart-comparison/
-            artifacts/viscose-audit/
+          name: sunsirs-monthly-${{ inputs.product_id }}-${{ inputs.start_month }}-${{ inputs.end_month }}
+          path: artifacts/sunsirs-chart-comparison/
           if-no-files-found: warn
-          retention-days: 7
+          retention-days: 14

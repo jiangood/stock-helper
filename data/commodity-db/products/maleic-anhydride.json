@@ -4,7 +4,7 @@
   "unit": "元/吨",
   "source": "生意社顺酐现货均价图表（图像估算）",
   "sourceNote": "每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
-  "sourceUrl": "https://ma.100ppi.com/kx/",
+  "sourceUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=660",
   "productStartDate": "2011-02-01",
   "productEndDate": "2026-11-01",
   "latestPrice": 9974.48,

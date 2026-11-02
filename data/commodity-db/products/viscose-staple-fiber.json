@@ -4,7 +4,7 @@
   "unit": "元/吨",
   "source": "生意社 report.php 商品价格走势图（图像估算）",
   "sourceNote": "每月完整自然月图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
-  "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
+  "sourceUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=1017",
   "productStartDate": "2020-04-01",
   "productEndDate": "2026-11-01",
   "latestPrice": 14704.98,

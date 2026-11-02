@@ -24,6 +24,11 @@ PLOT_RIGHT = 760
 AXIS_CROP_BOTTOM = 435
 AXIS_CROP_TOP = 75
 SCALE = 4
+# Verified against the August 2026 short-range and full-month chart images (790x458).
+# Seven horizontal grid/tick rows are stable in this chart template.
+AXIS_TICK_ROWS = (88, 144, 201, 258, 314, 371, 428)
+AXIS_LABEL_RIGHT = 60
+TICK_ROI_HALF_HEIGHT = 13
 
 
 def _normalise_tick(text: str) -> float | None:
@@ -41,51 +46,49 @@ def _normalise_tick(text: str) -> float | None:
     return number if 500 <= number <= 1000000 else None
 
 
-def detect_blue_line_y(image: np.ndarray) -> float | None:
-    """Record the target blue trace before colored traces are removed."""
+def detect_blue_line(image: np.ndarray) -> tuple[float | None, int]:
+    """Record the blue target trace on the untouched chart image."""
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, np.array([95, 100, 100], np.uint8), np.array([135, 255, 255], np.uint8))
-    ys = np.where(mask[80:430, PLOT_LEFT:min(PLOT_LEFT + 12, PLOT_RIGHT)] > 0)[0] + 80
-    return float(np.median(ys)) if len(ys) >= 3 else None
+    region = mask[80:430, PLOT_LEFT:min(PLOT_LEFT + 12, PLOT_RIGHT)]
+    ys = np.where(region > 0)[0] + 80
+    return (float(np.median(ys)) if len(ys) >= 3 else None, int(len(ys)))
 
 
-def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
-    # Remove saturated chart traces after blue-line position has been recorded.
+def remove_colored_traces(image: np.ndarray) -> np.ndarray:
+    """Suppress saturated series while preserving neutral grid lines and labels."""
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     colored = cv2.inRange(hsv, np.array([0, 35, 45], np.uint8), np.array([179, 255, 255], np.uint8))
     cleaned = image.copy()
     cleaned[colored > 0] = (255, 255, 255)
-    gray = cv2.cvtColor(cleaned, cv2.COLOR_BGR2GRAY)
-    plot = gray[AXIS_CROP_TOP:AXIS_CROP_BOTTOM, PLOT_LEFT:PLOT_RIGHT]
-    binary = cv2.threshold(plot, 220, 255, cv2.THRESH_BINARY_INV)[1]
-    horizontal = cv2.morphologyEx(binary, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (80, 1)))
-    projection = np.count_nonzero(horizontal, axis=1)
-    candidates = np.where(projection >= int(plot.shape[1] * 0.12))[0] + AXIS_CROP_TOP
-    clusters: list[list[int]] = []
-    for y in candidates.tolist():
-        if not clusters or y > clusters[-1][-1] + 2:
-            clusters.append([y])
-        else:
-            clusters[-1].append(y)
-    rows = [int(round(float(np.mean(group)))) for group in clusters]
-    if len(rows) != 7:
-        raise ValueError(f"预期识别到7条水平刻度线，实际识别到{len(rows)}条")
+    return cleaned
+
+
+def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
+    """OCR seven validated, fixed-position tick ROIs; no per-image line search."""
+    cleaned = remove_colored_traces(image)
     ticks: list[tuple[float, float, float]] = []
-    for y in rows:
-        roi = cleaned[max(0, y - 13):min(image.shape[0], y + 14), 0:PLOT_LEFT]
-        enlarged = cv2.resize(cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY), None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
-        _, binary_roi = cv2.threshold(enlarged, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        ok, encoded = cv2.imencode(".png", binary_roi)
+    for y in AXIS_TICK_ROWS:
+        top, bottom = max(0, y - TICK_ROI_HALF_HEIGHT), min(image.shape[0], y + TICK_ROI_HALF_HEIGHT + 1)
+        roi = cleaned[top:bottom, 0:AXIS_LABEL_RIGHT]
+        gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+        enlarged = cv2.resize(gray, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
+        _, binary = cv2.threshold(enlarged, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        ok, encoded = cv2.imencode(".png", binary)
         if not ok:
-            continue
+            raise ValueError(f"刻度ROI编码失败：y={y}")
         output = subprocess.check_output(["tesseract", "stdin", "stdout", "tsv", "--psm", "7"], input=encoded.tobytes(), stderr=subprocess.DEVNULL).decode("utf-8", errors="replace")
+        recognised = []
         for row in csv.DictReader(io.StringIO(output), delimiter="\t"):
             value = _normalise_tick(row.get("text", "").strip())
             confidence = float(row.get("conf", "-1"))
             if value is not None and confidence >= 25:
-                ticks.append((float(y), value, confidence))
-                break
-    return sorted(ticks)
+                recognised.append((value, confidence))
+        if not recognised:
+            raise ValueError(f"固定刻度ROI OCR失败：y={y}")
+        value, confidence = max(recognised, key=lambda item: item[1])
+        ticks.append((float(y), value, confidence))
+    return ticks
 
 def robust_axis_fit(ticks: list[tuple[float, float, float]]) -> tuple[float, float, list[int], float]:
     if len(ticks) < 4:
@@ -123,7 +126,7 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
         raise ValueError(f"图表尺寸异常：{image.shape[1]}x{image.shape[0]}")
 
     # Record the blue target-line coordinate before suppressing colored traces.
-    first_y = detect_blue_line_y(image)
+    first_y, blue_pixels_sampled = detect_blue_line(image)
     # No blue curve means the provider returned its explicit no-data chart.
     if first_y is None:
         return {
@@ -157,7 +160,7 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
             "axis_inlier_count": len(inlier_indices),
             "axis_rejected_count": len(ticks) - len(inlier_indices),
             "axis_fit_rmse": round(rmse, 3),
-            "blue_pixels_sampled": int(len(ys)),
+            "blue_pixels_sampled": blue_pixels_sampled,
             "first_line_y": round(first_y, 2),
         },
         "source_image": image_path.name,

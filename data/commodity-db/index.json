@@ -33,6 +33,20 @@
       "commonMonthCount": 83
     },
     {
+      "id": "viscose-staple-fiber",
+      "name": "粘胶短纤",
+      "unit": "元/吨",
+      "file": "products/viscose-staple-fiber.json",
+      "status": "ready",
+      "latestPrice": 14700,
+      "latestDate": "2026-11-01",
+      "source": "生意社 report.php 商品价格走势图（图像估算）",
+      "sunsirsPpid": "1017",
+      "monthCount": 62,
+      "stockTimelineMonthCount": 37,
+      "commonMonthCount": 37
+    },
+    {
       "id": "tio2",
       "name": "钛白粉",
       "unit": "元/吨",
@@ -44,20 +58,6 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0
-    },
-    {
-      "id": "viscose-staple-fiber",
-      "name": "粘胶短纤",
-      "unit": "元/吨",
-      "file": "products/viscose-staple-fiber.json",
-      "status": "stock-only",
-      "latestPrice": 13980,
-      "latestDate": "2026-11-01",
-      "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "sunsirsPpid": "1017",
-      "monthCount": 0,
-      "stockTimelineMonthCount": 47,
       "commonMonthCount": 0
     },
     {

@@ -41,90 +41,51 @@ def _normalise_tick(text: str) -> float | None:
     return number if 500 <= number <= 1000000 else None
 
 
-def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
-    # Locate neutral horizontal grid lines in the plot area. Colored series
-    # (including the blue target and other colored traces) are excluded by the
-    # low-saturation condition, so they cannot masquerade as axis grid lines.
+def detect_blue_line_y(image: np.ndarray) -> float | None:
+    """Record the target blue trace before colored traces are removed."""
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    grid_rows: list[int] = []
-    for y in range(AXIS_CROP_TOP, AXIS_CROP_BOTTOM):
-        row = hsv[y, PLOT_LEFT:PLOT_RIGHT]
-        neutral_dark = (row[:, 1] < 55) & (row[:, 2] < 180)
-        if int(np.count_nonzero(neutral_dark)) >= 250:
-            grid_rows.append(y)
+    mask = cv2.inRange(hsv, np.array([95, 100, 100], np.uint8), np.array([135, 255, 255], np.uint8))
+    ys = np.where(mask[80:430, PLOT_LEFT:min(PLOT_LEFT + 12, PLOT_RIGHT)] > 0)[0] + 80
+    return float(np.median(ys)) if len(ys) >= 3 else None
 
+
+def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
+    # Remove saturated chart traces after blue-line position has been recorded.
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    colored = cv2.inRange(hsv, np.array([0, 35, 45], np.uint8), np.array([179, 255, 255], np.uint8))
+    cleaned = image.copy()
+    cleaned[colored > 0] = (255, 255, 255)
+    gray = cv2.cvtColor(cleaned, cv2.COLOR_BGR2GRAY)
+    plot = gray[AXIS_CROP_TOP:AXIS_CROP_BOTTOM, PLOT_LEFT:PLOT_RIGHT]
+    binary = cv2.threshold(plot, 220, 255, cv2.THRESH_BINARY_INV)[1]
+    horizontal = cv2.morphologyEx(binary, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (80, 1)))
+    projection = np.count_nonzero(horizontal, axis=1)
+    candidates = np.where(projection >= int(plot.shape[1] * 0.12))[0] + AXIS_CROP_TOP
     clusters: list[list[int]] = []
-    for y in grid_rows:
-        if not clusters or y > clusters[-1][-1] + 1:
+    for y in candidates.tolist():
+        if not clusters or y > clusters[-1][-1] + 2:
             clusters.append([y])
         else:
             clusters[-1].append(y)
-    centers = [int(round(float(np.mean(cluster)))) for cluster in clusters]
-    if len(centers) < 4:
-        raise ValueError(f"纵轴水平网格线识别不足：{len(centers)} 条")
-
-    # A colored series can cover one grid line. Restore only regularly spaced
-    # missing rows from the median tick interval; do not treat colored traces
-    # themselves as grid lines.
-    intervals = np.diff(centers)
-    base_interval = float(np.median(intervals))
-    tick_rows: list[int] = []
-    for index, y in enumerate(centers):
-        tick_rows.append(y)
-        if index == len(centers) - 1:
-            continue
-        gap = centers[index + 1] - y
-        missing_count = int(round(gap / base_interval))
-        if missing_count >= 2 and abs(gap / missing_count - base_interval) <= 4:
-            tick_rows.extend(
-                int(round(y + gap * step / missing_count))
-                for step in range(1, missing_count)
-            )
-
+    rows = [int(round(float(np.mean(group)))) for group in clusters]
+    if len(rows) != 7:
+        raise ValueError(f"预期识别到7条水平刻度线，实际识别到{len(rows)}条")
     ticks: list[tuple[float, float, float]] = []
-    for y in sorted(set(tick_rows)):
-        top = max(0, y - 12)
-        bottom = min(image.shape[0], y + 13)
-        crop = image[top:bottom, 0:PLOT_LEFT].copy()
-
-        # Suppress chromatic pixels before OCR while retaining neutral text.
-        hsv_crop = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
-        colored = cv2.inRange(
-            hsv_crop,
-            np.array([0, 35, 45], dtype=np.uint8),
-            np.array([179, 255, 255], dtype=np.uint8),
-        )
-        crop[colored > 0] = (255, 255, 255)
-
-        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        enlarged = cv2.resize(gray, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
-        _, binary = cv2.threshold(
-            enlarged, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
-        )
-        ok, encoded = cv2.imencode(".png", binary)
+    for y in rows:
+        roi = cleaned[max(0, y - 13):min(image.shape[0], y + 14), 0:PLOT_LEFT]
+        enlarged = cv2.resize(cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY), None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
+        _, binary_roi = cv2.threshold(enlarged, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        ok, encoded = cv2.imencode(".png", binary_roi)
         if not ok:
             continue
-        output = subprocess.check_output(
-            ["tesseract", "stdin", "stdout", "tsv", "--psm", "7"],
-            input=encoded.tobytes(),
-            stderr=subprocess.DEVNULL,
-        ).decode("utf-8", errors="replace")
+        output = subprocess.check_output(["tesseract", "stdin", "stdout", "tsv", "--psm", "7"], input=encoded.tobytes(), stderr=subprocess.DEVNULL).decode("utf-8", errors="replace")
         for row in csv.DictReader(io.StringIO(output), delimiter="\t"):
-            raw = row.get("text", "").strip()
-            value = _normalise_tick(raw)
-            if value is None:
-                continue
+            value = _normalise_tick(row.get("text", "").strip())
             confidence = float(row.get("conf", "-1"))
-            if confidence < 25:
-                continue
-            ticks.append((float(y), value, confidence))
-            break
-
-    unique: dict[int, tuple[float, float, float]] = {}
-    for tick in ticks:
-        unique[round(tick[0])] = tick
-    return sorted(unique.values())
-
+            if value is not None and confidence >= 25:
+                ticks.append((float(y), value, confidence))
+                break
+    return sorted(ticks)
 
 def robust_axis_fit(ticks: list[tuple[float, float, float]]) -> tuple[float, float, list[int], float]:
     if len(ticks) < 4:
@@ -161,16 +122,10 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
     if image.shape[1] < 700 or image.shape[0] < 400:
         raise ValueError(f"图表尺寸异常：{image.shape[1]}x{image.shape[0]}")
 
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    blue_mask = cv2.inRange(
-        hsv,
-        np.array([95, 100, 100], dtype=np.uint8),
-        np.array([135, 255, 255], dtype=np.uint8),
-    )
-    # No axis and no blue curve means the provider returned its explicit
-    # no-data chart. Missing months must remain null, never be guessed.
-    plot_blue = blue_mask[80:430, PLOT_LEFT:PLOT_RIGHT]
-    if cv2.countNonZero(plot_blue) == 0:
+    # Record the blue target-line coordinate before suppressing colored traces.
+    first_y = detect_blue_line_y(image)
+    # No blue curve means the provider returned its explicit no-data chart.
+    if first_y is None:
         return {
             "month": month,
             "date_rule": "每月1日至2日图表最左侧蓝色价格线",
@@ -185,13 +140,6 @@ def estimate_first_price(image_path: Path, month: str) -> dict:
     ticks = read_axis_ticks(image)
     slope, intercept, inlier_indices, rmse = robust_axis_fit(ticks)
 
-    # Sample only a narrow strip at the left edge, i.e. the first day.
-    x_end = min(PLOT_LEFT + 12, PLOT_RIGHT)
-    y_region = blue_mask[80:430, PLOT_LEFT:x_end]
-    ys = np.where(y_region > 0)[0] + 80
-    if len(ys) < 3:
-        raise ValueError("图表最左侧未识别到足够的蓝色价格线像素")
-    first_y = float(np.median(ys))
     price = float(slope * first_y + intercept)
     if not np.isfinite(price) or price <= 0:
         raise ValueError("换算得到的价格无效")

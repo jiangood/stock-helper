@@ -6,7 +6,7 @@
   "ppid": "1017",
   "source": "生意社 report.php 商品价格走势图（图像估算）",
   "sourceUrl": "https://www.100ppi.com/graph/report.php",
-  "methodNote": "每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
+  "methodNote": "每月1日至2日图表最左侧价格线；OCR纵轴刻度采用抗异常值拟合，像素定位；人工核验值标记 verification=manual。属于图像估算/人工读图值，不是生意社原始报价。缺失月份留空，不插值。",
   "dateRule": "每月1日至2日图表最左侧蓝色价格线",
   "points": [
     {
@@ -1005,7 +1005,7 @@
     },
     {
       "month": "2026-02",
-      "value": 12803.0,
+      "value": 12803,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2026-02-01",
@@ -1149,12 +1149,14 @@
     },
     {
       "month": "2026-11",
-      "value": null,
-      "status": "unavailable",
+      "value": 14700,
+      "status": "estimated",
       "estimated": true,
+      "verification": "manual",
+      "verificationNote": "用户根据生意社原始图表人工核验：价格线与水平网格线重叠，读数为14700元/吨",
       "observedDate": "2026-11-01",
       "unit": "元/吨",
-      "error": "纵轴刻度拟合误差过大：4783.91"
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-2&f=xht_agent_price&ppid=1017"
     }
   ],
   "updatedAt": "2026-11-02"

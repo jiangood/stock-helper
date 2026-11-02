@@ -16,9 +16,7 @@
       "sunsirsPpid": "660",
       "monthCount": 166,
       "stockTimelineMonthCount": 161,
-      "commonMonthCount": 161,
-      "alternateSource": "生意社顺酐每日参考价（公开价格快讯）",
-      "alternateMonthCount": 3
+      "commonMonthCount": 161
     },
     {
       "id": "soda-ash",
@@ -57,7 +55,7 @@
       "latestPrice": 13980,
       "latestDate": "2026-11-01",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
-      "sunsirsPpid": null,
+      "sunsirsPpid": "1017",
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
       "commonMonthCount": 0

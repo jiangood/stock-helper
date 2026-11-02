@@ -1993,6 +1993,24 @@
       }
     },
     {
+      "month": "2020-10",
+      "value": 9002.39,
+      "status": "estimated",
+      "estimated": true,
+      "observedDate": "2020-10-01",
+      "unit": "元/吨",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2020-10-1&etime=2020-10-31&f=xht_agent_price&ppid=660",
+      "imageSha256": "a447b205173d9e64ec503385fd51a67847aa5923fdfc3a774eecb74502873833",
+      "quality": {
+        "axis_tick_count": 6,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 0,
+        "axis_fit_rmse": 0.849,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 129.5
+      }
+    },
+    {
       "month": "2020-11",
       "value": 8477.78,
       "status": "estimated",
@@ -3159,7 +3177,7 @@
       "estimated": true,
       "observedDate": "2026-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-2&f=xht_agent_price&ppid=660",
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=660",
       "imageSha256": "d70efb87e95b2c571916f208d36344f77b4497a6d367949b22bd60aa28e0d2a3",
       "quality": {
         "axis_tick_count": 7,

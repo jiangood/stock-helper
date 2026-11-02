@@ -10,9 +10,9 @@
   "latestPrice": 9974.53,
   "latestDate": "2026-11-01",
   "productChange": -0.5,
-  "productMonthCount": 189,
-  "stockTimelineMonthCount": 183,
-  "commonMonthCount": 183,
+  "productMonthCount": 190,
+  "stockTimelineMonthCount": 184,
+  "commonMonthCount": 184,
   "months": [
     "2011-02",
     "2011-03",
@@ -125,6 +125,7 @@
     "2020-07",
     "2020-08",
     "2020-09",
+    "2020-10",
     "2020-11",
     "2020-12",
     "2021-01",
@@ -753,6 +754,11 @@
       "month": "2020-09",
       "index": 70.03,
       "price": 6934.86
+    },
+    {
+      "month": "2020-10",
+      "index": 90.91,
+      "price": 9002.39
     },
     {
       "month": "2020-11",
@@ -1668,6 +1674,11 @@
     },
     {
       "month": "2020-09",
+      "index": null,
+      "price": null
+    },
+    {
+      "month": "2020-10",
       "index": null,
       "price": null
     },
@@ -2603,6 +2614,11 @@
           "month": "2020-09",
           "index": 91.05,
           "price": 4.487
+        },
+        {
+          "month": "2020-10",
+          "index": 109.17,
+          "price": 5.38
         },
         {
           "month": "2020-11",

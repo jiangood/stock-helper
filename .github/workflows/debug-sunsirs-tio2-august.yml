@@ -5,6 +5,7 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/debug-sunsirs-tio2-august.yml"
+      - "scripts/test_sunsirs_month_start_ocr.py"
   workflow_dispatch:
 
 permissions:

@@ -2,6 +2,7 @@ import sys
 import unittest
 from pathlib import Path
 from unittest.mock import Mock
+from tempfile import TemporaryDirectory
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import sunsirs_chart
@@ -26,11 +27,11 @@ class SunsirsChartTests(unittest.TestCase):
         response.headers = {"Content-Type": "text/html"}
         client = Mock()
         client.get.return_value = response
-        output = Path("artifacts/test-no-data.png")
-        output.unlink(missing_ok=True)
-        with self.assertRaisesRegex(ValueError, "响应不是 PNG"):
-            sunsirs_chart.fetch_chart_image("https://example.test/", output, session=client)
-        self.assertFalse(output.exists())
+        with TemporaryDirectory() as directory:
+            output = Path(directory) / "test-no-data.png"
+            with self.assertRaisesRegex(ValueError, "响应不是 PNG"):
+                sunsirs_chart.fetch_chart_image("https://example.test/", output, session=client)
+            self.assertFalse(output.exists())
 
     def test_fetch_saves_png_and_returns_provenance(self):
         body = bytes.fromhex("89504e470d0a1a0a") + b"chart"
@@ -38,12 +39,11 @@ class SunsirsChartTests(unittest.TestCase):
         response.headers = {"Content-Type": "image/png"}
         client = Mock()
         client.get.return_value = response
-        output = Path("artifacts/test-chart.png")
-        result = sunsirs_chart.fetch_chart_image("https://example.test/", output, session=client)
-        self.assertEqual(Path(result["path"]).read_bytes(), body)
-        self.assertEqual(result["content_type"], "image/png")
-        output.unlink()
-        output.parent.rmdir()
+        with TemporaryDirectory() as directory:
+            output = Path(directory) / "test-chart.png"
+            result = sunsirs_chart.fetch_chart_image("https://example.test/", output, session=client)
+            self.assertEqual(Path(result["path"]).read_bytes(), body)
+            self.assertEqual(result["content_type"], "image/png")
 
 
 if __name__ == "__main__":

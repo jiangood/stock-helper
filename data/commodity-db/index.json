@@ -5,6 +5,19 @@
   "productCount": 27,
   "products": [
     {
+      "id": "maleic-anhydride",
+      "name": "顺酐",
+      "unit": "元/吨",
+      "file": "products/maleic-anhydride.json",
+      "status": "ready",
+      "latestPrice": 9853.33,
+      "latestDate": "2026-10-01",
+      "source": "生意社顺酐现货均价图表（图像估算）",
+      "monthCount": 166,
+      "stockTimelineMonthCount": 161,
+      "commonMonthCount": 161
+    },
+    {
       "id": "soda-ash",
       "name": "纯碱",
       "unit": "元/吨",
@@ -16,19 +29,6 @@
       "monthCount": 83,
       "stockTimelineMonthCount": 83,
       "commonMonthCount": 83
-    },
-    {
-      "id": "maleic-anhydride",
-      "name": "顺酐",
-      "unit": "元/吨",
-      "file": "products/maleic-anhydride.json",
-      "status": "ready",
-      "latestPrice": 9975,
-      "latestDate": "2026-10-30",
-      "source": "生意社顺酐每日参考价（公开价格快讯）",
-      "monthCount": 3,
-      "stockTimelineMonthCount": 3,
-      "commonMonthCount": 3
     },
     {
       "id": "tio2",

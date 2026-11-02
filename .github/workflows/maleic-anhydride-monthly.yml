@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'scripts/collect_maleic_anhydride_monthly.py'
+      - 'scripts/sunsirs_chart.py'
       - 'scripts/test_sunsirs_month_start_ocr.py'
       - 'scripts/build_product_comparison.js'
       - 'data/maleic-anhydride-monthly.json'

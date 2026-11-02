@@ -181,7 +181,8 @@ function buildCommodityCards(productItems) {
     const productName = market && market.name || (itemId === 'corn' ? '玉米' : itemId === 'soybean-meal' ? '豆粕' : (marketMeta.marketItemId === itemId ? marketMeta.productName : itemId));
     const productHistory = commodityMonthly(market);
     const productPoints = productHistory.points;
-    // Keep a second, independently sourced market series when the selected primary
+    // Source variants are kept separate for comparison and are never used as fallback prices.
+  // Keep a second, independently sourced market series when the selected primary
     // history differs from the commodity quote feed. Never merge or average them.
     const alternatePoints = market && productHistory.source !== market.source
       ? productMonthly(market) : [];

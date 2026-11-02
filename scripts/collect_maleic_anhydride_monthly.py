@@ -9,6 +9,7 @@ from datetime import date
 from pathlib import Path
 import requests
 from test_sunsirs_month_start_ocr import estimate_first_price
+from sunsirs_chart import build_chart_url, fetch_chart_image
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "maleic-anhydride-monthly.json"
@@ -56,24 +57,17 @@ def main():
         if month in known and month != current_month:
             continue
         year, mon = map(int, month.split("-"))
-        url = BASE_URL
-        params = {"btime": f"{year}-{mon}-1", "etime": f"{year}-{mon}-2", "f": "xht_agent_price", "ppid": "660"}
+        url = build_chart_url("660", year, mon)
         try:
-            response = session.get(url, params=params, timeout=40)
-            response.raise_for_status()
-            content = response.content
-            if not content.startswith(bytes.fromhex("89504e470d0a1a0a")):
-                raise ValueError(f"response is not PNG (content-type={response.headers.get('Content-Type')})")
             image_path = ROOT / "artifacts" / f"maleic-{month}.png"
-            image_path.parent.mkdir(parents=True, exist_ok=True)
-            image_path.write_bytes(content)
+            fetched = fetch_chart_image(url, image_path, session=session, timeout=40)
             result = estimate_first_price(image_path, month)
             point = {
                 "month": month, "value": result.get("value"),
                 "status": result.get("status"), "estimated": True,
                 "observedDate": f"{month}-01", "unit": "元/吨",
-                "sourceImageUrl": response.url,
-                "imageSha256": __import__("hashlib").sha256(content).hexdigest()
+                "sourceImageUrl": fetched["url"],
+                "imageSha256": fetched["sha256"]
             }
             if result.get("quality"):
                 point["quality"] = result["quality"]

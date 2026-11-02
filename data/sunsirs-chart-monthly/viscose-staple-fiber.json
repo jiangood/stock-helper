@@ -1307,7 +1307,16 @@
       "estimated": true,
       "observedDate": "2026-11-01",
       "unit": "元/吨",
-      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-2&f=xht_agent_price&ppid=1017"
+      "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-2&f=xht_agent_price&ppid=1017",
+      "imageSha256": "9f768d820973a3dcf3df92268636123ffb4bc19dda70a7b2a8f68be65999dc2c",
+      "quality": {
+        "axis_tick_count": 7,
+        "axis_inlier_count": 6,
+        "axis_rejected_count": 1,
+        "axis_fit_rmse": 4.301,
+        "blue_pixels_sampled": 24,
+        "first_line_y": 257.5
+      }
     }
   ],
   "updatedAt": "2026-11-02"

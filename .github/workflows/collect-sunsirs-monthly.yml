@@ -1,0 +1,108 @@
+name: Collect Sunsirs monthly product history
+
+on:
+  workflow_dispatch:
+    inputs:
+      product_id:
+        description: "商品 ID（对应 data/business-data.json 中的已核实商品）"
+        required: true
+        default: "tio2"
+        type: string
+      start_month:
+        description: "起始月份 YYYY-MM"
+        required: true
+        default: "2020-04"
+        type: string
+      end_month:
+        description: "结束月份 YYYY-MM"
+        required: true
+        default: "2026-11"
+        type: string
+      refresh_existing:
+        description: "重新识别已有月份（用于 OCR 口径修正）"
+        required: true
+        default: false
+        type: boolean
+
+concurrency:
+  group: sunsirs-monthly-collection-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install chart OCR dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr
+          python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
+      - name: Run collector tests
+        run: python -m unittest discover -s tests -p 'test_sunsirs_*.py' -v
+      - name: Snapshot existing product history
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
+        run: |
+          mkdir -p artifacts/sunsirs-chart-comparison
+          file="data/sunsirs-chart-monthly/${PRODUCT_ID}.json"
+          if [ -f "$file" ]; then
+            cp "$file" "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before.json"
+          else
+            printf '{"points":[]}' > "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before.json"
+          fi
+      - name: Collect selected product and month range
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
+          START_MONTH: ${{ inputs.start_month }}
+          END_MONTH: ${{ inputs.end_month }}
+          REFRESH_EXISTING: ${{ inputs.refresh_existing }}
+        run: |
+          args=(--product-id "$PRODUCT_ID" --start-month "$START_MONTH" --end-month "$END_MONTH")
+          if [ "$REFRESH_EXISTING" = "true" ]; then
+            args+=(--refresh-existing)
+          fi
+          python scripts/collect_sunsirs_product_monthly.py "${args[@]}"
+      - name: Compare before and after
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
+        run: |
+          python scripts/compare_sunsirs_product_monthly.py \
+            --product-id "$PRODUCT_ID" \
+            --before "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before.json" \
+            --output "artifacts/sunsirs-chart-comparison/${PRODUCT_ID}-before-after.json"
+      - name: Commit refreshed product history
+        env:
+          PRODUCT_ID: ${{ inputs.product_id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+users.noreply.github.com"
+          git add "data/sunsirs-chart-monthly/${PRODUCT_ID}.json"
+          if ! git diff --cached --quiet; then
+            git commit -m "data: refresh Sunsirs monthly history for ${PRODUCT_ID}"
+            for attempt in 1 2 3; do
+              git fetch origin master
+              git rebase origin/master
+              if git push origin HEAD:master; then
+                exit 0
+              fi
+              echo "Push attempt ${attempt} failed; retrying"
+              sleep 2
+            done
+            exit 1
+          fi
+      - name: Upload collection report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunsirs-monthly-${{ inputs.product_id }}-${{ inputs.start_month }}-${{ inputs.end_month }}
+          path: artifacts/sunsirs-chart-comparison/
+          if-no-files-found: warn
+          retention-days: 14

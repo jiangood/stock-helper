@@ -165,6 +165,11 @@ function buildCommodityCards(productItems) {
     const productName = market && market.name || (itemId === 'corn' ? '玉米' : itemId === 'soybean-meal' ? '豆粕' : (marketMeta.marketItemId === itemId ? marketMeta.productName : itemId));
     const productHistory = commodityMonthly(market);
     const productPoints = productHistory.points;
+    // Keep a second, independently sourced market series when the selected primary
+    // history differs from the commodity quote feed. Never merge or average them.
+    const alternatePoints = market && productHistory.source !== market.source
+      ? productMonthly(market) : [];
+    const alternateSource = alternatePoints.length >= 2 ? (market.source || '商品行情接口') : null;
     const stocksWithHistory = related.map(({ stock, meta }) => {
       const history = stockMonthly(stock.code);
       const fundamental = fundamentals.stocks && fundamentals.stocks[stock.code] || {};
@@ -212,6 +217,18 @@ function buildCommodityCards(productItems) {
       index: Number((productMap.get(month).value / productBase * 100).toFixed(2)),
       price: Number(productMap.get(month).value.toFixed(4))
     })) : [];
+    const alternateMap = new Map(alternatePoints.map((point) => [point.month, point]));
+    const alternateBaseMonth = commonMonths.find((month) => alternateMap.has(month));
+    const alternateBase = alternateBaseMonth && alternateMap.get(alternateBaseMonth).value;
+    const alternateProductSeries = alternateBase > 0 && commonMonths.length >= 2
+      ? commonMonths.map((month) => {
+        const point = alternateMap.get(month);
+        return {
+          month,
+          index: point ? Number((point.value / alternateBase * 100).toFixed(2)) : null,
+          price: point ? Number(point.value.toFixed(4)) : null
+        };
+      }) : [];
     const stockSeries = qualifiedStocks.map((stock) => {
       const historyMap = new Map(stock.history.map((point) => [point.month, point]));
       const base = hasProductHistory
@@ -259,7 +276,7 @@ function buildCommodityCards(productItems) {
       productMonthCount: productPoints.length,
       stockTimelineMonthCount: stockOnlyMonths.length || commonMonths.length,
       commonMonthCount: hasProductHistory ? commonMonths.length : 0,
-      months: commonMonths, productSeries, stocks: stockSeries,
+      months: commonMonths, productSeries, alternateProductSeries, alternateSource, stocks: stockSeries,
       status: ready ? 'ready' : stockOnlyReady ? 'stock-only' : 'pending',
       note: [productHistory.note].concat(related.map(({ meta }) => meta.note).filter(Boolean))
         .concat(stockOnlyReady ? ['商品历史月线尚未接入；图表仅展示关联股票前复权月K，各股票分别以自身首月归一化为100，不代表商品与股票价格比较。'] : [])

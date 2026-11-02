@@ -2,15 +2,15 @@
   "id": "iron-ore",
   "name": "铁矿石",
   "unit": "元/吨",
-  "source": "期货主力连续",
-  "sourceNote": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。",
+  "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
+  "sourceNote": "期货主力连续价格仅作商品价格参考，不等于企业实际采购到厂价；连续合约换月可能产生价差。",
   "sourceUrl": "https://www.100ppi.com/",
-  "productStartDate": "2013-10-31",
-  "productEndDate": "2026-10-30",
-  "latestPrice": 672,
-  "latestDate": "2026-10-30",
+  "productStartDate": "2013-10",
+  "productEndDate": "2026-11",
+  "latestPrice": 674.5,
+  "latestDate": "2026-11",
   "productChange": -22.13,
-  "productMonthCount": 157,
+  "productMonthCount": 158,
   "stockTimelineMonthCount": 47,
   "commonMonthCount": 47,
   "months": [
@@ -792,5 +792,5 @@
     }
   ],
   "status": "ready",
-  "note": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。 磁铁矿约69%、铜约20%，分别观察两项主要产品。"
+  "note": "期货主力连续价格仅作商品价格参考，不等于企业实际采购到厂价；连续合约换月可能产生价差。 磁铁矿约69%、铜约20%，分别观察两项主要产品。"
 }

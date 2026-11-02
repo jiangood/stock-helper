@@ -109,7 +109,7 @@ def read_axis_ticks(image: np.ndarray) -> list[tuple[float, float, float]]:
             input=encoded.tobytes(),
             stderr=subprocess.DEVNULL,
         ).decode("utf-8", errors="replace")
-        for row in csv.DictReader(io.StringIO(output), delimiter="\\t"):
+        for row in csv.DictReader(io.StringIO(output), delimiter="\t"):
             raw = row.get("text", "").strip()
             value = _normalise_tick(raw)
             if value is None:

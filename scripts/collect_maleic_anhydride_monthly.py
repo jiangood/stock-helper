@@ -14,6 +14,10 @@ from sunsirs_chart import build_chart_url, fetch_chart_image
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "maleic-anhydride-monthly.json"
 SOURCE = "生意社顺酐现货均价图表（图像估算）"
+PRODUCTS = json.loads((ROOT / "data" / "business-data.json").read_text(encoding="utf-8"))["items"]
+PPID = PRODUCTS["maleic-anhydride"].get("sunsirsPpid")
+if not PPID:
+    raise RuntimeError("商品表未配置已核实的生意社 PPID，停止采集")
 BASE_URL = "https://www.100ppi.com/graph/report.php"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/128.0.0.0 Safari/537.36",
@@ -57,7 +61,7 @@ def main():
         if month in known and month != current_month:
             continue
         year, mon = map(int, month.split("-"))
-        url = build_chart_url("660", year, mon)
+        url = build_chart_url(PPID, year, mon)
         try:
             image_path = ROOT / "artifacts" / f"maleic-{month}.png"
             fetched = fetch_chart_image(url, image_path, session=session, timeout=40)

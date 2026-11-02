@@ -127,6 +127,14 @@ test('commodity database index references one independent JSON file per product'
         'a stock history count must not be smaller than its aligned chart points');
     });
   });
+  const sourceProducts = JSON.parse(fs.readFileSync(path.join(root, 'data/business-data.json'), 'utf8')).items;
+  assert.equal(sourceProducts['maleic-anhydride'].sunsirsPpid, '660');
+  assert.equal(sourceProducts.tio2.sunsirsPpid, null,
+    'unverified Sunsirs PPIDs must remain explicitly empty');
+  database.products.forEach((product) => {
+    assert.equal(product.sunsirsPpid, sourceProducts[product.id] && sourceProducts[product.id].sunsirsPpid || null,
+      'generated commodity index must carry the authoritative Sunsirs PPID');
+  });
   const maleic = database.products.find((item) => item.id === 'maleic-anhydride');
   assert.ok(maleic, 'maleic anhydride must remain in the product index');
   const maleicCard = JSON.parse(fs.readFileSync(path.join(databaseDir, maleic.file), 'utf8'));

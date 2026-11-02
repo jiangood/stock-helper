@@ -95,7 +95,13 @@ def main() -> int:
             print(json.dumps({"month": month, "status": point["status"], "value": point["value"]}, ensure_ascii=False))
         except Exception as exc:
             failed += 1
-            print(json.dumps({"month": month, "error": str(exc)}, ensure_ascii=False))
+            # Keep the month explicit but empty; never interpolate OCR/request failures.
+            known[month] = {
+                "month": month, "value": None, "status": "unavailable",
+                "estimated": True, "observedDate": f"{month}-01", "unit": unit,
+                "error": str(exc)[:300]
+            }
+            print(json.dumps({"month": month, "status": "unavailable", "error": str(exc)}, ensure_ascii=False))
         if args.delay > 0:
             time.sleep(args.delay)
 
@@ -110,7 +116,9 @@ def main() -> int:
     temp.replace(output)
     valid = sum(1 for point in payload["points"] if point.get("status") == "estimated" and point.get("value") is not None)
     print(json.dumps({"product": args.product_id, "ppid": ppid, "fetched": fetched, "failed": failed, "total": len(known), "valid": valid}, ensure_ascii=False))
-    return 1 if failed else 0
+    # Partial histories are useful when failed months remain explicitly null.
+    # Fail only when the run produced no usable estimates at all.
+    return 1 if valid == 0 else 0
 
 
 if __name__ == "__main__":

@@ -211,5 +211,5 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 - 顺酐采集器 `scripts/collect_maleic_anhydride_monthly.py` 已复用该模块；OCR 仍由 `scripts/test_sunsirs_month_start_ocr.py` 执行。通用模块只负责构造请求和验证图像，不会自动猜测 PPID，也不会绕过 OCR 质量检查。
 - 通用模块单元测试：`python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v`。
 - 多年份商品验证脚本：`scripts/test_sunsirs_chart_product.py`。它对起始、中间、结束年份请求月初图表并运行 OCR，生成 JSON 报告和原始图像；任何请求失败、无价格曲线或 OCR 不通过都会使验证失败。
-- 钛白粉当前验证仅把 `ppid=81` 作为待验证候选值。该数字此前出现在另一种 `nppid.php?id=81` 请求中，**并未因此确认它是 report.php 的 PPID**。只有新验证工作流实际取得多个年份的有效 report.php 图片并通过 OCR，才能确认；失败就放弃钛白粉这条图表接入，不改用其他报价。
+- 钛白粉候选 `ppid=81` 已经用通用模块实测：`report.php` 在 2020-04、2023-04、2026-10 均返回相同 SHA-256 的 15,999 字节 PNG，OCR 均识别为无价格曲线（`no_data`）。这说明 `id=81` 不是可用的 `report.php` PPID；钛白粉尚未找到合格 PPID，不得接入。该验证结果来自 GitHub Actions 运行记录，不能将 HTTP 200 误判为有图表数据。
 

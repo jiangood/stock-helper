@@ -28,7 +28,7 @@ jobs:
           sudo apt-get install -y tesseract-ocr
           python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
       - name: Unit tests for reusable chart downloader
-        run: python -m unittest tests/test_sunsirs_chart.py -v
+        run: python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v
       - name: Request titanium dioxide chart using report.php
         run: python scripts/test_sunsirs_chart_product.py --ppid 81 --name "钛白粉（硫酸法金红石型 R2）" --start-month 2020-04 --end-month 2026-10
       - name: Upload titanium dioxide chart validation

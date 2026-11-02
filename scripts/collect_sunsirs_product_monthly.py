@@ -13,7 +13,7 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT / "scripts"))
-from sunsirs_chart import build_chart_url, fetch_chart_image
+from sunsirs_chart import DEFAULT_HEADERS, build_chart_url, fetch_chart_image
 from test_sunsirs_month_start_ocr import estimate_first_price
 
 
@@ -54,6 +54,7 @@ def main() -> int:
         raise RuntimeError("商品 PPID 与历史文件不一致；为避免串品种，停止覆盖")
     known = {point.get("month"): point for point in payload.get("points", []) if point.get("month")}
     session = requests.Session()
+    session.headers.update(DEFAULT_HEADERS)
     fetched = failed = 0
     current_month = date.today().strftime("%Y-%m")
     for month in month_iter(args.start_month, args.end_month):

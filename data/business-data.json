@@ -5800,7 +5800,7 @@
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
       },
-      "sunsirsPpid": null
+      "sunsirsPpid": "645"
     },
     "aluminium": {
       "id": "aluminium",

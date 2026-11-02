@@ -213,3 +213,10 @@ https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agen
 - 多年份商品验证脚本：`scripts/test_sunsirs_chart_product.py`。它对起始、中间、结束年份请求月初图表并运行 OCR，生成 JSON 报告和原始图像；任何请求失败、无价格曲线或 OCR 不通过都会使验证失败。
 - 钛白粉候选 `ppid=81` 已经用通用模块实测：`report.php` 在 2020-04、2023-04、2026-10 均返回相同 SHA-256 的 15,999 字节 PNG，OCR 均识别为无价格曲线（`no_data`）。这说明 `id=81` 不是可用的 `report.php` PPID；钛白粉尚未找到合格 PPID，不得接入。该验证结果来自 GitHub Actions 运行记录，不能将 HTTP 200 误判为有图表数据。
 
+
+
+## 生意社商品标识字段
+
+- 生意社图表 PPID 作为商品元数据维护在 `data/business-data.json` 每个 `items.<商品ID>` 记录的 `sunsirsPpid` 字段；已核实填写数字字符串，未核实统一为 `null`，禁止根据其他页面 ID 推测。
+- `scripts/build_product_comparison.js` 将该字段透传到 `data/commodity-db/index.json` 对应商品记录，页面及通用采集器优先读取商品元数据，不在采集代码中硬编码 PPID。
+- 当前仅顺酐配置已验证 PPID `660`；钛白粉保持 `null`（候选 81 未通过 report.php 图表验证），粘胶短纤候选 1017 尚未完成跨年份 OCR 验证，暂不登记为已确认值。

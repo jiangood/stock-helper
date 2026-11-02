@@ -16,8 +16,7 @@
       "sunsirsPpid": "660",
       "monthCount": 166,
       "stockTimelineMonthCount": 161,
-      "commonMonthCount": 161,
-      "sunsirsPpid": "660"
+      "commonMonthCount": 161
     },
     {
       "id": "soda-ash",
@@ -31,8 +30,7 @@
       "sunsirsPpid": null,
       "monthCount": 83,
       "stockTimelineMonthCount": 83,
-      "commonMonthCount": 83,
-      "sunsirsPpid": null
+      "commonMonthCount": 83
     },
     {
       "id": "tio2",
@@ -46,8 +44,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "viscose-staple-fiber",
@@ -61,8 +58,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "fluorine-materials",
@@ -76,8 +72,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "rubber",
@@ -91,8 +86,7 @@
       "sunsirsPpid": null,
       "monthCount": 200,
       "stockTimelineMonthCount": 185,
-      "commonMonthCount": 185,
-      "sunsirsPpid": null
+      "commonMonthCount": 185
     },
     {
       "id": "soybean-meal",
@@ -106,8 +100,7 @@
       "sunsirsPpid": null,
       "monthCount": 180,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47,
-      "sunsirsPpid": null
+      "commonMonthCount": 47
     },
     {
       "id": "corn",
@@ -121,8 +114,7 @@
       "sunsirsPpid": null,
       "monthCount": 200,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47,
-      "sunsirsPpid": null
+      "commonMonthCount": 47
     },
     {
       "id": "tin",
@@ -136,8 +128,7 @@
       "sunsirsPpid": null,
       "monthCount": 140,
       "stockTimelineMonthCount": 138,
-      "commonMonthCount": 138,
-      "sunsirsPpid": null
+      "commonMonthCount": 138
     },
     {
       "id": "zinc",
@@ -151,8 +142,7 @@
       "sunsirsPpid": null,
       "monthCount": 200,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 200,
-      "sunsirsPpid": null
+      "commonMonthCount": 200
     },
     {
       "id": "aluminium",
@@ -166,8 +156,7 @@
       "sunsirsPpid": null,
       "monthCount": 200,
       "stockTimelineMonthCount": 196,
-      "commonMonthCount": 196,
-      "sunsirsPpid": null
+      "commonMonthCount": 196
     },
     {
       "id": "molybdenum",
@@ -181,8 +170,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "tantalum-niobium",
@@ -196,8 +184,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "rare-earth",
@@ -211,8 +198,7 @@
       "sunsirsPpid": null,
       "monthCount": 7,
       "stockTimelineMonthCount": 7,
-      "commonMonthCount": 7,
-      "sunsirsPpid": null
+      "commonMonthCount": 7
     },
     {
       "id": "tungsten-products",
@@ -226,8 +212,7 @@
       "sunsirsPpid": null,
       "monthCount": 5,
       "stockTimelineMonthCount": 5,
-      "commonMonthCount": 5,
-      "sunsirsPpid": null
+      "commonMonthCount": 5
     },
     {
       "id": "gold",
@@ -241,8 +226,7 @@
       "sunsirsPpid": null,
       "monthCount": 200,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 200,
-      "sunsirsPpid": null
+      "commonMonthCount": 200
     },
     {
       "id": "steel",
@@ -256,8 +240,7 @@
       "sunsirsPpid": null,
       "monthCount": 152,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47,
-      "sunsirsPpid": null
+      "commonMonthCount": 47
     },
     {
       "id": "iron-ore",
@@ -271,8 +254,7 @@
       "sunsirsPpid": null,
       "monthCount": 157,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 47,
-      "sunsirsPpid": null
+      "commonMonthCount": 47
     },
     {
       "id": "gasoline",
@@ -286,8 +268,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "coal",
@@ -301,8 +282,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "titanium-material",
@@ -316,8 +296,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "cast-superalloy",
@@ -331,8 +310,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "cathode-materials",
@@ -346,8 +324,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 62,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "carbon-fiber",
@@ -361,8 +338,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 55,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "sugar",
@@ -376,8 +352,7 @@
       "sunsirsPpid": null,
       "monthCount": 200,
       "stockTimelineMonthCount": 200,
-      "commonMonthCount": 200,
-      "sunsirsPpid": null
+      "commonMonthCount": 200
     },
     {
       "id": "yeast",
@@ -391,8 +366,7 @@
       "sunsirsPpid": null,
       "monthCount": 0,
       "stockTimelineMonthCount": 47,
-      "commonMonthCount": 0,
-      "sunsirsPpid": null
+      "commonMonthCount": 0
     },
     {
       "id": "methionine",
@@ -406,8 +380,7 @@
       "sunsirsPpid": null,
       "monthCount": 1,
       "stockTimelineMonthCount": 1,
-      "commonMonthCount": 1,
-      "sunsirsPpid": null
+      "commonMonthCount": 1
     }
   ]
 }

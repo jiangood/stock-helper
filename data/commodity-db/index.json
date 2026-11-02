@@ -10,13 +10,13 @@
       "unit": "元/吨",
       "file": "products/maleic-anhydride.json",
       "status": "ready",
-      "latestPrice": 9853.33,
-      "latestDate": "2026-10-01",
+      "latestPrice": 9974.53,
+      "latestDate": "2026-11-01",
       "source": "生意社顺酐现货均价图表（图像估算）",
       "sunsirsPpid": "660",
-      "monthCount": 166,
-      "stockTimelineMonthCount": 161,
-      "commonMonthCount": 161
+      "monthCount": 189,
+      "stockTimelineMonthCount": 183,
+      "commonMonthCount": 183
     },
     {
       "id": "soda-ash",
@@ -38,11 +38,11 @@
       "unit": "元/吨",
       "file": "products/viscose-staple-fiber.json",
       "status": "ready",
-      "latestPrice": 14700,
-      "latestDate": "2026-11-01",
+      "latestPrice": 14584.85,
+      "latestDate": "2026-10-01",
       "source": "生意社 report.php 商品价格走势图（图像估算）",
       "sunsirsPpid": "1017",
-      "monthCount": 62,
+      "monthCount": 61,
       "stockTimelineMonthCount": 37,
       "commonMonthCount": 37
     },

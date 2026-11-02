@@ -88,6 +88,22 @@ function commodityMonthly(item) {
       note: history.methodNote || '每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。'
     };
   }
+  if (item.sunsirsPpid) {
+    const chartPath = path.join(ROOT, 'data', 'sunsirs-chart-monthly', item.id + '.json');
+    if (fs.existsSync(chartPath)) {
+      try {
+        const history = readJson(path.relative(ROOT, chartPath));
+        const chartPoints = monthlyLast((history.points || [])
+          .filter((point) => point && point.status === 'estimated' && point.estimated === true)
+          .map((point) => ({ date: point.month + '-01', value: Number(point.value) })));
+        if (chartPoints.length >= 2) return {
+          points: chartPoints,
+          source: history.source || '生意社商品现货价格走势图（图像估算）',
+          note: history.methodNote || '生意社 report.php 图表月初价格线 OCR 估算；非原始报价。缺失月份留空，不插值。'
+        };
+      } catch (_) { /* malformed optional chart history remains unavailable */ }
+    }
+  }
   const itemName = String(item.name || '').trim();
   const candidates = companyProducts.filter((product) => {
     const sameName = String(product.productName || '').trim() === itemName;

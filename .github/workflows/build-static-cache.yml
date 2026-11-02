@@ -15,6 +15,7 @@ on:
       - "data/business-data.json"
       - "data/sunsirs-chart-monthly/**"
       - "data/maleic-anhydride-monthly.json"
+      - ".github/workflows/build-static-cache.yml"
 
 permissions:
   contents: write
@@ -49,6 +50,7 @@ jobs:
             node scripts/build_stock_detail_cache.js
             node scripts/build_sector_monthly.js
             node scripts/build_product_comparison.js
+            node --test tests/product-comparison.test.js
             node scripts/build_research_scores.js
             node scripts/build_cache_manifest.js
             node scripts/validate_stock_data.js

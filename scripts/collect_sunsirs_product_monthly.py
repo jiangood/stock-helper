@@ -60,6 +60,7 @@ def main() -> int:
         raise RuntimeError("商品 PPID 与历史文件不一致；为避免串品种，停止覆盖")
     known = {point.get("month"): point for point in payload.get("points", []) if point.get("month")}
     fetched = failed = 0
+    refresh_errors = {row.get("month"): row for row in payload.get("refreshErrors", []) if row.get("month")}
     current_month = date.today().strftime("%Y-%m")
     for month in month_iter(args.start_month, args.end_month):
         if (
@@ -102,16 +103,20 @@ def main() -> int:
             if estimate.get("status") == "no_data":
                 point["value"] = None
             known[month] = point
+            refresh_errors.pop(month, None)
             fetched += 1
             print(json.dumps({"month": month, "status": point["status"], "value": point["value"]}, ensure_ascii=False))
         except Exception as exc:
             failed += 1
-            # Keep the month explicit but empty; never interpolate OCR/request failures.
-            known[month] = {
-                "month": month, "value": None, "status": "unavailable",
-                "estimated": True, "observedDate": f"{month}-01", "unit": unit,
-                "error": str(exc)[:300]
-            }
+            # Never destroy a previously valid estimate because a refresh request/OCR failed.
+            previous = known.get(month)
+            if not (isinstance(previous, dict) and isinstance(previous.get("value"), (int, float)) and previous.get("status") == "estimated"):
+                known[month] = {
+                    "month": month, "value": None, "status": "unavailable",
+                    "estimated": True, "observedDate": f"{month}-01", "unit": unit,
+                    "error": str(exc)[:300]
+                }
+            refresh_errors[month] = {"month": month, "error": str(exc)[:300], "previous_value_preserved": bool(previous and previous.get("status") == "estimated" and previous.get("value") is not None)}
             print(json.dumps({"month": month, "status": "unavailable", "error": str(exc)}, ensure_ascii=False))
         if args.delay > 0:
             time.sleep(args.delay)
@@ -121,7 +126,8 @@ def main() -> int:
         "ppid": ppid, "updatedAt": date.today().isoformat(),
         "methodNote": "每月完整自然月图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
         "dateRule": "每月完整自然月图表最左侧蓝色价格线",
-        "points": [known[key] for key in sorted(known)]
+        "points": [known[key] for key in sorted(known)],
+        "refreshErrors": [refresh_errors[key] for key in sorted(refresh_errors)]
     })
     output.parent.mkdir(parents=True, exist_ok=True)
     temp = output.with_suffix(".json.tmp")

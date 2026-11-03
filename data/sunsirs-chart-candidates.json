@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "description": "Candidate chart product IDs sourced from the corresponding Sunsirs price-list pages; these are candidates only until report.php image/OCR validation passes.",
+  "samples": [
+    "2026-10",
+    "2026-11"
+  ],
+  "candidates": [
+    {
+      "id": "rare-earth",
+      "name": "镨钕氧化物",
+      "ppid": "1454",
+      "priceListUrl": "https://metals.100ppi.com/price/plist-1454-1.html"
+    },
+    {
+      "id": "tungsten-products",
+      "name": "仲钨酸铵",
+      "ppid": "994",
+      "priceListUrl": "https://metals.100ppi.com/price/plist-994-1.html"
+    }
+  ]
+}

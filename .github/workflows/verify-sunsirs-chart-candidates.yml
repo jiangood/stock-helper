@@ -23,6 +23,29 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y tesseract-ocr
           python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
+      - name: Inspect source price page chart identifiers
+        run: |
+          python - <<'PY'
+          import re
+          import sys
+          sys.path.insert(0, "scripts")
+          import sunsirs
+          products = [
+              ("镨钕氧化物", "https://metals.100ppi.com/price/plist-1454-1.html"),
+              ("仲钨酸铵", "https://metals.100ppi.com/price/plist-994-1.html"),
+              ("五氧化二钒", "https://metals.100ppi.com/price/plist-10452-1.html"),
+              ("PC", "https://www.100ppi.com/price/plist-825-1.html"),
+          ]
+          read = sunsirs.session(delay=0)
+          for name, url in products:
+              try:
+                  html = read(url)
+                  print(f"PAGE {name} {url} bytes={len(html)}")
+                  for match in re.finditer(r"(?i)(?:ppid|report\\.php|graph)", html):
+                      print(html[max(0, match.start()-180):min(len(html), match.end()+260)].replace("\\n", " ")[:500])
+              except Exception as exc:
+                  print(f"PAGE_ERROR {name}: {exc}")
+          PY
       - name: Run chart collector tests
         run: python -m unittest discover -s tests -p 'test_sunsirs_*.py' -v
       - name: Fetch candidate charts and run OCR checks

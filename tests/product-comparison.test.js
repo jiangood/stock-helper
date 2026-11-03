@@ -1,7 +1,14 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { monthlyLast, normalizedComparison, productMonthly } = require('../scripts/build_product_comparison');
+const { monthlyLast, normalizedComparison, productMonthly, usableSourceUrl } = require('../scripts/build_product_comparison');
+
+test('usableSourceUrl rejects generic provider homepages but keeps exact product links', () => {
+  assert.equal(usableSourceUrl('https://www.100ppi.com/'), null);
+  assert.equal(usableSourceUrl('https://www.100ppi.com/graph/report.php'), null);
+  assert.equal(usableSourceUrl('https://www.100ppi.com/graph/report.php?ppid=645'), 'https://www.100ppi.com/graph/report.php?ppid=645');
+  assert.equal(usableSourceUrl('https://www.100ppi.com/news/list-12-1217-994-1.html'), 'https://www.100ppi.com/news/list-12-1217-994-1.html');
+});
 
 test('monthlyLast keeps the last valid observation in each month', () => {
   const result = monthlyLast([
@@ -133,6 +140,9 @@ test('commodity database index references one independent JSON file per product'
   assert.equal(sourceProducts.tio2.sunsirsPpid, '645',
     'titanium dioxide PPID must match the official Sunsirs product chart');
   database.products.forEach((product) => {
+    const card = JSON.parse(fs.readFileSync(path.join(databaseDir, product.file), 'utf8'));
+    assert.notEqual(card.sourceUrl, 'https://www.100ppi.com/',
+      'generic provider homepage must not be published as a product source link');
     assert.equal(product.sunsirsPpid, sourceProducts[product.id] && sourceProducts[product.id].sunsirsPpid || null,
       'generated commodity index must carry the authoritative Sunsirs PPID');
   });

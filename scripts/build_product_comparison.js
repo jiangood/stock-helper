@@ -22,7 +22,7 @@ function usableSourceUrl(value) {
     const url = new URL(value);
     if (!['http:', 'https:'].includes(url.protocol)) return null;
     // A provider homepage is not a product source.
-    if (url.hostname === '100ppi.com' && url.pathname === '/') return null;
+    if (url.hostname.endsWith('100ppi.com') && url.pathname === '/') return null;
     if (url.hostname === 'www.100ppi.com' && url.pathname === '/graph/report.php' && !url.searchParams.has('ppid')) return null;
     return url.toString();
   } catch (_) { return null; }

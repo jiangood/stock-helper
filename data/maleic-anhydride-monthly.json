@@ -7,7 +7,7 @@
   "sourceUrl": "https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agent_price&ppid=660",
   "dateRule": "每月1日至2日图表最左侧蓝色价格线；不判断是否交易日",
   "methodNote": "每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
-  "updatedAt": "2026-11-02",
+  "updatedAt": "2026-11-03",
   "startMonth": "2010-05",
   "points": [
     {

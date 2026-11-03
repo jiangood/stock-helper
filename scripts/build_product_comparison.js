@@ -16,6 +16,18 @@ function validPoint(point) {
     Number.isFinite(Number(point.value)) && Number(point.value) > 0;
 }
 function monthKey(date) { return String(date).slice(0, 7); }
+function usableSourceUrl(value) {
+  if (typeof value !== 'string' || !value.trim()) return null;
+  try {
+    const url = new URL(value);
+    if (!['http:', 'https:'].includes(url.protocol)) return null;
+    // A provider homepage is not a product source. In particular, do not turn
+    // the generic 100ppi landing page into a misleading clickable chart link.
+    if (url.hostname === '100ppi.com' && url.pathname === '/') return null;
+    if (url.hostname === 'www.100ppi.com' && url.pathname === '/graph/report.php' && !url.searchParams.has('ppid')) return null;
+    return url.toString();
+  } catch (_) { return null; }
+}
 const MONTHLY_BAR_LIMIT = 200;
 function monthlyLast(points) {
   const byMonth = new Map();
@@ -293,7 +305,8 @@ function buildCommodityCards(productItems) {
     const stockOnlyReady = !hasProductHistory && stockSeries.some((stock) => stock.values.filter((point) => point.price !== null).length >= 2);
     return {
       id: itemId, name: productName, unit: market && market.unit || (itemId === 'corn' || itemId === 'soybean-meal' ? '元/吨' : (marketMeta.marketItemId === itemId ? marketMeta.unit : '')) || '',
-      source: productHistory.source || null, sourceNote: productHistory.note || null, sourceUrl: productHistory.sourceUrl || (market && market.sourceUrl) || null,
+      source: productHistory.source || null, sourceNote: productHistory.note || null,
+      sourceUrl: usableSourceUrl(productHistory.sourceUrl) || usableSourceUrl(market && market.sourceUrl),
       productStartDate: productPoints.length ? productPoints[0].date : null,
       productEndDate: productPoints.length ? productPoints[productPoints.length - 1].date : null,
       latestPrice,
@@ -436,4 +449,4 @@ function build() {
   return payload;
 }
 if (require.main === module) build();
-module.exports = { build, monthlyLast, normalizedComparison, productMonthly, stockMonthly, preferLongerHistory };
+module.exports = { build, monthlyLast, normalizedComparison, productMonthly, stockMonthly, preferLongerHistory, usableSourceUrl };

@@ -27,18 +27,6 @@ function usableSourceUrl(value) {
     return url.toString();
   } catch (_) { return null; }
 }
-function usableSourceUrl(value) {
-  if (typeof value !== 'string' || !value.trim()) return null;
-  try {
-    const url = new URL(value);
-    if (!['http:', 'https:'].includes(url.protocol)) return null;
-    // A provider homepage is not a product source. In particular, do not turn
-    // the generic 100ppi landing page into a misleading clickable chart link.
-    if (url.hostname === '100ppi.com' && url.pathname === '/') return null;
-    if (url.hostname === 'www.100ppi.com' && url.pathname === '/graph/report.php' && !url.searchParams.has('ppid')) return null;
-    return url.toString();
-  } catch (_) { return null; }
-}
 const MONTHLY_BAR_LIMIT = 200;
 function monthlyLast(points) {
   const byMonth = new Map();

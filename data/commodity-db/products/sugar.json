@@ -4,7 +4,7 @@
   "unit": "元/吨",
   "source": "期货主力连续",
   "sourceNote": "期货主力连续价格仅作行业价格代理，不等于公司实际销售均价；连续合约换月可能产生价差。",
-  "sourceUrl": "https://www.100ppi.com/",
+  "sourceUrl": null,
   "productStartDate": "2010-03-31",
   "productEndDate": "2026-10-30",
   "latestPrice": 5263,

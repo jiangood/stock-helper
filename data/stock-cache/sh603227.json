@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh603227",
-  "updatedAt": "2026-10-31T08:19:07.677Z",
+  "updatedAt": "2026-11-03T15:22:15.937Z",
   "detail": {
     "name": "雪峰科技",
-    "price": 6.74,
-    "prevClose": 6.73,
-    "change": 0.01,
-    "todayChange": 0.15,
-    "open": 6.71,
-    "high": 6.82,
-    "low": 6.63,
-    "avg": 6.74,
-    "volume": 48956,
-    "amount": 33004070,
-    "turnover": 0.46,
-    "volumeRatio": 0.89,
-    "amplitude": 2.82,
-    "limitUp": 7.4,
-    "limitDown": 6.06,
-    "pe": 14.59,
-    "peStatic": 14.34,
-    "peTtm": 15.14,
-    "pb": 1.34,
+    "price": 7.09,
+    "prevClose": 6.9,
+    "change": 0.19,
+    "todayChange": 2.75,
+    "open": 6.91,
+    "high": 7.1,
+    "low": 6.87,
+    "avg": 7.03,
+    "volume": 94689,
+    "amount": 66596971,
+    "turnover": 0.88,
+    "volumeRatio": 1.68,
+    "amplitude": 3.33,
+    "limitUp": 7.59,
+    "limitDown": 6.21,
+    "pe": 15.35,
+    "peStatic": 15.09,
+    "peTtm": 15.93,
+    "pb": 1.41,
     "roe": 7.03,
     "grossMargin": 24.0718501405,
     "netMargin": 11.4208498963,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 1071692689,
     "floatShares": 1071692689,
-    "totalCap": 7223208723.860001,
-    "floatCap": 7223208723.860001,
-    "time": 1793347921000,
+    "totalCap": 7598301165.01,
+    "floatCap": 7598301165.01,
+    "time": 1793693513000,
     "code": "sh603227"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 9,
-        "close": 9.04,
-        "high": 9.06,
-        "low": 8.88,
-        "volume": 259648
-      },
       {
         "time": "2025-10-22",
         "open": 9.01,
@@ -2046,6 +2038,22 @@
         "high": 6.82,
         "low": 6.63,
         "volume": 48956
+      },
+      {
+        "time": "2026-11-02",
+        "open": 6.73,
+        "close": 6.9,
+        "high": 6.99,
+        "low": 6.73,
+        "volume": 99740
+      },
+      {
+        "time": "2026-11-03",
+        "open": 6.91,
+        "close": 7.09,
+        "high": 7.1,
+        "low": 6.87,
+        "volume": 94689
       }
     ]
   },
@@ -2054,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 9.15,
-        "close": 9.19,
-        "high": 9.21,
-        "low": 9.03,
-        "volume": 259648
-      },
-      {
-        "time": "2025-10-22",
-        "open": 9.16,
-        "close": 9.4,
-        "high": 9.42,
-        "low": 9.1,
-        "volume": 265038
-      },
       {
         "time": "2025-10-23",
         "open": 9.45,
@@ -4053,6 +4045,22 @@
         "high": 6.82,
         "low": 6.63,
         "volume": 48956
+      },
+      {
+        "time": "2026-11-02",
+        "open": 6.73,
+        "close": 6.9,
+        "high": 6.99,
+        "low": 6.73,
+        "volume": 99740
+      },
+      {
+        "time": "2026-11-03",
+        "open": 6.91,
+        "close": 7.09,
+        "high": 7.1,
+        "low": 6.87,
+        "volume": 94689
       }
     ]
   },
@@ -4061,14 +4069,6 @@
     "period": "week",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2022-12-09",
-        "open": 8.23,
-        "close": 8.34,
-        "high": 8.6,
-        "low": 8.09,
-        "volume": 723410
-      },
       {
         "time": "2022-12-16",
         "open": 8.26,
@@ -5654,16 +5654,24 @@
         "volume": 448340
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 6.79,
-        "close": 6.72,
+        "close": 6.74,
         "high": 6.89,
-        "low": 6.71,
-        "volume": 156813
+        "low": 6.63,
+        "volume": 239369
+      },
+      {
+        "time": "2026-11-03",
+        "open": 6.73,
+        "close": 7.09,
+        "high": 7.1,
+        "low": 6.73,
+        "volume": 194429
       }
     ]
   },
-  "weeklyFetchedFor": "2026-W44",
+  "weeklyFetchedFor": "2026-W45",
   "monthlyAdjusted": {
     "code": "sh603227",
     "period": "month",
@@ -6764,8 +6772,16 @@
         "high": 7.64,
         "low": 6.53,
         "volume": 1148585
+      },
+      {
+        "time": "2026-11-03",
+        "open": 6.73,
+        "close": 7.09,
+        "high": 7.1,
+        "low": 6.73,
+        "volume": 194429
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10-31"
+  "monthlyFetchedFor": "2026-11-03"
 }

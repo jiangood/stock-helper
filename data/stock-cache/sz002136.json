@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz002136",
-  "updatedAt": "2026-10-31T08:19:07.677Z",
+  "updatedAt": "2026-11-03T15:22:15.937Z",
   "detail": {
     "name": "安 纳 达",
-    "price": 9.77,
-    "prevClose": 10.07,
-    "change": -0.3,
-    "todayChange": -2.98,
-    "open": 9.94,
-    "high": 10.26,
-    "low": 9.7,
-    "avg": 10.01,
-    "volume": 61441,
-    "amount": 61527984.93,
-    "turnover": 2.86,
-    "volumeRatio": 1.1,
-    "amplitude": 5.56,
-    "limitUp": 11.08,
-    "limitDown": 9.06,
-    "pe": 23.33,
-    "peStatic": -22.69,
-    "peTtm": 98.59,
-    "pb": 1.83,
+    "price": 9.92,
+    "prevClose": 9.87,
+    "change": 0.05,
+    "todayChange": 0.51,
+    "open": 9.87,
+    "high": 10.08,
+    "low": 9.81,
+    "avg": 9.94,
+    "volume": 50887,
+    "amount": 50593675,
+    "turnover": 2.37,
+    "volumeRatio": 0.92,
+    "amplitude": 2.74,
+    "limitUp": 10.86,
+    "limitDown": 8.88,
+    "pe": 23.69,
+    "peStatic": -23.04,
+    "peTtm": 100.1,
+    "pb": 1.86,
     "roe": 6.05,
     "grossMargin": 12.5237774505,
     "netMargin": 4.4057793786,
@@ -37,9 +37,9 @@
     "board": "BK1019",
     "totalShares": 215020000,
     "floatShares": 214455760,
-    "totalCap": 2100745400,
-    "floatCap": 2095232775.1999998,
-    "time": 1793345652000,
+    "totalCap": 2132998400,
+    "floatCap": 2127401139.2,
+    "time": 1793691276000,
     "code": "sz002136"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 11.28,
-        "close": 11.37,
-        "high": 11.4,
-        "low": 11.23,
-        "volume": 59206
-      },
       {
         "time": "2025-10-22",
         "open": 11.15,
@@ -2046,6 +2038,22 @@
         "high": 10.26,
         "low": 9.7,
         "volume": 61441
+      },
+      {
+        "time": "2026-11-02",
+        "open": 9.9,
+        "close": 9.87,
+        "high": 10.04,
+        "low": 9.78,
+        "volume": 79635
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.87,
+        "close": 9.92,
+        "high": 10.08,
+        "low": 9.81,
+        "volume": 50887
       }
     ]
   },
@@ -2055,22 +2063,6 @@
     "adjust": "",
     "bars": [
       {
-        "time": "2025-10-21",
-        "open": 11.28,
-        "close": 11.37,
-        "high": 11.4,
-        "low": 11.23,
-        "volume": 59206
-      },
-      {
-        "time": "2025-10-22",
-        "open": 11.15,
-        "close": 11.28,
-        "high": 11.37,
-        "low": 11.12,
-        "volume": 59317
-      },
-      {
         "time": "2025-10-23",
         "open": 11.28,
         "close": 11.35,
@@ -4053,6 +4045,22 @@
         "high": 10.26,
         "low": 9.7,
         "volume": 61441
+      },
+      {
+        "time": "2026-11-02",
+        "open": 9.9,
+        "close": 9.87,
+        "high": 10.04,
+        "low": 9.78,
+        "volume": 79635
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.87,
+        "close": 9.92,
+        "high": 10.08,
+        "low": 9.81,
+        "volume": 50887
       }
     ]
   },
@@ -4061,14 +4069,6 @@
     "period": "week",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2022-12-09",
-        "open": 14.03,
-        "close": 14.3,
-        "high": 14.36,
-        "low": 13.93,
-        "volume": 155882
-      },
       {
         "time": "2022-12-16",
         "open": 14.24,
@@ -5654,16 +5654,24 @@
         "volume": 207488
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 10.51,
-        "close": 10.37,
+        "close": 9.77,
         "high": 10.79,
-        "low": 10.16,
-        "volume": 179710
+        "low": 9.7,
+        "volume": 271025
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.9,
+        "close": 9.92,
+        "high": 10.08,
+        "low": 9.78,
+        "volume": 130522
       }
     ]
   },
-  "weeklyFetchedFor": "2026-W44",
+  "weeklyFetchedFor": "2026-W45",
   "monthlyAdjusted": {
     "code": "sz002136",
     "period": "month",
@@ -7540,8 +7548,16 @@
         "high": 12.3,
         "low": 9.7,
         "volume": 871650
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.9,
+        "close": 9.92,
+        "high": 10.08,
+        "low": 9.78,
+        "volume": 130522
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10-31"
+  "monthlyFetchedFor": "2026-11-03"
 }

@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600426",
-  "updatedAt": "2026-10-31T08:19:07.677Z",
+  "updatedAt": "2026-11-03T15:22:15.937Z",
   "detail": {
     "name": "华鲁恒升",
-    "price": 19.06,
-    "prevClose": 19.48,
-    "change": -0.42,
-    "todayChange": -2.16,
-    "open": 19.1,
-    "high": 19.61,
-    "low": 18.61,
-    "avg": 19.09,
-    "volume": 263993,
-    "amount": 504089905,
-    "turnover": 0.96,
-    "volumeRatio": 1.09,
-    "amplitude": 5.13,
-    "limitUp": 21.43,
-    "limitDown": 17.53,
-    "pe": 12.4,
-    "peStatic": 15.81,
-    "peTtm": 12.74,
-    "pb": 1.5,
+    "price": 19.83,
+    "prevClose": 19.42,
+    "change": 0.41,
+    "todayChange": 2.11,
+    "open": 19.33,
+    "high": 19.92,
+    "low": 19.33,
+    "avg": 19.64,
+    "volume": 365545,
+    "amount": 717876545,
+    "turnover": 1.33,
+    "volumeRatio": 1.42,
+    "amplitude": 3.04,
+    "limitUp": 21.36,
+    "limitDown": 17.48,
+    "pe": 12.9,
+    "peStatic": 16.45,
+    "peTtm": 13.26,
+    "pb": 1.56,
     "roe": 9.21,
     "grossMargin": 21.8549696462,
     "netMargin": 13.141565493999998,
@@ -37,9 +37,9 @@
     "board": "BK0731",
     "totalShares": 2749943015,
     "floatShares": 2749943015,
-    "totalCap": 52413913865.899994,
-    "floatCap": 52413913865.899994,
-    "time": 1793347901000,
+    "totalCap": 54531369987.45,
+    "floatCap": 54531369987.45,
+    "time": 1793693493000,
     "code": "sh600426"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 18.048,
-        "close": 17.917,
-        "high": 18.164,
-        "low": 17.817,
-        "volume": 167629
-      },
       {
         "time": "2025-10-22",
         "open": 17.833,
@@ -2046,6 +2038,22 @@
         "high": 19.61,
         "low": 18.61,
         "volume": 263993
+      },
+      {
+        "time": "2026-11-02",
+        "open": 19.06,
+        "close": 19.42,
+        "high": 19.64,
+        "low": 18.83,
+        "volume": 330593
+      },
+      {
+        "time": "2026-11-03",
+        "open": 19.33,
+        "close": 19.83,
+        "high": 19.92,
+        "low": 19.33,
+        "volume": 365545
       }
     ]
   },
@@ -2054,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 24.3,
-        "close": 24.13,
-        "high": 24.45,
-        "low": 24,
-        "volume": 167629
-      },
-      {
-        "time": "2025-10-22",
-        "open": 24.02,
-        "close": 24.11,
-        "high": 24.45,
-        "low": 24.02,
-        "volume": 97361
-      },
       {
         "time": "2025-10-23",
         "open": 24.2,
@@ -4053,6 +4045,22 @@
         "high": 19.61,
         "low": 18.61,
         "volume": 263993
+      },
+      {
+        "time": "2026-11-02",
+        "open": 19.06,
+        "close": 19.42,
+        "high": 19.64,
+        "low": 18.83,
+        "volume": 330593
+      },
+      {
+        "time": "2026-11-03",
+        "open": 19.33,
+        "close": 19.83,
+        "high": 19.92,
+        "low": 19.33,
+        "volume": 365545
       }
     ]
   },
@@ -4061,14 +4069,6 @@
     "period": "week",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2022-12-09",
-        "open": 22.856,
-        "close": 22.664,
-        "high": 23.433,
-        "low": 22.049,
-        "volume": 639511
-      },
       {
         "time": "2022-12-16",
         "open": 22.556,
@@ -5654,16 +5654,24 @@
         "volume": 963774
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 19.14,
-        "close": 19.22,
+        "close": 19.06,
         "high": 19.8,
-        "low": 18.89,
-        "volume": 828682
+        "low": 18.61,
+        "volume": 1215821
+      },
+      {
+        "time": "2026-11-03",
+        "open": 19.06,
+        "close": 19.83,
+        "high": 19.92,
+        "low": 18.83,
+        "volume": 696138
       }
     ]
   },
-  "weeklyFetchedFor": "2026-W44",
+  "weeklyFetchedFor": "2026-W45",
   "monthlyAdjusted": {
     "code": "sh600426",
     "period": "month",
@@ -5671,11 +5679,11 @@
     "bars": [
       {
         "time": "2024-03",
-        "open": 18.672,
+        "open": 18.741,
         "high": 19.125,
         "low": 16.987,
         "close": 18.556,
-        "volume": 2561602
+        "volume": 2346308
       },
       {
         "time": "2024-04",
@@ -5924,9 +5932,17 @@
         "low": 17.89,
         "close": 19.06,
         "volume": 4138975
+      },
+      {
+        "time": "2026-11",
+        "open": 19.06,
+        "high": 19.92,
+        "low": 18.83,
+        "close": 19.83,
+        "volume": 696138
       }
     ],
     "source": "aggregated-adjusted-daily"
   },
-  "monthlyFetchedFor": "2026-10-31"
+  "monthlyFetchedFor": "2026-11-03"
 }

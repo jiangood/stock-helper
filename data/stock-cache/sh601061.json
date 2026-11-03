@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
   "code": "sh601061",
-  "updatedAt": "2026-10-31T08:19:07.677Z",
+  "updatedAt": "2026-11-03T15:22:15.937Z",
   "detail": {
     "name": "中信金属",
     "price": 9.25,
-    "prevClose": 9.49,
-    "change": -0.24,
-    "todayChange": -2.53,
-    "open": 9.31,
+    "prevClose": 9.3,
+    "change": -0.05,
+    "todayChange": -0.54,
+    "open": 9.33,
     "high": 9.53,
-    "low": 9.2,
-    "avg": 9.33,
-    "volume": 110745,
-    "amount": 103347677,
-    "turnover": 0.23,
-    "volumeRatio": 1,
-    "amplitude": 3.48,
-    "limitUp": 10.44,
-    "limitDown": 8.54,
+    "low": 9.21,
+    "avg": 9.34,
+    "volume": 137034,
+    "amount": 128007068,
+    "turnover": 0.28,
+    "volumeRatio": 1.22,
+    "amplitude": 3.44,
+    "limitUp": 10.23,
+    "limitDown": 8.37,
     "pe": 9.02,
     "peStatic": 16.85,
     "peTtm": 10.97,
@@ -32,14 +32,14 @@
     "profitYoY": 62.011498055483,
     "navPerShare": 5.2226716,
     "high52": 17.71,
-    "low52": 9.2,
+    "low52": 9.19,
     "listedAt": 20230410,
     "board": "BK0484",
     "totalShares": 4900000000,
     "floatShares": 4900000000,
     "totalCap": 45325000000,
     "floatCap": 45325000000,
-    "time": 1793347920000,
+    "time": 1793693509000,
     "code": "sh601061"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 10.03,
-        "close": 11.02,
-        "high": 11.02,
-        "low": 10.03,
-        "volume": 355789
-      },
       {
         "time": "2025-10-22",
         "open": 10.78,
@@ -2046,6 +2038,22 @@
         "high": 9.53,
         "low": 9.2,
         "volume": 110745
+      },
+      {
+        "time": "2026-11-02",
+        "open": 9.38,
+        "close": 9.3,
+        "high": 9.39,
+        "low": 9.19,
+        "volume": 111471
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.33,
+        "close": 9.25,
+        "high": 9.53,
+        "low": 9.21,
+        "volume": 137034
       }
     ]
   },
@@ -2054,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 10.25,
-        "close": 11.24,
-        "high": 11.24,
-        "low": 10.25,
-        "volume": 355789
-      },
-      {
-        "time": "2025-10-22",
-        "open": 11,
-        "close": 11.49,
-        "high": 11.69,
-        "low": 10.96,
-        "volume": 859980
-      },
       {
         "time": "2025-10-23",
         "open": 11.51,
@@ -4053,6 +4045,22 @@
         "high": 9.53,
         "low": 9.2,
         "volume": 110745
+      },
+      {
+        "time": "2026-11-02",
+        "open": 9.38,
+        "close": 9.3,
+        "high": 9.39,
+        "low": 9.19,
+        "volume": 111471
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.33,
+        "close": 9.25,
+        "high": 9.53,
+        "low": 9.21,
+        "volume": 137034
       }
     ]
   },
@@ -5518,16 +5526,24 @@
         "volume": 498589
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 10.05,
-        "close": 9.55,
+        "close": 9.25,
         "high": 10.05,
-        "low": 9.54,
-        "volume": 385820
+        "low": 9.2,
+        "volume": 550195
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.38,
+        "close": 9.25,
+        "high": 9.53,
+        "low": 9.19,
+        "volume": 248505
       }
     ]
   },
-  "weeklyFetchedFor": "2026-W44",
+  "weeklyFetchedFor": "2026-W45",
   "monthlyAdjusted": {
     "code": "sh601061",
     "period": "month",
@@ -5876,8 +5892,16 @@
         "high": 11.28,
         "low": 9.2,
         "volume": 1937144
+      },
+      {
+        "time": "2026-11-03",
+        "open": 9.38,
+        "close": 9.25,
+        "high": 9.53,
+        "low": 9.19,
+        "volume": 248505
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10-31"
+  "monthlyFetchedFor": "2026-11-03"
 }

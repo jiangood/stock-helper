@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh688750",
-  "updatedAt": "2026-10-31T08:19:07.677Z",
+  "updatedAt": "2026-11-03T15:22:15.937Z",
   "detail": {
     "name": "金天钛业",
-    "price": 12.53,
-    "prevClose": 13.04,
-    "change": -0.51,
-    "todayChange": -3.91,
-    "open": 13,
-    "high": 13.08,
-    "low": 12.44,
-    "avg": 12.82,
-    "volume": 25950,
-    "amount": 33273221,
-    "turnover": 1.11,
-    "volumeRatio": 1.19,
-    "amplitude": 4.91,
-    "limitUp": 15.65,
-    "limitDown": 10.43,
-    "pe": 55.59,
-    "peStatic": 97.77,
-    "peTtm": 64.36,
-    "pb": 2.29,
+    "price": 13.27,
+    "prevClose": 13.34,
+    "change": -0.07,
+    "todayChange": -0.52,
+    "open": 13.2,
+    "high": 13.5,
+    "low": 13.14,
+    "avg": 13.34,
+    "volume": 25327,
+    "amount": 33773103,
+    "turnover": 1.09,
+    "volumeRatio": 0.97,
+    "amplitude": 2.7,
+    "limitUp": 16.01,
+    "limitDown": 10.67,
+    "pe": 58.87,
+    "peStatic": 103.54,
+    "peTtm": 68.16,
+    "pb": 2.42,
     "roe": 3.12,
     "grossMargin": 29.1934650174,
     "netMargin": 17.3228279994,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 462500000,
     "floatShares": 232918326,
-    "totalCap": 5795125000,
-    "floatCap": 2918466624.7799997,
-    "time": 1793347912000,
+    "totalCap": 6137375000,
+    "floatCap": 3090826186.02,
+    "time": 1793693501000,
     "code": "sh688750"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 20.657,
-        "close": 20.667,
-        "high": 20.727,
-        "low": 20.477,
-        "volume": 1565481
-      },
       {
         "time": "2025-10-22",
         "open": 20.657,
@@ -2046,6 +2038,22 @@
         "high": 13.08,
         "low": 12.44,
         "volume": 2595027
+      },
+      {
+        "time": "2026-11-02",
+        "open": 12.81,
+        "close": 13.34,
+        "high": 13.48,
+        "low": 12.8,
+        "volume": 4932698
+      },
+      {
+        "time": "2026-11-03",
+        "open": 13.2,
+        "close": 13.27,
+        "high": 13.5,
+        "low": 13.14,
+        "volume": 2532655
       }
     ]
   },
@@ -2054,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 20.68,
-        "close": 20.69,
-        "high": 20.75,
-        "low": 20.5,
-        "volume": 1565481
-      },
-      {
-        "time": "2025-10-22",
-        "open": 20.68,
-        "close": 20.55,
-        "high": 20.68,
-        "low": 20.43,
-        "volume": 1122409
-      },
       {
         "time": "2025-10-23",
         "open": 20.5,
@@ -4053,6 +4045,22 @@
         "high": 13.08,
         "low": 12.44,
         "volume": 2595027
+      },
+      {
+        "time": "2026-11-02",
+        "open": 12.81,
+        "close": 13.34,
+        "high": 13.48,
+        "low": 12.8,
+        "volume": 4932698
+      },
+      {
+        "time": "2026-11-03",
+        "open": 13.2,
+        "close": 13.27,
+        "high": 13.5,
+        "low": 13.14,
+        "volume": 2532655
       }
     ]
   },
@@ -4862,16 +4870,24 @@
         "volume": 9023507
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 13.14,
-        "close": 13.14,
+        "close": 12.53,
         "high": 13.46,
-        "low": 12.96,
-        "volume": 6236923
+        "low": 12.44,
+        "volume": 9962773
+      },
+      {
+        "time": "2026-11-03",
+        "open": 12.81,
+        "close": 13.27,
+        "high": 13.5,
+        "low": 12.8,
+        "volume": 7465353
       }
     ]
   },
-  "weeklyFetchedFor": "2026-W44",
+  "weeklyFetchedFor": "2026-W45",
   "monthlyAdjusted": {
     "code": "sh688750",
     "period": "month",
@@ -5068,8 +5084,16 @@
         "high": 14.08,
         "low": 12.44,
         "volume": 32272120
+      },
+      {
+        "time": "2026-11-03",
+        "open": 12.81,
+        "close": 13.27,
+        "high": 13.5,
+        "low": 12.8,
+        "volume": 7465353
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10-31"
+  "monthlyFetchedFor": "2026-11-03"
 }

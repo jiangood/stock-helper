@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600737",
-  "updatedAt": "2026-10-31T08:19:07.677Z",
+  "updatedAt": "2026-11-03T15:22:15.937Z",
   "detail": {
     "name": "中粮糖业",
-    "price": 11.78,
-    "prevClose": 11.56,
-    "change": 0.22,
-    "todayChange": 1.9,
-    "open": 11.38,
+    "price": 11.96,
+    "prevClose": 11.79,
+    "change": 0.17,
+    "todayChange": 1.44,
+    "open": 11.64,
     "high": 12.09,
-    "low": 11.22,
-    "avg": 11.72,
-    "volume": 487190,
-    "amount": 571180902,
-    "turnover": 2.28,
-    "volumeRatio": 1.12,
-    "amplitude": 7.53,
-    "limitUp": 12.72,
-    "limitDown": 10.4,
-    "pe": 20.26,
-    "peStatic": 26.49,
-    "peTtm": 23.57,
-    "pb": 2.21,
+    "low": 11.58,
+    "avg": 11.93,
+    "volume": 334786,
+    "amount": 399284772,
+    "turnover": 1.57,
+    "volumeRatio": 0.78,
+    "amplitude": 4.33,
+    "limitUp": 12.97,
+    "limitDown": 10.61,
+    "pe": 20.57,
+    "peStatic": 26.89,
+    "peTtm": 23.93,
+    "pb": 2.24,
     "roe": 8.01,
     "grossMargin": 13.7929704968,
     "netMargin": 6.3028978695,
@@ -37,9 +37,9 @@
     "board": "BK1256",
     "totalShares": 2138848228,
     "floatShares": 2138848228,
-    "totalCap": 25195632125.84,
-    "floatCap": 25195632125.84,
-    "time": 1793347901000,
+    "totalCap": 25580624806.88,
+    "floatCap": 25580624806.88,
+    "time": 1793693517000,
     "code": "sh600737"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 14.22,
-        "close": 15.2,
-        "high": 15.46,
-        "low": 13.97,
-        "volume": 590870
-      },
       {
         "time": "2025-10-22",
         "open": 15.26,
@@ -2046,6 +2038,22 @@
         "high": 12.09,
         "low": 11.22,
         "volume": 487190
+      },
+      {
+        "time": "2026-11-02",
+        "open": 11.81,
+        "close": 11.79,
+        "high": 11.88,
+        "low": 11.58,
+        "volume": 345284
+      },
+      {
+        "time": "2026-11-03",
+        "open": 11.64,
+        "close": 11.96,
+        "high": 12.09,
+        "low": 11.58,
+        "volume": 334786
       }
     ]
   },
@@ -2054,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-21",
-        "open": 14.56,
-        "close": 15.54,
-        "high": 15.8,
-        "low": 14.31,
-        "volume": 590870
-      },
-      {
-        "time": "2025-10-22",
-        "open": 15.6,
-        "close": 15.19,
-        "high": 15.76,
-        "low": 15.08,
-        "volume": 269925
-      },
       {
         "time": "2025-10-23",
         "open": 15.11,
@@ -4053,6 +4045,22 @@
         "high": 12.09,
         "low": 11.22,
         "volume": 487190
+      },
+      {
+        "time": "2026-11-02",
+        "open": 11.81,
+        "close": 11.79,
+        "high": 11.88,
+        "low": 11.58,
+        "volume": 345284
+      },
+      {
+        "time": "2026-11-03",
+        "open": 11.64,
+        "close": 11.96,
+        "high": 12.09,
+        "low": 11.58,
+        "volume": 334786
       }
     ]
   },
@@ -4061,14 +4069,6 @@
     "period": "week",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2022-12-09",
-        "open": 5.11,
-        "close": 5.18,
-        "high": 5.4,
-        "low": 5.04,
-        "volume": 1355516
-      },
       {
         "time": "2022-12-16",
         "open": 5.18,
@@ -5654,29 +5654,29 @@
         "volume": 2330509
       },
       {
-        "time": "2026-10-29",
+        "time": "2026-10-30",
         "open": 13.05,
-        "close": 11.74,
+        "close": 11.78,
         "high": 13.1,
-        "low": 11.71,
-        "volume": 1375396
+        "low": 11.22,
+        "volume": 2137034
+      },
+      {
+        "time": "2026-11-03",
+        "open": 11.81,
+        "close": 11.96,
+        "high": 12.09,
+        "low": 11.58,
+        "volume": 680070
       }
     ]
   },
-  "weeklyFetchedFor": "2026-W44",
+  "weeklyFetchedFor": "2026-W45",
   "monthlyAdjusted": {
     "code": "sh600737",
     "period": "month",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2006-11-17",
-        "open": 3.379,
-        "close": 3.729,
-        "high": 3.869,
-        "low": 3.049,
-        "volume": 1498517.93
-      },
       {
         "time": "2006-12-21",
         "open": 4.059,
@@ -7588,8 +7588,16 @@
         "high": 16.5,
         "low": 11.22,
         "volume": 11905449
+      },
+      {
+        "time": "2026-11-03",
+        "open": 11.81,
+        "close": 11.96,
+        "high": 12.09,
+        "low": 11.58,
+        "volume": 680070
       }
     ]
   },
-  "monthlyFetchedFor": "2026-10-31"
+  "monthlyFetchedFor": "2026-11-03"
 }

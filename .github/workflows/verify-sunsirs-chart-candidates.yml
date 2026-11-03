@@ -1,0 +1,59 @@
+name: Verify Sunsirs chart PPID candidates
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "data/sunsirs-chart-candidates.json"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install OCR dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr
+          python -m pip install --disable-pip-version-check requests numpy opencv-python-headless
+      - name: Run chart collector tests
+        run: python -m unittest discover -s tests -p 'test_sunsirs_*.py' -v
+      - name: Fetch candidate charts and run OCR checks
+        run: |
+          mkdir -p artifacts/sunsirs-chart-candidates
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          manifest = json.loads(Path("data/sunsirs-chart-candidates.json").read_text(encoding="utf-8"))
+          failed = False
+          for item in manifest["candidates"]:
+              command = [
+                  "python", "scripts/test_sunsirs_chart_product.py",
+                  "--ppid", str(item["ppid"]),
+                  "--name", item["name"],
+                  "--start-month", "2026-10",
+                  "--end-month", "2026-11",
+                  "--output-dir", f"artifacts/sunsirs-chart-candidates/{item['id']}",
+              ]
+              print("Running:", " ".join(command), flush=True)
+              result = subprocess.run(command, check=False)
+              failed = failed or result.returncode != 0
+          if failed:
+              raise SystemExit("One or more candidate PPIDs failed image/OCR validation")
+          PY
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunsirs-chart-ppid-validation
+          path: artifacts/sunsirs-chart-candidates/
+          if-no-files-found: warn
+          retention-days: 14

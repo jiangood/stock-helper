@@ -3172,20 +3172,20 @@
     },
     {
       "month": "2026-11",
-      "value": 9974.48,
+      "value": 9973.7,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2026-11-01",
       "unit": "元/吨",
       "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=660",
-      "imageSha256": "d70efb87e95b2c571916f208d36344f77b4497a6d367949b22bd60aa28e0d2a3",
+      "imageSha256": "0c2efebd4bfd2acf7c7466b4c7ae7cb358e2147a2eaaa321b8150fe0ffae8afd",
       "quality": {
         "axis_tick_count": 7,
         "axis_inlier_count": 7,
         "axis_rejected_count": 0,
         "axis_fit_rmse": 0.11,
         "blue_pixels_sampled": 24,
-        "first_line_y": 131.5
+        "first_line_y": 133.5
       }
     }
   ]

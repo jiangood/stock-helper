@@ -9,10 +9,10 @@
   "productEndDate": "2026-11",
   "latestPrice": 365110,
   "latestDate": "2026-11",
-  "productChange": 205.42,
+  "productChange": 209,
   "productMonthCount": 141,
-  "stockTimelineMonthCount": 138,
-  "commonMonthCount": 138,
+  "stockTimelineMonthCount": 139,
+  "commonMonthCount": 139,
   "months": [
     "2015-03",
     "2015-04",
@@ -151,7 +151,8 @@
     "2026-07",
     "2026-08",
     "2026-09",
-    "2026-10"
+    "2026-10",
+    "2026-11"
   ],
   "productSeries": [
     {
@@ -843,6 +844,11 @@
       "month": "2026-10",
       "index": 305.42,
       "price": 360880
+    },
+    {
+      "month": "2026-11",
+      "index": 309,
+      "price": 365110
     }
   ],
   "alternateProductSeries": [
@@ -1535,6 +1541,11 @@
       "month": "2026-10",
       "index": 305.42,
       "price": 360880
+    },
+    {
+      "month": "2026-11",
+      "index": 309,
+      "price": 365110
     }
   ],
   "alternateSource": "商品行情接口",
@@ -1547,12 +1558,12 @@
       "roleLabel": "产品端",
       "mainRatio": 0.500039,
       "source": "月K",
-      "latestDate": "2026-10-30",
-      "latestClose": 22.67,
+      "latestDate": "2026-11-03",
+      "latestClose": 22.58,
       "monthCount": 200,
-      "historyStartMonth": "2010-01",
-      "historyEndMonth": "2026-10",
-      "changePct": 6.72,
+      "historyStartMonth": "2010-02",
+      "historyEndMonth": "2026-11",
+      "changePct": 6.3,
       "values": [
         {
           "month": "2015-03",
@@ -2243,6 +2254,11 @@
           "month": "2026-10",
           "index": 106.72,
           "price": 22.67
+        },
+        {
+          "month": "2026-11",
+          "index": 106.3,
+          "price": 22.58
         }
       ]
     },
@@ -2254,12 +2270,12 @@
       "roleLabel": "产品端",
       "mainRatio": 0.515863,
       "source": "月K",
-      "latestDate": "2026-10-30",
-      "latestClose": 41.63,
+      "latestDate": "2026-11-03",
+      "latestClose": 42.61,
       "monthCount": 200,
-      "historyStartMonth": "2010-01",
-      "historyEndMonth": "2026-10",
-      "changePct": 338.21,
+      "historyStartMonth": "2010-02",
+      "historyEndMonth": "2026-11",
+      "changePct": 348.53,
       "values": [
         {
           "month": "2015-03",
@@ -2950,6 +2966,11 @@
           "month": "2026-10",
           "index": 438.21,
           "price": 41.63
+        },
+        {
+          "month": "2026-11",
+          "index": 448.53,
+          "price": 42.61
         }
       ]
     }

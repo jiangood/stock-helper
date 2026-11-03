@@ -9,10 +9,10 @@
   "productEndDate": "2026-11",
   "latestPrice": 3198,
   "latestDate": "2026-11",
-  "productChange": -19.13,
+  "productChange": -18.75,
   "productMonthCount": 180,
-  "stockTimelineMonthCount": 47,
-  "commonMonthCount": 47,
+  "stockTimelineMonthCount": 48,
+  "commonMonthCount": 48,
   "months": [
     "2022-12",
     "2023-01",
@@ -60,7 +60,8 @@
     "2026-07",
     "2026-08",
     "2026-09",
-    "2026-10"
+    "2026-10",
+    "2026-11"
   ],
   "productSeries": [
     {
@@ -297,6 +298,11 @@
       "month": "2026-10",
       "index": 80.87,
       "price": 3183
+    },
+    {
+      "month": "2026-11",
+      "index": 81.25,
+      "price": 3198
     }
   ],
   "alternateProductSeries": [
@@ -534,6 +540,11 @@
       "month": "2026-10",
       "index": 80.87,
       "price": 3183
+    },
+    {
+      "month": "2026-11",
+      "index": 81.25,
+      "price": 3198
     }
   ],
   "alternateSource": "商品行情接口",
@@ -546,12 +557,12 @@
       "roleLabel": "成本端",
       "mainRatio": null,
       "source": "周K月末收盘聚合",
-      "latestDate": "2026-10-29",
-      "latestClose": 7.67,
-      "monthCount": 47,
+      "latestDate": "2026-11-03",
+      "latestClose": 8.19,
+      "monthCount": 48,
       "historyStartMonth": "2022-12",
-      "historyEndMonth": "2026-10",
-      "changePct": -1.57,
+      "historyEndMonth": "2026-11",
+      "changePct": 5.11,
       "values": [
         {
           "month": "2022-12",
@@ -785,8 +796,13 @@
         },
         {
           "month": "2026-10",
-          "index": 98.43,
-          "price": 7.67
+          "index": 97.15,
+          "price": 7.57
+        },
+        {
+          "month": "2026-11",
+          "index": 105.11,
+          "price": 8.19
         }
       ]
     }

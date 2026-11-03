@@ -14,7 +14,6 @@
   "stockTimelineMonthCount": 200,
   "commonMonthCount": 0,
   "months": [
-    "2010-03",
     "2010-04",
     "2010-05",
     "2010-06",
@@ -213,7 +212,8 @@
     "2026-07",
     "2026-08",
     "2026-09",
-    "2026-10"
+    "2026-10",
+    "2026-11"
   ],
   "productSeries": [],
   "alternateProductSeries": [],
@@ -227,1012 +227,1012 @@
       "roleLabel": "多因素",
       "mainRatio": 0.692585,
       "source": "月K",
-      "latestDate": "2026-10-30",
-      "latestClose": 6.51,
+      "latestDate": "2026-11-03",
+      "latestClose": 6.54,
       "monthCount": 200,
-      "historyStartMonth": "2010-03",
-      "historyEndMonth": "2026-10",
-      "changePct": -23.41,
+      "historyStartMonth": "2010-04",
+      "historyEndMonth": "2026-11",
+      "changePct": -15.18,
       "values": [
         {
-          "month": "2010-03",
-          "index": 100,
-          "price": 8.5
-        },
-        {
           "month": "2010-04",
-          "index": 90.71,
+          "index": 100,
           "price": 7.71
         },
         {
           "month": "2010-05",
-          "index": 74.71,
+          "index": 82.36,
           "price": 6.35
         },
         {
           "month": "2010-06",
-          "index": 74.35,
+          "index": 81.97,
           "price": 6.32
         },
         {
           "month": "2010-07",
-          "index": 88.12,
+          "index": 97.15,
           "price": 7.49
         },
         {
           "month": "2010-08",
-          "index": 95.76,
+          "index": 105.58,
           "price": 8.14
         },
         {
           "month": "2010-09",
-          "index": 86.94,
+          "index": 95.85,
           "price": 7.39
         },
         {
           "month": "2010-10",
-          "index": 102.47,
+          "index": 112.97,
           "price": 8.71
         },
         {
           "month": "2010-11",
-          "index": 102.47,
+          "index": 112.97,
           "price": 8.71
         },
         {
           "month": "2010-12",
-          "index": 96.47,
+          "index": 106.36,
           "price": 8.2
         },
         {
           "month": "2011-01",
-          "index": 98,
+          "index": 108.04,
           "price": 8.33
         },
         {
           "month": "2011-02",
-          "index": 108.35,
+          "index": 119.46,
           "price": 9.21
         },
         {
           "month": "2011-03",
-          "index": 123.06,
+          "index": 135.67,
           "price": 10.46
         },
         {
           "month": "2011-04",
-          "index": 134.82,
+          "index": 148.64,
           "price": 11.46
         },
         {
           "month": "2011-05",
-          "index": 117.76,
+          "index": 129.83,
           "price": 10.01
         },
         {
           "month": "2011-06",
-          "index": 129.06,
+          "index": 142.28,
           "price": 10.97
         },
         {
           "month": "2011-07",
-          "index": 140,
+          "index": 154.35,
           "price": 11.9
         },
         {
           "month": "2011-08",
-          "index": 130.82,
+          "index": 144.23,
           "price": 11.12
         },
         {
           "month": "2011-09",
-          "index": 98.35,
+          "index": 108.43,
           "price": 8.36
         },
         {
           "month": "2011-10",
-          "index": 91.18,
+          "index": 100.52,
           "price": 7.75
         },
         {
           "month": "2011-11",
-          "index": 87.53,
+          "index": 96.5,
           "price": 7.44
         },
         {
           "month": "2011-12",
-          "index": 76.35,
+          "index": 84.18,
           "price": 6.49
         },
         {
           "month": "2012-01",
-          "index": 82.94,
+          "index": 91.44,
           "price": 7.05
         },
         {
           "month": "2012-02",
-          "index": 85.41,
+          "index": 94.16,
           "price": 7.26
         },
         {
           "month": "2012-03",
-          "index": 74.47,
+          "index": 82.1,
           "price": 6.33
         },
         {
           "month": "2012-04",
-          "index": 75.53,
+          "index": 83.27,
           "price": 6.42
         },
         {
           "month": "2012-05",
-          "index": 69.65,
+          "index": 76.78,
           "price": 5.92
         },
         {
           "month": "2012-06",
-          "index": 62.94,
+          "index": 69.39,
           "price": 5.35
         },
         {
           "month": "2012-07",
-          "index": 49.18,
+          "index": 54.22,
           "price": 4.18
         },
         {
           "month": "2012-08",
-          "index": 61.41,
+          "index": 67.7,
           "price": 5.22
         },
         {
           "month": "2012-09",
-          "index": 55.53,
+          "index": 61.22,
           "price": 4.72
         },
         {
           "month": "2012-10",
-          "index": 55.65,
+          "index": 61.35,
           "price": 4.73
         },
         {
           "month": "2012-11",
-          "index": 47.18,
+          "index": 52.01,
           "price": 4.01
         },
         {
           "month": "2012-12",
-          "index": 53.53,
+          "index": 59.01,
           "price": 4.55
         },
         {
           "month": "2013-01",
-          "index": 57.29,
+          "index": 63.16,
           "price": 4.87
         },
         {
           "month": "2013-02",
-          "index": 56.24,
+          "index": 62,
           "price": 4.78
         },
         {
           "month": "2013-03",
-          "index": 50.94,
+          "index": 56.16,
           "price": 4.33
         },
         {
           "month": "2013-04",
-          "index": 46.24,
+          "index": 50.97,
           "price": 3.93
         },
         {
           "month": "2013-05",
-          "index": 50.24,
+          "index": 55.38,
           "price": 4.27
         },
         {
           "month": "2013-06",
-          "index": 38.35,
+          "index": 42.28,
           "price": 3.26
         },
         {
           "month": "2013-07",
-          "index": 37.88,
+          "index": 41.76,
           "price": 3.22
         },
         {
           "month": "2013-08",
-          "index": 48.59,
+          "index": 53.57,
           "price": 4.13
         },
         {
           "month": "2013-09",
-          "index": 44.47,
+          "index": 49.03,
           "price": 3.78
         },
         {
           "month": "2013-10",
-          "index": 67.53,
+          "index": 74.45,
           "price": 5.74
         },
         {
           "month": "2013-11",
-          "index": 64.47,
+          "index": 71.08,
           "price": 5.48
         },
         {
           "month": "2013-12",
-          "index": 53.65,
+          "index": 59.14,
           "price": 4.56
         },
         {
           "month": "2014-01",
-          "index": 52.47,
+          "index": 57.85,
           "price": 4.46
         },
         {
           "month": "2014-02",
-          "index": 100,
+          "index": 110.25,
           "price": 8.5
         },
         {
           "month": "2014-03",
-          "index": 76.35,
+          "index": 84.18,
           "price": 6.49
         },
         {
           "month": "2014-04",
-          "index": 66.24,
+          "index": 73.02,
           "price": 5.63
         },
         {
           "month": "2014-05",
-          "index": 78.12,
+          "index": 86.12,
           "price": 6.64
         },
         {
           "month": "2014-06",
-          "index": 90.12,
+          "index": 99.35,
           "price": 7.66
         },
         {
           "month": "2014-07",
-          "index": 104.12,
+          "index": 114.79,
           "price": 8.85
         },
         {
           "month": "2014-08",
-          "index": 95.06,
+          "index": 104.8,
           "price": 8.08
         },
         {
           "month": "2014-09",
-          "index": 119.29,
+          "index": 131.52,
           "price": 10.14
         },
         {
           "month": "2014-10",
-          "index": 116,
+          "index": 127.89,
           "price": 9.86
         },
         {
           "month": "2014-11",
-          "index": 116.12,
+          "index": 128.02,
           "price": 9.87
         },
         {
           "month": "2014-12",
-          "index": 96,
+          "index": 105.84,
           "price": 8.16
         },
         {
           "month": "2015-01",
-          "index": 102.94,
+          "index": 113.49,
           "price": 8.75
         },
         {
           "month": "2015-02",
-          "index": 114.35,
+          "index": 126.07,
           "price": 9.72
         },
         {
           "month": "2015-03",
-          "index": 132.71,
+          "index": 146.3,
           "price": 11.28
         },
         {
           "month": "2015-04",
-          "index": 160.71,
+          "index": 177.17,
           "price": 13.66
         },
         {
           "month": "2015-05",
-          "index": 167.29,
+          "index": 184.44,
           "price": 14.22
         },
         {
           "month": "2015-06",
-          "index": 212.59,
+          "index": 234.37,
           "price": 18.07
         },
         {
           "month": "2015-07",
-          "index": 136.71,
+          "index": 150.71,
           "price": 11.62
         },
         {
           "month": "2015-08",
-          "index": 117.06,
+          "index": 129.05,
           "price": 9.95
         },
         {
           "month": "2015-09",
-          "index": 100.35,
+          "index": 110.64,
           "price": 8.53
         },
         {
           "month": "2015-10",
-          "index": 138.59,
+          "index": 152.79,
           "price": 11.78
         },
         {
           "month": "2015-11",
-          "index": 128,
+          "index": 141.12,
           "price": 10.88
         },
         {
           "month": "2015-12",
-          "index": 141.18,
+          "index": 155.64,
           "price": 12
         },
         {
           "month": "2016-01",
-          "index": 103.88,
+          "index": 114.53,
           "price": 8.83
         },
         {
           "month": "2016-02",
-          "index": 110.59,
+          "index": 121.92,
           "price": 9.4
         },
         {
           "month": "2016-03",
-          "index": 113.53,
+          "index": 125.16,
           "price": 9.65
         },
         {
           "month": "2016-04",
-          "index": 107.29,
+          "index": 118.29,
           "price": 9.12
         },
         {
           "month": "2016-05",
-          "index": 96.35,
+          "index": 106.23,
           "price": 8.19
         },
         {
           "month": "2016-06",
-          "index": 96.82,
+          "index": 106.74,
           "price": 8.23
         },
         {
           "month": "2016-07",
-          "index": 94.71,
+          "index": 104.41,
           "price": 8.05
         },
         {
           "month": "2016-08",
-          "index": 100.35,
+          "index": 110.64,
           "price": 8.53
         },
         {
           "month": "2016-09",
-          "index": 108.12,
+          "index": 119.2,
           "price": 9.19
         },
         {
           "month": "2016-10",
-          "index": 105.65,
+          "index": 116.47,
           "price": 8.98
         },
         {
           "month": "2016-11",
-          "index": 122.35,
+          "index": 134.89,
           "price": 10.4
         },
         {
           "month": "2016-12",
-          "index": 125.88,
+          "index": 138.78,
           "price": 10.7
         },
         {
           "month": "2017-01",
-          "index": 135.29,
+          "index": 149.16,
           "price": 11.5
         },
         {
           "month": "2017-02",
-          "index": 144.71,
+          "index": 159.53,
           "price": 12.3
         },
         {
           "month": "2017-03",
-          "index": 126.94,
+          "index": 139.95,
           "price": 10.79
         },
         {
           "month": "2017-04",
-          "index": 139.06,
+          "index": 153.31,
           "price": 11.82
         },
         {
           "month": "2017-05",
-          "index": 102,
+          "index": 112.45,
           "price": 8.67
         },
         {
           "month": "2017-06",
-          "index": 90.94,
+          "index": 100.26,
           "price": 7.73
         },
         {
           "month": "2017-07",
-          "index": 97.53,
+          "index": 107.52,
           "price": 8.29
         },
         {
           "month": "2017-08",
-          "index": 123.65,
+          "index": 136.32,
           "price": 10.51
         },
         {
           "month": "2017-09",
-          "index": 110.35,
+          "index": 121.66,
           "price": 9.38
         },
         {
           "month": "2017-10",
-          "index": 101.41,
+          "index": 111.8,
           "price": 8.62
         },
         {
           "month": "2017-11",
-          "index": 90.24,
+          "index": 99.48,
           "price": 7.67
         },
         {
           "month": "2017-12",
-          "index": 91.29,
+          "index": 100.65,
           "price": 7.76
         },
         {
           "month": "2018-01",
-          "index": 86.24,
+          "index": 95.07,
           "price": 7.33
         },
         {
           "month": "2018-02",
-          "index": 74.47,
+          "index": 82.1,
           "price": 6.33
         },
         {
           "month": "2018-03",
-          "index": 80.12,
+          "index": 88.33,
           "price": 6.81
         },
         {
           "month": "2018-04",
-          "index": 74.71,
+          "index": 82.36,
           "price": 6.35
         },
         {
           "month": "2018-05",
-          "index": 74.59,
+          "index": 82.23,
           "price": 6.34
         },
         {
           "month": "2018-06",
-          "index": 65.06,
+          "index": 71.73,
           "price": 5.53
         },
         {
           "month": "2018-07",
-          "index": 71.29,
+          "index": 78.6,
           "price": 6.06
         },
         {
           "month": "2018-08",
-          "index": 64.35,
+          "index": 70.95,
           "price": 5.47
         },
         {
           "month": "2018-09",
-          "index": 65.65,
+          "index": 72.37,
           "price": 5.58
         },
         {
           "month": "2018-10",
-          "index": 55.29,
+          "index": 60.96,
           "price": 4.7
         },
         {
           "month": "2018-11",
-          "index": 55.18,
+          "index": 60.83,
           "price": 4.69
         },
         {
           "month": "2018-12",
-          "index": 56,
+          "index": 61.74,
           "price": 4.76
         },
         {
           "month": "2019-01",
-          "index": 53.53,
+          "index": 59.01,
           "price": 4.55
         },
         {
           "month": "2019-02",
-          "index": 64.71,
+          "index": 71.34,
           "price": 5.5
         },
         {
           "month": "2019-03",
-          "index": 72.94,
+          "index": 80.42,
           "price": 6.2
         },
         {
           "month": "2019-04",
-          "index": 72.47,
+          "index": 79.9,
           "price": 6.16
         },
         {
           "month": "2019-05",
-          "index": 66.94,
+          "index": 73.8,
           "price": 5.69
         },
         {
           "month": "2019-06",
-          "index": 66.12,
+          "index": 72.89,
           "price": 5.62
         },
         {
           "month": "2019-07",
-          "index": 61.18,
+          "index": 67.44,
           "price": 5.2
         },
         {
           "month": "2019-08",
-          "index": 55.76,
+          "index": 61.48,
           "price": 4.74
         },
         {
           "month": "2019-09",
-          "index": 54.12,
+          "index": 59.66,
           "price": 4.6
         },
         {
           "month": "2019-10",
-          "index": 52.94,
+          "index": 58.37,
           "price": 4.5
         },
         {
           "month": "2019-11",
-          "index": 51.06,
+          "index": 56.29,
           "price": 4.34
         },
         {
           "month": "2019-12",
-          "index": 53.41,
+          "index": 58.88,
           "price": 4.54
         },
         {
           "month": "2020-01",
-          "index": 51.76,
+          "index": 57.07,
           "price": 4.4
         },
         {
           "month": "2020-02",
-          "index": 50,
+          "index": 55.12,
           "price": 4.25
         },
         {
           "month": "2020-03",
-          "index": 49.29,
+          "index": 54.35,
           "price": 4.19
         },
         {
           "month": "2020-04",
-          "index": 52.47,
+          "index": 57.85,
           "price": 4.46
         },
         {
           "month": "2020-05",
-          "index": 47.65,
+          "index": 52.53,
           "price": 4.05
         },
         {
           "month": "2020-06",
-          "index": 50,
+          "index": 55.12,
           "price": 4.25
         },
         {
           "month": "2020-07",
-          "index": 55.06,
+          "index": 60.7,
           "price": 4.68
         },
         {
           "month": "2020-08",
-          "index": 56.24,
+          "index": 62,
           "price": 4.78
         },
         {
           "month": "2020-09",
-          "index": 49.41,
+          "index": 54.47,
           "price": 4.2
         },
         {
           "month": "2020-10",
-          "index": 47.06,
+          "index": 51.88,
           "price": 4
         },
         {
           "month": "2020-11",
-          "index": 50.47,
+          "index": 55.64,
           "price": 4.29
         },
         {
           "month": "2020-12",
-          "index": 47.65,
+          "index": 52.53,
           "price": 4.05
         },
         {
           "month": "2021-01",
-          "index": 43.29,
+          "index": 47.73,
           "price": 3.68
         },
         {
           "month": "2021-02",
-          "index": 47.88,
+          "index": 52.79,
           "price": 4.07
         },
         {
           "month": "2021-03",
-          "index": 49.53,
+          "index": 54.6,
           "price": 4.21
         },
         {
           "month": "2021-04",
-          "index": 50.94,
+          "index": 56.16,
           "price": 4.33
         },
         {
           "month": "2021-05",
-          "index": 50.71,
+          "index": 55.9,
           "price": 4.31
         },
         {
           "month": "2021-06",
-          "index": 50.24,
+          "index": 55.38,
           "price": 4.27
         },
         {
           "month": "2021-07",
-          "index": 45.88,
+          "index": 50.58,
           "price": 3.9
         },
         {
           "month": "2021-08",
-          "index": 50,
+          "index": 55.12,
           "price": 4.25
         },
         {
           "month": "2021-09",
-          "index": 58.94,
+          "index": 64.98,
           "price": 5.01
         },
         {
           "month": "2021-10",
-          "index": 57.06,
+          "index": 62.91,
           "price": 4.85
         },
         {
           "month": "2021-11",
-          "index": 50.94,
+          "index": 56.16,
           "price": 4.33
         },
         {
           "month": "2021-12",
-          "index": 58.59,
+          "index": 64.59,
           "price": 4.98
         },
         {
           "month": "2022-01",
-          "index": 59.76,
+          "index": 65.89,
           "price": 5.08
         },
         {
           "month": "2022-02",
-          "index": 68.71,
+          "index": 75.75,
           "price": 5.84
         },
         {
           "month": "2022-03",
-          "index": 57.18,
+          "index": 63.04,
           "price": 4.86
         },
         {
           "month": "2022-04",
-          "index": 49.18,
+          "index": 54.22,
           "price": 4.18
         },
         {
           "month": "2022-05",
-          "index": 65.18,
+          "index": 71.85,
           "price": 5.54
         },
         {
           "month": "2022-06",
-          "index": 57.88,
+          "index": 63.81,
           "price": 4.92
         },
         {
           "month": "2022-07",
-          "index": 60.24,
+          "index": 66.41,
           "price": 5.12
         },
         {
           "month": "2022-08",
-          "index": 60.94,
+          "index": 67.19,
           "price": 5.18
         },
         {
           "month": "2022-09",
-          "index": 56.47,
+          "index": 62.26,
           "price": 4.8
         },
         {
           "month": "2022-10",
-          "index": 53.29,
+          "index": 58.75,
           "price": 4.53
         },
         {
           "month": "2022-11",
-          "index": 63.41,
+          "index": 69.91,
           "price": 5.39
         },
         {
           "month": "2022-12",
-          "index": 60.94,
+          "index": 67.19,
           "price": 5.18
         },
         {
           "month": "2023-01",
-          "index": 66.24,
+          "index": 73.02,
           "price": 5.63
         },
         {
           "month": "2023-02",
-          "index": 67.53,
+          "index": 74.45,
           "price": 5.74
         },
         {
           "month": "2023-03",
-          "index": 61.06,
+          "index": 67.32,
           "price": 5.19
         },
         {
           "month": "2023-04",
-          "index": 61.18,
+          "index": 67.44,
           "price": 5.2
         },
         {
           "month": "2023-05",
-          "index": 60.35,
+          "index": 66.54,
           "price": 5.13
         },
         {
           "month": "2023-06",
-          "index": 62.12,
+          "index": 68.48,
           "price": 5.28
         },
         {
           "month": "2023-07",
-          "index": 65.24,
+          "index": 71.92,
           "price": 5.545
         },
         {
           "month": "2023-08",
-          "index": 64.29,
+          "index": 70.88,
           "price": 5.465
         },
         {
           "month": "2023-09",
-          "index": 68.18,
+          "index": 75.16,
           "price": 5.795
         },
         {
           "month": "2023-10",
-          "index": 64.65,
+          "index": 71.27,
           "price": 5.495
         },
         {
           "month": "2023-11",
-          "index": 65.82,
+          "index": 72.57,
           "price": 5.595
         },
         {
           "month": "2023-12",
-          "index": 63.94,
+          "index": 70.49,
           "price": 5.435
         },
         {
           "month": "2024-01",
-          "index": 67.59,
+          "index": 74.51,
           "price": 5.745
         },
         {
           "month": "2024-02",
-          "index": 60.88,
+          "index": 67.12,
           "price": 5.175
         },
         {
           "month": "2024-03",
-          "index": 59.82,
+          "index": 65.95,
           "price": 5.085
         },
         {
           "month": "2024-04",
-          "index": 62.53,
+          "index": 68.94,
           "price": 5.315
         },
         {
           "month": "2024-05",
-          "index": 60.18,
+          "index": 66.34,
           "price": 5.115
         },
         {
           "month": "2024-06",
-          "index": 55.98,
+          "index": 61.71,
           "price": 4.758
         },
         {
           "month": "2024-07",
-          "index": 57.39,
+          "index": 63.27,
           "price": 4.878
         },
         {
           "month": "2024-08",
-          "index": 55.74,
+          "index": 61.45,
           "price": 4.738
         },
         {
           "month": "2024-09",
-          "index": 65.98,
+          "index": 72.74,
           "price": 5.608
         },
         {
           "month": "2024-10",
-          "index": 69.04,
+          "index": 76.11,
           "price": 5.868
         },
         {
           "month": "2024-11",
-          "index": 69.98,
+          "index": 77.15,
           "price": 5.948
         },
         {
           "month": "2024-12",
-          "index": 66.45,
+          "index": 73.26,
           "price": 5.648
         },
         {
           "month": "2025-01",
-          "index": 65.27,
+          "index": 71.96,
           "price": 5.548
         },
         {
           "month": "2025-02",
-          "index": 65.04,
+          "index": 71.7,
           "price": 5.528
         },
         {
           "month": "2025-03",
-          "index": 68.68,
+          "index": 75.72,
           "price": 5.838
         },
         {
           "month": "2025-04",
-          "index": 66.92,
+          "index": 73.77,
           "price": 5.688
         },
         {
           "month": "2025-05",
-          "index": 69.04,
+          "index": 76.11,
           "price": 5.868
         },
         {
           "month": "2025-06",
-          "index": 80.73,
+          "index": 89,
           "price": 6.862
         },
         {
           "month": "2025-07",
-          "index": 76.49,
+          "index": 84.33,
           "price": 6.502
         },
         {
           "month": "2025-08",
-          "index": 79.91,
+          "index": 88.09,
           "price": 6.792
         },
         {
           "month": "2025-09",
-          "index": 75.79,
+          "index": 83.55,
           "price": 6.442
         },
         {
           "month": "2025-10",
-          "index": 78.05,
+          "index": 86.04,
           "price": 6.634
         },
         {
           "month": "2025-11",
-          "index": 77.22,
+          "index": 85.14,
           "price": 6.564
         },
         {
           "month": "2025-12",
-          "index": 74.52,
+          "index": 82.15,
           "price": 6.334
         },
         {
           "month": "2026-01",
-          "index": 97.81,
+          "index": 107.83,
           "price": 8.314
         },
         {
           "month": "2026-02",
-          "index": 103.69,
+          "index": 114.32,
           "price": 8.814
         },
         {
           "month": "2026-03",
-          "index": 95.22,
+          "index": 104.98,
           "price": 8.094
         },
         {
           "month": "2026-04",
-          "index": 94.64,
+          "index": 104.33,
           "price": 8.044
         },
         {
           "month": "2026-05",
-          "index": 77.58,
+          "index": 85.53,
           "price": 6.594
         },
         {
           "month": "2026-06",
-          "index": 64.28,
+          "index": 70.87,
           "price": 5.464
         },
         {
           "month": "2026-07",
-          "index": 73.34,
+          "index": 80.86,
           "price": 6.234
         },
         {
           "month": "2026-08",
-          "index": 77.88,
+          "index": 85.86,
           "price": 6.62
         },
         {
           "month": "2026-09",
-          "index": 72.12,
+          "index": 79.51,
           "price": 6.13
         },
         {
           "month": "2026-10",
-          "index": 76.59,
+          "index": 84.44,
           "price": 6.51
+        },
+        {
+          "month": "2026-11",
+          "index": 84.82,
+          "price": 6.54
         }
       ]
     }

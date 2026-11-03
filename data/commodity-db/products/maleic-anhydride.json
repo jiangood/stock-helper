@@ -9,10 +9,10 @@
   "productEndDate": "2026-11-01",
   "latestPrice": 9974.48,
   "latestDate": "2026-11-01",
-  "productChange": -0.5,
+  "productChange": 0.72,
   "productMonthCount": 190,
-  "stockTimelineMonthCount": 184,
-  "commonMonthCount": 184,
+  "stockTimelineMonthCount": 185,
+  "commonMonthCount": 185,
   "months": [
     "2011-02",
     "2011-03",
@@ -197,7 +197,8 @@
     "2026-07",
     "2026-08",
     "2026-09",
-    "2026-10"
+    "2026-10",
+    "2026-11"
   ],
   "productSeries": [
     {
@@ -1119,6 +1120,11 @@
       "month": "2026-10",
       "index": 99.5,
       "price": 9853.33
+    },
+    {
+      "month": "2026-11",
+      "index": 100.72,
+      "price": 9974.48
     }
   ],
   "alternateProductSeries": [
@@ -2041,6 +2047,11 @@
       "month": "2026-10",
       "index": 121.65,
       "price": 9975
+    },
+    {
+      "month": "2026-11",
+      "index": 120.43,
+      "price": 9875
     }
   ],
   "alternateSource": "生意社顺酐每日参考价（公开价格快讯）",
@@ -2053,12 +2064,12 @@
       "roleLabel": "产品端",
       "mainRatio": 0.5019,
       "source": "月K",
-      "latestDate": "2026-10-30",
-      "latestClose": 4.27,
-      "monthCount": 193,
+      "latestDate": "2026-11-03",
+      "latestClose": 4.43,
+      "monthCount": 194,
       "historyStartMonth": "2010-05",
-      "historyEndMonth": "2026-10",
-      "changePct": -13.35,
+      "historyEndMonth": "2026-11",
+      "changePct": -10.11,
       "values": [
         {
           "month": "2011-02",
@@ -2979,6 +2990,11 @@
           "month": "2026-10",
           "index": 86.65,
           "price": 4.27
+        },
+        {
+          "month": "2026-11",
+          "index": 89.89,
+          "price": 4.43
         }
       ]
     }

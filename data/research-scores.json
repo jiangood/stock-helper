@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-31T08:19:54.605Z",
-  "marketDate": "2026-10-31",
+  "updatedAt": "2026-11-03T15:22:54.382Z",
+  "marketDate": "2026-11-03",
   "totalMax": 32,
   "weights": {
     "owner": 10,
@@ -46,28 +46,28 @@
         "focus": 6.5,
         "profit": 2,
         "consolidation": 4,
-        "bottom": 8.2,
-        "volume": 5.8
+        "bottom": 7.8,
+        "volume": 3.4
       },
-      "points": 37.8,
+      "points": 36.1,
       "max": 65,
-      "percent": 58.2,
+      "percent": 55.5,
       "complete": true,
-      "band": "mid",
+      "band": "high",
       "metrics": {
         "ownerType": "province",
         "owner": "山东省人民政府国有资产监督管理委员会",
-        "capYi": 121,
+        "capYi": 126,
         "mainRatio": 0.502,
         "mainItem": "化工板块",
         "profitYoy": -3905.6,
         "priorProfitYoy": 106.1,
         "boxHeight": 0.541,
-        "months": 6,
-        "position": 0.22,
-        "pAll": 36.3,
-        "p52": 0.7,
-        "volRatio": 1.99
+        "months": 7,
+        "position": 0.266,
+        "pAll": 40.2,
+        "p52": 6.2,
+        "volRatio": 1.42
       }
     },
     "sh688707": {
@@ -77,28 +77,28 @@
         "focus": 10,
         "profit": 2,
         "consolidation": 5,
-        "bottom": 9.8,
-        "volume": 6.3
+        "bottom": 9.6,
+        "volume": 3.8
       },
-      "points": 46.8,
+      "points": 45.2,
       "max": 65,
-      "percent": 72,
+      "percent": 69.5,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国电子信息产业集团有限公司",
-        "capYi": 46,
+        "capYi": 48,
         "mainRatio": 0.937,
         "mainItem": "正极材料",
         "profitYoy": 16.7,
         "priorProfitYoy": -647,
-        "boxHeight": 1.492,
+        "boxHeight": 1.364,
         "months": 35,
-        "position": 0.029,
-        "pAll": 4.8,
-        "p52": 0,
-        "volRatio": 2.1
+        "position": 0.054,
+        "pAll": 6.3,
+        "p52": 3.9,
+        "volRatio": 1.51
       }
     },
     "sz002100": {
@@ -109,27 +109,27 @@
         "profit": 3,
         "consolidation": 4,
         "bottom": 4,
-        "volume": 1.3
+        "volume": 0.9
       },
-      "points": 31.2,
+      "points": 30.9,
       "max": 65,
-      "percent": 48,
+      "percent": 47.5,
       "complete": true,
       "band": "high",
       "metrics": {
         "ownerType": "province",
         "owner": "新疆生产建设兵团国有资产经营有限责任公司",
-        "capYi": 103,
+        "capYi": 112,
         "mainRatio": 0.324,
         "mainItem": "生猪养殖产业链收入",
         "profitYoy": -73,
         "priorProfitYoy": 140.6,
-        "boxHeight": 0.347,
-        "months": 6,
-        "position": 0.792,
-        "pAll": 87.5,
-        "p52": 66.8,
-        "volRatio": 0.92
+        "boxHeight": 0.402,
+        "months": 0,
+        "position": 0.953,
+        "pAll": 100,
+        "p52": 88.2,
+        "volRatio": 0.82
       }
     },
     "sh601118": {
@@ -139,28 +139,28 @@
         "focus": 10,
         "profit": 2,
         "consolidation": 4,
-        "bottom": 7.8,
-        "volume": 6.3
+        "bottom": 7.5,
+        "volume": 8
       },
-      "points": 40.8,
+      "points": 41.6,
       "max": 65,
-      "percent": 62.8,
+      "percent": 64,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "海南省国有资产监督管理委员会",
-        "capYi": 217,
+        "capYi": 223,
         "mainRatio": 0.943,
         "mainItem": "橡胶产品销售",
         "profitYoy": -58.4,
         "priorProfitYoy": 36.5,
         "boxHeight": 0.883,
-        "months": 8,
-        "position": 0.265,
-        "pAll": 35.7,
-        "p52": 12.7,
-        "volRatio": 2.12
+        "months": 9,
+        "position": 0.301,
+        "pAll": 39.8,
+        "p52": 15.7,
+        "volRatio": 2.53
       }
     },
     "sz300034": {
@@ -170,28 +170,28 @@
         "focus": 7.5,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 7,
-        "volume": 1.5
+        "bottom": 6.8,
+        "volume": 1
       },
-      "points": 36.9,
+      "points": 36.5,
       "max": 65,
-      "percent": 56.8,
+      "percent": 56.2,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 105,
+        "capYi": 108,
         "mainRatio": 0.596,
         "mainItem": "铸造合金制品",
         "profitYoy": -70.7,
         "priorProfitYoy": -24.9,
         "boxHeight": 0.845,
-        "months": 8,
-        "position": 0.364,
-        "pAll": 60.5,
-        "p52": 0.2,
-        "volRatio": 0.95
+        "months": 9,
+        "position": 0.381,
+        "pAll": 61.2,
+        "p52": 3.6,
+        "volRatio": 0.84
       }
     },
     "sh603977": {
@@ -201,28 +201,28 @@
         "focus": 4.5,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 6.8,
-        "volume": 3.3
+        "bottom": 6.7,
+        "volume": 2.2
       },
-      "points": 41.6,
+      "points": 40.9,
       "max": 65,
-      "percent": 64,
+      "percent": 62.9,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "江西省国有资产监督管理委员会",
-        "capYi": 58,
+        "capYi": 60,
         "mainRatio": 0.304,
         "mainItem": "工业包装炸药",
         "profitYoy": 55.6,
         "priorProfitYoy": -48.6,
-        "boxHeight": 1.013,
-        "months": 7,
-        "position": 0.385,
-        "pAll": 64.1,
-        "p52": 0.1,
-        "volRatio": 1.38
+        "boxHeight": 0.839,
+        "months": 8,
+        "position": 0.399,
+        "pAll": 64.4,
+        "p52": 3.1,
+        "volRatio": 1.12
       }
     },
     "sz002783": {
@@ -232,28 +232,28 @@
         "focus": 4.4,
         "profit": 3,
         "consolidation": 6.3,
-        "bottom": 9.2,
-        "volume": 0.9
+        "bottom": 8.9,
+        "volume": 0.4
       },
-      "points": 40.1,
+      "points": 39.6,
       "max": 65,
-      "percent": 61.7,
+      "percent": 60.9,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "湖北省人民政府国有资产监督管理委员会",
-        "capYi": 36,
+        "capYi": 37,
         "mainRatio": 0.286,
         "mainItem": "爆破服务",
         "profitYoy": -30.9,
         "priorProfitYoy": 0,
         "boxHeight": 0.641,
-        "months": 34,
-        "position": 0.101,
-        "pAll": 9.2,
-        "p52": 11.5,
-        "volRatio": 0.81
+        "months": 35,
+        "position": 0.14,
+        "pAll": 11.4,
+        "p52": 18,
+        "volRatio": 0.7
       }
     },
     "sz000928": {
@@ -262,29 +262,29 @@
         "cap": 10,
         "focus": 10,
         "profit": 3,
-        "consolidation": 4,
-        "bottom": 7.6,
-        "volume": 1.3
+        "consolidation": 4.3,
+        "bottom": 7.2,
+        "volume": 0.2
       },
-      "points": 42.5,
+      "points": 41.6,
       "max": 65,
-      "percent": 65.4,
+      "percent": 64,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 79,
+        "capYi": 81,
         "mainRatio": 0.891,
         "mainItem": "工程总承包",
         "profitYoy": -34.4,
         "priorProfitYoy": 19,
         "boxHeight": 0.384,
-        "months": 8,
-        "position": 0.285,
-        "pAll": 28.1,
-        "p52": 29.1,
-        "volRatio": 0.91
+        "months": 9,
+        "position": 0.34,
+        "pAll": 33.3,
+        "p52": 35.1,
+        "volRatio": 0.65
       }
     },
     "sz002136": {
@@ -294,12 +294,12 @@
         "focus": 7,
         "profit": 2,
         "consolidation": 4,
-        "bottom": 7.6,
-        "volume": 2.2
+        "bottom": 7.4,
+        "volume": 1.6
       },
-      "points": 36.3,
+      "points": 35.8,
       "max": 65,
-      "percent": 55.8,
+      "percent": 55.1,
       "complete": true,
       "band": "high",
       "metrics": {
@@ -311,11 +311,11 @@
         "profitYoy": -554.3,
         "priorProfitYoy": -72.7,
         "boxHeight": 0.705,
-        "months": 6,
-        "position": 0.296,
-        "pAll": 48.7,
-        "p52": 0.9,
-        "volRatio": 1.13
+        "months": 7,
+        "position": 0.31,
+        "pAll": 49.8,
+        "p52": 2.7,
+        "volRatio": 0.98
       }
     },
     "sz000707": {
@@ -325,28 +325,28 @@
         "focus": 10,
         "profit": 2,
         "consolidation": 5,
-        "bottom": 8.7,
-        "volume": 2.3
+        "bottom": 8.5,
+        "volume": 1.1
       },
-      "points": 43.1,
+      "points": 42.1,
       "max": 65,
-      "percent": 66.3,
+      "percent": 64.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "湖北省人民政府国有资产监督管理委员会",
-        "capYi": 24,
+        "capYi": 25,
         "mainRatio": 0.984,
         "mainItem": "联碱及其他化工产品",
         "profitYoy": -160.5,
         "priorProfitYoy": -62.2,
         "boxHeight": 0.902,
-        "months": 25,
-        "position": 0.155,
-        "pAll": 25.8,
-        "p52": 0,
-        "volRatio": 1.16
+        "months": 26,
+        "position": 0.186,
+        "pAll": 26.3,
+        "p52": 7,
+        "volRatio": 0.86
       }
     },
     "sh600500": {
@@ -356,28 +356,28 @@
         "focus": 5.8,
         "profit": 2,
         "consolidation": 4,
-        "bottom": 9.1,
+        "bottom": 9,
         "volume": 9
       },
-      "points": 40.4,
+      "points": 40.3,
       "max": 65,
-      "percent": 62.2,
+      "percent": 62,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 145,
+        "capYi": 147,
         "mainRatio": 0.427,
         "mainItem": "中间体及高性能材料",
         "profitYoy": 43.1,
         "priorProfitYoy": -58.6,
         "boxHeight": 1.244,
-        "months": 4,
-        "position": 0.106,
-        "pAll": 14.6,
-        "p52": 4.6,
-        "volRatio": 5.62
+        "months": 5,
+        "position": 0.126,
+        "pAll": 17.1,
+        "p52": 5.9,
+        "volRatio": 5.53
       }
     },
     "sz000731": {
@@ -387,14 +387,14 @@
         "focus": 4.1,
         "profit": 2,
         "consolidation": 4,
-        "bottom": 6.8,
-        "volume": 3.7
+        "bottom": 6.7,
+        "volume": 2.6
       },
-      "points": 36.5,
+      "points": 35.7,
       "max": 65,
-      "percent": 56.2,
+      "percent": 54.9,
       "complete": true,
-      "band": "mid",
+      "band": "high",
       "metrics": {
         "ownerType": "central",
         "owner": "中国石油化工集团有限公司",
@@ -404,42 +404,42 @@
         "profitYoy": -176,
         "priorProfitYoy": -35.6,
         "boxHeight": 0.56,
-        "months": 1,
-        "position": 0.378,
-        "pAll": 42.9,
-        "p52": 30.1,
-        "volRatio": 1.5
+        "months": 2,
+        "position": 0.395,
+        "pAll": 44.2,
+        "p52": 32.6,
+        "volRatio": 1.23
       }
     },
     "sh601618": {
       "items": {
         "owner": 10,
-        "cap": 5.3,
+        "cap": 5.2,
         "focus": 8.3,
         "profit": 3,
-        "consolidation": 4,
-        "bottom": 8.4,
-        "volume": 0.8
+        "consolidation": 4.1,
+        "bottom": 7.6,
+        "volume": 0.7
       },
-      "points": 37.5,
+      "points": 36.7,
       "max": 65,
-      "percent": 57.7,
+      "percent": 56.5,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 509,
+        "capYi": 546,
         "mainRatio": 0.677,
         "mainItem": "主体业务",
         "profitYoy": -91.2,
         "priorProfitYoy": -32.4,
         "boxHeight": 0.578,
-        "months": 13,
-        "position": 0.197,
-        "pAll": 30,
-        "p52": 4.1,
-        "volRatio": 0.8
+        "months": 14,
+        "position": 0.287,
+        "pAll": 34.3,
+        "p52": 20.3,
+        "volRatio": 0.77
       }
     },
     "sh603227": {
@@ -449,28 +449,28 @@
         "focus": 6.4,
         "profit": 4.5,
         "consolidation": 4,
-        "bottom": 7.2,
-        "volume": 1.7
+        "bottom": 6.8,
+        "volume": 0.2
       },
-      "points": 40.7,
+      "points": 39.4,
       "max": 65,
-      "percent": 62.6,
+      "percent": 60.6,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "广东省环保集团有限公司",
-        "capYi": 72,
+        "capYi": 76,
         "mainRatio": 0.488,
         "mainItem": "化工产品",
         "profitYoy": -25.2,
         "priorProfitYoy": -21.5,
         "boxHeight": 0.738,
-        "months": 7,
-        "position": 0.332,
-        "pAll": 51.8,
-        "p52": 5.2,
-        "volRatio": 1.01
+        "months": 8,
+        "position": 0.381,
+        "pAll": 54.3,
+        "p52": 13.8,
+        "volRatio": 0.65
       }
     },
     "sz301058": {
@@ -479,28 +479,28 @@
         "cap": 10,
         "focus": 8.8,
         "profit": 5.5,
-        "consolidation": 5.2,
-        "bottom": 9.8,
+        "consolidation": 5.5,
+        "bottom": 9.4,
         "volume": 0.4
       },
-      "points": 47.5,
+      "points": 47.3,
       "max": 65,
-      "percent": 73.1,
+      "percent": 72.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中粮集团有限公司",
-        "capYi": 40,
+        "capYi": 42,
         "mainRatio": 0.735,
         "mainItem": "机电工程系统交付",
         "profitYoy": 0.5,
         "priorProfitYoy": 5.7,
         "boxHeight": 0.637,
-        "months": 20,
-        "position": 0.022,
-        "pAll": 1.6,
-        "p52": 3.1,
+        "months": 21,
+        "position": 0.08,
+        "pAll": 6.3,
+        "p52": 10.6,
         "volRatio": 0.7
       }
     },
@@ -511,28 +511,28 @@
         "focus": 5.1,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 5.6,
-        "volume": 6.9
+        "bottom": 5.4,
+        "volume": 6.4
       },
-      "points": 39.7,
+      "points": 39.2,
       "max": 65,
-      "percent": 61.1,
+      "percent": 60.3,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "云南省人民政府国有资产监督管理委员会",
-        "capYi": 129,
+        "capYi": 132,
         "mainRatio": 0.355,
         "mainItem": "贵金属再生资源产品",
         "profitYoy": 14,
         "priorProfitYoy": 79.7,
         "boxHeight": 1.408,
-        "months": 4,
-        "position": 0.521,
-        "pAll": 86.3,
-        "p52": 0.8,
-        "volRatio": 2.26
+        "months": 5,
+        "position": 0.538,
+        "pAll": 87.5,
+        "p52": 3.1,
+        "volRatio": 2.13
       }
     },
     "sz002237": {
@@ -542,28 +542,28 @@
         "focus": 7.5,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 7,
-        "volume": 3.4
+        "bottom": 6.8,
+        "volume": 2.5
       },
-      "points": 41.9,
+      "points": 41.1,
       "max": 65,
-      "percent": 64.5,
+      "percent": 63.2,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "江西省国有资产监督管理委员会",
-        "capYi": 155,
+        "capYi": 157,
         "mainRatio": 0.603,
         "mainItem": "黄金",
         "profitYoy": 28.3,
         "priorProfitYoy": -6.5,
         "boxHeight": 1.346,
-        "months": 9,
-        "position": 0.357,
-        "pAll": 59,
-        "p52": 0.6,
-        "volRatio": 1.43
+        "months": 10,
+        "position": 0.384,
+        "pAll": 62.3,
+        "p52": 2.4,
+        "volRatio": 1.2
       }
     },
     "sz000554": {
@@ -574,11 +574,11 @@
         "profit": 6,
         "consolidation": 4,
         "bottom": 6.5,
-        "volume": 2.2
+        "volume": 1.5
       },
-      "points": 44.7,
+      "points": 44.3,
       "max": 65,
-      "percent": 68.8,
+      "percent": 68.2,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -590,11 +590,11 @@
         "profitYoy": 47.9,
         "priorProfitYoy": 169.3,
         "boxHeight": 0.86,
-        "months": 8,
-        "position": 0.419,
+        "months": 9,
+        "position": 0.421,
         "pAll": 58.3,
-        "p52": 17.4,
-        "volRatio": 1.12
+        "p52": 17.8,
+        "volRatio": 0.96
       }
     },
     "sh600328": {
@@ -604,28 +604,28 @@
         "focus": 5.7,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 8.1,
-        "volume": 2.5
+        "bottom": 7.8,
+        "volume": 1.6
       },
-      "points": 39.7,
+      "points": 38.9,
       "max": 65,
-      "percent": 61.1,
+      "percent": 59.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国盐业集团有限公司",
-        "capYi": 77,
+        "capYi": 80,
         "mainRatio": 0.417,
         "mainItem": "纯碱",
         "profitYoy": -98.9,
         "priorProfitYoy": -71.1,
         "boxHeight": 0.863,
-        "months": 8,
-        "position": 0.237,
-        "pAll": 38.3,
-        "p52": 1.6,
-        "volRatio": 1.21
+        "months": 9,
+        "position": 0.269,
+        "pAll": 40.8,
+        "p52": 6,
+        "volRatio": 0.98
       }
     },
     "sh600963": {
@@ -635,8 +635,8 @@
         "focus": 6.4,
         "profit": 2,
         "consolidation": 5,
-        "bottom": 7.7,
-        "volume": 2.7
+        "bottom": 7.6,
+        "volume": 2.8
       },
       "points": 39.6,
       "max": 65,
@@ -646,17 +646,17 @@
       "metrics": {
         "ownerType": "central",
         "owner": "中国诚通控股集团有限公司",
-        "capYi": 66,
+        "capYi": 67,
         "mainRatio": 0.494,
         "mainItem": "印刷用纸",
         "profitYoy": -36.4,
         "priorProfitYoy": -2173.6,
-        "boxHeight": 1.062,
-        "months": 35,
-        "position": 0.278,
-        "pAll": 31.3,
-        "p52": 22.7,
-        "volRatio": 1.24
+        "boxHeight": 1.01,
+        "months": 25,
+        "position": 0.287,
+        "pAll": 31.7,
+        "p52": 24.3,
+        "volRatio": 1.27
       }
     },
     "sh600348": {
@@ -667,11 +667,11 @@
         "profit": 4.5,
         "consolidation": 4,
         "bottom": 4.2,
-        "volume": 1.4
+        "volume": 0.9
       },
-      "points": 37.8,
+      "points": 37.4,
       "max": 65,
-      "percent": 58.2,
+      "percent": 57.5,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -683,11 +683,11 @@
         "profitYoy": -23.7,
         "priorProfitYoy": -58.7,
         "boxHeight": 0.739,
-        "months": 6,
-        "position": 0.662,
-        "pAll": 78.1,
+        "months": 7,
+        "position": 0.666,
+        "pAll": 78.8,
         "p52": 48.2,
-        "volRatio": 0.95
+        "volRatio": 0.81
       }
     },
     "sh603639": {
@@ -696,13 +696,13 @@
         "cap": 10,
         "focus": 10,
         "profit": 4.5,
-        "consolidation": 5.8,
-        "bottom": 9.8,
-        "volume": 1.2
+        "consolidation": 4,
+        "bottom": 9.6,
+        "volume": 0.3
       },
-      "points": 43.5,
+      "points": 41.2,
       "max": 65,
-      "percent": 66.9,
+      "percent": 63.4,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -713,43 +713,43 @@
         "mainItem": "农药",
         "profitYoy": -2.9,
         "priorProfitYoy": -66.9,
-        "boxHeight": 0.705,
-        "months": 35,
-        "position": 0.03,
-        "pAll": 4.2,
-        "p52": 1.2,
-        "volRatio": 0.88
+        "boxHeight": 0.653,
+        "months": 15,
+        "position": 0.055,
+        "pAll": 5.9,
+        "p52": 5,
+        "volRatio": 0.67
       }
     },
     "sh600299": {
       "items": {
         "owner": 10,
-        "cap": 6.3,
+        "cap": 6.2,
         "focus": 9.1,
         "profit": 4.5,
         "consolidation": 4,
-        "bottom": 9.1,
+        "bottom": 8.1,
         "volume": 9
       },
-      "points": 46.7,
+      "points": 45.7,
       "max": 65,
-      "percent": 71.8,
+      "percent": 70.3,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 226,
+        "capYi": 261,
         "mainRatio": 0.756,
         "mainItem": "功能性产品",
         "profitYoy": -9.2,
         "priorProfitYoy": 10258.6,
         "boxHeight": 0.861,
-        "months": 6,
-        "position": 0.113,
-        "pAll": 17.9,
-        "p52": 1.4,
-        "volRatio": 3.68
+        "months": 7,
+        "position": 0.228,
+        "pAll": 28.7,
+        "p52": 13.9,
+        "volRatio": 3.29
       }
     },
     "sz000923": {
@@ -759,27 +759,27 @@
         "focus": 8.4,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 7.7,
+        "bottom": 8,
         "volume": 2.4
       },
-      "points": 44.8,
+      "points": 45,
       "max": 65,
-      "percent": 68.9,
+      "percent": 69.2,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "河北省人民政府国有资产监督管理委员会",
-        "capYi": 89,
+        "capYi": 88,
         "mainRatio": 0.693,
         "mainItem": "磁铁矿",
         "profitYoy": 0.2,
         "priorProfitYoy": -39.1,
         "boxHeight": 1.017,
-        "months": 8,
-        "position": 0.273,
-        "pAll": 37.5,
-        "p52": 12.1,
+        "months": 9,
+        "position": 0.242,
+        "pAll": 33.3,
+        "p52": 10.5,
         "volRatio": 1.18
       }
     },
@@ -790,8 +790,8 @@
         "focus": 9.2,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 4.3,
-        "volume": 2.1
+        "bottom": 4.6,
+        "volume": 1.4
       },
       "points": 39.5,
       "max": 65,
@@ -801,17 +801,17 @@
       "metrics": {
         "ownerType": "central",
         "owner": "中国海洋石油集团有限公司",
-        "capYi": 290,
+        "capYi": 283,
         "mainRatio": 0.77,
         "mainItem": "海洋工程总承包项目收入",
         "profitYoy": 2,
         "priorProfitYoy": 46.2,
         "boxHeight": 0.495,
-        "months": 8,
-        "position": 0.651,
-        "pAll": 76.3,
-        "p52": 48.3,
-        "volRatio": 1.09
+        "months": 9,
+        "position": 0.617,
+        "pAll": 73.3,
+        "p52": 44.3,
+        "volRatio": 0.95
       }
     },
     "sh601600": {
@@ -821,28 +821,28 @@
         "focus": 9.9,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 5.7,
-        "volume": 3.5
+        "bottom": 5.5,
+        "volume": 2.8
       },
-      "points": 40.5,
+      "points": 39.9,
       "max": 65,
-      "percent": 62.3,
+      "percent": 61.4,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 1467,
+        "capYi": 1492,
         "mainRatio": 0.838,
         "mainItem": "营销板块",
         "profitYoy": 4.1,
         "priorProfitYoy": 81.9,
-        "boxHeight": 1.918,
-        "months": 9,
-        "position": 0.51,
-        "pAll": 75.3,
-        "p52": 14.4,
-        "volRatio": 1.43
+        "boxHeight": 1.857,
+        "months": 10,
+        "position": 0.523,
+        "pAll": 76.3,
+        "p52": 16.3,
+        "volRatio": 1.27
       }
     },
     "sh600509": {
@@ -852,28 +852,28 @@
         "focus": 8.7,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 8.1,
-        "volume": 2.8
+        "bottom": 7.7,
+        "volume": 2.4
       },
-      "points": 46.3,
+      "points": 45.7,
       "max": 65,
-      "percent": 71.2,
+      "percent": 70.3,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "新疆生产建设兵团第八师国有资产监督管理委员会",
-        "capYi": 86,
+        "capYi": 89,
         "mainRatio": 0.718,
         "mainItem": "供电",
         "profitYoy": 42.6,
         "priorProfitYoy": -67.8,
         "boxHeight": 0.974,
-        "months": 5,
-        "position": 0.226,
-        "pAll": 37.5,
-        "p52": 0.2,
-        "volRatio": 1.27
+        "months": 6,
+        "position": 0.275,
+        "pAll": 42.9,
+        "p52": 4.4,
+        "volRatio": 1.16
       }
     },
     "sh600378": {
@@ -883,59 +883,59 @@
         "focus": 7.9,
         "profit": 8.5,
         "consolidation": 4,
-        "bottom": 6.9,
+        "bottom": 6.8,
         "volume": 9
       },
-      "points": 48.7,
+      "points": 48.6,
       "max": 65,
-      "percent": 74.9,
+      "percent": 74.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 391,
+        "capYi": 398,
         "mainRatio": 0.638,
         "mainItem": "高端氟材料",
         "profitYoy": 121.6,
         "priorProfitYoy": -20.4,
         "boxHeight": 2.238,
-        "months": 4,
-        "position": 0.368,
-        "pAll": 59.4,
-        "p52": 3.1,
-        "volRatio": 9.81
+        "months": 5,
+        "position": 0.379,
+        "pAll": 60.6,
+        "p52": 3.9,
+        "volRatio": 9.47
       }
     },
     "sz000629": {
       "items": {
         "owner": 10,
-        "cap": 6.3,
+        "cap": 6.2,
         "focus": 5.9,
         "profit": 2,
         "consolidation": 4,
-        "bottom": 8.5,
-        "volume": 2.9
+        "bottom": 8.2,
+        "volume": 2.3
       },
-      "points": 36.1,
+      "points": 35.4,
       "max": 65,
-      "percent": 55.5,
+      "percent": 54.5,
       "complete": true,
       "band": "high",
       "metrics": {
         "ownerType": "central",
         "owner": "鞍钢集团有限公司",
-        "capYi": 241,
+        "capYi": 252,
         "mainRatio": 0.437,
         "mainItem": "钛产品",
         "profitYoy": -140.1,
         "priorProfitYoy": -75.9,
         "boxHeight": 0.824,
-        "months": 8,
-        "position": 0.178,
-        "pAll": 28.3,
-        "p52": 2.1,
-        "volRatio": 1.29
+        "months": 9,
+        "position": 0.218,
+        "pAll": 30.8,
+        "p52": 8.2,
+        "volRatio": 1.16
       }
     },
     "sh601061": {
@@ -945,12 +945,12 @@
         "focus": 9.9,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 6.5,
-        "volume": 0.9
+        "bottom": 6.4,
+        "volume": 0.7
       },
-      "points": 41.6,
+      "points": 41.5,
       "max": 65,
-      "percent": 64,
+      "percent": 63.8,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -962,11 +962,11 @@
         "profitYoy": 41,
         "priorProfitYoy": -7.4,
         "boxHeight": 1.497,
-        "months": 8,
-        "position": 0.421,
-        "pAll": 69.8,
-        "p52": 0.6,
-        "volRatio": 0.82
+        "months": 9,
+        "position": 0.426,
+        "pAll": 70.5,
+        "p52": 0.7,
+        "volRatio": 0.78
       }
     },
     "sz002140": {
@@ -976,28 +976,28 @@
         "focus": 9.9,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 7.4,
-        "volume": 0.9
+        "bottom": 7.2,
+        "volume": 0.5
       },
-      "points": 45.4,
+      "points": 45,
       "max": 65,
-      "percent": 69.8,
+      "percent": 69.2,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国化学工程集团有限公司",
-        "capYi": 65,
+        "capYi": 67,
         "mainRatio": 0.838,
         "mainItem": "总承包收入",
         "profitYoy": 6.8,
         "priorProfitYoy": 29,
         "boxHeight": 0.957,
-        "months": 8,
-        "position": 0.314,
-        "pAll": 44.8,
-        "p52": 11.3,
-        "volRatio": 0.81
+        "months": 9,
+        "position": 0.334,
+        "pAll": 46.4,
+        "p52": 13.9,
+        "volRatio": 0.73
       }
     },
     "sh600230": {
@@ -1007,28 +1007,28 @@
         "focus": 5.9,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 7.1,
-        "volume": 4.5
+        "bottom": 6.8,
+        "volume": 3.8
       },
-      "points": 44.5,
+      "points": 43.8,
       "max": 65,
-      "percent": 68.5,
+      "percent": 67.4,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 47,
+        "capYi": 49,
         "mainRatio": 0.444,
         "mainItem": "甲苯二异氰酸酯(TDI)",
         "profitYoy": 29.6,
         "priorProfitYoy": -86.3,
         "boxHeight": 1.578,
-        "months": 8,
-        "position": 0.35,
-        "pAll": 57.9,
-        "p52": 0.5,
-        "volRatio": 1.69
+        "months": 9,
+        "position": 0.378,
+        "pAll": 60.4,
+        "p52": 4,
+        "volRatio": 1.52
       }
     },
     "sh600282": {
@@ -1038,28 +1038,28 @@
         "focus": 7.5,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 7.6,
+        "bottom": 6.8,
         "volume": 1.7
       },
-      "points": 40.9,
+      "points": 40.1,
       "max": 65,
-      "percent": 62.9,
+      "percent": 61.7,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国中信集团有限公司",
-        "capYi": 266,
+        "capYi": 272,
         "mainRatio": 0.605,
         "mainItem": "钢材销售",
         "profitYoy": 13,
         "priorProfitYoy": 15.4,
         "boxHeight": 0.539,
-        "months": 8,
-        "position": 0.293,
-        "pAll": 40.6,
-        "p52": 12.3,
-        "volRatio": 1.02
+        "months": 9,
+        "position": 0.384,
+        "pAll": 51.5,
+        "p52": 18.7,
+        "volRatio": 1.01
       }
     },
     "sz002258": {
@@ -1069,28 +1069,28 @@
         "focus": 7.7,
         "profit": 8.5,
         "consolidation": 4,
-        "bottom": 4.3,
-        "volume": 5.4
+        "bottom": 4,
+        "volume": 5.1
       },
-      "points": 44.8,
+      "points": 44.3,
       "max": 65,
-      "percent": 68.9,
+      "percent": 68.2,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国工程物理研究院",
-        "capYi": 111,
+        "capYi": 116,
         "mainRatio": 0.619,
         "mainItem": "农药原药",
         "profitYoy": 138.8,
         "priorProfitYoy": -66.4,
         "boxHeight": 1.691,
-        "months": 9,
-        "position": 0.647,
-        "pAll": 83.2,
-        "p52": 37,
-        "volRatio": 1.89
+        "months": 10,
+        "position": 0.699,
+        "pAll": 85.5,
+        "p52": 46.6,
+        "volRatio": 1.82
       }
     },
     "sz000830": {
@@ -1100,28 +1100,28 @@
         "focus": 8.2,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 9.1,
-        "volume": 3.2
+        "bottom": 8.7,
+        "volume": 2.4
       },
-      "points": 40.4,
+      "points": 39.6,
       "max": 65,
-      "percent": 62.2,
+      "percent": 60.9,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 198,
+        "capYi": 205,
         "mainRatio": 0.667,
         "mainItem": "化工新材料产品",
         "profitYoy": -63.8,
         "priorProfitYoy": 126.9,
         "boxHeight": 1.208,
-        "months": 9,
-        "position": 0.114,
-        "pAll": 18.8,
-        "p52": 0.3,
-        "volRatio": 1.36
+        "months": 10,
+        "position": 0.161,
+        "pAll": 24.2,
+        "p52": 3.8,
+        "volRatio": 1.18
       }
     },
     "sz002430": {
@@ -1132,58 +1132,58 @@
         "profit": 5.5,
         "consolidation": 4,
         "bottom": 4.7,
-        "volume": 8.2
+        "volume": 7.6
       },
-      "points": 40.3,
+      "points": 39.9,
       "max": 65,
-      "percent": 62,
+      "percent": 61.4,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "city",
         "owner": "杭州市人民政府国有资产监督管理委员会",
-        "capYi": 254,
+        "capYi": 255,
         "mainRatio": 0.67,
         "mainItem": "气体销售",
         "profitYoy": 5.7,
         "priorProfitYoy": -23.4,
         "boxHeight": 0.86,
-        "months": 8,
-        "position": 0.61,
-        "pAll": 79.7,
-        "p52": 33,
-        "volRatio": 2.56
+        "months": 9,
+        "position": 0.615,
+        "pAll": 79.8,
+        "p52": 34,
+        "volRatio": 2.41
       }
     },
     "sh600486": {
       "items": {
         "owner": 10,
-        "cap": 6.4,
+        "cap": 6.3,
         "focus": 7.7,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 7.5,
-        "volume": 5.3
+        "bottom": 6.2,
+        "volume": 4.2
       },
-      "points": 43.2,
+      "points": 41.4,
       "max": 65,
-      "percent": 66.5,
+      "percent": 63.7,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 221,
+        "capYi": 231,
         "mainRatio": 0.618,
         "mainItem": "原药",
         "profitYoy": 9.4,
         "priorProfitYoy": -22.8,
         "boxHeight": 0.64,
-        "months": 8,
-        "position": 0.308,
-        "pAll": 40.6,
-        "p52": 16,
-        "volRatio": 1.87
+        "months": 9,
+        "position": 0.453,
+        "pAll": 60.6,
+        "p52": 22.3,
+        "volRatio": 1.62
       }
     },
     "sh601958": {
@@ -1193,28 +1193,28 @@
         "focus": 10,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 4.8,
-        "volume": 8
+        "bottom": 4.7,
+        "volume": 7.6
       },
-      "points": 43.2,
+      "points": 42.9,
       "max": 65,
-      "percent": 66.5,
+      "percent": 66,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "陕西有色金属控股集团有限责任公司",
-        "capYi": 507,
+        "capYi": 518,
         "mainRatio": 0.892,
         "mainItem": "钼矿产品开采、冶炼及深加工",
         "profitYoy": 6.4,
         "priorProfitYoy": -0.4,
         "boxHeight": 2.503,
-        "months": 4,
-        "position": 0.596,
-        "pAll": 89.7,
-        "p52": 14.5,
-        "volRatio": 2.52
+        "months": 5,
+        "position": 0.606,
+        "pAll": 90.2,
+        "p52": 16.3,
+        "volRatio": 2.44
       }
     },
     "sz000960": {
@@ -1225,27 +1225,27 @@
         "profit": 6,
         "consolidation": 4,
         "bottom": 5.6,
-        "volume": 6.5
+        "volume": 5.5
       },
-      "points": 40.8,
+      "points": 40.3,
       "max": 65,
-      "percent": 62.8,
+      "percent": 62,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "云南省人民政府国有资产监督管理委员会",
-        "capYi": 373,
+        "capYi": 372,
         "mainRatio": 0.5,
         "mainItem": "锡锭",
         "profitYoy": 24.5,
         "priorProfitYoy": 40.5,
         "boxHeight": 2.78,
-        "months": 8,
-        "position": 0.517,
-        "pAll": 82.5,
-        "p52": 5.6,
-        "volRatio": 2.17
+        "months": 9,
+        "position": 0.514,
+        "pAll": 82.1,
+        "p52": 5.3,
+        "volRatio": 1.92
       }
     },
     "sz000962": {
@@ -1255,28 +1255,28 @@
         "focus": 10,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 4.4,
-        "volume": 4
+        "bottom": 4.5,
+        "volume": 3.6
       },
-      "points": 42.6,
+      "points": 42.4,
       "max": 65,
-      "percent": 65.5,
+      "percent": 65.2,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国有色矿业集团有限公司",
-        "capYi": 192,
+        "capYi": 186,
         "mainRatio": 0.997,
         "mainItem": "钽铌及其合金制品",
         "profitYoy": 20.5,
         "priorProfitYoy": 21.9,
         "boxHeight": 8.693,
-        "months": 4,
-        "position": 0.643,
-        "pAll": 96.3,
-        "p52": 16.3,
-        "volRatio": 1.57
+        "months": 5,
+        "position": 0.634,
+        "pAll": 95.8,
+        "p52": 14.7,
+        "volRatio": 1.46
       }
     },
     "sh600426": {
@@ -1286,28 +1286,28 @@
         "focus": 6.9,
         "profit": 4.5,
         "consolidation": 4,
-        "bottom": 7.2,
-        "volume": 6.1
+        "bottom": 6.3,
+        "volume": 5.7
       },
-      "points": 40,
+      "points": 38.9,
       "max": 65,
-      "percent": 61.5,
+      "percent": 59.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "华鲁控股集团有限公司",
-        "capYi": 524,
+        "capYi": 545,
         "mainRatio": 0.544,
         "mainItem": "新能源新材料相关产品",
         "profitYoy": -15,
         "priorProfitYoy": 4.5,
         "boxHeight": 0.974,
-        "months": 8,
-        "position": 0.341,
-        "pAll": 50,
-        "p52": 10.2,
-        "volRatio": 2.07
+        "months": 9,
+        "position": 0.442,
+        "pAll": 63.6,
+        "p52": 15,
+        "volRatio": 1.97
       }
     },
     "sh600379": {
@@ -1334,11 +1334,11 @@
         "profitYoy": -43.7,
         "priorProfitYoy": 28.1,
         "boxHeight": 1.163,
-        "months": 6,
-        "position": 0.514,
+        "months": 7,
+        "position": 0.515,
         "pAll": 77.5,
-        "p52": 12.3,
-        "volRatio": 4.54
+        "p52": 12.5,
+        "volRatio": 4.02
       }
     },
     "sh600456": {
@@ -1348,28 +1348,28 @@
         "focus": 10,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 7.1,
-        "volume": 1.1
+        "bottom": 6.9,
+        "volume": 0.6
       },
-      "points": 38.6,
+      "points": 38.1,
       "max": 65,
-      "percent": 59.4,
+      "percent": 58.6,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "陕西有色金属控股集团有限责任公司",
-        "capYi": 112,
+        "capYi": 115,
         "mainRatio": 0.877,
         "mainItem": "钛产品",
         "profitYoy": -36.6,
         "priorProfitYoy": 5.2,
         "boxHeight": 0.903,
-        "months": 8,
-        "position": 0.345,
-        "pAll": 57.1,
-        "p52": 0.5,
-        "volRatio": 0.86
+        "months": 9,
+        "position": 0.372,
+        "pAll": 59.2,
+        "p52": 4.2,
+        "volRatio": 0.75
       }
     },
     "sh600961": {
@@ -1380,27 +1380,27 @@
         "profit": 7.5,
         "consolidation": 4,
         "bottom": 5,
-        "volume": 7.7
+        "volume": 6.3
       },
-      "points": 43.6,
+      "points": 42.8,
       "max": 65,
-      "percent": 67.1,
+      "percent": 65.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国五矿集团有限公司",
-        "capYi": 180,
+        "capYi": 178,
         "mainRatio": 0.433,
         "mainItem": "锌及锌合金",
         "profitYoy": 99.7,
         "priorProfitYoy": 29.7,
         "boxHeight": 3.455,
-        "months": 4,
-        "position": 0.584,
-        "pAll": 89.6,
-        "p52": 11.7,
-        "volRatio": 2.45
+        "months": 5,
+        "position": 0.579,
+        "pAll": 89.2,
+        "p52": 11,
+        "volRatio": 2.12
       }
     },
     "sz300527": {
@@ -1410,28 +1410,28 @@
         "focus": 10,
         "profit": 8.5,
         "consolidation": 4,
-        "bottom": 9.4,
+        "bottom": 9,
         "volume": 0
       },
-      "points": 51,
+      "points": 50.6,
       "max": 65,
-      "percent": 78.5,
+      "percent": 77.8,
       "complete": true,
       "band": "good",
       "metrics": {
         "ownerType": "central",
         "owner": "中国船舶集团有限公司",
-        "capYi": 66,
+        "capYi": 68,
         "mainRatio": 0.879,
         "mainItem": "应急交通工程装备",
         "profitYoy": 236,
         "priorProfitYoy": 95.2,
         "boxHeight": 0.935,
-        "months": 15,
-        "position": 0.075,
-        "pAll": 7.3,
-        "p52": 7.7,
-        "volRatio": 0.34
+        "months": 16,
+        "position": 0.121,
+        "pAll": 11.3,
+        "p52": 13.4,
+        "volRatio": 0.36
       }
     },
     "sh600301": {
@@ -1442,27 +1442,27 @@
         "profit": 6,
         "consolidation": 4,
         "bottom": 4,
-        "volume": 3.2
+        "volume": 2.8
       },
-      "points": 38,
+      "points": 37.6,
       "max": 65,
-      "percent": 58.5,
+      "percent": 57.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "广西壮族自治区人民政府国有资产监督管理委员会",
-        "capYi": 263,
+        "capYi": 270,
         "mainRatio": 0.516,
         "mainItem": "锡锭",
         "profitYoy": 21.3,
         "priorProfitYoy": 97.6,
         "boxHeight": 4.911,
-        "months": 8,
-        "position": 0.704,
+        "months": 9,
+        "position": 0.706,
         "pAll": 96.7,
-        "p52": 30.9,
-        "volRatio": 1.38
+        "p52": 31.5,
+        "volRatio": 1.26
       }
     },
     "sh688750": {
@@ -1472,28 +1472,28 @@
         "focus": 10,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 9.8,
-        "volume": 0.2
+        "bottom": 9.4,
+        "volume": 0.1
       },
-      "points": 43.2,
+      "points": 42.8,
       "max": 65,
-      "percent": 66.5,
+      "percent": 65.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "湖南省人民政府国有资产监督管理委员会",
-        "capYi": 58,
+        "capYi": 61,
         "mainRatio": 0.957,
         "mainItem": "钛及钛合金产品",
         "profitYoy": -64.3,
         "priorProfitYoy": 2.1,
         "boxHeight": 0.855,
-        "months": 14,
-        "position": 0.028,
-        "pAll": 4.2,
-        "p52": 0.9,
-        "volRatio": 0.64
+        "months": 15,
+        "position": 0.079,
+        "pAll": 8,
+        "p52": 7.8,
+        "volRatio": 0.63
       }
     },
     "sh600549": {
@@ -1503,41 +1503,41 @@
         "focus": 6.1,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 5,
-        "volume": 7.8
+        "bottom": 4.9,
+        "volume": 6.3
       },
-      "points": 40.4,
+      "points": 39.3,
       "max": 65,
-      "percent": 62.2,
+      "percent": 60.5,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "福建省人民政府国有资产监督管理委员会",
-        "capYi": 524,
+        "capYi": 542,
         "mainRatio": 0.461,
         "mainItem": "钨钼等有色金属制品",
         "profitYoy": 44.2,
         "priorProfitYoy": 8.5,
         "boxHeight": 5.315,
-        "months": 4,
-        "position": 0.584,
-        "pAll": 95,
-        "p52": 3.5,
-        "volRatio": 2.48
+        "months": 5,
+        "position": 0.593,
+        "pAll": 95.4,
+        "p52": 5.2,
+        "volRatio": 2.12
       }
     },
     "sh600392": {
       "items": {
         "owner": 10,
-        "cap": 6.2,
+        "cap": 6.1,
         "focus": null,
         "profit": 8.5,
         "consolidation": 4,
-        "bottom": 5.7,
-        "volume": 4.4
+        "bottom": 5.6,
+        "volume": 3.6
       },
-      "points": 38.3,
+      "points": 37.6,
       "max": 56,
       "percent": null,
       "complete": false,
@@ -1545,17 +1545,17 @@
       "metrics": {
         "ownerType": "central",
         "owner": "中华人民共和国财政部",
-        "capYi": 257,
+        "capYi": 262,
         "mainRatio": null,
         "mainItem": null,
         "profitYoy": 310.3,
         "priorProfitYoy": -26.5,
         "boxHeight": 3.478,
-        "months": 8,
-        "position": 0.502,
-        "pAll": 83.3,
-        "p52": 0.5,
-        "volRatio": 1.67
+        "months": 9,
+        "position": 0.511,
+        "pAll": 83.8,
+        "p52": 2,
+        "volRatio": 1.46
       }
     },
     "sh600111": {
@@ -1565,10 +1565,10 @@
         "focus": null,
         "profit": 8.5,
         "consolidation": 4,
-        "bottom": 7.3,
-        "volume": 1.6
+        "bottom": 6.9,
+        "volume": 1
       },
-      "points": 35.8,
+      "points": 35.1,
       "max": 56,
       "percent": null,
       "complete": false,
@@ -1576,17 +1576,17 @@
       "metrics": {
         "ownerType": "province",
         "owner": "内蒙古自治区人民政府",
-        "capYi": 1237,
+        "capYi": 1289,
         "mainRatio": 1.734,
         "mainItem": "生产业务分部",
         "profitYoy": 128.1,
         "priorProfitYoy": -61.1,
         "boxHeight": 2.739,
-        "months": 8,
-        "position": 0.322,
-        "pAll": 53.1,
-        "p52": 0.8,
-        "volRatio": 0.98
+        "months": 9,
+        "position": 0.368,
+        "pAll": 57.6,
+        "p52": 5.7,
+        "volRatio": 0.84
       }
     },
     "sh600737": {
@@ -1596,28 +1596,28 @@
         "focus": 10,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 4.9,
-        "volume": 5
+        "bottom": 4.7,
+        "volume": 6
       },
-      "points": 39.1,
+      "points": 39.6,
       "max": 65,
-      "percent": 60.2,
+      "percent": 60.9,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 252,
+        "capYi": 256,
         "mainRatio": 0.9,
         "mainItem": "食糖类商品",
         "profitYoy": -52,
         "priorProfitYoy": -19.4,
         "boxHeight": 1.613,
-        "months": 9,
-        "position": 0.594,
-        "pAll": 84.6,
-        "p52": 21.7,
-        "volRatio": 1.8
+        "months": 10,
+        "position": 0.606,
+        "pAll": 85.4,
+        "p52": 23.4,
+        "volRatio": 2.04
       }
     },
     "sz002057": {
@@ -1627,12 +1627,12 @@
         "focus": 5.2,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 8.3,
-        "volume": 2.3
+        "bottom": 8.1,
+        "volume": 2.5
       },
-      "points": 42.8,
+      "points": 42.7,
       "max": 65,
-      "percent": 65.8,
+      "percent": 65.7,
       "complete": true,
       "band": "mid",
       "metrics": {
@@ -1644,11 +1644,11 @@
         "profitYoy": 4.5,
         "priorProfitYoy": -29.7,
         "boxHeight": 1.115,
-        "months": 4,
-        "position": 0.207,
-        "pAll": 34.4,
-        "p52": 0.2,
-        "volRatio": 1.15
+        "months": 5,
+        "position": 0.227,
+        "pAll": 36.4,
+        "p52": 2.1,
+        "volRatio": 1.19
       }
     },
     "sh601568": {
@@ -1657,29 +1657,29 @@
         "cap": 6.5,
         "focus": 10,
         "profit": 3,
-        "consolidation": 8.5,
-        "bottom": 9.8,
-        "volume": 3.1
+        "consolidation": 8.7,
+        "bottom": 9.4,
+        "volume": 2.2
       },
-      "points": 46.2,
+      "points": 45.5,
       "max": 65,
-      "percent": 71.1,
+      "percent": 70,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "陕西省人民政府国有资产监督管理委员会",
-        "capYi": 134,
+        "capYi": 140,
         "mainRatio": 0.919,
         "mainItem": "基本化学原料制造业",
         "profitYoy": -36.9,
         "priorProfitYoy": -48.2,
-        "boxHeight": 0.385,
-        "months": 35,
-        "position": 0.019,
-        "pAll": 1.4,
-        "p52": 2.7,
-        "volRatio": 1.35
+        "boxHeight": 0.352,
+        "months": 33,
+        "position": 0.075,
+        "pAll": 4.1,
+        "p52": 12.7,
+        "volRatio": 1.12
       }
     },
     "sz000738": {
@@ -1689,28 +1689,28 @@
         "focus": 10,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 7,
-        "volume": 3
+        "bottom": 6.8,
+        "volume": 2.3
       },
-      "points": 40,
+      "points": 39.3,
       "max": 65,
-      "percent": 61.5,
+      "percent": 60.5,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国航空发动机集团有限公司",
-        "capYi": 227,
+        "capYi": 233,
         "mainRatio": 0.888,
         "mainItem": "航空发动机及燃气轮机控制系统",
         "profitYoy": -54.3,
         "priorProfitYoy": 5.4,
         "boxHeight": 0.882,
-        "months": 8,
-        "position": 0.355,
-        "pAll": 55,
-        "p52": 6.3,
-        "volRatio": 1.31
+        "months": 9,
+        "position": 0.384,
+        "pAll": 57.5,
+        "p52": 9.7,
+        "volRatio": 1.15
       }
     },
     "sz002092": {
@@ -1720,28 +1720,28 @@
         "focus": 5.1,
         "profit": 2,
         "consolidation": 4,
-        "bottom": 9.6,
-        "volume": 5.4
+        "bottom": 9.5,
+        "volume": 4.2
       },
-      "points": 37.5,
+      "points": 36.7,
       "max": 65,
-      "percent": 57.7,
+      "percent": 56.5,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "新疆维吾尔自治区人民政府国有资产监督管理委员会",
-        "capYi": 100,
+        "capYi": 102,
         "mainRatio": 0.361,
         "mainItem": "聚氯乙烯",
         "profitYoy": 61.3,
         "priorProfitYoy": 63.7,
         "boxHeight": 1.139,
-        "months": 8,
-        "position": 0.055,
-        "pAll": 6.4,
-        "p52": 4.1,
-        "volRatio": 1.9
+        "months": 9,
+        "position": 0.065,
+        "pAll": 7.2,
+        "p52": 5.5,
+        "volRatio": 1.6
       }
     },
     "sz000657": {
@@ -1751,28 +1751,28 @@
         "focus": 10,
         "profit": 8.5,
         "consolidation": 4,
-        "bottom": 4.3,
-        "volume": 6.8
+        "bottom": 4.4,
+        "volume": 5.3
       },
-      "points": 46.2,
+      "points": 45.4,
       "max": 65,
-      "percent": 71.1,
+      "percent": 69.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国五矿集团有限公司",
-        "capYi": 816,
+        "capYi": 813,
         "mainRatio": 1,
         "mainItem": "硬质合金及钨产品",
         "profitYoy": 585.4,
         "priorProfitYoy": -51.4,
         "boxHeight": 12.244,
-        "months": 4,
-        "position": 0.647,
-        "pAll": 96.3,
-        "p52": 17.4,
-        "volRatio": 2.23
+        "months": 5,
+        "position": 0.639,
+        "pAll": 95.8,
+        "p52": 16.1,
+        "volRatio": 1.88
       }
     },
     "sz002556": {
@@ -1782,28 +1782,28 @@
         "focus": 9.7,
         "profit": 10,
         "consolidation": 4,
-        "bottom": 8.9,
-        "volume": 1
+        "bottom": 8.7,
+        "volume": 0.4
       },
-      "points": 52.4,
+      "points": 51.9,
       "max": 65,
-      "percent": 80.6,
+      "percent": 79.8,
       "complete": true,
       "band": "good",
       "metrics": {
         "ownerType": "province",
         "owner": "安徽省供销合作社联合社",
-        "capYi": 39,
+        "capYi": 40,
         "mainRatio": 0.818,
         "mainItem": "农资产品",
         "profitYoy": 239.5,
         "priorProfitYoy": 184.2,
         "boxHeight": 0.729,
-        "months": 8,
-        "position": 0.131,
-        "pAll": 21.8,
-        "p52": 0,
-        "volRatio": 0.83
+        "months": 9,
+        "position": 0.163,
+        "pAll": 24.3,
+        "p52": 4.3,
+        "volRatio": 0.7
       }
     },
     "sh600298": {
@@ -1813,28 +1813,28 @@
         "focus": 10,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 6.7,
-        "volume": 2.5
+        "bottom": 5.4,
+        "volume": 2.7
       },
-      "points": 40,
+      "points": 39,
       "max": 65,
-      "percent": 61.5,
+      "percent": 60,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "city",
         "owner": "宜昌市人民政府国有资产监督管理委员会",
-        "capYi": 309,
+        "capYi": 324,
         "mainRatio": 0.883,
         "mainItem": "酵母及相关行业",
         "profitYoy": 16.2,
         "priorProfitYoy": 5.8,
         "boxHeight": 0.619,
-        "months": 8,
-        "position": 0.398,
-        "pAll": 53.1,
-        "p52": 19.9,
-        "volRatio": 1.2
+        "months": 9,
+        "position": 0.535,
+        "pAll": 66.7,
+        "p52": 33.8,
+        "volRatio": 1.24
       }
     },
     "sh603970": {
@@ -1844,8 +1844,8 @@
         "focus": 8.5,
         "profit": 4.5,
         "consolidation": 5,
-        "bottom": 8.5,
-        "volume": 1.6
+        "bottom": 8.2,
+        "volume": 1.9
       },
       "points": 45,
       "max": 65,
@@ -1861,11 +1861,11 @@
         "profitYoy": -23.3,
         "priorProfitYoy": -3.1,
         "boxHeight": 0.898,
-        "months": 29,
-        "position": 0.189,
-        "pAll": 29.6,
-        "p52": 2.8,
-        "volRatio": 0.99
+        "months": 30,
+        "position": 0.214,
+        "pAll": 31.2,
+        "p52": 6.7,
+        "volRatio": 1.07
       }
     },
     "sh600618": {
@@ -1875,28 +1875,28 @@
         "focus": 4.9,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 6.8,
-        "volume": 1.4
+        "bottom": 6.5,
+        "volume": 0.8
       },
-      "points": 35.3,
+      "points": 34.7,
       "max": 65,
-      "percent": 54.3,
+      "percent": 53.4,
       "complete": true,
       "band": "high",
       "metrics": {
         "ownerType": "city",
         "owner": "上海市国有资产监督管理委员会",
-        "capYi": 102,
+        "capYi": 104,
         "mainRatio": 0.338,
         "mainItem": "氯产品",
         "profitYoy": 8.5,
         "priorProfitYoy": 16.4,
         "boxHeight": 1.369,
-        "months": 9,
-        "position": 0.385,
-        "pAll": 63.3,
-        "p52": 1.3,
-        "volRatio": 0.93
+        "months": 10,
+        "position": 0.418,
+        "pAll": 67.1,
+        "p52": 3.9,
+        "volRatio": 0.79
       }
     },
     "sz300470": {
@@ -1906,28 +1906,28 @@
         "focus": 10,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 6.2,
-        "volume": 1.9
+        "bottom": 7.1,
+        "volume": 0.8
       },
-      "points": 44.5,
+      "points": 44.7,
       "max": 65,
-      "percent": 68.5,
+      "percent": 68.8,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "四川省机械研究设计院(集团)有限公司",
-        "capYi": 57,
+        "capYi": 59,
         "mainRatio": 0.998,
         "mainItem": "其他主营业务",
         "profitYoy": 0.1,
         "priorProfitYoy": 16.5,
         "boxHeight": 0.455,
-        "months": 8,
-        "position": 0.453,
-        "pAll": 45.3,
-        "p52": null,
-        "volRatio": 1.04
+        "months": 9,
+        "position": 0.35,
+        "pAll": 46.4,
+        "p52": 17.9,
+        "volRatio": 0.8
       }
     },
     "sh600819": {
@@ -1937,27 +1937,27 @@
         "focus": 6.6,
         "profit": 6,
         "consolidation": 4,
-        "bottom": 7.5,
+        "bottom": 7.9,
         "volume": 0.5
       },
-      "points": 42.5,
+      "points": 42.9,
       "max": 65,
-      "percent": 65.4,
+      "percent": 66,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "province",
         "owner": "上海地产(集团)有限公司",
-        "capYi": 49,
+        "capYi": 50,
         "mainRatio": 0.515,
         "mainItem": "汽车加工玻璃",
         "profitYoy": 22.8,
         "priorProfitYoy": 168,
         "boxHeight": 1.06,
-        "months": 8,
-        "position": 0.3,
-        "pAll": 30,
-        "p52": null,
+        "months": 9,
+        "position": 0.257,
+        "pAll": 37.1,
+        "p52": 8.7,
         "volRatio": 0.71
       }
     },
@@ -1968,28 +1968,28 @@
         "focus": 10,
         "profit": 8.5,
         "consolidation": 4,
-        "bottom": 7.4,
-        "volume": 9
+        "bottom": 7.3,
+        "volume": 6.4
       },
-      "points": 51.5,
+      "points": 49.8,
       "max": 65,
-      "percent": 79.2,
+      "percent": 76.6,
       "complete": true,
       "band": "good",
       "metrics": {
         "ownerType": "central",
         "owner": "中国建材集团有限公司",
-        "capYi": 265,
+        "capYi": 268,
         "mainRatio": 0.99,
         "mainItem": "碳纤维",
         "profitYoy": 137.1,
         "priorProfitYoy": -177.8,
         "boxHeight": 2.49,
-        "months": 4,
-        "position": 0.313,
-        "pAll": 43.6,
-        "p52": 12.8,
-        "volRatio": 3.28
+        "months": 5,
+        "position": 0.322,
+        "pAll": 44.6,
+        "p52": 13.6,
+        "volRatio": 2.13
       }
     },
     "sh600409": {
@@ -1999,28 +1999,28 @@
         "focus": 6.7,
         "profit": 3,
         "consolidation": 4,
-        "bottom": 8.9,
-        "volume": 2.9
+        "bottom": 7.5,
+        "volume": 2.2
       },
-      "points": 36.3,
+      "points": 34.6,
       "max": 65,
-      "percent": 55.8,
+      "percent": 53.2,
       "complete": true,
       "band": "high",
       "metrics": {
         "ownerType": "city",
         "owner": "唐山市人民政府国有资产监督管理委员会",
-        "capYi": 108,
+        "capYi": 113,
         "mainRatio": 0.516,
         "mainItem": "粘胶短纤维",
         "profitYoy": -98.9,
         "priorProfitYoy": -22.3,
         "boxHeight": 0.833,
-        "months": 8,
-        "position": 0.137,
-        "pAll": 21.9,
-        "p52": 1.4,
-        "volRatio": 1.3
+        "months": 9,
+        "position": 0.302,
+        "pAll": 45.5,
+        "p52": 7.2,
+        "volRatio": 1.13
       }
     },
     "sh600195": {
@@ -2030,28 +2030,28 @@
         "focus": 5.3,
         "profit": 3,
         "consolidation": 5,
-        "bottom": 8.3,
-        "volume": 1.6
+        "bottom": 8,
+        "volume": 0
       },
-      "points": 39.9,
+      "points": 38.6,
       "max": 65,
-      "percent": 61.4,
+      "percent": 59.4,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国农业发展集团有限公司",
-        "capYi": 61,
+        "capYi": 64,
         "mainRatio": 0.376,
         "mainItem": "化药",
         "profitYoy": -67.4,
         "priorProfitYoy": -77.7,
         "boxHeight": 0.995,
-        "months": 34,
-        "position": 0.203,
-        "pAll": 27.5,
-        "p52": 9.5,
-        "volRatio": 0.99
+        "months": 35,
+        "position": 0.244,
+        "pAll": 29.6,
+        "p52": 16.5,
+        "volRatio": 0.59
       }
     },
     "sz000819": {
@@ -2060,29 +2060,29 @@
         "cap": 10,
         "focus": 6.7,
         "profit": 2,
-        "consolidation": 5.5,
-        "bottom": 8.2,
-        "volume": 1.9
+        "consolidation": 4,
+        "bottom": 7,
+        "volume": 1.2
       },
-      "points": 40.2,
+      "points": 37.4,
       "max": 65,
-      "percent": 61.8,
+      "percent": 57.5,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "中国石油化工集团有限公司",
-        "capYi": 39,
+        "capYi": 45,
         "mainRatio": 0.52,
         "mainItem": "能源化工",
         "profitYoy": -199.2,
         "priorProfitYoy": -43.8,
-        "boxHeight": 0.741,
-        "months": 35,
-        "position": 0.223,
-        "pAll": 35.8,
-        "p52": 1.9,
-        "volRatio": 1.04
+        "boxHeight": 0.69,
+        "months": 13,
+        "position": 0.36,
+        "pAll": 49.2,
+        "p52": 16.3,
+        "volRatio": 0.89
       }
     },
     "sz002096": {
@@ -2092,28 +2092,28 @@
         "focus": 9.3,
         "profit": 5.5,
         "consolidation": 4,
-        "bottom": 8,
-        "volume": 1.7
+        "bottom": 7.5,
+        "volume": 1.3
       },
-      "points": 43,
+      "points": 42.3,
       "max": 65,
-      "percent": 66.2,
+      "percent": 65.1,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
-        "capYi": 109,
+        "capYi": 116,
         "mainRatio": 0.777,
         "mainItem": "爆破服务业务",
         "profitYoy": 6.8,
         "priorProfitYoy": 7,
-        "boxHeight": 0.685,
-        "months": 8,
-        "position": 0.249,
-        "pAll": 36.1,
-        "p52": 8,
-        "volRatio": 1.02
+        "boxHeight": 0.655,
+        "months": 9,
+        "position": 0.307,
+        "pAll": 39.7,
+        "p52": 17.1,
+        "volRatio": 0.91
       }
     }
   }

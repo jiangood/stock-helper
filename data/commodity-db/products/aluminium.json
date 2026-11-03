@@ -2185,11 +2185,11 @@
       "roleLabel": "产品端",
       "mainRatio": 0.715402,
       "source": "月K",
-      "latestDate": "2026-10-30",
-      "latestClose": 8.55,
+      "latestDate": "2026-11-03",
+      "latestClose": 8.7,
       "monthCount": 200,
-      "historyStartMonth": "2009-11",
-      "historyEndMonth": "2026-10",
+      "historyStartMonth": "2009-12",
+      "historyEndMonth": "2026-11",
       "changePct": -28.26,
       "values": [
         {

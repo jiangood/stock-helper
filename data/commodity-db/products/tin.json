@@ -7,9 +7,9 @@
   "sourceUrl": null,
   "productStartDate": "2015-03",
   "productEndDate": "2026-11",
-  "latestPrice": 365110,
+  "latestPrice": 352960,
   "latestDate": "2026-11",
-  "productChange": 209,
+  "productChange": 198.71,
   "productMonthCount": 141,
   "stockTimelineMonthCount": 139,
   "commonMonthCount": 139,
@@ -847,8 +847,8 @@
     },
     {
       "month": "2026-11",
-      "index": 309,
-      "price": 365110
+      "index": 298.71,
+      "price": 352960
     }
   ],
   "alternateProductSeries": [
@@ -1544,8 +1544,8 @@
     },
     {
       "month": "2026-11",
-      "index": 309,
-      "price": 365110
+      "index": 298.71,
+      "price": 352960
     }
   ],
   "alternateSource": "商品行情接口",

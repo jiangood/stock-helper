@@ -7,9 +7,9 @@
   "sourceUrl": "https://finance.sina.com.cn/futuremarket/",
   "productStartDate": "2014-03",
   "productEndDate": "2026-11",
-  "latestPrice": 3156,
+  "latestPrice": 3147,
   "latestDate": "2026-11",
-  "productChange": -23.82,
+  "productChange": -24.04,
   "productMonthCount": 153,
   "stockTimelineMonthCount": 48,
   "commonMonthCount": 48,
@@ -301,8 +301,8 @@
     },
     {
       "month": "2026-11",
-      "index": 76.18,
-      "price": 3156
+      "index": 75.96,
+      "price": 3147
     }
   ],
   "alternateProductSeries": [],

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-02T18:33:42+00:00",
+  "updatedAt": "2026-11-03T16:21:49+00:00",
   "timezone": "UTC",
   "provider": "AKShare; underlying source labels are shown per item",
   "items": {
@@ -10,10 +10,6 @@
       "unit": "元/吨",
       "symbol": "SA",
       "series": [
-        {
-          "date": "2025-12-31",
-          "spot": 1225.71
-        },
         {
           "date": "2026-01-05",
           "spot": 1208.57
@@ -811,12 +807,17 @@
           "date": "2026-11-02",
           "spot": 1048.33,
           "futures": 975.0
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 1048.33,
+          "futures": 970.0
         }
       ],
       "latest": 1048.33,
-      "latestDate": "2026-11-02",
+      "latestDate": "2026-11-03",
       "latestSpot": 1048.33,
-      "latestFutures": 968.0,
+      "latestFutures": 984.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -1141,11 +1142,16 @@
             "date": "2026-11-02",
             "value": 3452.0,
             "change": 25.0
+          },
+          {
+            "date": "2026-11-03",
+            "value": 3452.0,
+            "change": 0.0
           }
         ],
         "latest": 3452.0,
-        "latestDate": "2026-11-02",
-        "change": 25.0,
+        "latestDate": "2026-11-03",
+        "change": 0.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -1746,9 +1752,9 @@
           {
             "date": "2026-11",
             "open": 965.0,
-            "high": 981.0,
+            "high": 993.0,
             "low": 949.0,
-            "close": 975.0
+            "close": 970.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -1756,7 +1762,7 @@
         "period": "monthly",
         "priceType": "main-continuous-futures"
       },
-      "futuresDate": "2026-11-02",
+      "futuresDate": "2026-11-03",
       "futuresTime": "23:00:00",
       "sunsirsPpid": null
     },
@@ -1766,10 +1772,6 @@
       "unit": "元/吨",
       "symbol": "UR",
       "series": [
-        {
-          "date": "2025-12-31",
-          "spot": 1725.0
-        },
         {
           "date": "2026-01-05",
           "spot": 1717.5
@@ -2567,12 +2569,17 @@
           "date": "2026-11-02",
           "spot": 1750.0,
           "futures": 1738.0
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 1760.0,
+          "futures": 1741.0
         }
       ],
-      "latest": 1750.0,
-      "latestDate": "2026-11-02",
-      "latestSpot": 1750.0,
-      "latestFutures": 1738.0,
+      "latest": 1760.0,
+      "latestDate": "2026-11-03",
+      "latestSpot": 1760.0,
+      "latestFutures": 1741.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -2897,11 +2904,16 @@
             "date": "2026-11-02",
             "value": 662.0,
             "change": 162.0
+          },
+          {
+            "date": "2026-11-03",
+            "value": 662.0,
+            "change": 0.0
           }
         ],
         "latest": 662.0,
-        "latestDate": "2026-11-02",
-        "change": 162.0,
+        "latestDate": "2026-11-03",
+        "change": 0.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -3529,8 +3541,8 @@
             "date": "2026-11",
             "open": 1737.0,
             "high": 1744.0,
-            "low": 1730.0,
-            "close": 1738.0
+            "low": 1720.0,
+            "close": 1741.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -3538,20 +3550,20 @@
         "period": "monthly",
         "priceType": "main-continuous-futures"
       },
-      "futuresDate": "2026-11-02",
+      "futuresDate": "2026-11-03",
       "futuresTime": "15:00:00",
       "industryLinks": {
         "label": "数据源列示产业链企业",
         "productName": "尿素",
         "producers": [
-          "博源化工",
-          "华鲁恒升",
-          "河化股份",
           "华锦股份",
+          "湖北宜化",
+          "博源化工",
+          "四川美丰",
+          "泸天化",
+          "河化股份",
           "华昌化工",
-          "兰花科创",
-          "赤天化",
-          "湖北宜化"
+          "辉隆股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -3565,10 +3577,6 @@
       "unit": "元/吨",
       "symbol": "MA",
       "series": [
-        {
-          "date": "2025-12-31",
-          "spot": 2207.5
-        },
         {
           "date": "2026-01-05",
           "spot": 2224.17
@@ -4366,12 +4374,17 @@
           "date": "2026-11-02",
           "spot": 3991.67,
           "futures": 3557.0
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 3915.0,
+          "futures": 3506.0
         }
       ],
-      "latest": 3991.67,
-      "latestDate": "2026-11-02",
-      "latestSpot": 3991.67,
-      "latestFutures": 3557.0,
+      "latest": 3915.0,
+      "latestDate": "2026-11-03",
+      "latestSpot": 3915.0,
+      "latestFutures": 3506.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -4701,11 +4714,16 @@
             "date": "2026-11-02",
             "value": 5630.0,
             "change": 0.0
+          },
+          {
+            "date": "2026-11-03",
+            "value": 5612.0,
+            "change": -18.0
           }
         ],
-        "latest": 5630.0,
-        "latestDate": "2026-11-02",
-        "change": 0.0,
+        "latest": 5612.0,
+        "latestDate": "2026-11-03",
+        "change": -18.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -5725,8 +5743,8 @@
             "date": "2026-11",
             "open": 3501.0,
             "high": 3615.0,
-            "low": 3491.0,
-            "close": 3557.0
+            "low": 3371.0,
+            "close": 3506.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -5738,14 +5756,14 @@
         "label": "数据源列示产业链企业",
         "productName": "甲醇",
         "producers": [
-          "湖北宜化",
-          "鲁西化工",
-          "泸天化",
-          "诚志股份",
           "兴化股份",
+          "博源化工",
           "华昌化工",
-          "兖矿能源",
-          "赤天化"
+          "岳阳兴长",
+          "柳化股份",
+          "兰花科创",
+          "山西焦化",
+          "泸天化"
         ],
         "downstreamUsers": [
           "联泓新科"
@@ -5761,13 +5779,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 17180.0,
-      "latestDate": "2026-11-02",
-      "latestSpot": 17180.0,
+      "latest": 13740.0,
+      "latestDate": "2026-11-03",
+      "latestSpot": 13740.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 25.04,
+      "changePct": 1.93,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -5802,10 +5820,6 @@
       "unit": "元/吨",
       "symbol": "AL",
       "series": [
-        {
-          "date": "2025-12-31",
-          "spot": 22473.33
-        },
         {
           "date": "2026-01-05",
           "spot": 23323.33
@@ -6603,12 +6617,17 @@
           "date": "2026-11-02",
           "spot": 23526.7,
           "futures": 23155.0
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 23456.7,
+          "futures": 23035.0
         }
       ],
-      "latest": 23526.7,
-      "latestDate": "2026-11-02",
-      "latestSpot": 23526.7,
-      "latestFutures": 23155.0,
+      "latest": 23456.7,
+      "latestDate": "2026-11-03",
+      "latestSpot": 23456.7,
+      "latestFutures": 23035.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -6938,11 +6957,16 @@
             "date": "2026-11-02",
             "value": 57293.0,
             "change": -1223.0
+          },
+          {
+            "date": "2026-11-03",
+            "value": 56126.0,
+            "change": -1167.0
           }
         ],
-        "latest": 57293.0,
-        "latestDate": "2026-11-02",
-        "change": -1223.0,
+        "latest": 56126.0,
+        "latestDate": "2026-11-03",
+        "change": -1167.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -8214,8 +8238,8 @@
             "date": "2026-11",
             "open": 23375.0,
             "high": 23445.0,
-            "low": 23025.0,
-            "close": 23155.0
+            "low": 22990.0,
+            "close": 23035.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -8227,23 +8251,24 @@
         "label": "数据源列示产业链企业",
         "productName": "铝",
         "producers": [
-          "焦作万方",
+          "中国铝业",
           "云铝股份",
           "神火股份",
-          "电投能源",
-          "天山铝业",
+          "焦作万方",
           "中孚实业",
-          "中国铝业"
+          "中国宏桥",
+          "金瑞矿业",
+          "电投能源"
         ],
         "downstreamUsers": [
-          "兴发铝业",
-          "万邦德",
+          "明泰铝业",
+          "南山铝业",
+          "闽发铝业",
           "常铝股份",
-          "罗普斯金",
+          "上海能源",
           "宏创控股",
-          "利源精制",
-          "亚太科技",
-          "闽发铝业"
+          "中国忠旺",
+          "利源精制"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -8252,17 +8277,17 @@
     },
     "coal": {
       "id": "coal",
-      "name": "动力煤",
+      "name": "炼焦煤",
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 842.75,
-      "latestDate": "2026-11-02",
-      "latestSpot": 842.75,
+      "latest": 1441.25,
+      "latestDate": "2026-11-03",
+      "latestSpot": 1441.25,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 19.12,
+      "changePct": 1.59,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -8274,16 +8299,16 @@
       "status": "latest-only",
       "industryLinks": {
         "label": "数据源列示产业链企业",
-        "productName": "动力煤",
+        "productName": "炼焦煤",
         "producers": [
-          "甘肃能化",
-          "神火股份",
           "冀中能源",
-          "电投能源",
-          "郑州煤电",
+          "山西焦煤",
           "兰花科创",
           "兖矿能源",
-          "华阳股份"
+          "盘江股份",
+          "江钨装备",
+          "淮北矿业",
+          "开滦股份"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -8297,10 +8322,6 @@
       "unit": "元/吨",
       "symbol": "RU",
       "series": [
-        {
-          "date": "2025-12-31",
-          "spot": 15341.67
-        },
         {
           "date": "2026-01-05",
           "spot": 15575.0
@@ -9098,12 +9119,17 @@
           "date": "2026-11-02",
           "spot": 18916.7,
           "futures": 19310.0
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 18808.3,
+          "futures": 19185.0
         }
       ],
-      "latest": 18916.7,
-      "latestDate": "2026-11-02",
-      "latestSpot": 18916.7,
-      "latestFutures": 19310.0,
+      "latest": 18808.3,
+      "latestDate": "2026-11-03",
+      "latestSpot": 18808.3,
+      "latestFutures": 19185.0,
       "futuresSource": "生意社主力合约参考价（历史数据）",
       "futuresSourceUrl": "https://www.100ppi.com/",
       "changePct": null,
@@ -9433,11 +9459,16 @@
             "date": "2026-11-02",
             "value": 147920.0,
             "change": 4580.0
+          },
+          {
+            "date": "2026-11-03",
+            "value": 147590.0,
+            "change": -330.0
           }
         ],
-        "latest": 147920.0,
-        "latestDate": "2026-11-02",
-        "change": 4580.0,
+        "latest": 147590.0,
+        "latestDate": "2026-11-03",
+        "change": -330.0,
         "source": "东方财富期货库存数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
       },
@@ -10708,9 +10739,9 @@
           {
             "date": "2026-11",
             "open": 19175.0,
-            "high": 19360.0,
+            "high": 19420.0,
             "low": 18970.0,
-            "close": 19310.0
+            "close": 19185.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -11535,10 +11566,16 @@
           "spot": 710000.0,
           "spec": "生意社镨钕氧化物（即氧化镨钕）基准价，元/吨，为行业参考价，不等于公司实际成交价或结算价。",
           "sourceUrl": "https://www.100ppi.com/news/list-12-1217-1454-1.html"
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 710000.0,
+          "spec": "生意社镨钕氧化物（即氧化镨钕）基准价，元/吨，为行业参考价，不等于公司实际成交价或结算价。",
+          "sourceUrl": "https://www.100ppi.com/news/list-12-1217-1454-1.html"
         }
       ],
       "latest": 710000.0,
-      "latestDate": "2026-11-02",
+      "latestDate": "2026-11-03",
       "latestSpot": 710000.0,
       "latestFutures": null,
       "futuresSource": null,
@@ -11958,10 +11995,16 @@
           "spot": 9875.0,
           "spec": "顺酐 99.5% 参考价",
           "sourceUrl": "https://ma.100ppi.com/kx/"
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 9875.0,
+          "spec": "顺酐 99.5% 参考价",
+          "sourceUrl": "https://ma.100ppi.com/kx/"
         }
       ],
       "latest": 9875.0,
-      "latestDate": "2026-11-02",
+      "latestDate": "2026-11-03",
       "latestSpot": 9875.0,
       "latestFutures": null,
       "futuresSource": null,
@@ -11985,10 +12028,10 @@
       "unit": "元/公斤",
       "symbol": null,
       "series": [],
-      "latest": 9.5,
-      "latestDate": "2026-11-02",
+      "latest": 9.15,
+      "latestDate": "2026-11-03",
       "latestSpot": null,
-      "latestFutures": 9.5,
+      "latestFutures": 9.15,
       "futuresSource": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -12498,21 +12541,21 @@
             "date": "2026-11",
             "open": 9.49,
             "high": 9.65,
-            "low": 9.43,
-            "close": 9.5
+            "low": 9.145,
+            "close": 9.15
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
         "sourceUrl": "https://finance.sina.com.cn/futuremarket/",
         "period": "monthly",
         "priceType": "main-continuous-futures",
-        "latestDate": "2026-11-02"
+        "latestDate": "2026-11-03"
       },
       "industryLinks": {
         "label": "数据源列示产业链企业",
         "productName": "生猪",
         "producers": [
-          "京基智农",
+          "基京智农",
           "正虹科技",
           "罗牛山",
           "顺鑫农业",
@@ -12536,7 +12579,7 @@
       "latest": null,
       "latestDate": null,
       "latestSpot": null,
-      "latestFutures": 2235.0,
+      "latestFutures": 2224.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -13810,7 +13853,7 @@
             "open": 2221.0,
             "high": 2238.0,
             "low": 2217.0,
-            "close": 2234.0
+            "close": 2230.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -13818,29 +13861,29 @@
         "period": "monthly",
         "priceType": "main-continuous-futures"
       },
-      "futuresDate": "2026-11-03",
+      "futuresDate": "2026-11-04",
       "futuresTime": "23:00:00",
       "industryLinks": {
         "label": "数据源列示产业链企业",
         "productName": "玉米",
         "producers": [
-          "北大荒",
-          "登海种业",
-          "敦煌种业",
           "国投丰乐",
           "隆平高科",
+          "登海种业",
+          "大北农",
           "荃银高科",
-          "万向德农",
-          "大北农"
+          "神农种业",
+          "农发种业",
+          "敦煌种业"
         ],
         "downstreamUsers": [
+          "西王食品",
           "中粮科技",
-          "ST西王",
-          "保龄宝",
-          "中国淀粉",
-          "梅花生物",
           "天康生物",
-          "仙坛股份"
+          "保龄宝",
+          "仙坛股份",
+          "中国淀粉",
+          "梅花生物"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -13856,7 +13899,7 @@
       "latest": null,
       "latestDate": null,
       "latestSpot": null,
-      "latestFutures": 3179.0,
+      "latestFutures": 3127.0,
       "futuresSource": "新浪财经商品期货行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -15128,9 +15171,9 @@
           {
             "date": "2026-11",
             "open": 3180.0,
-            "high": 3201.0,
-            "low": 3166.0,
-            "close": 3198.0
+            "high": 3204.0,
+            "low": 3138.0,
+            "close": 3147.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -15138,7 +15181,7 @@
         "period": "monthly",
         "priceType": "main-continuous-futures"
       },
-      "futuresDate": "2026-11-03",
+      "futuresDate": "2026-11-04",
       "futuresTime": "23:00:00",
       "industryLinks": {
         "label": "数据源列示产业链企业",
@@ -15146,15 +15189,13 @@
         "producers": [
           "京粮控股",
           "金龙鱼",
-          "嘉华股份"
+          "北大荒"
         ],
         "downstreamUsers": [
-          "大北农",
-          "天康生物",
-          "金新农",
           "新希望",
-          "禾丰股份",
-          "海大集团"
+          "天康生物",
+          "大北农",
+          "金新农"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -16443,9 +16484,9 @@
           {
             "date": "2026-11",
             "open": 849.08,
-            "high": 849.28,
+            "high": 851.4,
             "low": 831.0,
-            "close": 836.76
+            "close": 841.8
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -16457,18 +16498,19 @@
         "label": "数据源列示产业链企业",
         "productName": "黄金",
         "producers": [
-          "中金黄金",
-          "湖南黄金",
-          "湖南白银",
-          "赤峰黄金",
-          "豫光金铅",
           "铜陵有色",
-          "盛屯矿业",
-          "西部矿业"
+          "湖南黄金",
+          "恒邦股份",
+          "湖南白银",
+          "中金黄金",
+          "豫光金铅",
+          "山东黄金",
+          "盛屯矿业"
         ],
         "downstreamUsers": [
-          "金一文化",
-          "明牌珠宝"
+          "生意宝",
+          "明牌珠宝",
+          "金一文化"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -17722,9 +17764,9 @@
           {
             "date": "2026-11",
             "open": 11908.0,
-            "high": 11973.0,
+            "high": 12196.0,
             "low": 11521.0,
-            "close": 11885.0
+            "close": 11655.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -17737,13 +17779,13 @@
         "productName": "白银",
         "producers": [
           "兴业银锡",
-          "盛达资源",
-          "铜陵有色",
           "锡业股份",
           "恒邦股份",
           "湖南白银",
-          "江西铜业",
-          "鹏欣资源"
+          "鹏欣资源",
+          "豫光金铅",
+          "山东黄金",
+          "盛屯矿业"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -19033,9 +19075,9 @@
           {
             "date": "2026-11",
             "open": 107720.0,
-            "high": 108010.0,
-            "low": 107160.0,
-            "close": 107810.0
+            "high": 108470.0,
+            "low": 106090.0,
+            "close": 106090.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -19054,7 +19096,7 @@
           "国城矿业",
           "北方铜业",
           "中色股份",
-          "云南铜业"
+          "西藏矿业"
         ],
         "downstreamUsers": [
           "楚江新材",
@@ -20197,8 +20239,8 @@
             "date": "2026-11",
             "open": 672.0,
             "high": 682.0,
-            "low": 671.5,
-            "close": 674.5
+            "low": 668.0,
+            "close": 671.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -21217,9 +21259,9 @@
           {
             "date": "2026-11",
             "open": 360000.0,
-            "high": 369560.0,
-            "low": 359110.0,
-            "close": 365110.0
+            "high": 370000.0,
+            "low": 352080.0,
+            "close": 352960.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -21231,17 +21273,18 @@
         "label": "数据源列示产业链企业",
         "productName": "锡",
         "producers": [
-          "兴业银锡",
-          "西藏矿业",
           "锡业股份",
+          "兴业银锡",
+          "华锡有色",
+          "西部矿业",
+          "章源钨业",
+          "西藏矿业",
           "飞南资源",
-          "华锡有色"
+          "新疆众和"
         ],
         "downstreamUsers": [
-          "格林美",
-          "章源钨业",
           "新星新材",
-          "盛屯矿业"
+          "格林美"
         ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
@@ -22530,8 +22573,8 @@
             "date": "2026-11",
             "open": 25910.0,
             "high": 25940.0,
-            "low": 25460.0,
-            "close": 25615.0
+            "low": 25340.0,
+            "close": 25355.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -22543,14 +22586,14 @@
         "label": "数据源列示产业链企业",
         "productName": "锌",
         "producers": [
-          "中金岭南",
-          "兴业银锡",
-          "盛达资源",
           "国城矿业",
-          "锌业股份",
-          "中色股份",
-          "智慧农业",
-          "锡业股份"
+          "盛达资源",
+          "兴业银锡",
+          "金钼股份",
+          "宏达股份",
+          "紫金矿业",
+          "中金岭南",
+          "中色股份"
         ],
         "downstreamUsers": [
           "新威凌"
@@ -23842,8 +23885,8 @@
             "date": "2026-11",
             "open": 5250.0,
             "high": 5262.0,
-            "low": 5221.0,
-            "close": 5224.0
+            "low": 5206.0,
+            "close": 5230.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -23857,8 +23900,9 @@
         "producers": [
           "粤桂股份",
           "冠农股份",
+          "甘化科工",
           "华资实业",
-          "*ST广糖",
+          "广农糖业",
           "中粮糖业"
         ],
         "downstreamUsers": [],
@@ -25151,8 +25195,8 @@
             "date": "2026-11",
             "open": 5303.0,
             "high": 5325.0,
-            "low": 5213.0,
-            "close": 5299.0
+            "low": 5136.0,
+            "close": 5190.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -25456,9 +25500,9 @@
           {
             "date": "2026-11",
             "open": 1485.0,
-            "high": 1497.0,
+            "high": 1508.0,
             "low": 1456.0,
-            "close": 1479.0
+            "close": 1491.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -25479,7 +25523,9 @@
           "中泰化学",
           "天原股份"
         ],
-        "downstreamUsers": [],
+        "downstreamUsers": [
+          "博汇纸业"
+        ],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
         "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html"
       },
@@ -25802,7 +25848,7 @@
             "open": 2609.0,
             "high": 2668.0,
             "low": 2598.0,
-            "close": 2629.0
+            "close": 2621.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -27009,9 +27055,9 @@
           {
             "date": "2026-11",
             "open": 863.0,
-            "high": 887.0,
+            "high": 888.0,
             "low": 846.0,
-            "close": 878.0
+            "close": 879.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -27739,8 +27785,8 @@
             "date": "2026-11",
             "open": 4614.0,
             "high": 4628.0,
-            "low": 4558.0,
-            "close": 4560.0
+            "low": 4516.0,
+            "close": 4576.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
@@ -27756,13 +27802,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 16066.67,
-      "latestDate": "2026-11-02",
-      "latestSpot": 16066.67,
+      "latest": 14333.33,
+      "latestDate": "2026-11-03",
+      "latestSpot": 14333.33,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 9.55,
+      "changePct": -2.49,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -27777,7 +27823,8 @@
         "productName": "TDI",
         "producers": [
           "沧州大化",
-          "万华化学"
+          "万华化学",
+          "航锦科技"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -28600,10 +28647,16 @@
           "spot": 14966.67,
           "spec": "生意社PC（聚碳酸酯）基准价，元/吨，为通用牌号行业参考价，不等于公司实际成交价或结算价。",
           "sourceUrl": "https://www.100ppi.com/news/list-15-1217-825-1.html"
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 14966.67,
+          "spec": "生意社PC（聚碳酸酯）基准价，元/吨，为通用牌号行业参考价，不等于公司实际成交价或结算价。",
+          "sourceUrl": "https://www.100ppi.com/news/list-15-1217-825-1.html"
         }
       ],
       "latest": 14966.67,
-      "latestDate": "2026-11-02",
+      "latestDate": "2026-11-03",
       "latestSpot": 14966.67,
       "latestFutures": null,
       "futuresSource": null,
@@ -29263,10 +29316,16 @@
           "spot": 97916.67,
           "spec": "生意社五氧化二钒基准价，元/吨，只代表 V2O5 这一钒产品口径，不等于钒铁、钒氮合金或公司成交价。",
           "sourceUrl": "https://www.100ppi.com/news/list-12-1217-10452-1.html"
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 97916.67,
+          "spec": "生意社五氧化二钒基准价，元/吨，只代表 V2O5 这一钒产品口径，不等于钒铁、钒氮合金或公司成交价。",
+          "sourceUrl": "https://www.100ppi.com/news/list-12-1217-10452-1.html"
         }
       ],
       "latest": 97916.67,
-      "latestDate": "2026-11-02",
+      "latestDate": "2026-11-03",
       "latestSpot": 97916.67,
       "latestFutures": null,
       "futuresSource": null,
@@ -29314,13 +29373,13 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 13980.0,
-      "latestDate": "2026-11-02",
-      "latestSpot": 13980.0,
+      "latest": 12800.0,
+      "latestDate": "2026-11-03",
+      "latestSpot": 12800.0,
       "latestFutures": null,
       "futuresSource": null,
       "futuresSourceUrl": null,
-      "changePct": 8.37,
+      "changePct": -1.84,
       "inventory": null,
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
@@ -29334,12 +29393,14 @@
         "label": "数据源列示产业链企业",
         "productName": "粘胶短纤",
         "producers": [
-          "三友化工",
+          "吉林化纤",
+          "*ST美谷",
+          "恒天海龙",
           "新乡化纤",
+          "华孚色纺",
           "中泰化学",
-          "*ST京化",
-          "ST海龙",
-          "吉林化纤"
+          "澳洋健康",
+          "三友化工"
         ],
         "downstreamUsers": [],
         "source": "东方财富现货与股票数据（经 AKShare 获取）",
@@ -29882,10 +29943,10 @@
       "unit": "元/吨",
       "symbol": null,
       "series": [],
-      "latest": 3156.0,
-      "latestDate": "2026-11-02",
+      "latest": 3147.0,
+      "latestDate": "2026-11-03",
       "latestSpot": null,
-      "latestFutures": 3156.0,
+      "latestFutures": 3147.0,
       "futuresSource": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
       "futuresSourceUrl": "https://finance.sina.com.cn/futuremarket/",
       "changePct": null,
@@ -30969,15 +31030,15 @@
             "date": "2026-11",
             "open": 3170.0,
             "high": 3177.0,
-            "low": 3154.0,
-            "close": 3156.0
+            "low": 3142.0,
+            "close": 3147.0
           }
         ],
         "source": "新浪财经期货主力连续合约历史行情（经 AKShare 获取）",
         "sourceUrl": "https://finance.sina.com.cn/futuremarket/",
         "period": "monthly",
         "priceType": "main-continuous-futures",
-        "latestDate": "2026-11-02"
+        "latestDate": "2026-11-03"
       },
       "sunsirsPpid": null
     },
@@ -31562,10 +31623,16 @@
           "spot": 520000.0,
           "spec": "生意社仲钨酸铵（APT）基准价，元/吨，只代表 APT 这一钨产品口径，不等于钨精矿、碳化钨粉或公司成交价。",
           "sourceUrl": "https://www.100ppi.com/news/list-12-1217-994-1.html"
+        },
+        {
+          "date": "2026-11-03",
+          "spot": 520000.0,
+          "spec": "生意社仲钨酸铵（APT）基准价，元/吨，只代表 APT 这一钨产品口径，不等于钨精矿、碳化钨粉或公司成交价。",
+          "sourceUrl": "https://www.100ppi.com/news/list-12-1217-994-1.html"
         }
       ],
       "latest": 520000.0,
-      "latestDate": "2026-11-02",
+      "latestDate": "2026-11-03",
       "latestSpot": 520000.0,
       "latestFutures": null,
       "futuresSource": null,
@@ -31735,8 +31802,8 @@
       ],
       "role": "化工原料参考价",
       "series": [],
-      "latest": 2240.0,
-      "latestDate": "2026-11-02",
+      "latest": 2366.67,
+      "latestDate": "2026-11-03",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "latest-only"
@@ -31750,8 +31817,8 @@
       ],
       "role": "硫酸法钛白粉成本参考",
       "series": [],
-      "latest": 1862.5,
-      "latestDate": "2026-11-02",
+      "latest": 917.5,
+      "latestDate": "2026-11-03",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "latest-only"
@@ -31782,8 +31849,8 @@
       ],
       "role": "煤化工能源成本参考；煤种/地区口径需核对",
       "series": [],
-      "latest": 842.75,
-      "latestDate": "2026-11-02",
+      "latest": 710.0,
+      "latestDate": "2026-11-03",
       "source": "东方财富现货与股票数据（经 AKShare 获取）",
       "sourceUrl": "https://data.eastmoney.com/ifdata/xhgp.html",
       "status": "latest-only"

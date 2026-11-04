@@ -90,12 +90,12 @@
       "roleLabel": "产品端",
       "mainRatio": 0.937107,
       "source": "月K",
-      "latestDate": "2026-11-03",
-      "latestClose": 9.38,
+      "latestDate": "2026-11-04",
+      "latestClose": 9.63,
       "monthCount": 63,
       "historyStartMonth": "2021-09",
       "historyEndMonth": "2026-11",
-      "changePct": -75.22,
+      "changePct": -74.56,
       "values": [
         {
           "month": "2021-09",
@@ -409,8 +409,8 @@
         },
         {
           "month": "2026-11",
-          "index": 24.78,
-          "price": 9.38
+          "index": 25.44,
+          "price": 9.63
         }
       ]
     }

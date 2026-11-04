@@ -953,12 +953,12 @@
       "roleLabel": "多因素",
       "mainRatio": 0.984,
       "source": "月K",
-      "latestDate": "2026-11-03",
-      "latestClose": 4.21,
+      "latestDate": "2026-11-04",
+      "latestClose": 4.23,
       "monthCount": 200,
       "historyStartMonth": "2010-01",
       "historyEndMonth": "2026-11",
-      "changePct": 52.59,
+      "changePct": 53.32,
       "values": [
         {
           "month": "2019-12",
@@ -1377,8 +1377,8 @@
         },
         {
           "month": "2026-11",
-          "index": 152.59,
-          "price": 4.21
+          "index": 153.32,
+          "price": 4.23
         }
       ]
     }

@@ -1558,12 +1558,12 @@
       "roleLabel": "产品端",
       "mainRatio": 0.500039,
       "source": "月K",
-      "latestDate": "2026-11-03",
-      "latestClose": 22.58,
+      "latestDate": "2026-11-04",
+      "latestClose": 24.01,
       "monthCount": 200,
       "historyStartMonth": "2010-02",
       "historyEndMonth": "2026-11",
-      "changePct": 6.3,
+      "changePct": 13.03,
       "values": [
         {
           "month": "2015-03",
@@ -2257,8 +2257,8 @@
         },
         {
           "month": "2026-11",
-          "index": 106.3,
-          "price": 22.58
+          "index": 113.03,
+          "price": 24.01
         }
       ]
     },
@@ -2270,12 +2270,12 @@
       "roleLabel": "产品端",
       "mainRatio": 0.515863,
       "source": "月K",
-      "latestDate": "2026-11-03",
-      "latestClose": 42.61,
+      "latestDate": "2026-11-04",
+      "latestClose": 45,
       "monthCount": 200,
       "historyStartMonth": "2010-02",
       "historyEndMonth": "2026-11",
-      "changePct": 348.53,
+      "changePct": 373.68,
       "values": [
         {
           "month": "2015-03",
@@ -2969,8 +2969,8 @@
         },
         {
           "month": "2026-11",
-          "index": 448.53,
-          "price": 42.61
+          "index": 473.68,
+          "price": 45
         }
       ]
     }

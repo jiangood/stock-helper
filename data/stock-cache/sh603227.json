@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
   "code": "sh603227",
-  "updatedAt": "2026-11-03T15:22:15.937Z",
+  "updatedAt": "2026-11-04T15:34:57.614Z",
   "detail": {
     "name": "雪峰科技",
-    "price": 7.09,
-    "prevClose": 6.9,
-    "change": 0.19,
-    "todayChange": 2.75,
-    "open": 6.91,
-    "high": 7.1,
-    "low": 6.87,
-    "avg": 7.03,
-    "volume": 94689,
-    "amount": 66596971,
-    "turnover": 0.88,
-    "volumeRatio": 1.68,
-    "amplitude": 3.33,
-    "limitUp": 7.59,
-    "limitDown": 6.21,
-    "pe": 15.35,
-    "peStatic": 15.09,
-    "peTtm": 15.93,
-    "pb": 1.41,
-    "roe": 7.03,
-    "grossMargin": 24.0718501405,
-    "netMargin": 11.4208498963,
-    "revenue": 3899764459.07,
-    "revenueYoY": -7.7480620883,
-    "profit": 371230938.77,
-    "profitYoY": -6.692931633054,
-    "navPerShare": 5.0328138,
-    "high52": 10.6,
-    "low52": 6.53,
-    "listedAt": 20150515,
-    "board": "BK0538",
-    "totalShares": 1071692689,
-    "floatShares": 1071692689,
-    "totalCap": 7598301165.01,
-    "floatCap": 7598301165.01,
-    "time": 1793693513000,
+    "price": 7.15,
+    "prevClose": 7.09,
+    "change": 0.06,
+    "todayChange": 0.85,
+    "open": 7.05,
+    "high": 7.24,
+    "low": 7.05,
+    "avg": 7.1649456957894175,
+    "volume": 93455,
+    "amount": 66960000,
+    "turnover": 0.87,
+    "volumeRatio": 1.39,
+    "amplitude": 2.68,
+    "limitUp": 7.8,
+    "limitDown": 6.38,
+    "pe": null,
+    "peStatic": null,
+    "peTtm": 16.06,
+    "pb": 1.42,
+    "roe": null,
+    "grossMargin": null,
+    "netMargin": null,
+    "revenue": null,
+    "revenueYoY": null,
+    "profit": null,
+    "profitYoY": null,
+    "navPerShare": null,
+    "high52": null,
+    "low52": null,
+    "listedAt": null,
+    "board": null,
+    "totalShares": null,
+    "floatShares": null,
+    "totalCap": 7663000000,
+    "floatCap": 7663000000,
+    "time": 1793808890000,
     "code": "sh603227"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-22",
-        "open": 9.01,
-        "close": 9.25,
-        "high": 9.27,
-        "low": 8.95,
-        "volume": 265038
-      },
       {
         "time": "2025-10-23",
         "open": 9.3,
@@ -2054,6 +2046,14 @@
         "high": 7.1,
         "low": 6.87,
         "volume": 94689
+      },
+      {
+        "time": "2026-11-04",
+        "open": 7.05,
+        "close": 7.15,
+        "high": 7.24,
+        "low": 7.05,
+        "volume": 93455
       }
     ]
   },
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-23",
-        "open": 9.45,
-        "close": 9.27,
-        "high": 9.7,
-        "low": 9.18,
-        "volume": 240528
-      },
       {
         "time": "2025-10-24",
         "open": 9.23,
@@ -4061,6 +4053,14 @@
         "high": 7.1,
         "low": 6.87,
         "volume": 94689
+      },
+      {
+        "time": "2026-11-04",
+        "open": 7.05,
+        "close": 7.15,
+        "high": 7.24,
+        "low": 7.05,
+        "volume": 93455
       }
     ]
   },
@@ -6774,14 +6774,14 @@
         "volume": 1148585
       },
       {
-        "time": "2026-11-03",
+        "time": "2026-11-04",
         "open": 6.73,
-        "close": 7.09,
-        "high": 7.1,
+        "close": 7.15,
+        "high": 7.24,
         "low": 6.73,
-        "volume": 194429
+        "volume": 287884
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-03"
+  "monthlyFetchedFor": "2026-11-04"
 }

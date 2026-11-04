@@ -7,9 +7,9 @@
   "sourceUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=660",
   "productStartDate": "2011-02-01",
   "productEndDate": "2026-11-01",
-  "latestPrice": 9973.7,
+  "latestPrice": 9972.52,
   "latestDate": "2026-11-01",
-  "productChange": 0.72,
+  "productChange": 0.7,
   "productMonthCount": 190,
   "stockTimelineMonthCount": 185,
   "commonMonthCount": 185,
@@ -1123,8 +1123,8 @@
     },
     {
       "month": "2026-11",
-      "index": 100.72,
-      "price": 9973.7
+      "index": 100.7,
+      "price": 9972.52
     }
   ],
   "alternateProductSeries": [

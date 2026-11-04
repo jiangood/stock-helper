@@ -7,7 +7,7 @@
   "sourceUrl": "https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agent_price&ppid=660",
   "dateRule": "每月1日至2日图表最左侧蓝色价格线；不判断是否交易日",
   "methodNote": "每月1日至2日图表最左侧蓝色价格线；OCR纵轴刻度线性拟合与蓝线像素定位，属于图像估算值，不是生意社原始报价。缺失月份留空，不插值。",
-  "updatedAt": "2026-11-03",
+  "updatedAt": "2026-11-04",
   "startMonth": "2010-05",
   "points": [
     {
@@ -3172,20 +3172,20 @@
     },
     {
       "month": "2026-11",
-      "value": 9973.7,
+      "value": 9972.52,
       "status": "estimated",
       "estimated": true,
       "observedDate": "2026-11-01",
       "unit": "元/吨",
       "sourceImageUrl": "https://www.100ppi.com/graph/report.php?btime=2026-11-1&etime=2026-11-30&f=xht_agent_price&ppid=660",
-      "imageSha256": "0c2efebd4bfd2acf7c7466b4c7ae7cb358e2147a2eaaa321b8150fe0ffae8afd",
+      "imageSha256": "95b0f4ad0589ea677246c73709c996ea709f6fb8b0785900e2c955522e7cbda5",
       "quality": {
         "axis_tick_count": 7,
         "axis_inlier_count": 7,
         "axis_rejected_count": 0,
         "axis_fit_rmse": 0.11,
-        "blue_pixels_sampled": 24,
-        "first_line_y": 133.5
+        "blue_pixels_sampled": 26,
+        "first_line_y": 136.5
       }
     }
   ]

@@ -7,9 +7,9 @@
   "sourceUrl": null,
   "productStartDate": "2019-12",
   "productEndDate": "2026-11",
-  "latestPrice": 970,
+  "latestPrice": 990,
   "latestDate": "2026-11",
-  "productChange": -40.6,
+  "productChange": -39.38,
   "productMonthCount": 84,
   "stockTimelineMonthCount": 84,
   "commonMonthCount": 84,
@@ -517,8 +517,8 @@
     },
     {
       "month": "2026-11",
-      "index": 59.4,
-      "price": 970
+      "index": 60.62,
+      "price": 990
     }
   ],
   "alternateProductSeries": [
@@ -939,8 +939,8 @@
     },
     {
       "month": "2026-11",
-      "index": 59.4,
-      "price": 970
+      "index": 60.62,
+      "price": 990
     }
   ],
   "alternateSource": "生意社现货/期货基差数据（经 AKShare 获取）",

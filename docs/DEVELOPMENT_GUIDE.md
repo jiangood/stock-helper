@@ -18,12 +18,8 @@
 | 路径 | 用途 |
 | --- | --- |
 | `index.html` | 自选股票池页面 |
-| `market.html`、`business.js` | 行情与产业链数据展示 |
-| `products.html`、`products.js` | 以商品为中心的关联股票月线对比卡片 |
-| `data/business-data.json`、`data/stock-products.json` | 商品报价及商品-上市公司关联关系 |
 | `stock.html`、`stock.js` | 个股详情 |
 | `data/stocks.json` | 股票基础资料、分组及交易计划等权威数据 |
-| `data/commodity-db/index.json`、`data/commodity-db/products/<商品ID>.json` | 商品总索引与每商品独立的标准化月线读模型 |
 
 | `data/research-reports.json` | 研报原始评分及来源信息 |
 | `data/fundamentals.json` | 基本面快照 |
@@ -55,7 +51,6 @@ python -m http.server 8089
 ```bash
 # 构建页面派生读模型
 node scripts/build_sector_monthly.js
-node scripts/build_product_comparison.js
 node scripts/build_research_scores.js
 node scripts/build_stock_detail_cache.js
 
@@ -86,8 +81,6 @@ node scripts/validate_stock_data.js
 
 - `stock-snapshot.yml`：采集股票行情与 K 线，并在提交前运行 `tests/monthly-kline.test.js`。
 - `fundamentals.yml`：刷新基本面快照。
-- `build-static-cache.yml`：在上游采集工作流成功后（`workflow_run`）或手动触发时，统一重建详情缓存、评分、板块月线、商品及关联股票月线对比、manifest 和健康快照，并校验后发布。
-- `business-data.yml`：更新商品数据，并重建商品及关联股票月线比较。
 - `asset-fingerprints.yml`：页面或公共 CSS/JS 变化后，运行 `scripts/update_asset_fingerprints.js`，为 HTML 中实际引用的本地 CSS/JS 计算 SHA-256 前 12 位并更新 `?v=`；第三方 CDN、内联代码和业务 JSON 不参与。只有 HTML 指纹有变化时才提交到 master；工作流使用 `GITHUB_TOKEN` 提交，避免由自动提交递归触发工作流。
 
 重要原则：
@@ -149,88 +142,3 @@ node scripts/validate_stock_data.js
 6. 尚未完成事项及具体原因。
 
 **最终原则：以可验证的实际交付为目标。先检查工具，再执行；遇到障碍先排查和寻找安全替代路径；不把工具限制泛化为无法完成，也不把未执行的操作说成已经完成。**
-
-## 9. 生意社商品图表取数规范（顺酐方式）
-
-本节是生意社商品历史价格采集的统一规范。新增或补齐生意社商品序列时，**以生意社原始价格走势图为唯一依据**，按顺酐的图表 OCR 方法取数。不能因为某商品有基准价文章、企业报价、年度统计或 Rawmex 表格，就把这些数据当作图表历史接入。
-
-### 9.1 唯一认可的图表请求方式
-
-优先使用顺酐已验证的通用图表接口：
-
-```text
-https://www.100ppi.com/graph/report.php?btime=YYYY-M-1&etime=YYYY-M-2&f=xht_agent_price&ppid=<商品图表PPID>
-```
-
-参数含义：
-
-- `btime`：图表开始日期，按月取该月 1 日。
-- `etime`：图表结束日期，按月取该月 2 日。
-- `f=xht_agent_price`：顺酐方式使用的图表类型参数。
-- `ppid`：该商品在此图表接口中的真实图表 ID。必须从生意社实际页面/图表请求中确认，不能猜测，也不能把商品目录 ID、文章 ID、另一种图表 URL 中的 `id` 或路径编号直接当作 `ppid`。
-
-已知可复用的验证样例：
-
-- 顺酐：`ppid=660`。示例：`https://www.100ppi.com/graph/report.php?btime=2020-4-1&etime=2020-4-2&f=xht_agent_price&ppid=660`。
-- 粘胶短纤：`ppid=1017`。示例：`https://www.100ppi.com/graph/report.php?btime=2025-10-28&etime=2026-10-28&f=xht_agent_price&ppid=1017`。仍需按月请求并完成跨年份月初取点验证，才可正式接入。
-
-### 9.2 新商品接入前必须完成的验证
-
-1. 从生意社商品页面的真实图表请求中确认 `ppid`，记录商品名称、规格、价格类型、地区/工艺（如有）和单位。
-2. 使用上述 `report.php` 模板分别请求至少三个不同年份的区间；至少包含较早历史年份和近期年份。
-3. 每次都检查 HTTP 状态、响应内容确为有效 PNG、图表确实有价格曲线。HTTP 200 或返回一张图片本身不代表有数据；“无数据”图、空白图、错误页均判定失败。
-4. 交叉检查图表标题、商品规格、单位及价格口径，防止把不同等级、工艺、地区或报价类型混成一条序列。
-5. 只有跨年份请求均能得到可识别的价格曲线，且 OCR 质量检查通过，才允许接入自动采集。仅找到网页、文章、基准价或其他图表接口不算通过。
-
-### 9.3 月初价格 OCR 规则
-
-- 每个月请求该月 1 日至 2 日的图表，取价格曲线最左侧有效点，作为该月月初观测；不是月平均价，也不是月末价。
-- OCR 识别纵轴价格刻度，以刻度像素位置与价格值做线性拟合，再定位图表最左侧蓝色价格线像素并换算价格。
-- 沿用 `scripts/test_sunsirs_month_start_ocr.py` 的质量门槛：至少识别 4 个纵轴刻度，拟合 RMSE 不超过 8，左侧蓝线像素数量达到最低要求；同时检查图片尺寸、价格有效性和曲线是否存在。
-- 采集记录必须标注来源图表 URL、观测日期、单位、OCR 方法、估算状态及质量信息。数值属于**图像估算值**，不是生意社原始报价，不能伪装成精确原始数据。
-- 图表没有价格线、明确无数据、图片损坏、刻度不足、拟合误差超限或价格无效时，记录为缺失/null 或保留失败状态；不得插值、外推、用文章报价补齐或改用相近商品代替。
-- 不同商品必须单独确认 `ppid`、规格和 OCR 图表坐标/颜色是否一致。不得假设顺酐的固定坐标、蓝色阈值和刻度范围对所有图表都适用；如图表布局不同，先独立校准并增加样本测试。
-
-### 9.4 来源边界与期货例外
-
-- 生意社商品历史价格统一按上述走势图方式取数。基准价文章、参考价快讯、企业报价、年度统计、Rawmex 表格等均不能替代走势图。
-- 若找不到 `report.php` 对应的有效图表，或历史区间无法取图/无法可靠识别，**放弃该商品的生意社图表采集**，保持数据缺失，不继续寻找其他报价口径补位。
-- 已有稳定、标准化期货行情接口的品种继续使用对应期货数据源，不纳入生意社图表补数范围。
-- 不要因本规范而自动删除或覆盖现有历史数据。发现旧序列来自基准价/企业报价而非图表 OCR 时，应先标记来源不符合新规范，再单独评估迁移；不得把旧来源改标成图表估算。
-
-### 9.5 当前验证状态
-
-- 顺酐：`ppid=660`，已用于月初图表 OCR 采集。
-- 粘胶短纤：`ppid=1017`，已确认通用接口图表可打开；月度跨年份样本和 OCR 质量仍需验证，验证完成前不得视为正式接入。
-- 钛白粉：专属商品页的指数图 iframe 使用 `ppid=645`；已将其作为 `report.php` 候选交由跨年份图表与 OCR 工作流验证。验证通过前不视为正式可用历史数据。
-- 任何其他商品：状态均以实际 `report.php` 图表请求及跨年份验证结果为准，不能根据目录编号或搜索摘要推断。
-
-### 9.6 通用采集模块与验证命令
-
-- 通用请求模块：`scripts/sunsirs_chart.py`。新增商品时传入经实际请求确认的 `ppid`，使用 `build_chart_url(ppid, year, month)` 生成月初图表 URL，再用 `fetch_chart_image(url, output_path)` 下载并校验 PNG；模块同时返回最终 URL、HTTP 状态、图片字节数和 SHA-256，便于追溯。
-- 顺酐采集器 `scripts/collect_maleic_anhydride_monthly.py` 已复用该模块；OCR 仍由 `scripts/test_sunsirs_month_start_ocr.py` 执行。通用模块只负责构造请求和验证图像，不会自动猜测 PPID，也不会绕过 OCR 质量检查。
-- 通用模块单元测试：`python -m unittest discover -s tests -p 'test_sunsirs_chart.py' -v`。
-- 多年份商品验证脚本：`scripts/test_sunsirs_chart_product.py`。它对起始、中间、结束年份请求月初图表并运行 OCR，生成 JSON 报告和原始图像；任何请求失败、无价格曲线或 OCR 不通过都会使验证失败。
-- 钛白粉候选 `ppid=81` 已经用通用模块实测：`report.php` 在 2020-04、2023-04、2026-10 均返回相同 SHA-256 的 15,999 字节 PNG，OCR 均识别为无价格曲线（`no_data`），禁止使用。专属商品页 iframe 指向 `ppid=645`，当前工作流改为对 645 执行三年份图表与 OCR 验证，并在验证通过后回补历史；不得把 iframe 中的 ID 本身当成 report.php 验证已经通过。
-
-
-
-## 生意社商品标识字段
-
-- 生意社图表 PPID 作为商品元数据维护在 `data/business-data.json` 每个 `items.<商品ID>` 记录的 `sunsirsPpid` 字段；已核实填写数字字符串，未核实统一为 `null`，禁止根据其他页面 ID 推测。
-- `scripts/fetch_business_data.py` 每次刷新时从上一版商品记录保留人工核验的 PPID，避免采集器重建商品报价后丢失元数据；新商品默认写入 `null`。
-- `scripts/build_product_comparison.js` 将该字段透传到 `data/commodity-db/index.json` 对应商品记录，顺酐采集器从商品记录读取 PPID，不在采集代码中硬编码。
-- 顺酐 PPID `660` 已验证；粘胶短纤 PPID `1017` 已通过 2020-04、2023-04、2026-10 三个年份的图表与 OCR 验证，登记为已确认值并由通用采集器回补月初序列；钛白粉候选 81 在三个年份均无曲线，保持 `null`。
-
-
-## 商品页面多来源价格线
-
-- 商品主价格序列与备用来源必须分别保留，不得平均、拼接或静默切换。若商品月线当前采用的来源与 `business-data.json` 商品行情来源不同，构建器会将后者作为 `alternateProductSeries` 输出，并按各自首个共同月份归一化，仅用于趋势比较。
-- 商品页在具备备用序列时显示来源切换按钮；按钮通过图表图例控制备用来源线显示/隐藏。来源名称及口径在商品说明中保留，缺失月份留空，不插值。
-- 生意社图表 PPID 仍须通过真实 `report.php` 请求及至少三个年份的 OCR 验证后才能正式启用。钛白粉候选 81 失败，候选 645 正在执行验证；粘胶短纤 1017 已通过验证。
-
-
-### 通用商品图表历史回补
-
-- 已确认 PPID 的商品可使用 `scripts/collect_sunsirs_product_monthly.py --product-id <商品ID> --start-month YYYY-MM --end-month YYYY-MM` 回补月初图表估算，数据独立写入 `data/sunsirs-chart-monthly/<商品ID>.json`。
-- 通用商品图表序列优先作为独立价格来源，不覆盖 `business-data.json` 中的行情接口数据；商品页面可将两者并列显示并分别开关。

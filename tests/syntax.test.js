@@ -16,15 +16,12 @@ test('核心 JavaScript 文件均可通过语法解析', () => {
     'scripts/fetch_stock_snapshot.js',
     'scripts/build_sector_monthly.js',
     'scripts/build_research_scores.js',
-    'scripts/build_product_comparison.js',
     'scripts/build_stock_detail_cache.js',
     'scripts/build_cache_manifest.js',
     'scripts/monthly_kline.js',
     'pinyin.js',
     'indicators.js',
     'stock.js',
-    'products.js',
-    'business.js',
     'stock-dashboard.js'
   ];
   for (const file of files) {

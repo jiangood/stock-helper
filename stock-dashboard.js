@@ -616,13 +616,6 @@ function finishRefresh() {
 
 /** 重新读取同源静态行情缓存 */
 async function refreshQuotes() {
-  if (window.StockBusiness && typeof window.StockBusiness.reloadSectors === 'function') {
-    try {
-      await window.StockBusiness.reloadSectors();
-    } catch (e) {
-      console.warn('板块数据刷新失败：', e);
-    }
-  }
   await loadPrices(true);
 }
 window.refreshQuotes = refreshQuotes;
@@ -643,10 +636,6 @@ function toggleTheme() {
   const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
   try { localStorage.setItem('stock-theme', next); } catch (e) {}
   applyTheme(next);
-  // 图表配色来自 CSS 变量，切换主题后需要重建。
-  if (window.StockBusiness && typeof window.StockBusiness.refreshCharts === 'function') {
-    window.StockBusiness.refreshCharts();
-  }
 }
 
 window.toggleTheme = toggleTheme;
@@ -794,7 +783,6 @@ function applyFilter() {
         ));
   });
   buildTable();
-  if (window.StockBusiness) window.StockBusiness.renderBrief();
 }
 
 // ============================================================
@@ -862,8 +850,6 @@ function setPageLoading(message, done) {
         status: result.status
       }))
     });
-    if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
-    if (page === 'market' && window.StockBusiness) window.StockBusiness.onTab('market');
   } catch (e) {
     console.error('[StockDashboard] 页面初始化失败：', e);
     try {

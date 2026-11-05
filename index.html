@@ -46,7 +46,6 @@
   <nav class="bg-body border-bottom px-2 px-sm-3 py-1 d-flex align-items-center gap-2" aria-label="主导航">
     <a class="d-flex align-items-center gap-2 text-body text-decoration-none me-auto text-nowrap" href="index.html"><span class="logo" aria-hidden="true">股</span><strong class="d-none d-sm-inline" style="font-size:14px">股票助手</strong></a>
     <a class="main-nav-link" data-page-link="stocks" href="index.html">自选</a>
-    <a class="main-nav-link" data-page-link="products" href="products.html">商品</a>
     <span class="vr opacity-25 mx-1 d-none d-sm-block"></span>
 
     <button class="btn btn-sm icon-btn" id="theme-btn" type="button" onclick="toggleTheme()" aria-label="切换主题" aria-pressed="false"><svg class="theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button>
@@ -797,13 +796,6 @@ function finishRefresh() {
 
 /** 重新读取同源静态行情缓存 */
 async function refreshQuotes() {
-  if (window.StockBusiness && typeof window.StockBusiness.reloadSectors === 'function') {
-    try {
-      await window.StockBusiness.reloadSectors();
-    } catch (e) {
-      console.warn('板块数据刷新失败：', e);
-    }
-  }
   await loadPrices(true);
 }
 window.refreshQuotes = refreshQuotes;
@@ -824,10 +816,6 @@ function toggleTheme() {
   const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
   try { localStorage.setItem('stock-theme', next); } catch (e) {}
   applyTheme(next);
-  // 图表配色来自 CSS 变量，切换主题后需要重建。
-  if (window.StockBusiness && typeof window.StockBusiness.refreshCharts === 'function') {
-    window.StockBusiness.refreshCharts();
-  }
 }
 
 window.toggleTheme = toggleTheme;
@@ -975,7 +963,6 @@ function applyFilter() {
         ));
   });
   buildTable();
-  if (window.StockBusiness) window.StockBusiness.renderBrief();
 }
 
 // ============================================================
@@ -1043,8 +1030,6 @@ function setPageLoading(message, done) {
         status: result.status
       }))
     });
-    if (page === 'market' && window.StockBusiness) window.StockBusiness.init(STOCKS, priceData, quotes);
-    if (page === 'market' && window.StockBusiness) window.StockBusiness.onTab('market');
   } catch (e) {
     console.error('[StockDashboard] 页面初始化失败：', e);
     try {

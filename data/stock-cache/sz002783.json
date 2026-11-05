@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
   "code": "sz002783",
-  "updatedAt": "2026-11-04T15:34:57.614Z",
+  "updatedAt": "2026-11-05T15:38:40.565Z",
   "detail": {
     "name": "凯龙股份",
-    "price": 7.47,
-    "prevClose": 7.49,
-    "change": -0.02,
-    "todayChange": -0.27,
-    "open": 7.47,
-    "high": 7.56,
-    "low": 7.37,
-    "avg": 7.456081131764106,
-    "volume": 66657,
-    "amount": 49700000,
-    "turnover": 1.45,
-    "volumeRatio": 1.12,
-    "amplitude": 2.54,
-    "limitUp": 8.24,
-    "limitDown": 6.74,
-    "pe": null,
-    "peStatic": null,
-    "peTtm": 35.4,
-    "pb": 1.38,
-    "roe": null,
-    "grossMargin": null,
-    "netMargin": null,
-    "revenue": null,
-    "revenueYoY": null,
-    "profit": null,
-    "profitYoY": null,
-    "navPerShare": null,
-    "high52": null,
-    "low52": null,
-    "listedAt": null,
-    "board": null,
-    "totalShares": null,
-    "floatShares": null,
-    "totalCap": 3729999999.9999995,
-    "floatCap": 3445000000.0000005,
-    "time": 1793808864000,
+    "price": 7.53,
+    "prevClose": 7.47,
+    "change": 0.06,
+    "todayChange": 0.8,
+    "open": 7.44,
+    "high": 7.53,
+    "low": 7.4,
+    "avg": 7.49,
+    "volume": 63873,
+    "amount": 47820481,
+    "turnover": 1.38,
+    "volumeRatio": 1.04,
+    "amplitude": 1.74,
+    "limitUp": 8.22,
+    "limitDown": 6.72,
+    "pe": 28.76,
+    "peStatic": 26.4,
+    "peTtm": 35.68,
+    "pb": 1.39,
+    "roe": 4,
+    "grossMargin": 27.9211937641,
+    "netMargin": 6.2459537072,
+    "revenue": 2639806098.47,
+    "revenueYoY": 2.7662819776,
+    "profit": 98034023.4,
+    "profitYoY": -27.426504384958,
+    "navPerShare": 5.4113384,
+    "high52": 11.28,
+    "low52": 6.66,
+    "listedAt": 20151209,
+    "board": "BK0538",
+    "totalShares": 499317447,
+    "floatShares": 461213936,
+    "totalCap": 3759860375.9100003,
+    "floatCap": 3472940938.08,
+    "time": 1793864061000,
     "code": "sz002783"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-23",
-        "open": 10.14,
-        "close": 10.3,
-        "high": 10.3,
-        "low": 10.11,
-        "volume": 206513
-      },
       {
         "time": "2025-10-24",
         "open": 10.3,
@@ -2054,6 +2046,14 @@
         "high": 7.56,
         "low": 7.37,
         "volume": 66657
+      },
+      {
+        "time": "2026-11-05",
+        "open": 7.44,
+        "close": 7.53,
+        "high": 7.53,
+        "low": 7.4,
+        "volume": 63873
       }
     ]
   },
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-24",
-        "open": 10.4,
-        "close": 10.27,
-        "high": 10.42,
-        "low": 10.21,
-        "volume": 181636
-      },
       {
         "time": "2025-10-27",
         "open": 10.15,
@@ -4061,6 +4053,14 @@
         "high": 7.56,
         "low": 7.37,
         "volume": 66657
+      },
+      {
+        "time": "2026-11-05",
+        "open": 7.44,
+        "close": 7.53,
+        "high": 7.53,
+        "low": 7.4,
+        "volume": 63873
       }
     ]
   },
@@ -6726,14 +6726,14 @@
         "volume": 1154820
       },
       {
-        "time": "2026-11-04",
+        "time": "2026-11-05",
         "open": 7.23,
-        "close": 7.47,
+        "close": 7.53,
         "high": 7.61,
         "low": 7.2,
-        "volume": 192329
+        "volume": 256202
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-04"
+  "monthlyFetchedFor": "2026-11-05"
 }

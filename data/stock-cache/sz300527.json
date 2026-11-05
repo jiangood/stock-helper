@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
   "code": "sz300527",
-  "updatedAt": "2026-11-04T15:34:57.614Z",
+  "updatedAt": "2026-11-05T15:38:40.565Z",
   "detail": {
     "name": "中船应急",
-    "price": 6.74,
-    "prevClose": 6.68,
-    "change": 0.06,
-    "todayChange": 0.9,
-    "open": 6.69,
-    "high": 6.77,
-    "low": 6.61,
-    "avg": 6.697565660361602,
-    "volume": 95796,
-    "amount": 64160000,
-    "turnover": 0.94,
-    "volumeRatio": 0.87,
-    "amplitude": 2.4,
-    "limitUp": 8.02,
-    "limitDown": 5.34,
-    "pe": null,
-    "peStatic": null,
-    "peTtm": 12919.3,
-    "pb": 2.36,
-    "roe": null,
-    "grossMargin": null,
-    "netMargin": null,
-    "revenue": null,
-    "revenueYoY": null,
-    "profit": null,
-    "profitYoY": null,
-    "navPerShare": null,
-    "high52": null,
-    "low52": null,
-    "listedAt": null,
-    "board": null,
-    "totalShares": null,
-    "floatShares": null,
-    "totalCap": 6853000000,
-    "floatCap": 6853000000,
-    "time": 1793808855000,
+    "price": 6.79,
+    "prevClose": 6.74,
+    "change": 0.05,
+    "todayChange": 0.74,
+    "open": 6.7,
+    "high": 6.84,
+    "low": 6.67,
+    "avg": 6.78,
+    "volume": 85422,
+    "amount": 57876996.95,
+    "turnover": 0.84,
+    "volumeRatio": 0.73,
+    "amplitude": 2.52,
+    "limitUp": 8.09,
+    "limitDown": 5.39,
+    "pe": -559.38,
+    "peStatic": 387.73,
+    "peTtm": 13015.1,
+    "pb": 2.38,
+    "roe": -0.32,
+    "grossMargin": 27.4819907583,
+    "netMargin": -1.8912134535999998,
+    "revenue": 489446538.8,
+    "revenueYoY": -17.2155925541,
+    "profit": -9256478.79,
+    "profitYoY": -215.429429956642,
+    "navPerShare": 2.8538254,
+    "high52": 9.26,
+    "low52": 6.28,
+    "listedAt": 20160805,
+    "board": "BK1229",
+    "totalShares": 1016770372,
+    "floatShares": 1016770372,
+    "totalCap": 6903870825.88,
+    "floatCap": 6903870825.88,
+    "time": 1793864088000,
     "code": "sz300527"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-22",
-        "open": 8.145,
-        "close": 8.325,
-        "high": 8.475,
-        "low": 8.125,
-        "volume": 229872
-      },
       {
         "time": "2025-10-23",
         "open": 8.295,
@@ -2054,6 +2046,14 @@
         "high": 6.77,
         "low": 6.61,
         "volume": 95796
+      },
+      {
+        "time": "2026-11-05",
+        "open": 6.7,
+        "close": 6.79,
+        "high": 6.84,
+        "low": 6.67,
+        "volume": 85422
       }
     ]
   },
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-23",
-        "open": 8.3,
-        "close": 8.34,
-        "high": 8.42,
-        "low": 8.26,
-        "volume": 152074
-      },
       {
         "time": "2025-10-24",
         "open": 8.35,
@@ -4061,6 +4053,14 @@
         "high": 6.77,
         "low": 6.61,
         "volume": 95796
+      },
+      {
+        "time": "2026-11-05",
+        "open": 6.7,
+        "close": 6.79,
+        "high": 6.84,
+        "low": 6.67,
+        "volume": 85422
       }
     ]
   },
@@ -6662,14 +6662,14 @@
         "volume": 2246101
       },
       {
-        "time": "2026-11-04",
+        "time": "2026-11-05",
         "open": 6.5,
-        "close": 6.74,
-        "high": 6.79,
+        "close": 6.79,
+        "high": 6.84,
         "low": 6.42,
-        "volume": 300418
+        "volume": 385840
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-04"
+  "monthlyFetchedFor": "2026-11-05"
 }

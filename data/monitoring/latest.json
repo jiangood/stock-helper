@@ -1,52 +1,52 @@
 {
   "schemaVersion": 1,
   "status": "healthy",
-  "generatedAt": "2026-11-05T15:39:12.577Z",
-  "manifestGeneratedAt": "2026-11-05T15:39:12.576Z",
-  "marketDate": "2026-11-05",
-  "durationMs": 1577,
+  "generatedAt": "2026-11-06T15:12:49.483Z",
+  "manifestGeneratedAt": "2026-11-06T15:12:49.483Z",
+  "marketDate": "2026-11-06",
+  "durationMs": 1483,
   "cacheCount": 5,
   "healthyCount": 5,
   "staleCount": 0,
   "unknownCount": 0,
   "reusedCount": 0,
   "contentReuseRate": 0,
-  "totalBytes": 5666226,
+  "totalBytes": 5666660,
   "caches": [
     {
       "id": "market-quotes",
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 21359
+      "bytes": 21455
     },
     {
       "id": "research-scores",
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 50110
+      "bytes": 50106
     },
     {
       "id": "sector-monthly",
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 15982
+      "bytes": 16031
     },
     {
       "id": "stock-details-index",
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 357676
+      "bytes": 357684
     },
     {
       "id": "stock-detail-bundles",
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 5221099
+      "bytes": 5221384
     }
   ]
 }

@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
   "code": "sh601618",
-  "updatedAt": "2026-11-05T15:38:40.565Z",
+  "updatedAt": "2026-11-06T15:12:19.266Z",
   "detail": {
     "name": "中国中冶",
-    "price": 2.64,
+    "price": 2.63,
     "prevClose": 2.64,
-    "change": 0,
-    "todayChange": 0,
-    "open": 2.63,
+    "change": -0.01,
+    "todayChange": -0.38,
+    "open": 2.62,
     "high": 2.65,
-    "low": 2.62,
+    "low": 2.6,
     "avg": 2.63,
-    "volume": 677505,
-    "amount": 178444319,
-    "turnover": 0.38,
-    "volumeRatio": 0.63,
-    "amplitude": 1.14,
+    "volume": 794440,
+    "amount": 209063429,
+    "turnover": 0.45,
+    "volumeRatio": 0.7,
+    "amplitude": 1.89,
     "limitUp": 2.9,
     "limitDown": 2.38,
-    "pe": 11.85,
-    "peStatic": 41.33,
-    "peTtm": 67.51,
+    "pe": 11.8,
+    "peStatic": 41.17,
+    "peTtm": 67.25,
     "pb": 0.53,
     "roe": 2.38,
     "grossMargin": 9.7962247659,
@@ -37,9 +37,9 @@
     "board": "BK1248",
     "totalShares": 20691619170,
     "floatShares": 17852619170,
-    "totalCap": 54625874608.8,
-    "floatCap": 47130914608.8,
-    "time": 1793866311000,
+    "totalCap": 54418958417.1,
+    "floatCap": 46952388417.1,
+    "time": 1793952712000,
     "code": "sh601618"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-24",
-        "open": 3.7,
-        "close": 3.74,
-        "high": 3.76,
-        "low": 3.69,
-        "volume": 1740460
-      },
       {
         "time": "2025-10-27",
         "open": 3.8,
@@ -2054,6 +2046,14 @@
         "high": 2.65,
         "low": 2.62,
         "volume": 677505
+      },
+      {
+        "time": "2026-11-06",
+        "open": 2.62,
+        "close": 2.63,
+        "high": 2.65,
+        "low": 2.6,
+        "volume": 794440
       }
     ]
   },
@@ -2063,14 +2063,6 @@
     "adjust": "",
     "bars": [
       {
-        "time": "2025-10-27",
-        "open": 3.8,
-        "close": 3.82,
-        "high": 3.88,
-        "low": 3.77,
-        "volume": 2426457
-      },
-      {
         "time": "2025-10-28",
         "open": 3.8,
         "close": 3.65,
@@ -4061,6 +4053,14 @@
         "high": 2.65,
         "low": 2.62,
         "volume": 677505
+      },
+      {
+        "time": "2026-11-06",
+        "open": 2.62,
+        "close": 2.63,
+        "high": 2.65,
+        "low": 2.6,
+        "volume": 794440
       }
     ]
   },
@@ -7302,14 +7302,14 @@
         "volume": 12754244
       },
       {
-        "time": "2026-11-05",
+        "time": "2026-11-06",
         "open": 2.47,
-        "close": 2.64,
+        "close": 2.63,
         "high": 2.66,
         "low": 2.47,
-        "volume": 5078411
+        "volume": 5872851
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-05"
+  "monthlyFetchedFor": "2026-11-06"
 }

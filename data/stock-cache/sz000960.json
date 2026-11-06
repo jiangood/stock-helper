@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000960",
-  "updatedAt": "2026-11-05T15:38:40.565Z",
+  "updatedAt": "2026-11-06T15:12:19.266Z",
   "detail": {
     "name": "锡业股份",
-    "price": 24.55,
-    "prevClose": 24.01,
-    "change": 0.54,
-    "todayChange": 2.25,
-    "open": 23.97,
-    "high": 25.06,
-    "low": 23.68,
-    "avg": 24.49,
-    "volume": 464236,
-    "amount": 1137021110.32,
-    "turnover": 2.82,
-    "volumeRatio": 1.3,
-    "amplitude": 5.75,
-    "limitUp": 26.41,
-    "limitDown": 21.61,
-    "pe": 11.79,
-    "peStatic": 20.55,
-    "peTtm": 14.48,
-    "pb": 1.84,
+    "price": 23.28,
+    "prevClose": 24.55,
+    "change": -1.27,
+    "todayChange": -5.17,
+    "open": 23.28,
+    "high": 23.89,
+    "low": 23.03,
+    "avg": 23.5,
+    "volume": 353066,
+    "amount": 829612087.28,
+    "turnover": 2.15,
+    "volumeRatio": 0.89,
+    "amplitude": 3.5,
+    "limitUp": 27.01,
+    "limitDown": 22.1,
+    "pe": 11.18,
+    "peStatic": 19.48,
+    "peTtm": 13.73,
+    "pb": 1.75,
     "roe": 12.29,
     "grossMargin": 11.8137766181,
     "netMargin": 5.7762456734,
@@ -37,9 +37,9 @@
     "board": "BK1027",
     "totalShares": 1645431952,
     "floatShares": 1645431952,
-    "totalCap": 40395354421.6,
-    "floatCap": 40395354421.6,
-    "time": 1793864064000,
+    "totalCap": 38305655842.560005,
+    "floatCap": 38305655842.560005,
+    "time": 1793950497000,
     "code": "sz000960"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-24",
-        "open": 22.46,
-        "close": 22.76,
-        "high": 22.8,
-        "low": 22.13,
-        "volume": 346292
-      },
       {
         "time": "2025-10-27",
         "open": 22.91,
@@ -2054,6 +2046,14 @@
         "high": 25.06,
         "low": 23.68,
         "volume": 464236
+      },
+      {
+        "time": "2026-11-06",
+        "open": 23.28,
+        "close": 23.28,
+        "high": 23.89,
+        "low": 23.03,
+        "volume": 353066
       }
     ]
   },
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-27",
-        "open": 23.27,
-        "close": 24.24,
-        "high": 24.32,
-        "low": 23.25,
-        "volume": 662412
-      },
       {
         "time": "2025-10-28",
         "open": 24,
@@ -4061,6 +4053,14 @@
         "high": 25.06,
         "low": 23.68,
         "volume": 464236
+      },
+      {
+        "time": "2026-11-06",
+        "open": 23.28,
+        "close": 23.28,
+        "high": 23.89,
+        "low": 23.03,
+        "volume": 353066
       }
     ]
   },
@@ -7590,14 +7590,14 @@
         "volume": 4802606
       },
       {
-        "time": "2026-11-05",
+        "time": "2026-11-06",
         "open": 23,
-        "close": 24.55,
+        "close": 23.28,
         "high": 25.06,
         "low": 22.22,
-        "volume": 1674470
+        "volume": 2027536
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-05"
+  "monthlyFetchedFor": "2026-11-06"
 }

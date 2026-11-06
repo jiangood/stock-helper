@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600379",
-  "updatedAt": "2026-11-05T15:38:40.565Z",
+  "updatedAt": "2026-11-06T15:12:19.266Z",
   "detail": {
     "name": "宝光股份",
-    "price": 11.57,
-    "prevClose": 11.37,
-    "change": 0.2,
-    "todayChange": 1.76,
-    "open": 11.27,
-    "high": 11.96,
-    "low": 11.21,
-    "avg": 11.65,
-    "volume": 101925,
-    "amount": 118717665,
-    "turnover": 3.09,
-    "volumeRatio": 1.12,
-    "amplitude": 6.6,
-    "limitUp": 12.51,
-    "limitDown": 10.23,
-    "pe": 48.02,
-    "peStatic": 74.47,
-    "peTtm": 62.13,
-    "pb": 4.67,
+    "price": 11.71,
+    "prevClose": 11.57,
+    "change": 0.14,
+    "todayChange": 1.21,
+    "open": 11.05,
+    "high": 11.99,
+    "low": 11.04,
+    "avg": 11.67,
+    "volume": 104856,
+    "amount": 122401219,
+    "turnover": 3.18,
+    "volumeRatio": 1.08,
+    "amplitude": 8.21,
+    "limitUp": 12.73,
+    "limitDown": 10.41,
+    "pe": 48.61,
+    "peStatic": 75.37,
+    "peTtm": 62.89,
+    "pb": 4.73,
     "roe": 7.48,
     "grossMargin": 21.791242062,
     "netMargin": 5.475742561400001,
@@ -37,9 +37,9 @@
     "board": "BK0457",
     "totalShares": 330201564,
     "floatShares": 330201564,
-    "totalCap": 3820432095.48,
-    "floatCap": 3820432095.48,
-    "time": 1793866296000,
+    "totalCap": 3866660314.44,
+    "floatCap": 3866660314.44,
+    "time": 1793952693000,
     "code": "sh600379"
   },
   "dailyAdjusted": {
@@ -2046,6 +2046,14 @@
         "high": 11.96,
         "low": 11.21,
         "volume": 101925
+      },
+      {
+        "time": "2026-11-06",
+        "open": 11.05,
+        "close": 11.71,
+        "high": 11.99,
+        "low": 11.04,
+        "volume": 104856
       }
     ]
   },
@@ -2054,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-27",
-        "open": 12.33,
-        "close": 12.66,
-        "high": 12.86,
-        "low": 12.31,
-        "volume": 74203
-      },
       {
         "time": "2025-10-28",
         "open": 12.55,
@@ -4053,6 +4053,14 @@
         "high": 11.96,
         "low": 11.21,
         "volume": 101925
+      },
+      {
+        "time": "2026-11-06",
+        "open": 11.05,
+        "close": 11.71,
+        "high": 11.99,
+        "low": 11.04,
+        "volume": 104856
       }
     ]
   },
@@ -7582,14 +7590,14 @@
         "volume": 1321007
       },
       {
-        "time": "2026-11-05",
+        "time": "2026-11-06",
         "open": 10.7,
-        "close": 11.57,
-        "high": 11.96,
+        "close": 11.71,
+        "high": 11.99,
         "low": 10.41,
-        "volume": 412893
+        "volume": 517749
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-05"
+  "monthlyFetchedFor": "2026-11-06"
 }

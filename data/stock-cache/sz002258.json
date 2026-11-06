@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
   "code": "sz002258",
-  "updatedAt": "2026-11-05T15:38:40.565Z",
+  "updatedAt": "2026-11-06T15:12:19.266Z",
   "detail": {
     "name": "利尔化学",
     "price": 15.45,
-    "prevClose": 14.8,
-    "change": 0.65,
-    "todayChange": 4.39,
-    "open": 14.8,
-    "high": 15.66,
-    "low": 14.58,
-    "avg": 15.21,
-    "volume": 351655,
-    "amount": 535030752.97,
-    "turnover": 4.4,
-    "volumeRatio": 2.04,
-    "amplitude": 7.3,
-    "limitUp": 16.28,
-    "limitDown": 13.32,
+    "prevClose": 15.45,
+    "change": 0,
+    "todayChange": 0,
+    "open": 15.3,
+    "high": 15.75,
+    "low": 15.15,
+    "avg": 15.54,
+    "volume": 191863,
+    "amount": 298175770.64,
+    "turnover": 2.4,
+    "volumeRatio": 0.87,
+    "amplitude": 3.88,
+    "limitUp": 17,
+    "limitDown": 13.91,
     "pe": 26.79,
     "peStatic": 25.83,
     "peTtm": 27.87,
@@ -39,7 +39,7 @@
     "floatShares": 799080895,
     "totalCap": 12366755172.6,
     "floatCap": 12345799827.75,
-    "time": 1793864073000,
+    "time": 1793950485000,
     "code": "sz002258"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-24",
-        "open": 11.94,
-        "close": 11.94,
-        "high": 12.02,
-        "low": 11.82,
-        "volume": 87751
-      },
       {
         "time": "2025-10-27",
         "open": 12.06,
@@ -2054,6 +2046,14 @@
         "high": 15.66,
         "low": 14.58,
         "volume": 351655
+      },
+      {
+        "time": "2026-11-06",
+        "open": 15.3,
+        "close": 15.45,
+        "high": 15.75,
+        "low": 15.15,
+        "volume": 191863
       }
     ]
   },
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-27",
-        "open": 12.26,
-        "close": 12.71,
-        "high": 13.12,
-        "low": 12.22,
-        "volume": 344451
-      },
       {
         "time": "2025-10-28",
         "open": 12.66,
@@ -4061,6 +4053,14 @@
         "high": 15.66,
         "low": 14.58,
         "volume": 351655
+      },
+      {
+        "time": "2026-11-06",
+        "open": 15.3,
+        "close": 15.45,
+        "high": 15.75,
+        "low": 15.15,
+        "volume": 191863
       }
     ]
   },
@@ -7438,14 +7438,14 @@
         "volume": 2424624
       },
       {
-        "time": "2026-11-05",
+        "time": "2026-11-06",
         "open": 13.9,
         "close": 15.45,
-        "high": 15.66,
+        "high": 15.75,
         "low": 13.88,
-        "volume": 1004598
+        "volume": 1196461
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-05"
+  "monthlyFetchedFor": "2026-11-06"
 }

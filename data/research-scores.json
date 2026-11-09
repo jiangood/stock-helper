@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-06T15:12:49.403Z",
+  "updatedAt": "2026-11-09T01:43:49.820Z",
   "marketDate": "2026-11-06",
   "totalMax": 32,
   "weights": {
@@ -1097,23 +1097,23 @@
       "items": {
         "owner": 10,
         "cap": 6.4,
-        "focus": 8.2,
+        "focus": 9.9,
         "profit": 3,
         "consolidation": 4,
         "bottom": 8,
         "volume": 2.4
       },
-      "points": 39,
+      "points": 40.6,
       "max": 65,
-      "percent": 60,
+      "percent": 62.5,
       "complete": true,
       "band": "mid",
       "metrics": {
         "ownerType": "central",
         "owner": "国务院国有资产监督管理委员会",
         "capYi": 209,
-        "mainRatio": 0.667,
-        "mainItem": "化工新材料产品",
+        "mainRatio": 0.841,
+        "mainItem": "化工产品",
         "profitYoy": -63.8,
         "priorProfitYoy": 126.9,
         "boxHeight": 1.208,

@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "status": "healthy",
-  "generatedAt": "2026-11-06T15:12:49.483Z",
-  "manifestGeneratedAt": "2026-11-06T15:12:49.483Z",
+  "generatedAt": "2026-11-09T01:43:49.940Z",
+  "manifestGeneratedAt": "2026-11-09T01:43:49.940Z",
   "marketDate": "2026-11-06",
-  "durationMs": 1483,
+  "durationMs": 1940,
   "cacheCount": 5,
   "healthyCount": 5,
   "staleCount": 0,
   "unknownCount": 0,
-  "reusedCount": 0,
-  "contentReuseRate": 0,
-  "totalBytes": 5666660,
+  "reusedCount": 4,
+  "contentReuseRate": 80,
+  "totalBytes": 5666655,
   "caches": [
     {
       "id": "market-quotes",
@@ -25,7 +25,7 @@
       "status": "healthy",
       "freshness": "fresh",
       "recordCount": 67,
-      "bytes": 50106
+      "bytes": 50101
     },
     {
       "id": "sector-monthly",

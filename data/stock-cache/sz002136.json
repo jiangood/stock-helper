@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
   "code": "sz002136",
-  "updatedAt": "2026-11-10T15:41:45.333Z",
+  "updatedAt": "2026-11-11T15:28:04.616Z",
   "detail": {
     "name": "安 纳 达",
-    "price": 10.12,
-    "prevClose": 9.97,
-    "change": 0.15,
-    "todayChange": 1.5,
-    "open": 10.06,
-    "high": 10.15,
-    "low": 9.98,
-    "avg": 10.071559524513573,
-    "volume": 33818,
-    "amount": 34060000,
-    "turnover": 1.58,
-    "volumeRatio": 0.62,
-    "amplitude": 1.71,
-    "limitUp": 10.97,
-    "limitDown": 8.97,
-    "pe": null,
-    "peStatic": null,
-    "peTtm": 102.12,
-    "pb": 1.89,
-    "roe": null,
-    "grossMargin": null,
-    "netMargin": null,
-    "revenue": null,
-    "revenueYoY": null,
-    "profit": null,
-    "profitYoY": null,
-    "navPerShare": null,
-    "high52": null,
-    "low52": null,
-    "listedAt": null,
-    "board": null,
-    "totalShares": null,
-    "floatShares": null,
-    "totalCap": 2176000000,
-    "floatCap": 2170000000,
-    "time": 1794327300000,
+    "price": 10.24,
+    "prevClose": 10.12,
+    "change": 0.12,
+    "todayChange": 1.19,
+    "open": 10.17,
+    "high": 10.32,
+    "low": 10.04,
+    "avg": 10.23,
+    "volume": 32606,
+    "amount": 33357367,
+    "turnover": 1.52,
+    "volumeRatio": 0.64,
+    "amplitude": 2.77,
+    "limitUp": 11.13,
+    "limitDown": 9.11,
+    "pe": 24.46,
+    "peStatic": -23.78,
+    "peTtm": 103.33,
+    "pb": 1.92,
+    "roe": 6.05,
+    "grossMargin": 12.5237774505,
+    "netMargin": 4.4057793786,
+    "revenue": 1638349125.26,
+    "revenueYoY": 25.0583730398,
+    "profit": 67523043.42,
+    "profitYoY": 245.620968450508,
+    "navPerShare": 5.3455095,
+    "high52": 17.75,
+    "low52": 9.7,
+    "listedAt": 20070530,
+    "board": "BK1019",
+    "totalShares": 215020000,
+    "floatShares": 214455760,
+    "totalCap": 2201804800,
+    "floatCap": 2196026982.4,
+    "time": 1794382476000,
     "code": "sz002136"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-29",
-        "open": 11.29,
-        "close": 11.22,
-        "high": 11.4,
-        "low": 11.13,
-        "volume": 44729
-      },
       {
         "time": "2025-10-30",
         "open": 11.22,
@@ -2054,6 +2046,14 @@
         "high": 10.15,
         "low": 9.98,
         "volume": 33818
+      },
+      {
+        "time": "2026-11-11",
+        "open": 10.17,
+        "close": 10.24,
+        "high": 10.32,
+        "low": 10.04,
+        "volume": 32606
       }
     ]
   },
@@ -2063,14 +2063,6 @@
     "adjust": "",
     "bars": [
       {
-        "time": "2025-10-30",
-        "open": 11.22,
-        "close": 11.12,
-        "high": 11.27,
-        "low": 11.12,
-        "volume": 36255
-      },
-      {
         "time": "2025-10-31",
         "open": 11.33,
         "close": 11.74,
@@ -4061,6 +4053,14 @@
         "high": 10.15,
         "low": 9.98,
         "volume": 33818
+      },
+      {
+        "time": "2026-11-11",
+        "open": 10.17,
+        "close": 10.24,
+        "high": 10.32,
+        "low": 10.04,
+        "volume": 32606
       }
     ]
   },
@@ -7550,14 +7550,14 @@
         "volume": 871650
       },
       {
-        "time": "2026-11-10",
+        "time": "2026-11-11",
         "open": 9.9,
-        "close": 10.12,
+        "close": 10.24,
         "high": 10.33,
         "low": 9.73,
-        "volume": 385700
+        "volume": 418306
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-10"
+  "monthlyFetchedFor": "2026-11-11"
 }

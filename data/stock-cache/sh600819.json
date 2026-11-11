@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
   "code": "sh600819",
-  "updatedAt": "2026-11-10T15:41:45.333Z",
+  "updatedAt": "2026-11-11T15:28:04.616Z",
   "detail": {
     "name": "耀皮玻璃",
-    "price": 5.16,
-    "prevClose": 5.19,
-    "change": -0.03,
-    "todayChange": -0.58,
-    "open": 5.24,
-    "high": 5.26,
-    "low": 5.13,
-    "avg": 5.1681378170084535,
-    "volume": 37499,
-    "amount": 19380000,
-    "turnover": 0.48,
-    "volumeRatio": 0.6,
-    "amplitude": 2.5,
-    "limitUp": 5.71,
-    "limitDown": 4.67,
-    "pe": null,
-    "peStatic": null,
-    "peTtm": 92.87,
+    "price": 5.18,
+    "prevClose": 5.16,
+    "change": 0.02,
+    "todayChange": 0.39,
+    "open": 5.16,
+    "high": 5.25,
+    "low": 5.15,
+    "avg": 5.2,
+    "volume": 50784,
+    "amount": 26395346,
+    "turnover": 0.64,
+    "volumeRatio": 0.91,
+    "amplitude": 1.94,
+    "limitUp": 5.68,
+    "limitDown": 4.64,
+    "pe": 89.27,
+    "peStatic": 37.31,
+    "peTtm": 93.23,
     "pb": 1.3,
-    "roe": null,
-    "grossMargin": null,
-    "netMargin": null,
-    "revenue": null,
-    "revenueYoY": null,
-    "profit": null,
-    "profitYoY": null,
-    "navPerShare": null,
-    "high52": null,
-    "low52": null,
-    "listedAt": null,
-    "board": null,
-    "totalShares": null,
-    "floatShares": null,
-    "totalCap": 5040000000,
-    "floatCap": 4072999999.9999995,
-    "time": 1794327300000,
+    "roe": 1.1,
+    "grossMargin": 15.8751221507,
+    "netMargin": 2.2719008919999997,
+    "revenue": 4028719075.48,
+    "revenueYoY": -0.9816553127,
+    "profit": 42506709.51,
+    "profitYoY": -65.681039915341,
+    "navPerShare": 3.9716561,
+    "high52": 10.08,
+    "low52": 4.68,
+    "listedAt": 19940128,
+    "board": "BK0546",
+    "totalShares": 976757073,
+    "floatShares": 789257071,
+    "totalCap": 5059601638.139999,
+    "floatCap": 4088351627.7799997,
+    "time": 1794384704000,
     "code": "sh600819"
   },
   "dailyAdjusted": {
@@ -47,14 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-29",
-        "open": 7.745,
-        "close": 8.195,
-        "high": 8.485,
-        "low": 7.745,
-        "volume": 489513
-      },
       {
         "time": "2025-10-30",
         "open": 8.195,
@@ -2054,6 +2046,14 @@
         "high": 5.26,
         "low": 5.13,
         "volume": 37499
+      },
+      {
+        "time": "2026-11-11",
+        "open": 5.16,
+        "close": 5.18,
+        "high": 5.25,
+        "low": 5.15,
+        "volume": 50784
       }
     ]
   },
@@ -2062,14 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-30",
-        "open": 8.21,
-        "close": 8.29,
-        "high": 8.46,
-        "low": 8.05,
-        "volume": 363094
-      },
       {
         "time": "2025-10-31",
         "open": 8.24,
@@ -4061,6 +4053,14 @@
         "high": 5.26,
         "low": 5.13,
         "volume": 37499
+      },
+      {
+        "time": "2026-11-11",
+        "open": 5.16,
+        "close": 5.18,
+        "high": 5.25,
+        "low": 5.15,
+        "volume": 50784
       }
     ]
   },
@@ -7590,14 +7590,14 @@
         "volume": 1081484
       },
       {
-        "time": "2026-11-10",
+        "time": "2026-11-11",
         "open": 5.01,
-        "close": 5.16,
+        "close": 5.18,
         "high": 5.35,
         "low": 4.93,
-        "volume": 423986
+        "volume": 474770
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-10"
+  "monthlyFetchedFor": "2026-11-11"
 }

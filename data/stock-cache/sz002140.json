@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz002140",
-  "updatedAt": "2026-11-11T15:28:04.616Z",
+  "updatedAt": "2026-11-13T15:31:52.450Z",
   "detail": {
     "name": "东华科技",
-    "price": 9.28,
-    "prevClose": 9.35,
-    "change": -0.07,
-    "todayChange": -0.75,
-    "open": 9.33,
-    "high": 9.4,
-    "low": 9.25,
-    "avg": 9.3,
-    "volume": 40277,
-    "amount": 37456314.6,
+    "price": 9.01,
+    "prevClose": 9.2,
+    "change": -0.19,
+    "todayChange": -2.07,
+    "open": 9.23,
+    "high": 9.27,
+    "low": 8.98,
+    "avg": 9.1,
+    "volume": 40281,
+    "amount": 36654839,
     "turnover": 0.57,
-    "volumeRatio": 0.67,
-    "amplitude": 1.6,
-    "limitUp": 10.29,
-    "limitDown": 8.42,
-    "pe": 11.88,
-    "peStatic": 12.33,
-    "peTtm": 11.28,
-    "pb": 1.3,
+    "volumeRatio": 0.86,
+    "amplitude": 3.15,
+    "limitUp": 10.12,
+    "limitDown": 8.28,
+    "pe": 11.53,
+    "peStatic": 11.97,
+    "peTtm": 10.95,
+    "pb": 1.27,
     "roe": 8.45,
     "grossMargin": 11.845182098,
     "netMargin": 5.6878778249,
@@ -37,9 +37,9 @@
     "board": "BK1248",
     "totalShares": 708013872,
     "floatShares": 706908875,
-    "totalCap": 6570368732.16,
-    "floatCap": 6560114360,
-    "time": 1794382446000,
+    "totalCap": 6379204986.72,
+    "floatCap": 6369248963.75,
+    "time": 1794555273000,
     "code": "sz002140"
   },
   "dailyAdjusted": {
@@ -47,22 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-30",
-        "open": 11.68,
-        "close": 11.55,
-        "high": 11.92,
-        "low": 11.55,
-        "volume": 151449
-      },
-      {
-        "time": "2025-10-31",
-        "open": 11.47,
-        "close": 11.52,
-        "high": 11.63,
-        "low": 11.31,
-        "volume": 115069
-      },
       {
         "time": "2025-11-03",
         "open": 11.6,
@@ -2054,6 +2038,22 @@
         "high": 9.4,
         "low": 9.25,
         "volume": 40277
+      },
+      {
+        "time": "2026-11-12",
+        "open": 9.28,
+        "close": 9.2,
+        "high": 9.34,
+        "low": 9.17,
+        "volume": 34836
+      },
+      {
+        "time": "2026-11-13",
+        "open": 9.23,
+        "close": 9.01,
+        "high": 9.27,
+        "low": 8.98,
+        "volume": 40281
       }
     ]
   },
@@ -2062,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-31",
-        "open": 11.67,
-        "close": 11.72,
-        "high": 11.83,
-        "low": 11.51,
-        "volume": 115069
-      },
-      {
-        "time": "2025-11-03",
-        "open": 11.8,
-        "close": 12.89,
-        "high": 12.89,
-        "low": 11.78,
-        "volume": 403194
-      },
       {
         "time": "2025-11-04",
         "open": 12.99,
@@ -4061,6 +4045,22 @@
         "high": 9.4,
         "low": 9.25,
         "volume": 40277
+      },
+      {
+        "time": "2026-11-12",
+        "open": 9.28,
+        "close": 9.2,
+        "high": 9.34,
+        "low": 9.17,
+        "volume": 34836
+      },
+      {
+        "time": "2026-11-13",
+        "open": 9.23,
+        "close": 9.01,
+        "high": 9.27,
+        "low": 8.98,
+        "volume": 40281
       }
     ]
   },
@@ -7534,14 +7534,14 @@
         "volume": 918139
       },
       {
-        "time": "2026-11-11",
+        "time": "2026-11-13",
         "open": 9.37,
-        "close": 9.28,
+        "close": 9.01,
         "high": 9.61,
-        "low": 9.21,
-        "volume": 490210
+        "low": 8.98,
+        "volume": 565327
       }
     ]
   },
-  "monthlyFetchedFor": "2026-11-11"
+  "monthlyFetchedFor": "2026-11-13"
 }

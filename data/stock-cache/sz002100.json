@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz002100",
-  "updatedAt": "2026-11-11T15:28:04.616Z",
+  "updatedAt": "2026-11-13T15:31:52.450Z",
   "detail": {
     "name": "天康生物",
-    "price": 8.26,
-    "prevClose": 8.38,
-    "change": -0.12,
-    "todayChange": -1.43,
-    "open": 8.38,
-    "high": 8.48,
-    "low": 8.22,
-    "avg": 8.31,
-    "volume": 221395,
-    "amount": 184003721,
-    "turnover": 1.62,
-    "volumeRatio": 0.69,
-    "amplitude": 3.1,
-    "limitUp": 9.22,
-    "limitDown": 7.54,
-    "pe": -14.19,
-    "peStatic": 53.54,
-    "peTtm": -14.15,
-    "pb": 1.77,
+    "price": 8.59,
+    "prevClose": 8.35,
+    "change": 0.24,
+    "todayChange": 2.87,
+    "open": 8.35,
+    "high": 8.75,
+    "low": 8.28,
+    "avg": 8.6,
+    "volume": 557149,
+    "amount": 479246108.78,
+    "turnover": 4.08,
+    "volumeRatio": 2.14,
+    "amplitude": 5.63,
+    "limitUp": 9.19,
+    "limitDown": 7.52,
+    "pe": -14.76,
+    "peStatic": 55.68,
+    "peTtm": -14.71,
+    "pb": 1.84,
     "roe": -8.68,
     "grossMargin": 1.9404418601,
     "netMargin": -5.0917392793,
@@ -31,15 +31,15 @@
     "profit": -596028025.44,
     "profitYoY": -244.755013821103,
     "navPerShare": 4.672549,
-    "high52": 8.66,
+    "high52": 8.75,
     "low52": 5.64,
     "listedAt": 20061226,
     "board": "BK1259",
     "totalShares": 1365251515,
     "floatShares": 1365251515,
-    "totalCap": 11276977513.9,
-    "floatCap": 11276977513.9,
-    "time": 1794382491000,
+    "totalCap": 11727510513.85,
+    "floatCap": 11727510513.85,
+    "time": 1794555270000,
     "code": "sz002100"
   },
   "dailyAdjusted": {
@@ -47,22 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-30",
-        "open": 7.662,
-        "close": 7.332,
-        "high": 7.722,
-        "low": 7.322,
-        "volume": 399035
-      },
-      {
-        "time": "2025-10-31",
-        "open": 7.372,
-        "close": 7.302,
-        "high": 7.412,
-        "low": 7.292,
-        "volume": 227890
-      },
       {
         "time": "2025-11-03",
         "open": 7.352,
@@ -2054,6 +2038,22 @@
         "high": 8.48,
         "low": 8.22,
         "volume": 221395
+      },
+      {
+        "time": "2026-11-12",
+        "open": 8.26,
+        "close": 8.35,
+        "high": 8.5,
+        "low": 8.18,
+        "volume": 251927
+      },
+      {
+        "time": "2026-11-13",
+        "open": 8.35,
+        "close": 8.59,
+        "high": 8.75,
+        "low": 8.28,
+        "volume": 557149
       }
     ]
   },
@@ -2062,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-31",
-        "open": 7.45,
-        "close": 7.38,
-        "high": 7.49,
-        "low": 7.37,
-        "volume": 227890
-      },
-      {
-        "time": "2025-11-03",
-        "open": 7.43,
-        "close": 7.55,
-        "high": 7.62,
-        "low": 7.35,
-        "volume": 319549
-      },
       {
         "time": "2025-11-04",
         "open": 7.51,
@@ -4061,6 +4045,22 @@
         "high": 8.48,
         "low": 8.22,
         "volume": 221395
+      },
+      {
+        "time": "2026-11-12",
+        "open": 8.26,
+        "close": 8.35,
+        "high": 8.5,
+        "low": 8.18,
+        "volume": 251927
+      },
+      {
+        "time": "2026-11-13",
+        "open": 8.35,
+        "close": 8.59,
+        "high": 8.75,
+        "low": 8.28,
+        "volume": 557149
       }
     ]
   },
@@ -5679,11 +5679,11 @@
     "bars": [
       {
         "time": "2024-03",
-        "open": 7.222,
+        "open": 7.722,
         "high": 7.792,
         "low": 7.052,
         "close": 7.352,
-        "volume": 1764642
+        "volume": 1150854
       },
       {
         "time": "2024-04",
@@ -5936,13 +5936,13 @@
       {
         "time": "2026-11",
         "open": 7.5,
-        "high": 8.66,
+        "high": 8.75,
         "low": 7.5,
-        "close": 8.26,
-        "volume": 2613922
+        "close": 8.59,
+        "volume": 3422998
       }
     ],
     "source": "aggregated-adjusted-daily"
   },
-  "monthlyFetchedFor": "2026-11-11"
+  "monthlyFetchedFor": "2026-11-13"
 }

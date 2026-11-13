@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sh600378",
-  "updatedAt": "2026-11-11T15:28:04.616Z",
+  "updatedAt": "2026-11-13T15:31:52.450Z",
   "detail": {
     "name": "昊华科技",
-    "price": 33.63,
-    "prevClose": 32.86,
-    "change": 0.77,
-    "todayChange": 2.34,
-    "open": 32.68,
-    "high": 33.83,
-    "low": 32.46,
-    "avg": 33.19,
-    "volume": 192363,
-    "amount": 638439539,
-    "turnover": 1.79,
-    "volumeRatio": 0.79,
-    "amplitude": 4.17,
-    "limitUp": 36.15,
-    "limitDown": 29.57,
-    "pe": 23.82,
-    "peStatic": 30.03,
-    "peTtm": 27.48,
-    "pb": 2.27,
+    "price": 31.85,
+    "prevClose": 33.36,
+    "change": -1.51,
+    "todayChange": -4.53,
+    "open": 33.59,
+    "high": 33.91,
+    "low": 31.61,
+    "avg": 32.52,
+    "volume": 201090,
+    "amount": 653941870,
+    "turnover": 1.87,
+    "volumeRatio": 1.03,
+    "amplitude": 6.89,
+    "limitUp": 36.7,
+    "limitDown": 30.02,
+    "pe": 22.56,
+    "peStatic": 28.44,
+    "peTtm": 26.02,
+    "pb": 2.15,
     "roe": 7.3,
     "grossMargin": 24.6950610321,
     "netMargin": 10.589700006400001,
@@ -37,9 +37,9 @@
     "board": "BK0538",
     "totalShares": 1289999620,
     "floatShares": 1072565363,
-    "totalCap": 43382687220.600006,
-    "floatCap": 36070373157.69,
-    "time": 1794384696000,
+    "totalCap": 41086487897,
+    "floatCap": 34161206811.550003,
+    "time": 1794557519000,
     "code": "sh600378"
   },
   "dailyAdjusted": {
@@ -47,22 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-30",
-        "open": 31.958,
-        "close": 31.388,
-        "high": 32.938,
-        "low": 31.278,
-        "volume": 305210
-      },
-      {
-        "time": "2025-10-31",
-        "open": 31.388,
-        "close": 31.338,
-        "high": 32.378,
-        "low": 31.248,
-        "volume": 191587
-      },
       {
         "time": "2025-11-03",
         "open": 31.258,
@@ -2054,6 +2038,22 @@
         "high": 33.83,
         "low": 32.46,
         "volume": 192363
+      },
+      {
+        "time": "2026-11-12",
+        "open": 33.66,
+        "close": 33.36,
+        "high": 35.08,
+        "low": 33.31,
+        "volume": 247055
+      },
+      {
+        "time": "2026-11-13",
+        "open": 33.59,
+        "close": 31.85,
+        "high": 33.91,
+        "low": 31.61,
+        "volume": 201090
       }
     ]
   },
@@ -2062,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-31",
-        "open": 31.78,
-        "close": 31.73,
-        "high": 32.77,
-        "low": 31.64,
-        "volume": 191587
-      },
-      {
-        "time": "2025-11-03",
-        "open": 31.65,
-        "close": 31.19,
-        "high": 31.79,
-        "low": 30.52,
-        "volume": 167506
-      },
       {
         "time": "2025-11-04",
         "open": 31.19,
@@ -4061,6 +4045,22 @@
         "high": 33.83,
         "low": 32.46,
         "volume": 192363
+      },
+      {
+        "time": "2026-11-12",
+        "open": 33.66,
+        "close": 33.36,
+        "high": 35.08,
+        "low": 33.31,
+        "volume": 247055
+      },
+      {
+        "time": "2026-11-13",
+        "open": 33.59,
+        "close": 31.85,
+        "high": 33.91,
+        "low": 31.61,
+        "volume": 201090
       }
     ]
   },
@@ -5679,11 +5679,11 @@
     "bars": [
       {
         "time": "2024-03",
-        "open": 30.626,
+        "open": 31.126,
         "high": 34.126,
-        "low": 30.476,
+        "low": 30.576,
         "close": 32.026,
-        "volume": 322950
+        "volume": 266799
       },
       {
         "time": "2024-04",
@@ -5936,13 +5936,13 @@
       {
         "time": "2026-11",
         "open": 30.66,
-        "high": 34.99,
+        "high": 35.08,
         "low": 30.33,
-        "close": 33.63,
-        "volume": 1879820
+        "close": 31.85,
+        "volume": 2327965
       }
     ],
     "source": "aggregated-adjusted-daily"
   },
-  "monthlyFetchedFor": "2026-11-11"
+  "monthlyFetchedFor": "2026-11-13"
 }

@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
   "code": "sz000830",
-  "updatedAt": "2026-11-11T15:28:04.616Z",
+  "updatedAt": "2026-11-13T15:31:52.450Z",
   "detail": {
     "name": "鲁西化工",
-    "price": 10.55,
-    "prevClose": 10.6,
-    "change": -0.05,
-    "todayChange": -0.47,
-    "open": 10.59,
-    "high": 10.63,
-    "low": 10.47,
-    "avg": 10.54,
-    "volume": 153911,
-    "amount": 162265797.96,
-    "turnover": 0.81,
-    "volumeRatio": 0.73,
-    "amplitude": 1.51,
-    "limitUp": 11.66,
-    "limitDown": 9.54,
-    "pe": 13.38,
-    "peStatic": 22.16,
-    "peTtm": 19.9,
-    "pb": 1.03,
+    "price": 10.14,
+    "prevClose": 10.35,
+    "change": -0.21,
+    "todayChange": -2.03,
+    "open": 10.34,
+    "high": 10.4,
+    "low": 10.1,
+    "avg": 10.22,
+    "volume": 226860,
+    "amount": 231842227.55,
+    "turnover": 1.19,
+    "volumeRatio": 1.11,
+    "amplitude": 2.9,
+    "limitUp": 11.39,
+    "limitDown": 9.32,
+    "pe": 12.86,
+    "peStatic": 21.3,
+    "peTtm": 19.13,
+    "pb": 0.99,
     "roe": 5.81,
     "grossMargin": 13.7086837644,
     "netMargin": 4.9957567663,
@@ -32,14 +32,14 @@
     "profitYoY": 10.049944594281,
     "navPerShare": 10.2446555,
     "high52": 21.5,
-    "low52": 10.33,
+    "low52": 10.1,
     "listedAt": 19980807,
     "board": "BK1019",
     "totalShares": 1904319011,
     "floatShares": 1904178218,
-    "totalCap": 20090565566.050003,
-    "floatCap": 20089080199.9,
-    "time": 1794382440000,
+    "totalCap": 19309794771.54,
+    "floatCap": 19308367130.52,
+    "time": 1794555297000,
     "code": "sz000830"
   },
   "dailyAdjusted": {
@@ -47,22 +47,6 @@
     "period": "day",
     "adjust": "qfq",
     "bars": [
-      {
-        "time": "2025-10-30",
-        "open": 12.99,
-        "close": 13.17,
-        "high": 13.43,
-        "low": 12.73,
-        "volume": 275468
-      },
-      {
-        "time": "2025-10-31",
-        "open": 13.14,
-        "close": 13.18,
-        "high": 13.4,
-        "low": 13.02,
-        "volume": 241408
-      },
       {
         "time": "2025-11-03",
         "open": 13.14,
@@ -2054,6 +2038,22 @@
         "high": 10.63,
         "low": 10.47,
         "volume": 153911
+      },
+      {
+        "time": "2026-11-12",
+        "open": 10.55,
+        "close": 10.35,
+        "high": 10.59,
+        "low": 10.33,
+        "volume": 285785
+      },
+      {
+        "time": "2026-11-13",
+        "open": 10.34,
+        "close": 10.14,
+        "high": 10.4,
+        "low": 10.1,
+        "volume": 226860
       }
     ]
   },
@@ -2062,22 +2062,6 @@
     "period": "day",
     "adjust": "",
     "bars": [
-      {
-        "time": "2025-10-31",
-        "open": 13.44,
-        "close": 13.48,
-        "high": 13.7,
-        "low": 13.32,
-        "volume": 241408
-      },
-      {
-        "time": "2025-11-03",
-        "open": 13.44,
-        "close": 13.54,
-        "high": 13.81,
-        "low": 13.22,
-        "volume": 220306
-      },
       {
         "time": "2025-11-04",
         "open": 13.5,
@@ -4061,6 +4045,22 @@
         "high": 10.63,
         "low": 10.47,
         "volume": 153911
+      },
+      {
+        "time": "2026-11-12",
+        "open": 10.55,
+        "close": 10.35,
+        "high": 10.59,
+        "low": 10.33,
+        "volume": 285785
+      },
+      {
+        "time": "2026-11-13",
+        "open": 10.34,
+        "close": 10.14,
+        "high": 10.4,
+        "low": 10.1,
+        "volume": 226860
       }
     ]
   },
@@ -5679,11 +5679,11 @@
     "bars": [
       {
         "time": "2024-03",
-        "open": 9.17,
-        "high": 9.19,
+        "open": 9.03,
+        "high": 9.05,
         "low": 8.48,
         "close": 8.72,
-        "volume": 1109847
+        "volume": 836530
       },
       {
         "time": "2024-04",
@@ -5937,12 +5937,12 @@
         "time": "2026-11",
         "open": 10.43,
         "high": 11.25,
-        "low": 10.33,
-        "close": 10.55,
-        "volume": 1696648
+        "low": 10.1,
+        "close": 10.14,
+        "volume": 2209293
       }
     ],
     "source": "aggregated-adjusted-daily"
   },
-  "monthlyFetchedFor": "2026-11-11"
+  "monthlyFetchedFor": "2026-11-13"
 }

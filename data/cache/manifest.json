@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "builderVersion": "490125efd2f7038de1eb2cf6b8711c2ca69059d5cfc1ce9dac1c0f47acfceb1c",
-  "generatedAt": "2026-11-16T01:59:49.673Z",
+  "generatedAt": "2026-11-23T02:43:43.611Z",
   "marketDate": "2026-11-13",
   "caches": {
     "market-quotes": {
@@ -20,13 +20,13 @@
     "research-scores": {
       "cacheType": "page-read-model",
       "path": "data/research-scores.json",
-      "generatedAt": "2026-11-13T15:32:23.742Z",
+      "generatedAt": "2026-11-23T02:43:43.492Z",
       "quoteSnapshotUpdatedAt": "2026-11-13T15:31:52.450Z",
       "marketDate": "2026-11-13",
       "recordCount": 67,
-      "bytes": 50074,
-      "dataVersion": "955e94e844bb266c7bfc9c5ef9482c0fbe8a17050e3cf7df4e7214fdbb27c665",
-      "sourceVersion": "f84cbc600e66c624e290349ac0dec8077c1868019759ac1ea721d2115e4d2c68",
+      "bytes": 50075,
+      "dataVersion": "1a39abc6dfbfd3fb6be2b800f6e8a5baf25c01b561c84c91e11b688602037378",
+      "sourceVersion": "61be469e3c97dafe2dc84afed9e763afab3ed94aaed88ee31de2055a53f4b116",
       "freshness": "fresh",
       "status": "healthy"
     },

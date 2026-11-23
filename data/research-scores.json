@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T15:32:23.742Z",
+  "updatedAt": "2026-11-23T02:43:43.492Z",
   "marketDate": "2026-11-13",
   "totalMax": 32,
   "weights": {
@@ -678,7 +678,7 @@
         "ownerType": "province",
         "owner": "山西省人民政府国有资产监督管理委员会",
         "capYi": 298,
-        "mainRatio": 0.86,
+        "mainRatio": 0.884,
         "mainItem": "煤炭",
         "profitYoy": -23.7,
         "priorProfitYoy": -58.7,

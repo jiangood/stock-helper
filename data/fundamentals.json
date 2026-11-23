@@ -1,9 +1,125 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-16T01:59:34Z",
+  "updatedAt": "2026-11-23T02:43:25Z",
   "source": "Eastmoney F10 via GitHub Actions",
   "note": "实际控制人 / 主营构成 / 扣非净利润，供研报评分使用；请求失败的股票保留上一次有效值",
   "stocks": {
+    "sz002408": {
+      "name": "齐翔腾达",
+      "owner": "山东省人民政府国有资产监督管理委员会",
+      "ownerType": "province",
+      "mainItem": "化工板块",
+      "mainRatio": 0.5019,
+      "mainBasis": "industry",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "化工板块",
+          "ratio": 0.501932,
+          "basis": "industry",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "国外贸易板块",
+          "ratio": 0.466708,
+          "basis": "industry",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.03136,
+          "basis": "industry",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": -3905.64,
+          "value": -583472620.8
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 106.12,
+          "value": 15331791.78
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -143.75,
+          "value": -250363560.62
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": -75.97,
+          "value": 572230763.69
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 143.93,
+          "value": 2381226257.16
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 75.93,
+          "value": 976178828.85
+        }
+      ]
+    },
+    "sh688707": {
+      "name": "振华新材",
+      "owner": "中国电子信息产业集团有限公司",
+      "ownerType": "central",
+      "mainItem": "正极材料",
+      "mainRatio": 0.9371,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "正极材料",
+          "ratio": 0.937107,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.062893,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 16.71,
+          "value": -445159098.71
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": -647.0,
+          "value": -534487200.0
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -92.17,
+          "value": 97711900.0
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 209.55,
+          "value": 1247474000.0
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 307.51,
+          "value": 402996900.0
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": -1206.13,
+          "value": -194210600.0
+        }
+      ]
+    },
     "sz002100": {
       "name": "天康生物",
       "owner": "新疆生产建设兵团国有资产经营有限责任公司",
@@ -92,122 +208,6 @@
           "date": "2020-12-31",
           "yoy": 169.63,
           "value": 1714886723.42
-        }
-      ]
-    },
-    "sh688707": {
-      "name": "振华新材",
-      "owner": "中国电子信息产业集团有限公司",
-      "ownerType": "central",
-      "mainItem": "正极材料",
-      "mainRatio": 0.9371,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "正极材料",
-          "ratio": 0.937107,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.062893,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 16.71,
-          "value": -445159098.71
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": -647.0,
-          "value": -534487200.0
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -92.17,
-          "value": 97711900.0
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 209.55,
-          "value": 1247474000.0
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 307.51,
-          "value": 402996900.0
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": -1206.13,
-          "value": -194210600.0
-        }
-      ]
-    },
-    "sz002408": {
-      "name": "齐翔腾达",
-      "owner": "山东省人民政府国有资产监督管理委员会",
-      "ownerType": "province",
-      "mainItem": "化工板块",
-      "mainRatio": 0.5019,
-      "mainBasis": "industry",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "化工板块",
-          "ratio": 0.501932,
-          "basis": "industry",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "国外贸易板块",
-          "ratio": 0.466708,
-          "basis": "industry",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.03136,
-          "basis": "industry",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": -3905.64,
-          "value": -583472620.8
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 106.12,
-          "value": 15331791.78
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -143.75,
-          "value": -250363560.62
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": -75.97,
-          "value": 572230763.69
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 143.93,
-          "value": 2381226257.16
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 75.93,
-          "value": 976178828.85
         }
       ]
     },
@@ -430,6 +430,73 @@
         }
       ]
     },
+    "sz000928": {
+      "name": "中钢国际",
+      "owner": "国务院国有资产监督管理委员会",
+      "ownerType": "central",
+      "mainItem": "工程总承包",
+      "mainRatio": 0.8905,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "工程总承包",
+          "ratio": 0.890503,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "工程单机备件",
+          "ratio": 0.08481,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "工程咨询与服务",
+          "ratio": 0.022553,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.002135,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": -34.45,
+          "value": 489456040.59
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 19.01,
+          "value": 746733801.53
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": 13.57,
+          "value": 627468281.59
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 62.47,
+          "value": 552507348.86
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": -42.21,
+          "value": 340068571.01
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 19.69,
+          "value": 588485298.22
+        }
+      ]
+    },
     "sh603977": {
       "name": "国泰集团",
       "owner": "江西省国有资产监督管理委员会",
@@ -527,30 +594,24 @@
         }
       ]
     },
-    "sz002136": {
-      "name": "安纳达",
-      "owner": "烟台市人民政府国有资产监督管理委员会",
-      "ownerType": "city",
-      "mainItem": "钛白粉",
-      "mainRatio": 0.5507,
+    "sz000707": {
+      "name": "双环科技",
+      "owner": "湖北省人民政府国有资产监督管理委员会",
+      "ownerType": "province",
+      "mainItem": "联碱及其他化工产品",
+      "mainRatio": 0.984,
       "mainBasis": "product",
       "mainDate": "2026-06-30",
       "mainSegments": [
         {
-          "name": "钛白粉",
-          "ratio": 0.550731,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "磷酸铁",
-          "ratio": 0.374075,
+          "name": "联碱及其他化工产品",
+          "ratio": 0.984019,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
           "name": "其他(补充)",
-          "ratio": 0.075194,
+          "ratio": 0.015981,
           "basis": "product",
           "reportDate": "2026-06-30"
         }
@@ -558,100 +619,33 @@
       "annual": [
         {
           "date": "2025-12-31",
-          "yoy": -554.34,
-          "value": -80526580.34
+          "yoy": -160.5,
+          "value": -146614578.75
         },
         {
           "date": "2024-12-31",
-          "yoy": -72.66,
-          "value": 17723895.26
+          "yoy": -62.24,
+          "value": 242325844.86
         },
         {
           "date": "2023-12-31",
-          "yoy": -76.57,
-          "value": 64833154.1
+          "yoy": -26.06,
+          "value": 641703916.85
         },
         {
           "date": "2022-12-31",
-          "yoy": 48.66,
-          "value": 276718277.35
+          "yoy": 105.89,
+          "value": 867882639.66
         },
         {
           "date": "2021-12-31",
-          "yoy": 226.88,
-          "value": 186137307.37
+          "yoy": 184.25,
+          "value": 421517188.32
         },
         {
           "date": "2020-12-31",
-          "yoy": 109.67,
-          "value": 56942948.98
-        }
-      ]
-    },
-    "sz000928": {
-      "name": "中钢国际",
-      "owner": "国务院国有资产监督管理委员会",
-      "ownerType": "central",
-      "mainItem": "工程总承包",
-      "mainRatio": 0.8905,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "工程总承包",
-          "ratio": 0.890503,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "工程单机备件",
-          "ratio": 0.08481,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "工程咨询与服务",
-          "ratio": 0.022553,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.002135,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": -34.45,
-          "value": 489456040.59
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 19.01,
-          "value": 746733801.53
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": 13.57,
-          "value": 627468281.59
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 62.47,
-          "value": 552507348.86
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": -42.21,
-          "value": 340068571.01
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 19.69,
-          "value": 588485298.22
+          "yoy": -779.2,
+          "value": -500297004.76
         }
       ]
     },
@@ -722,24 +716,30 @@
         }
       ]
     },
-    "sz000707": {
-      "name": "双环科技",
-      "owner": "湖北省人民政府国有资产监督管理委员会",
-      "ownerType": "province",
-      "mainItem": "联碱及其他化工产品",
-      "mainRatio": 0.984,
+    "sz002136": {
+      "name": "安纳达",
+      "owner": "烟台市人民政府国有资产监督管理委员会",
+      "ownerType": "city",
+      "mainItem": "钛白粉",
+      "mainRatio": 0.5507,
       "mainBasis": "product",
       "mainDate": "2026-06-30",
       "mainSegments": [
         {
-          "name": "联碱及其他化工产品",
-          "ratio": 0.984019,
+          "name": "钛白粉",
+          "ratio": 0.550731,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "磷酸铁",
+          "ratio": 0.374075,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
           "name": "其他(补充)",
-          "ratio": 0.015981,
+          "ratio": 0.075194,
           "basis": "product",
           "reportDate": "2026-06-30"
         }
@@ -747,33 +747,33 @@
       "annual": [
         {
           "date": "2025-12-31",
-          "yoy": -160.5,
-          "value": -146614578.75
+          "yoy": -554.34,
+          "value": -80526580.34
         },
         {
           "date": "2024-12-31",
-          "yoy": -62.24,
-          "value": 242325844.86
+          "yoy": -72.66,
+          "value": 17723895.26
         },
         {
           "date": "2023-12-31",
-          "yoy": -26.06,
-          "value": 641703916.85
+          "yoy": -76.57,
+          "value": 64833154.1
         },
         {
           "date": "2022-12-31",
-          "yoy": 105.89,
-          "value": 867882639.66
+          "yoy": 48.66,
+          "value": 276718277.35
         },
         {
           "date": "2021-12-31",
-          "yoy": 184.25,
-          "value": 421517188.32
+          "yoy": 226.88,
+          "value": 186137307.37
         },
         {
           "date": "2020-12-31",
-          "yoy": -779.2,
-          "value": -500297004.76
+          "yoy": 109.67,
+          "value": 56942948.98
         }
       ]
     },
@@ -1190,60 +1190,36 @@
         }
       ]
     },
-    "sh600459": {
-      "name": "贵研铂业",
-      "owner": "云南省人民政府国有资产监督管理委员会",
-      "ownerType": "province",
-      "mainItem": "贵金属再生资源产品",
-      "mainRatio": 0.3552,
+    "sz000554": {
+      "name": "泰山石油",
+      "owner": "中国石油化工集团有限公司",
+      "ownerType": "central",
+      "mainItem": "汽油",
+      "mainRatio": 0.6926,
       "mainBasis": "product",
       "mainDate": "2026-06-30",
       "mainSegments": [
         {
-          "name": "贵金属再生资源产品",
-          "ratio": 0.355191,
+          "name": "汽油",
+          "ratio": 0.692585,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "贵金属供给服务产品",
-          "ratio": 0.289599,
+          "name": "柴油",
+          "ratio": 0.180986,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "贵金属前驱体材料",
-          "ratio": 0.15589,
+          "name": "天然气",
+          "ratio": 0.088676,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "贵金属特种功能材料",
-          "ratio": 0.126037,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "机动车催化净化器",
-          "ratio": 0.04821,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "贵金属信息功能材料",
-          "ratio": 0.018697,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "贵金属工业催化剂材料",
-          "ratio": 0.004193,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.002184,
+          "name": "其他",
+          "ratio": 0.037752,
           "basis": "product",
           "reportDate": "2026-06-30"
         }
@@ -1251,33 +1227,33 @@
       "annual": [
         {
           "date": "2025-12-31",
-          "yoy": 14.0,
-          "value": 607224109.24
+          "yoy": 47.87,
+          "value": 159988133.74
         },
         {
           "date": "2024-12-31",
-          "yoy": 79.73,
-          "value": 532661906.3
+          "yoy": 169.27,
+          "value": 108192810.61
         },
         {
           "date": "2023-12-31",
-          "yoy": 11.0,
-          "value": 296365831.57
+          "yoy": 113.82,
+          "value": 40179566.58
         },
         {
           "date": "2022-12-31",
-          "yoy": -5.51,
-          "value": 266996514.3
+          "yoy": 28.91,
+          "value": 18791632.32
         },
         {
           "date": "2021-12-31",
-          "yoy": 33.62,
-          "value": 282551549.6
+          "yoy": 70.41,
+          "value": 14577835.33
         },
         {
           "date": "2020-12-31",
-          "yoy": 19.2,
-          "value": 211456427.21
+          "yoy": -25.0,
+          "value": 8554504.44
         }
       ]
     },
@@ -1378,36 +1354,60 @@
         }
       ]
     },
-    "sz000554": {
-      "name": "泰山石油",
-      "owner": "中国石油化工集团有限公司",
-      "ownerType": "central",
-      "mainItem": "汽油",
-      "mainRatio": 0.6926,
+    "sh600459": {
+      "name": "贵研铂业",
+      "owner": "云南省人民政府国有资产监督管理委员会",
+      "ownerType": "province",
+      "mainItem": "贵金属再生资源产品",
+      "mainRatio": 0.3552,
       "mainBasis": "product",
       "mainDate": "2026-06-30",
       "mainSegments": [
         {
-          "name": "汽油",
-          "ratio": 0.692585,
+          "name": "贵金属再生资源产品",
+          "ratio": 0.355191,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "柴油",
-          "ratio": 0.180986,
+          "name": "贵金属供给服务产品",
+          "ratio": 0.289599,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "天然气",
-          "ratio": 0.088676,
+          "name": "贵金属前驱体材料",
+          "ratio": 0.15589,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "其他",
-          "ratio": 0.037752,
+          "name": "贵金属特种功能材料",
+          "ratio": 0.126037,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "机动车催化净化器",
+          "ratio": 0.04821,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "贵金属信息功能材料",
+          "ratio": 0.018697,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "贵金属工业催化剂材料",
+          "ratio": 0.004193,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.002184,
           "basis": "product",
           "reportDate": "2026-06-30"
         }
@@ -1415,33 +1415,33 @@
       "annual": [
         {
           "date": "2025-12-31",
-          "yoy": 47.87,
-          "value": 159988133.74
+          "yoy": 14.0,
+          "value": 607224109.24
         },
         {
           "date": "2024-12-31",
-          "yoy": 169.27,
-          "value": 108192810.61
+          "yoy": 79.73,
+          "value": 532661906.3
         },
         {
           "date": "2023-12-31",
-          "yoy": 113.82,
-          "value": 40179566.58
+          "yoy": 11.0,
+          "value": 296365831.57
         },
         {
           "date": "2022-12-31",
-          "yoy": 28.91,
-          "value": 18791632.32
+          "yoy": -5.51,
+          "value": 266996514.3
         },
         {
           "date": "2021-12-31",
-          "yoy": 70.41,
-          "value": 14577835.33
+          "yoy": 33.62,
+          "value": 282551549.6
         },
         {
           "date": "2020-12-31",
-          "yoy": -25.0,
-          "value": 8554504.44
+          "yoy": 19.2,
+          "value": 211456427.21
         }
       ]
     },
@@ -1542,93 +1542,26 @@
         }
       ]
     },
-    "sh600299": {
-      "name": "安迪苏",
-      "owner": "国务院国有资产监督管理委员会",
-      "ownerType": "central",
-      "mainItem": "功能性产品",
-      "mainRatio": 0.7558,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "功能性产品",
-          "ratio": 0.755757,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "特种产品",
-          "ratio": 0.244243,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": -9.18,
-          "value": 1222619010.0
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 10258.6,
-          "value": 1346220882.0
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -98.92,
-          "value": 12996165.0
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": -18.64,
-          "value": 1206010948.0
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 8.08,
-          "value": 1482347878.0
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 52.9,
-          "value": 1371584700.0
-        }
-      ]
-    },
     "sh600348": {
       "name": "华阳股份",
       "owner": "山西省人民政府国有资产监督管理委员会",
       "ownerType": "province",
       "mainItem": "煤炭",
-      "mainRatio": 0.8604,
+      "mainRatio": 0.8838,
       "mainBasis": "product",
-      "mainDate": "2026-03-31",
+      "mainDate": "2026-09-30",
       "mainSegments": [
         {
           "name": "煤炭",
-          "ratio": 0.860356,
+          "ratio": 0.883767,
           "basis": "product",
-          "reportDate": "2026-03-31"
+          "reportDate": "2026-09-30"
         },
         {
-          "name": "电力",
-          "ratio": 0.084115,
+          "name": "其他主营业务",
+          "ratio": 0.116233,
           "basis": "product",
-          "reportDate": "2026-03-31"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.047347,
-          "basis": "product",
-          "reportDate": "2026-03-31"
-        },
-        {
-          "name": "供热",
-          "ratio": 0.008183,
-          "basis": "product",
-          "reportDate": "2026-03-31"
+          "reportDate": "2026-09-30"
         }
       ],
       "annual": [
@@ -1725,6 +1658,61 @@
         }
       ]
     },
+    "sh600299": {
+      "name": "安迪苏",
+      "owner": "国务院国有资产监督管理委员会",
+      "ownerType": "central",
+      "mainItem": "功能性产品",
+      "mainRatio": 0.7558,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "功能性产品",
+          "ratio": 0.755757,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "特种产品",
+          "ratio": 0.244243,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": -9.18,
+          "value": 1222619010.0
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 10258.6,
+          "value": 1346220882.0
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -98.92,
+          "value": 12996165.0
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": -18.64,
+          "value": 1206010948.0
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 8.08,
+          "value": 1482347878.0
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 52.9,
+          "value": 1371584700.0
+        }
+      ]
+    },
     "sz000923": {
       "name": "河钢资源",
       "owner": "河北省人民政府国有资产监督管理委员会",
@@ -1789,97 +1777,6 @@
           "date": "2020-12-31",
           "yoy": 91.37,
           "value": 970785323.54
-        }
-      ]
-    },
-    "sh600583": {
-      "name": "海油工程",
-      "owner": "中国海洋石油集团有限公司",
-      "ownerType": "central",
-      "mainItem": "海洋工程总承包项目收入",
-      "mainRatio": 0.7703,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "海洋工程总承包项目收入",
-          "ratio": 0.770262,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "海洋工程非总承包项目收入",
-          "ratio": 0.18466,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其中:海洋工程非总承包项目收入-陆地建造收入",
-          "ratio": 0.112087,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "非海洋工程项目收入",
-          "ratio": 0.041624,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其中:海洋工程非总承包项目收入-海上安装及海管铺设收入",
-          "ratio": 0.038867,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其中:海洋工程非总承包项目收入-维修收入",
-          "ratio": 0.027901,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其中:海洋工程非总承包项目收入-设计收入",
-          "ratio": 0.005804,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.003454,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 2.0,
-          "value": 1844875300.0
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 46.2,
-          "value": 1808686100.0
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": 44.85,
-          "value": 1237140400.0
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 11950.54,
-          "value": 854058200.0
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": -86.32,
-          "value": 7087300.0
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 119.91,
-          "value": 51798800.0
         }
       ]
     },
@@ -2041,6 +1938,97 @@
         }
       ]
     },
+    "sh600583": {
+      "name": "海油工程",
+      "owner": "中国海洋石油集团有限公司",
+      "ownerType": "central",
+      "mainItem": "海洋工程总承包项目收入",
+      "mainRatio": 0.7703,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "海洋工程总承包项目收入",
+          "ratio": 0.770262,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "海洋工程非总承包项目收入",
+          "ratio": 0.18466,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其中:海洋工程非总承包项目收入-陆地建造收入",
+          "ratio": 0.112087,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "非海洋工程项目收入",
+          "ratio": 0.041624,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其中:海洋工程非总承包项目收入-海上安装及海管铺设收入",
+          "ratio": 0.038867,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其中:海洋工程非总承包项目收入-维修收入",
+          "ratio": 0.027901,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其中:海洋工程非总承包项目收入-设计收入",
+          "ratio": 0.005804,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.003454,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 2.0,
+          "value": 1844875300.0
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 46.2,
+          "value": 1808686100.0
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": 44.85,
+          "value": 1237140400.0
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 11950.54,
+          "value": 854058200.0
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": -86.32,
+          "value": 7087300.0
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 119.91,
+          "value": 51798800.0
+        }
+      ]
+    },
     "sh600378": {
       "name": "昊华科技",
       "owner": "国务院国有资产监督管理委员会",
@@ -2111,6 +2099,73 @@
           "date": "2020-12-31",
           "yoy": 24.39,
           "value": 616172921.68
+        }
+      ]
+    },
+    "sh601061": {
+      "name": "中信金属",
+      "owner": "中国中信集团有限公司",
+      "ownerType": "central",
+      "mainItem": "有色金属产品",
+      "mainRatio": 0.8396,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "有色金属产品",
+          "ratio": 0.839592,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "黑色金属产品",
+          "ratio": 0.158163,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他贸易",
+          "ratio": 0.001832,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.000412,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 41.0,
+          "value": 2566891145.08
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": -7.42,
+          "value": 1820480242.83
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": 34.88,
+          "value": 1966364119.08
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": -8.63,
+          "value": 1457829103.61
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 118.36,
+          "value": 1595560861.68
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 32.79,
+          "value": 730710065.31
         }
       ]
     },
@@ -2242,36 +2297,42 @@
         }
       ]
     },
-    "sh601061": {
-      "name": "中信金属",
-      "owner": "中国中信集团有限公司",
+    "sh600230": {
+      "name": "沧州大化",
+      "owner": "国务院国有资产监督管理委员会",
       "ownerType": "central",
-      "mainItem": "有色金属产品",
-      "mainRatio": 0.8396,
+      "mainItem": "甲苯二异氰酸酯(TDI)",
+      "mainRatio": 0.4439,
       "mainBasis": "product",
       "mainDate": "2026-06-30",
       "mainSegments": [
         {
-          "name": "有色金属产品",
-          "ratio": 0.839592,
+          "name": "甲苯二异氰酸酯(TDI)",
+          "ratio": 0.443933,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "黑色金属产品",
-          "ratio": 0.158163,
+          "name": "聚碳酸酯(PC)",
+          "ratio": 0.294448,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "其他贸易",
-          "ratio": 0.001832,
+          "name": "其他主营业务",
+          "ratio": 0.212351,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "离子膜烧碱",
+          "ratio": 0.042361,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
           "name": "其他(补充)",
-          "ratio": 0.000412,
+          "ratio": 0.006906,
           "basis": "product",
           "reportDate": "2026-06-30"
         }
@@ -2279,88 +2340,33 @@
       "annual": [
         {
           "date": "2025-12-31",
-          "yoy": 41.0,
-          "value": 2566891145.08
+          "yoy": 29.61,
+          "value": 33438325.93
         },
         {
           "date": "2024-12-31",
-          "yoy": -7.42,
-          "value": 1820480242.83
+          "yoy": -86.31,
+          "value": 25799290.38
         },
         {
           "date": "2023-12-31",
-          "yoy": 34.88,
-          "value": 1966364119.08
+          "yoy": -54.91,
+          "value": 188489279.6
         },
         {
           "date": "2022-12-31",
-          "yoy": -8.63,
-          "value": 1457829103.61
+          "yoy": 955.67,
+          "value": 418057353.44
         },
         {
           "date": "2021-12-31",
-          "yoy": 118.36,
-          "value": 1595560861.68
+          "yoy": -12.69,
+          "value": -48857055.58
         },
         {
           "date": "2020-12-31",
-          "yoy": 32.79,
-          "value": 730710065.31
-        }
-      ]
-    },
-    "sh600282": {
-      "name": "南钢股份",
-      "owner": "中国中信集团有限公司",
-      "ownerType": "central",
-      "mainItem": "钢材销售",
-      "mainRatio": 0.6047,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "钢材销售",
-          "ratio": 0.60471,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他销售",
-          "ratio": 0.39529,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 13.02,
-          "value": 2466733761.79
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 15.4,
-          "value": 2182598181.72
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -6.79,
-          "value": 1891394518.57
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": -45.01,
-          "value": 2029196481.68
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 49.84,
-          "value": 3689835472.71
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 4.82,
-          "value": 2462557093.49
+          "yoy": -212.32,
+          "value": -43355130.67
         }
       ]
     },
@@ -2449,79 +2455,6 @@
         }
       ]
     },
-    "sh600230": {
-      "name": "沧州大化",
-      "owner": "国务院国有资产监督管理委员会",
-      "ownerType": "central",
-      "mainItem": "甲苯二异氰酸酯(TDI)",
-      "mainRatio": 0.4439,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "甲苯二异氰酸酯(TDI)",
-          "ratio": 0.443933,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "聚碳酸酯(PC)",
-          "ratio": 0.294448,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他主营业务",
-          "ratio": 0.212351,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "离子膜烧碱",
-          "ratio": 0.042361,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.006906,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 29.61,
-          "value": 33438325.93
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": -86.31,
-          "value": 25799290.38
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -54.91,
-          "value": 188489279.6
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 955.67,
-          "value": 418057353.44
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": -12.69,
-          "value": -48857055.58
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": -212.32,
-          "value": -43355130.67
-        }
-      ]
-    },
     "sz000830": {
       "name": "鲁西化工",
       "owner": "国务院国有资产监督管理委员会",
@@ -2592,6 +2525,61 @@
           "date": "2020-12-31",
           "yoy": -22.2,
           "value": 729485303.66
+        }
+      ]
+    },
+    "sh600282": {
+      "name": "南钢股份",
+      "owner": "中国中信集团有限公司",
+      "ownerType": "central",
+      "mainItem": "钢材销售",
+      "mainRatio": 0.6047,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "钢材销售",
+          "ratio": 0.60471,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他销售",
+          "ratio": 0.39529,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 13.02,
+          "value": 2466733761.79
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 15.4,
+          "value": 2182598181.72
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -6.79,
+          "value": 1891394518.57
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": -45.01,
+          "value": 2029196481.68
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 49.84,
+          "value": 3689835472.71
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 4.82,
+          "value": 2462557093.49
         }
       ]
     },
@@ -2668,67 +2656,6 @@
         }
       ]
     },
-    "sh601958": {
-      "name": "金钼股份",
-      "owner": "陕西有色金属控股集团有限责任公司",
-      "ownerType": "province",
-      "mainItem": "钼矿产品开采、冶炼及深加工",
-      "mainRatio": 0.8921,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "钼矿产品开采、冶炼及深加工",
-          "ratio": 0.892069,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "商品贸易",
-          "ratio": 0.101818,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.006113,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 6.44,
-          "value": 3136707972.66
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": -0.38,
-          "value": 2946898589.99
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": 125.26,
-          "value": 2958285526.29
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 182.93,
-          "value": 1313300836.99
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 181.06,
-          "value": 464178745.56
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": -69.9,
-          "value": 165153905.46
-        }
-      ]
-    },
     "sh600486": {
       "name": "扬农化工",
       "owner": "国务院国有资产监督管理委员会",
@@ -2793,6 +2720,134 @@
           "date": "2020-12-31",
           "yoy": 23.31,
           "value": 1090190966.86
+        }
+      ]
+    },
+    "sh601958": {
+      "name": "金钼股份",
+      "owner": "陕西有色金属控股集团有限责任公司",
+      "ownerType": "province",
+      "mainItem": "钼矿产品开采、冶炼及深加工",
+      "mainRatio": 0.8921,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "钼矿产品开采、冶炼及深加工",
+          "ratio": 0.892069,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "商品贸易",
+          "ratio": 0.101818,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.006113,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 6.44,
+          "value": 3136707972.66
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": -0.38,
+          "value": 2946898589.99
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": 125.26,
+          "value": 2958285526.29
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 182.93,
+          "value": 1313300836.99
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 181.06,
+          "value": 464178745.56
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": -69.9,
+          "value": 165153905.46
+        }
+      ]
+    },
+    "sz000962": {
+      "name": "东方钽业",
+      "owner": "中国有色矿业集团有限公司",
+      "ownerType": "central",
+      "mainItem": "钽铌及其合金制品",
+      "mainRatio": 0.9972,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "钽铌及其合金制品",
+          "ratio": 0.99724,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.001555,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他",
+          "ratio": 0.000622,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "钛及钛合金制品",
+          "ratio": 0.000583,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 20.52,
+          "value": 232345294.05
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 21.92,
+          "value": 192788830.36
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": 26.56,
+          "value": 158121196.58
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 80.31,
+          "value": 124938980.13
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 239.94,
+          "value": 69290471.54
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 6.49,
+          "value": 20382869.73
         }
       ]
     },
@@ -2975,73 +3030,6 @@
           "date": "2020-12-31",
           "yoy": -26.61,
           "value": 1764472647.08
-        }
-      ]
-    },
-    "sz000962": {
-      "name": "东方钽业",
-      "owner": "中国有色矿业集团有限公司",
-      "ownerType": "central",
-      "mainItem": "钽铌及其合金制品",
-      "mainRatio": 0.9972,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "钽铌及其合金制品",
-          "ratio": 0.99724,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.001555,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他",
-          "ratio": 0.000622,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "钛及钛合金制品",
-          "ratio": 0.000583,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 20.52,
-          "value": 232345294.05
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 21.92,
-          "value": 192788830.36
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": 26.56,
-          "value": 158121196.58
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 80.31,
-          "value": 124938980.13
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 239.94,
-          "value": 69290471.54
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 6.49,
-          "value": 20382869.73
         }
       ]
     },
@@ -3319,61 +3307,6 @@
         }
       ]
     },
-    "sh688750": {
-      "name": "金天钛业",
-      "owner": "湖南省人民政府国有资产监督管理委员会",
-      "ownerType": "province",
-      "mainItem": "钛及钛合金产品",
-      "mainRatio": 0.9571,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "钛及钛合金产品",
-          "ratio": 0.957071,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.042929,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": -64.35,
-          "value": 48770287.18
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 2.13,
-          "value": 136797907.4
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": 22.59,
-          "value": 133944701.03
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 24.19,
-          "value": 109257954.39
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 266.56,
-          "value": 87972999.11
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": null,
-          "value": 23999351.8
-        }
-      ]
-    },
     "sh600301": {
       "name": "华锡有色",
       "owner": "广西壮族自治区人民政府国有资产监督管理委员会",
@@ -3468,6 +3401,189 @@
           "date": "2020-12-31",
           "yoy": -241.76,
           "value": -9219646.78
+        }
+      ]
+    },
+    "sh688750": {
+      "name": "金天钛业",
+      "owner": "湖南省人民政府国有资产监督管理委员会",
+      "ownerType": "province",
+      "mainItem": "钛及钛合金产品",
+      "mainRatio": 0.9571,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "钛及钛合金产品",
+          "ratio": 0.957071,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.042929,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": -64.35,
+          "value": 48770287.18
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 2.13,
+          "value": 136797907.4
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": 22.59,
+          "value": 133944701.03
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 24.19,
+          "value": 109257954.39
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 266.56,
+          "value": 87972999.11
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": null,
+          "value": 23999351.8
+        }
+      ]
+    },
+    "sh600111": {
+      "name": "北方稀土",
+      "owner": "内蒙古自治区人民政府",
+      "ownerType": "province",
+      "mainItem": "生产业务分部",
+      "mainRatio": 1.7337,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "生产业务分部",
+          "ratio": 1.733705,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "稀土功能材料及应用产品分部",
+          "ratio": 0.428335,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "贸易业务分部",
+          "ratio": 0.163538,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "环保产业业务分部及其他",
+          "ratio": 0.020887,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 128.1,
+          "value": 2055908109.98
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": -61.12,
+          "value": 901307586.64
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -62.63,
+          "value": 2317962668.39
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 24.89,
+          "value": 6203044812.13
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 444.5,
+          "value": 4966873529.5
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 88.16,
+          "value": 912194725.54
+        }
+      ]
+    },
+    "sh600737": {
+      "name": "中粮糖业",
+      "owner": "国务院国有资产监督管理委员会",
+      "ownerType": "central",
+      "mainItem": "食糖类商品",
+      "mainRatio": 0.8997,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "食糖类商品",
+          "ratio": 0.899655,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "番茄类商品",
+          "ratio": 0.081225,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他",
+          "ratio": 0.01912,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": -52.02,
+          "value": 811740918.7
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": -19.36,
+          "value": 1691885238.7
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": 232.55,
+          "value": 2098137706.4
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 31.78,
+          "value": 630920676.57
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": -11.91,
+          "value": 478784509.47
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 12.2,
+          "value": 543525403.34
         }
       ]
     },
@@ -3575,134 +3691,6 @@
         }
       ]
     },
-    "sh600737": {
-      "name": "中粮糖业",
-      "owner": "国务院国有资产监督管理委员会",
-      "ownerType": "central",
-      "mainItem": "食糖类商品",
-      "mainRatio": 0.8997,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "食糖类商品",
-          "ratio": 0.899655,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "番茄类商品",
-          "ratio": 0.081225,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他",
-          "ratio": 0.01912,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": -52.02,
-          "value": 811740918.7
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": -19.36,
-          "value": 1691885238.7
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": 232.55,
-          "value": 2098137706.4
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 31.78,
-          "value": 630920676.57
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": -11.91,
-          "value": 478784509.47
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 12.2,
-          "value": 543525403.34
-        }
-      ]
-    },
-    "sh600111": {
-      "name": "北方稀土",
-      "owner": "内蒙古自治区人民政府",
-      "ownerType": "province",
-      "mainItem": "生产业务分部",
-      "mainRatio": 1.7337,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "生产业务分部",
-          "ratio": 1.733705,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "稀土功能材料及应用产品分部",
-          "ratio": 0.428335,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "贸易业务分部",
-          "ratio": 0.163538,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "环保产业业务分部及其他",
-          "ratio": 0.020887,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 128.1,
-          "value": 2055908109.98
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": -61.12,
-          "value": 901307586.64
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -62.63,
-          "value": 2317962668.39
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 24.89,
-          "value": 6203044812.13
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 444.5,
-          "value": 4966873529.5
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 88.16,
-          "value": 912194725.54
-        }
-      ]
-    },
     "sz002057": {
       "name": "中钢天源",
       "owner": "国务院国有资产监督管理委员会",
@@ -3779,6 +3767,115 @@
           "date": "2020-12-31",
           "yoy": 24.07,
           "value": 145277980.27
+        }
+      ]
+    },
+    "sz002092": {
+      "name": "中泰化学",
+      "owner": "新疆维吾尔自治区人民政府国有资产监督管理委员会",
+      "ownerType": "province",
+      "mainItem": "聚氯乙烯",
+      "mainRatio": 0.3611,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "聚氯乙烯",
+          "ratio": 0.361142,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "粘胶纱线",
+          "ratio": 0.161408,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "粘胶纤维",
+          "ratio": 0.109079,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "氯碱类产品",
+          "ratio": 0.108203,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他煤化工产品",
+          "ratio": 0.096073,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他纺织产品",
+          "ratio": 0.066254,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "甲醇",
+          "ratio": 0.044258,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.022974,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "现代贸易",
+          "ratio": 0.011558,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "自制电",
+          "ratio": 0.00987,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "物流运输",
+          "ratio": 0.00918,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 61.33,
+          "value": -410038490.08
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 63.67,
+          "value": -1060267187.3
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -535.71,
+          "value": -2918399431.65
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": -75.12,
+          "value": 669797631.45
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 11994.79,
+          "value": 2692345885.69
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": -93.59,
+          "value": 22260377.04
         }
       ]
     },
@@ -3959,115 +4056,6 @@
         }
       ]
     },
-    "sz002092": {
-      "name": "中泰化学",
-      "owner": "新疆维吾尔自治区人民政府国有资产监督管理委员会",
-      "ownerType": "province",
-      "mainItem": "聚氯乙烯",
-      "mainRatio": 0.3611,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "聚氯乙烯",
-          "ratio": 0.361142,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "粘胶纱线",
-          "ratio": 0.161408,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "粘胶纤维",
-          "ratio": 0.109079,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "氯碱类产品",
-          "ratio": 0.108203,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他煤化工产品",
-          "ratio": 0.096073,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他纺织产品",
-          "ratio": 0.066254,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "甲醇",
-          "ratio": 0.044258,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.022974,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "现代贸易",
-          "ratio": 0.011558,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "自制电",
-          "ratio": 0.00987,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "物流运输",
-          "ratio": 0.00918,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 61.33,
-          "value": -410038490.08
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 63.67,
-          "value": -1060267187.3
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -535.71,
-          "value": -2918399431.65
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": -75.12,
-          "value": 669797631.45
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 11994.79,
-          "value": 2692345885.69
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": -93.59,
-          "value": 22260377.04
-        }
-      ]
-    },
     "sz002556": {
       "name": "辉隆股份",
       "owner": "安徽省供销合作社联合社",
@@ -4126,67 +4114,6 @@
           "date": "2020-12-31",
           "yoy": 1037.71,
           "value": 229338845.34
-        }
-      ]
-    },
-    "sh600298": {
-      "name": "安琪酵母",
-      "owner": "宜昌市人民政府国有资产监督管理委员会",
-      "ownerType": "city",
-      "mainItem": "酵母及相关行业",
-      "mainRatio": 0.8827,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "酵母及相关行业",
-          "ratio": 0.882687,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他",
-          "ratio": 0.107026,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "包装物",
-          "ratio": 0.040372,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 16.19,
-          "value": 1359139575.38
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": 5.79,
-          "value": 1169737631.25
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -0.75,
-          "value": 1105738374.96
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 5.1,
-          "value": 1114130924.65
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": -13.14,
-          "value": 1060024562.13
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 45.81,
-          "value": 1220348877.69
         }
       ]
     },
@@ -4324,6 +4251,67 @@
         }
       ]
     },
+    "sh600298": {
+      "name": "安琪酵母",
+      "owner": "宜昌市人民政府国有资产监督管理委员会",
+      "ownerType": "city",
+      "mainItem": "酵母及相关行业",
+      "mainRatio": 0.8827,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "酵母及相关行业",
+          "ratio": 0.882687,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他",
+          "ratio": 0.107026,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "包装物",
+          "ratio": 0.040372,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 16.19,
+          "value": 1359139575.38
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": 5.79,
+          "value": 1169737631.25
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -0.75,
+          "value": 1105738374.96
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 5.1,
+          "value": 1114130924.65
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": -13.14,
+          "value": 1060024562.13
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 45.81,
+          "value": 1220348877.69
+        }
+      ]
+    },
     "sz300470": {
       "name": "中密控股",
       "owner": "四川省机械研究设计院(集团)有限公司",
@@ -4427,61 +4415,6 @@
         }
       ]
     },
-    "sh688295": {
-      "name": "中复神鹰",
-      "owner": "中国建材集团有限公司",
-      "ownerType": "central",
-      "mainItem": "碳纤维",
-      "mainRatio": 0.9899,
-      "mainBasis": "product",
-      "mainDate": "2026-06-30",
-      "mainSegments": [
-        {
-          "name": "碳纤维",
-          "ratio": 0.989864,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.010136,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        }
-      ],
-      "annual": [
-        {
-          "date": "2025-12-31",
-          "yoy": 137.14,
-          "value": 68639046.44
-        },
-        {
-          "date": "2024-12-31",
-          "yoy": -177.77,
-          "value": -184789529.5
-        },
-        {
-          "date": "2023-12-31",
-          "yoy": -57.9,
-          "value": 237611149.93
-        },
-        {
-          "date": "2022-12-31",
-          "yoy": 119.1,
-          "value": 564427100.0
-        },
-        {
-          "date": "2021-12-31",
-          "yoy": 275.86,
-          "value": 257607683.7
-        },
-        {
-          "date": "2020-12-31",
-          "yoy": 1909.15,
-          "value": 68537958.49
-        }
-      ]
-    },
     "sh600819": {
       "name": "耀皮玻璃",
       "owner": "上海地产(集团)有限公司",
@@ -4546,6 +4479,61 @@
           "date": "2020-12-31",
           "yoy": 30.52,
           "value": 179281492.02
+        }
+      ]
+    },
+    "sh688295": {
+      "name": "中复神鹰",
+      "owner": "中国建材集团有限公司",
+      "ownerType": "central",
+      "mainItem": "碳纤维",
+      "mainRatio": 0.9899,
+      "mainBasis": "product",
+      "mainDate": "2026-06-30",
+      "mainSegments": [
+        {
+          "name": "碳纤维",
+          "ratio": 0.989864,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.010136,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        }
+      ],
+      "annual": [
+        {
+          "date": "2025-12-31",
+          "yoy": 137.14,
+          "value": 68639046.44
+        },
+        {
+          "date": "2024-12-31",
+          "yoy": -177.77,
+          "value": -184789529.5
+        },
+        {
+          "date": "2023-12-31",
+          "yoy": -57.9,
+          "value": 237611149.93
+        },
+        {
+          "date": "2022-12-31",
+          "yoy": 119.1,
+          "value": 564427100.0
+        },
+        {
+          "date": "2021-12-31",
+          "yoy": 275.86,
+          "value": 257607683.7
+        },
+        {
+          "date": "2020-12-31",
+          "yoy": 1909.15,
+          "value": 68537958.49
         }
       ]
     },
@@ -4664,42 +4652,36 @@
         }
       ]
     },
-    "sh600195": {
-      "name": "中牧股份",
-      "owner": "中国农业发展集团有限公司",
+    "sz000819": {
+      "name": "岳阳兴长",
+      "owner": "中国石油化工集团有限公司",
       "ownerType": "central",
-      "mainItem": "化药",
-      "mainRatio": 0.3757,
+      "mainItem": "能源化工",
+      "mainRatio": 0.5195,
       "mainBasis": "product",
       "mainDate": "2026-06-30",
       "mainSegments": [
         {
-          "name": "化药",
-          "ratio": 0.375699,
+          "name": "能源化工",
+          "ratio": 0.519517,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "贸易",
-          "ratio": 0.347421,
+          "name": "化工新材料",
+          "ratio": 0.361859,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "饲料",
-          "ratio": 0.167578,
+          "name": "成品油",
+          "ratio": 0.117132,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "生物制品",
-          "ratio": 0.107456,
-          "basis": "product",
-          "reportDate": "2026-06-30"
-        },
-        {
-          "name": "其他(补充)",
-          "ratio": 0.001846,
+          "name": "其他",
+          "ratio": 0.001493,
           "basis": "product",
           "reportDate": "2026-06-30"
         }
@@ -4707,33 +4689,33 @@
       "annual": [
         {
           "date": "2025-12-31",
-          "yoy": -67.42,
-          "value": 20247631.0
+          "yoy": -199.19,
+          "value": -54428265.46
         },
         {
           "date": "2024-12-31",
-          "yoy": -77.72,
-          "value": 62137902.01
+          "yoy": -43.85,
+          "value": 54873045.61
         },
         {
           "date": "2023-12-31",
-          "yoy": -30.26,
-          "value": 278858364.79
+          "yoy": 22.06,
+          "value": 97722722.96
         },
         {
           "date": "2022-12-31",
-          "yoy": -21.72,
-          "value": 399858144.16
+          "yoy": 27.16,
+          "value": 80063661.36
         },
         {
           "date": "2021-12-31",
-          "yoy": 25.23,
-          "value": 510806502.49
+          "yoy": 32.36,
+          "value": 62962362.16
         },
         {
           "date": "2020-12-31",
-          "yoy": 79.92,
-          "value": 407879938.31
+          "yoy": -19.26,
+          "value": 47570814.64
         }
       ]
     },
@@ -4804,36 +4786,42 @@
         }
       ]
     },
-    "sz000819": {
-      "name": "岳阳兴长",
-      "owner": "中国石油化工集团有限公司",
+    "sh600195": {
+      "name": "中牧股份",
+      "owner": "中国农业发展集团有限公司",
       "ownerType": "central",
-      "mainItem": "能源化工",
-      "mainRatio": 0.5195,
+      "mainItem": "化药",
+      "mainRatio": 0.3757,
       "mainBasis": "product",
       "mainDate": "2026-06-30",
       "mainSegments": [
         {
-          "name": "能源化工",
-          "ratio": 0.519517,
+          "name": "化药",
+          "ratio": 0.375699,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "化工新材料",
-          "ratio": 0.361859,
+          "name": "贸易",
+          "ratio": 0.347421,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "成品油",
-          "ratio": 0.117132,
+          "name": "饲料",
+          "ratio": 0.167578,
           "basis": "product",
           "reportDate": "2026-06-30"
         },
         {
-          "name": "其他",
-          "ratio": 0.001493,
+          "name": "生物制品",
+          "ratio": 0.107456,
+          "basis": "product",
+          "reportDate": "2026-06-30"
+        },
+        {
+          "name": "其他(补充)",
+          "ratio": 0.001846,
           "basis": "product",
           "reportDate": "2026-06-30"
         }
@@ -4841,33 +4829,33 @@
       "annual": [
         {
           "date": "2025-12-31",
-          "yoy": -199.19,
-          "value": -54428265.46
+          "yoy": -67.42,
+          "value": 20247631.0
         },
         {
           "date": "2024-12-31",
-          "yoy": -43.85,
-          "value": 54873045.61
+          "yoy": -77.72,
+          "value": 62137902.01
         },
         {
           "date": "2023-12-31",
-          "yoy": 22.06,
-          "value": 97722722.96
+          "yoy": -30.26,
+          "value": 278858364.79
         },
         {
           "date": "2022-12-31",
-          "yoy": 27.16,
-          "value": 80063661.36
+          "yoy": -21.72,
+          "value": 399858144.16
         },
         {
           "date": "2021-12-31",
-          "yoy": 32.36,
-          "value": 62962362.16
+          "yoy": 25.23,
+          "value": 510806502.49
         },
         {
           "date": "2020-12-31",
-          "yoy": -19.26,
-          "value": 47570814.64
+          "yoy": 79.92,
+          "value": 407879938.31
         }
       ]
     }
